@@ -1,0 +1,75 @@
+# Configuration Netlify pour GAMEDOOR•41
+
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/escape-game-caen"
+  to = "/escape-game-caen/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/quiz-game-caen"
+  to = "/quiz-game-caen/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/tarifs"
+  to = "/tarifs/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/index.html"
+  status = 200
+
+# Redirections avec trailing slash
+[[redirects]]
+  from = "/escape-game-caen/"
+  to = "/escape-game-caen/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/quiz-game-caen/"
+  to = "/quiz-game-caen/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/tarifs/"
+  to = "/tarifs/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact/"
+  to = "/contact/index.html"
+  status = 200
+
+# Headers de sécurité et performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache pour assets statiques
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
