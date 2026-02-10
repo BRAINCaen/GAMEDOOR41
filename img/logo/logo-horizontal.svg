@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 60" fill="none">
+  <!-- GAME - bold white -->
+  <text x="0" y="46" font-family="'Montserrat','Arial Black',sans-serif" font-weight="900" font-size="42" fill="#FFFFFF" letter-spacing="1">GAME</text>
+  <!-- DOOR - lighter white -->
+  <text x="168" y="46" font-family="'Montserrat','Arial',sans-serif" font-weight="400" font-size="42" fill="#FFFFFF" letter-spacing="1">DOOR</text>
+  <!-- Orange dot -->
+  <circle cx="325" cy="38" r="5" fill="#E8712B"/>
+  <!-- 41 - bold orange -->
+  <text x="338" y="46" font-family="'Montserrat','Arial Black',sans-serif" font-weight="900" font-size="42" fill="#E8712B" letter-spacing="1">41</text>
+</svg>
