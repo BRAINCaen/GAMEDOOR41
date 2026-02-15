@@ -588,6 +588,55 @@ p { max-width: 65ch; }
   body { padding-bottom: 70px; }
 }
 
+/* --- Transition Banner (Phase 1 migration) --- */
+.migration-banner {
+  text-align: center;
+  padding: 16px 24px;
+  margin-bottom: 32px;
+  background: linear-gradient(90deg, rgba(255,107,0,0.15) 0%, rgba(255,107,0,0.05) 100%);
+  border: 1px solid rgba(255,107,0,0.3);
+  border-radius: var(--radius);
+}
+.migration-banner p {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  max-width: none;
+  margin: 0;
+}
+.migration-banner span {
+  font-weight: 400;
+  color: var(--grey-light);
+}
+@media (max-width: 768px) {
+  .migration-banner p { font-size: 0.7rem; letter-spacing: 0.03em; }
+  .migration-banner span { display: block; margin-top: 4px; }
+}
+
+/* --- Room Vintage Tag --- */
+.room-vintage-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--grey);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--dark-border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.room-vintage-tag .dot {
+  width: 6px; height: 6px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: inline-block;
+}
+
 /* --- Animations --- */
 .fade-in {
   opacity: 0;

@@ -3,6 +3,71 @@
 [build]
   publish = "."
 
+# === Redirections 301 — Anciennes URLs Brain Escape Game ===
+# Ces redirections captent le trafic qui arrive via les anciens liens
+
+[[redirects]]
+  from = "/brain-escape-game"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/brain-escape-game/"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-game"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/buzz-your-brain"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/buzz-your-brain/"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-game"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reservation"
+  to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/booking"
+  to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reserver"
+  to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
+
+# === Redirections internes propres ===
+
 [[redirects]]
   from = "/escape-game-caen"
   to = "/escape-game-caen/index.html"
@@ -23,7 +88,6 @@
   to = "/contact/index.html"
   status = 200
 
-# Redirections avec trailing slash
 [[redirects]]
   from = "/escape-game-caen/"
   to = "/escape-game-caen/index.html"
