@@ -486,14 +486,14 @@
 
   function pdfFooter(doc) {
     doc.setFillColor(DARK[0], DARK[1], DARK[2]);
-    doc.rect(0, 282, 210, 15, 'F');
+    doc.rect(0, 286, 210, 11, 'F');
     doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-    doc.rect(0, 282, 210, 0.8, 'F');
+    doc.rect(0, 286, 210, 0.6, 'F');
     doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
-    doc.setFontSize(6.5);
+    doc.setFontSize(6);
     doc.setFont('helvetica', 'normal');
-    doc.text('GAMEDOOR 41  -  41B Rue Pasteur, ZAC de Calix, 14120 MONDEVILLE  -  06 44 64 71 07  -  contact@braincaen.com  -  gamedoor41.fr', 105, 289, { align: 'center' });
-    doc.text('SARL au capital de 10 000 EUR  -  SIRET 82322711100023  -  TVA : FR41823227111', 105, 293, { align: 'center' });
+    doc.text('GAMEDOOR 41  -  41B Rue Pasteur, ZAC de Calix, 14120 MONDEVILLE  -  06 44 64 71 07  -  contact@braincaen.com  -  gamedoor41.fr', 105, 291, { align: 'center' });
+    doc.text('SARL au capital de 10 000 EUR  -  SIRET 82322711100023  -  TVA : FR41823227111', 105, 295, { align: 'center' });
   }
 
   function pdfSection(doc, title, y) {
@@ -509,12 +509,12 @@
   function pdfRow(doc, label, value, y) {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(GREY[0], GREY[1], GREY[2]);
-    doc.setFontSize(9);
+    doc.setFontSize(8);
     doc.text(label, 22, y);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-    doc.text(String(value), 88, y);
-    return y + 5.5;
+    doc.text(String(value), 85, y);
+    return y + 4.5;
   }
 
   function generatePDF() {
@@ -530,35 +530,30 @@
       pdfFooter(doc);
 
       /* --- Title --- */
-      var y = 39;
+      var y = 37;
       doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-      doc.setFontSize(15);
+      doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.text('CONFIRMATION DE DEMANDE DE DEVIS', 105, y, { align: 'center' });
-      y += 6;
+      y += 5;
       doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Votre demande a bien ete recue par GAMEDOOR 41', 105, y, { align: 'center' });
-      y += 4;
-      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
       doc.setFontSize(8);
-      doc.text('Reference : ' + d.devisId + '  -  Date : ' + new Date().toLocaleDateString('fr-FR'), 105, y, { align: 'center' });
+      doc.setFont('helvetica', 'normal');
+      doc.text('Votre demande a bien ete recue par GAMEDOOR 41  -  Ref. ' + d.devisId + '  -  ' + new Date().toLocaleDateString('fr-FR'), 105, y, { align: 'center' });
 
       /* --- Info box --- */
-      y += 7;
+      y += 5;
       doc.setFillColor(255, 248, 240);
       doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
       doc.setLineWidth(0.4);
-      doc.roundedRect(15, y, 180, 18, 2, 2, 'FD');
+      doc.roundedRect(15, y, 180, 14, 2, 2, 'FD');
       doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-      doc.setFontSize(8);
+      doc.setFontSize(7.5);
       doc.setFont('helvetica', 'normal');
-      doc.text('Votre demande a bien ete transmise a notre equipe.', 22, y + 5.5);
-      doc.text('Un devis personnalise vous sera envoye sous 48h ouvrees.', 22, y + 10.5);
+      doc.text('Votre demande a bien ete transmise a notre equipe. Un devis personnalise vous sera envoye sous 48h ouvrees.', 22, y + 5);
       doc.setFont('helvetica', 'bold');
-      doc.text('La reservation ne sera effective qu\'apres validation du devis officiel.', 22, y + 15.5);
-      y += 23;
+      doc.text('La reservation ne sera effective qu\'apres validation du devis officiel.', 22, y + 10.5);
+      y += 18;
 
       /* --- Recap de la demande --- */
       y = pdfSection(doc, 'RECAPITULATIF DE VOTRE DEMANDE', y);
@@ -567,8 +562,8 @@
       var imgKey = d.activite;
       var actImg = pdfImages[imgKey];
       var imgX = 15;
-      var imgW = 45;
-      var imgH = 32;
+      var imgW = 40;
+      var imgH = 28;
       var textX = imgX + imgW + 8;
 
       if (actImg) {
@@ -584,29 +579,27 @@
       // Activity info beside image
       var iy = y + 1;
       doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-      doc.setFontSize(13);
+      doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text(d.brand.brand, textX, iy + 4);
-      iy += 8;
-      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-      doc.setFontSize(9.5);
-      doc.text(d.brand.name, textX, iy + 4);
       iy += 7;
-      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Duree : ' + d.brand.duration, textX, iy + 4);
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.setFontSize(9);
+      doc.text(d.brand.name, textX, iy + 4);
       iy += 6;
-      doc.text(d.nb + ' personnes', textX, iy + 4);
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Duree : ' + d.brand.duration + '  -  ' + d.nb + ' personnes', textX, iy + 4);
 
       if (d.activite === 'combo') {
         var img2 = pdfImages.combo_quiz;
         if (img2) {
           try { doc.addImage(img2, 'JPEG', imgX, y + imgH + 2, imgW, imgH); } catch (e) { /* skip */ }
         }
-        y += imgH + 2 + imgH + 5;
+        y += imgH + 2 + imgH + 4;
       } else {
-        y += imgH + 5;
+        y += imgH + 3;
       }
 
       if (d.privatisation) {
@@ -614,15 +607,15 @@
         doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
         doc.setFontSize(8);
         doc.text('+ Privatisation de l\'espace demandee', 22, y);
-        y += 6;
+        y += 5;
       }
 
       // Details grid
-      y += 2;
+      y += 1;
       doc.setDrawColor(230, 230, 230);
       doc.setLineWidth(0.2);
       doc.line(15, y, 195, y);
-      y += 5;
+      y += 4;
 
       if (d.societe) y = pdfRow(doc, 'Organisation :', d.societe, y);
       y = pdfRow(doc, 'Contact :', d.nom, y);
@@ -645,11 +638,11 @@
       }
 
       // Estimation indicative (light, not contractual)
-      y += 4;
+      y += 2;
       doc.setDrawColor(230, 230, 230);
       doc.setLineWidth(0.2);
       doc.line(15, y, 195, y);
-      y += 5;
+      y += 4;
       doc.setTextColor(GREY[0], GREY[1], GREY[2]);
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
@@ -661,14 +654,14 @@
       } else {
         doc.text(d.est.ttc.toFixed(2) + ' EUR TTC', 110, y);
       }
-      y += 4;
+      y += 3.5;
       doc.setTextColor(150, 150, 150);
-      doc.setFontSize(7);
+      doc.setFontSize(6.5);
       doc.setFont('helvetica', 'normal');
       doc.text('Le tarif definitif sera confirme dans le devis officiel envoye par notre equipe.', 22, y);
 
       /* --- Prochaines etapes --- */
-      y += 9;
+      y += 7;
       y = pdfSection(doc, 'PROCHAINES ETAPES', y);
 
       var steps = [
@@ -679,39 +672,36 @@
       ];
 
       steps.forEach(function (step) {
-        // Circle with number
         doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-        doc.circle(26, y + 1, 3.5, 'F');
+        doc.circle(24, y + 0.5, 2.8, 'F');
         doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
-        doc.setFontSize(9);
+        doc.setFontSize(8);
         doc.setFont('helvetica', 'bold');
-        doc.text(step.num, 26, y + 2.2, { align: 'center' });
-        // Text
+        doc.text(step.num, 24, y + 1.5, { align: 'center' });
         doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-        doc.setFontSize(9);
+        doc.setFontSize(8);
         doc.setFont('helvetica', 'normal');
-        doc.text(step.text, 35, y + 2);
-        y += 8;
+        doc.text(step.text, 31, y + 1.5);
+        y += 6;
       });
 
       /* --- Closing message --- */
-      y += 4;
+      y += 2;
       doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
       doc.setLineWidth(0.3);
       doc.line(15, y, 195, y);
-      y += 6;
+      y += 4;
 
       doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-      doc.setFontSize(8.5);
+      doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
       doc.text('Merci pour votre demande. Notre equipe revient vers vous dans les meilleurs delais.', 15, y);
-      y += 5;
       doc.setFont('helvetica', 'bold');
-      doc.text('L\'equipe GAMEDOOR 41', 15, y);
-      y += 5;
+      doc.text('L\'equipe GAMEDOOR 41', 160, y);
+      y += 4;
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(GREY[0], GREY[1], GREY[2]);
-      doc.setFontSize(7.5);
+      doc.setFontSize(7);
       doc.text('Une question ? Contactez-nous : 06 44 64 71 07  -  contact@braincaen.com', 15, y);
 
       /* --- Save --- */
