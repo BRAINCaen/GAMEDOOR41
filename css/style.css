@@ -762,3 +762,96 @@ p { max-width: 65ch; }
   padding: 8px 0;
   border-bottom: 1px solid var(--dark-border);
 }
+
+/* --- Trust / References Section --- */
+.trust-section {
+  padding: 60px 0;
+}
+.trust-logos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  align-items: center;
+}
+.trust-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--radius);
+  min-height: 70px;
+  transition: var(--transition);
+}
+.trust-logo-item:hover {
+  border-color: rgba(255,107,0,0.3);
+  background: rgba(255,107,0,0.05);
+}
+.trust-logo-item span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--grey);
+  text-align: center;
+  line-height: 1.3;
+}
+.trust-logo-item:hover span {
+  color: var(--grey-light);
+}
+.trust-text-list {
+  text-align: center;
+  color: var(--grey);
+  font-size: 0.9rem;
+  margin-top: 24px;
+  line-height: 1.8;
+}
+.trust-text-list .trust-names {
+  color: var(--grey-light);
+  font-size: 0.85rem;
+}
+.trust-disclaimer {
+  text-align: center;
+  color: var(--grey);
+  font-size: 0.75rem;
+  margin-top: 12px;
+  font-style: italic;
+}
+.trust-counter {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.trust-counter .number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--orange);
+  line-height: 1;
+}
+.trust-counter .label {
+  font-size: 1rem;
+  color: var(--grey-light);
+  margin-top: 8px;
+}
+@media (max-width: 768px) {
+  .trust-logos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .trust-logo-item {
+    padding: 14px 10px;
+    min-height: 56px;
+  }
+  .trust-logo-item span {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 480px) {
+  .trust-logos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
