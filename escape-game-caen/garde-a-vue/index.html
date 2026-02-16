@@ -17,6 +17,9 @@
 
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="/img/escape/garde-a-vue-cellule.jpg">
   <link rel="stylesheet" href="/css/style.css">
 
   <!-- BreadcrumbList -->
@@ -59,7 +62,8 @@
       "priceCurrency": "EUR",
       "price": "25",
       "description": "À partir de 25€ par personne"
-    }
+    },
+    "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/PlayAction", "userInteractionCount": "18000"}
   }
   </script>
 </head>
@@ -110,8 +114,8 @@
           <div class="label">Google (2 060+ avis)</div>
         </div>
         <div class="proof-stat">
-          <div class="number" style="font-size:1.8rem;">5 000+</div>
-          <div class="label">joueurs sur cette salle</div>
+          <div class="number" style="font-size:1.8rem;">18 000+</div>
+          <div class="label">joueur·euse·s accueilli·e·s</div>
         </div>
         <div class="proof-stat">
           <div class="number" style="font-size:1.8rem;">3/5</div>
@@ -129,7 +133,7 @@
           <p>In Prison devient Garde à Vue <span>· Version modernisée · Même univers policier</span></p>
         </div>
         <h2 style="font-size:1.5rem;margin-bottom:16px;">De In Prison à Garde à Vue : une nouvelle identité</h2>
-        <p style="color:var(--grey-light);margin-bottom:12px;">Vous connaissiez peut-être cette salle sous le nom <strong>In Prison</strong>. Depuis sa création en 2019, plus de 5 000 joueurs ont tenté de s'en évader. Aujourd'hui, elle évolue avec GAMEDOOR•41 : <strong>même univers policier, même intensité, nouveaux éléments de décor et énigmes actualisées</strong>.</p>
+        <p style="color:var(--grey-light);margin-bottom:12px;">Vous connaissiez peut-être cette salle sous le nom <strong>In Prison</strong>. Depuis sa création en 2018, plus de 18 000 joueur·euse·s ont tenté de s'en évader. Aujourd'hui, elle évolue avec GAMEDOOR•41 : <strong>même univers policier, même intensité, nouveaux éléments de décor et énigmes actualisées</strong>.</p>
         <p style="color:var(--grey-light);">Le concept reste le même : une cellule verrouillée, un gardien joué par un game master acteur, des indices dissimulés partout. Mais l'expérience a été enrichie pour surprendre même ceux qui l'ont déjà faite.</p>
       </div>
     </div>
@@ -146,7 +150,7 @@
         </div>
         <div>
           <span class="exp-card-badge badge-escape" style="margin-bottom:16px;display:inline-block;">Escape Game Policier</span>
-          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2019 · 5 000+ joueurs</div>
+          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
           <h2 style="margin-bottom:12px;">L'interrogatoire commence.</h2>
           <p style="color:var(--red);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">« Plus rien à perdre »</p>
           <div class="room-card-meta" style="margin-bottom:16px;">
@@ -276,6 +280,30 @@
             </div>
           </div>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRICTION REDUCTION -->
+  <section class="section" style="padding:40px 0;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto;" class="fade-in">
+        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <h3 style="font-size:0.95rem;margin-bottom:6px;color:var(--white);">Débutant ? Aucun souci.</h3>
+          <p style="color:var(--grey-light);font-size:0.85rem;">Pas besoin d'expérience. Le game master vous guide en temps réel.</p>
+        </div>
+        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <h3 style="font-size:0.95rem;margin-bottom:6px;color:var(--white);">En retard ?</h3>
+          <p style="color:var(--grey-light);font-size:0.85rem;">Prévenez-nous par téléphone. On fait notre maximum pour adapter le créneau.</p>
+        </div>
+        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <h3 style="font-size:0.95rem;margin-bottom:6px;color:var(--white);">Annulation / report</h3>
+          <p style="color:var(--grey-light);font-size:0.85rem;">Annulation gratuite 24h avant. Report possible sans frais.</p>
+        </div>
+        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <h3 style="font-size:0.95rem;margin-bottom:6px;color:var(--white);">Age minimum</h3>
+          <p style="color:var(--grey-light);font-size:0.85rem;">Dès 14 ans. Mineurs accompagnés d'un adulte.</p>
+        </div>
       </div>
     </div>
   </section>
