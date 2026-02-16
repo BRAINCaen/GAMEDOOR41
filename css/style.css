@@ -548,8 +548,12 @@ p { max-width: 65ch; }
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
-  .hero { min-height: 100svh; }
+  .hero { min-height: 80svh; }
   .section { padding: 60px 0; }
+  .proof-strip { padding: 24px 0; }
+  .proof-stats { gap: 20px; }
+  .proof-stat .number { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .proof-stat .label { font-size: 0.75rem; }
   .exp-grid { grid-template-columns: 1fr; }
   .proof-stats { gap: 32px; }
   .info-bar { grid-template-columns: 1fr 1fr; gap: 24px; }

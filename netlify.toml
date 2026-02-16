@@ -1,10 +1,129 @@
 # Configuration Netlify pour GAMEDOOR•41
+# Migration SEO complète depuis brain-escapegame-caen.fr (Wix)
 
 [build]
   publish = "."
 
-# === Redirections 301 — Anciennes URLs Brain Escape Game ===
-# Ces redirections captent le trafic qui arrive via les anciens liens
+# ============================================================
+# REDIRECTIONS 301 — Migration Wix → gamedoor41.fr
+# Mapping sémantique complet : chaque URL Wix redirige vers
+# la page la plus proche sur gamedoor41.fr
+# ============================================================
+
+# --- Pages Escape Game (salles) ---
+
+# In Prison → Garde à Vue (avec et sans trailing slash)
+[[redirects]]
+  from = "/escape-inprison"
+  to = "/escape-game-caen/garde-a-vue/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-inprison/"
+  to = "/escape-game-caen/garde-a-vue/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/room-prison"
+  to = "/escape-game-caen/garde-a-vue/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/room-prison/"
+  to = "/escape-game-caen/garde-a-vue/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/in-prison"
+  to = "/escape-game-caen/garde-a-vue/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/in-prison/"
+  to = "/escape-game-caen/garde-a-vue/"
+  status = 301
+  force = true
+
+# Psychiatric
+[[redirects]]
+  from = "/horreur-escape-psychiatric"
+  to = "/escape-game-caen/psychiatric/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/horreur-escape-psychiatric/"
+  to = "/escape-game-caen/psychiatric/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/room-psychiatric"
+  to = "/escape-game-caen/psychiatric/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/room-psychiatric/"
+  to = "/escape-game-caen/psychiatric/"
+  status = 301
+  force = true
+
+# Back to the 80's
+[[redirects]]
+  from = "/escape-back-to-80s"
+  to = "/escape-game-caen/back-to-the-80s/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-back-to-80s/"
+  to = "/escape-game-caen/back-to-the-80s/"
+  status = 301
+  force = true
+
+# --- Pages Escape Game (catégorie) ---
+
+[[redirects]]
+  from = "/escape-game"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-game/"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-game-themes"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-game-themes/"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-gamet"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/escape-gamet/"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/brain-escape-game"
@@ -18,9 +137,53 @@
   status = 301
   force = true
 
+# --- Pages Quiz Game ---
+
 [[redirects]]
-  from = "/escape-game"
-  to = "/escape-game-caen/"
+  from = "/quiz-game"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-game/"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-game-plateau"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-game-plateau/"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-game-nos-emissions"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-game-nos-emissions/"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-evenements-saintvalentain-noel-halloween"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quiz-evenements-saintvalentain-noel-halloween/"
+  to = "/quiz-game-caen/"
   status = 301
   force = true
 
@@ -37,19 +200,218 @@
   force = true
 
 [[redirects]]
-  from = "/quiz-game"
-  to = "/quiz-game-caen/"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/quiz"
   to = "/quiz-game-caen/"
   status = 301
   force = true
 
 [[redirects]]
+  from = "/quiz/"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+# --- Pages événements/occasions ---
+
+[[redirects]]
+  from = "/evjf-evg-mariage"
+  to = "/evjf-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/evjf-evg-mariage/"
+  to = "/evjf-caen/"
+  status = 301
+  force = true
+
+# URL Wix spéciale avec slash dans le path
+[[redirects]]
+  from = "/evg-/entreprises"
+  to = "/team-building-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/evg-/entreprises/"
+  to = "/team-building-caen/"
+  status = 301
+  force = true
+
+# --- Pages tarifs/offres ---
+
+[[redirects]]
+  from = "/reductions-offres"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reductions-offres/"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pass-culture"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pass-culture/"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+# --- Pages info/contact ---
+
+[[redirects]]
+  from = "/about-1"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about-1/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/preparez-votre-experience"
+  to = "/contact/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/preparez-votre-experience/"
+  to = "/contact/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/emploi-escape-game-caen"
+  to = "/contact/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/emploi-escape-game-caen/"
+  to = "/contact/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/termes-et-conditions"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/termes-et-conditions/"
+  to = "/"
+  status = 301
+  force = true
+
+# --- Blog (toutes les pages blog → homepage) ---
+
+[[redirects]]
+  from = "/blog"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/"
+  status = 301
+  force = true
+
+# Blog posts → pages les plus proches sémantiquement
+[[redirects]]
+  from = "/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-*"
+  to = "/escape-game-caen/back-to-the-80s/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post/organiser-un-team-building-r*"
+  to = "/team-building-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post/escape-game-*-deux*"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-*"
+  to = "/escape-game-caen/psychiatric/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post/buzz-your-brain-*"
+  to = "/quiz-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post/organisez-un-evjf-evg-*"
+  to = "/evjf-caen/"
+  status = 301
+  force = true
+
+# Catch-all pour les autres blog posts
+[[redirects]]
+  from = "/post/*"
+  to = "/"
+  status = 301
+  force = true
+
+# --- Réservation ---
+
+[[redirects]]
   from = "/reservation"
+  to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reservation/"
   to = "https://braincaen.4escape.io/booking"
   status = 301
   force = true
@@ -61,54 +423,28 @@
   force = true
 
 [[redirects]]
+  from = "/booking/"
+  to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/reserver"
   to = "https://braincaen.4escape.io/booking"
   status = 301
   force = true
 
-# === Redirections internes propres ===
-
 [[redirects]]
-  from = "/escape-game-caen"
-  to = "/escape-game-caen/index.html"
-  status = 200
+  from = "/reserver/"
+  to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
 
-[[redirects]]
-  from = "/quiz-game-caen"
-  to = "/quiz-game-caen/index.html"
-  status = 200
+# ============================================================
+# HEADERS — Sécurité + Performance + noindex netlify.app
+# ============================================================
 
-[[redirects]]
-  from = "/tarifs"
-  to = "/tarifs/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/contact"
-  to = "/contact/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/escape-game-caen/"
-  to = "/escape-game-caen/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/quiz-game-caen/"
-  to = "/quiz-game-caen/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/tarifs/"
-  to = "/tarifs/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/contact/"
-  to = "/contact/index.html"
-  status = 200
-
-# Headers de sécurité et performance
+# Sécurité globale
 [[headers]]
   for = "/*"
   [headers.values]
@@ -117,7 +453,14 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Cache pour assets statiques
+# CRITIQUE : Empêcher l'indexation du domaine netlify.app
+# Seul gamedoor41.fr doit être indexé
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# Cache longue durée pour assets statiques
 [[headers]]
   for = "/img/*"
   [headers.values]
@@ -137,3 +480,9 @@
   for = "/js/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Fonts preload hint
+[[headers]]
+  for = "/css/style.css"
+  [headers.values]
+    Link = "<https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap>; rel=preload; as=style"

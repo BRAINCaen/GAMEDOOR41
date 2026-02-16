@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gamedoor41.fr/sitemap.xml
+
+# Bloquer les URLs techniques Netlify
+Disallow: /netlify/
