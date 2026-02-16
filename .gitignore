@@ -16,6 +16,3 @@ Thumbs.db
 
 # Build tools (not deployed)
 node_modules/
-package.json
-package-lock.json
-scripts/

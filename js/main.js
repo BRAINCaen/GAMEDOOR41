@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* --- Hero video: load source only on desktop (58 MB) --- */
+  /* --- Hero video: load source only on desktop (3 MB) --- */
   const heroVideo = document.querySelector('video.hero-video');
   if (heroVideo) {
     if (window.innerWidth > 768) {
