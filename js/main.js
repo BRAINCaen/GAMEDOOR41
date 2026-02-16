@@ -57,4 +57,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* --- Conversion Tracking (GA4-ready) ---
+   * Tracks clicks on CTAs with data-track attributes
+   * and key conversion actions (booking links, phone, email)
+   * Events are sent to GA4 via gtag() if available,
+   * otherwise logged to console for debugging.
+   */
+  function trackEvent(eventName, params) {
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, params);
+    }
+  }
+
+  // Track all [data-track] elements
+  document.querySelectorAll('[data-track]').forEach(el => {
+    el.addEventListener('click', () => {
+      trackEvent('cta_click', {
+        cta_name: el.getAttribute('data-track'),
+        page_path: window.location.pathname
+      });
+    });
+  });
+
+  // Track booking link clicks
+  document.querySelectorAll('a[href*="4escape.io/booking"]').forEach(el => {
+    el.addEventListener('click', () => {
+      trackEvent('begin_checkout', {
+        source: el.getAttribute('data-track') || 'booking_link',
+        page_path: window.location.pathname
+      });
+    });
+  });
+
+  // Track phone clicks
+  document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+    el.addEventListener('click', () => {
+      trackEvent('contact_phone', {
+        page_path: window.location.pathname
+      });
+    });
+  });
+
+  // Track email clicks
+  document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+    el.addEventListener('click', () => {
+      trackEvent('contact_email', {
+        page_path: window.location.pathname
+      });
+    });
+  });
+
 });
