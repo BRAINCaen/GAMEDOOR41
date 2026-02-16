@@ -95,14 +95,14 @@
       var email = document.getElementById('email').value.trim();
       if (isPro && !societe) { showError('error-step3', 'Veuillez indiquer votre société / organisation.'); return false; }
       if (!nom) { showError('error-step3', 'Veuillez indiquer votre nom.'); return false; }
-      if (!tel || !isValidPhone(tel)) { showError('error-step3', 'Veuillez indiquer un numéro de téléphone valide (06 ou 07).'); return false; }
+      if (!tel || !isValidPhone(tel)) { showError('error-step3', 'Veuillez indiquer un numéro de téléphone valide (10 chiffres).'); return false; }
       if (!email || !isValidEmail(email)) { showError('error-step3', 'Veuillez indiquer un email valide.'); return false; }
       return true;
     }
     return true;
   }
 
-  function isValidPhone(p) { return /^(?:0|\+33)[67]\d{8}$/.test(p.replace(/[\s.\-]/g, '')); }
+  function isValidPhone(p) { return /^(?:0|\+33)\d{9}$/.test(p.replace(/[\s.\-]/g, '')); }
   function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
 
   function showError(id, msg) {
@@ -283,20 +283,29 @@
     btnSubmit.textContent = 'Envoi en cours\u2026';
 
     var formData = new FormData(form);
-    fetch('/', {
+
+    // Debug: log all fields being sent
+    var params = new URLSearchParams(formData);
+    console.log('[DEVIS] Submitting to Netlify Forms:', Object.fromEntries(params));
+
+    fetch('/devis/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
+      body: params.toString()
     })
     .then(function (res) {
       if (res.ok) {
+        console.log('[DEVIS] Submission OK, status:', res.status);
         showConfirmation();
       } else {
-        throw new Error('Erreur ' + res.status);
+        return res.text().then(function (body) {
+          console.error('[DEVIS] Server error:', res.status, body.substring(0, 500));
+          throw new Error('Erreur serveur ' + res.status);
+        });
       }
     })
     .catch(function (err) {
-      console.error('Erreur envoi devis:', err);
+      console.error('[DEVIS] Erreur envoi:', err);
       showError('error-step4', 'Erreur lors de l\u2019envoi. Réessayez ou appelez le 02 31 53 07 51.');
       btnSubmit.disabled = false;
       btnSubmit.textContent = 'Recevoir mon devis';
