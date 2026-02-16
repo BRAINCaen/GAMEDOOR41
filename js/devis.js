@@ -728,11 +728,11 @@
       doc.setFontSize(7.5);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-      doc.text('Les creneaux demandes sont pre-bloques temporairement dans notre planning.', 22, y + 13);
+      doc.text('Les creneaux demandes sont pre-bloque\u00b7e\u00b7s temporairement dans notre planning, sous reserve de disponibilite.', 22, y + 13);
       doc.text('En l\'absence de validation ecrite du devis officiel dans le delai communique par notre equipe,', 22, y + 17);
       doc.text('les creneaux seront automatiquement liberes et pourront etre attribues a un autre groupe.', 22, y + 21);
       doc.setFont('helvetica', 'bold');
-      doc.text('Aucune activite ne pourra etre maintenue sans validation formelle du devis.', 22, y + 25.5);
+      doc.text('Aucune activite ne pourra etre maintenue sans validation ecrite du devis officiel.', 22, y + 25.5);
       y += 32;
 
       /* --- Prochaines etapes --- */
