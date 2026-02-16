@@ -1,11 +1,17 @@
 /* GAMEDOOR•41 — Main JS */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* --- Scroll Header --- */
+  /* --- Scroll Header + dynamic --header-h --- */
   const header = document.querySelector('.site-header');
   if (header) {
+    const setHeaderH = () => {
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    };
+    setHeaderH();
+    window.addEventListener('resize', setHeaderH, { passive: true });
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 60);
+      setHeaderH();
     }, { passive: true });
   }
 

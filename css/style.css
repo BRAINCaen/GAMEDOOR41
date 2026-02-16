@@ -29,6 +29,7 @@
   --container: 1200px;
   --radius: 8px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --header-h: 72px; /* fallback — JS overrides on load + resize */
 }
 
 /* --- Reset & Base --- */
@@ -824,17 +825,30 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   text-align: left;
   width: 100%;
 }
+/* --- Breadcrumb Bar (between fixed header and hero) --- */
+.breadcrumb-bar {
+  position: relative;
+  z-index: 1;
+  padding-top: calc(var(--header-h) + 12px);
+  padding-bottom: 12px;
+  background: var(--black);
+}
 .breadcrumb {
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-bottom: 16px;
   font-size: 0.85rem;
   color: var(--grey);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .breadcrumb a { color: var(--grey); transition: var(--transition); }
 .breadcrumb a:hover { color: var(--orange); }
 .breadcrumb .sep { color: var(--grey); }
+@media (max-width: 480px) {
+  .breadcrumb { font-size: 0.78rem; gap: 5px; }
+}
 
 /* --- Gallery Grid --- */
 .gallery-grid {
