@@ -31,6 +31,7 @@
   var currentStep = 1;
   var totalSteps = 4;
   var devisId = '';
+  var savedData = null; // stored at submit time for PDF generation
 
   /* ========== HELPERS ========== */
   function q(sel) { return form.querySelector(sel); }
@@ -274,50 +275,143 @@
     return div.innerHTML;
   }
 
+  /* ========== SAVE DATA FOR PDF ========== */
+  function saveFormData() {
+    var type = val('type');
+    var activite = val('activite');
+    var nb = parseInt(participantsInput.value, 10);
+    var isPro = (type === 'entreprise' || type === 'association');
+    var est = calculatePrice(type, activite, nb);
+    var typeLabels = { entreprise: 'Entreprise', association: 'Association', particulier: 'Particulier' };
+    var actLabels = { escape: 'Escape Game', quiz: 'Quiz Game', combo: 'Combo Escape + Quiz' };
+
+    savedData = {
+      type: type,
+      activite: activite,
+      nb: nb,
+      isPro: isPro,
+      est: est,
+      typeLabel: typeLabels[type] || type,
+      actLabel: actLabels[activite] || activite,
+      date: dateInput.value,
+      dateFormatted: formatDate(dateInput.value),
+      creneau: val('creneau'),
+      privatisation: checked('privatisation'),
+      societe: document.getElementById('societe').value.trim(),
+      nom: document.getElementById('nom').value.trim(),
+      telephone: document.getElementById('telephone').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      notes: document.getElementById('notes').value.trim(),
+      rappel: checked('rappel'),
+      devisId: devisId
+    };
+  }
+
   /* ========== FORM SUBMISSION ========== */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!validateStep(4)) return;
 
+    // Save data before hiding the form
+    saveFormData();
+
     btnSubmit.disabled = true;
     btnSubmit.textContent = 'Envoi en cours\u2026';
 
     var formData = new FormData(form);
-
-    // Debug: log all fields being sent
     var params = new URLSearchParams(formData);
-    console.log('[DEVIS] Submitting to Netlify Forms:', Object.fromEntries(params));
+    console.log('[DEVIS] Submitting:', Object.fromEntries(params));
 
-    fetch('/devis/', {
+    // Try Netlify Forms (both endpoints), then fallback to email
+    tryNetlify(params, ['/', '/devis/'], 0);
+  });
+
+  function tryNetlify(params, endpoints, attempt) {
+    if (attempt >= endpoints.length) {
+      // All Netlify endpoints failed — use email fallback
+      console.warn('[DEVIS] Netlify Forms unavailable, using email fallback');
+      sendViaEmail();
+      return;
+    }
+    var url = endpoints[attempt];
+    console.log('[DEVIS] Try', attempt + 1, '/', endpoints.length, 'POST', url);
+
+    fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString()
     })
     .then(function (res) {
       if (res.ok) {
-        console.log('[DEVIS] Submission OK, status:', res.status);
-        showConfirmation();
+        console.log('[DEVIS] OK via', url);
+        showConfirmation('netlify');
       } else {
-        return res.text().then(function (body) {
-          console.error('[DEVIS] Server error:', res.status, body.substring(0, 500));
-          throw new Error('Erreur serveur ' + res.status);
-        });
+        console.warn('[DEVIS]', url, 'returned', res.status);
+        tryNetlify(params, endpoints, attempt + 1);
       }
     })
-    .catch(function (err) {
-      console.error('[DEVIS] Erreur envoi:', err);
-      showError('error-step4', 'Erreur lors de l\u2019envoi. Réessayez ou appelez le 02 31 53 07 51.');
-      btnSubmit.disabled = false;
-      btnSubmit.textContent = 'Recevoir mon devis';
+    .catch(function () {
+      tryNetlify(params, endpoints, attempt + 1);
     });
-  });
+  }
 
-  function showConfirmation() {
+  function sendViaEmail() {
+    var type = val('type');
+    var activite = val('activite');
+    var nb = participantsInput.value;
+    var isPro = (type === 'entreprise' || type === 'association');
+    var est = calculatePrice(type, activite, parseInt(nb, 10));
+    var actLabels = { escape: 'Escape Game', quiz: 'Quiz Game', combo: 'Combo Escape + Quiz' };
+    var typeLabels = { entreprise: 'Entreprise', association: 'Association', particulier: 'Particulier' };
+
+    var lines = [
+      'DEMANDE DE DEVIS ' + devisId,
+      '---',
+      'Type : ' + (typeLabels[type] || type),
+      'Activite : ' + (actLabels[activite] || activite),
+      'Participants : ' + nb,
+      'Date : ' + formatDate(document.getElementById('date').value),
+      'Creneau : ' + val('creneau')
+    ];
+    if (checked('privatisation')) lines.push('Privatisation : Oui');
+    var societe = document.getElementById('societe').value.trim();
+    if (societe) lines.push('Societe : ' + societe);
+    lines.push('Contact : ' + document.getElementById('nom').value);
+    lines.push('Telephone : ' + document.getElementById('telephone').value);
+    lines.push('Email : ' + document.getElementById('email').value);
+    if (isPro) {
+      lines.push('---');
+      lines.push('Estimation HT : ' + est.ht.toFixed(2) + ' EUR');
+      lines.push('Estimation TTC : ' + est.ttc.toFixed(2) + ' EUR');
+    } else {
+      lines.push('---');
+      lines.push('Estimation TTC : ' + est.ttc.toFixed(2) + ' EUR');
+    }
+    var notes = document.getElementById('notes').value.trim();
+    if (notes) { lines.push('---'); lines.push('Notes : ' + notes); }
+    if (checked('rappel')) lines.push('Souhaite etre rappele(e)');
+
+    var subject = encodeURIComponent('[GAMEDOOR41] Demande de devis ' + devisId);
+    var body = encodeURIComponent(lines.join('\n'));
+    var mailto = 'mailto:contact@gamedoor41.fr?subject=' + subject + '&body=' + body;
+
+    showConfirmation('email', mailto);
+  }
+
+  function showConfirmation(mode, mailtoUrl) {
     form.hidden = true;
     document.getElementById('devis-progress').hidden = true;
     document.getElementById('confirm-id').textContent = devisId;
     document.getElementById('confirm-email').textContent = document.getElementById('email').value;
     document.getElementById('confirm-recap').innerHTML = document.getElementById('recap-content').innerHTML;
+
+    // If email fallback, add the send button
+    var emailNote = document.getElementById('confirm-email-fallback');
+    if (mode === 'email' && mailtoUrl && emailNote) {
+      emailNote.hidden = false;
+      emailNote.querySelector('a').href = mailtoUrl;
+    }
+
     confirmation.hidden = false;
     window.scrollTo({ top: document.querySelector('.devis-section').offsetTop - 80, behavior: 'smooth' });
   }
@@ -327,104 +421,102 @@
 
   function generatePDF() {
     var jsPDF = window.jspdf && window.jspdf.jsPDF;
-    if (!jsPDF) { alert('PDF non disponible. Faites une capture d\u2019écran du récapitulatif.'); return; }
+    if (!jsPDF) { alert('PDF non disponible. Faites une capture d\'ecran du recapitulatif.'); return; }
+    if (!savedData) { alert('Donnees du devis non disponibles. Veuillez recharger la page et soumettre a nouveau.'); return; }
 
-    var doc = new jsPDF();
-    var type = val('type');
-    var activite = val('activite');
-    var nb = parseInt(participantsInput.value, 10);
-    var isPro = (type === 'entreprise' || type === 'association');
-    var est = calculatePrice(type, activite, nb);
-    var actLabels = { escape: 'Escape Game', quiz: 'Quiz Game', combo: 'Combo Escape + Quiz' };
-    var typeLabels = { entreprise: 'Entreprise', association: 'Association', particulier: 'Particulier' };
+    try {
+      var d = savedData;
+      var doc = new jsPDF();
 
-    // Header bar
-    doc.setFillColor(30, 30, 30);
-    doc.rect(0, 0, 210, 28, 'F');
-    doc.setFillColor(245, 130, 32); // orange
-    doc.rect(0, 28, 210, 3, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(20);
-    doc.setFont('helvetica', 'bold');
-    doc.text('GAMEDOOR\u202241', 105, 14, { align: 'center' });
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Escape Game & Quiz Game \u2014 Caen', 105, 22, { align: 'center' });
+      // Header bar
+      doc.setFillColor(30, 30, 30);
+      doc.rect(0, 0, 210, 28, 'F');
+      doc.setFillColor(245, 130, 32);
+      doc.rect(0, 28, 210, 3, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(20);
+      doc.setFont('helvetica', 'bold');
+      doc.text('GAMEDOOR 41', 105, 14, { align: 'center' });
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Escape Game & Quiz Game - Caen', 105, 22, { align: 'center' });
 
-    // Title
-    doc.setTextColor(245, 130, 32);
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('DEMANDE DE DEVIS', 105, 44, { align: 'center' });
-    doc.setTextColor(130, 130, 130);
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Ref. ' + devisId + '  \u2014  ' + new Date().toLocaleDateString('fr-FR'), 105, 51, { align: 'center' });
+      // Title
+      doc.setTextColor(245, 130, 32);
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('DEMANDE DE DEVIS', 105, 44, { align: 'center' });
+      doc.setTextColor(130, 130, 130);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Ref. ' + d.devisId + '  -  ' + new Date().toLocaleDateString('fr-FR'), 105, 51, { align: 'center' });
 
-    // Client info
-    var y = 64;
-    doc.setTextColor(245, 130, 32);
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.text('INFORMATIONS', 20, y); y += 8;
-    doc.setTextColor(50, 50, 50);
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Type : ' + (typeLabels[type] || type), 20, y);
-    doc.text('Activite : ' + (actLabels[activite] || activite), 110, y); y += 6;
-    doc.text('Participants : ' + nb, 20, y);
-    doc.text('Date : ' + formatDate(dateInput.value), 110, y); y += 6;
-    doc.text('Creneau : ' + val('creneau'), 20, y); y += 6;
-    var societe = document.getElementById('societe').value.trim();
-    if (societe) { doc.text('Societe : ' + societe, 20, y); y += 6; }
-    doc.text('Contact : ' + document.getElementById('nom').value, 20, y);
-    doc.text('Tel : ' + document.getElementById('telephone').value, 110, y); y += 6;
-    doc.text('Email : ' + document.getElementById('email').value, 20, y); y += 6;
-    if (checked('privatisation')) { doc.text('Privatisation : Oui (sur devis)', 20, y); y += 6; }
-    var notes = document.getElementById('notes').value.trim();
-    if (notes) {
-      y += 4;
-      doc.text('Notes :', 20, y); y += 5;
-      var lines = doc.splitTextToSize(notes, 170);
-      doc.text(lines, 20, y); y += lines.length * 5;
+      // Client info
+      var y = 64;
+      doc.setTextColor(245, 130, 32);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('INFORMATIONS', 20, y); y += 8;
+      doc.setTextColor(50, 50, 50);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Type : ' + d.typeLabel, 20, y);
+      doc.text('Activite : ' + d.actLabel, 110, y); y += 6;
+      doc.text('Participants : ' + d.nb, 20, y);
+      doc.text('Date : ' + d.dateFormatted, 110, y); y += 6;
+      doc.text('Creneau : ' + d.creneau, 20, y); y += 6;
+      if (d.societe) { doc.text('Societe : ' + d.societe, 20, y); y += 6; }
+      doc.text('Contact : ' + d.nom, 20, y);
+      doc.text('Tel : ' + d.telephone, 110, y); y += 6;
+      doc.text('Email : ' + d.email, 20, y); y += 6;
+      if (d.privatisation) { doc.text('Privatisation : Oui (sur devis)', 20, y); y += 6; }
+      if (d.notes) {
+        y += 4;
+        doc.text('Notes :', 20, y); y += 5;
+        var lines = doc.splitTextToSize(d.notes, 170);
+        doc.text(lines, 20, y); y += lines.length * 5;
+      }
+
+      // Price table
+      y += 10;
+      doc.setFillColor(40, 40, 40);
+      doc.rect(20, y, 170, 8, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text('ESTIMATION TARIFAIRE', 25, y + 5.5);
+      y += 12;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(50, 50, 50);
+
+      if (d.isPro) {
+        doc.text('Total HT :', 25, y); doc.text(d.est.ht.toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
+        doc.text('TVA 10% :', 25, y); doc.text((d.est.ttc - d.est.ht).toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
+      }
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(245, 130, 32);
+      doc.text('TOTAL TTC :', 25, y); doc.text(d.est.ttc.toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 100, 100);
+      doc.text('Soit ' + (d.isPro ? (d.est.ht / d.nb).toFixed(2) + ' EUR HT' : '~' + (d.est.ttc / d.nb).toFixed(2) + ' EUR') + ' par personne', 25, y); y += 10;
+      doc.setFontSize(8);
+      doc.text('Estimation indicative. Le devis definitif sera ajuste selon la configuration retenue.', 25, y);
+
+      // Footer
+      doc.setFillColor(30, 30, 30);
+      doc.rect(0, 275, 210, 22, 'F');
+      doc.setFillColor(245, 130, 32);
+      doc.rect(0, 275, 210, 2, 'F');
+      doc.setTextColor(200, 200, 200);
+      doc.setFontSize(8);
+      doc.text('GAMEDOOR 41 - 41 bis rue Pasteur, 14000 Caen', 105, 284, { align: 'center' });
+      doc.text('02 31 53 07 51 - contact@gamedoor41.fr - gamedoor41.fr', 105, 290, { align: 'center' });
+
+      doc.save('GAMEDOOR41_Devis_' + d.devisId + '.pdf');
+    } catch (err) {
+      console.error('[DEVIS] PDF generation error:', err);
+      alert('Erreur lors de la generation du PDF. Vous pouvez faire une capture d\'ecran du recapitulatif.');
     }
-
-    // Price table
-    y += 10;
-    doc.setFillColor(40, 40, 40);
-    doc.rect(20, y, 170, 8, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.text('ESTIMATION TARIFAIRE', 25, y + 5.5);
-    y += 12;
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(50, 50, 50);
-
-    if (isPro) {
-      doc.text('Total HT :', 25, y); doc.text(est.ht.toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
-      doc.text('TVA 10% :', 25, y); doc.text((est.ttc - est.ht).toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
-    }
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(245, 130, 32);
-    doc.text('TOTAL TTC :', 25, y); doc.text(est.ttc.toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(100, 100, 100);
-    doc.text('Soit ' + (isPro ? (est.ht / nb).toFixed(2) + ' EUR HT' : '~' + (est.ttc / nb).toFixed(2) + ' EUR') + ' par personne', 25, y); y += 10;
-    doc.setFontSize(8);
-    doc.text('Estimation indicative. Le devis definitif sera ajuste selon la configuration retenue.', 25, y);
-
-    // Footer
-    doc.setFillColor(30, 30, 30);
-    doc.rect(0, 275, 210, 22, 'F');
-    doc.setFillColor(245, 130, 32);
-    doc.rect(0, 275, 210, 2, 'F');
-    doc.setTextColor(200, 200, 200);
-    doc.setFontSize(8);
-    doc.text('GAMEDOOR\u202241 \u2014 41 bis rue Pasteur, 14000 Caen', 105, 284, { align: 'center' });
-    doc.text('02 31 53 07 51 \u2014 contact@gamedoor41.fr \u2014 gamedoor41.fr', 105, 290, { align: 'center' });
-
-    doc.save('GAMEDOOR41_Devis_' + devisId + '.pdf');
   }
 
   /* ========== INIT ========== */

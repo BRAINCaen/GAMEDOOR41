@@ -90,7 +90,7 @@
       </div>
 
       <!-- Form (Netlify) -->
-      <form id="devis-form" name="devis-gamedoor41" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <form id="devis-form" name="devis-gamedoor41" method="POST" action="/devis/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="devis-gamedoor41">
         <input type="hidden" name="devis-id" id="field-devis-id">
         <input type="hidden" name="estimation-ht" id="field-estimation-ht">
@@ -277,6 +277,10 @@
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
           <button type="button" id="download-pdf" class="btn btn-primary">Télécharger le récap (PDF)</button>
           <a href="/" class="btn btn-outline">Retour à l'accueil</a>
+        </div>
+        <div id="confirm-email-fallback" hidden style="margin-top:20px;padding:16px;background:rgba(245,130,32,0.1);border:1px solid rgba(245,130,32,0.3);border-radius:8px;">
+          <p style="margin-bottom:10px;font-size:0.9rem;">Pour finaliser votre demande, cliquez ci-dessous pour nous envoyer le récap par email :</p>
+          <a href="#" class="btn btn-primary" style="display:inline-flex;">Envoyer par email</a>
         </div>
         <p style="margin-top:16px;font-size:0.8rem;color:var(--grey-light);">Un problème ? Contactez-nous : <a href="tel:+33231530751" style="color:var(--orange);">02 31 53 07 51</a></p>
       </div>
