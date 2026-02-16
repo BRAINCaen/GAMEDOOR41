@@ -275,6 +275,40 @@
     return div.innerHTML;
   }
 
+  /* ========== IMAGE PRELOADING FOR PDF ========== */
+  var pdfImages = {};
+  var IMG_SOURCES = {
+    escape: '/img/escape/garde-a-vue-bureau.jpg',
+    quiz: '/img/quiz/salle-quiz.jpg',
+    combo_escape: '/img/escape/psychiatric-main.jpg',
+    combo_quiz: '/img/quiz/buzzer-action.jpg'
+  };
+
+  function preloadImage(key, src) {
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function () {
+      var canvas = document.createElement('canvas');
+      var MAX = 400;
+      var ratio = Math.min(MAX / img.naturalWidth, MAX / img.naturalHeight);
+      canvas.width = img.naturalWidth * ratio;
+      canvas.height = img.naturalHeight * ratio;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      pdfImages[key] = canvas.toDataURL('image/jpeg', 0.75);
+    };
+    img.src = src;
+  }
+
+  Object.keys(IMG_SOURCES).forEach(function (k) { preloadImage(k, IMG_SOURCES[k]); });
+
+  /* ========== BRAND LABELS ========== */
+  var BRANDS = {
+    escape: { brand: 'BRAIN', name: 'Escape Game', full: 'BRAIN - Escape Game', duration: '60 min' },
+    quiz:   { brand: 'BUZZ YOUR BRAIN', name: 'Quiz Game - Emissions Au Choix !', full: 'BUZZ YOUR BRAIN - Quiz Game', duration: '90 min' },
+    combo:  { brand: 'BRAIN + BUZZ YOUR BRAIN', name: 'Combo Escape + Quiz', full: 'BRAIN + BUZZ YOUR BRAIN - Combo', duration: 'Demi-journee' }
+  };
+
   /* ========== SAVE DATA FOR PDF ========== */
   function saveFormData() {
     var type = val('type');
@@ -283,7 +317,7 @@
     var isPro = (type === 'entreprise' || type === 'association');
     var est = calculatePrice(type, activite, nb);
     var typeLabels = { entreprise: 'Entreprise', association: 'Association', particulier: 'Particulier' };
-    var actLabels = { escape: 'Escape Game', quiz: 'Quiz Game', combo: 'Combo Escape + Quiz' };
+    var brand = BRANDS[activite] || BRANDS.escape;
 
     savedData = {
       type: type,
@@ -292,7 +326,7 @@
       isPro: isPro,
       est: est,
       typeLabel: typeLabels[type] || type,
-      actLabel: actLabels[activite] || activite,
+      brand: brand,
       date: dateInput.value,
       dateFormatted: formatDate(dateInput.value),
       creneau: val('creneau'),
@@ -312,7 +346,6 @@
     e.preventDefault();
     if (!validateStep(4)) return;
 
-    // Save data before hiding the form
     saveFormData();
 
     btnSubmit.disabled = true;
@@ -322,13 +355,11 @@
     var params = new URLSearchParams(formData);
     console.log('[DEVIS] Submitting:', Object.fromEntries(params));
 
-    // Try Netlify Forms (both endpoints), then fallback to email
     tryNetlify(params, ['/', '/devis/'], 0);
   });
 
   function tryNetlify(params, endpoints, attempt) {
     if (attempt >= endpoints.length) {
-      // All Netlify endpoints failed — use email fallback
       console.warn('[DEVIS] Netlify Forms unavailable, using email fallback');
       sendViaEmail();
       return;
@@ -361,14 +392,14 @@
     var nb = participantsInput.value;
     var isPro = (type === 'entreprise' || type === 'association');
     var est = calculatePrice(type, activite, parseInt(nb, 10));
-    var actLabels = { escape: 'Escape Game', quiz: 'Quiz Game', combo: 'Combo Escape + Quiz' };
+    var brand = BRANDS[activite] || BRANDS.escape;
     var typeLabels = { entreprise: 'Entreprise', association: 'Association', particulier: 'Particulier' };
 
     var lines = [
       'DEMANDE DE DEVIS ' + devisId,
       '---',
       'Type : ' + (typeLabels[type] || type),
-      'Activite : ' + (actLabels[activite] || activite),
+      'Activite : ' + brand.full,
       'Participants : ' + nb,
       'Date : ' + formatDate(document.getElementById('date').value),
       'Creneau : ' + val('creneau')
@@ -405,7 +436,6 @@
     document.getElementById('confirm-email').textContent = document.getElementById('email').value;
     document.getElementById('confirm-recap').innerHTML = document.getElementById('recap-content').innerHTML;
 
-    // If email fallback, add the send button
     var emailNote = document.getElementById('confirm-email-fallback');
     if (mode === 'email' && mailtoUrl && emailNote) {
       emailNote.hidden = false;
@@ -416,8 +446,89 @@
     window.scrollTo({ top: document.querySelector('.devis-section').offsetTop - 80, behavior: 'smooth' });
   }
 
-  /* ========== PDF GENERATION ========== */
+  /* ========== PDF GENERATION (2 pages) ========== */
   document.getElementById('download-pdf').addEventListener('click', generatePDF);
+
+  /* --- PDF helpers --- */
+  var ORANGE = [245, 130, 32];
+  var DARK = [30, 30, 30];
+  var WHITE = [255, 255, 255];
+  var GREY = [100, 100, 100];
+  var LGREY = [200, 200, 200];
+  var TEXT = [50, 50, 50];
+
+  function pdfHeader(doc, pageNum, totalPages) {
+    // Dark top bar
+    doc.setFillColor(DARK[0], DARK[1], DARK[2]);
+    doc.rect(0, 0, 210, 32, 'F');
+    // Orange accent line
+    doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.rect(0, 32, 210, 1.5, 'F');
+
+    // Company name
+    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('BRAIN CAEN', 20, 13);
+
+    // Company details right
+    doc.setFontSize(7.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
+    doc.text('41B Rue Pasteur, ZAC de Calix, 14120 MONDEVILLE', 190, 10, { align: 'right' });
+    doc.text('Tel. 06 44 64 71 07  -  contact@braincaen.com', 190, 15, { align: 'right' });
+
+    // Brands line
+    doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Escape Game : BRAIN  |  Quiz Game : BUZZ YOUR BRAIN', 20, 24);
+
+    // Legal line
+    doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
+    doc.setFontSize(6);
+    doc.setFont('helvetica', 'normal');
+    doc.text('SARL au capital de 10 000 EUR - SIRET 82322711100023 - TVA : FR41823227111', 20, 29);
+  }
+
+  function pdfFooter(doc, pageNum, totalPages) {
+    doc.setFillColor(DARK[0], DARK[1], DARK[2]);
+    doc.rect(0, 280, 210, 17, 'F');
+    doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.rect(0, 280, 210, 1, 'F');
+    doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'normal');
+    doc.text('BRAIN CAEN - 41B Rue Pasteur, ZAC de Calix, 14120 MONDEVILLE - Tel. 06 44 64 71 07 - contact@braincaen.com', 105, 287, { align: 'center' });
+    doc.text('gamedoor41.fr', 105, 292, { align: 'center' });
+    // Page number
+    doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+    doc.setFontSize(7);
+    doc.text(pageNum + '/' + totalPages, 195, 292);
+  }
+
+  function pdfSectionTitle(doc, title, y) {
+    doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+    doc.rect(15, y, 180, 8, 'F');
+    doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text(title, 20, y + 5.5);
+    return y + 12;
+  }
+
+  function pdfLine(doc, label, value, y, opts) {
+    var lx = (opts && opts.lx) || 20;
+    var vx = (opts && opts.vx) || 90;
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+    doc.setFontSize(9);
+    doc.text(label, lx, y);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+    doc.text(String(value), vx, y);
+    return y + 6;
+  }
 
   function generatePDF() {
     var jsPDF = window.jspdf && window.jspdf.jsPDF;
@@ -427,92 +538,336 @@
     try {
       var d = savedData;
       var doc = new jsPDF();
+      var totalPages = 2;
 
-      // Header bar
-      doc.setFillColor(30, 30, 30);
-      doc.rect(0, 0, 210, 28, 'F');
-      doc.setFillColor(245, 130, 32);
-      doc.rect(0, 28, 210, 3, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(20);
+      /* ============================================= */
+      /* PAGE 1 — DEVIS                                */
+      /* ============================================= */
+      pdfHeader(doc, 1, totalPages);
+      pdfFooter(doc, 1, totalPages);
+
+      // --- Devis title ---
+      var y = 42;
+      doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
-      doc.text('GAMEDOOR 41', 105, 14, { align: 'center' });
+      doc.text('DEVIS N\u00B0 ' + d.devisId, 15, y);
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
-      doc.text('Escape Game & Quiz Game - Caen', 105, 22, { align: 'center' });
+      doc.text('Date : ' + new Date().toLocaleDateString('fr-FR'), 190, y, { align: 'right' });
 
-      // Title
-      doc.setTextColor(245, 130, 32);
-      doc.setFontSize(16);
+      // Thin separator
+      y += 4;
+      doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setLineWidth(0.5);
+      doc.line(15, y, 195, y);
+
+      // --- Client block ---
+      y += 8;
+      y = pdfSectionTitle(doc, 'CLIENT', y);
+      if (d.societe) y = pdfLine(doc, 'Societe :', d.societe, y);
+      y = pdfLine(doc, 'Contact :', d.nom, y);
+      y = pdfLine(doc, 'Telephone :', d.telephone, y);
+      y = pdfLine(doc, 'Email :', d.email, y);
+      y = pdfLine(doc, 'Type :', d.typeLabel, y);
+
+      // --- Reservation block with activity image ---
+      y += 4;
+      y = pdfSectionTitle(doc, 'RESERVATION', y);
+
+      var imgKey = d.activite;
+      var actImg = pdfImages[imgKey];
+      var imgX = 15;
+      var imgW = 50;
+      var imgH = 35;
+      var textX = imgX + imgW + 8;
+
+      // Activity image
+      if (actImg) {
+        try { doc.addImage(actImg, 'JPEG', imgX, y, imgW, imgH); } catch (e) { /* skip image */ }
+      } else {
+        // Placeholder rectangle
+        doc.setFillColor(40, 40, 40);
+        doc.rect(imgX, y, imgW, imgH, 'F');
+        doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
+        doc.setFontSize(8);
+        doc.text(d.brand.name, imgX + imgW / 2, y + imgH / 2, { align: 'center' });
+      }
+
+      // Activity info next to image
+      var iy = y + 2;
+      doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
-      doc.text('DEMANDE DE DEVIS', 105, 44, { align: 'center' });
-      doc.setTextColor(130, 130, 130);
+      doc.text(d.brand.brand, textX, iy + 4);
+      iy += 9;
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
       doc.setFontSize(10);
+      doc.text(d.brand.name, textX, iy + 4);
+      iy += 8;
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
-      doc.text('Ref. ' + d.devisId + '  -  ' + new Date().toLocaleDateString('fr-FR'), 105, 51, { align: 'center' });
+      doc.text(d.nb + ' personnes  -  Duree : ' + d.brand.duration, textX, iy + 4);
+      iy += 7;
+      doc.text('Date : ' + d.dateFormatted + '  -  Creneau : ' + d.creneau, textX, iy + 4);
 
-      // Client info
-      var y = 64;
-      doc.setTextColor(245, 130, 32);
+      // For combo, show second image
+      if (d.activite === 'combo') {
+        var img2 = pdfImages.combo_quiz;
+        if (img2) {
+          try { doc.addImage(img2, 'JPEG', imgX, y + imgH + 3, imgW, imgH); } catch (e) { /* skip */ }
+        }
+        y += imgH + 3 + imgH + 6;
+      } else {
+        y += imgH + 6;
+      }
+
+      if (d.privatisation) {
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+        doc.setFontSize(9);
+        doc.text('+ Privatisation de l\'espace (sur devis)', 20, y);
+        y += 7;
+      }
+
+      if (d.notes) {
+        y += 2;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+        doc.setFontSize(8);
+        doc.text('Notes :', 20, y); y += 4;
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        var noteLines = doc.splitTextToSize(d.notes, 170);
+        doc.text(noteLines, 20, y);
+        y += noteLines.length * 4 + 2;
+      }
+
+      // --- Price table ---
+      y += 4;
+      y = pdfSectionTitle(doc, 'ESTIMATION TARIFAIRE', y);
+
+      // Table header row
+      doc.setFillColor(240, 240, 240);
+      doc.rect(15, y, 180, 7, 'F');
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Description', 20, y + 5);
+      doc.text('Qte', 115, y + 5, { align: 'center' });
+      doc.text('P.U. HT', 145, y + 5, { align: 'right' });
+      doc.text('Total HT', 190, y + 5, { align: 'right' });
+      y += 9;
+
+      // Activity line(s)
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.setFontSize(9);
+
+      if (d.activite === 'escape' || d.activite === 'quiz') {
+        var pu = d.activite === 'escape' ? PRO.escape.ht : PRO.quiz.ht;
+        doc.text(d.brand.full, 20, y + 4);
+        doc.text(String(d.nb), 115, y + 4, { align: 'center' });
+        doc.text(pu.toFixed(2) + ' EUR', 145, y + 4, { align: 'right' });
+        doc.text(d.est.ht.toFixed(2) + ' EUR', 190, y + 4, { align: 'right' });
+        y += 8;
+      } else {
+        // Combo: 2 lines
+        doc.text('BRAIN - Escape Game', 20, y + 4);
+        doc.text(String(d.nb), 115, y + 4, { align: 'center' });
+        doc.text(PRO.escape.ht.toFixed(2) + ' EUR', 145, y + 4, { align: 'right' });
+        doc.text((d.nb * PRO.escape.ht).toFixed(2) + ' EUR', 190, y + 4, { align: 'right' });
+        y += 7;
+        doc.text('BUZZ YOUR BRAIN - Quiz Game', 20, y + 4);
+        doc.text(String(d.nb), 115, y + 4, { align: 'center' });
+        doc.text(PRO.quiz.ht.toFixed(2) + ' EUR', 145, y + 4, { align: 'right' });
+        doc.text((d.nb * PRO.quiz.ht).toFixed(2) + ' EUR', 190, y + 4, { align: 'right' });
+        y += 8;
+      }
+
+      // Separator
+      doc.setDrawColor(200, 200, 200);
+      doc.setLineWidth(0.3);
+      doc.line(15, y, 195, y);
+      y += 5;
+
+      // Totals
+      if (d.isPro) {
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        doc.setFontSize(9);
+        doc.text('Total HT', 145, y, { align: 'right' });
+        doc.text(d.est.ht.toFixed(2) + ' EUR', 190, y, { align: 'right' });
+        y += 6;
+        doc.text('TVA 10%', 145, y, { align: 'right' });
+        doc.text((d.est.ttc - d.est.ht).toFixed(2) + ' EUR', 190, y, { align: 'right' });
+        y += 6;
+      }
+
+      // Total TTC highlighted
+      doc.setFillColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.roundedRect(120, y - 3, 75, 10, 2, 2, 'F');
+      doc.setTextColor(WHITE[0], WHITE[1], WHITE[2]);
       doc.setFontSize(11);
       doc.setFont('helvetica', 'bold');
-      doc.text('INFORMATIONS', 20, y); y += 8;
-      doc.setTextColor(50, 50, 50);
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Type : ' + d.typeLabel, 20, y);
-      doc.text('Activite : ' + d.actLabel, 110, y); y += 6;
-      doc.text('Participants : ' + d.nb, 20, y);
-      doc.text('Date : ' + d.dateFormatted, 110, y); y += 6;
-      doc.text('Creneau : ' + d.creneau, 20, y); y += 6;
-      if (d.societe) { doc.text('Societe : ' + d.societe, 20, y); y += 6; }
-      doc.text('Contact : ' + d.nom, 20, y);
-      doc.text('Tel : ' + d.telephone, 110, y); y += 6;
-      doc.text('Email : ' + d.email, 20, y); y += 6;
-      if (d.privatisation) { doc.text('Privatisation : Oui (sur devis)', 20, y); y += 6; }
-      if (d.notes) {
-        y += 4;
-        doc.text('Notes :', 20, y); y += 5;
-        var lines = doc.splitTextToSize(d.notes, 170);
-        doc.text(lines, 20, y); y += lines.length * 5;
-      }
+      doc.text('TOTAL TTC', 125, y + 4);
+      doc.text(d.est.ttc.toFixed(2) + ' EUR', 190, y + 4, { align: 'right' });
+      y += 13;
 
-      // Price table
-      y += 10;
-      doc.setFillColor(40, 40, 40);
-      doc.rect(20, y, 170, 8, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'bold');
-      doc.text('ESTIMATION TARIFAIRE', 25, y + 5.5);
-      y += 12;
+      // Per person
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
-      doc.setTextColor(50, 50, 50);
-
       if (d.isPro) {
-        doc.text('Total HT :', 25, y); doc.text(d.est.ht.toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
-        doc.text('TVA 10% :', 25, y); doc.text((d.est.ttc - d.est.ht).toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
+        doc.text('Soit ' + (d.est.ht / d.nb).toFixed(2) + ' EUR HT par personne (' + (d.est.ttc / d.nb).toFixed(2) + ' EUR TTC)', 20, y);
+      } else {
+        doc.text('Soit environ ' + (d.est.ttc / d.nb).toFixed(2) + ' EUR TTC par personne', 20, y);
       }
+      y += 6;
+      doc.setFontSize(7);
+      doc.setTextColor(150, 150, 150);
+      doc.text('Estimation basee sur nos tarifs en vigueur. Le devis definitif sera ajuste selon la configuration retenue.', 20, y);
+
+      // --- Legal notice + Signature area ---
+      y += 12;
+      doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setLineWidth(0.3);
+      doc.line(15, y, 195, y);
+      y += 6;
+
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.setFontSize(8);
       doc.setFont('helvetica', 'bold');
-      doc.setTextColor(245, 130, 32);
-      doc.text('TOTAL TTC :', 25, y); doc.text(d.est.ttc.toFixed(2) + ' EUR', 170, y, { align: 'right' }); y += 7;
+      doc.text('Important : la reservation n\'est definitive qu\'apres validation du devis et confirmation ecrite de notre part.', 15, y);
+      y += 6;
       doc.setFont('helvetica', 'normal');
-      doc.setTextColor(100, 100, 100);
-      doc.text('Soit ' + (d.isPro ? (d.est.ht / d.nb).toFixed(2) + ' EUR HT' : '~' + (d.est.ttc / d.nb).toFixed(2) + ' EUR') + ' par personne', 25, y); y += 10;
-      doc.setFontSize(8);
-      doc.text('Estimation indicative. Le devis definitif sera ajuste selon la configuration retenue.', 25, y);
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      doc.setFontSize(7.5);
+      doc.text('Ce devis est sans engagement tant qu\'il n\'est pas valide.', 15, y);
+      y += 4;
+      doc.text('Pour confirmer ce devis sans modification, merci de nous le renvoyer signe "bon pour accord".', 15, y);
+      y += 8;
 
-      // Footer
-      doc.setFillColor(30, 30, 30);
-      doc.rect(0, 275, 210, 22, 'F');
-      doc.setFillColor(245, 130, 32);
-      doc.rect(0, 275, 210, 2, 'F');
-      doc.setTextColor(200, 200, 200);
-      doc.setFontSize(8);
-      doc.text('GAMEDOOR 41 - 41 bis rue Pasteur, 14000 Caen', 105, 284, { align: 'center' });
-      doc.text('02 31 53 07 51 - contact@gamedoor41.fr - gamedoor41.fr', 105, 290, { align: 'center' });
+      // Signature boxes
+      doc.setDrawColor(180, 180, 180);
+      doc.setLineWidth(0.3);
+      doc.setFontSize(7.5);
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
 
-      doc.save('GAMEDOOR41_Devis_' + d.devisId + '.pdf');
+      // Left: "Bon pour accord"
+      doc.rect(15, y, 85, 22);
+      doc.text('Date et signature du client', 18, y + 4);
+      doc.text('"Bon pour accord"', 18, y + 8);
+
+      // Right: Brain
+      doc.rect(110, y, 85, 22);
+      doc.text('BRAIN CAEN', 113, y + 4);
+      doc.text('Restant a votre disposition,', 113, y + 8);
+      doc.text('Toute l\'equipe de Brain.', 113, y + 12);
+
+      /* ============================================= */
+      /* PAGE 2 — CONDITIONS GENERALES                 */
+      /* ============================================= */
+      doc.addPage();
+      pdfHeader(doc, 2, totalPages);
+      pdfFooter(doc, 2, totalPages);
+
+      y = 42;
+      doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CONDITIONS GENERALES DE VENTE', 105, y, { align: 'center' });
+      y += 4;
+      doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setLineWidth(0.5);
+      doc.line(60, y, 150, y);
+
+      y += 10;
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'normal');
+
+      // CGV text content
+      var cgvSections = [
+        { title: 'ARTICLE I : VALIDATION DU DEVIS PAR L\'ENTREPRISE', items: [
+          '1. L\'Entreprise envoie a BRAIN le devis signe par mail ou courrier postal.',
+          '2. L\'envoi du devis signe constitue l\'acceptation du devis et formalise le contrat :',
+          '   - Accepter le devis signifie consentir au prix, a la description des services et a leur date d\'execution ;',
+          '   - Cela signifie egalement l\'acceptation sans reserve des conditions generales ;',
+          '   - Enfin, cela engage l\'Entreprise a regler le montant total du.',
+          '3. Annuler une reservation, ou en cas de non-presence ou retard des participants, n\'exonere pas',
+          '   l\'Entreprise de son obligation de paiement du montant total du.'
+        ]},
+        { title: 'ARTICLE II : MODALITES DE PAIEMENT', items: [
+          '1. Un acompte du montant des produits complementaires (repas) est exige apres la signature du devis,',
+          '   conditionnant la commande au traiteur.',
+          '2. Le reglement se fait en CB par voie electronique via un lien envoye par mail ou par CB sur place',
+          '   en un seul reglement de la totalite du montant restant.',
+          '3. Les services publics doivent transmettre leur bon de commande avant la prestation pour un',
+          '   enregistrement sur Chorus.',
+          '4. L\'acces aux salles est conditionne par le paiement complet.'
+        ]},
+        { title: 'ARTICLE III : EXCLUSION DU DROIT DE RETRACTATION', items: [
+          '1. Les prestations BRAIN sont etablies selon les specifications de l\'Entreprise.',
+          '2. Aucune retractation n\'est possible apres acceptation du devis.'
+        ]},
+        { title: 'ARTICLE IV : MODIFICATIONS DU DEVIS', items: [
+          '',
+          'A. Modification de la date de service',
+          '1. Changement moins de sept jours avant interdit.',
+          '2. Report possible avec frais de 20% du montant total du devis si moins de quinze jours avant,',
+          '   gratuit si plus.',
+          '',
+          'B. Modification du nombre de participants',
+          '1. Reduction possible plus de sept jours avant.',
+          '2. Augmentation possible jusqu\'a un certain nombre de participants en fonction des capacites',
+          '   des salles choisies et des disponibilites.'
+        ]}
+      ];
+
+      cgvSections.forEach(function (section) {
+        // Section title
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+        doc.setFontSize(8);
+        doc.text(section.title, 15, y);
+        y += 5;
+
+        // Section items
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        doc.setFontSize(7);
+        section.items.forEach(function (item) {
+          if (item === '') { y += 2; return; }
+          doc.text(item, 18, y);
+          y += 3.8;
+        });
+        y += 4;
+      });
+
+      // Closing
+      y += 4;
+      doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setLineWidth(0.3);
+      doc.line(15, y, 195, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.setFontSize(8);
+      doc.text('Restant a votre disposition,', 15, y); y += 4;
+      doc.setFont('helvetica', 'bold');
+      doc.text('Toute l\'equipe de Brain l\'escape game de Caen', 15, y); y += 8;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      doc.setFontSize(7.5);
+      doc.text('Ce devis est sans engagement tant qu\'il n\'est pas valide.', 15, y); y += 4;
+      doc.text('Pour confirmer ce devis sans faire de modification, merci de nous le renvoyer signe "bon pour accord" :', 15, y); y += 4;
+      doc.text('vous serez engage a honorer la facture que vous recevrez par mail.', 15, y);
+
+      // --- Save ---
+      doc.save('BRAIN_Devis_' + d.devisId + '.pdf');
     } catch (err) {
       console.error('[DEVIS] PDF generation error:', err);
       alert('Erreur lors de la generation du PDF. Vous pouvez faire une capture d\'ecran du recapitulatif.');
