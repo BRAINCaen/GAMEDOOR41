@@ -283,57 +283,99 @@
     btnSubmit.textContent = 'Envoi en cours\u2026';
 
     var formData = new FormData(form);
-
-    // Debug: log all fields being sent
     var params = new URLSearchParams(formData);
-    console.log('[DEVIS] Submitting to Netlify Forms:', Object.fromEntries(params));
+    console.log('[DEVIS] Submitting:', Object.fromEntries(params));
 
-    // Try primary endpoint, fallback to alternate
-    submitToNetlify(params, 0);
-
-    function submitToNetlify(params, attempt) {
-      var endpoints = ['/', '/devis/'];
-      var url = endpoints[attempt] || endpoints[0];
-      console.log('[DEVIS] Attempt', attempt + 1, 'POST to', url);
-
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-      })
-      .then(function (res) {
-        if (res.ok) {
-          console.log('[DEVIS] Submission OK, status:', res.status);
-          showConfirmation();
-        } else if (attempt < endpoints.length - 1) {
-          console.warn('[DEVIS] Endpoint', url, 'returned', res.status, '- trying next');
-          submitToNetlify(params, attempt + 1);
-        } else {
-          return res.text().then(function (body) {
-            console.error('[DEVIS] All endpoints failed. Last:', res.status, body.substring(0, 300));
-            throw new Error('Erreur serveur ' + res.status);
-          });
-        }
-      })
-      .catch(function (err) {
-        if (attempt < endpoints.length - 1) {
-          submitToNetlify(params, attempt + 1);
-        } else {
-          console.error('[DEVIS] Erreur envoi finale:', err);
-          showError('error-step4', 'Erreur lors de l\u2019envoi. Réessayez ou appelez le 02 31 53 07 51.');
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Recevoir mon devis';
-        }
-      });
-    }
+    // Try Netlify Forms (both endpoints), then fallback to email
+    tryNetlify(params, ['/', '/devis/'], 0);
   });
 
-  function showConfirmation() {
+  function tryNetlify(params, endpoints, attempt) {
+    if (attempt >= endpoints.length) {
+      // All Netlify endpoints failed — use email fallback
+      console.warn('[DEVIS] Netlify Forms unavailable, using email fallback');
+      sendViaEmail();
+      return;
+    }
+    var url = endpoints[attempt];
+    console.log('[DEVIS] Try', attempt + 1, '/', endpoints.length, 'POST', url);
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    })
+    .then(function (res) {
+      if (res.ok) {
+        console.log('[DEVIS] OK via', url);
+        showConfirmation('netlify');
+      } else {
+        console.warn('[DEVIS]', url, 'returned', res.status);
+        tryNetlify(params, endpoints, attempt + 1);
+      }
+    })
+    .catch(function () {
+      tryNetlify(params, endpoints, attempt + 1);
+    });
+  }
+
+  function sendViaEmail() {
+    var type = val('type');
+    var activite = val('activite');
+    var nb = participantsInput.value;
+    var isPro = (type === 'entreprise' || type === 'association');
+    var est = calculatePrice(type, activite, parseInt(nb, 10));
+    var actLabels = { escape: 'Escape Game', quiz: 'Quiz Game', combo: 'Combo Escape + Quiz' };
+    var typeLabels = { entreprise: 'Entreprise', association: 'Association', particulier: 'Particulier' };
+
+    var lines = [
+      'DEMANDE DE DEVIS ' + devisId,
+      '---',
+      'Type : ' + (typeLabels[type] || type),
+      'Activite : ' + (actLabels[activite] || activite),
+      'Participants : ' + nb,
+      'Date : ' + formatDate(document.getElementById('date').value),
+      'Creneau : ' + val('creneau')
+    ];
+    if (checked('privatisation')) lines.push('Privatisation : Oui');
+    var societe = document.getElementById('societe').value.trim();
+    if (societe) lines.push('Societe : ' + societe);
+    lines.push('Contact : ' + document.getElementById('nom').value);
+    lines.push('Telephone : ' + document.getElementById('telephone').value);
+    lines.push('Email : ' + document.getElementById('email').value);
+    if (isPro) {
+      lines.push('---');
+      lines.push('Estimation HT : ' + est.ht.toFixed(2) + ' EUR');
+      lines.push('Estimation TTC : ' + est.ttc.toFixed(2) + ' EUR');
+    } else {
+      lines.push('---');
+      lines.push('Estimation TTC : ' + est.ttc.toFixed(2) + ' EUR');
+    }
+    var notes = document.getElementById('notes').value.trim();
+    if (notes) { lines.push('---'); lines.push('Notes : ' + notes); }
+    if (checked('rappel')) lines.push('Souhaite etre rappele(e)');
+
+    var subject = encodeURIComponent('[GAMEDOOR41] Demande de devis ' + devisId);
+    var body = encodeURIComponent(lines.join('\n'));
+    var mailto = 'mailto:contact@gamedoor41.fr?subject=' + subject + '&body=' + body;
+
+    showConfirmation('email', mailto);
+  }
+
+  function showConfirmation(mode, mailtoUrl) {
     form.hidden = true;
     document.getElementById('devis-progress').hidden = true;
     document.getElementById('confirm-id').textContent = devisId;
     document.getElementById('confirm-email').textContent = document.getElementById('email').value;
     document.getElementById('confirm-recap').innerHTML = document.getElementById('recap-content').innerHTML;
+
+    // If email fallback, add the send button
+    var emailNote = document.getElementById('confirm-email-fallback');
+    if (mode === 'email' && mailtoUrl && emailNote) {
+      emailNote.hidden = false;
+      emailNote.querySelector('a').href = mailtoUrl;
+    }
+
     confirmation.hidden = false;
     window.scrollTo({ top: document.querySelector('.devis-section').offsetTop - 80, behavior: 'smooth' });
   }
