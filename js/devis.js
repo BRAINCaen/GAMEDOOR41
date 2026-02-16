@@ -546,14 +546,16 @@
       doc.setFillColor(255, 248, 240);
       doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
       doc.setLineWidth(0.4);
-      doc.roundedRect(15, y, 180, 14, 2, 2, 'FD');
+      doc.roundedRect(15, y, 180, 21, 2, 2, 'FD');
       doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
       doc.setFontSize(7.5);
       doc.setFont('helvetica', 'normal');
-      doc.text('Votre demande a bien ete transmise a notre equipe. Un devis personnalise vous sera envoye sous 48h ouvrees.', 22, y + 5);
+      doc.text('Votre demande a bien ete transmise a notre equipe.', 22, y + 5);
+      doc.text('Un devis officiel detaille vous sera envoye sous 48h ouvrees. Le delai de validite ainsi que la duree', 22, y + 9.5);
+      doc.text('de blocage des creneaux seront precises dans ce devis.', 22, y + 13.5);
       doc.setFont('helvetica', 'bold');
-      doc.text('La reservation ne sera effective qu\'apres validation du devis officiel.', 22, y + 10.5);
-      y += 18;
+      doc.text('La reservation ne sera effective qu\'apres validation du devis officiel.', 22, y + 18);
+      y += 25;
 
       /* --- Recap de la demande --- */
       y = pdfSection(doc, 'RECAPITULATIF DE VOTRE DEMANDE', y);
@@ -707,13 +709,39 @@
       doc.setFont('helvetica', 'normal');
       doc.text('Le tarif definitif sera confirme dans le devis officiel envoye par notre equipe.', 22, y);
 
+      /* --- Blocage temporaire des creneaux --- */
+      y += 8;
+      doc.setFillColor(252, 251, 249);
+      doc.setDrawColor(LGREY[0], LGREY[1], LGREY[2]);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(15, y, 180, 28, 2, 2, 'FD');
+
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Blocage temporaire des creneaux', 22, y + 6);
+
+      doc.setDrawColor(LGREY[0], LGREY[1], LGREY[2]);
+      doc.setLineWidth(0.15);
+      doc.line(22, y + 8, 90, y + 8);
+
+      doc.setFontSize(7.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+      doc.text('Les creneaux demandes sont pre-bloques temporairement dans notre planning.', 22, y + 13);
+      doc.text('En l\'absence de validation ecrite du devis officiel dans le delai communique par notre equipe,', 22, y + 17);
+      doc.text('les creneaux seront automatiquement liberes et pourront etre attribues a un autre groupe.', 22, y + 21);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Aucune activite ne pourra etre maintenue sans validation formelle du devis.', 22, y + 25.5);
+      y += 32;
+
       /* --- Prochaines etapes --- */
-      y += 7;
+      y += 4;
       y = pdfSection(doc, 'PROCHAINES ETAPES', y);
 
       var steps = [
         { num: '1', text: 'Analyse de votre demande par notre equipe' },
-        { num: '2', text: 'Envoi du devis personnalise sous 48h ouvrees' },
+        { num: '2', text: 'Envoi du devis officiel detaille sous 48h ouvrees' },
         { num: '3', text: 'Validation du devis par vos soins' },
         { num: '4', text: 'Confirmation definitive par notre equipe' }
       ];
@@ -750,6 +778,19 @@
       doc.setTextColor(GREY[0], GREY[1], GREY[2]);
       doc.setFontSize(7);
       doc.text('Une question ? Contactez-nous : 06 44 64 71 07  -  contact@braincaen.com', 15, y);
+
+      /* --- Urgency notice --- */
+      y += 6;
+      doc.setFillColor(255, 248, 240);
+      doc.setDrawColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(15, y, 180, 9, 1.5, 1.5, 'FD');
+      doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Evenement dans moins de 7 jours ?', 22, y + 3.8);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Merci de nous contacter directement par telephone afin de securiser votre organisation : 06 44 64 71 07', 22, y + 7.3);
 
       /* --- Save --- */
       doc.save('GAMEDOOR41_Confirmation_' + d.devisId + '.pdf');
