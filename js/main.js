@@ -52,14 +52,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* --- Mobile: poster + click-to-play for LCP --- */
+  /* --- Hero video: load source only on desktop (58 MB) --- */
+  const heroVideo = document.querySelector('video.hero-video');
+  if (heroVideo) {
+    if (window.innerWidth > 768) {
+      const src = document.createElement('source');
+      src.src = 'video/hero.mp4';
+      src.type = 'video/mp4';
+      heroVideo.appendChild(src);
+      heroVideo.load();
+      heroVideo.play().catch(() => {});
+    }
+    // Mobile: poster only, no video download
+  }
+
+  /* --- Mobile: poster + click-to-play for other videos --- */
   if (window.innerWidth <= 768) {
     document.querySelectorAll('video[autoplay]').forEach(video => {
       if (video.closest('.exp-card')) return;
+      if (video.classList.contains('hero-video')) return;
       video.removeAttribute('autoplay');
       video.pause();
       video.currentTime = 0;
-      if (video.classList.contains('hero-video')) return;
       const parent = video.parentElement;
       if (!parent) return;
       const playBtn = document.createElement('button');

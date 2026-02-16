@@ -10,13 +10,19 @@
   <meta property="og:title" content="Escape Game Caen — 3 Salles Immersives avec Game Master Acteur">
   <meta property="og:description" content="Enquête policière, hôpital psychiatrique ou voyage dans les 80's. 60 min pour s'échapper. Dès 25€/pers.">
   <meta property="og:url" content="https://gamedoor41.fr/escape-game-caen/">
-  <meta property="og:image" content="https://gamedoor41.fr/img/logo/logo-icon.svg">
+  <meta property="og:image" content="https://gamedoor41.fr/img/og/og-escape.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Escape Game Caen — 3 Salles Immersives avec Game Master Acteur">
+  <meta name="twitter:description" content="Enquête policière, hôpital psychiatrique ou voyage dans les 80's. 60 min pour s'échapper. Dès 25€/pers.">
+  <meta name="twitter:image" content="https://gamedoor41.fr/img/og/og-escape.jpg">
 
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="/img/escape/garde-a-vue-cellule.jpg">
+    <link rel="preload" as="image" type="image/avif" imagesrcset="/img/escape/garde-a-vue-cellule-480w.avif 480w, /img/escape/garde-a-vue-cellule-768w.avif 768w, /img/escape/garde-a-vue-cellule-1024w.avif 1024w, /img/escape/garde-a-vue-cellule.avif 1400w" imagesizes="100vw">
   <link rel="stylesheet" href="/css/style.css">
   
   <script type="application/ld+json">
@@ -113,7 +119,7 @@
   <!-- HEADER -->
   <header class="site-header scrolled" role="banner">
     <div class="nav-inner">
-      <a href="/" class="nav-logo"><img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img"></a>
+      <a href="/" class="nav-logo"><img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img"></a>
       <nav class="nav-links" role="navigation" aria-label="Navigation principale">
         <a href="/" class="mobile-only">Accueil</a>
         <a href="/escape-game-caen/" class="active">Escape Game</a>
@@ -137,7 +143,11 @@
 
   <!-- PAGE HERO -->
   <section class="page-hero">
-    <img class="hero-img" src="/img/escape/garde-a-vue-cellule.jpg" alt="Escape Game Caen - In Prison">
+              <picture>
+            <source type="image/avif" srcset="/img/escape/garde-a-vue-cellule-480w.avif 480w, /img/escape/garde-a-vue-cellule-768w.avif 768w, /img/escape/garde-a-vue-cellule-1024w.avif 1024w, /img/escape/garde-a-vue-cellule.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/garde-a-vue-cellule-480w.webp 480w, /img/escape/garde-a-vue-cellule-768w.webp 768w, /img/escape/garde-a-vue-cellule-1024w.webp 1024w, /img/escape/garde-a-vue-cellule.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/garde-a-vue-cellule.jpg" srcset="/img/escape/garde-a-vue-cellule-480w.jpg 480w, /img/escape/garde-a-vue-cellule-768w.jpg 768w, /img/escape/garde-a-vue-cellule-1024w.jpg 1024w, /img/escape/garde-a-vue-cellule.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Escape Game Caen - In Prison" width="1400" height="1054" loading="eager" decoding="async" fetchpriority="high">
+          </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content container">
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
@@ -170,7 +180,7 @@
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
         <div>
-          <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius);aspect-ratio:9/16;object-fit:cover;max-height:500px;" poster="/img/promo/affiche-garde-a-vue.jpg">
+          <video autoplay muted loop playsinline preload="none" style="width:100%;border-radius:var(--radius);aspect-ratio:9/16;object-fit:cover;max-height:500px;" poster="/img/promo/affiche-garde-a-vue.jpg">
             <source src="/video/garde-a-vue.mp4" type="video/mp4">
           </video>
         </div>
@@ -189,9 +199,21 @@
           <p style="color:var(--grey-light);margin-bottom:24px;">Le game master incarne le policier. Il vous interroge, vous provoque, vous observe. Chaque indice est dissimulé dans le décor : derrière les barreaux, sous la couchette, dans les dossiers d'enquête.</p>
           
           <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-            <img src="/img/escape/garde-a-vue-cellule.jpg" alt="Cellule In Prison escape game Caen" loading="lazy">
-            <img src="/img/escape/garde-a-vue-bureau.jpg" alt="Bureau police escape game Caen" loading="lazy">
-            <img src="/img/escape/garde-a-vue-fiche.jpg" alt="Dossier détention escape game Caen" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/garde-a-vue-cellule-480w.avif 480w, /img/escape/garde-a-vue-cellule-768w.avif 768w, /img/escape/garde-a-vue-cellule-1024w.avif 1024w, /img/escape/garde-a-vue-cellule.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/garde-a-vue-cellule-480w.webp 480w, /img/escape/garde-a-vue-cellule-768w.webp 768w, /img/escape/garde-a-vue-cellule-1024w.webp 1024w, /img/escape/garde-a-vue-cellule.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/garde-a-vue-cellule.jpg" srcset="/img/escape/garde-a-vue-cellule-480w.jpg 480w, /img/escape/garde-a-vue-cellule-768w.jpg 768w, /img/escape/garde-a-vue-cellule-1024w.jpg 1024w, /img/escape/garde-a-vue-cellule.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Cellule In Prison escape game Caen" width="1400" height="1054" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/garde-a-vue-bureau-480w.avif 480w, /img/escape/garde-a-vue-bureau-768w.avif 768w, /img/escape/garde-a-vue-bureau-1024w.avif 1024w, /img/escape/garde-a-vue-bureau.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/garde-a-vue-bureau-480w.webp 480w, /img/escape/garde-a-vue-bureau-768w.webp 768w, /img/escape/garde-a-vue-bureau-1024w.webp 1024w, /img/escape/garde-a-vue-bureau.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/garde-a-vue-bureau.jpg" srcset="/img/escape/garde-a-vue-bureau-480w.jpg 480w, /img/escape/garde-a-vue-bureau-768w.jpg 768w, /img/escape/garde-a-vue-bureau-1024w.jpg 1024w, /img/escape/garde-a-vue-bureau.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Bureau police escape game Caen" width="1400" height="1867" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/garde-a-vue-fiche-480w.avif 480w, /img/escape/garde-a-vue-fiche-768w.avif 768w, /img/escape/garde-a-vue-fiche-1024w.avif 1024w, /img/escape/garde-a-vue-fiche.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/garde-a-vue-fiche-480w.webp 480w, /img/escape/garde-a-vue-fiche-768w.webp 768w, /img/escape/garde-a-vue-fiche-1024w.webp 1024w, /img/escape/garde-a-vue-fiche.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/garde-a-vue-fiche.jpg" srcset="/img/escape/garde-a-vue-fiche-480w.jpg 480w, /img/escape/garde-a-vue-fiche-768w.jpg 768w, /img/escape/garde-a-vue-fiche-1024w.jpg 1024w, /img/escape/garde-a-vue-fiche.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Dossier détention escape game Caen" width="1400" height="1054" loading="lazy" decoding="async">
+          </picture>
           </div>
 
           <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
@@ -209,7 +231,7 @@
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
         <div style="order:2;">
-          <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius);aspect-ratio:9/16;object-fit:cover;max-height:500px;" poster="/img/promo/affiche-psychiatric.jpg">
+          <video autoplay muted loop playsinline preload="none" style="width:100%;border-radius:var(--radius);aspect-ratio:9/16;object-fit:cover;max-height:500px;" poster="/img/promo/affiche-psychiatric.jpg">
             <source src="/video/psychiatric.mp4" type="video/mp4">
           </video>
         </div>
@@ -228,9 +250,21 @@
           <p style="color:var(--grey-light);margin-bottom:24px;">Notre salle la plus intense. Ambiance horrifique sans jump scares gratuits. Le game master est présent, dans l'ombre. Claustrophobes, âmes sensibles : vous êtes prévenus.</p>
           
           <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-            <img src="/img/escape/psychiatric-lit.jpg" alt="Lit hôpital psychiatrique escape game Caen" loading="lazy">
-            <img src="/img/escape/psychiatric-main.jpg" alt="Main attachée escape game horreur Caen" loading="lazy">
-            <img src="/img/escape/psychiatric-sangles.jpg" alt="Sangles psychiatrique escape game Caen" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-lit-480w.avif 480w, /img/escape/psychiatric-lit-768w.avif 768w, /img/escape/psychiatric-lit-1024w.avif 1024w, /img/escape/psychiatric-lit.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-lit-480w.webp 480w, /img/escape/psychiatric-lit-768w.webp 768w, /img/escape/psychiatric-lit-1024w.webp 1024w, /img/escape/psychiatric-lit.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-lit.jpg" srcset="/img/escape/psychiatric-lit-480w.jpg 480w, /img/escape/psychiatric-lit-768w.jpg 768w, /img/escape/psychiatric-lit-1024w.jpg 1024w, /img/escape/psychiatric-lit.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Lit hôpital psychiatrique escape game Caen" width="1400" height="1054" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-main-480w.avif 480w, /img/escape/psychiatric-main-768w.avif 768w, /img/escape/psychiatric-main-1024w.avif 1024w, /img/escape/psychiatric-main.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-main-480w.webp 480w, /img/escape/psychiatric-main-768w.webp 768w, /img/escape/psychiatric-main-1024w.webp 1024w, /img/escape/psychiatric-main.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-main.jpg" srcset="/img/escape/psychiatric-main-480w.jpg 480w, /img/escape/psychiatric-main-768w.jpg 768w, /img/escape/psychiatric-main-1024w.jpg 1024w, /img/escape/psychiatric-main.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Main attachée escape game horreur Caen" width="1400" height="1867" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-sangles-480w.avif 480w, /img/escape/psychiatric-sangles-768w.avif 768w, /img/escape/psychiatric-sangles-1024w.avif 1024w, /img/escape/psychiatric-sangles.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-sangles-480w.webp 480w, /img/escape/psychiatric-sangles-768w.webp 768w, /img/escape/psychiatric-sangles-1024w.webp 1024w, /img/escape/psychiatric-sangles.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-sangles.jpg" srcset="/img/escape/psychiatric-sangles-480w.jpg 480w, /img/escape/psychiatric-sangles-768w.jpg 768w, /img/escape/psychiatric-sangles-1024w.jpg 1024w, /img/escape/psychiatric-sangles.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Sangles psychiatrique escape game Caen" width="1400" height="1867" loading="lazy" decoding="async">
+          </picture>
           </div>
 
           <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
@@ -248,7 +282,7 @@
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
         <div>
-          <video autoplay muted loop playsinline style="width:100%;border-radius:var(--radius);aspect-ratio:9/16;object-fit:cover;max-height:500px;" poster="/img/promo/affiche-80s.jpg">
+          <video autoplay muted loop playsinline preload="none" style="width:100%;border-radius:var(--radius);aspect-ratio:9/16;object-fit:cover;max-height:500px;" poster="/img/promo/affiche-80s.jpg">
             <source src="/video/80s.mp4" type="video/mp4">
           </video>
         </div>
@@ -270,9 +304,21 @@
           <p style="color:var(--grey-light);margin-bottom:24px;">Notre salle la plus accessible et la plus fun. Idéale en famille, entre amis, pour un anniversaire. Pas besoin d'être un pro de l'escape game pour s'éclater.</p>
           
           <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-            <img src="/img/escape/80s-jukebox.jpg" alt="Jukebox Wurlitzer escape game 80s Caen" loading="lazy">
-            <img src="/img/escape/80s-objets.jpg" alt="Objets rétro Rubik's Cube escape game Caen" loading="lazy">
-            <img src="/img/escape/80s-telephone.jpg" alt="Téléphone vintage escape game 80s Caen" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/80s-jukebox-480w.avif 480w, /img/escape/80s-jukebox-768w.avif 768w, /img/escape/80s-jukebox-1024w.avif 1024w, /img/escape/80s-jukebox.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/80s-jukebox-480w.webp 480w, /img/escape/80s-jukebox-768w.webp 768w, /img/escape/80s-jukebox-1024w.webp 1024w, /img/escape/80s-jukebox.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/80s-jukebox.jpg" srcset="/img/escape/80s-jukebox-480w.jpg 480w, /img/escape/80s-jukebox-768w.jpg 768w, /img/escape/80s-jukebox-1024w.jpg 1024w, /img/escape/80s-jukebox.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Jukebox Wurlitzer escape game 80s Caen" width="1400" height="1054" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/80s-objets-480w.avif 480w, /img/escape/80s-objets-768w.avif 768w, /img/escape/80s-objets-1024w.avif 1024w, /img/escape/80s-objets.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/80s-objets-480w.webp 480w, /img/escape/80s-objets-768w.webp 768w, /img/escape/80s-objets-1024w.webp 1024w, /img/escape/80s-objets.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/80s-objets.jpg" srcset="/img/escape/80s-objets-480w.jpg 480w, /img/escape/80s-objets-768w.jpg 768w, /img/escape/80s-objets-1024w.jpg 1024w, /img/escape/80s-objets.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Objets rétro Rubik's Cube escape game Caen" width="1400" height="1867" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/80s-telephone-480w.avif 480w, /img/escape/80s-telephone-768w.avif 768w, /img/escape/80s-telephone-1024w.avif 1024w, /img/escape/80s-telephone.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/80s-telephone-480w.webp 480w, /img/escape/80s-telephone-768w.webp 768w, /img/escape/80s-telephone-1024w.webp 1024w, /img/escape/80s-telephone.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/80s-telephone.jpg" srcset="/img/escape/80s-telephone-480w.jpg 480w, /img/escape/80s-telephone-768w.jpg 768w, /img/escape/80s-telephone-1024w.jpg 1024w, /img/escape/80s-telephone.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Téléphone vintage escape game 80s Caen" width="1400" height="1054" loading="lazy" decoding="async">
+          </picture>
           </div>
 
           <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
@@ -433,7 +479,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo"><img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img footer-logo-img"></div>
+          <div class="nav-logo"><img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img footer-logo-img"></div>
           <p>Escape game, quiz game et activités de groupe à Caen.</p>
           <p style="margin-top:12px;"><a href="tel:+33231530751" style="color:var(--orange);">02 31 53 07 51</a></p>
         </div>
