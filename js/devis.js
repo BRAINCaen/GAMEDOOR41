@@ -278,10 +278,10 @@
   /* ========== IMAGE PRELOADING FOR PDF ========== */
   var pdfImages = {};
   var IMG_SOURCES = {
-    escape: '/img/escape/garde-a-vue-bureau.jpg',
+    escape: '/img/escape/garde-a-vue-porte.jpg',
     quiz: '/img/quiz/salle-quiz.jpg',
-    combo_escape: '/img/escape/psychiatric-main.jpg',
-    combo_quiz: '/img/quiz/buzzer-action.jpg'
+    combo_escape: '/img/escape/garde-a-vue-porte.jpg',
+    combo_quiz: '/img/quiz/salle-quiz.jpg'
   };
 
   function preloadImage(key, src) {
@@ -558,47 +558,94 @@
       /* --- Recap de la demande --- */
       y = pdfSection(doc, 'RECAPITULATIF DE VOTRE DEMANDE', y);
 
-      // Activity with image
-      var imgKey = d.activite;
-      var actImg = pdfImages[imgKey];
-      var imgX = 15;
-      var imgW = 40;
-      var imgH = 28;
-      var textX = imgX + imgW + 8;
-
-      if (actImg) {
-        try { doc.addImage(actImg, 'JPEG', imgX, y, imgW, imgH); } catch (e) { /* skip */ }
-      } else {
-        doc.setFillColor(40, 40, 40);
-        doc.rect(imgX, y, imgW, imgH, 'F');
-        doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
-        doc.setFontSize(8);
-        doc.text(d.brand.name, imgX + imgW / 2, y + imgH / 2, { align: 'center' });
-      }
-
-      // Activity info beside image
-      var iy = y + 1;
-      doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text(d.brand.brand, textX, iy + 4);
-      iy += 7;
-      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
-      doc.setFontSize(9);
-      doc.text(d.brand.name, textX, iy + 4);
-      iy += 6;
-      doc.setTextColor(GREY[0], GREY[1], GREY[2]);
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Duree : ' + d.brand.duration + '  -  ' + d.nb + ' personnes', textX, iy + 4);
-
+      // Activity with image(s)
       if (d.activite === 'combo') {
-        var img2 = pdfImages.combo_quiz;
-        if (img2) {
-          try { doc.addImage(img2, 'JPEG', imgX, y + imgH + 2, imgW, imgH); } catch (e) { /* skip */ }
+        // Combo: two images side by side with labels
+        var cImgW = 42;
+        var cImgH = 28;
+        var col1X = 15;
+        var col2X = 110;
+
+        // Escape image + label
+        var escImg = pdfImages.combo_escape || pdfImages.escape;
+        if (escImg) {
+          try { doc.addImage(escImg, 'JPEG', col1X, y, cImgW, cImgH); } catch (e) { /* skip */ }
+        } else {
+          doc.setFillColor(40, 40, 40);
+          doc.rect(col1X, y, cImgW, cImgH, 'F');
         }
-        y += imgH + 2 + imgH + 4;
+        doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('BRAIN', col1X + cImgW + 3, y + 10);
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        doc.setFontSize(8);
+        doc.text('Escape Game', col1X + cImgW + 3, y + 16);
+        doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'normal');
+        doc.text('60 min', col1X + cImgW + 3, y + 21);
+
+        // Quiz image + label
+        var quizImg = pdfImages.combo_quiz || pdfImages.quiz;
+        if (quizImg) {
+          try { doc.addImage(quizImg, 'JPEG', col2X, y, cImgW, cImgH); } catch (e) { /* skip */ }
+        } else {
+          doc.setFillColor(40, 40, 40);
+          doc.rect(col2X, y, cImgW, cImgH, 'F');
+        }
+        doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('BUZZ YOUR BRAIN', col2X + cImgW + 3, y + 10);
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        doc.setFontSize(8);
+        doc.text('Quiz Game', col2X + cImgW + 3, y + 16);
+        doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'normal');
+        doc.text('90 min', col2X + cImgW + 3, y + 21);
+
+        y += cImgH + 4;
+        // Participants line
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.text(d.nb + ' personnes  -  Demi-journee', 22, y);
+        y += 4;
       } else {
+        // Single activity: image + info beside
+        var imgX = 15;
+        var imgW = 40;
+        var imgH = 28;
+        var textX = imgX + imgW + 8;
+        var actImg = pdfImages[d.activite];
+
+        if (actImg) {
+          try { doc.addImage(actImg, 'JPEG', imgX, y, imgW, imgH); } catch (e) { /* skip */ }
+        } else {
+          doc.setFillColor(40, 40, 40);
+          doc.rect(imgX, y, imgW, imgH, 'F');
+          doc.setTextColor(LGREY[0], LGREY[1], LGREY[2]);
+          doc.setFontSize(8);
+          doc.text(d.brand.name, imgX + imgW / 2, y + imgH / 2, { align: 'center' });
+        }
+
+        var iy = y + 1;
+        doc.setTextColor(ORANGE[0], ORANGE[1], ORANGE[2]);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text(d.brand.brand, textX, iy + 4);
+        iy += 7;
+        doc.setTextColor(TEXT[0], TEXT[1], TEXT[2]);
+        doc.setFontSize(9);
+        doc.text(d.brand.name, textX, iy + 4);
+        iy += 6;
+        doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Duree : ' + d.brand.duration + '  -  ' + d.nb + ' personnes', textX, iy + 4);
+
         y += imgH + 3;
       }
 
