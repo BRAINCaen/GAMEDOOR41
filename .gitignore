@@ -13,3 +13,9 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+# Build tools (not deployed)
+node_modules/
+package.json
+package-lock.json
+scripts/

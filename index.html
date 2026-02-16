@@ -14,7 +14,13 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://gamedoor41.fr/">
   <meta property="og:locale" content="fr_FR">
-  <meta property="og:image" content="https://gamedoor41.fr/img/logo/logo-icon.svg">
+  <meta property="og:image" content="https://gamedoor41.fr/img/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GAMEDOOR•41 — Escape Game & Quiz Game à Caen">
+  <meta name="twitter:description" content="3 escape games + quiz interactif avec buzzers. L'endroit où on joue à Caen.">
+  <meta name="twitter:image" content="https://gamedoor41.fr/img/og/og-default.jpg">
 
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.svg">
@@ -91,7 +97,7 @@
   <header class="site-header" role="banner">
     <div class="nav-inner">
       <a href="/" class="nav-logo" aria-label="GAMEDOOR 41 - Accueil">
-        <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img">
+        <img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img">
       </a>
       <nav class="nav-links" role="navigation" aria-label="Navigation principale">
         <a href="/" class="mobile-only">Accueil</a>
@@ -116,8 +122,8 @@
 
   <!-- ===== HERO ===== -->
   <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline poster="img/escape/garde-a-vue-porte.jpg">
-      <source src="video/hero.mp4" type="video/mp4">
+    <video class="hero-video" muted loop playsinline preload="none" poster="img/escape/garde-a-vue-porte.jpg">
+      <!-- Source loaded dynamically by main.js on desktop only (58 MB) -->
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -175,7 +181,11 @@
         
         <!-- ESCAPE GAME -->
         <a href="/escape-game-caen/" class="exp-card fade-in fade-in-delay-1">
-          <img src="img/escape/garde-a-vue-porte.jpg" alt="Escape Game Caen - Brain Escape Game - Porte Crime Scene" loading="lazy">
+                    <picture>
+            <source type="image/avif" srcset="img/escape/garde-a-vue-porte-480w.avif 480w, img/escape/garde-a-vue-porte-768w.avif 768w, img/escape/garde-a-vue-porte-1024w.avif 1024w, img/escape/garde-a-vue-porte.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/escape/garde-a-vue-porte-480w.webp 480w, img/escape/garde-a-vue-porte-768w.webp 768w, img/escape/garde-a-vue-porte-1024w.webp 1024w, img/escape/garde-a-vue-porte.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/escape/garde-a-vue-porte.jpg" srcset="img/escape/garde-a-vue-porte-480w.jpg 480w, img/escape/garde-a-vue-porte-768w.jpg 768w, img/escape/garde-a-vue-porte-1024w.jpg 1024w, img/escape/garde-a-vue-porte.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Escape Game Caen - Brain Escape Game - Porte Crime Scene" width="1400" height="1860" loading="eager" decoding="async" fetchpriority="high">
+          </picture>
           <div class="exp-card-overlay">
             <span class="exp-card-badge badge-escape">Escape Game</span>
             <h3>Brain Escape Game</h3>
@@ -185,7 +195,11 @@
 
         <!-- QUIZ GAME -->
         <a href="/quiz-game-caen/" class="exp-card fade-in fade-in-delay-2">
-          <img src="img/quiz/buzzer-closeup.jpg" alt="Quiz Game Caen - Buzz Your Brain - Buzzers" loading="lazy">
+                    <picture>
+            <source type="image/avif" srcset="img/quiz/buzzer-closeup-480w.avif 480w, img/quiz/buzzer-closeup-768w.avif 768w, img/quiz/buzzer-closeup-1024w.avif 1024w, img/quiz/buzzer-closeup.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/quiz/buzzer-closeup-480w.webp 480w, img/quiz/buzzer-closeup-768w.webp 768w, img/quiz/buzzer-closeup-1024w.webp 1024w, img/quiz/buzzer-closeup.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/quiz/buzzer-closeup.jpg" srcset="img/quiz/buzzer-closeup-480w.jpg 480w, img/quiz/buzzer-closeup-768w.jpg 768w, img/quiz/buzzer-closeup-1024w.jpg 1024w, img/quiz/buzzer-closeup.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Quiz Game Caen - Buzz Your Brain - Buzzers" width="1400" height="1400" loading="lazy" decoding="async">
+          </picture>
           <div class="exp-card-overlay">
             <span class="exp-card-badge badge-quiz">Quiz Game</span>
             <h3>Buzz Your Brain</h3>
@@ -258,7 +272,11 @@
         <!-- In Prison -->
         <div class="room-card fade-in fade-in-delay-1">
           <div class="room-card-img">
-            <img src="img/promo/affiche-garde-a-vue.jpg" alt="Escape Game In Prison Caen - Salle prison" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="img/promo/affiche-garde-a-vue-480w.avif 480w, img/promo/affiche-garde-a-vue-768w.avif 768w, img/promo/affiche-garde-a-vue.avif 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/promo/affiche-garde-a-vue-480w.webp 480w, img/promo/affiche-garde-a-vue-768w.webp 768w, img/promo/affiche-garde-a-vue.webp 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/promo/affiche-garde-a-vue.jpg" srcset="img/promo/affiche-garde-a-vue-480w.jpg 480w, img/promo/affiche-garde-a-vue-768w.jpg 768w, img/promo/affiche-garde-a-vue.jpg 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Escape Game In Prison Caen - Salle prison" width="1000" height="1334" loading="lazy" decoding="async">
+          </picture>
           </div>
           <div class="room-card-body">
             <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
@@ -279,7 +297,11 @@
         <!-- Psychiatric -->
         <div class="room-card fade-in fade-in-delay-2">
           <div class="room-card-img">
-            <img src="img/promo/affiche-psychiatric.jpg" alt="Escape Game Psychiatric Caen - Hôpital psychiatrique" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="img/promo/affiche-psychiatric-480w.avif 480w, img/promo/affiche-psychiatric-768w.avif 768w, img/promo/affiche-psychiatric.avif 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/promo/affiche-psychiatric-480w.webp 480w, img/promo/affiche-psychiatric-768w.webp 768w, img/promo/affiche-psychiatric.webp 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/promo/affiche-psychiatric.jpg" srcset="img/promo/affiche-psychiatric-480w.jpg 480w, img/promo/affiche-psychiatric-768w.jpg 768w, img/promo/affiche-psychiatric.jpg 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Escape Game Psychiatric Caen - Hôpital psychiatrique" width="1000" height="1334" loading="lazy" decoding="async">
+          </picture>
           </div>
           <div class="room-card-body">
             <div class="room-vintage-tag"><span class="dot"></span> Depuis 2017 · 26 000+ joueur·euse·s</div>
@@ -300,7 +322,11 @@
         <!-- 80s -->
         <div class="room-card fade-in fade-in-delay-3">
           <div class="room-card-img">
-            <img src="img/promo/affiche-80s.jpg" alt="Escape Game Back to the 80s Caen - Années 80" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="img/promo/affiche-80s-480w.avif 480w, img/promo/affiche-80s-768w.avif 768w, img/promo/affiche-80s.avif 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/promo/affiche-80s-480w.webp 480w, img/promo/affiche-80s-768w.webp 768w, img/promo/affiche-80s.webp 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/promo/affiche-80s.jpg" srcset="img/promo/affiche-80s-480w.jpg 480w, img/promo/affiche-80s-768w.jpg 768w, img/promo/affiche-80s.jpg 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Escape Game Back to the 80s Caen - Années 80" width="1000" height="1334" loading="lazy" decoding="async">
+          </picture>
           </div>
           <div class="room-card-body">
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
@@ -340,16 +366,32 @@
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;" class="fade-in">
         <div>
-          <img src="img/quiz/salle-quiz.jpg" alt="Salle quiz Buzz Your Brain à Caen" style="border-radius:var(--radius);width:100%;" loading="lazy">
+                    <picture>
+            <source type="image/avif" srcset="img/quiz/salle-quiz-480w.avif 480w, img/quiz/salle-quiz-768w.avif 768w, img/quiz/salle-quiz-1024w.avif 1024w, img/quiz/salle-quiz.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/quiz/salle-quiz-480w.webp 480w, img/quiz/salle-quiz-768w.webp 768w, img/quiz/salle-quiz-1024w.webp 1024w, img/quiz/salle-quiz.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/quiz/salle-quiz.jpg" srcset="img/quiz/salle-quiz-480w.jpg 480w, img/quiz/salle-quiz-768w.jpg 768w, img/quiz/salle-quiz-1024w.jpg 1024w, img/quiz/salle-quiz.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Salle quiz Buzz Your Brain à Caen" width="1400" height="1050" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div>
           <h3 style="margin-bottom:16px;">Un vrai plateau TV<br>dans votre soirée.</h3>
           <p style="color:var(--grey-light);margin-bottom:24px;">Un présentateur anime la partie. Des buzzers sur chaque table. Culture générale, blind test, quiz thématiques. De 4 à 40 joueurs. EVJF, anniversaires, soirées d'entreprise — ça marche à chaque fois.</p>
           
           <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
-            <img src="img/promo/quiz-blindtest.jpg" alt="Blind Test Caen" style="width:100px;height:100px;object-fit:cover;border-radius:6px;" loading="lazy">
-            <img src="img/promo/quiz-kids.jpg" alt="Quiz Kids Caen" style="width:100px;height:100px;object-fit:cover;border-radius:6px;" loading="lazy">
-            <img src="img/promo/quiz-evjf.jpg" alt="Quiz EVJF Caen" style="width:100px;height:100px;object-fit:cover;border-radius:6px;" loading="lazy">
+                      <picture>
+            <source type="image/avif" srcset="img/promo/quiz-blindtest-480w.avif 480w, img/promo/quiz-blindtest-768w.avif 768w, img/promo/quiz-blindtest.avif 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/promo/quiz-blindtest-480w.webp 480w, img/promo/quiz-blindtest-768w.webp 768w, img/promo/quiz-blindtest.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/promo/quiz-blindtest.jpg" srcset="img/promo/quiz-blindtest-480w.jpg 480w, img/promo/quiz-blindtest-768w.jpg 768w, img/promo/quiz-blindtest.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Blind Test Caen" width="800" height="1067" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="img/promo/quiz-kids-480w.avif 480w, img/promo/quiz-kids-768w.avif 768w, img/promo/quiz-kids.avif 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/promo/quiz-kids-480w.webp 480w, img/promo/quiz-kids-768w.webp 768w, img/promo/quiz-kids.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/promo/quiz-kids.jpg" srcset="img/promo/quiz-kids-480w.jpg 480w, img/promo/quiz-kids-768w.jpg 768w, img/promo/quiz-kids.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Quiz Kids Caen" width="800" height="1067" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="img/promo/quiz-evjf-480w.avif 480w, img/promo/quiz-evjf-768w.avif 768w, img/promo/quiz-evjf.avif 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="img/promo/quiz-evjf-480w.webp 480w, img/promo/quiz-evjf-768w.webp 768w, img/promo/quiz-evjf.webp 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="img/promo/quiz-evjf.jpg" srcset="img/promo/quiz-evjf-480w.jpg 480w, img/promo/quiz-evjf-768w.jpg 768w, img/promo/quiz-evjf.jpg 800w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Quiz EVJF Caen" width="800" height="1067" loading="lazy" decoding="async">
+          </picture>
           </div>
 
           <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -420,7 +462,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo"><img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img footer-logo-img"></div>
+          <div class="nav-logo"><img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img footer-logo-img"></div>
           <p>Escape game, quiz game et activités de groupe à Caen. L'endroit où on joue.</p>
           <p style="margin-top:12px;">
             <a href="tel:+33231530751" style="color:var(--orange);">02 31 53 07 51</a><br>
