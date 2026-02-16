@@ -288,28 +288,44 @@
     var params = new URLSearchParams(formData);
     console.log('[DEVIS] Submitting to Netlify Forms:', Object.fromEntries(params));
 
-    fetch('/devis/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    })
-    .then(function (res) {
-      if (res.ok) {
-        console.log('[DEVIS] Submission OK, status:', res.status);
-        showConfirmation();
-      } else {
-        return res.text().then(function (body) {
-          console.error('[DEVIS] Server error:', res.status, body.substring(0, 500));
-          throw new Error('Erreur serveur ' + res.status);
-        });
-      }
-    })
-    .catch(function (err) {
-      console.error('[DEVIS] Erreur envoi:', err);
-      showError('error-step4', 'Erreur lors de l\u2019envoi. Réessayez ou appelez le 02 31 53 07 51.');
-      btnSubmit.disabled = false;
-      btnSubmit.textContent = 'Recevoir mon devis';
-    });
+    // Try primary endpoint, fallback to alternate
+    submitToNetlify(params, 0);
+
+    function submitToNetlify(params, attempt) {
+      var endpoints = ['/', '/devis/'];
+      var url = endpoints[attempt] || endpoints[0];
+      console.log('[DEVIS] Attempt', attempt + 1, 'POST to', url);
+
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      })
+      .then(function (res) {
+        if (res.ok) {
+          console.log('[DEVIS] Submission OK, status:', res.status);
+          showConfirmation();
+        } else if (attempt < endpoints.length - 1) {
+          console.warn('[DEVIS] Endpoint', url, 'returned', res.status, '- trying next');
+          submitToNetlify(params, attempt + 1);
+        } else {
+          return res.text().then(function (body) {
+            console.error('[DEVIS] All endpoints failed. Last:', res.status, body.substring(0, 300));
+            throw new Error('Erreur serveur ' + res.status);
+          });
+        }
+      })
+      .catch(function (err) {
+        if (attempt < endpoints.length - 1) {
+          submitToNetlify(params, attempt + 1);
+        } else {
+          console.error('[DEVIS] Erreur envoi finale:', err);
+          showError('error-step4', 'Erreur lors de l\u2019envoi. Réessayez ou appelez le 02 31 53 07 51.');
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Recevoir mon devis';
+        }
+      });
+    }
   });
 
   function showConfirmation() {
