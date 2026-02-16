@@ -556,6 +556,8 @@ body.menu-open { overflow: hidden; }
   transition: border-color 0.2s;
 }
 .devis-input:focus { outline: none; border-color: var(--orange); }
+input[type="date"].devis-input { color-scheme: dark; }
+input[type="date"].devis-input::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 select.devis-input { cursor: pointer; }
 textarea.devis-input { resize: vertical; min-height: 80px; }
 
