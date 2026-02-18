@@ -18,19 +18,36 @@ document.addEventListener('DOMContentLoaded', () => {
   /* --- Mobile Nav Toggle --- */
   const toggle = document.querySelector('.nav-toggle');
   const links = document.querySelector('.nav-links');
+  const dropdown = document.querySelector('.nav-dropdown');
   if (toggle && links) {
     const closeMenu = () => {
       links.classList.remove('open');
       document.body.classList.remove('menu-open');
       toggle.setAttribute('aria-expanded', 'false');
+      if (dropdown && window.innerWidth <= 768) dropdown.open = false;
     };
     toggle.addEventListener('click', () => {
       const isOpen = links.classList.toggle('open');
       document.body.classList.toggle('menu-open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
+      if (dropdown && isOpen && window.innerWidth <= 768) dropdown.open = true;
     });
     links.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }
+
+  /* --- Desktop: dropdown hover + close on link click --- */
+  if (dropdown) {
+    if (window.innerWidth > 768) {
+      dropdown.addEventListener('mouseenter', () => { dropdown.open = true; });
+      dropdown.addEventListener('mouseleave', () => { dropdown.open = false; });
+    }
+    dropdown.querySelectorAll('.nav-dropdown-menu a').forEach(a => {
+      a.addEventListener('click', () => { dropdown.open = false; });
     });
   }
 
