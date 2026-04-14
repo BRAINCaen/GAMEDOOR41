@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" preserveAspectRatio="xMidYMid meet">
-  <title>GAMEDOOR·41 — YouTube Thumbnail Generic (1280×720)</title>
+  <title>GAMEDOOR·41 — YouTube Thumbnail (générique)</title>
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;900&amp;display=swap');
@@ -9,32 +9,22 @@
       <stop offset="0%" stop-color="#1a0d08"/>
       <stop offset="100%" stop-color="#0C0800"/>
     </linearGradient>
-    <linearGradient id="accentBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#E07020"/>
-      <stop offset="100%" stop-color="#FF8A3D"/>
-    </linearGradient>
   </defs>
-
   <rect width="1280" height="720" fill="url(#thumbBg)"/>
+  <rect x="0" y="0" width="16" height="720" fill="#E07020"/>
 
-  <!-- Left orange bar accent -->
-  <rect x="0" y="0" width="16" height="720" fill="url(#accentBar)"/>
-
-  <!-- Giant 41 background -->
   <text x="1280" y="820" text-anchor="end" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="720" fill="#E07020" opacity="0.05" letter-spacing="-20">41</text>
 
-  <!-- Kicker -->
-  <text x="80" y="180" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="28" fill="#E07020" letter-spacing="10">GAMEDOOR·41 · CAEN</text>
+  <text x="80" y="180" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="28" fill="#E07020" letter-spacing="10">GAMEDOOR 41 · CAEN</text>
 
-  <!-- Big title -->
   <text x="80" y="320" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="130" fill="#F0EBE2" letter-spacing="-2">TITRE DE LA</text>
   <text x="80" y="450" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="130" fill="#E07020" letter-spacing="-2">VIDÉO ICI</text>
 
-  <!-- Bottom mini logo -->
-  <g font-family="'Barlow Condensed', 'Arial Narrow', sans-serif">
+  <g font-family="'Barlow Condensed', 'Arial Narrow', 'Arial', sans-serif">
     <text x="80" y="640" font-size="48" letter-spacing="-1">
-      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan><tspan dx="6" font-weight="900" fill="#E07020">·41</tspan>
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan>
     </text>
+    <circle cx="335" cy="624" r="5" fill="#E07020"/>
+    <text x="347" y="640" font-size="48" font-weight="900" fill="#E07020" letter-spacing="-1">41</text>
   </g>
-
 </svg>

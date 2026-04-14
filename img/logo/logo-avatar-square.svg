@@ -7,10 +7,11 @@
     </style>
   </defs>
   <rect width="512" height="512" rx="64" fill="#0C0800"/>
-  <g font-family="'Barlow Condensed', 'Arial Narrow', sans-serif">
+  <g font-family="'Barlow Condensed', 'Arial Narrow', 'Arial', sans-serif">
     <text x="256" y="230" text-anchor="middle" font-size="80" letter-spacing="-3">
       <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan>
     </text>
-    <text x="256" y="340" text-anchor="middle" font-size="110" font-weight="900" fill="#E07020" letter-spacing="8">·41</text>
+    <circle cx="205" cy="305" r="14" fill="#E07020"/>
+    <text x="240" y="360" font-size="110" font-weight="900" fill="#E07020" letter-spacing="4">41</text>
   </g>
 </svg>

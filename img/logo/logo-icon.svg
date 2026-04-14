@@ -7,5 +7,6 @@
     </style>
   </defs>
   <rect width="512" height="512" rx="80" fill="#0C0800"/>
-  <text x="256" y="340" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="260" fill="#E07020" letter-spacing="6">·41</text>
+  <circle cx="140" cy="280" r="26" fill="#E07020"/>
+  <text x="195" y="360" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="260" fill="#E07020" letter-spacing="6">41</text>
 </svg>

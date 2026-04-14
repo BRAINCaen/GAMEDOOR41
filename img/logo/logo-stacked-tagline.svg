@@ -11,8 +11,9 @@
     <text x="250" y="120" text-anchor="middle" font-size="72" letter-spacing="-2">
       <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan>
     </text>
-    <text x="250" y="190" text-anchor="middle" font-size="60" font-weight="900" fill="#E07020" letter-spacing="8">·41</text>
-    <line x1="150" y1="225" x2="350" y2="225" stroke="#2E2820" stroke-width="1"/>
-    <text x="250" y="265" text-anchor="middle" font-size="18" font-weight="500" fill="#8A8078" letter-spacing="8" text-transform="uppercase">ESCAPE · QUIZ · ACTION</text>
+    <circle cx="225" cy="180" r="8" fill="#E07020"/>
+    <text x="245" y="205" font-size="60" font-weight="900" fill="#E07020" letter-spacing="4">41</text>
+    <line x1="150" y1="240" x2="350" y2="240" stroke="#2E2820" stroke-width="1"/>
+    <text x="250" y="280" text-anchor="middle" font-size="18" font-weight="500" fill="#8A8078" letter-spacing="8">ESCAPE · QUIZ · ACTION</text>
   </g>
 </svg>
