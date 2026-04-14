@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" preserveAspectRatio="xMidYMid meet">
+  <title>GAMEDOOR·41 — Annonce de rebranding (Google Business post)</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;700;900&amp;display=swap');
+    </style>
+    <radialGradient id="annonceBg" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#1a0d08"/>
+      <stop offset="100%" stop-color="#0C0800"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="1200" height="900" fill="url(#annonceBg)"/>
+
+  <!-- 41 géant en filigrane -->
+  <text x="1200" y="1000" text-anchor="end" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="900" fill="#E07020" opacity="0.05" letter-spacing="-25">41</text>
+
+  <!-- Cadre décoratif coins -->
+  <rect x="60" y="60" width="80" height="4" fill="#E07020"/>
+  <rect x="60" y="60" width="4" height="80" fill="#E07020"/>
+  <rect x="1060" y="60" width="80" height="4" fill="#E07020"/>
+  <rect x="1136" y="60" width="4" height="80" fill="#E07020"/>
+  <rect x="60" y="836" width="80" height="4" fill="#E07020"/>
+  <rect x="60" y="760" width="4" height="80" fill="#E07020"/>
+  <rect x="1060" y="836" width="80" height="4" fill="#E07020"/>
+  <rect x="1136" y="760" width="4" height="80" fill="#E07020"/>
+
+  <!-- Kicker -->
+  <text x="600" y="160" text-anchor="middle" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="28" fill="#E07020" letter-spacing="12">NOUVEAU NOM · MÊME EXPÉRIENCE</text>
+
+  <!-- Anciens noms barrés -->
+  <g font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="40" fill="#8A8078" letter-spacing="4">
+    <text x="600" y="260" text-anchor="middle">BRAIN ESCAPE GAME</text>
+    <text x="600" y="310" text-anchor="middle">&amp; BUZZ YOUR BRAIN</text>
+    <line x1="330" y1="248" x2="870" y2="248" stroke="#8A8078" stroke-width="2"/>
+    <line x1="330" y1="298" x2="870" y2="298" stroke="#8A8078" stroke-width="2"/>
+  </g>
+
+  <!-- Flèche descendante -->
+  <g transform="translate(600, 360)">
+    <line x1="0" y1="-10" x2="0" y2="30" stroke="#E07020" stroke-width="4"/>
+    <polyline points="-15,15 0,35 15,15" fill="none" stroke="#E07020" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- "DEVIENT" -->
+  <text x="600" y="450" text-anchor="middle" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="26" fill="#C8C2B8" letter-spacing="16">DEVIENT</text>
+
+  <!-- Logo principal GAMEDOOR·41 -->
+  <g font-family="'Barlow Condensed', 'Arial Narrow', 'Arial', sans-serif">
+    <text x="620" y="610" text-anchor="end" font-size="170" letter-spacing="-4">
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan>
+    </text>
+    <circle cx="660" cy="560" r="18" fill="#E07020"/>
+    <text x="695" y="610" font-size="170" font-weight="900" fill="#E07020" letter-spacing="-4">41</text>
+  </g>
+
+  <!-- Séparateur -->
+  <line x1="460" y1="660" x2="740" y2="660" stroke="#E07020" stroke-width="2"/>
+
+  <!-- Messages clés -->
+  <g font-family="'Barlow Condensed', 'Arial', sans-serif">
+    <text x="600" y="720" text-anchor="middle" font-weight="700" font-size="36" fill="#F0EBE2" letter-spacing="4">MÊME ÉQUIPE · MÊME ADRESSE</text>
+    <text x="600" y="770" text-anchor="middle" font-weight="500" font-size="24" fill="#8A8078" letter-spacing="8">41 BIS RUE PASTEUR · CAEN</text>
+  </g>
+
+</svg>
