@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1584 396" width="1584" height="396" preserveAspectRatio="xMidYMid meet">
+  <title>GAMEDOOR·41 — LinkedIn Banner (1584×396)</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;900&amp;display=swap');
+    </style>
+    <linearGradient id="liBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0C0800"/>
+      <stop offset="100%" stop-color="#1a0d08"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1584" height="396" fill="url(#liBg)"/>
+
+  <!-- Big 41 watermark -->
+  <text x="1584" y="500" text-anchor="end" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="520" fill="#E07020" opacity="0.04" letter-spacing="-15">41</text>
+
+  <!-- Kicker -->
+  <text x="80" y="120" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="22" fill="#E07020" letter-spacing="10">ESCAPE · QUIZ · ACTION · CAEN</text>
+
+  <!-- Main logo -->
+  <g font-family="'Barlow Condensed', 'Arial Narrow', sans-serif">
+    <text x="80" y="240" font-size="108" letter-spacing="-3">
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan><tspan dx="10" font-weight="900" fill="#E07020">·41</tspan>
+    </text>
+  </g>
+
+  <!-- Tagline -->
+  <text x="80" y="290" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="28" fill="#C8C2B8" letter-spacing="4">L'ENDROIT OÙ ON JOUE À CAEN</text>
+
+  <!-- Contact bar -->
+  <line x1="80" y1="325" x2="500" y2="325" stroke="#2E2820" stroke-width="1"/>
+  <text x="80" y="360" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="18" fill="#8A8078" letter-spacing="3">41 BIS RUE PASTEUR · 14120 MONDEVILLE · 02 31 53 07 51</text>
+
+</svg>

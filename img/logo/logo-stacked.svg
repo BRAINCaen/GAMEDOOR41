@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="500" height="280" preserveAspectRatio="xMidYMid meet">
+  <title>GAMEDOOR·41 — Version empilée</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;900&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="500" height="280" fill="#0C0800"/>
+  <g font-family="'Barlow Condensed', 'Arial Narrow', 'Arial', sans-serif">
+    <text x="250" y="135" text-anchor="middle" font-size="80" letter-spacing="-2">
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan>
+    </text>
+    <text x="250" y="210" text-anchor="middle" font-size="70" font-weight="900" fill="#E07020" letter-spacing="10">·41</text>
+  </g>
+</svg>

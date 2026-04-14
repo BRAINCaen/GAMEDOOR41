@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMEDOOR·41 — Phase 3 : INPI, Domaine & Bascule Technique</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #f8f9fa; color: #1a1a1a; line-height: 1.6; padding: 40px 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+    .doc-header { background: linear-gradient(135deg, #0a0a0a 0%, #1a0d08 100%); color: white; padding: 48px 40px; }
+    .doc-header .brand { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; color: #FF6B00; margin-bottom: 12px; }
+    .doc-header h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .doc-header .subtitle { font-size: 16px; color: #999; }
+    .doc-header .meta { margin-top: 24px; display: flex; gap: 24px; font-size: 13px; color: #666; }
+    .doc-header .meta span { color: #FF6B00; font-weight: 600; }
+    .content { padding: 40px; }
+    h2 { font-size: 22px; font-weight: 800; color: #0a0a0a; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid #FF6B00; display: inline-block; }
+    h2:first-child { margin-top: 0; }
+    h3 { font-size: 17px; font-weight: 700; color: #333; margin: 28px 0 12px; }
+    p { margin-bottom: 12px; color: #444; }
+    .alert { background: #fff3e0; border-left: 4px solid #FF6B00; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+    .alert.danger { background: #fce4ec; border-left-color: #c62828; }
+    .alert.success { background: #e8f5e9; border-left-color: #2e7d32; }
+    .alert.blue { background: #e3f2fd; border-left-color: #1565c0; }
+    .alert strong { display: block; margin-bottom: 4px; color: #1a1a1a; }
+    .alert p { margin-bottom: 0; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th { background: #f5f5f5; font-weight: 600; text-align: left; padding: 10px 14px; border-bottom: 2px solid #ddd; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; }
+    td { padding: 10px 14px; border-bottom: 1px solid #eee; color: #444; }
+    tr:hover td { background: #fafafa; }
+    .checklist { list-style: none; margin: 16px 0; }
+    .checklist li { padding: 10px 0 10px 36px; position: relative; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
+    .checklist li::before { content: ''; position: absolute; left: 0; top: 12px; width: 20px; height: 20px; border: 2px solid #ccc; border-radius: 4px; background: white; }
+    .step { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 24px; margin: 20px 0; page-break-inside: avoid; }
+    .step-number { display: inline-block; background: #FF6B00; color: white; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-weight: 700; font-size: 14px; margin-right: 8px; }
+    .step-title { font-weight: 700; font-size: 16px; display: inline; }
+    .step-body { margin-top: 12px; }
+    .step-body ol, .step-body ul { margin: 8px 0; padding-left: 24px; }
+    .step-body li { margin-bottom: 8px; font-size: 14px; color: #444; }
+    .code-block { background: #1a1a1a; color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 16px 0; font-size: 13px; line-height: 1.7; white-space: pre-wrap; font-family: 'Courier New', monospace; overflow-x: auto; }
+    .code-block .comment { color: #666; }
+    .code-block .key { color: #FF6B00; }
+    .code-block .value { color: #00e5ff; }
+    .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tag-urgent { background: #fce4ec; color: #c62828; }
+    .tag-important { background: #fff3e0; color: #e65100; }
+    .tag-info { background: #e3f2fd; color: #1565c0; }
+    .tag-ok { background: #e8f5e9; color: #2e7d32; }
+    .price-box { background: #f5f5f5; border: 2px solid #FF6B00; border-radius: 8px; padding: 20px; text-align: center; margin: 16px 0; }
+    .price-box .price { font-size: 36px; font-weight: 800; color: #FF6B00; }
+    .price-box .price small { font-size: 16px; color: #999; font-weight: 400; }
+    .price-box .desc { font-size: 14px; color: #666; margin-top: 4px; }
+    .part-header { background: #0a0a0a; color: white; padding: 24px 40px; margin: 40px -40px 24px; }
+    .part-header h2 { color: white; border-bottom-color: #FF6B00; margin: 0; }
+    .part-header p { color: #999; margin: 8px 0 0; font-size: 14px; }
+    hr { border: none; height: 1px; background: #eee; margin: 32px 0; }
+    @media print {
+      body { background: white; padding: 0; }
+      .container { box-shadow: none; border-radius: 0; }
+      .doc-header { padding: 32px; }
+      .content { padding: 32px; }
+      .part-header { margin: 40px -32px 24px; padding: 24px 32px; }
+      h2 { break-after: avoid; }
+      .step { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="doc-header">
+      <div class="brand">GAMEDOOR·41</div>
+      <h1>Phase 3 : INPI, Domaine & Bascule Technique</h1>
+      <div class="subtitle">Protéger la marque, acheter le domaine, basculer les sites</div>
+      <div class="meta">
+        <div>Date : <span>Avril 2026</span></div>
+        <div>Statut : <span>À exécuter</span></div>
+        <div>Priorité : <span>Critique</span></div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ======================= PARTIE A : INPI ======================= -->
+      <div class="part-header">
+        <h2>Partie A : Dépôt de marque INPI</h2>
+        <p>Protéger GAMEDOOR·41 face à la concurrence (Gameside et autres)</p>
+      </div>
+
+      <!-- Résultats recherche -->
+      <h3>Résultats des recherches de disponibilité</h3>
+
+      <table>
+        <tr><th>Recherche</th><th>Résultat</th><th>Status</th></tr>
+        <tr><td>GAMEDOOR à l'INPI (base marques France)</td><td>Aucun résultat — non déposé</td><td><span class="tag tag-ok">Disponible</span></td></tr>
+        <tr><td>GAMEDOOR à l'EUIPO (marques UE)</td><td>Aucun résultat trouvé</td><td><span class="tag tag-ok">Disponible</span></td></tr>
+        <tr><td>GAMESIDE à l'INPI</td><td><strong>Déposé le 11/03/2021</strong> par SAS FUSION (Perpignan) — classe 41</td><td><span class="tag tag-urgent">Déposé</span></td></tr>
+      </table>
+
+      <div class="alert success">
+        <strong>Bonne nouvelle</strong>
+        <p><strong>GAMEDOOR n'est déposé nulle part.</strong> Vous avez le champ libre. Mais il faut agir vite — un concurrent pourrait déposer le même nom.</p>
+      </div>
+
+      <div class="alert">
+        <strong>GAMESIDE vs GAMEDOOR — Risque de confusion ?</strong>
+        <p>GAMESIDE est déposé en classe 41 (loisirs/escape game) par une entreprise de Perpignan. Les noms sont proches phonétiquement mais suffisamment distincts (DOOR ≠ SIDE). Le risque d'opposition est <strong>faible</strong> mais pas nul. Un dépôt rapide et en bonne et due forme vous protège.</p>
+      </div>
+
+      <hr>
+
+      <h3>Coût du dépôt</h3>
+
+      <div class="price-box">
+        <div class="price">190€ <small>+ 40€/classe supplémentaire</small></div>
+        <div class="desc">Dépôt en ligne sur procedures.inpi.fr — Protection 10 ans sur la France</div>
+      </div>
+
+      <table>
+        <tr><th>Option</th><th>Classes</th><th>Coût</th><th>Recommandation</th></tr>
+        <tr><td>Dépôt basique</td><td>1 classe (n°41)</td><td><strong>190 €</strong></td><td><span class="tag tag-important">Minimum</span></td></tr>
+        <tr><td>Dépôt recommandé</td><td>2 classes (n°41 + n°43)</td><td><strong>230 €</strong></td><td><span class="tag tag-ok">Recommandé</span></td></tr>
+        <tr><td>Dépôt large</td><td>3 classes (n°41 + n°43 + n°28)</td><td><strong>270 €</strong></td><td><span class="tag tag-info">Optionnel</span></td></tr>
+      </table>
+
+      <hr>
+
+      <!-- Étapes INPI -->
+      <h3>Les classes à sélectionner</h3>
+
+      <div class="step">
+        <span class="step-number">41</span>
+        <div class="step-title">Classe 41 — Éducation, divertissement, activités sportives et culturelles</div>
+        <div class="step-body">
+          <p><span class="tag tag-urgent">OBLIGATOIRE</span> — C'est votre activité principale.</p>
+          <p>Libellé à utiliser lors du dépôt :</p>
+          <div class="code-block">Services de divertissement ; services de loisirs ; exploitation de salles de jeux ;
+organisation et conduite de jeux ; escape games ; jeux d'évasion grandeur nature ;
+quiz games ; organisation de jeux-concours ; services d'animation ;
+exploitation de centres de loisirs ; services récréatifs ;
+organisation d'événements à des fins de divertissement ;
+organisation de fêtes et d'événements privés à des fins de divertissement ;
+services de team building à des fins de divertissement</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">43</span>
+        <div class="step-title">Classe 43 — Services de restauration et hébergement temporaire</div>
+        <div class="step-body">
+          <p><span class="tag tag-ok">RECOMMANDÉ</span> — Protège l'espace bar/gaming mentionné sur votre site ("Bientôt").</p>
+          <p>Libellé à utiliser :</p>
+          <div class="code-block">Services de bar ; services de restauration (alimentation) ;
+services de traiteur ; location de salles pour événements et réceptions</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">28</span>
+        <div class="step-title">Classe 28 — Jeux, jouets, articles de sport</div>
+        <div class="step-body">
+          <p><span class="tag tag-info">OPTIONNEL</span> — Si vous vendez des jeux ou du merch un jour.</p>
+          <p>Libellé : Jeux de société ; jeux d'adresse ; appareils de jeux.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>Procédure de dépôt pas à pas</h3>
+
+      <div class="step">
+        <span class="step-number">1</span>
+        <div class="step-title">Créer un compte INPI</div>
+        <div class="step-body">
+          <ol>
+            <li>Aller sur <strong>procedures.inpi.fr</strong></li>
+            <li>Cliquer sur <strong>"Créer un compte"</strong></li>
+            <li>Renseigner les infos de la SARL BOEHME (SIREN 823 227 111)</li>
+            <li>Valider par email</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <div class="step-title">Déposer la marque</div>
+        <div class="step-body">
+          <ol>
+            <li>Se connecter sur <strong>procedures.inpi.fr</strong></li>
+            <li>Cliquer sur <strong>"Déposer une marque"</strong></li>
+            <li>Type de marque : <strong>"Marque verbale"</strong></li>
+            <li>Nom de la marque : <strong>GAMEDOOR 41</strong>
+              <ul>
+                <li>Note : l'INPI n'accepte pas toujours les caractères spéciaux (·). Déposer en tant que <strong>GAMEDOOR 41</strong> (avec espace) protège aussi la variante avec point médian</li>
+              </ul>
+            </li>
+            <li>Déposant : <strong>SARL BOEHME</strong> — SIREN 823 227 111 — 41 bis rue Pasteur, 14120 Mondeville</li>
+            <li>Sélectionner les classes : <strong>41</strong> (+ 43 si recommandé)</li>
+            <li>Renseigner les libellés de produits/services (voir ci-dessus)</li>
+            <li>Payer par carte bancaire : <strong>190€</strong> (1 classe) ou <strong>230€</strong> (2 classes)</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <div class="step-title">Après le dépôt — Ce qui se passe</div>
+        <div class="step-body">
+          <table>
+            <tr><th>Délai</th><th>Étape</th></tr>
+            <tr><td>Jour J</td><td>Dépôt enregistré, numéro de dépôt attribué</td></tr>
+            <tr><td>~6 semaines</td><td>Publication au BOPI (Bulletin Officiel de la Propriété Industrielle)</td></tr>
+            <tr><td>2 mois après publication</td><td>Période d'opposition (Gameside ou autres peuvent contester)</td></tr>
+            <tr><td>~5 mois total</td><td>Si pas d'opposition → <strong>Marque enregistrée</strong> — Certificat envoyé</td></tr>
+            <tr><td>10 ans</td><td>Durée de protection (renouvelable)</td></tr>
+          </table>
+          <div class="alert blue">
+            <strong>Info importante</strong>
+            <p>Dès le jour du dépôt, vous êtes protégé par la <strong>date de priorité</strong>. Même si la marque met 5 mois à être enregistrée, personne ne peut déposer GAMEDOOR après vous.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <div class="step-title">Optionnel : Déposer aussi le logo</div>
+        <div class="step-body">
+          <p>En plus de la marque verbale, vous pouvez déposer une <strong>marque figurative</strong> (le logo GAMEDOOR·41 avec le point médian stylisé). Cela protège le design visuel en plus du nom.</p>
+          <p>Coût supplémentaire : <strong>190€</strong> (même tarif, dépôt séparé).</p>
+          <p>Recommandation : faire le dépôt verbal d'abord (priorité), le logo peut attendre.</p>
+        </div>
+      </div>
+
+      <!-- ======================= PARTIE B : DOMAINE ======================= -->
+      <div class="part-header">
+        <h2>Partie B : Achat du domaine</h2>
+        <p>gamedoor41.fr — Configuration DNS et connexion Netlify</p>
+      </div>
+
+      <h3>Résultats de la vérification</h3>
+
+      <table>
+        <tr><th>Domaine</th><th>Status</th><th>Action</th></tr>
+        <tr><td><strong>gamedoor41.fr</strong></td><td><span class="tag tag-ok">Disponible</span></td><td><span class="tag tag-urgent">Acheter en priorité</span></td></tr>
+        <tr><td><strong>gamedoor41.com</strong></td><td><span class="tag tag-ok">Disponible</span></td><td><span class="tag tag-important">Acheter aussi (protection)</span></td></tr>
+        <tr><td>gamedoor41.net</td><td>Non vérifié</td><td><span class="tag tag-info">Optionnel</span></td></tr>
+        <tr><td>gamedoor.fr</td><td>Non vérifié</td><td><span class="tag tag-important">Vérifier et acheter si dispo</span></td></tr>
+      </table>
+
+      <div class="alert danger">
+        <strong>Urgence : Acheter les domaines AVANT d'annoncer le rebranding</strong>
+        <p>Si un concurrent voit l'annonce avant que vous ayez acheté les domaines, il pourrait les réserver (cybersquatting).</p>
+      </div>
+
+      <hr>
+
+      <h3>Où acheter ?</h3>
+
+      <table>
+        <tr><th>Registrar</th><th>Prix .fr /an</th><th>Avantages</th><th>Recommandation</th></tr>
+        <tr><td><strong>OVH</strong></td><td>~7-10 €</td><td>Français, interface simple, DNS rapide</td><td><span class="tag tag-ok">Recommandé</span></td></tr>
+        <tr><td>Gandi</td><td>~15 €</td><td>Français, bonne réputation</td><td><span class="tag tag-info">Bon aussi</span></td></tr>
+        <tr><td>Cloudflare</td><td>~9 €</td><td>DNS ultra-rapide, prix coûtant</td><td><span class="tag tag-info">Pour les tech</span></td></tr>
+        <tr><td>Namecheap</td><td>~10 €</td><td>Pas d'hébergement, juste domaines</td><td>OK</td></tr>
+      </table>
+
+      <hr>
+
+      <h3>Procédure d'achat — OVH (recommandé)</h3>
+
+      <div class="step">
+        <span class="step-number">1</span>
+        <div class="step-title">Commander le domaine</div>
+        <div class="step-body">
+          <ol>
+            <li>Aller sur <strong>www.ovhcloud.com/fr/domains/</strong></li>
+            <li>Taper <strong>gamedoor41</strong> dans la recherche</li>
+            <li>Sélectionner <strong>gamedoor41.fr</strong> + <strong>gamedoor41.com</strong></li>
+            <li>NE PAS prendre d'hébergement (vous êtes sur Netlify)</li>
+            <li>Prendre l'option <strong>DNS anycast</strong> si proposée (+2€/an, ça accélère)</li>
+            <li>Renseigner les infos du titulaire : <strong>SARL BOEHME</strong></li>
+            <li>Payer (~20€ total pour les 2 domaines la première année)</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <div class="step-title">Configurer les DNS pour Netlify</div>
+        <div class="step-body">
+          <p>Dans le panneau OVH > Domaines > gamedoor41.fr > Zone DNS, ajouter :</p>
+          <div class="code-block"><span class="comment"># Enregistrements DNS à ajouter chez OVH</span>
+
+<span class="comment"># Option A : Utiliser Netlify DNS (recommandé)</span>
+<span class="comment"># → Dans Netlify : Settings > Domain management > Add custom domain</span>
+<span class="comment"># → Netlify vous donnera des nameservers à configurer chez OVH</span>
+<span class="comment"># → Chez OVH : changer les serveurs DNS vers ceux de Netlify</span>
+
+<span class="key">dns1.p01.nsone.net</span>
+<span class="key">dns2.p01.nsone.net</span>
+<span class="key">dns3.p01.nsone.net</span>
+<span class="key">dns4.p01.nsone.net</span>
+
+<span class="comment"># Option B : Garder les DNS OVH et pointer vers Netlify</span>
+<span class="key">Type    Nom              Valeur</span>
+<span class="value">A       @                75.2.60.5</span>
+<span class="value">CNAME   www              gamedoor41.netlify.app.</span>
+
+<span class="comment"># L'option A est plus simple et gère automatiquement le HTTPS</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <div class="step-title">Configurer Netlify</div>
+        <div class="step-body">
+          <ol>
+            <li>Dans Netlify > <strong>Site settings</strong> > <strong>Domain management</strong></li>
+            <li>Cliquer <strong>"Add custom domain"</strong></li>
+            <li>Entrer : <strong>gamedoor41.fr</strong></li>
+            <li>Ajouter aussi : <strong>www.gamedoor41.fr</strong> (redirect auto vers gamedoor41.fr)</li>
+            <li>Netlify génère automatiquement le <strong>certificat SSL</strong> (HTTPS gratuit via Let's Encrypt)</li>
+            <li>Attendre la propagation DNS : <strong>15 min à 48h</strong> (généralement 1-2h)</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <div class="step-title">Configurer la redirection gamedoor41.com → gamedoor41.fr</div>
+        <div class="step-body">
+          <p>Le .com doit rediriger automatiquement vers le .fr (un seul site, pas de duplicate content).</p>
+          <ol>
+            <li>Ajouter <strong>gamedoor41.com</strong> comme domaine alias dans Netlify</li>
+            <li>Netlify redirigera automatiquement vers le domaine principal (.fr)</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- ======================= PARTIE C : BASCULE ======================= -->
+      <div class="part-header">
+        <h2>Partie C : Bascule technique</h2>
+        <p>Couper les anciens sites Wix et activer les redirections 301</p>
+      </div>
+
+      <div class="alert danger">
+        <strong>RÈGLE ABSOLUE : Ne jamais basculer un vendredi ou un week-end</strong>
+        <p>Si quelque chose casse, vous devez pouvoir réagir. Mardi ou mercredi matin = idéal.</p>
+      </div>
+
+      <h3>Pré-requis avant la bascule</h3>
+
+      <ul class="checklist">
+        <li>Domaine gamedoor41.fr acheté et fonctionnel (HTTPS actif)</li>
+        <li>Fiche Google renommée en GAMEDOOR·41 et validée</li>
+        <li>Nouveau site testé à fond sur gamedoor41.fr</li>
+        <li>Toutes les canonical URLs mises à jour vers gamedoor41.fr</li>
+        <li>Sitemap.xml mis à jour avec les URLs gamedoor41.fr</li>
+        <li>Google Search Console configurée pour gamedoor41.fr</li>
+      </ul>
+
+      <hr>
+
+      <h3>Le jour J — Ordre des opérations</h3>
+
+      <div class="step">
+        <span class="step-number">1</span>
+        <div class="step-title">Matin (8h) — Vérifications finales</div>
+        <div class="step-body">
+          <ul class="checklist">
+            <li>gamedoor41.fr est en ligne et fonctionne</li>
+            <li>Toutes les 13 pages sont accessibles</li>
+            <li>Le booking (4escape.io) fonctionne depuis le nouveau site</li>
+            <li>Le téléphone est correct sur toutes les pages</li>
+            <li>La fiche Google affiche GAMEDOOR·41</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <div class="step-title">10h — Activer les redirections depuis brain-escapegame-caen.fr</div>
+        <div class="step-body">
+          <p><strong>Option recommandée : Cloudflare (gratuit)</strong></p>
+          <ol>
+            <li>Créer un compte Cloudflare gratuit</li>
+            <li>Ajouter le domaine <strong>brain-escapegame-caen.fr</strong></li>
+            <li>Changer les DNS chez le registrar actuel → serveurs Cloudflare</li>
+            <li>Configurer les <strong>Redirect Rules</strong> :
+              <div class="code-block"><span class="comment"># Redirections Cloudflare pour brain-escapegame-caen.fr</span>
+
+<span class="comment"># Redirection globale (catch-all)</span>
+<span class="key">Source :</span> <span class="value">brain-escapegame-caen.fr/*</span>
+<span class="key">Destination :</span> <span class="value">https://gamedoor41.fr/</span>
+<span class="key">Type :</span> <span class="value">301 (Permanent)</span>
+
+<span class="comment"># Pages spécifiques (les plus importantes)</span>
+<span class="key">/tarifs</span>                    → <span class="value">https://gamedoor41.fr/tarifs/</span>
+<span class="key">/escape-back-to-80s</span>        → <span class="value">https://gamedoor41.fr/escape-game-caen/#back-80s</span>
+<span class="key">/horreur-escape-psychiatric</span> → <span class="value">https://gamedoor41.fr/escape-game-caen/#psychiatric</span>
+<span class="key">/escape-inprison</span>           → <span class="value">https://gamedoor41.fr/escape-game-caen/#garde-a-vue</span>
+<span class="key">/evjf-evg-mariage</span>          → <span class="value">https://gamedoor41.fr/evjf-caen/</span>
+<span class="key">/teambuilding-cse</span>          → <span class="value">https://gamedoor41.fr/team-building-caen/</span>
+<span class="key">/faq-infos</span>                 → <span class="value">https://gamedoor41.fr/faq/</span>
+<span class="key">/blog</span>                      → <span class="value">https://gamedoor41.fr/blog/</span>
+<span class="key">/post/*</span>                    → <span class="value">https://gamedoor41.fr/blog/</span></div>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <div class="step-title">10h30 — Activer les redirections depuis buzzyourbrain-caen.fr</div>
+        <div class="step-body">
+          <p>Même procédure Cloudflare :</p>
+          <div class="code-block"><span class="comment"># Redirections Cloudflare pour buzzyourbrain-caen.fr</span>
+
+<span class="key">/ (accueil)</span>    → <span class="value">https://gamedoor41.fr/quiz-game-caen/</span>     <span class="comment">301</span>
+<span class="key">/tarifs</span>        → <span class="value">https://gamedoor41.fr/tarifs/</span>              <span class="comment">301</span>
+<span class="key">/faq</span>           → <span class="value">https://gamedoor41.fr/faq/</span>                 <span class="comment">301</span>
+<span class="key">/contact</span>       → <span class="value">https://gamedoor41.fr/contact/</span>             <span class="comment">301</span>
+<span class="key">/le-quiz-game</span>  → <span class="value">https://gamedoor41.fr/quiz-game-caen/</span>     <span class="comment">301</span>
+<span class="key">/reserver</span>      → <span class="value">https://braincaen.4escape.io/booking</span>      <span class="comment">301</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <div class="step-title">11h — Tester les redirections</div>
+        <div class="step-body">
+          <p>Tester manuellement dans le navigateur (mode navigation privée) :</p>
+          <ul class="checklist">
+            <li>brain-escapegame-caen.fr → gamedoor41.fr</li>
+            <li>brain-escapegame-caen.fr/tarifs → gamedoor41.fr/tarifs/</li>
+            <li>brain-escapegame-caen.fr/escape-back-to-80s → gamedoor41.fr/escape-game-caen/#back-80s</li>
+            <li>brain-escapegame-caen.fr/evjf-evg-mariage → gamedoor41.fr/evjf-caen/</li>
+            <li>buzzyourbrain-caen.fr → gamedoor41.fr/quiz-game-caen/</li>
+            <li>buzzyourbrain-caen.fr/tarifs → gamedoor41.fr/tarifs/</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">5</span>
+        <div class="step-title">14h — Google Search Console</div>
+        <div class="step-body">
+          <ol>
+            <li>Ajouter <strong>gamedoor41.fr</strong> comme nouvelle propriété dans Search Console</li>
+            <li>Vérifier via DNS ou balise HTML</li>
+            <li>Soumettre le <strong>sitemap.xml</strong> : <code>https://gamedoor41.fr/sitemap.xml</code></li>
+            <li>Utiliser l'outil <strong>"Changement d'adresse"</strong> :
+              <ul>
+                <li>Propriété source : brain-escapegame-caen.fr</li>
+                <li>Propriété destination : gamedoor41.fr</li>
+              </ul>
+            </li>
+            <li>Faire la même chose pour buzzyourbrain-caen.fr</li>
+            <li>Demander l'<strong>indexation</strong> des 5 pages principales via "Inspection d'URL"</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-number">6</span>
+        <div class="step-title">14h30 — Mettre à jour la fiche Google</div>
+        <div class="step-body">
+          <ol>
+            <li>Dans Google Business Profile, changer l'URL du site web → <strong>https://gamedoor41.fr</strong></li>
+            <li>Mettre à jour le lien de réservation</li>
+            <li>Publier un Google Post pour annoncer le nouveau site</li>
+          </ol>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>Après la bascule — Monitoring (14 jours)</h3>
+
+      <table>
+        <tr><th>Jour</th><th>Action</th></tr>
+        <tr><td>J+1</td><td>Vérifier Search Console pour erreurs 404</td></tr>
+        <tr><td>J+2</td><td>Corriger toute URL cassée détectée</td></tr>
+        <tr><td>J+3</td><td>Vérifier que Google indexe les nouvelles pages</td></tr>
+        <tr><td>J+7</td><td>Comparer le trafic avant/après (baisse de 10-20% = normal)</td></tr>
+        <tr><td>J+14</td><td>Le trafic devrait revenir à la normale</td></tr>
+        <tr><td>J+30</td><td>Audit SEO : vérifier les positions sur les mots-clés principaux</td></tr>
+      </table>
+
+      <hr>
+
+      <!-- RÉCAP BUDGET -->
+      <h2>Récapitulatif budget</h2>
+
+      <table>
+        <tr><th>Poste</th><th>Coût</th><th>Récurrence</th></tr>
+        <tr><td>Dépôt marque INPI (2 classes)</td><td><strong>230 €</strong></td><td>Unique (renouvelable dans 10 ans : 290€)</td></tr>
+        <tr><td>Domaine gamedoor41.fr</td><td><strong>~8 €</strong></td><td>/an</td></tr>
+        <tr><td>Domaine gamedoor41.com</td><td><strong>~12 €</strong></td><td>/an</td></tr>
+        <tr><td>Cloudflare (redirections)</td><td><strong>Gratuit</strong></td><td>—</td></tr>
+        <tr><td>Netlify (hébergement)</td><td><strong>Gratuit</strong></td><td>(plan gratuit suffisant)</td></tr>
+        <tr><td>Certificat SSL</td><td><strong>Gratuit</strong></td><td>Auto via Netlify/Let's Encrypt</td></tr>
+        <tr><td>Renouvellement brain-escapegame-caen.fr</td><td><strong>~12 €</strong></td><td>/an (garder 2 ans min)</td></tr>
+        <tr><td>Renouvellement buzzyourbrain-caen.fr</td><td><strong>~12 €</strong></td><td>/an (garder 2 ans min)</td></tr>
+        <tr style="background:#fff3e0;"><td><strong>TOTAL année 1</strong></td><td><strong>~274 €</strong></td><td></td></tr>
+        <tr><td><strong>TOTAL années suivantes</strong></td><td><strong>~44 €/an</strong></td><td>(4 domaines)</td></tr>
+      </table>
+
+      <hr>
+
+      <!-- ORDRE DE PRIORITÉ -->
+      <h2>Ordre d'exécution global</h2>
+
+      <table>
+        <tr><th>Priorité</th><th>Action</th><th>Délai</th></tr>
+        <tr><td><span class="tag tag-urgent">1</span></td><td><strong>Déposer la marque INPI</strong></td><td>Faire AUJOURD'HUI (30 min en ligne)</td></tr>
+        <tr><td><span class="tag tag-urgent">2</span></td><td><strong>Acheter gamedoor41.fr + .com</strong></td><td>Faire AUJOURD'HUI (10 min)</td></tr>
+        <tr><td><span class="tag tag-important">3</span></td><td>Configurer DNS + Netlify</td><td>Le lendemain (1h + propagation)</td></tr>
+        <tr><td><span class="tag tag-important">4</span></td><td>Mettre à jour canonical URLs + sitemap dans le code</td><td>Quand DNS validé</td></tr>
+        <tr><td><span class="tag tag-important">5</span></td><td>Renommer fiche Google (Phase 2)</td><td>J-5 avant bascule</td></tr>
+        <tr><td><span class="tag tag-urgent">6</span></td><td><strong>BASCULE — Activer les 301 redirections</strong></td><td>Le jour J (mardi/mercredi)</td></tr>
+        <tr><td><span class="tag tag-info">7</span></td><td>Search Console + monitoring</td><td>Jour J après-midi</td></tr>
+        <tr><td><span class="tag tag-info">8</span></td><td>Annuaires + réseaux sociaux</td><td>J+1 à J+14</td></tr>
+      </table>
+
+      <hr>
+
+      <div style="text-align:center;padding:24px 0;color:#999;font-size:13px;">
+        <p>Document généré le 13 avril 2026 — GAMEDOOR·41</p>
+        <p style="color:#FF6B00;font-weight:600;margin-top:8px;">Phase 3 sur 5 du plan de migration</p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

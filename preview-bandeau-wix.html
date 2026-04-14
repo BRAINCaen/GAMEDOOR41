@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Bandeau Wix — GAMEDOOR·41</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow Condensed',sans-serif;background:#f4f3f1;min-height:100vh;}
+
+/* THE BANNER — Copiez ce style dans Wix */
+.banner{
+  position:sticky;
+  top:0;
+  width:100%;
+  background:#0E0B08;
+  border-bottom:2px solid #E07020;
+  padding:12px 20px;
+  text-align:center;
+  color:#F0EBE2;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background 0.3s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  z-index:9999;
+}
+.banner:hover{background:#1a1208;}
+.banner .orange{color:#E07020;font-weight:900;}
+.banner .cream{color:#F0EBE2;font-weight:500;}
+.banner .arrow{color:#E07020;font-weight:900;font-size:18px;transition:transform 0.3s ease;}
+.banner:hover .arrow{transform:translateX(4px);}
+.banner .close{position:absolute;right:16px;color:#8A8078;font-size:18px;font-weight:300;cursor:pointer;background:none;border:none;padding:0 8px;transition:color 0.2s;}
+.banner .close:hover{color:#F0EBE2;}
+.banner .dot{color:#E07020;font-weight:900;}
+
+/* Mock Wix site below */
+.site-mock{padding:40px 20px;text-align:center;background:white;border-bottom:1px solid #e0e0e0;}
+.site-mock .logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:-1px;color:#0E0B08;}
+.site-mock .sub{font-size:14px;color:#999;margin-top:8px;}
+
+.panel{max-width:900px;margin:40px auto;padding:32px;background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+.panel h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:28px;text-transform:uppercase;margin-bottom:16px;color:#0E0B08;}
+.panel h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;margin:24px 0 12px;color:#E07020;}
+.panel p{font-family:Arial,sans-serif;color:#444;line-height:1.6;margin-bottom:12px;font-size:15px;}
+.panel ul{font-family:Arial,sans-serif;color:#444;line-height:1.7;padding-left:24px;}
+.panel code{background:#f0ebe2;padding:2px 8px;border-radius:4px;color:#E07020;font-weight:600;font-size:13px;}
+
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.spec{background:#f4f3f1;padding:12px 16px;border-radius:8px;border-left:3px solid #E07020;}
+.spec .label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:4px;}
+.spec .value{font-family:monospace;font-size:14px;color:#0E0B08;font-weight:600;}
+
+.variant-section{margin:32px 0;}
+.variant-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#999;margin-bottom:8px;font-weight:600;}
+
+/* VARIANT 2 — Plus simple */
+.banner-v2{
+  position:static;
+  background:linear-gradient(90deg,#0E0B08 0%,#1a0d08 50%,#0E0B08 100%);
+  border-top:1px solid #E07020;
+  border-bottom:1px solid #E07020;
+  padding:10px 20px;
+  text-align:center;
+  color:#F0EBE2;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+/* VARIANT 3 — Orange pop */
+.banner-v3{
+  position:static;
+  background:#E07020;
+  padding:12px 20px;
+  text-align:center;
+  color:#0E0B08;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+.banner-v3 .cream{color:#0E0B08;font-weight:500;}
+.banner-v3 .arrow-dark{color:#0E0B08;font-weight:900;}
+
+@media (max-width:768px){
+  .banner{font-size:12px;letter-spacing:0.8px;padding:10px 16px;gap:4px;}
+  .banner .close{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- LE BANDEAU (Variant principal) -->
+<a href="#" class="banner" style="text-decoration:none;">
+  <span class="orange">BRAIN ESCAPE GAME</span>
+  <span class="cream">&amp;</span>
+  <span class="orange">BUZZ YOUR BRAIN</span>
+  <span class="cream">deviennent</span>
+  <span class="orange">GAMEDOOR<span class="dot">·</span>41</span>
+  <span class="cream">· Même équipe, même adresse</span>
+  <span class="arrow">→</span>
+</a>
+
+<!-- Site mock -->
+<div class="site-mock">
+  <div class="logo">B.R.A.I.N. — Escape & Quiz Game Caen</div>
+  <div class="sub">↑ Le bandeau s'affiche au-dessus de tout le site Wix</div>
+</div>
+
+<!-- Panel infos -->
+<div class="panel">
+  <h1>Bandeau GAMEDOOR·41 — Mode d'emploi Wix</h1>
+
+  <p>Ce bandeau s'affiche en haut de chaque page des 2 sites Wix (brain-escapegame-caen.fr et buzzyourbrain-caen.fr) pour préparer la transition vers gamedoor41.fr.</p>
+
+  <h2>Spécifications à reproduire dans Wix</h2>
+  <div class="spec-grid">
+    <div class="spec"><div class="label">Fond</div><div class="value">#0E0B08</div></div>
+    <div class="spec"><div class="label">Bordure basse</div><div class="value">#E07020 — 2px</div></div>
+    <div class="spec"><div class="label">Texte principal</div><div class="value">#F0EBE2</div></div>
+    <div class="spec"><div class="label">Mots orange</div><div class="value">#E07020 bold</div></div>
+    <div class="spec"><div class="label">Police</div><div class="value">Barlow Condensed 600</div></div>
+    <div class="spec"><div class="label">Taille</div><div class="value">14px (12px mobile)</div></div>
+    <div class="spec"><div class="label">Hauteur</div><div class="value">~44px</div></div>
+    <div class="spec"><div class="label">Position</div><div class="value">sticky top</div></div>
+  </div>
+
+  <h2>Texte exact à copier</h2>
+  <p><strong>BRAIN ESCAPE GAME</strong> &amp; <strong>BUZZ YOUR BRAIN</strong> deviennent <strong>GAMEDOOR·41</strong> · Même équipe, même adresse →</p>
+
+  <h2>Lien cible</h2>
+  <p><code>https://gamedoor41.fr/brain-escape-game-caen/</code></p>
+
+  <h2>Comment faire dans Wix Editor</h2>
+  <ul>
+    <li>Ouvrir le site B.R.A.I.N. Games dans Wix Editor</li>
+    <li>Cliquer sur le <strong>+</strong> (Ajouter) en haut à gauche</li>
+    <li>Chercher <strong>"Bande d'annonce"</strong> ou <strong>"Welcome Bar"</strong> ou <strong>"Announcement Bar"</strong></li>
+    <li>Glisser le composant en haut de la page</li>
+    <li>Double-clic pour modifier le texte</li>
+    <li>Coller le texte ci-dessus</li>
+    <li>Appliquer les couleurs (panneau Design)</li>
+    <li>Activer <strong>"Fixer en haut de la page"</strong> (sticky)</li>
+    <li>Ajouter le lien vers gamedoor41.fr/brain-escape-game-caen/</li>
+    <li><strong>Publier le site</strong></li>
+  </ul>
+
+  <h2>Variante 2 — Avec dégradé</h2>
+  <div class="variant-section">
+    <div class="variant-title">Moins agressif, plus premium</div>
+    <div class="banner-v2">
+      <span style="color:#E07020;font-weight:900;">BRAIN</span>
+      <span style="color:#F0EBE2;">&amp;</span>
+      <span style="color:#E07020;font-weight:900;">BUZZ YOUR BRAIN</span>
+      <span style="color:#F0EBE2;">deviennent</span>
+      <span style="color:#F0EBE2;font-weight:900;">GAMEDOOR<span style="color:#E07020;">·</span>41</span>
+      <span style="color:#8A8078;margin:0 8px;">|</span>
+      <span style="color:#E07020;font-weight:600;">En savoir plus →</span>
+    </div>
+  </div>
+
+  <h2>Variante 3 — Orange (très visible)</h2>
+  <div class="variant-section">
+    <div class="variant-title">Maximum d'impact, impossible à rater</div>
+    <div class="banner-v3">
+      <span style="color:#0E0B08;font-weight:900;">BRAIN &amp; BUZZ YOUR BRAIN</span>
+      <span class="cream">deviennent</span>
+      <span style="color:#0E0B08;font-weight:900;">GAMEDOOR·41</span>
+      <span class="cream">— Cliquez pour en savoir plus</span>
+      <span class="arrow-dark">→</span>
+    </div>
+  </div>
+
+  <h2>Recommandation</h2>
+  <p>La <strong>variante 1 (principale, en haut de cette page)</strong> est la plus équilibrée : élégante, cohérente avec la charte graphique, pas trop agressive. Elle sera aussi facile à reproduire dans Wix avec les composants natifs.</p>
+
+</div>
+
+</body>
+</html>

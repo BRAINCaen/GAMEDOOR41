@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMEDOOR·41 — Charte Graphique Officielle</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#f4f3f1;color:#1a1a1a;line-height:1.6;}
+.page{max-width:1000px;margin:0 auto;padding:40px 20px;}
+
+/* Header */
+.cover{background:#0C0800;color:#F0EBE2;padding:80px 60px;border-radius:16px;margin-bottom:40px;text-align:center;position:relative;overflow:hidden;}
+.cover::after{content:'41';position:absolute;right:-30px;bottom:-40px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:300px;color:rgba(224,112,32,0.05);line-height:1;pointer-events:none;}
+.cover .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#E07020;margin-bottom:20px;}
+.cover h1{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:800;text-transform:uppercase;letter-spacing:-1px;margin-bottom:12px;}
+.cover .sub{font-size:16px;color:#8A8078;}
+.cover .meta{margin-top:32px;display:flex;gap:24px;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#6A6460;}
+.cover .meta span{color:#E07020;font-weight:600;}
+
+/* Sections */
+.section{background:white;border-radius:12px;padding:48px;margin-bottom:32px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+.section.dark{background:#0E0B08;color:#F0EBE2;}
+.section.dark h2{color:#F0EBE2;border-bottom-color:#E07020;}
+.section.dark p{color:#C8C2B8;}
+.section.dark .spec-label{color:#8A8078;}
+.section.dark .spec-value{color:#F0EBE2;}
+
+h2{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:24px;padding-bottom:12px;border-bottom:3px solid #E07020;display:inline-block;}
+h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:28px 0 14px;color:#333;}
+.section.dark h3{color:#E07020;}
+
+p{margin-bottom:12px;color:#555;font-size:15px;}
+
+/* Logo rendering */
+.logo-display{display:flex;align-items:center;justify-content:center;padding:48px 32px;border-radius:12px;margin:16px 0;}
+.logo-dark{background:#0C0800;}
+.logo-light{background:#F0EBE2;}
+.logo-orange{background:#E07020;}
+
+.gdl{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:-2px;line-height:1;white-space:nowrap;}
+.gdl .gm{font-weight:900;}
+.gdl .dr{font-weight:300;}
+.gdl .dp{color:#E07020;}
+.gdl .nm{font-weight:900;color:#E07020;}
+
+/* Spec tables */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.spec-card{background:#f8f7f5;border:1px solid #e8e6e2;border-radius:8px;padding:16px 20px;}
+.section.dark .spec-card{background:#1A1610;border-color:#2E2820;}
+.spec-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#999;margin-bottom:6px;}
+.spec-value{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#1a1a1a;}
+
+/* Color swatches */
+.palette{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;}
+.swatch{width:80px;text-align:center;}
+.swatch-color{width:80px;height:80px;border-radius:10px;margin-bottom:6px;border:1px solid rgba(0,0,0,0.1);}
+.swatch-name{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#666;}
+.swatch-hex{font-size:11px;color:#999;font-family:monospace;}
+.section.dark .swatch-name{color:#C8C2B8;}
+.section.dark .swatch-hex{color:#8A8078;}
+
+/* Logo variations grid */
+.variations-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.var-card{border-radius:10px;overflow:hidden;border:1px solid #e8e6e2;}
+.section.dark .var-card{border-color:#2E2820;}
+.var-card .var-display{display:flex;align-items:center;justify-content:center;padding:32px 24px;min-height:120px;}
+.var-card .var-info{padding:12px 16px;background:#f8f7f5;font-size:13px;}
+.section.dark .var-card .var-info{background:#1A1610;color:#C8C2B8;}
+.var-card .var-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#E07020;font-weight:600;}
+
+/* Sub-brand cards */
+.subbrand-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0;}
+.subbrand{border-radius:12px;overflow:hidden;border:1px solid #2E2820;}
+.subbrand .sb-logo{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;min-height:160px;gap:8px;}
+.subbrand .sb-info{padding:16px 20px;background:#1A1610;}
+.subbrand .sb-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:8px;}
+.subbrand .sb-desc{font-size:13px;color:#8A8078;line-height:1.5;}
+
+/* Banner previews */
+.banner-preview{border-radius:10px;overflow:hidden;margin:12px 0;border:1px solid #2E2820;}
+.banner-inner{display:flex;align-items:center;justify-content:space-between;padding:24px 32px;}
+.banner-inner .tagline{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#8A8078;}
+
+/* Social avatars */
+.avatar-grid{display:flex;gap:20px;margin:16px 0;flex-wrap:wrap;}
+.avatar{text-align:center;}
+.avatar-circle{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
+.avatar-square{width:100px;height:100px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
+.avatar-name{font-size:12px;color:#8A8078;}
+
+/* Rules */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.rule{border-radius:8px;padding:20px;display:flex;gap:12px;align-items:flex-start;}
+.rule-do{background:#e8f5e9;border:1px solid #c8e6c9;}
+.rule-dont{background:#fce4ec;border:1px solid #f8bbd0;}
+.rule-icon{font-size:20px;flex-shrink:0;}
+.rule-text{font-size:14px;line-height:1.5;}
+.rule-text strong{display:block;margin-bottom:4px;}
+.section.dark .rule-do{background:#0C180C;border-color:#2A5030;}
+.section.dark .rule-dont{background:#180C0C;border-color:#5A2020;}
+.section.dark .rule-text{color:#C8C2B8;}
+
+hr{border:none;height:1px;background:#e8e6e2;margin:32px 0;}
+.section.dark hr{background:#2E2820;}
+
+/* Sub-logo rendering helper */
+.sub-tag{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:500;}
+
+@media print{
+  body{background:white;}
+  .section{box-shadow:none;border:1px solid #e0e0e0;page-break-inside:avoid;}
+  .cover{page-break-after:always;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="eyebrow">Document officiel</div>
+  <h1>Charte Graphique</h1>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:900;text-transform:uppercase;letter-spacing:-2px;line-height:1;margin:20px 0;">
+    <span style="font-weight:900;">GAME</span><span style="font-weight:300;">DOOR</span><span style="color:#E07020;">·</span><span style="color:#E07020;font-weight:900;">41</span>
+  </div>
+  <p class="sub">Identité visuelle, déclinaisons, sous-marques et règles d'usage</p>
+  <div class="meta">
+    <div>Version <span>1.0</span></div>
+    <div>Date <span>Avril 2026</span></div>
+    <div>Confidentiel <span>Usage interne</span></div>
+  </div>
+</div>
+
+<!-- ===== 1. LE LOGO PRINCIPAL ===== -->
+<div class="section dark">
+  <h2>1. Le logo principal</h2>
+  <p>Le logotype GAMEDOOR·41 est une marque verbale typographique. Il n'y a pas de pictogramme — la typographie EST le logo.</p>
+
+  <div class="logo-display logo-dark" style="padding:64px 32px;">
+    <div class="gdl" style="font-size:80px;">
+      <span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp">·</span><span class="nm">41</span>
+    </div>
+  </div>
+
+  <h3>Spécifications techniques</h3>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-label">Typographie</div>
+      <div class="spec-value">Barlow Condensed</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Casse</div>
+      <div class="spec-value">UPPERCASE (capitales)</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Letter-spacing</div>
+      <div class="spec-value">-2px (tracking serré)</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Line-height</div>
+      <div class="spec-value">1.0 (collé)</div>
+    </div>
+  </div>
+
+  <h3>Anatomie du logo</h3>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;">
+    <div style="background:#1A1008;border:1px solid #3A2010;border-radius:10px;padding:20px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#F0EBE2;line-height:1;margin-bottom:12px;">GAME</div>
+      <div class="spec-label">Weight 900 (Extra Bold)</div>
+      <div style="font-size:13px;color:#8A8078;margin-top:6px;">Couleur : #F0EBE2</div>
+      <div style="font-size:13px;color:#E07020;margin-top:4px;">Dit ce qu'on fait. Massif. Direct.</div>
+    </div>
+    <div style="background:#1A1008;border:1px solid #3A2010;border-radius:10px;padding:20px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:300;color:#F0EBE2;line-height:1;margin-bottom:12px;">DOOR</div>
+      <div class="spec-label">Weight 300 (Light)</div>
+      <div style="font-size:13px;color:#8A8078;margin-top:6px;">Couleur : #F0EBE2</div>
+      <div style="font-size:13px;color:#E07020;margin-top:4px;">Le passage. L'immersion. Élégant.</div>
+    </div>
+    <div style="background:#1A1008;border:2px solid #E07020;border-radius:10px;padding:20px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#E07020;line-height:1;margin-bottom:12px;">·</div>
+      <div class="spec-label">Point médian (U+00B7)</div>
+      <div style="font-size:13px;color:#8A8078;margin-top:6px;">Couleur : #E07020</div>
+      <div style="font-size:13px;color:#E07020;margin-top:4px;">Inclusivité. Signature unique.</div>
+    </div>
+    <div style="background:#1A1008;border:1px solid #3A2010;border-radius:10px;padding:20px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#E07020;line-height:1;margin-bottom:12px;">41</div>
+      <div class="spec-label">Weight 900 (Extra Bold)</div>
+      <div style="font-size:13px;color:#8A8078;margin-top:6px;">Couleur : #E07020</div>
+      <div style="font-size:13px;color:#E07020;margin-top:4px;">Notre adresse. Pas une franchise.</div>
+    </div>
+  </div>
+
+  <h3>Contraste typographique</h3>
+  <p>Le coeur de l'identité est le <strong style="color:#F0EBE2;">contraste de graisse</strong> entre GAME (900) et DOOR (300). Ce contraste est <strong style="color:#E07020;">non négociable</strong> — il ne doit jamais être modifié, inversé ou atténué.</p>
+</div>
+
+<!-- ===== 2. VARIATIONS DU LOGO ===== -->
+<div class="section dark">
+  <h2>2. Variations du logo</h2>
+
+  <div class="variations-grid">
+    <!-- Primary dark -->
+    <div class="var-card">
+      <div class="var-display" style="background:#0C0800;">
+        <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp">·</span><span class="nm">41</span></div>
+      </div>
+      <div class="var-info"><div class="var-label">Principal — Fond sombre</div>Version de référence. Usage prioritaire.</div>
+    </div>
+
+    <!-- Light bg -->
+    <div class="var-card">
+      <div class="var-display" style="background:#F0EBE2;">
+        <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#0E0B08;">GAME</span><span class="dr" style="color:#0E0B08;">DOOR</span><span class="dp" style="color:#E07020;">·</span><span class="nm" style="color:#E07020;">41</span></div>
+      </div>
+      <div class="var-info"><div class="var-label">Inversé — Fond clair</div>GAME/DOOR en noir #0E0B08. Orange inchangé.</div>
+    </div>
+
+    <!-- White bg -->
+    <div class="var-card">
+      <div class="var-display" style="background:#FFFFFF;">
+        <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#1a1a1a;">GAME</span><span class="dr" style="color:#1a1a1a;">DOOR</span><span class="dp" style="color:#E07020;">·</span><span class="nm" style="color:#E07020;">41</span></div>
+      </div>
+      <div class="var-info"><div class="var-label">Fond blanc</div>Pour documents administratifs, devis, factures.</div>
+    </div>
+
+    <!-- Monochrome white -->
+    <div class="var-card">
+      <div class="var-display" style="background:#0C0800;">
+        <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp" style="color:#F0EBE2;">·</span><span class="nm" style="color:#F0EBE2;">41</span></div>
+      </div>
+      <div class="var-info"><div class="var-label">Monochrome blanc</div>Gravure, sérigraphie, watermark. Pas de couleur.</div>
+    </div>
+
+    <!-- Monochrome black -->
+    <div class="var-card">
+      <div class="var-display" style="background:#FFFFFF;">
+        <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#0E0B08;">GAME</span><span class="dr" style="color:#0E0B08;">DOOR</span><span class="dp" style="color:#0E0B08;">·</span><span class="nm" style="color:#0E0B08;">41</span></div>
+      </div>
+      <div class="var-info"><div class="var-label">Monochrome noir</div>Fax, tampons, impression N&B.</div>
+    </div>
+
+    <!-- Orange bg -->
+    <div class="var-card">
+      <div class="var-display" style="background:#E07020;">
+        <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#FFFFFF;">GAME</span><span class="dr" style="color:#FFFFFF;">DOOR</span><span class="dp" style="color:#0E0B08;">·</span><span class="nm" style="color:#0E0B08;">41</span></div>
+      </div>
+      <div class="var-info"><div class="var-label">Fond orange</div>Goodies, stickers, merchandising événementiel.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- STACKED VERSION -->
+  <h3>Version empilée (verticale)</h3>
+  <div class="variations-grid">
+    <div class="var-card">
+      <div class="var-display" style="background:#0C0800;flex-direction:column;gap:0;">
+        <div class="gdl" style="font-size:48px;text-align:center;">
+          <span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#E07020;letter-spacing:6px;margin-top:-2px;">·41</div>
+      </div>
+      <div class="var-info"><div class="var-label">Empilé — Fond sombre</div>Signalétique, enseigne extérieure, drapeaux.</div>
+    </div>
+    <div class="var-card">
+      <div class="var-display" style="background:#0C0800;flex-direction:column;gap:0;">
+        <div class="gdl" style="font-size:48px;text-align:center;">
+          <span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:500;color:#8A8078;letter-spacing:5px;text-transform:uppercase;margin-top:6px;">Escape · Quiz · Action</div>
+      </div>
+      <div class="var-info"><div class="var-label">Empilé avec tagline</div>Carte de visite, papeterie, signature email.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- AVATARS -->
+  <h3>Avatars réseaux sociaux</h3>
+  <p>Format carré (Instagram, Facebook, TikTok, Google Business).</p>
+  <div class="avatar-grid">
+    <div class="avatar">
+      <div class="avatar-square" style="background:#0C0800;border:1px solid #2E2820;">
+        <div style="text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#F0EBE2;text-transform:uppercase;letter-spacing:-1px;line-height:1;">GAME<span style="font-weight:300;">DOOR</span></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#E07020;line-height:1;margin-top:-1px;">·41</div>
+        </div>
+      </div>
+      <div class="avatar-name">Principal</div>
+    </div>
+    <div class="avatar">
+      <div class="avatar-square" style="background:#0C0800;border:1px solid #2E2820;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:#E07020;line-height:1;">·41</div>
+      </div>
+      <div class="avatar-name">Icône réduite</div>
+    </div>
+    <div class="avatar">
+      <div class="avatar-square" style="background:#0C0800;border:1px solid #2E2820;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;line-height:1;"><span style="color:#F0EBE2;">G</span><span style="color:#E07020;">·</span></div>
+      </div>
+      <div class="avatar-name">Favicon / App</div>
+    </div>
+    <div class="avatar">
+      <div class="avatar-circle" style="background:#E07020;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#0E0B08;line-height:1;">·41</div>
+      </div>
+      <div class="avatar-name">Badge rond</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- BANNERS -->
+  <h3>Bannières (Facebook, YouTube, LinkedIn)</h3>
+  <div class="banner-preview" style="border-color:#2E2820;">
+    <div class="banner-inner" style="background:linear-gradient(135deg,#0C0800 0%,#1A0D08 100%);min-height:100px;">
+      <div class="gdl" style="font-size:36px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp">·</span><span class="nm">41</span></div>
+      <div style="text-align:right;">
+        <div class="tagline">Escape Game · Quiz Game · Action Game</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#E07020;margin-top:4px;">41 bis rue Pasteur · Mondeville</div>
+      </div>
+    </div>
+  </div>
+  <div class="banner-preview" style="border-color:#2E2820;">
+    <div class="banner-inner" style="background:#E07020;min-height:100px;">
+      <div class="gdl" style="font-size:36px;"><span class="gm" style="color:#FFFFFF;">GAME</span><span class="dr" style="color:#FFFFFF;">DOOR</span><span class="dp" style="color:#0E0B08;">·</span><span class="nm" style="color:#0E0B08;">41</span></div>
+      <div style="text-align:right;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#0E0B08;">L'endroit ou on joue.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 3. SOUS-MARQUES ===== -->
+<div class="section dark">
+  <h2>3. Sous-marques & déclinaisons</h2>
+  <p>GAMEDOOR·41 est la <strong style="color:#F0EBE2;">marque ombrelle</strong>. Chaque activité garde son identité propre mais vit sous le toit commun.</p>
+
+  <div class="subbrand-grid">
+    <!-- ESCAPE -->
+    <div class="subbrand" style="border-color:#c62828;">
+      <div class="sb-logo" style="background:linear-gradient(135deg,#0C0800 0%,#1A0808 100%);">
+        <div class="gdl" style="font-size:32px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp" style="color:#c62828;">·</span><span class="nm" style="color:#c62828;">41</span></div>
+        <div class="sub-tag" style="color:#c62828;">Brain Escape Game</div>
+      </div>
+      <div class="sb-info">
+        <div class="sb-name" style="color:#c62828;">Escape Game</div>
+        <div class="sb-desc">Accent : Rouge #c62828<br>3 salles immersives · Game master acteur</div>
+        <div class="palette" style="margin-top:10px;">
+          <div class="swatch"><div class="swatch-color" style="background:#c62828;"></div><div class="swatch-hex">#c62828</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#d32f2f;"></div><div class="swatch-hex">#d32f2f</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#1A0808;"></div><div class="swatch-hex">#1A0808</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="subbrand" style="border-color:#00e5ff;">
+      <div class="sb-logo" style="background:linear-gradient(135deg,#0C0800 0%,#080D10 100%);">
+        <div class="gdl" style="font-size:32px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp" style="color:#00e5ff;">·</span><span class="nm" style="color:#00e5ff;">41</span></div>
+        <div class="sub-tag" style="color:#00e5ff;">Buzz Your Brain</div>
+      </div>
+      <div class="sb-info">
+        <div class="sb-name" style="color:#00e5ff;">Quiz Game</div>
+        <div class="sb-desc">Accent : Cyan #00e5ff<br>Plateau TV · Buzzers · 4-40 joueurs</div>
+        <div class="palette" style="margin-top:10px;">
+          <div class="swatch"><div class="swatch-color" style="background:#00e5ff;"></div><div class="swatch-hex">#00e5ff</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#33ebff;"></div><div class="swatch-hex">#33ebff</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#080D10;"></div><div class="swatch-hex">#080D10</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION -->
+    <div class="subbrand" style="border-color:#76ff03;">
+      <div class="sb-logo" style="background:linear-gradient(135deg,#0C0800 0%,#0A1008 100%);">
+        <div class="gdl" style="font-size:32px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp" style="color:#76ff03;">·</span><span class="nm" style="color:#76ff03;">41</span></div>
+        <div class="sub-tag" style="color:#76ff03;">Action Game</div>
+      </div>
+      <div class="sb-info">
+        <div class="sb-name" style="color:#76ff03;">Action Game</div>
+        <div class="sb-desc">Accent : Vert fluo #76ff03<br>Activité physique · Adrénaline · Compétition</div>
+        <div class="palette" style="margin-top:10px;">
+          <div class="swatch"><div class="swatch-color" style="background:#76ff03;"></div><div class="swatch-hex">#76ff03</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#64dd17;"></div><div class="swatch-hex">#64dd17</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#0A1008;"></div><div class="swatch-hex">#0A1008</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="subbrand" style="border-color:#FFD740;">
+      <div class="sb-logo" style="background:linear-gradient(135deg,#0C0800 0%,#141008 100%);">
+        <div class="gdl" style="font-size:32px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp" style="color:#FFD740;">·</span><span class="nm" style="color:#FFD740;">41</span></div>
+        <div class="sub-tag" style="color:#FFD740;">Events & Réceptions</div>
+      </div>
+      <div class="sb-info">
+        <div class="sb-name" style="color:#FFD740;">Événements</div>
+        <div class="sb-desc">Accent : Or #FFD740<br>EVJF · Team Building · Anniversaires · B2B</div>
+        <div class="palette" style="margin-top:10px;">
+          <div class="swatch"><div class="swatch-color" style="background:#FFD740;"></div><div class="swatch-hex">#FFD740</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#FFC107;"></div><div class="swatch-hex">#FFC107</div></div>
+          <div class="swatch"><div class="swatch-color" style="background:#141008;"></div><div class="swatch-hex">#141008</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Principe de déclinaison</h3>
+  <p>Le logo reste <strong style="color:#F0EBE2;">identique</strong> dans toutes les déclinaisons. Seuls changent :</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0;">
+    <div style="background:#1A1610;border:1px solid #2E2820;border-radius:8px;padding:16px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;line-height:1;margin-bottom:8px;">
+        <span style="color:#F0EBE2;">·</span> <span style="color:#c62828;">·</span> <span style="color:#00e5ff;">·</span> <span style="color:#76ff03;">·</span> <span style="color:#FFD740;">·</span>
+      </div>
+      <div class="spec-label">La couleur du point et du 41</div>
+    </div>
+    <div style="background:#1A1610;border:1px solid #2E2820;border-radius:8px;padding:16px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:4px;text-transform:uppercase;color:#8A8078;margin-bottom:8px;line-height:2;">Brain Escape Game<br>Buzz Your Brain</div>
+      <div class="spec-label">Le nom de la sous-marque</div>
+    </div>
+    <div style="background:#1A1610;border:1px solid #2E2820;border-radius:8px;padding:16px;text-align:center;">
+      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px;">
+        <div style="width:24px;height:24px;border-radius:4px;background:#1A0808;border:1px solid #c62828;"></div>
+        <div style="width:24px;height:24px;border-radius:4px;background:#080D10;border:1px solid #00e5ff;"></div>
+        <div style="width:24px;height:24px;border-radius:4px;background:#0A1008;border:1px solid #76ff03;"></div>
+      </div>
+      <div class="spec-label">Le fond dégradé associé</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 4. PALETTE PRINCIPALE ===== -->
+<div class="section dark">
+  <h2>4. Palette de couleurs</h2>
+
+  <h3>Couleurs fondamentales</h3>
+  <div class="palette">
+    <div class="swatch"><div class="swatch-color" style="background:#0C0800;border:1px solid #2E2820;"></div><div class="swatch-name">Noir chaud</div><div class="swatch-hex">#0C0800</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0E0B08;border:1px solid #2E2820;"></div><div class="swatch-name">Fond principal</div><div class="swatch-hex">#0E0B08</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1A1610;border:1px solid #2E2820;"></div><div class="swatch-name">Card / Surface</div><div class="swatch-hex">#1A1610</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#2E2820;border:1px solid #3A3530;"></div><div class="swatch-name">Bordure</div><div class="swatch-hex">#2E2820</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#E07020;"></div><div class="swatch-name">Orange GAMEDOOR</div><div class="swatch-hex">#E07020</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F0EBE2;"></div><div class="swatch-name">Crème texte</div><div class="swatch-hex">#F0EBE2</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C8C2B8;"></div><div class="swatch-name">Gris clair</div><div class="swatch-hex">#C8C2B8</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#8A8078;"></div><div class="swatch-name">Gris moyen</div><div class="swatch-hex">#8A8078</div></div>
+  </div>
+
+  <h3>Couleurs par activité</h3>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:16px 0;">
+    <div style="text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#c62828;margin-bottom:10px;font-weight:600;">Escape</div>
+      <div class="palette" style="justify-content:center;">
+        <div class="swatch"><div class="swatch-color" style="background:#c62828;width:60px;height:60px;"></div><div class="swatch-hex">#c62828</div></div>
+      </div>
+      <div style="font-size:12px;color:#8A8078;margin-top:4px;">Rouge sang<br>Tension, horreur, mystère</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#00e5ff;margin-bottom:10px;font-weight:600;">Quiz</div>
+      <div class="palette" style="justify-content:center;">
+        <div class="swatch"><div class="swatch-color" style="background:#00e5ff;width:60px;height:60px;"></div><div class="swatch-hex">#00e5ff</div></div>
+      </div>
+      <div style="font-size:12px;color:#8A8078;margin-top:4px;">Cyan électrique<br>Plateau TV, buzzers, fun</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#76ff03;margin-bottom:10px;font-weight:600;">Action</div>
+      <div class="palette" style="justify-content:center;">
+        <div class="swatch"><div class="swatch-color" style="background:#76ff03;width:60px;height:60px;"></div><div class="swatch-hex">#76ff03</div></div>
+      </div>
+      <div style="font-size:12px;color:#8A8078;margin-top:4px;">Vert fluo<br>Adrénaline, mouvement</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#FFD740;margin-bottom:10px;font-weight:600;">Events</div>
+      <div class="palette" style="justify-content:center;">
+        <div class="swatch"><div class="swatch-color" style="background:#FFD740;width:60px;height:60px;"></div><div class="swatch-hex">#FFD740</div></div>
+      </div>
+      <div style="font-size:12px;color:#8A8078;margin-top:4px;">Or chaud<br>Premium, célébration</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5. TYPOGRAPHIE ===== -->
+<div class="section">
+  <h2>5. Typographie</h2>
+
+  <div class="spec-grid">
+    <div class="spec-card" style="background:#0E0B08;border-color:#2E2820;">
+      <div class="spec-label" style="color:#E07020;">Titres & Logo</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;color:#F0EBE2;letter-spacing:-1px;margin:8px 0;">Barlow Condensed</div>
+      <div style="font-size:13px;color:#8A8078;">Weights : 300 (Light), 400, 500, 600, 700, 800, 900 (Black)</div>
+      <div style="font-size:13px;color:#8A8078;margin-top:4px;">Google Fonts — Gratuite</div>
+    </div>
+    <div class="spec-card" style="background:#0E0B08;border-color:#2E2820;">
+      <div class="spec-label" style="color:#E07020;">Corps de texte (site web)</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:20px;font-weight:400;color:#F0EBE2;margin:8px 0;">DM Sans</div>
+      <div style="font-size:13px;color:#8A8078;">Weights : 400 (Regular), 500 (Medium), 700 (Bold)</div>
+      <div style="font-size:13px;color:#8A8078;margin-top:4px;">Google Fonts — Gratuite</div>
+    </div>
+  </div>
+
+  <h3>Hiérarchie typographique</h3>
+  <div style="background:#0E0B08;border-radius:10px;padding:24px;margin:12px 0;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:48px;text-transform:uppercase;letter-spacing:-1px;color:#F0EBE2;line-height:1.1;margin-bottom:8px;">H1 — Titre principal</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:32px;text-transform:uppercase;letter-spacing:-0.5px;color:#F0EBE2;line-height:1.1;margin-bottom:8px;">H2 — Titre de section</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:0.5px;color:#F0EBE2;line-height:1.2;margin-bottom:8px;">H3 — Sous-titre</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:5px;color:#E07020;margin-bottom:16px;">KICKER — ACCROCHE</div>
+    <div style="font-family:'DM Sans',sans-serif;font-size:17px;color:#C8C2B8;line-height:1.65;max-width:60ch;">Corps de texte — DM Sans 17px. Le texte courant utilise cette police pour le confort de lecture sur écran et mobile.</div>
+  </div>
+</div>
+
+<!-- ===== 6. RÈGLES D'USAGE ===== -->
+<div class="section dark">
+  <h2>6. Regles d'usage</h2>
+
+  <div class="rules-grid">
+    <div class="rule rule-do">
+      <div class="rule-icon">&#10004;</div>
+      <div class="rule-text"><strong>Respecter le contraste GAME/DOOR</strong>GAME en 900 (gras), DOOR en 300 (fin). Toujours.</div>
+    </div>
+    <div class="rule rule-dont">
+      <div class="rule-icon">&#10008;</div>
+      <div class="rule-text"><strong>Ne pas inverser les graisses</strong>Jamais GAME en fin et DOOR en gras.</div>
+    </div>
+    <div class="rule rule-do">
+      <div class="rule-icon">&#10004;</div>
+      <div class="rule-text"><strong>Utiliser le point median (·)</strong>C'est le caractere Unicode U+00B7, pas un point classique.</div>
+    </div>
+    <div class="rule rule-dont">
+      <div class="rule-icon">&#10008;</div>
+      <div class="rule-text"><strong>Ne pas utiliser un point classique (.)</strong>GAMEDOOR.41 est incorrect. C'est GAMEDOOR·41.</div>
+    </div>
+    <div class="rule rule-do">
+      <div class="rule-icon">&#10004;</div>
+      <div class="rule-text"><strong>Fond sombre = version de reference</strong>Le logo est concu pour vivre sur fond sombre.</div>
+    </div>
+    <div class="rule rule-dont">
+      <div class="rule-icon">&#10008;</div>
+      <div class="rule-text"><strong>Ne pas mettre le logo sur fond colore aleatoire</strong>Uniquement les fonds definis dans cette charte.</div>
+    </div>
+    <div class="rule rule-do">
+      <div class="rule-icon">&#10004;</div>
+      <div class="rule-text"><strong>Zone de protection = hauteur du ·</strong>Espace libre autour du logo minimum = taille du point median.</div>
+    </div>
+    <div class="rule rule-dont">
+      <div class="rule-icon">&#10008;</div>
+      <div class="rule-text"><strong>Ne pas etirer, deformer ou pivoter</strong>Le logo est toujours horizontal, proportions d'origine.</div>
+    </div>
+  </div>
+
+  <h3>Taille minimum</h3>
+  <div style="display:flex;align-items:flex-end;gap:24px;margin:16px 0;">
+    <div style="text-align:center;">
+      <div class="gdl" style="font-size:14px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp">·</span><span class="nm">41</span></div>
+      <div style="font-size:11px;color:#8A8078;margin-top:6px;">14px = taille min ecran</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="gdl" style="font-size:24px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp">·</span><span class="nm">41</span></div>
+      <div style="font-size:11px;color:#8A8078;margin-top:6px;">24px = min recommande</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="gdl" style="font-size:40px;"><span class="gm" style="color:#F0EBE2;">GAME</span><span class="dr" style="color:#F0EBE2;">DOOR</span><span class="dp">·</span><span class="nm">41</span></div>
+      <div style="font-size:11px;color:#8A8078;margin-top:6px;">40px = usage standard</div>
+    </div>
+  </div>
+  <p>En impression : taille minimum du logo = <strong style="color:#F0EBE2;">25mm de large</strong>.</p>
+</div>
+
+<!-- ===== 7. URLS & DIGITAL ===== -->
+<div class="section dark">
+  <h2>7. Usage digital & URLs</h2>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-label">Domaine principal</div>
+      <div class="spec-value" style="color:#E07020;">gamedoor41.fr</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Domaine secondaire</div>
+      <div class="spec-value">gamedoor41.com (redirige vers .fr)</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Instagram</div>
+      <div class="spec-value">@gamedoor41</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Facebook</div>
+      <div class="spec-value">facebook.com/gamedoor41</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">TikTok</div>
+      <div class="spec-value">@gamedoor41</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-label">Marque INPI</div>
+      <div class="spec-value">GAMEDOOR 41 — n° 5247839</div>
+    </div>
+  </div>
+
+  <h3>Regle du point median dans les URLs</h3>
+  <p>Le point median (·) n'est <strong style="color:#E07020;">JAMAIS</strong> utilise dans les URLs, domaines, ou identifiants techniques. Il est reserve a l'affichage visuel uniquement.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;">
+    <div class="rule rule-do"><div class="rule-icon">&#10004;</div><div class="rule-text">gamedoor41.fr<br>@gamedoor41</div></div>
+    <div class="rule rule-dont"><div class="rule-icon">&#10008;</div><div class="rule-text">gamedoor·41.fr<br>@gamedoor·41</div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:32px 0;color:#999;font-size:13px;">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;color:#1a1a1a;margin-bottom:8px;">
+    <span style="font-weight:900;">GAME</span><span style="font-weight:300;">DOOR</span><span style="color:#E07020;">·</span><span style="color:#E07020;font-weight:900;">41</span>
+  </div>
+  <p>Charte graphique v1.0 — Avril 2026</p>
+  <p>Document confidentiel — Usage interne uniquement</p>
+  <p style="color:#E07020;font-weight:600;margin-top:8px;">Marque deposee INPI n° 5247839</p>
+</div>
+
+</div>
+</body>
+</html>

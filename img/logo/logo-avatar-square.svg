@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>GAMEDOOR·41 — Avatar carré</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;900&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="512" height="512" rx="64" fill="#0C0800"/>
+  <g font-family="'Barlow Condensed', 'Arial Narrow', sans-serif">
+    <text x="256" y="230" text-anchor="middle" font-size="80" letter-spacing="-3">
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan>
+    </text>
+    <text x="256" y="340" text-anchor="middle" font-size="110" font-weight="900" fill="#E07020" letter-spacing="8">·41</text>
+  </g>
+</svg>

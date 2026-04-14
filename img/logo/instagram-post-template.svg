@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080" preserveAspectRatio="xMidYMid meet">
+  <title>GAMEDOOR·41 — Instagram Post Template (1080×1080)</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;900&amp;display=swap');
+    </style>
+    <linearGradient id="igBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a0d08"/>
+      <stop offset="50%" stop-color="#0C0800"/>
+      <stop offset="100%" stop-color="#0C0800"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="url(#igBg)"/>
+
+  <!-- Decorative corner elements -->
+  <rect x="40" y="40" width="60" height="4" fill="#E07020"/>
+  <rect x="40" y="40" width="4" height="60" fill="#E07020"/>
+  <rect x="980" y="40" width="60" height="4" fill="#E07020"/>
+  <rect x="1036" y="40" width="4" height="60" fill="#E07020"/>
+  <rect x="40" y="1036" width="60" height="4" fill="#E07020"/>
+  <rect x="40" y="980" width="4" height="60" fill="#E07020"/>
+  <rect x="980" y="1036" width="60" height="4" fill="#E07020"/>
+  <rect x="1036" y="980" width="4" height="60" fill="#E07020"/>
+
+  <!-- Giant background 41 -->
+  <text x="1080" y="1200" text-anchor="end" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="1100" fill="#E07020" opacity="0.04" letter-spacing="-30">41</text>
+
+  <!-- Top kicker -->
+  <text x="540" y="180" text-anchor="middle" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="28" fill="#E07020" letter-spacing="12">41 BIS RUE PASTEUR · CAEN</text>
+
+  <!-- Main logo -->
+  <g font-family="'Barlow Condensed', 'Arial Narrow', sans-serif">
+    <text x="540" y="470" text-anchor="middle" font-size="170" letter-spacing="-4">
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan><tspan dx="15" font-weight="900" fill="#E07020">·41</tspan>
+    </text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="440" y1="530" x2="640" y2="530" stroke="#E07020" stroke-width="2"/>
+
+  <!-- Tagline -->
+  <text x="540" y="610" text-anchor="middle" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="300" font-size="56" fill="#F0EBE2" letter-spacing="4">L'ENDROIT OÙ</text>
+  <text x="540" y="680" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="72" fill="#E07020" letter-spacing="2">ON JOUE</text>
+
+  <!-- Sub-tagline -->
+  <text x="540" y="780" text-anchor="middle" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="26" fill="#8A8078" letter-spacing="8">ESCAPE GAME · QUIZ GAME · ACTION GAME</text>
+
+  <!-- CTA button -->
+  <rect x="380" y="860" width="320" height="80" rx="8" fill="#E07020"/>
+  <text x="540" y="913" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#0E0B08" letter-spacing="6">RÉSERVEZ MAINTENANT</text>
+
+  <!-- Bottom -->
+  <text x="540" y="1000" text-anchor="middle" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" font-size="22" fill="#C8C2B8" letter-spacing="6">GAMEDOOR41.FR</text>
+</svg>

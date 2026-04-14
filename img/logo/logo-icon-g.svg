@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <title>GAMEDOOR·41 — Icône ·41</title>
+  <title>GAMEDOOR·41 — Icône G·</title>
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&amp;display=swap');
     </style>
   </defs>
   <rect width="512" height="512" rx="80" fill="#0C0800"/>
-  <text x="256" y="340" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="260" fill="#E07020" letter-spacing="6">·41</text>
+  <text x="220" y="370" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="340" fill="#F0EBE2">G</text>
+  <circle cx="380" cy="320" r="36" fill="#E07020"/>
 </svg>

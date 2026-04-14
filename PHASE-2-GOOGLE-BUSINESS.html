@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMEDOOR·41 — Phase 2 : Migration Google Business Profile</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a1a;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .doc-header {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0d08 100%);
+      color: white;
+      padding: 48px 40px;
+    }
+    .doc-header .brand {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #FF6B00;
+      margin-bottom: 12px;
+    }
+    .doc-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .doc-header .subtitle {
+      font-size: 16px;
+      color: #999;
+    }
+    .doc-header .meta {
+      margin-top: 24px;
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      color: #666;
+    }
+    .doc-header .meta span { color: #FF6B00; font-weight: 600; }
+
+    /* Content */
+    .content { padding: 40px; }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0a0a0a;
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #FF6B00;
+      display: inline-block;
+    }
+    h2:first-child { margin-top: 0; }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #333;
+      margin: 28px 0 12px;
+    }
+
+    p { margin-bottom: 12px; color: #444; }
+
+    /* Alert box */
+    .alert {
+      background: #fff3e0;
+      border-left: 4px solid #FF6B00;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+    }
+    .alert.danger {
+      background: #fce4ec;
+      border-left-color: #c62828;
+    }
+    .alert.success {
+      background: #e8f5e9;
+      border-left-color: #2e7d32;
+    }
+    .alert strong { display: block; margin-bottom: 4px; color: #1a1a1a; }
+    .alert p { margin-bottom: 0; font-size: 14px; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid #ddd;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #666;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+      color: #444;
+    }
+    tr:hover td { background: #fafafa; }
+
+    /* Checklist */
+    .checklist { list-style: none; margin: 16px 0; }
+    .checklist li {
+      padding: 10px 0 10px 36px;
+      position: relative;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 15px;
+    }
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background: white;
+    }
+    .checklist li.done::before {
+      background: #FF6B00;
+      border-color: #FF6B00;
+    }
+    .checklist li.done::after {
+      content: '✓';
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Steps */
+    .step {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .step-number {
+      display: inline-block;
+      background: #FF6B00;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 16px;
+      display: inline;
+    }
+    .step-body { margin-top: 12px; }
+    .step-body ol, .step-body ul { margin: 8px 0; padding-left: 24px; }
+    .step-body li { margin-bottom: 8px; font-size: 14px; color: #444; }
+
+    /* Code block / description */
+    .description-box {
+      background: #1a1a1a;
+      color: #f5f5f5;
+      padding: 24px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .description-box .highlight { color: #FF6B00; }
+
+    /* Timeline */
+    .timeline { margin: 20px 0; }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .timeline-day {
+      flex-shrink: 0;
+      width: 60px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #FF6B00;
+    }
+    .timeline-action { font-size: 14px; color: #444; }
+
+    /* Print styles */
+    @media print {
+      body { background: white; padding: 0; }
+      .container { box-shadow: none; border-radius: 0; }
+      .doc-header { padding: 32px; }
+      .content { padding: 32px; }
+      h2 { break-after: avoid; }
+      .step { break-inside: avoid; }
+      .alert { break-inside: avoid; }
+    }
+
+    /* Separator */
+    hr {
+      border: none;
+      height: 1px;
+      background: #eee;
+      margin: 32px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tag-urgent { background: #fce4ec; color: #c62828; }
+    .tag-important { background: #fff3e0; color: #e65100; }
+    .tag-info { background: #e3f2fd; color: #1565c0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="doc-header">
+      <div class="brand">GAMEDOOR·41</div>
+      <h1>Phase 2 : Migration Google Business</h1>
+      <div class="subtitle">Guide pas à pas pour le rebranding de la fiche Google</div>
+      <div class="meta">
+        <div>Date : <span>Avril 2026</span></div>
+        <div>Statut : <span>À exécuter</span></div>
+        <div>Priorité : <span>Haute</span></div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ALERTE ADRESSE -->
+      <h2>Alerte : Incohérence d'adresse</h2>
+
+      <div class="alert danger">
+        <strong>Adresse officielle vs adresse affichée</strong>
+        <p>Le SIRET enregistre l'adresse <strong>41 bis rue Pasteur, 14120 Mondeville</strong>, mais le site affiche <strong>14000 Caen</strong>. Sur Google Business, l'adresse doit correspondre à la réalité postale pour éviter une suspension.</p>
+      </div>
+
+      <table>
+        <tr><th>Source</th><th>Adresse</th></tr>
+        <tr><td>SIRET / RCS officiel</td><td><strong>41 bis rue Pasteur, ZAC de Calix, 14120 Mondeville</strong></td></tr>
+        <tr><td>Site web actuel</td><td>41 bis rue Pasteur, 14000 Caen</td></tr>
+        <tr><td>PagesJaunes</td><td>41 bis rue Pasteur, 14120 Mondeville</td></tr>
+      </table>
+
+      <div class="alert success">
+        <strong>Recommandation</strong>
+        <p>Utiliser <strong>41 bis rue Pasteur, 14120 Mondeville</strong> sur la fiche Google. Ajouter "Caen" dans le descriptif et les catégories pour le SEO local. Google sait que Mondeville est dans l'agglomération de Caen.</p>
+      </div>
+
+      <hr>
+
+      <!-- ÉTAT DES FICHES -->
+      <h2>État actuel des fiches Google</h2>
+
+      <table>
+        <tr><th>Fiche</th><th>Note</th><th>Avis</th><th>Action</th></tr>
+        <tr>
+          <td><strong>B.R.A.I.N l'Escape & Quiz Game</strong></td>
+          <td>4.9/5</td>
+          <td>~2000+</td>
+          <td><span class="tag tag-urgent">Conserver + Renommer</span></td>
+        </tr>
+        <tr>
+          <td>Buzz Your Brain (si fiche séparée)</td>
+          <td>?</td>
+          <td>?</td>
+          <td><span class="tag tag-important">Fermer + Rediriger</span></td>
+        </tr>
+      </table>
+
+      <div class="alert">
+        <strong>Règle d'or</strong>
+        <p>Ne JAMAIS supprimer la fiche Brain Escape Game. 2000+ avis à 4.9/5 = un trésor SEO local irremplaçable. On la renomme, c'est tout.</p>
+      </div>
+
+      <hr>
+
+      <!-- ÉTAPES -->
+      <h2>Les 7 étapes de la migration</h2>
+
+      <!-- Étape 1 -->
+      <div class="step">
+        <span class="step-number">1</span>
+        <div class="step-title">Renommer la fiche principale</div>
+        <div class="step-body">
+          <ol>
+            <li>Se connecter sur <strong>business.google.com</strong></li>
+            <li>Sélectionner la fiche <strong>"B.R.A.I.N l'Escape & Quiz Game"</strong></li>
+            <li>Cliquer sur <strong>"Modifier le profil"</strong> > <strong>"Nom de l'établissement"</strong></li>
+            <li>Changer le nom en : <strong>GAMEDOOR·41</strong>
+              <ul>
+                <li>Utiliser le point médian (·) — Google l'affiche correctement</li>
+                <li>NE PAS ajouter "Escape Game Caen" dans le nom (interdit par Google)</li>
+              </ul>
+            </li>
+            <li><strong>Enregistrer</strong> — Google peut demander une vérification (1-3 jours)</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="step">
+        <span class="step-number">2</span>
+        <div class="step-title">Mettre à jour les informations</div>
+        <div class="step-body">
+          <table>
+            <tr><th>Champ</th><th>Ancienne valeur</th><th>Nouvelle valeur</th></tr>
+            <tr><td><strong>Nom</strong></td><td>B.R.A.I.N l'Escape & Quiz Game</td><td><strong>GAMEDOOR·41</strong></td></tr>
+            <tr><td><strong>Catégorie principale</strong></td><td>Escape game</td><td><strong>Escape game</strong> (garder)</td></tr>
+            <tr><td><strong>Catégories secondaires</strong></td><td>—</td><td><strong>Salle de jeux, Centre de loisirs</strong></td></tr>
+            <tr><td><strong>Site web</strong></td><td>brain-escapegame-caen.fr</td><td><strong>gamedoor41.fr</strong></td></tr>
+            <tr><td><strong>Téléphone principal</strong></td><td>Vérifier</td><td><strong>02 31 53 07 51</strong></td></tr>
+            <tr><td><strong>Adresse</strong></td><td>41 bis rue Pasteur, Mondeville</td><td>Garder tel quel</td></tr>
+            <tr><td><strong>Horaires</strong></td><td>Vérifier</td><td><strong>10h-23h, 7j/7</strong></td></tr>
+            <tr><td><strong>Lien de réservation</strong></td><td>Ancien lien</td><td><strong>braincaen.4escape.io/booking</strong></td></tr>
+            <tr><td><strong>Zone desservie</strong></td><td>—</td><td><strong>Caen, Mondeville, agglomération</strong></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="step">
+        <span class="step-number">3</span>
+        <div class="step-title">Mettre à jour la description</div>
+        <div class="step-body">
+          <p>Copier-coller cette description dans le champ "Description" de la fiche :</p>
+          <div class="description-box"><span class="highlight">GAMEDOOR·41</span> — Escape game, quiz game et activités de groupe à Caen.
+
+<span class="highlight">🎭 ESCAPE GAME — Brain Escape Game</span>
+3 salles immersives avec game master acteur :
+• Garde à Vue (policier, difficulté 3/5)
+• Psychiatric (horreur, difficulté 4/5)
+• Back to the 80's (fun/famille, difficulté 2/5)
+2 à 6 joueurs · 60 minutes · Dès 25€/pers
+
+<span class="highlight">🎯 QUIZ GAME — Buzz Your Brain</span>
+Quiz interactif sur un vrai plateau TV avec buzzers et présentateur.
+Blind test, culture générale, quiz thématiques.
+4 à 40 joueurs · 90 minutes · Dès 18€/pers
+
+Idéal pour : EVJF, EVG, anniversaires, team building, sorties entre amis.
+
+📍 41 bis rue Pasteur, Mondeville (agglomération de Caen)
+🚃 Tram T1/T2 + Bus 2, 4, 10
+🅿️ Parking Mondevillage à 200m
+
+Anciennement Brain Escape Game & Buzz Your Brain.
+
+Réservez en ligne : braincaen.4escape.io/booking
+📞 02 31 53 07 51</div>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="step">
+        <span class="step-number">4</span>
+        <div class="step-title">Mettre à jour les photos</div>
+        <div class="step-body">
+          <ul class="checklist">
+            <li>Ajouter le nouveau <strong>logo GAMEDOOR·41</strong> (en photo de profil)</li>
+            <li>Ajouter une <strong>photo de couverture</strong> avec le nouveau branding</li>
+            <li><strong>Garder</strong> toutes les photos existantes des salles</li>
+            <li>Ajouter des photos avec le <strong>nouveau nom visible</strong> (enseigne, signalétique)</li>
+            <li>Ajouter des <strong>photos de l'espace quiz</strong> Buzz Your Brain</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Étape 5 -->
+      <div class="step">
+        <span class="step-number">5</span>
+        <div class="step-title">Gérer la fiche Buzz Your Brain</div>
+        <div class="step-body">
+          <h3>Si c'est une fiche Google séparée :</h3>
+          <ol>
+            <li>Aller sur la fiche <strong>Buzz Your Brain</strong></li>
+            <li>Cliquer sur "Modifier" > <strong>"Fermer cet établissement"</strong></li>
+            <li>Choisir <strong>"A fusionné avec un autre établissement"</strong></li>
+            <li>Indiquer <strong>GAMEDOOR·41</strong> comme établissement de destination</li>
+          </ol>
+          <div class="alert">
+            <strong>Info</strong>
+            <p>Les avis de Buzz Your Brain ne seront PAS transférés automatiquement, mais Google saura que c'est le même lieu. Si Buzz Your Brain est déjà listé sous la même fiche Brain, rien à faire.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 6 -->
+      <div class="step">
+        <span class="step-number">6</span>
+        <div class="step-title">Publier un Google Post d'annonce</div>
+        <div class="step-body">
+          <p>Publier immédiatement après la validation du nouveau nom :</p>
+          <div class="description-box"><span class="highlight">Brain Escape Game & Buzz Your Brain deviennent GAMEDOOR·41 !</span>
+
+Nouveau nom, même adresse, même équipe, mêmes expériences que vous adorez.
+
+🎭 3 salles d'escape game avec game master acteur
+🎯 Quiz game interactif avec buzzers (jusqu'à 40 joueurs)
+
+Réservez sur notre nouveau site : gamedoor41.fr
+📞 02 31 53 07 51</div>
+        </div>
+      </div>
+
+      <!-- Étape 7 -->
+      <div class="step">
+        <span class="step-number">7</span>
+        <div class="step-title">Mettre à jour les annuaires & backlinks</div>
+        <div class="step-body">
+          <p>Mettre à jour le nom et l'URL du site sur chaque plateforme (1-2 par jour) :</p>
+          <table>
+            <tr><th>Plateforme</th><th>Priorité</th><th>Action</th><th>Fait</th></tr>
+            <tr><td><strong>PagesJaunes / Solocal</strong></td><td><span class="tag tag-urgent">Urgent</span></td><td>Modifier nom + URL site</td><td>☐</td></tr>
+            <tr><td><strong>TripAdvisor</strong></td><td><span class="tag tag-urgent">Urgent</span></td><td>Modifier nom + URL site</td><td>☐</td></tr>
+            <tr><td><strong>Facebook</strong></td><td><span class="tag tag-urgent">Urgent</span></td><td>Renommer la page</td><td>☐</td></tr>
+            <tr><td><strong>Instagram</strong></td><td><span class="tag tag-urgent">Urgent</span></td><td>Modifier nom affiché + bio</td><td>☐</td></tr>
+            <tr><td><strong>TikTok</strong></td><td><span class="tag tag-important">Important</span></td><td>Modifier bio + lien</td><td>☐</td></tr>
+            <tr><td><strong>Caen la Mer Tourisme</strong></td><td><span class="tag tag-important">Important</span></td><td>Contacter l'OT</td><td>☐</td></tr>
+            <tr><td><strong>Normandie Tourisme</strong></td><td><span class="tag tag-important">Important</span></td><td>Contacter le CRT</td><td>☐</td></tr>
+            <tr><td><strong>The Escapers</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>Wescape</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>L'Escapeur</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>EscapeGame.fr</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>Morty</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>Book-Event</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>Carte Escape Game</strong></td><td><span class="tag tag-info">Normal</span></td><td>Contacter pour mise à jour</td><td>☐</td></tr>
+            <tr><td><strong>KoiFaire</strong></td><td><span class="tag tag-info">Normal</span></td><td>Modifier fiche</td><td>☐</td></tr>
+            <tr><td><strong>4escape.io</strong></td><td><span class="tag tag-urgent">Urgent</span></td><td>Prévenir du changement de domaine</td><td>☐</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- PLANNING -->
+      <h2>Planning recommandé</h2>
+
+      <div class="alert">
+        <strong>Règle : Renommer la fiche Google AVANT de basculer les domaines</strong>
+        <p>Si vous basculez le domaine avant que la fiche soit à jour, les clients verront un nom qui ne correspond pas au site.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-day">J-7</div>
+          <div class="timeline-action">Préparer les visuels (logo GAMEDOOR·41, photos avec nouveau nom)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J-5</div>
+          <div class="timeline-action"><strong>Renommer la fiche Google</strong> (Étapes 1 à 3) — attendre validation 1-3 jours</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J-3</div>
+          <div class="timeline-action">Vérifier que la fiche est validée avec le nouveau nom</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J-2</div>
+          <div class="timeline-action">Ajouter les nouvelles photos (Étape 4)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J-1</div>
+          <div class="timeline-action">Publier le Google Post d'annonce (Étape 6)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day" style="color:#c62828;"><strong>JOUR J</strong></div>
+          <div class="timeline-action"><strong>Bascule du site (Phase 3)</strong> + mise à jour URL site web sur Google</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J+1</div>
+          <div class="timeline-action">Fermer la fiche Buzz Your Brain si séparée (Étape 5)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J+1 à J+7</div>
+          <div class="timeline-action">Mettre à jour les annuaires (Étape 7) — 1 à 2 par jour</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J+7</div>
+          <div class="timeline-action">Modifier les réseaux sociaux (Facebook, Instagram, TikTok)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-day">J+14</div>
+          <div class="timeline-action">Audit final : vérifier que tout est cohérent partout</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- CHECKLIST ANTI-ERREUR -->
+      <h2>Checklist anti-erreur</h2>
+
+      <ul class="checklist">
+        <li><strong>NE PAS supprimer</strong> la fiche Brain Escape Game — la renommer seulement</li>
+        <li><strong>NE PAS</strong> ajouter "Escape Game" dans le nom Google (GAMEDOOR·41 suffit)</li>
+        <li><strong>Garder</strong> tous les avis existants (ils restent après renommage)</li>
+        <li><strong>Garder</strong> toutes les photos existantes</li>
+        <li><strong>Répondre</strong> aux futurs avis avec le nouveau nom pour ancrer le changement</li>
+        <li><strong>Vérifier</strong> le téléphone affiché (doit être 02 31 53 07 51)</li>
+        <li><strong>NE PAS</strong> faire la bascule du site un vendredi ou un week-end</li>
+        <li><strong>Garder</strong> les anciens domaines (brain-escapegame-caen.fr et buzzyourbrain-caen.fr) pendant minimum 2 ans</li>
+        <li><strong>Prévenir</strong> 4escape.io du changement de domaine</li>
+      </ul>
+
+      <hr>
+
+      <!-- INFOS LÉGALES -->
+      <h2>Informations de référence</h2>
+
+      <table>
+        <tr><th>Info</th><th>Valeur</th></tr>
+        <tr><td>Société</td><td><strong>SARL BOEHME</strong></td></tr>
+        <tr><td>Nom commercial</td><td>GAMEDOOR·41 (anciennement Brain Escape Game + Buzz Your Brain)</td></tr>
+        <tr><td>SIREN</td><td>823 227 111</td></tr>
+        <tr><td>SIRET</td><td>823 227 111 00023</td></tr>
+        <tr><td>RCS</td><td>Caen 823 227 111</td></tr>
+        <tr><td>Capital</td><td>10 000 €</td></tr>
+        <tr><td>Gérant</td><td>Allan BOEHME</td></tr>
+        <tr><td>Adresse légale</td><td>41 bis rue Pasteur, ZAC de Calix, 14120 Mondeville</td></tr>
+        <tr><td>Téléphone</td><td>02 31 53 07 51</td></tr>
+        <tr><td>Email</td><td>contact@gamedoor41.fr</td></tr>
+        <tr><td>Nouveau site</td><td>gamedoor41.fr</td></tr>
+        <tr><td>Réservation</td><td>braincaen.4escape.io/booking</td></tr>
+      </table>
+
+      <hr>
+
+      <div style="text-align:center;padding:24px 0;color:#999;font-size:13px;">
+        <p>Document généré le 13 avril 2026 — GAMEDOOR·41</p>
+        <p style="color:#FF6B00;font-weight:600;margin-top:8px;">Phase 2 sur 5 du plan de migration</p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

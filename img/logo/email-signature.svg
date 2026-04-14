@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" width="600" height="160" preserveAspectRatio="xMidYMid meet">
+  <title>GAMEDOOR·41 — Signature Email (600×160)</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;900&amp;display=swap');
+    </style>
+  </defs>
+
+  <rect width="600" height="160" fill="#0C0800"/>
+
+  <!-- Logo block -->
+  <g font-family="'Barlow Condensed', 'Arial Narrow', sans-serif">
+    <text x="30" y="65" font-size="52" letter-spacing="-2">
+      <tspan font-weight="900" fill="#F0EBE2">GAME</tspan><tspan font-weight="300" fill="#F0EBE2">DOOR</tspan><tspan dx="5" font-weight="900" fill="#E07020">·41</tspan>
+    </text>
+  </g>
+
+  <!-- Vertical separator -->
+  <line x1="330" y1="30" x2="330" y2="130" stroke="#2E2820" stroke-width="1"/>
+
+  <!-- Contact info -->
+  <g font-family="'Barlow Condensed', 'Arial', sans-serif" fill="#C8C2B8" font-size="14">
+    <text x="355" y="50" font-weight="900" fill="#F0EBE2" font-size="16">Allan Boehme</text>
+    <text x="355" y="72" fill="#E07020" font-size="12" letter-spacing="2">GÉRANT</text>
+    <text x="355" y="100" fill="#C8C2B8">02 31 53 07 51</text>
+    <text x="355" y="120" fill="#C8C2B8">contact@gamedoor41.fr</text>
+    <text x="355" y="140" fill="#8A8078" font-size="12">41 bis rue Pasteur · Mondeville</text>
+  </g>
+
+  <!-- Bottom accent -->
+  <rect x="30" y="90" width="280" height="2" fill="#E07020"/>
+  <text x="30" y="110" font-family="'Barlow Condensed', 'Arial', sans-serif" font-weight="500" fill="#8A8078" font-size="12" letter-spacing="4">ESCAPE · QUIZ · ACTION</text>
+  <text x="30" y="130" font-family="'Barlow Condensed', 'Arial', sans-serif" fill="#E07020" font-size="13" font-weight="500">gamedoor41.fr</text>
+</svg>
