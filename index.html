@@ -333,7 +333,46 @@
         </div>
 
         <!-- 80s -->
-        <div class="room-card fade-in fade-in-delay-3">
+        <div class="room-card fade-in fade-in-delay-3" style="position:relative;">
+          <!-- ÉCUSSON OR TOP 100 FRANCE -->
+          <div class="gold-crest" aria-label="Nommée Top 100 France">
+            <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#FFE075"/>
+                  <stop offset="40%" stop-color="#FFC93C"/>
+                  <stop offset="55%" stop-color="#E8A000"/>
+                  <stop offset="100%" stop-color="#C28700"/>
+                </linearGradient>
+                <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+                  <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="crestInner" cx="50%" cy="40%" r="55%">
+                  <stop offset="0%" stop-color="#FFE075"/>
+                  <stop offset="100%" stop-color="#D49500"/>
+                </radialGradient>
+              </defs>
+              <!-- Rubans gauche / droite -->
+              <path d="M 20,60 L 10,130 L 35,115 L 45,90 Z" fill="#C62828" stroke="#8B1A1A" stroke-width="1"/>
+              <path d="M 100,60 L 110,130 L 85,115 L 75,90 Z" fill="#C62828" stroke="#8B1A1A" stroke-width="1"/>
+              <!-- Écusson principal (rond) -->
+              <circle cx="60" cy="60" r="50" fill="url(#goldGrad)" stroke="#8B6508" stroke-width="2"/>
+              <!-- Cercle interne -->
+              <circle cx="60" cy="60" r="42" fill="url(#crestInner)" stroke="#8B6508" stroke-width="1"/>
+              <!-- Petites étoiles décoratives -->
+              <polygon points="60,20 62,26 68,26 63,30 65,36 60,32 55,36 57,30 52,26 58,26" fill="#8B6508"/>
+              <!-- Texte TOP -->
+              <text x="60" y="56" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="18" fill="#8B1A1A" letter-spacing="2">TOP</text>
+              <!-- Grand 100 -->
+              <text x="60" y="82" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="30" fill="#8B1A1A">100</text>
+              <!-- Texte FRANCE -->
+              <text x="60" y="98" text-anchor="middle" font-family="'Barlow Condensed', 'Arial Black', sans-serif" font-weight="700" font-size="11" fill="#8B1A1A" letter-spacing="2">FRANCE</text>
+              <!-- Reflet brillant sur le haut -->
+              <ellipse cx="60" cy="28" rx="32" ry="10" fill="url(#goldShine)"/>
+            </svg>
+          </div>
+
           <div class="room-card-img">
                       <picture>
             <source type="image/avif" srcset="img/promo/affiche-80s-480w.avif 480w, img/promo/affiche-80s-768w.avif 768w, img/promo/affiche-80s.avif 1000w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
@@ -342,17 +381,14 @@
           </picture>
           </div>
           <div class="room-card-body">
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
-              <div class="room-vintage-tag" style="margin-bottom:0;"><span class="dot"></span> Depuis 2021 · 12 000+ joueur·euse·s</div>
-              <div class="room-vintage-tag" style="margin-bottom:0;"><span class="dot"></span> Nommée Top 100 France</div>
-            </div>
+            <div class="room-vintage-tag"><span class="dot"></span> Depuis 2021 · 12 000+ joueur·euse·s</div>
             <h3>Back to the 80's</h3>
             <div class="room-card-meta">
               <span>👥 2-6 joueurs</span>
               <span>⏱ 60 min</span>
               <span>📊 Niveau 2 ou 3</span>
             </div>
-            <p>Jukebox Wurlitzer, borne Pac-Man, vinyles. Plongez dans les années 80. Nommée Top 100 France.</p>
+            <p>Jukebox Wurlitzer, borne Pac-Man, vinyles. Plongez dans les années 80. <strong style="color:#FFC93C;">Nommée Top 100 France</strong>.</p>
             <div class="room-card-footer">
               <div class="room-price">25€ <small>/pers.</small></div>
               <a href="https://braincaen.4escape.io/booking" class="btn btn-red" target="_blank" rel="noopener" style="padding:10px 20px;font-size:0.85rem;">Réserver</a>
@@ -510,24 +546,67 @@
   <section class="section trust-section" id="entreprises">
     <div class="container">
       <div class="section-header fade-in">
-        <p class="kicker">Entreprises · CE · CSE</p>
+        <p class="kicker">Entreprises · CE · CSE · Collectivités</p>
         <h2>Ils nous ont fait confiance pour leur <span class="text-orange">team building</span></h2>
-        <p class="subtitle" style="margin-top:8px;font-size:0.95rem;letter-spacing:0.05em;">Depuis 2017, des banques régionales, groupes industriels, collectivités et grandes enseignes nationales nous confient leurs team building.</p>
+        <p style="margin-top:16px;font-size:1rem;color:var(--grey-light);max-width:720px;margin-left:auto;margin-right:auto;text-align:center;">
+          <strong style="color:var(--white);">750+ entreprises</strong> nous font confiance depuis 2017.
+          De la PME locale aux <strong style="color:var(--orange);">grands groupes nationaux</strong> : banques, industriels, grande distribution, collectivités, tech.
+        </p>
       </div>
-      <div class="trust-logos fade-in">
-        <div class="trust-logo-item"><span>IKEA</span></div>
-        <div class="trust-logo-item"><span>Renault Trucks</span></div>
-        <div class="trust-logo-item"><span>Crédit Agricole Normandie</span></div>
-        <div class="trust-logo-item"><span>CE Capgemini</span></div>
-        <div class="trust-logo-item"><span>Castorama</span></div>
-        <div class="trust-logo-item"><span>Mairie d'Hérouville-Saint-Clair</span></div>
-        <div class="trust-logo-item"><span>Village by CA Normandie</span></div>
-        <div class="trust-logo-item"><span>Flers Agglo</span></div>
+
+      <!-- RÉFÉRENCES PAR CATÉGORIE -->
+      <div class="trust-categories fade-in">
+
+        <!-- GRANDE DISTRIBUTION -->
+        <div class="trust-cat">
+          <div class="trust-cat-label">Grande distribution</div>
+          <div class="trust-cat-logos">
+            <div class="trust-logo-item trust-big"><span>IKEA</span></div>
+            <div class="trust-logo-item"><span>Castorama</span></div>
+          </div>
+        </div>
+
+        <!-- INDUSTRIE -->
+        <div class="trust-cat">
+          <div class="trust-cat-label">Industrie</div>
+          <div class="trust-cat-logos">
+            <div class="trust-logo-item trust-big"><span>Renault Trucks</span></div>
+          </div>
+        </div>
+
+        <!-- BANQUE / FINANCE -->
+        <div class="trust-cat">
+          <div class="trust-cat-label">Banque &amp; Finance</div>
+          <div class="trust-cat-logos">
+            <div class="trust-logo-item trust-big"><span>Crédit Agricole Normandie</span></div>
+            <div class="trust-logo-item"><span>Village by CA</span></div>
+          </div>
+        </div>
+
+        <!-- TECH / CONSEIL -->
+        <div class="trust-cat">
+          <div class="trust-cat-label">Tech &amp; Conseil</div>
+          <div class="trust-cat-logos">
+            <div class="trust-logo-item trust-big"><span>Capgemini</span></div>
+          </div>
+        </div>
+
+        <!-- COLLECTIVITÉS -->
+        <div class="trust-cat">
+          <div class="trust-cat-label">Collectivités &amp; Mairies</div>
+          <div class="trust-cat-logos">
+            <div class="trust-logo-item"><span>Ville d'Hérouville-Saint-Clair</span></div>
+            <div class="trust-logo-item"><span>Flers Agglo</span></div>
+          </div>
+        </div>
+
       </div>
-      <p class="trust-disclaimer fade-in">Noms cités à titre d'exemples d'entreprises/organisations ayant participé à un team building. Les marques et logos restent la propriété de leurs titulaires. Aucune affiliation ou partenariat n'est revendiqué.</p>
-      <div style="text-align:center;margin-top:32px;" class="fade-in">
+
+      <p class="trust-disclaimer fade-in" style="text-align:center;max-width:720px;margin:20px auto 0;">Clients cités avec leur accord à titre d'exemple. Marques et logos restent propriété de leurs titulaires.</p>
+
+      <div style="text-align:center;margin-top:40px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;" class="fade-in">
         <a href="/team-building-caen/" class="btn btn-primary">Organiser votre team building</a>
-        <a href="/references-entreprises-caen/" class="btn btn-outline" style="margin-left:12px;">Toutes nos références</a>
+        <a href="/references-entreprises-caen/" class="btn btn-outline">Voir toutes nos références</a>
       </div>
     </div>
   </section>

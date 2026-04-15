@@ -450,14 +450,43 @@ body.menu-open { overflow: hidden; }
 .room-card {
   background: var(--dark-card);
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid var(--dark-border);
   transition: var(--transition);
+}
+.room-card > .room-card-img {
+  border-radius: var(--radius) var(--radius) 0 0;
+  overflow: hidden;
 }
 .room-card:hover {
   border-color: var(--red);
   box-shadow: 0 0 30px var(--red-glow);
   transform: translateY(-4px);
+}
+
+/* ========== ÉCUSSON OR TOP 100 FRANCE ========== */
+.gold-crest {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  width: 90px;
+  height: 105px;
+  z-index: 10;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 20px rgba(255, 201, 60, 0.4));
+  transform: rotate(6deg);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: crestPulse 3s ease-in-out infinite;
+}
+.gold-crest svg { width: 100%; height: 100%; display: block; }
+.room-card:hover .gold-crest {
+  transform: rotate(0deg) scale(1.1);
+}
+@keyframes crestPulse {
+  0%, 100% { filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 20px rgba(255, 201, 60, 0.4)); }
+  50% { filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5)) drop-shadow(0 0 35px rgba(255, 201, 60, 0.7)); }
+}
+@media (max-width: 480px) {
+  .gold-crest { width: 70px; height: 82px; top: -15px; right: -5px; }
 }
 .room-card-img {
   position: relative;
@@ -1062,6 +1091,49 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   font-size: 0.75rem;
   margin-top: 12px;
   font-style: italic;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ========== RÉFÉRENCES PAR CATÉGORIE ========== */
+.trust-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 40px auto 0;
+}
+.trust-cat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.trust-cat-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 107, 0, 0.25);
+  text-align: center;
+}
+.trust-cat-logos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.trust-big {
+  border-color: rgba(255, 107, 0, 0.4) !important;
+  background: rgba(255, 107, 0, 0.06) !important;
+  min-height: 70px !important;
+}
+.trust-big span {
+  font-size: 1.05rem !important;
+  color: var(--white) !important;
+  font-weight: 700 !important;
 }
 .trust-counter {
   text-align: center;
