@@ -1192,28 +1192,44 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) brightness(99%) contrast(98%); }
 
 /* ========== ÉTAPES NUMÉROTÉES PREMIUM ========== */
+/* Reset le parent .icon quand il contient un step-number */
+.info-item .icon:has(.step-number),
+.icon:has(.step-number) {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  margin-bottom: 16px !important;
+  background: transparent !important;
+  border: none !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
 .step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, #2a1808 0%, #1a0d08 100%);
-  border: 2px solid var(--orange);
-  color: var(--orange);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 2.2rem;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #2a1808 0%, #1a0d08 100%) !important;
+  border: 2px solid var(--orange) !important;
+  color: var(--orange) !important;
+  font-family: 'Barlow Condensed', 'Arial Black', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 44px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.02em !important;
   box-shadow:
     0 0 0 4px rgba(255, 107, 0, 0.08),
     0 8px 24px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
   position: relative;
   transition: var(--transition);
+  text-align: center !important;
+  vertical-align: middle;
 }
 .step-number::before {
   content: '';
@@ -1222,24 +1238,16 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   border: 1px dashed rgba(255, 107, 0, 0.25);
   border-radius: 50%;
   animation: stepRotate 20s linear infinite;
+  pointer-events: none;
 }
 .info-item:hover .step-number {
-  background: linear-gradient(135deg, var(--orange) 0%, #C45800 100%);
-  color: var(--black);
+  background: linear-gradient(135deg, var(--orange) 0%, #C45800 100%) !important;
+  color: #0C0800 !important;
   transform: translateY(-4px) scale(1.05);
   box-shadow:
     0 0 0 6px rgba(255, 107, 0, 0.15),
-    0 12px 32px rgba(255, 107, 0, 0.3);
+    0 12px 32px rgba(255, 107, 0, 0.3) !important;
 }
 @keyframes stepRotate {
   to { transform: rotate(360deg); }
-}
-/* Quand .step-number remplace un .icon dans .info-item, neutraliser le font-size emoji */
-.info-item .icon .step-number,
-.info-item > .icon:has(.step-number) {
-  font-size: inherit;
-}
-.info-item .icon:has(.step-number) {
-  font-size: 0;
-  margin-bottom: 0;
 }
