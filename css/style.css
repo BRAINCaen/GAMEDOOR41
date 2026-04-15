@@ -515,6 +515,28 @@ body.menu-open { overflow: hidden; }
   font-size: 2rem;
   margin-bottom: 12px;
 }
+.info-item .icon-svg {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: 12px;
+  color: var(--orange);
+  transition: var(--transition);
+}
+.info-item .icon-svg svg {
+  width: 26px;
+  height: 26px;
+}
+.info-item:hover .icon-svg {
+  background: rgba(255, 107, 0, 0.15);
+  border-color: var(--orange);
+  transform: translateY(-2px);
+}
 .info-item h4 {
   margin-bottom: 4px;
   color: var(--white);
