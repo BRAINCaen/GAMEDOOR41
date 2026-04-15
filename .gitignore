@@ -17,3 +17,5 @@ Thumbs.db
 # Build tools (not deployed)
 node_modules/
 .fonts/
+.claude/
+.netlify/
