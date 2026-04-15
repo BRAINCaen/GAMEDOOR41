@@ -1169,3 +1169,24 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ========== ICÔNES ON-BRAND GAMEDOOR·41 ========== */
+.gd-icon {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.15em;
+  color: var(--orange);
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+.gd-icon-sm { width: 0.95em; height: 0.95em; vertical-align: -0.1em; }
+.gd-icon-lg { width: 1.5em; height: 1.5em; vertical-align: -0.25em; }
+.gd-icon-xl { width: 2rem; height: 2rem; }
+.gd-icon-white { color: var(--white); }
+.gd-icon-cream { color: var(--grey-light); }
+.gd-icon-cyan { color: var(--cyan); }
+.gd-icon-red { color: var(--red); }
+.gd-icon-green { color: var(--green, #76ff03); }
+/* Pour utiliser avec <img> - hack pour coloriser via filter quand inline SVG pas possible */
+img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) brightness(99%) contrast(98%); }
