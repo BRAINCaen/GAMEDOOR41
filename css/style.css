@@ -142,13 +142,16 @@ p { max-width: 65ch; }
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 16px 0;
+  padding: 14px 0;
   transition: var(--transition);
-  background: transparent;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 70%, transparent 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 .site-header.scrolled {
-  background: rgba(10, 10, 10, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 10, 10, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 10px 0;
   box-shadow: 0 2px 20px rgba(0,0,0,0.5);
 }
@@ -287,22 +290,25 @@ body.menu-open { overflow: hidden; }
   top: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  opacity: 0.75;
+  opacity: 0.45;
   z-index: 0;
+  filter: saturate(0.85) contrast(1.1);
 }
 .hero-img {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  opacity: 0.35;
+  opacity: 0.3;
   z-index: 0;
 }
 .hero-overlay {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.4) 60%, rgba(10,10,10,0.85) 100%);
+  background:
+    radial-gradient(ellipse at center, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.75) 70%, rgba(10,10,10,0.95) 100%),
+    linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.2) 40%, rgba(10,10,10,0.9) 100%);
   z-index: 1;
 }
 .hero-content {
@@ -310,17 +316,48 @@ body.menu-open { overflow: hidden; }
   z-index: 2;
   text-align: center;
   padding: 0 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero .kicker {
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
 }
 .hero h1 {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-shadow:
+    0 4px 24px rgba(0,0,0,0.9),
+    0 2px 8px rgba(0,0,0,0.6);
+  line-height: 0.95;
 }
-.hero h1 .accent { color: var(--orange); }
-.hero .subtitle { margin-bottom: 32px; }
+.hero h1 .accent {
+  color: var(--orange);
+  text-shadow:
+    0 4px 24px rgba(255,107,0,0.3),
+    0 2px 8px rgba(0,0,0,0.6);
+}
+.hero .subtitle {
+  margin-bottom: 36px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  color: #e8e4dd;
+}
+.hero-proof {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
 .hero-actions {
   display: flex;
   gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
+}
+.hero-actions .btn {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.hero-actions .btn-primary {
+  font-size: 1.05rem;
+  padding: 16px 36px;
 }
 
 /* --- Section Spacing --- */
