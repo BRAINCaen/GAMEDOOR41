@@ -78,12 +78,12 @@ function formatWithSpaces(n) {
 
 function buildReplacements({ rating, count }) {
   const ratingStr = rating.toFixed(1);                // "4.9"
-  const countExact = count;                           // 2075
-  const countRounded = Math.floor(count / 10) * 10;   // 2070
-  const countExactFmt = formatWithSpaces(countExact); // "2 075"
-  const countRoundedFmt = formatWithSpaces(countRounded); // "2 070"
+  const countExact = count;                           // 2085
+  const countExactFmt = formatWithSpaces(countExact); // "2 085"
 
   // Order matters: specific patterns first, generic last.
+  // All count patterns allow the "+" suffix to be optional so they keep
+  // matching once we've rewritten the page without it.
   return [
     // Schema.org aggregateRating
     {
@@ -97,7 +97,7 @@ function buildReplacements({ rating, count }) {
       out: `"reviewCount": "${countExact}"`,
     },
 
-    // Narrative: "plus de X XXX avis" (no "+")
+    // Narrative: "plus de X XXX avis"
     {
       label: 'narrative.plusDe',
       re: /plus de \d{1,3}(?:[ \u00A0]\d{3})+\s+avis\b/gi,
@@ -110,39 +110,41 @@ function buildReplacements({ rating, count }) {
       out: `Plus de ${countExactFmt} avis vérifiés`,
     },
 
-    // "<div class="number">X XXX+</div>"
+    // "<div class="number">X XXX</div>" — requires space-separated thousands
+    // so "2017" / "4" / other plain numbers don't match.
     {
       label: 'proofStat.number',
-      re: /<div class="number">\d{1,3}(?:[ \u00A0]\d{3})+\+<\/div>/g,
-      out: `<div class="number">${countRoundedFmt}+</div>`,
+      re: /<div class="number">\d{1,3}(?:[ \u00A0]\d{3})+\+?<\/div>/g,
+      out: `<div class="number">${countExactFmt}</div>`,
     },
 
-    // Google label: "Google (X XXX+ avis)"
+    // Google label: "Google (X XXX avis)"
     {
       label: 'label.google',
       re: /Google \(\d{1,3}(?:[ \u00A0]\d{3})+\+?\s*avis\)/g,
-      out: `Google (${countRoundedFmt}+ avis)`,
+      out: `Google (${countExactFmt} avis)`,
     },
 
-    // "X XXX+ avis Google · 4.9/5" headings — count part only
+    // "X XXX avis Google" headings
     {
       label: 'heading.avisGoogle',
-      re: /\b\d{1,3}(?:[ \u00A0]\d{3})+\+\s*avis Google\b/g,
-      out: `${countRoundedFmt}+ avis Google`,
+      re: /\b\d{1,3}(?:[ \u00A0]\d{3})+\+?\s*avis Google\b/g,
+      out: `${countExactFmt} avis Google`,
     },
 
-    // Hero bar: "X XXX+ avis Google" (already covered above) and lone "X XXX+ avis"
+    // Generic: "X XXX avis" (excludes "avis Google" and "avis vérifiés"
+    // which are handled above)
     {
       label: 'generic.avisPlus',
-      re: /\b\d{1,3}(?:[ \u00A0]\d{3})+\+\s*avis\b(?!\s+vérifiés)/gi,
-      out: `${countRoundedFmt}+ avis`,
+      re: /\b\d{1,3}(?:[ \u00A0]\d{3})+\+?\s*avis\b(?!\s+(?:vérifiés|Google))/gi,
+      out: `${countExactFmt} avis`,
     },
 
-    // Title tag: "2060+ Avis" (no space, capital A)
+    // Title tag: "2085 Avis" (no space, capital A)
     {
       label: 'title.avis',
-      re: /\b\d{3,}\+ Avis\b/g,
-      out: `${countExact}+ Avis`,
+      re: /\b\d{3,}\+? Avis\b/g,
+      out: `${countExact} Avis`,
     },
 
     // Rating display "X.X/5"
