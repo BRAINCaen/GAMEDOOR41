@@ -8,9 +8,11 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-// Public identifier for the GAMEDOOR•41 Google Business listing
-// (anciennement Brain Escape Game Caen). Not secret.
-const PLACE_ID = 'ChIJm39bjEFoCkgR0IwsEq72CLU';
+// Text Search query — targets the Google Business listing (note/avis),
+// not the street address. Robust to the Brain Escape Game → GAMEDOOR•41
+// rebranding: both names will match as long as the business remains on
+// the same address.
+const SEARCH_QUERY = 'Brain Escape Game 41 bis rue Pasteur Caen';
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
@@ -40,25 +42,33 @@ const HTML_FILES = [
 ];
 
 async function fetchPlace() {
-  const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(PLACE_ID)}?fields=rating,userRatingCount,displayName`;
-  const res = await fetch(url, {
+  const res = await fetch('https://places.googleapis.com/v1/places:searchText', {
+    method: 'POST',
     headers: {
       'X-Goog-Api-Key': API_KEY,
+      'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress',
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, maxResultCount: 5 }),
   });
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`Places API ${res.status}: ${body}`);
   }
   const data = await res.json();
-  if (typeof data.rating !== 'number' || typeof data.userRatingCount !== 'number') {
-    throw new Error(`Unexpected Places payload: ${JSON.stringify(data)}`);
+  const candidates = data.places ?? [];
+  const match = candidates.find(
+    (p) => typeof p.rating === 'number' && typeof p.userRatingCount === 'number',
+  );
+  if (!match) {
+    throw new Error(`No business with rating found. Payload: ${JSON.stringify(data)}`);
   }
   return {
-    rating: data.rating,
-    count: data.userRatingCount,
-    name: data.displayName?.text ?? 'unknown',
+    placeId: match.id,
+    rating: match.rating,
+    count: match.userRatingCount,
+    name: match.displayName?.text ?? 'unknown',
+    address: match.formattedAddress ?? '',
   };
 }
 
@@ -186,7 +196,8 @@ async function updateFile(relPath, replacements) {
 
 async function main() {
   const place = await fetchPlace();
-  console.log(`Place: ${place.name}`);
+  console.log(`Place: ${place.name} (${place.placeId})`);
+  console.log(`Address: ${place.address}`);
   console.log(`Rating: ${place.rating} · Count: ${place.count}`);
 
   const rules = buildReplacements(place);
@@ -213,9 +224,11 @@ async function main() {
   // Also write a JSON snapshot for downstream use / debugging
   const snapshot = {
     updatedAt: new Date().toISOString(),
+    placeId: place.placeId,
+    name: place.name,
     rating: place.rating,
     reviewCount: place.count,
-    source: 'Google Places API (New)',
+    source: 'Google Places API (New) — Text Search',
   };
   await fs.writeFile(
     path.join(ROOT, 'data', 'google-reviews.json'),
