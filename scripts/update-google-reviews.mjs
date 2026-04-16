@@ -177,12 +177,12 @@ async function updateFile(relPath, replacements) {
   const original = content;
   const perRule = {};
   for (const rule of replacements) {
-    let hits = 0;
-    content = content.replace(rule.re, (match) => {
-      hits++;
-      return typeof rule.out === 'function' ? rule.out(match) : rule.out;
-    });
-    if (hits > 0) perRule[rule.label] = hits;
+    // Count hits separately, then replace — never wrap a string replacement
+    // in a callback because callbacks disable $1/$2 backreference substitution.
+    const matches = content.match(rule.re);
+    if (!matches) continue;
+    perRule[rule.label] = matches.length;
+    content = content.replace(rule.re, rule.out);
   }
 
   if (content === original) {
