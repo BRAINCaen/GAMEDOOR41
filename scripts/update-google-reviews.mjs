@@ -2,18 +2,20 @@
 // Fetches the Google Places rating and review count, then updates all
 // HTML files across the site. Designed to run nightly via GitHub Actions.
 //
-// Required env vars:
+// Required env var:
 //   GOOGLE_PLACES_API_KEY  — key with "Places API (New)" enabled
-//   GOOGLE_PLACE_ID        — Google Place ID for GAMEDOOR•41
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
-const PLACE_ID = process.env.GOOGLE_PLACE_ID;
+// Public identifier for the GAMEDOOR•41 Google Business listing
+// (anciennement Brain Escape Game Caen). Not secret.
+const PLACE_ID = 'ChIJm39bjEFoCkgR0IwsEq72CLU';
 
-if (!API_KEY || !PLACE_ID) {
-  console.error('Missing GOOGLE_PLACES_API_KEY or GOOGLE_PLACE_ID env vars.');
+const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+
+if (!API_KEY) {
+  console.error('Missing GOOGLE_PLACES_API_KEY env var.');
   process.exit(1);
 }
 

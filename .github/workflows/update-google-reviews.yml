@@ -24,7 +24,6 @@ jobs:
       - name: Fetch reviews and update HTML
         env:
           GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
-          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
         run: node scripts/update-google-reviews.mjs
 
       - name: Commit and push if changed
