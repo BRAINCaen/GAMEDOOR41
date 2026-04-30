@@ -207,8 +207,8 @@ ${components}`;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GAMEDOOR·41 — Escape Game &amp; Quiz à Caen · 1500m² dédiés au jeu · Mondeville</title>
-  <meta name="description" content="Escape game, quiz Buzz Your Brain et events à 5 min de Caen centre. 1500 m² · 4 univers sous un même toit · 2085 avis Google ★4,9. Réservez en ligne.">
+  <title>GAMEDOOR·41 — Escape Game &amp; Quiz à Caen · Mondeville</title>
+  <meta name="description" content="Escape game, quiz Buzz Your Brain et events à 5 min de Caen centre. 4 univers sous un même toit · 2085 avis Google ★4,9. Réservez en ligne.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#0C0800">
   <link rel="canonical" href="https://gamedoor41.fr/">
@@ -218,14 +218,14 @@ ${components}`;
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://gamedoor41.fr/">
   <meta property="og:title" content="GAMEDOOR·41 — Escape Game &amp; Quiz Game à Caen">
-  <meta property="og:description" content="4 univers sous un toit · 1500 m² dédiés au jeu à 5 min de Caen centre. Escape · Quiz · Action · Events.">
+  <meta property="og:description" content="4 univers sous un toit · à 5 min de Caen centre. Escape · Quiz · Action · Events.">
   <meta property="og:image" content="https://gamedoor41.fr/img/og/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="GAMEDOOR·41">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GAMEDOOR·41 — Escape Game &amp; Quiz à Caen">
-  <meta name="twitter:description" content="4 univers sous un toit · 1500 m² dédiés au jeu à 5 min de Caen centre.">
+  <meta name="twitter:description" content="4 univers sous un toit · à 5 min de Caen centre.">
   <meta name="twitter:image" content="https://gamedoor41.fr/img/og/og-default.jpg">
 
   <!-- Favicon -->
@@ -251,7 +251,7 @@ ${components}`;
     "@id": "https://gamedoor41.fr/#business",
     "name": "GAMEDOOR·41",
     "alternateName": ["Brain Escape Game Caen", "Buzz Your Brain Caen", "Brain Caen"],
-    "description": "Escape game, quiz Buzz Your Brain, action games et events à 5 min de Caen centre. 1500 m² dédiés au jeu, 4 univers sous un même toit.",
+    "description": "Escape game, quiz Buzz Your Brain, action games et events à 5 min de Caen centre. 4 univers sous un même toit.",
     "url": "https://gamedoor41.fr/",
     "logo": "https://gamedoor41.fr/img/logo/logo-stacked.png",
     "image": "https://gamedoor41.fr/img/og/og-default.jpg",
