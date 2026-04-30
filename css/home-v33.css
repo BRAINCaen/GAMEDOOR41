@@ -2056,41 +2056,56 @@ a.hero-tripadvisor:hover {
 .cta-logo-wrap {
   position: relative;
   margin: 48px auto 32px;
-  max-width: 720px;
-  padding: 70px 80px 90px;  /* place pour le frame + sol autour du logo */
-  perspective: 1500px;
+  width: 100%;
+  max-width: 760px;
+  /* Hauteur fixe pour la porte = format vertical-ish, pas écrasé */
+  height: clamp(420px, 56vw, 540px);
+  perspective: 1800px;
   isolation: isolate;
 }
+/* Logo PLACÉ DERRIÈRE les portes (z=2 < z=4 panneaux).
+   Visible uniquement quand les portes s'ouvrent. */
 .cta-final-logo {
   display: block;
-  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* Reste BIEN à l'intérieur de l'embrasure (jamais sur les côtés des portes) */
+  width: 60%;
+  max-width: 420px;
   height: auto;
-  position: relative;
-  z-index: 6;
+  z-index: 2;
+  /* Le logo SVG est maintenant transparent (pas de bg noir) */
+  background: transparent;
+  /* Subtilement visible quand fermé, full bright quand ouvert */
+  opacity: calc(0.55 + var(--door-progress) * 0.45);
   filter:
-    drop-shadow(0 0 calc(var(--door-progress) * 30px) rgba(255, 220, 150, calc(.55 * var(--door-progress))))
-    drop-shadow(0 0 calc(var(--door-progress) * 90px) rgba(224, 112, 32, calc(.4 * var(--door-progress))));
-  transform: scale(calc(1 + var(--door-progress) * 0.05));
-  transition: filter .3s ease, transform .3s ease;
+    drop-shadow(0 0 calc(var(--door-progress) * 30px) rgba(255, 220, 150, calc(.6 * var(--door-progress))))
+    drop-shadow(0 0 calc(var(--door-progress) * 90px) rgba(224, 112, 32, calc(.45 * var(--door-progress))));
+  transform: translate(-50%, -50%) scale(calc(1 + var(--door-progress) * 0.05));
+  transition: filter .3s ease, transform .3s ease, opacity .3s ease;
+  pointer-events: none;
 }
 
 .door-stage {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  perspective: 1500px;
+  perspective: 1800px;
   transform-style: preserve-3d;
+  /* Clip pour que rien ne déborde du cadre quand la porte s'ouvre */
+  overflow: hidden;
+  border-radius: 8px;
 }
 
-/* Fond sombre de l'embrasure (visible derrière le logo) */
+/* Fond très sombre + chaud derrière la porte (suggère une pièce intérieure) */
 .door-stage-bg {
   position: absolute;
   inset: 8px;
-  background: linear-gradient(180deg,
-    #07050200 0%,
-    rgba(20,12,4,.65) 30%,
-    rgba(28,18,8,.7) 70%,
-    rgba(20,12,4,.5) 100%);
+  background: radial-gradient(ellipse 60% 70% at 50% 50%,
+    rgba(80, 40, 10, .35) 0%,
+    rgba(20, 12, 4, .8) 50%,
+    rgba(8, 5, 1, 1) 100%);
   border-radius: 6px;
   z-index: 0;
 }
