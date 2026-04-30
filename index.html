@@ -242,11 +242,20 @@
     <div class="heritage-band reveal">
       <span class="heritage-eq"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></span>
       <span class="heritage-sep" aria-hidden="true">·</span>
-      <span class="heritage-tag">Même équipe</span>
+      <span class="heritage-tag">
+        <img src="/img/icons/users.svg" alt="" aria-hidden="true" class="heritage-ico">
+        Même équipe
+      </span>
       <span class="heritage-sep" aria-hidden="true">·</span>
-      <span class="heritage-tag">Même adresse</span>
+      <span class="heritage-tag">
+        <img src="/img/icons/pin.svg" alt="" aria-hidden="true" class="heritage-ico">
+        Même adresse
+      </span>
       <span class="heritage-sep" aria-hidden="true">·</span>
-      <span class="heritage-tag">Plus de jeux</span>
+      <span class="heritage-tag">
+        <img src="/img/icons/gamepad.svg" alt="" aria-hidden="true" class="heritage-ico">
+        Plus de jeux
+      </span>
     </div>
   </div>
 </section>
@@ -592,29 +601,32 @@
   <div class="container cta-final-inner">
     <div class="reveal">
       <div class="eyebrow no-rules" style="justify-content:center; display:flex;"><span>Prêt à entrer ?</span></div>
-      <h2 class="h-display cta-final-h2" style="margin-top:32px;" aria-label="Sois le prochain à pousser la porte GAMEDOOR·41">
+      <h2 class="h-display cta-final-h2" style="margin-top:32px;" aria-label="Sois le prochain à entrer GAMEDOOR·41">
         <span class="cta-word" style="--d:0">Sois</span>
         <span class="cta-word" style="--d:1">le</span>
         <span class="cta-word" style="--d:2">prochain</span>
         <span class="cta-word" style="--d:3">à</span>
-        <span class="cta-word" style="--d:4">pousser</span>
+        <span class="cta-word" style="--d:4">entrer</span>
       </h2>
 
-      <!-- Scène porte 3D + logo. Le "·" du logo joue le rôle de poignée.
-           Les 2 panneaux s'écartent quand la section est centrée dans le viewport
-           via --door-progress (0 = fermé, 1 = grand ouvert), géré en JS. -->
-      <div class="door-stage" aria-hidden="true">
-        <div class="door-stage-light"></div>
-        <div class="door-stage-rays"></div>
-        <div class="door-stage-leaf door-stage-leaf-left">
-          <div class="door-stage-panel"></div>
-        </div>
-        <div class="door-stage-leaf door-stage-leaf-right">
-          <div class="door-stage-panel"></div>
-        </div>
-        <div class="door-stage-frame"></div>
-      </div>
+      <!-- Scène porte 3D contenue autour du logo (ne masque plus le reste du contenu)
+           --door-progress (0 fermé → 1 grand ouvert) piloté en JS au scroll. -->
       <div class="cta-logo-wrap">
+        <div class="door-stage" aria-hidden="true">
+          <div class="door-stage-bg"></div>
+          <div class="door-stage-rays"></div>
+          <div class="door-stage-light"></div>
+          <div class="door-stage-leaf door-stage-leaf-left">
+            <div class="door-stage-panel"></div>
+            <span class="door-stage-handle"></span>
+          </div>
+          <div class="door-stage-leaf door-stage-leaf-right">
+            <div class="door-stage-panel"></div>
+            <span class="door-stage-handle"></span>
+          </div>
+          <div class="door-stage-frame"></div>
+          <div class="door-stage-floor"></div>
+        </div>
         <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" class="cta-final-logo" decoding="async" loading="lazy">
       </div>
       <p class="lead cta-lead" style="text-align:center;">
@@ -1071,11 +1083,12 @@
     var sectionMid = rect.top + rect.height / 2;
     var viewportMid = winH / 2;
     var distance = Math.abs(sectionMid - viewportMid);
-    // Plage active = 70 % de la hauteur viewport (au-delà, porte fermée)
-    var range = winH * 0.7;
+    // Plage active = 40 % de la hauteur viewport (porte beaucoup plus
+    // réactive: ~peu de scroll suffit pour ouvrir/fermer)
+    var range = winH * 0.4;
     var p = Math.max(0, Math.min(1, 1 - distance / range));
-    // Petit easing pour rendre l'ouverture plus marquée
-    p = p * p * (3 - 2 * p);
+    // Easing cubique plus marqué (smoothstep accentué)
+    p = p * p * p * (p * (p * 6 - 15) + 10);
     sect.style.setProperty('--door-progress', p.toFixed(3));
   }
   function onScroll() {
