@@ -764,7 +764,7 @@
       w.stack.style.transition = 'none';
       // Force reflow
       void w.stack.offsetHeight;
-      var dur = 1100 + i * 220; // staggered landing — left wheels stop first
+      var dur = 600 + i * 100; // staggered landing — left wheels stop first (V2: plus rapide)
       w.stack.style.transition = 'transform ' + dur + 'ms cubic-bezier(.16,.84,.3,1)';
       w.stack.style.transform = 'translateY(-' + rolls + 'em)';
       // Mark final state at the end
@@ -784,9 +784,9 @@
   setTimeout(function tick() {
     idx = (idx + 1) % WORDS.length;
     spinTo(WORDS[idx]);
-    var nextDelay = 1100 + (MAX_LEN * 220) + 2200; // wait for spin + read time (toutes les roues spinnent jusqu'a MAX_LEN)
+    var nextDelay = 600 + (MAX_LEN * 100) + 900; // spin time + read time (V2: plus rapide pour voir tous les mots défiler)
     setTimeout(tick, nextDelay);
-  }, 2500);
+  }, 1200);
 })();
 
 /* ============================================================
