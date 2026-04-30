@@ -167,6 +167,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* compense le nav en position:fixed quand on clique sur un anchor (#escape, #quiz...) */
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
 }
 body {
   font-family: var(--gd-font-body);
