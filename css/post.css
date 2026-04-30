@@ -1,0 +1,360 @@
+/* GAMEDOOR·41 — Pages article (/post/<slug>/) et magazine (/magazine/)
+   Charge en complément de home-v33.css pour récupérer les tokens, .nav,
+   .btn, .footer, .container, et les classes V3.3 partagées.
+*/
+
+/* ============================================================
+   Hero article
+   ============================================================ */
+.post-main { padding-bottom: 80px; }
+
+.post-hero {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 42vh, 480px);
+  overflow: hidden;
+  background: var(--gd-black);
+  margin-bottom: 0;
+}
+.post-hero picture, .post-hero img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.6) saturate(1.05);
+}
+.post-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12,8,0,0) 40%, rgba(12,8,0,.95) 100%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Container article + breadcrumb
+   ============================================================ */
+.post-container {
+  max-width: 760px;
+  padding-top: 40px;
+}
+.post-breadcrumb {
+  font-family: var(--gd-font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--fg3);
+  margin-bottom: 24px;
+}
+.post-breadcrumb a { color: var(--fg2); }
+.post-breadcrumb a:hover { color: var(--gd-orange); }
+.post-breadcrumb span { margin: 0 6px; color: var(--fg3); }
+
+/* ============================================================
+   Article header
+   ============================================================ */
+.post-header { margin-bottom: 40px; }
+.post-cat {
+  display: inline-block;
+  padding: 8px 14px;
+  background: var(--gd-orange);
+  color: var(--gd-black);
+  font-family: var(--gd-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+.post-cat.escape { background: var(--gd-escape); color: var(--gd-cream); }
+.post-cat.quiz { background: var(--gd-quiz); color: var(--gd-cream); }
+.post-cat.events { background: var(--gd-events); color: var(--gd-black); }
+.post-cat.action { background: var(--gd-action); color: var(--gd-cream); }
+
+.post-title {
+  font-family: var(--gd-font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  line-height: 1;
+  font-size: clamp(32px, 4.4vw, 56px);
+  color: var(--gd-cream);
+  margin: 0 0 18px;
+}
+.post-excerpt {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--fg2);
+  margin: 0 0 24px;
+}
+.post-meta {
+  font-family: var(--gd-font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--fg3);
+}
+.post-meta .dot { margin: 0 8px; color: var(--gd-orange); }
+
+/* ============================================================
+   Article body — typography
+   ============================================================ */
+.post-body {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--fg1);
+}
+.post-body h2 {
+  font-family: var(--gd-font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -.5px;
+  font-size: clamp(24px, 3vw, 32px);
+  color: var(--gd-cream);
+  margin: 48px 0 16px;
+  position: relative;
+  padding-top: 12px;
+}
+.post-body h2::before {
+  content: ""; display: block;
+  width: 40px; height: 2px;
+  background: var(--gd-orange);
+  position: absolute;
+  top: 0; left: 0;
+}
+.post-body h3 {
+  font-family: var(--gd-font-display);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: -.2px;
+  font-size: 22px;
+  color: var(--gd-cream);
+  margin: 32px 0 12px;
+}
+.post-body p { margin: 0 0 18px; }
+.post-body a {
+  color: var(--gd-orange);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.post-body a:hover { color: var(--gd-orange-light); }
+.post-body strong { color: var(--gd-cream); font-weight: 700; }
+.post-body em { font-style: italic; color: var(--gd-grey-light); }
+.post-body code {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--gd-card-bg);
+  color: var(--gd-orange);
+  border: 1px solid var(--gd-border);
+  border-radius: 3px;
+  font-family: var(--gd-font-mono);
+  font-size: 16px;
+}
+.post-body ul, .post-body ol { margin: 0 0 24px; padding-left: 24px; }
+.post-body li { margin-bottom: 8px; }
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 16px;
+}
+.post-body th, .post-body td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--gd-border);
+}
+.post-body th {
+  font-family: var(--gd-font-display);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 16px;
+  color: var(--gd-grey-light);
+  background: var(--gd-card-bg);
+}
+.post-cta {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 14px 24px;
+  background: var(--gd-orange);
+  color: var(--gd-black) !important;
+  font-family: var(--gd-font-display);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  border-radius: 3px;
+  transition: all 200ms ease;
+}
+.post-cta:hover {
+  background: var(--gd-orange-dark);
+  color: var(--gd-cream) !important;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   Bloc CTA bas d'article
+   ============================================================ */
+.post-cta-block {
+  margin-top: 56px;
+  padding: 40px 32px;
+  background: var(--gd-card-bg);
+  border: 1px solid var(--gd-border);
+  border-left: 3px solid var(--gd-orange);
+  border-radius: 6px;
+}
+.post-cta-block h2 {
+  font-family: var(--gd-font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--gd-cream);
+  margin: 0 0 12px;
+}
+.post-cta-block p {
+  color: var(--fg2);
+  margin: 0 0 20px;
+}
+.post-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ============================================================
+   Magazine list (page /magazine/)
+   ============================================================ */
+.mag-main { padding-bottom: 80px; }
+.mag-hero {
+  padding: 64px 0 32px;
+  border-bottom: 1px solid var(--gd-border);
+}
+.mag-hero .lead {
+  font-size: 19px; color: var(--fg2);
+  max-width: 60ch; margin-top: 16px;
+}
+.mag-list {
+  padding: 56px 0;
+}
+.mag-list .container-wide {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+@media (max-width: 980px) {
+  .mag-list .container-wide { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .mag-list .container-wide { grid-template-columns: 1fr; }
+}
+
+.mag-card {
+  position: relative;
+  background: var(--gd-card-bg);
+  border: 1px solid var(--gd-border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 200ms ease, border-color 200ms ease;
+}
+.mag-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gd-orange);
+}
+.mag-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+.mag-card-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.mag-card-img picture, .mag-card-img img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 320ms ease;
+}
+.mag-card:hover .mag-card-img img {
+  transform: scale(1.04);
+}
+.mag-card-body { padding: 22px 24px 26px; }
+.mag-card-title {
+  font-family: var(--gd-font-display);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: -.3px;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--gd-cream);
+  margin: 14px 0 10px;
+}
+.mag-card-excerpt {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--fg2);
+  margin: 0 0 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mag-card-meta {
+  font-family: var(--gd-font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--fg3);
+}
+.mag-card-meta .dot { color: var(--gd-orange); margin: 0 6px; }
+
+/* ============================================================
+   Footer minimal pour pages article (full footer venant de home-v33.css)
+   ============================================================ */
+.footer-row {
+  display: flex; align-items: center; gap: 24px;
+  padding: 32px 0 16px;
+  flex-wrap: wrap;
+}
+.footer-tagline {
+  color: var(--fg2);
+  font-family: var(--gd-font-display);
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 24px 0 32px;
+  border-top: 1px solid var(--gd-border);
+}
+.footer-cols h4 {
+  font-family: var(--gd-font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gd-orange);
+  margin: 0 0 12px;
+}
+.footer-cols a {
+  display: block;
+  font-size: 16px;
+  color: var(--fg2);
+  margin-bottom: 10px;
+}
+.footer-cols a:hover { color: var(--gd-cream); }
+.footer-legal {
+  font-size: 16px;
+  color: var(--fg3);
+  padding: 16px 0;
+  border-top: 1px solid var(--gd-border);
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .footer-cols { grid-template-columns: 1fr 1fr; }
+}

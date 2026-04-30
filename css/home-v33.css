@@ -476,7 +476,7 @@ img { display: block; max-width: 100%; }
   display: inline-flex; align-items: center;
   padding: 8px 14px;
   font-family: var(--gd-font-display);
-  font-size: 13px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--gd-cream);
 }
@@ -539,7 +539,7 @@ img { display: block; max-width: 100%; }
 }
 .nav-link:hover::after { transform: scaleX(1); }
 .nav-cta {
-  padding: 9px 22px; font-size: 15px; letter-spacing: 1.5px;
+  padding: 9px 22px; font-size: 16px; letter-spacing: 1.5px;
 }
 @media (max-width: 900px) {
   .nav-links { display: none; }
@@ -760,7 +760,7 @@ img { display: block; max-width: 100%; }
 }
 .hero-stat-label {
   font-family: var(--gd-font-display);
-  font-size: 12px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--gd-cream);
   margin-top: 10px;
@@ -768,7 +768,7 @@ img { display: block; max-width: 100%; }
 }
 .hero-stat-stars {
   color: var(--gd-orange);
-  font-size: 13px; letter-spacing: 1.5px;
+  font-size: 16px; letter-spacing: 1.5px;
   text-shadow: 0 0 10px rgba(224,112,32,.5);
 }
 .hero-stat-pipe {
@@ -811,13 +811,13 @@ a.hero-tripadvisor:hover {
 }
 .hero-tripadvisor-text strong {
   font-family: var(--gd-font-display);
-  font-size: 14px; font-weight: 800;
+  font-size: 16px; font-weight: 800;
   letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--gd-cream);
 }
 .hero-tripadvisor-text small {
   font-family: var(--gd-font-body);
-  font-size: 12.5px; font-weight: 500;
+  font-size: 16px; font-weight: 500;
   color: var(--gd-grey-light);
   letter-spacing: .3px;
   margin-top: 3px;
@@ -861,8 +861,8 @@ a.hero-tripadvisor:hover {
   background: linear-gradient(90deg, rgba(224,112,32,.08) 0%, rgba(224,112,32,.04) 50%, rgba(224,112,32,.08) 100%);
   font-family: var(--gd-font-display);
   font-weight: 700;
-  letter-spacing: 2.5px; text-transform: uppercase;
-  font-size: clamp(11px, 1.1vw, 14px);
+  letter-spacing: 2px; text-transform: uppercase;
+  font-size: 16px;
   text-align: center;
   color: var(--gd-orange);
 }
@@ -1010,14 +1010,14 @@ a.hero-tripadvisor:hover {
 }
 .card-price small {
   font-family: var(--gd-font-body);
-  font-size: 13px; font-weight: 500;
+  font-size: 16px; font-weight: 500;
   letter-spacing: 1px; text-transform: uppercase;
   color: var(--gd-grey-light);
   display: block; margin-top: 4px;
 }
 .card-cta {
   font-family: var(--gd-font-display);
-  font-size: 14px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
   border-bottom: 1px solid var(--gd-cream);
   padding-bottom: 3px;
@@ -1516,10 +1516,10 @@ a.hero-tripadvisor:hover {
 }
 .tag {
   display: inline-flex; align-items: center;
-  padding: 10px 16px;
+  padding: 12px 18px;
   font-family: var(--gd-font-display);
-  font-size: 12px; font-weight: 600;
-  letter-spacing: 2px; text-transform: uppercase;
+  font-size: 16px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
   background: rgba(240,235,226,.06);
   border: 1px solid var(--hairline-strong);
   color: var(--gd-cream);
@@ -1781,36 +1781,88 @@ a.hero-tripadvisor:hover {
 @media (max-width: 900px) {
   .trust-head { grid-template-columns: 1fr; gap: 24px; }
 }
+/* Marquee premium — défilement infini avec fade des bords + pause au hover */
+.trust-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 24px;
+  /* Mask gradient pour fade premium des deux côtés */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  padding: 4px 0;
+}
+.trust-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 14px;
+  animation: trust-marquee 42s linear infinite;
+  will-change: transform;
+}
+.trust-marquee:hover .trust-marquee-track {
+  animation-play-state: paused;
+}
+.trust-marquee-set {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;
+  padding-right: 14px;
+}
+@keyframes trust-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trust-marquee-track { animation: none; transform: none; }
+  .trust-marquee {
+    -webkit-mask-image: none;
+            mask-image: none;
+    overflow-x: auto;
+  }
+}
+.trust-logo {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 28px;
+  border: 1px solid var(--border1);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  font-family: var(--gd-font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  color: var(--fg2);
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color .25s ease, color .25s ease, background .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.trust-marquee:hover .trust-logo {
+  /* Subtle dim on neighbours when paused — focus auto sur celui hovered */
+  opacity: .55;
+}
+.trust-marquee .trust-logo:hover {
+  opacity: 1;
+  border-color: var(--gd-orange);
+  color: var(--gd-orange);
+  background: linear-gradient(180deg, rgba(224,112,32,.18), rgba(224,112,32,.04));
+  box-shadow: 0 0 0 1px rgba(224,112,32,.35), 0 8px 32px rgba(224,112,32,.18);
+  transform: translateY(-2px);
+}
+/* Backwards compat si quelqu'un utilise encore .trust-logos sans marquee */
 .trust-logos {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 24px;
 }
-.trust-logo {
-  display: inline-flex;
-  align-items: center;
-  padding: 14px 24px;
-  border: 1px solid var(--border1);
-  border-radius: 999px;
-  font-family: var(--gd-font-display);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: var(--fg2);
-  text-transform: uppercase;
-  transition: border-color .2s ease, color .2s ease;
-}
-.trust-logo:hover {
-  border-color: var(--gd-orange);
-  color: var(--gd-orange);
-}
 .trust-disclaimer {
-  font-size: 11px;
+  font-size: 16px;
   color: var(--fg3);
   max-width: 80ch;
   font-style: italic;
   margin: 0;
+  line-height: 1.5;
 }
 .trust-divider {
   height: 1px;
@@ -1845,11 +1897,11 @@ a.hero-tripadvisor:hover {
 .trust .review-stars {
   color: var(--gd-orange);
   letter-spacing: 4px;
-  font-size: 18px;
+  font-size: 20px;
 }
 .trust .review-quote {
   color: var(--fg1);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.55;
   margin: 0;
   flex: 1;
@@ -1859,8 +1911,9 @@ a.hero-tripadvisor:hover {
   justify-content: space-between;
   align-items: center;
   font-family: var(--gd-font-display);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--fg3);
   border-top: 1px solid var(--border1);
