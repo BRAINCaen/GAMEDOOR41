@@ -1854,4 +1854,10 @@ a.hero-tripadvisor:hover {
   padding-top: 16px;
 }
 .trust .review-name { color: var(--fg2); }
+/* "encore." en italique fine (même pattern que .b2b h2 em) */
+.trust h2 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gd-grey-light);
+}
 
