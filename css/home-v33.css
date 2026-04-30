@@ -180,7 +180,7 @@ body {
   background: var(--bg1);
   text-align: left;
   /* compense le header en position:fixed pour que le hero ne soit pas masqué */
-  padding-top: 64px;
+  padding-top: 56px;
 }
 
 /* ---------------------------------------------------------------------
@@ -511,23 +511,23 @@ img { display: block; max-width: 100%; }
 }
 .nav-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 0;
+  padding: 10px 0;
 }
 .nav-logo {
   display: inline-flex; align-items: baseline;
   font-family: var(--gd-font-display);
   font-weight: 900; letter-spacing: -1px;
-  text-transform: uppercase; font-size: 22px; line-height: 1;
+  text-transform: uppercase; font-size: 26px; line-height: 1;
 }
 .nav-logo .door { font-weight: 300; }
 .nav-logo .num  { color: var(--gd-orange); margin-left: 2px; font-size: 16px; }
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-link {
   font-family: var(--gd-font-display);
-  font-size: 14px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--gd-grey-light);
-  position: relative; padding: 6px 0;
+  position: relative; padding: 4px 0;
   transition: color 200ms ease;
 }
 .nav-link:hover { color: var(--gd-cream); }
@@ -539,7 +539,7 @@ img { display: block; max-width: 100%; }
 }
 .nav-link:hover::after { transform: scaleX(1); }
 .nav-cta {
-  padding: 12px 22px; font-size: 14px; letter-spacing: 1.5px;
+  padding: 9px 22px; font-size: 15px; letter-spacing: 1.5px;
 }
 @media (max-width: 900px) {
   .nav-links { display: none; }
