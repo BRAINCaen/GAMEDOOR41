@@ -46,7 +46,7 @@ async function fetchPlace() {
     method: 'POST',
     headers: {
       'X-Goog-Api-Key': API_KEY,
-      'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress',
+      'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress,places.reviews',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ textQuery: SEARCH_QUERY, maxResultCount: 5 }),
@@ -69,14 +69,97 @@ async function fetchPlace() {
     count: match.userRatingCount,
     name: match.displayName?.text ?? 'unknown',
     address: match.formattedAddress ?? '',
+    reviews: Array.isArray(match.reviews) ? match.reviews : [],
   };
+}
+
+// --- Reviews helpers ----------------------------------------------------
+
+const FR_MONTHS = [
+  'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+  'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+];
+
+function formatDateFr(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.valueOf())) return '';
+  return `${FR_MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
+// "Marie Dupont" -> "Marie D."  ·  "Marie D." -> "Marie D."  ·  "Marie" -> "Marie"
+function anonymizeName(displayName) {
+  const trimmed = (displayName || '').trim();
+  if (!trimmed) return 'Anonyme';
+  const parts = trimmed.split(/\s+/);
+  if (parts.length === 1) return parts[0];
+  const first = parts[0];
+  const last = parts[parts.length - 1];
+  if (/^[A-Za-zÀ-ÿ]\.?$/.test(last)) {
+    return `${first} ${last.endsWith('.') ? last : last + '.'}`;
+  }
+  return `${first} ${last.charAt(0).toUpperCase()}.`;
+}
+
+function truncateQuote(text, max = 280) {
+  const cleaned = (text || '').replace(/\s+/g, ' ').trim();
+  if (cleaned.length <= max) return cleaned;
+  const slice = cleaned.slice(0, max);
+  const lastSpace = slice.lastIndexOf(' ');
+  const cut = lastSpace > max * 0.6 ? lastSpace : max;
+  return slice.slice(0, cut).replace(/[.,;:!?\-–—\s]+$/, '') + '…';
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Trier par note desc puis date desc, ne garder que les avis utilisables
+// (texte non vide, longueur min). On reste tolérant : si moins de 3 avis 5★
+// disponibles on accepte les 4★ ; si vraiment rien, on retourne [] et le
+// HTML reste sur les placeholders.
+function pickReviews(rawReviews, count = 3, minLen = 30) {
+  const usable = (rawReviews || [])
+    .map((r) => {
+      const text = (r?.text?.text || r?.originalText?.text || '').trim();
+      return {
+        rating: typeof r?.rating === 'number' ? r.rating : 5,
+        text,
+        author: r?.authorAttribution?.displayName || '',
+        publishTime: r?.publishTime || '',
+      };
+    })
+    .filter((r) => r.text.length >= minLen && r.rating >= 4)
+    .sort((a, b) => {
+      if (b.rating !== a.rating) return b.rating - a.rating;
+      return (b.publishTime || '').localeCompare(a.publishTime || '');
+    });
+  return usable.slice(0, count);
+}
+
+function buildReviewArticleInner(review) {
+  const fullStars = Math.max(0, Math.min(5, Math.round(review.rating || 5)));
+  const stars = '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
+  return `
+        <div class="review-stars">${stars}</div>
+        <p class="review-quote">«&nbsp;${escapeHtml(truncateQuote(review.text))}&nbsp;»</p>
+        <div class="review-meta">
+          <span class="review-name">${escapeHtml(anonymizeName(review.author))}</span>
+          <span class="review-date">${escapeHtml(formatDateFr(review.publishTime))}</span>
+        </div>
+      `;
 }
 
 function formatWithSpaces(n) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
-function buildReplacements({ rating, count }) {
+function buildReplacements({ rating, count, reviews = [] }) {
   const ratingStr = rating.toFixed(1);                // "4.9"
   const countExact = count;                           // 2085
   const countExactFmt = formatWithSpaces(countExact); // "2 085"
@@ -160,6 +243,20 @@ function buildReplacements({ rating, count }) {
       re: /(<div class="number"[^>]*>)[45]\.\d(<small>\/5<\/small><\/div>)/g,
       out: `$1${ratingStr}$2`,
     },
+
+    // Review slots — remplit le contenu interne de chaque <article class="review"
+    // data-review-slot="N"> avec les vrais avis Google (note, citation, prénom L.,
+    // mois année). Si pas assez d'avis dispo, le slot reste tel quel.
+    {
+      label: 'reviewSlot',
+      re: /(<article class="review[^"]*" data-review-slot="(\d+)"[^>]*>)[\s\S]*?(<\/article>)/g,
+      fn: (match, openTag, slotStr, closeTag) => {
+        const slot = parseInt(slotStr, 10);
+        const r = reviews[slot - 1];
+        if (!r) return match;
+        return `${openTag}${buildReviewArticleInner(r)}${closeTag}`;
+      },
+    },
   ];
 }
 
@@ -179,12 +276,17 @@ async function updateFile(relPath, replacements) {
   const original = content;
   const perRule = {};
   for (const rule of replacements) {
-    // Count hits separately, then replace — never wrap a string replacement
-    // in a callback because callbacks disable $1/$2 backreference substitution.
+    // Count hits separately, then replace — pour les règles à `out` (string)
+    // on garde le replace string (préserve $1/$2). Les règles `fn` utilisent
+    // une callback : on assume la substitution backref manuellement à l'intérieur.
     const matches = content.match(rule.re);
     if (!matches) continue;
     perRule[rule.label] = matches.length;
-    content = content.replace(rule.re, rule.out);
+    if (typeof rule.fn === 'function') {
+      content = content.replace(rule.re, rule.fn);
+    } else {
+      content = content.replace(rule.re, rule.out);
+    }
   }
 
   if (content === original) {
@@ -202,7 +304,13 @@ async function main() {
   console.log(`Address: ${place.address}`);
   console.log(`Rating: ${place.rating} · Count: ${place.count}`);
 
-  const rules = buildReplacements(place);
+  const picked = pickReviews(place.reviews, 3);
+  console.log(`Reviews usable: ${picked.length} / ${place.reviews.length}`);
+  for (const r of picked) {
+    console.log(`  - ${r.rating}★ ${anonymizeName(r.author)} (${formatDateFr(r.publishTime)})`);
+  }
+
+  const rules = buildReplacements({ ...place, reviews: picked });
   let totalChanges = 0;
   const report = [];
 

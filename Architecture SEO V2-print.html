@@ -1,0 +1,3350 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Architecture SEO V2 — GAMEDOOR·41 (print)</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+@page { size: A4 portrait; margin: 14mm 12mm; }
+* { box-sizing: border-box; }
+html, body {
+  background: #fff !important;
+  color: #0C0800 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  margin: 0; padding: 0;
+}
+body { font-family: var(--gd-font-body); font-size: 9pt; line-height: 1.42; }
+a { color: #B85A18; text-decoration: none; }
+
+.cover {
+  background: #0C0800; color: #F0EBE2;
+  padding: 38mm 18mm 24mm;
+  margin: -14mm -12mm 0;
+  min-height: 269mm;
+  page-break-after: always; break-after: page;
+}
+.cover-top {
+  display: flex; justify-content: space-between;
+  font-family: var(--gd-font-display);
+  font-size: 8pt; letter-spacing: 4px;
+  text-transform: uppercase; color: #C8C2B8;
+}
+.cover-eyebrow {
+  margin-top: 56mm;
+  font-family: var(--gd-font-display);
+  font-size: 9pt; letter-spacing: 6px;
+  text-transform: uppercase; color: #E07020;
+  display: flex; align-items: center; gap: 12px;
+}
+.cover-eyebrow::before {
+  content: ""; width: 24mm; height: 1px;
+  background: #E07020; display: inline-block;
+}
+.cover-title {
+  margin-top: 8mm;
+  font-family: var(--gd-font-display);
+  font-weight: 900; font-size: 60pt; line-height: .9;
+  letter-spacing: -2px; text-transform: uppercase;
+}
+.cover-title .accent { color: #E07020; }
+.cover-title .stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5pt #F0EBE2;
+}
+.cover-sub {
+  margin-top: 14mm; max-width: 140mm;
+  font-size: 12pt; line-height: 1.45; color: #C8C2B8;
+}
+.cover-stats {
+  margin-top: 16mm;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 6mm;
+}
+.cstat { padding: 6mm 0; border-top: 1px solid #2E2820; }
+.cstat-num {
+  font-family: var(--gd-font-display);
+  font-weight: 800; font-size: 36pt; line-height: 1;
+  color: #E07020; letter-spacing: -1px;
+}
+.cstat-l {
+  margin-top: 3mm; font-size: 7.5pt; color: #8A8078;
+  text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+}
+.cover-foot {
+  position: absolute; bottom: 24mm; left: 18mm; right: 18mm;
+  display: flex; justify-content: space-between;
+  font-family: var(--gd-font-display);
+  font-size: 7.5pt; letter-spacing: 3px;
+  color: #6A6460; text-transform: uppercase;
+  border-top: 1px solid #2E2820; padding-top: 5mm;
+}
+
+/* Section header */
+.sec { padding: 10mm 0 6mm; page-break-before: always; break-before: page; }
+.sec:first-of-type { page-break-before: auto; break-before: auto; }
+.sec-num {
+  font-family: var(--gd-font-display);
+  font-size: 8pt; letter-spacing: 5px;
+  color: #E07020; text-transform: uppercase; font-weight: 600;
+}
+.sec-title {
+  font-family: var(--gd-font-display);
+  font-weight: 900; font-size: 32pt; line-height: .95;
+  letter-spacing: -1px; text-transform: uppercase;
+  margin: 2mm 0 4mm; color: #0C0800;
+  border-bottom: 2pt solid #E07020;
+  padding-bottom: 4mm;
+}
+.sec-lead {
+  font-size: 10pt; line-height: 1.5; max-width: 165mm;
+  margin: 0 0 8mm; color: #2E2820;
+}
+.sec-lead strong { color: #0C0800; }
+h2,h3,h4 { color: #0C0800; }
+
+/* warning box */
+.warn {
+  margin-top: 5mm; padding: 4mm 5mm;
+  background: #FFF7E6; border: 1px solid #FFB74D;
+  border-left: 3pt solid #B86E00;
+  font-size: 8.5pt; color: #2E2820;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.warn b { color: #B86E00; text-transform: uppercase;
+  font-family: var(--gd-font-display); font-size: 8pt; letter-spacing: 1px; }
+
+/* keywords table */
+.kwt {
+  width: 100%; border-collapse: collapse; font-size: 8.5pt;
+  border: 0.5pt solid #C8C2B8;
+}
+.kwt th {
+  background: #F0EBE2; color: #2E2820;
+  font-family: var(--gd-font-display);
+  font-weight: 700; font-size: 7.5pt;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-align: left; padding: 3mm 3mm;
+  border-bottom: 1pt solid #C8C2B8;
+}
+.kwt td {
+  padding: 2.5mm 3mm; border-bottom: 0.3pt solid #E8E6E2;
+  vertical-align: top;
+}
+.kwt tr.v1 { border-left: 2pt solid #E07020; background: #FFF8F0; }
+.kwt tr { page-break-inside: avoid; break-inside: avoid; }
+.kw-url { font-family: var(--gd-font-mono); font-size: 7.5pt; color: #6A6460; }
+.kw-term { font-weight: 600; color: #0C0800; }
+.kw-term.primary { color: #B85A18; }
+.kw-note { font-size: 7pt; color: #6A6460; font-style: italic; margin-top: 1mm; line-height: 1.35; }
+.mono { font-family: var(--gd-font-mono); font-size: 7.5pt; color: #2E2820; }
+.diff { display: inline-flex; align-items: center; gap: 6px; font-family: var(--gd-font-mono); font-size: 8pt; }
+.diff-bar { display: inline-block; width: 18mm; height: 2pt; background: #E8E6E2; border-radius: 1pt; overflow: hidden; }
+.diff-fill { display: block; height: 100%; }
+
+.pill {
+  display: inline-block; padding: 0.5mm 2mm;
+  border-radius: 1pt;
+  font-family: var(--gd-font-display);
+  font-size: 7pt; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  border: 0.5pt solid;
+}
+.conc-faible { background: #E8F5E9; color: #2E7D32; border-color: #2E7D32; }
+.conc-moyen  { background: #FFF3E0; color: #B86E00; border-color: #B86E00; }
+.conc-forte  { background: #FCE4E4; color: #B22020; border-color: #B22020; }
+.reco-QW { background: #E8F5E9; color: #2E7D32; border-color: #2E7D32; }
+.reco-CM { background: #FFF3E0; color: #B86E00; border-color: #B86E00; }
+.reco-LT { background: #F3E8FB; color: #6B2EA8; border-color: #6B2EA8; }
+.v1-tag {
+  display: inline-block; background: #E07020; color: #fff;
+  padding: 0.3mm 1.5mm; border-radius: 0.5pt;
+  font-family: var(--gd-font-display);
+  font-size: 6.5pt; font-weight: 800;
+  letter-spacing: 1.5px; margin-top: 1mm;
+}
+
+/* Matrix */
+.city { margin-bottom: 8mm; page-break-inside: auto; }
+.city-h {
+  display: flex; align-items: baseline; gap: 4mm;
+  border-bottom: 1.2pt solid #C8C2B8;
+  padding-bottom: 2mm; margin-bottom: 4mm;
+}
+.city-name {
+  font-family: var(--gd-font-display);
+  font-weight: 800; font-size: 18pt;
+  text-transform: uppercase; letter-spacing: -0.5px;
+  margin: 0; color: #0C0800;
+}
+.city-sub {
+  font-size: 8pt; color: #6A6460;
+  text-transform: uppercase; letter-spacing: 1.5px;
+}
+.mgrid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+}
+.mcard {
+  background: #fff; border: 0.5pt solid #C8C2B8;
+  border-radius: 1mm;
+  padding: 4mm 5mm;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.murl {
+  font-family: var(--gd-font-mono);
+  font-size: 7.5pt; color: #B85A18;
+  background: #FFF7EF; padding: 1mm 2mm;
+  border-radius: 0.5mm;
+  display: inline-block; margin-bottom: 2mm;
+  word-break: break-all;
+}
+.mh1 {
+  font-family: var(--gd-font-display);
+  font-weight: 700; font-size: 12pt;
+  margin: 0 0 1.5mm; line-height: 1.2;
+}
+.mmeta {
+  font-size: 8pt; color: #2E2820; line-height: 1.45;
+  padding: 2mm 3mm; background: #F7F6F3;
+  border-left: 1pt solid #C8C2B8;
+  border-radius: 0.5mm;
+  margin-bottom: 3mm;
+}
+.mrow {
+  display: grid; grid-template-columns: 22mm 1fr;
+  gap: 2mm; font-size: 8pt; padding: 0.7mm 0;
+  align-items: baseline;
+}
+.mk {
+  font-family: var(--gd-font-display);
+  font-weight: 600; font-size: 7pt;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: #6A6460;
+}
+.mv { color: #2E2820; }
+.mv b { color: #0C0800; }
+.mv.small { font-size: 7pt; }
+.mratio {
+  margin-top: 2.5mm; padding-top: 2mm;
+  border-top: 0.5pt solid #E8E6E2;
+  font-size: 7.5pt; color: #6A6460;
+  font-style: italic; line-height: 1.45;
+}
+
+/* FAQ */
+.faq-block {
+  background: #fff; border: 0.5pt solid #C8C2B8;
+  border-radius: 1mm; margin-bottom: 6mm;
+  page-break-inside: auto;
+}
+.faq-head {
+  background: #FFF7EF; padding: 4mm 5mm;
+  border-bottom: 0.5pt solid #C8C2B8;
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: 4mm;
+  page-break-after: avoid; break-after: avoid;
+}
+.faq-url {
+  font-family: var(--gd-font-mono);
+  font-size: 8pt; color: #B85A18;
+}
+.faq-title {
+  font-family: var(--gd-font-display);
+  font-weight: 700; font-size: 13pt;
+  margin: 1mm 0 0;
+}
+.faq-tag {
+  font-family: var(--gd-font-mono);
+  font-size: 7pt; background: #6B2EA8; color: #fff;
+  padding: 1mm 2mm; border-radius: 0.5mm;
+  letter-spacing: 1px; font-weight: 600;
+  white-space: nowrap;
+}
+.faq-list { padding: 2mm 5mm; }
+.faq-item {
+  padding: 3mm 0;
+  border-bottom: 0.3pt solid #E8E6E2;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.faq-item:last-child { border-bottom: 0; }
+.faq-q {
+  font-family: var(--gd-font-display);
+  font-weight: 700; font-size: 9.5pt;
+  color: #0C0800; margin-bottom: 1.5mm;
+}
+.faq-q::before { content: "Q. "; color: #E07020; }
+.faq-a {
+  font-size: 8.5pt; color: #2E2820;
+  line-height: 1.5;
+}
+.faq-a::before { content: "R. "; color: #B85A18; font-weight: 700; }
+.faq-jsonld {
+  background: #F7F6F3; padding: 4mm 5mm;
+  border-top: 0.5pt solid #C8C2B8;
+  page-break-inside: avoid; break-inside: avoid;
+}
+
+/* Schemas */
+.sch-block {
+  background: #fff; border: 0.5pt solid #C8C2B8;
+  border-radius: 1mm; margin-bottom: 6mm;
+}
+.sch-head {
+  background: #F3E8FB; padding: 4mm 5mm;
+  border-bottom: 0.5pt solid #C8C2B8;
+  page-break-after: avoid; break-after: avoid;
+}
+.sch-url {
+  font-family: var(--gd-font-mono);
+  font-size: 8pt; color: #6B2EA8;
+}
+.sch-title {
+  font-family: var(--gd-font-display);
+  font-weight: 700; font-size: 13pt;
+  margin: 1mm 0 0;
+}
+.sch-list { padding: 2mm 5mm; }
+.sch-row {
+  padding: 3mm 0;
+  border-bottom: 0.3pt solid #E8E6E2;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.sch-row:last-child { border-bottom: 0; }
+.sch-name {
+  font-family: var(--gd-font-mono);
+  font-size: 9pt; font-weight: 600;
+  color: #B85A18; margin-bottom: 1.5mm;
+}
+.sch-prop {
+  display: flex; gap: 2mm; align-items: baseline;
+  font-size: 8pt; margin: 1mm 0;
+}
+.ptag {
+  font-family: var(--gd-font-display);
+  font-size: 6.5pt; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 0.5mm 1.5mm; border-radius: 0.5pt;
+  flex-shrink: 0; min-width: 18mm; text-align: center;
+}
+.ptag.req { background: #FCE4E4; color: #B22020; }
+.ptag.rec { background: #FFF3E0; color: #B86E00; }
+.ptag.opt { background: #EFEFEF; color: #6A6460; }
+.pval { font-family: var(--gd-font-mono); font-size: 7.5pt; color: #2E2820; }
+.sch-note {
+  font-size: 7.5pt; color: #6A6460;
+  font-style: italic; margin-top: 1mm;
+  line-height: 1.4;
+}
+.sch-json-section {
+  background: #F7F6F3; padding: 4mm 5mm;
+  border-top: 0.5pt solid #C8C2B8;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.jsonld-label {
+  font-family: var(--gd-font-display);
+  font-size: 7pt; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: #6A6460; margin-bottom: 2mm;
+}
+pre.jsonld {
+  margin: 0; padding: 3mm 4mm;
+  background: #F0EBE2; border: 0.5pt solid #C8C2B8;
+  border-radius: 0.5mm;
+  font-family: var(--gd-font-mono);
+  font-size: 7pt; line-height: 1.4;
+  color: #2E2820;
+  white-space: pre-wrap; word-break: break-word;
+}
+.pitfalls {
+  margin: 0 5mm 5mm; padding: 3mm 4mm;
+  background: #FCE4E4; border-left: 2pt solid #B22020;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.pitfalls-l {
+  font-family: var(--gd-font-display);
+  font-size: 7.5pt; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: #B22020; margin-bottom: 2mm;
+}
+.pitfalls ul { margin: 0; padding-left: 5mm; }
+.pitfalls li { font-size: 8pt; color: #2E2820; line-height: 1.45; margin-bottom: 1mm; }
+
+/* Strategy */
+.strat-cols {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 4mm;
+}
+.strat-col {
+  page-break-inside: auto;
+}
+.strat-h {
+  display: flex; align-items: center; gap: 3mm;
+  margin-bottom: 4mm; padding-bottom: 2mm;
+  border-bottom: 1.5pt solid;
+}
+.strat-col.qw .strat-h { border-color: #2E7D32; }
+.strat-col.risk .strat-h { border-color: #B22020; }
+.strat-col.auth .strat-h { border-color: #6B2EA8; }
+.strat-icn {
+  width: 9mm; height: 9mm;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--gd-font-display);
+  font-weight: 800; font-size: 11pt;
+  border-radius: 0.5mm;
+}
+.strat-col.qw .strat-icn { background: #E8F5E9; color: #2E7D32; }
+.strat-col.risk .strat-icn { background: #FCE4E4; color: #B22020; }
+.strat-col.auth .strat-icn { background: #F3E8FB; color: #6B2EA8; }
+.strat-h h3 {
+  font-family: var(--gd-font-display);
+  font-weight: 700; font-size: 12pt;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin: 0;
+}
+.strat-item {
+  background: #F7F6F3;
+  border: 0.5pt solid #E8E6E2;
+  border-radius: 0.5mm;
+  padding: 3mm 4mm;
+  margin-bottom: 3mm;
+  page-break-inside: avoid; break-inside: avoid;
+}
+.strat-t {
+  font-weight: 700; font-size: 8.5pt;
+  color: #0C0800; margin-bottom: 1.5mm; line-height: 1.35;
+}
+.strat-d {
+  font-size: 7.5pt; color: #2E2820; line-height: 1.5;
+}
+
+/* footer page numbers via @page (best effort) */
+.foot {
+  font-family: var(--gd-font-display);
+  font-size: 7pt; letter-spacing: 2px;
+  text-transform: uppercase; color: #8A8078;
+  text-align: center; padding: 6mm 0 2mm;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+  <div class="cover-top">
+    <span>GAMEDOOR · 41</span>
+    <span>Avril 2026</span>
+  </div>
+
+  <div class="cover-eyebrow">Addendum stratégique · V2</div>
+  <h1 class="cover-title">
+    Architecture<br/>
+    <span class="stroke">SEO</span> <span class="accent">enrichie</span>
+  </h1>
+  <p class="cover-sub">
+    Volumes &amp; difficulté · Matrice locale étendue · Blocs FAQ rich-snippet ·
+    Schema.org JSON-LD · Recommandations stratégiques.
+    Périmètre : les 12 pages de la Vague 1 traitées en profondeur,
+    best-effort sur le reste de l'arbre V1.
+  </p>
+
+  <div class="cover-stats">
+    <div class="cstat">
+      <div class="cstat-num">60</div>
+      <div class="cstat-l">Mots-clés enrichis</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-num">24</div>
+      <div class="cstat-l">Pages matrice locale</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-num">78</div>
+      <div class="cstat-l">FAQ produites</div>
+    </div>
+    <div class="cstat">
+      <div class="cstat-num">41</div>
+      <div class="cstat-l">Schemas spécifiés</div>
+    </div>
+  </div>
+
+  <div class="cover-foot">
+    <span>Document interne · confidentiel</span>
+    <span>V2 · Avril 2026</span>
+  </div>
+</section>
+
+<!-- ============ SECTION 1 — KEYWORDS ============ -->
+<section class="sec">
+  <div class="sec-num">Section 1</div>
+  <h2 class="sec-title">Volumes &amp; difficulté</h2>
+  <p class="sec-lead">
+    Pour chaque mot-clé : volume mensuel France métro estimé, difficulté SEO 1-100 (échelle Ahrefs),
+    saturation locale Caen et recommandation tactique. Lignes <span class="v1-tag" style="margin:0">V1</span> = pages prioritaires de la Vague 1.
+    <strong>Toutes les valeurs sont des estimations</strong> à recalibrer avec Ahrefs / SEMrush avant arbitrage budgétaire.
+  </p>
+
+  <table class="kwt">
+    <thead>
+      <tr>
+        <th style="width: 36mm">URL</th>
+        <th>Mot-clé</th>
+        <th style="width: 18mm">Volume</th>
+        <th style="width: 26mm">Difficulté</th>
+        <th style="width: 18mm">Conc. Caen</th>
+        <th style="width: 22mm">Reco</th>
+      </tr>
+    </thead>
+    <tbody>
+  <tr class="v1">
+    <td><div class="kw-url">/</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ escape game caen</div><div class="kw-note">Compétition Excape, Génération Aventure. Cible #1 absolue.</div></td>
+    <td class="mono">1900-2400</td>
+    <td><span class="diff" style="color:#B22020"><b>38</b><span class="diff-bar"><span class="diff-fill" style="width:38%;background:#B22020"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">gamedoor 41</div><div class="kw-note">Marque nouvelle, à construire. Quick win post-lancement (3 mois).</div></td>
+    <td class="mono">0-50</td>
+    <td><span class="diff" style="color:#2E7D32"><b>5</b><span class="diff-bar"><span class="diff-fill" style="width:5%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">maison du jeu caen</div><div class="kw-note">Niche, branding. Easy win.</div></td>
+    <td class="mono">10-50</td>
+    <td><span class="diff" style="color:#2E7D32"><b>8</b><span class="diff-bar"><span class="diff-fill" style="width:8%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">loisirs caen</div><div class="kw-note">Trop générique, tente le top 10 puis affiner.</div></td>
+    <td class="mono">880-1200</td>
+    <td><span class="diff" style="color:#B86E00"><b>32</b><span class="diff-bar"><span class="diff-fill" style="width:32%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-LT">Long terme</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">activité caen</div><div class="kw-note">Top 10 atteignable en 6-9 mois.</div></td>
+    <td class="mono">720-900</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ escape game caen</div><div class="kw-note">Page pilier renforce le silo. Title bien optimisé.</div></td>
+    <td class="mono">1900-2400</td>
+    <td><span class="diff" style="color:#B22020"><b>38</b><span class="diff-bar"><span class="diff-fill" style="width:38%;background:#B22020"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape room caen</div><div class="kw-note">Variante anglaise, capter les anglophones.</div></td>
+    <td class="mono">320-480</td>
+    <td><span class="diff" style="color:#B22020"><b>35</b><span class="diff-bar"><span class="diff-fill" style="width:35%;background:#B22020"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape game mondeville</div><div class="kw-note">Localisation exacte, peu concurrence.</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape game normandie</div><div class="kw-note">Régional, capter Rouen/Le Havre.</div></td>
+    <td class="mono">390-600</td>
+    <td><span class="diff" style="color:#B86E00"><b>30</b><span class="diff-bar"><span class="diff-fill" style="width:30%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/psychiatric</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ escape game horreur caen</div><div class="kw-note">Niche bien définie, intent transactionnel fort.</div></td>
+    <td class="mono">140-260</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/psychiatric</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape game peur caen</div><div class="kw-note">Variante moins compétitive.</div></td>
+    <td class="mono">90-180</td>
+    <td><span class="diff" style="color:#2E7D32"><b>20</b><span class="diff-bar"><span class="diff-fill" style="width:20%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/psychiatric</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">salle psychiatric caen</div><div class="kw-note">Brand search, indexation rapide.</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>5</b><span class="diff-bar"><span class="diff-fill" style="width:5%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/psychiatric</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape room horreur</div><div class="kw-note">National, peu local. Ciblage secondaire.</div></td>
+    <td class="mono">260-380</td>
+    <td><span class="diff" style="color:#B86E00"><b>30</b><span class="diff-bar"><span class="diff-fill" style="width:30%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-LT">Long terme</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/garde-a-vue</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ escape game enquête caen</div><div class="kw-note">Bonne intent, peu de concurrence locale.</div></td>
+    <td class="mono">110-220</td>
+    <td><span class="diff" style="color:#2E7D32"><b>24</b><span class="diff-bar"><span class="diff-fill" style="width:24%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/garde-a-vue</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape game policier caen</div><div class="kw-note">Synonyme exploitable.</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/garde-a-vue</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">salle enquête caen</div><div class="kw-note">Très spécifique, easy ranking.</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/escape-game/garde-a-vue</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">escape room investigation</div><div class="kw-note">Variante anglaise, intent informationnel.</div></td>
+    <td class="mono">90-180</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/quiz</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ quiz game caen</div><div class="kw-note">Marché peu mature à Caen, premier qui tient le SERP gagne.</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/quiz</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">buzz your brain</div><div class="kw-note">Marque héritée, indexation immédiate.</div></td>
+    <td class="mono">210-380</td>
+    <td><span class="diff" style="color:#2E7D32"><b>12</b><span class="diff-bar"><span class="diff-fill" style="width:12%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/quiz</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">quiz interactif caen</div><div class="kw-note">Niche, intent transactionnel.</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>16</b><span class="diff-bar"><span class="diff-fill" style="width:16%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/quiz</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">soirée quiz caen</div><div class="kw-note">Bar trivia concurrence indirecte.</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/quiz</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">blind test caen</div><div class="kw-note">Capter via /quiz/musique aussi.</div></td>
+    <td class="mono">210-380</td>
+    <td><span class="diff" style="color:#2E7D32"><b>24</b><span class="diff-bar"><span class="diff-fill" style="width:24%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ privatisation caen</div><div class="kw-note">Intent B2B fort, conversion élevée.</div></td>
+    <td class="mono">90-180</td>
+    <td><span class="diff" style="color:#B86E00"><b>25</b><span class="diff-bar"><span class="diff-fill" style="width:25%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">événement entreprise caen</div><div class="kw-note">B2B générique, top 5 visé.</div></td>
+    <td class="mono">210-320</td>
+    <td><span class="diff" style="color:#B86E00"><b>30</b><span class="diff-bar"><span class="diff-fill" style="width:30%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">soirée privée caen</div><div class="kw-note">Capte B2C + B2B, double intent.</div></td>
+    <td class="mono">140-260</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">lieu événement caen</div><div class="kw-note">Lieux atypiques peu nombreux à Caen.</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#B86E00"><b>26</b><span class="diff-bar"><span class="diff-fill" style="width:26%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/entreprises</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ événement entreprise caen</div></td>
+    <td class="mono">210-320</td>
+    <td><span class="diff" style="color:#B86E00"><b>30</b><span class="diff-bar"><span class="diff-fill" style="width:30%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/entreprises</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">soirée entreprise caen</div></td>
+    <td class="mono">140-220</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/entreprises</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">événementiel professionnel caen</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>24</b><span class="diff-bar"><span class="diff-fill" style="width:24%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/evjf</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ evjf caen</div><div class="kw-note">Très concurrentiel (agences EVJF nationales). Angle local + activités exclusives = différenciateur.</div></td>
+    <td class="mono">390-600</td>
+    <td><span class="diff" style="color:#B86E00"><b>32</b><span class="diff-bar"><span class="diff-fill" style="width:32%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/evjf</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">enterrement vie jeune fille caen</div></td>
+    <td class="mono">210-380</td>
+    <td><span class="diff" style="color:#B86E00"><b>32</b><span class="diff-bar"><span class="diff-fill" style="width:32%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/evjf</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">evjf normandie</div></td>
+    <td class="mono">210-320</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/events/evjf</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">evjf original caen</div><div class="kw-note">Long-tail, intent transactionnel élevé.</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/reserver</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ réserver escape game caen</div><div class="kw-note">Intent transactionnel pur, conversion directe.</div></td>
+    <td class="mono">210-380</td>
+    <td><span class="diff" style="color:#2E7D32"><b>24</b><span class="diff-bar"><span class="diff-fill" style="width:24%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/reserver</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">réservation escape game caen</div></td>
+    <td class="mono">140-260</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/reserver</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">réserver quiz caen</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>14</b><span class="diff-bar"><span class="diff-fill" style="width:14%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/reserver</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">billet escape game caen</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/tarifs</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ tarif escape game caen</div><div class="kw-note">Intent commercial, comparateur.</div></td>
+    <td class="mono">210-320</td>
+    <td><span class="diff" style="color:#B86E00"><b>26</b><span class="diff-bar"><span class="diff-fill" style="width:26%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/tarifs</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">prix escape game caen</div></td>
+    <td class="mono">320-480</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/tarifs</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">tarif quiz caen</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>12</b><span class="diff-bar"><span class="diff-fill" style="width:12%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/tarifs</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">prix séminaire caen</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/acces</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ gamedoor 41 adresse</div><div class="kw-note">Brand search, immédiat.</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>5</b><span class="diff-bar"><span class="diff-fill" style="width:5%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/acces</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">parking caen mondeville</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>16</b><span class="diff-bar"><span class="diff-fill" style="width:16%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/acces</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">tram caen mondeville</div><div class="kw-note">Concurrence Twisto/CTU, capter intent indirect.</div></td>
+    <td class="mono">210-320</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-LT">Long terme</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/acces</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">accès gamedoor 41</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>5</b><span class="diff-bar"><span class="diff-fill" style="width:5%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/contact</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term primary">★ contact gamedoor 41</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>5</b><span class="diff-bar"><span class="diff-fill" style="width:5%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/contact</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">téléphone gamedoor 41</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>5</b><span class="diff-bar"><span class="diff-fill" style="width:5%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="v1">
+    <td><div class="kw-url">/contact</div><span class="v1-tag">V1</span></td>
+    <td><div class="kw-term ">email escape game caen</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>8</b><span class="diff-bar"><span class="diff-fill" style="width:8%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/escape-game/back-to-80s</div></td>
+    <td><div class="kw-term primary">★ escape game année 80 caen</div></td>
+    <td class="mono">70-140</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/quiz/cinema</div></td>
+    <td><div class="kw-term primary">★ quiz cinéma caen</div></td>
+    <td class="mono">30-90</td>
+    <td><span class="diff" style="color:#2E7D32"><b>14</b><span class="diff-bar"><span class="diff-fill" style="width:14%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/quiz/musique</div></td>
+    <td><div class="kw-term primary">★ blind test caen</div></td>
+    <td class="mono">210-380</td>
+    <td><span class="diff" style="color:#2E7D32"><b>24</b><span class="diff-bar"><span class="diff-fill" style="width:24%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/entreprises/seminaire</div></td>
+    <td><div class="kw-term primary">★ séminaire caen</div><div class="kw-note">Forte concurrence (hôtels Caen, châteaux). Différenciation = lieu atypique.</div></td>
+    <td class="mono">390-600</td>
+    <td><span class="diff" style="color:#B86E00"><b>34</b><span class="diff-bar"><span class="diff-fill" style="width:34%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/entreprises/team-building</div></td>
+    <td><div class="kw-term primary">★ team building caen</div></td>
+    <td class="mono">390-600</td>
+    <td><span class="diff" style="color:#B86E00"><b>32</b><span class="diff-bar"><span class="diff-fill" style="width:32%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/evg</div></td>
+    <td><div class="kw-term primary">★ evg caen</div></td>
+    <td class="mono">320-480</td>
+    <td><span class="diff" style="color:#B86E00"><b>30</b><span class="diff-bar"><span class="diff-fill" style="width:30%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-forte">forte</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/anniversaire</div></td>
+    <td><div class="kw-term primary">★ anniversaire caen</div></td>
+    <td class="mono">140-260</td>
+    <td><span class="diff" style="color:#B86E00"><b>26</b><span class="diff-bar"><span class="diff-fill" style="width:26%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/anniversaire/enfant</div></td>
+    <td><div class="kw-term primary">★ anniversaire enfant caen</div></td>
+    <td class="mono">320-480</td>
+    <td><span class="diff" style="color:#B86E00"><b>28</b><span class="diff-bar"><span class="diff-fill" style="width:28%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/anniversaire/adulte</div></td>
+    <td><div class="kw-term primary">★ anniversaire 40 ans caen</div></td>
+    <td class="mono">90-180</td>
+    <td><span class="diff" style="color:#2E7D32"><b>22</b><span class="diff-bar"><span class="diff-fill" style="width:22%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/events/privatisation-totale</div></td>
+    <td><div class="kw-term primary">★ privatisation caen</div></td>
+    <td class="mono">90-180</td>
+    <td><span class="diff" style="color:#B86E00"><b>25</b><span class="diff-bar"><span class="diff-fill" style="width:25%;background:#B86E00"></span></span></span></td>
+    <td><span class="pill conc-moyen">moyen</span></td>
+    <td><span class="pill reco-CM">Cible moy.</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/cartes-cadeaux</div></td>
+    <td><div class="kw-term primary">★ carte cadeau escape game caen</div><div class="kw-note">Pic Noël/Saint-Valentin.</div></td>
+    <td class="mono">90-180</td>
+    <td><span class="diff" style="color:#2E7D32"><b>18</b><span class="diff-bar"><span class="diff-fill" style="width:18%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr>
+  <tr class="">
+    <td><div class="kw-url">/faq</div></td>
+    <td><div class="kw-term primary">★ faq escape game caen</div></td>
+    <td class="mono">0-30</td>
+    <td><span class="diff" style="color:#2E7D32"><b>12</b><span class="diff-bar"><span class="diff-fill" style="width:12%;background:#2E7D32"></span></span></span></td>
+    <td><span class="pill conc-faible">faible</span></td>
+    <td><span class="pill reco-QW">Quick win</span></td>
+  </tr></tbody>
+  </table>
+
+  <div class="warn">
+    <b>⚠ Estimations</b> · Volumes basés sur la connaissance du marché loisirs/escape game France et la modulation par
+    population pour les mots-clés géolocalisés. Marge d'erreur ±30 %.
+    À recalibrer avec un outil tiers avant tout arbitrage budgétaire ou enchère SEA.
+  </div>
+</section>
+
+<!-- ============ SECTION 2 — MATRIX ============ -->
+<section class="sec">
+  <div class="sec-num">Section 2</div>
+  <h2 class="sec-title">Matrice locale</h2>
+  <p class="sec-lead">
+    Cartographie d'expansion <strong>Vague 2-3</strong> (post-lancement). 8 villes,
+    24 pages [ville × occasion]. Caen en matrice complète,
+    autres en partiel selon volume estimé. Permet au dev d'anticiper la structure d'URL
+    et au content team de prioriser le calendrier rédactionnel.
+  </p>
+
+  <div class="city">
+    <div class="city-h"><h3 class="city-name">Caen</h3><span class="city-sub">Matrice complète · 7 pages</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/evjf</div>
+          <h4 class="mh1">EVJF à Caen</h4>
+          <div class="mmeta">Tout pour votre EVJF à Caen : escape game peur, blind test, soirée privée chez GAMEDOOR·41 (Mondeville, 5 min de Caen).</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">EVJF à Caen — formule complète | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>evjf caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">enterrement vie jeune fille caen · evjf original caen</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">390-600/mois · diff. <b style="color:#B86E00">32</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/evjf · /ou-jouer/caen · /escape-game/psychiatric · /quiz/musique</span></div>
+          <div class="mratio">→ Doublon SEO légitime avec /events/evjf — angle géographique pur. Capte 'evjf caen' depuis longue traîne.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/evg</div>
+          <h4 class="mh1">EVG à Caen</h4>
+          <div class="mmeta">EVG à Caen : escape enquête, quiz sport, soirée privée. À partir de 4 personnes.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">EVG à Caen — formule originale | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>evg caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">enterrement vie garçon caen · evg normandie</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">320-480/mois · diff. <b style="color:#B86E00">30</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/evg · /ou-jouer/caen · /escape-game/garde-a-vue · /quiz/sport</span></div>
+          <div class="mratio">→ Pendant masculin de la matrice EVJF.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/team-building</div>
+          <h4 class="mh1">Team Building à Caen</h4>
+          <div class="mmeta">Le team building qui sort des bowlings : escape, quiz, défi multi-univers à 5 min de Caen.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building à Caen — l'idée originale | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building normandie · cohésion équipe caen</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">390-600/mois · diff. <b style="color:#B86E00">32</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/caen · /events/entreprises/seminaire · /events/entreprises/devis</span></div>
+          <div class="mratio">→ Cible directe B2B Caen — page la plus lucrative de la matrice.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/seminaire</div>
+          <h4 class="mh1">Séminaire à Caen</h4>
+          <div class="mmeta">Lieu de séminaire atypique à Caen : 1500m², 4 univers, salle plénière, restauration sur place.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Séminaire à Caen — lieu atypique | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>séminaire caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu séminaire caen · salle séminaire caen</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">390-600/mois · diff. <b style="color:#B86E00">34</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/seminaire · /ou-jouer/caen · /events/entreprises/team-building · /events/entreprises/devis</span></div>
+          <div class="mratio">→ Concurrence hôtels/châteaux. Angle 'atypique' = différenciation.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/anniversaire</div>
+          <h4 class="mh1">Anniversaire à Caen</h4>
+          <div class="mmeta">Fêtez votre anniversaire à Caen autrement : escape, quiz, événement privatisé. Enfants, ados, adultes.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Anniversaire à Caen — l'idée qui change | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>anniversaire caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu anniversaire caen · anniversaire original caen</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">140-260/mois · diff. <b style="color:#B86E00">26</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/anniversaire · /ou-jouer/caen · /escape-game/back-to-80s · /quiz/annees-80</span></div>
+          <div class="mratio">→ Hub anniversaire géolocalisé.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/soiree-entreprise</div>
+          <h4 class="mh1">Soirée d'entreprise à Caen</h4>
+          <div class="mmeta">Soirée d'entreprise privatisée à Caen : quiz, blind test, escape game, ambiance bar. Jusqu'à 80 personnes.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Soirée d'entreprise à Caen — privatisation | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>soirée entreprise caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">soirée fin d'année caen · soirée d'entreprise normandie</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">140-220/mois · diff. <b style="color:#B86E00">28</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/soiree-entreprise · /ou-jouer/caen · /events/privatisation-totale</span></div>
+          <div class="mratio">→ Pic décembre — galas fin d'année.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/caen/sortie-famille</div>
+          <h4 class="mh1">Sortie famille à Caen</h4>
+          <div class="mmeta">Sortie famille à Caen : escape game adapté dès 10 ans, quiz familial. Idéal week-end pluvieux.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Sortie famille à Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>sortie famille caen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">activité famille caen · que faire en famille caen</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">210-320/mois · diff. <b style="color:#B86E00">28</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/famille · /ou-jouer/caen · /escape-game/back-to-80s</span></div>
+          <div class="mratio">→ Capture pic week-end pluvieux.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Mondeville</h3><span class="city-sub">Matrice partielle · localisation exacte</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/mondeville/team-building</div>
+          <h4 class="mh1">Team Building à Mondeville</h4>
+          <div class="mmeta">Team building à Mondeville : 1500m² dédiés, escape, quiz, défi inter-équipes. Sur place au 41 bis rue Pasteur.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building à Mondeville — sur place | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building mondeville</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">activité entreprise mondeville · événement professionnel mondeville</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">14</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/mondeville · /acces</span></div>
+          <div class="mratio">→ Localisation exacte, faible concurrence.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/mondeville/seminaire</div>
+          <h4 class="mh1">Séminaire à Mondeville</h4>
+          <div class="mmeta">Lieu de séminaire à Mondeville : 1500m², 4 univers, parking gratuit, restauration possible.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Séminaire à Mondeville | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>séminaire mondeville</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu séminaire mondeville · salle séminaire mondeville</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">12</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/seminaire · /ou-jouer/mondeville · /acces</span></div>
+          <div class="mratio">→ Niche locale exacte.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/mondeville/anniversaire</div>
+          <h4 class="mh1">Anniversaire à Mondeville</h4>
+          <div class="mmeta">Anniversaire à Mondeville : escape, quiz, événement privatisé chez GAMEDOOR·41.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Anniversaire à Mondeville | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>anniversaire mondeville</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu anniversaire mondeville</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">12</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/anniversaire · /ou-jouer/mondeville</span></div>
+          <div class="mratio">→ Quick win local.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Hérouville-Saint-Clair</h3><span class="city-sub">Matrice partielle · bassin proche</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/herouville-saint-clair/team-building</div>
+          <h4 class="mh1">Team Building Hérouvillais</h4>
+          <div class="mmeta">Team building à 10 min d'Hérouville-Saint-Clair : escape, quiz, défi. Cohésion d'équipe au sortir des bureaux.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building à Hérouville-Saint-Clair | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building hérouville saint clair</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building hérouville · activité entreprise hérouville</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">16</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/herouville-saint-clair</span></div>
+          <div class="mratio">→ Bassin d'emploi tertiaire, cible directe.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/herouville-saint-clair/anniversaire</div>
+          <h4 class="mh1">Anniversaire pour Hérouvillais</h4>
+          <div class="mmeta">Anniversaire à 10 min d'Hérouville-Saint-Clair : enfants, ados, adultes. Formule clé en main.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Anniversaire près d'Hérouville | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>anniversaire hérouville saint clair</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">anniversaire hérouville</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">14</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/anniversaire · /ou-jouer/herouville-saint-clair</span></div>
+          <div class="mratio">→ Bassin résidentiel proche.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/herouville-saint-clair/evjf</div>
+          <h4 class="mh1">EVJF pour Hérouvillaises</h4>
+          <div class="mmeta">EVJF à 10 min d'Hérouville : escape peur, blind test, formule sur-mesure 4 à 12 copines.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">EVJF près d'Hérouville-Saint-Clair | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>evjf hérouville saint clair</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">evjf hérouville</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">0-30/mois · diff. <b style="color:#2E7D32">12</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/evjf · /ou-jouer/herouville-saint-clair</span></div>
+          <div class="mratio">→ Long-tail proche, easy ranking.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Bayeux</h3><span class="city-sub">Matrice partielle · Bessin</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/bayeux/team-building</div>
+          <h4 class="mh1">Team Building pour Bayeux</h4>
+          <div class="mmeta">À 30 min de Bayeux, GAMEDOOR·41 organise vos team buildings : escape, quiz, défi multi-univers.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building Bayeux — option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building bayeux</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building bessin · activité entreprise bayeux</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">16</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/bayeux</span></div>
+          <div class="mratio">→ Capter PME du Bessin.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/bayeux/seminaire</div>
+          <h4 class="mh1">Séminaire pour Bayeux</h4>
+          <div class="mmeta">À 30 min de Bayeux, lieu de séminaire atypique chez GAMEDOOR·41. Venue + activités sur place.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Séminaire Bayeux — l'option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>séminaire bayeux</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu séminaire bessin</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">0-30/mois · diff. <b style="color:#2E7D32">14</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/seminaire · /ou-jouer/bayeux</span></div>
+          <div class="mratio">→ Niche, ROI élevé.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/bayeux/sortie-famille</div>
+          <h4 class="mh1">Sortie famille (Bayeux)</h4>
+          <div class="mmeta">À 30 min de Bayeux, idée sortie famille : escape adapté dès 10 ans + quiz familial.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Sortie famille pour Bayeux | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>sortie famille bayeux</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">activité famille bessin</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">0-30/mois · diff. <b style="color:#2E7D32">12</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/famille · /ou-jouer/bayeux</span></div>
+          <div class="mratio">→ Capter touristes Bayeux + locaux.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Lisieux</h3><span class="city-sub">Matrice partielle · Pays d'Auge</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/lisieux/team-building</div>
+          <h4 class="mh1">Team Building pour Lisieux</h4>
+          <div class="mmeta">À 40 min de Lisieux, team building original chez GAMEDOOR·41 Caen.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building Lisieux — option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building lisieux</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building pays d'auge</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">0-30/mois · diff. <b style="color:#2E7D32">14</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/lisieux</span></div>
+          <div class="mratio">→ Capter PME Pays d'Auge.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/lisieux/anniversaire</div>
+          <h4 class="mh1">Anniversaire pour Lexoviens</h4>
+          <div class="mmeta">À 40 min de Lisieux, idée anniversaire originale : escape, quiz, événement privatisé.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Anniversaire pour Lisieux | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>anniversaire lisieux</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">fête anniversaire pays d'auge</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">0-30/mois · diff. <b style="color:#2E7D32">12</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/anniversaire · /ou-jouer/lisieux</span></div>
+          <div class="mratio">→ Niche.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Cherbourg</h3><span class="city-sub">Matrice partielle · Manche</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/cherbourg/team-building</div>
+          <h4 class="mh1">Team Building pour Cherbourg</h4>
+          <div class="mmeta">À 1h20 de Cherbourg, GAMEDOOR·41 organise vos team buildings : escape, quiz, défi.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building Cherbourg — l'option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building cherbourg</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building manche · incentive cherbourg</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">18</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/cherbourg</span></div>
+          <div class="mratio">→ Bassin Manche, séminaires résidentiels potentiels.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/cherbourg/seminaire</div>
+          <h4 class="mh1">Séminaire pour Cherbourg</h4>
+          <div class="mmeta">À 1h20 de Cherbourg, séminaire 1/2 journée ou journée chez GAMEDOOR·41.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Séminaire Cherbourg — option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>séminaire cherbourg</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu séminaire manche</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">30-90/mois · diff. <b style="color:#2E7D32">18</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/seminaire · /ou-jouer/cherbourg</span></div>
+          <div class="mratio">→ Capter PME Manche.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Rouen</h3><span class="city-sub">Matrice partielle · capter Haute-Normandie</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/rouen/team-building</div>
+          <h4 class="mh1">Team Building pour Rouen</h4>
+          <div class="mmeta">À 1h30 de Rouen, GAMEDOOR·41 reçoit vos équipes : escape, quiz, défi multi-univers.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building Rouen — option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building rouen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building haute normandie</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">210-320/mois · diff. <b style="color:#B86E00">30</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/rouen</span></div>
+          <div class="mratio">→ Cible volume — gros bassin tertiaire Rouen, peu de concurrence haute-gamme.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/rouen/seminaire</div>
+          <h4 class="mh1">Séminaire pour Rouen</h4>
+          <div class="mmeta">À 1h30 de Rouen, séminaire complet chez GAMEDOOR·41 Caen : plénière + activités + restauration.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Séminaire Rouen — l'option Normandie complète | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>séminaire rouen</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">lieu séminaire haute normandie</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">210-320/mois · diff. <b style="color:#B86E00">32</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/seminaire · /ou-jouer/rouen</span></div>
+          <div class="mratio">→ Concurrence Rouen forte, mais offre 'résidentiel Caen' = différencié.</div>
+        </div>
+      
+    </div>
+  </div><div class="city">
+    <div class="city-h"><h3 class="city-name">Le Havre</h3><span class="city-sub">Matrice partielle · Seine-Maritime</span></div>
+    <div class="mgrid">
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/le-havre/team-building</div>
+          <h4 class="mh1">Team Building pour Le Havre</h4>
+          <div class="mmeta">À 1h45 du Havre, team building original chez GAMEDOOR·41 Caen.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">Team Building Le Havre — l'option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>team building le havre</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">team building seine maritime</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">140-220/mois · diff. <b style="color:#B86E00">28</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/entreprises/team-building · /ou-jouer/le-havre</span></div>
+          <div class="mratio">→ Bassin tertiaire Le Havre, capter via résidentiel.</div>
+        </div>
+      
+        <div class="mcard">
+          <div class="murl">/ou-jouer/le-havre/evjf</div>
+          <h4 class="mh1">EVJF pour Havraises</h4>
+          <div class="mmeta">À 1h45 du Havre, EVJF à Caen : escape peur, blind test, formule sur-mesure. Possibilité résidentiel.</div>
+          <div class="mrow"><span class="mk">Title</span><span class="mv">EVJF Le Havre — l'option Caen | GAMEDOOR·41</span></div>
+          <div class="mrow"><span class="mk">KW principal</span><span class="mv"><b>evjf le havre</b></span></div>
+          <div class="mrow"><span class="mk">KW sec.</span><span class="mv">evjf seine maritime</span></div>
+          <div class="mrow"><span class="mk">Volume</span><span class="mv mono">70-140/mois · diff. <b style="color:#2E7D32">22</b></span></div>
+          <div class="mrow"><span class="mk">Maillage</span><span class="mv mono small">/events/evjf · /ou-jouer/le-havre</span></div>
+          <div class="mratio">→ Marché EVJF Le Havre saturé, GAMEDOOR·41 = échappée.</div>
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 — FAQ ============ -->
+<section class="sec">
+  <div class="sec-num">Section 3</div>
+  <h2 class="sec-title">Blocs FAQ Vague 1</h2>
+  <p class="sec-lead">
+    78 questions/réponses pour les 12 pages de la Vague 1.
+    Inspirées des "People Also Ask" Google, optimisées pour rich snippets,
+    maillage interne intégré, voix de marque GAMEDOOR·41.
+    Chaque bloc inclut le JSON-LD <code>FAQPage</code> prêt à coller.
+  </p>
+
+  <div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/</div>
+        <h3 class="faq-title">Questions fréquentes — GAMEDOOR·41</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 6 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est quoi GAMEDOOR·41 ?</div>
+          <div class="faq-a">La maison du jeu à Caen. Quatre univers sous un même toit au 41 bis rue Pasteur à Mondeville : escape game, quiz live, action games (à venir) et événements privés. Né en 2026 de la fusion de Brain Escape Game et Buzz Your Brain.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Où vous trouvez-vous exactement ?</div>
+          <div class="faq-a">41 bis rue Pasteur, 14120 Mondeville — à 5 minutes du centre de Caen. Parking gratuit, accès tram T1 et bus. Voir la <a href="/acces">page accès</a> pour l'itinéraire complet.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quels sont les horaires d'ouverture ?</div>
+          <div class="faq-a">Du mardi au jeudi de 14h à 23h, du vendredi au samedi de 11h à 1h, le dimanche de 11h à 21h. Fermé le lundi sauf privatisation.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Comment réserver ?</div>
+          <div class="faq-a">Directement en ligne sur la page <a href="/reserver">/reserver</a>. Choisissez votre univers, votre créneau et payez en ligne. Pour un événement privé, passez par le <a href="/contact">formulaire de contact</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">À partir de quel âge ?</div>
+          <div class="faq-a">À partir de 8 ans pour Back to 80's (escape fun), 12 ans pour Garde à Vue (enquête), 16 ans pour Psychiatric (horreur). Le quiz est ouvert dès 10 ans selon les thèmes.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous proposez des cartes cadeaux ?</div>
+          <div class="faq-a">Oui, des cartes cadeaux dématérialisées valables 1 an sur tous les univers. Voir <a href="/cartes-cadeaux">les cartes cadeaux</a>.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "C'est quoi GAMEDOOR·41 ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La maison du jeu à Caen. Quatre univers sous un même toit au 41 bis rue Pasteur à Mondeville : escape game, quiz live, action games (à venir) et événements privés. Né en 2026 de la fusion de Brain Escape Game et Buzz Your Brain."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Où vous trouvez-vous exactement ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "41 bis rue Pasteur, 14120 Mondeville — à 5 minutes du centre de Caen. Parking gratuit, accès tram T1 et bus. Voir la page accès pour l'itinéraire complet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels sont les horaires d'ouverture ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Du mardi au jeudi de 14h à 23h, du vendredi au samedi de 11h à 1h, le dimanche de 11h à 21h. Fermé le lundi sauf privatisation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment réserver ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Directement en ligne sur la page /reserver. Choisissez votre univers, votre créneau et payez en ligne. Pour un événement privé, passez par le formulaire de contact."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "À partir de quel âge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "À partir de 8 ans pour Back to 80's (escape fun), 12 ans pour Garde à Vue (enquête), 16 ans pour Psychiatric (horreur). Le quiz est ouvert dès 10 ans selon les thèmes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous proposez des cartes cadeaux ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, des cartes cadeaux dématérialisées valables 1 an sur tous les univers. Voir les cartes cadeaux."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/escape-game</div>
+        <h3 class="faq-title">Tout sur l'escape game à Caen</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 7 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien coûte un escape game à Caen ?</div>
+          <div class="faq-a">À partir de 25 €/joueur en semaine, 30 €/joueur le week-end. Tarif dégressif à partir de 5 joueurs. Détail complet sur <a href="/tarifs">la page tarifs</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de joueurs par salle ?</div>
+          <div class="faq-a">Toutes nos salles accueillent de 2 à 6 joueurs. À 6 vous êtes serrés mais c'est plus drôle. À 2 c'est plus tendu — possible mais demandant.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de temps dure une partie ?</div>
+          <div class="faq-a">60 minutes dans la salle + 15 minutes de briefing + 15 minutes de débrief. Comptez 1h30 de A à Z. Soyez à l'heure : on ne peut pas démarrer en retard.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quelle salle choisir pour une première fois ?</div>
+          <div class="faq-a"><a href="/escape-game/back-to-80s">Back to 80's</a> — fun, accessible, pas effrayante. Si vous voulez plus de tension, <a href="/escape-game/garde-a-vue">Garde à Vue</a>. Évitez <a href="/escape-game/psychiatric">Psychiatric</a> en premier choix : ambiance horreur exigeante.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est accessible aux personnes en situation de handicap ?</div>
+          <div class="faq-a">Le bâtiment est accessible PMR (ascenseur, sanitaires adaptés). Garde à Vue et Back to 80's sont jouables en fauteuil. Psychiatric a une marche que nous étudions à l'aménagement. Voir <a href="/accessibilite">accessibilité</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Peut-on annuler une réservation ?</div>
+          <div class="faq-a">Annulation gratuite jusqu'à 48h avant le créneau. Entre 48h et 24h : avoir valable 1 an. Moins de 24h : la réservation est due. Détails dans nos <a href="/cgv">CGV</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut privatiser une salle pour un anniversaire ?</div>
+          <div class="faq-a">Oui, toutes les salles se privatisent. Pour un anniversaire enfant, ado ou adulte, voir <a href="/events/anniversaire">les formules anniversaire</a>.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Combien coûte un escape game à Caen ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "À partir de 25 €/joueur en semaine, 30 €/joueur le week-end. Tarif dégressif à partir de 5 joueurs. Détail complet sur la page tarifs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de joueurs par salle ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Toutes nos salles accueillent de 2 à 6 joueurs. À 6 vous êtes serrés mais c'est plus drôle. À 2 c'est plus tendu — possible mais demandant."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de temps dure une partie ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "60 minutes dans la salle + 15 minutes de briefing + 15 minutes de débrief. Comptez 1h30 de A à Z. Soyez à l'heure : on ne peut pas démarrer en retard."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle salle choisir pour une première fois ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Back to 80's — fun, accessible, pas effrayante. Si vous voulez plus de tension, Garde à Vue. Évitez Psychiatric en premier choix : ambiance horreur exigeante."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "C'est accessible aux personnes en situation de handicap ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le bâtiment est accessible PMR (ascenseur, sanitaires adaptés). Garde à Vue et Back to 80's sont jouables en fauteuil. Psychiatric a une marche que nous étudions à l'aménagement. Voir accessibilité."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Peut-on annuler une réservation ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Annulation gratuite jusqu'à 48h avant le créneau. Entre 48h et 24h : avoir valable 1 an. Moins de 24h : la réservation est due. Détails dans nos CGV."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut privatiser une salle pour un anniversaire ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, toutes les salles se privatisent. Pour un anniversaire enfant, ado ou adulte, voir les formules anniversaire."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/escape-game/psychiatric</div>
+        <h3 class="faq-title">Psychiatric — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 7 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">À partir de quel âge peut-on jouer Psychiatric ?</div>
+          <div class="faq-a">16 ans minimum. C'est une salle d'horreur immersive avec ambiance sonore tendue, scénographie réaliste et passages dans le noir. Pas adaptée aux enfants ni aux adolescents sensibles.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est vraiment effrayant ?</div>
+          <div class="faq-a">Oui. C'est notre salle la plus tendue : effets de surprise, comédiens (sur certains créneaux), passages dans le noir. Si vous avez peur du noir ou des ambiances oppressantes, choisissez <a href="/escape-game/garde-a-vue">Garde à Vue</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Y a-t-il un acteur dans la salle ?</div>
+          <div class="faq-a">Sur les créneaux soir (après 21h) et certains week-ends, oui : un comédien interagit avec vous selon votre comportement. Sur les autres créneaux, non — l'ambiance fait tout le travail.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de joueurs ?</div>
+          <div class="faq-a">2 à 6 joueurs. À 4-5 c'est l'idéal pour cette salle : assez pour ne pas se sentir seul, pas trop pour rester immergés.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Peut-on sortir avant la fin si c'est trop ?</div>
+          <div class="faq-a">Oui, à tout moment. Un game master vous suit en permanence et un mot d'arrêt clair stoppe la partie. Aucun jugement, aucun remboursement partiel — c'est prévu.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel est le taux de réussite ?</div>
+          <div class="faq-a">42 % à ce jour. C'est la salle la plus difficile du complexe : énigmes complexes, ambiance qui déconcentre, gestion du stress.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien ça coûte ?</div>
+          <div class="faq-a">À partir de 28 €/joueur en semaine, 32 €/joueur le week-end. Voir <a href="/tarifs">tarifs détaillés</a> ou <a href="/reserver">réserver maintenant</a>.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "À partir de quel âge peut-on jouer Psychiatric ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "16 ans minimum. C'est une salle d'horreur immersive avec ambiance sonore tendue, scénographie réaliste et passages dans le noir. Pas adaptée aux enfants ni aux adolescents sensibles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "C'est vraiment effrayant ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. C'est notre salle la plus tendue : effets de surprise, comédiens (sur certains créneaux), passages dans le noir. Si vous avez peur du noir ou des ambiances oppressantes, choisissez Garde à Vue."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Y a-t-il un acteur dans la salle ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sur les créneaux soir (après 21h) et certains week-ends, oui : un comédien interagit avec vous selon votre comportement. Sur les autres créneaux, non — l'ambiance fait tout le travail."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de joueurs ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "2 à 6 joueurs. À 4-5 c'est l'idéal pour cette salle : assez pour ne pas se sentir seul, pas trop pour rester immergés."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Peut-on sortir avant la fin si c'est trop ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, à tout moment. Un game master vous suit en permanence et un mot d'arrêt clair stoppe la partie. Aucun jugement, aucun remboursement partiel — c'est prévu."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quel est le taux de réussite ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "42 % à ce jour. C'est la salle la plus difficile du complexe : énigmes complexes, ambiance qui déconcentre, gestion du stress."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien ça coûte ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "À partir de 28 €/joueur en semaine, 32 €/joueur le week-end. Voir tarifs détaillés ou réserver maintenant."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/escape-game/garde-a-vue</div>
+        <h3 class="faq-title">Garde à Vue — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 7 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">À partir de quel âge ?</div>
+          <div class="faq-a">12 ans accompagnés d'un adulte, 14 ans en autonomie. Pas d'horreur — une enquête policière à résoudre dans une garde à vue fictive.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel niveau de difficulté ?</div>
+          <div class="faq-a">Intermédiaire à expert. Énigmes logiques, observation, déduction. Idéal pour qui aime Cluedo, les escape books, ou a déjà fait 2-3 escape games.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de joueurs ?</div>
+          <div class="faq-a">3 à 6 joueurs. À 3 c'est tendu, à 6 c'est confortable. Pas jouable à 2 — la salle est conçue pour la collaboration.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est jouable en famille ?</div>
+          <div class="faq-a">Oui à partir de 12 ans. Une famille de 4 (2 parents + 2 ados) trouve son rythme parfaitement. Voir aussi <a href="/escape-game/back-to-80s">Back to 80's</a> pour les plus jeunes.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de temps pour finir ?</div>
+          <div class="faq-a">60 minutes dans la salle. 64 % des équipes en sortent. Les 36 % qui n'y arrivent pas sont sortis avec le sourire — la mécanique d'enquête est prenante jusqu'au bout.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut faire ça en couple ?</div>
+          <div class="faq-a">Pas idéal à 2 — la salle exige plusieurs paires d'yeux en parallèle. Pour un duo, préférez <a href="/escape-game/back-to-80s">Back to 80's</a> qui se joue très bien à 2.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien ça coûte ?</div>
+          <div class="faq-a">À partir de 25 €/joueur en semaine. Voir <a href="/tarifs">tarifs</a>.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "À partir de quel âge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "12 ans accompagnés d'un adulte, 14 ans en autonomie. Pas d'horreur — une enquête policière à résoudre dans une garde à vue fictive."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quel niveau de difficulté ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Intermédiaire à expert. Énigmes logiques, observation, déduction. Idéal pour qui aime Cluedo, les escape books, ou a déjà fait 2-3 escape games."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de joueurs ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "3 à 6 joueurs. À 3 c'est tendu, à 6 c'est confortable. Pas jouable à 2 — la salle est conçue pour la collaboration."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "C'est jouable en famille ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui à partir de 12 ans. Une famille de 4 (2 parents + 2 ados) trouve son rythme parfaitement. Voir aussi Back to 80's pour les plus jeunes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de temps pour finir ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "60 minutes dans la salle. 64 % des équipes en sortent. Les 36 % qui n'y arrivent pas sont sortis avec le sourire — la mécanique d'enquête est prenante jusqu'au bout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut faire ça en couple ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pas idéal à 2 — la salle exige plusieurs paires d'yeux en parallèle. Pour un duo, préférez Back to 80's qui se joue très bien à 2."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien ça coûte ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "À partir de 25 €/joueur en semaine. Voir tarifs."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/quiz</div>
+        <h3 class="faq-title">Quiz GAMEDOOR·41 — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 7 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est quoi un quiz Buzz Your Brain ?</div>
+          <div class="faq-a">Un quiz live avec écran géant, buzzers, host en chair et en os, équipes, manches éliminatoires. 1h30 à 2h de jeu, ambiance plateau télé. Hérité du concept Buzz Your Brain Caen, refondu chez GAMEDOOR·41.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de joueurs ?</div>
+          <div class="faq-a">De 6 à 30 joueurs (équipes de 2 à 5). Au-delà, on passe en privatisation totale jusqu'à 80 personnes — voir <a href="/events/privatisation-totale">privatisation</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quels thèmes proposez-vous ?</div>
+          <div class="faq-a">Cinéma, musique (blind test), culture générale, années 80, pop culture/séries, sport. Catalogue complet sur les sous-pages <a href="/quiz/cinema">/quiz/cinema</a>, <a href="/quiz/musique">/quiz/musique</a>, etc. Demandes sur-mesure possibles pour les groupes.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de temps ça dure ?</div>
+          <div class="faq-a">1h30 à 2h selon le format. Possibilité d'enchaîner avec un escape game ou un buffet pour un événement complet.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est ouvert au public ou seulement en privé ?</div>
+          <div class="faq-a">Les deux. Soirées quiz publiques chaque vendredi (créneaux ouverts à <a href="/reserver">la réservation</a>) et privatisations sur demande tous les autres jours.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien ça coûte ?</div>
+          <div class="faq-a">18 €/joueur en soirée publique (boisson incluse), 22 €/joueur en privatisation, dégressif à partir de 15 personnes. Voir <a href="/tarifs">tarifs</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous faites des EVJF/EVG/anniversaires en quiz ?</div>
+          <div class="faq-a">Oui, c'est une de nos formules les plus demandées. Voir <a href="/events/evjf">EVJF</a>, <a href="/events/evg">EVG</a>, <a href="/events/anniversaire">anniversaire</a>.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "C'est quoi un quiz Buzz Your Brain ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un quiz live avec écran géant, buzzers, host en chair et en os, équipes, manches éliminatoires. 1h30 à 2h de jeu, ambiance plateau télé. Hérité du concept Buzz Your Brain Caen, refondu chez GAMEDOOR·41."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de joueurs ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "De 6 à 30 joueurs (équipes de 2 à 5). Au-delà, on passe en privatisation totale jusqu'à 80 personnes — voir privatisation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels thèmes proposez-vous ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cinéma, musique (blind test), culture générale, années 80, pop culture/séries, sport. Catalogue complet sur les sous-pages /quiz/cinema, /quiz/musique, etc. Demandes sur-mesure possibles pour les groupes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de temps ça dure ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1h30 à 2h selon le format. Possibilité d'enchaîner avec un escape game ou un buffet pour un événement complet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "C'est ouvert au public ou seulement en privé ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les deux. Soirées quiz publiques chaque vendredi (créneaux ouverts à la réservation) et privatisations sur demande tous les autres jours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien ça coûte ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "18 €/joueur en soirée publique (boisson incluse), 22 €/joueur en privatisation, dégressif à partir de 15 personnes. Voir tarifs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous faites des EVJF/EVG/anniversaires en quiz ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, c'est une de nos formules les plus demandées. Voir EVJF, EVG, anniversaire."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/events</div>
+        <h3 class="faq-title">Événements &amp; privatisations — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 6 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel type d'événements organisez-vous ?</div>
+          <div class="faq-a">Séminaires, team building, soirées d'entreprise, afterworks, EVJF, EVG, anniversaires (enfant, ado, adulte), sorties famille et associations. <a href="/events/entreprises">B2B ici</a>, événements privés <a href="/events/evjf">EVJF</a> / <a href="/events/anniversaire">anniversaire</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut privatiser tout le complexe ?</div>
+          <div class="faq-a">Oui — 1500 m², 4 univers, jusqu'à 80 personnes. Formule premium sur devis avec exclusivité totale. Voir <a href="/events/privatisation-totale">privatisation totale</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quelle capacité maximale ?</div>
+          <div class="faq-a">80 personnes en privatisation totale, 30 par univers en privatisation partielle. Pour 80+, on étudie au cas par cas avec horaires étendus.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous fournissez la restauration ?</div>
+          <div class="faq-a">Oui, sous-traitée à des partenaires locaux : cocktails dînatoires, buffets, plateaux repas, foodtrucks. Demande spécifique sur demande.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien ça coûte un événement privé ?</div>
+          <div class="faq-a">Très variable selon format, durée et nombre. À partir de 600 € pour un EVJF de 6 personnes, à partir de 4 000 € pour une privatisation totale 50 personnes. <a href="/events/entreprises/devis">Demandez un devis</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel délai pour réserver un événement ?</div>
+          <div class="faq-a">Idéal : 4 à 6 semaines à l'avance. Possible jusqu'à 1 semaine selon disponibilité. Pour décembre (galas fin d'année), réservez dès septembre.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quel type d'événements organisez-vous ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Séminaires, team building, soirées d'entreprise, afterworks, EVJF, EVG, anniversaires (enfant, ado, adulte), sorties famille et associations. B2B ici, événements privés EVJF / anniversaire."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut privatiser tout le complexe ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui — 1500 m², 4 univers, jusqu'à 80 personnes. Formule premium sur devis avec exclusivité totale. Voir privatisation totale."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle capacité maximale ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "80 personnes en privatisation totale, 30 par univers en privatisation partielle. Pour 80+, on étudie au cas par cas avec horaires étendus."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous fournissez la restauration ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, sous-traitée à des partenaires locaux : cocktails dînatoires, buffets, plateaux repas, foodtrucks. Demande spécifique sur demande."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien ça coûte un événement privé ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Très variable selon format, durée et nombre. À partir de 600 € pour un EVJF de 6 personnes, à partir de 4 000 € pour une privatisation totale 50 personnes. Demandez un devis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quel délai pour réserver un événement ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Idéal : 4 à 6 semaines à l'avance. Possible jusqu'à 1 semaine selon disponibilité. Pour décembre (galas fin d'année), réservez dès septembre."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/events/entreprises</div>
+        <h3 class="faq-title">Événements d'entreprise — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 7 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Quels formats B2B proposez-vous ?</div>
+          <div class="faq-a"><a href="/events/entreprises/seminaire">Séminaire</a> (1/2 journée à journée), <a href="/events/entreprises/team-building">team building</a> (2-4h), <a href="/events/entreprises/soiree-entreprise">soirée d'entreprise</a> (3-5h), <a href="/events/entreprises/afterwork">afterwork</a> (2h), <a href="/events/entreprises/incentive">incentive</a> (sur-mesure).</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de personnes pouvez-vous recevoir ?</div>
+          <div class="faq-a">De 8 à 80 personnes en simultané. Au-delà, format en rotation par groupes possible — étudions au cas par cas.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous avez une salle plénière ?</div>
+          <div class="faq-a">Oui, 60 places assises avec écran 3m, vidéoprojecteur 4K, sonorisation pro, fibre optique. Configurable en U, classe ou théâtre.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel délai pour un devis ?</div>
+          <div class="faq-a">Réponse sous 24h ouvrées. Devis détaillé sous 48h après brief. Visite des lieux possible sur rendez-vous.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous gérez la restauration et la logistique ?</div>
+          <div class="faq-a">Oui, clé en main : restauration (partenaires locaux), pauses café, animation, navette possible depuis Caen centre. Vous arrivez, on s'occupe du reste.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quels tarifs pour un team building ?</div>
+          <div class="faq-a">À partir de 35 €/personne en semaine, 45 €/personne en soirée. Dégressif au volume. <a href="/events/entreprises/tarifs-et-formules">Grille tarifaire détaillée</a> ou <a href="/events/entreprises/devis">demande de devis</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut faire un séminaire résidentiel ?</div>
+          <div class="faq-a">Pas d'hébergement sur place — partenariats avec hôtels Caen centre (Mercure, Ibis, IBIS Budget Mondeville) à 5-10 min, navette possible.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quels formats B2B proposez-vous ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Séminaire (1/2 journée à journée), team building (2-4h), soirée d'entreprise (3-5h), afterwork (2h), incentive (sur-mesure)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de personnes pouvez-vous recevoir ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "De 8 à 80 personnes en simultané. Au-delà, format en rotation par groupes possible — étudions au cas par cas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous avez une salle plénière ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, 60 places assises avec écran 3m, vidéoprojecteur 4K, sonorisation pro, fibre optique. Configurable en U, classe ou théâtre."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quel délai pour un devis ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Réponse sous 24h ouvrées. Devis détaillé sous 48h après brief. Visite des lieux possible sur rendez-vous."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous gérez la restauration et la logistique ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, clé en main : restauration (partenaires locaux), pauses café, animation, navette possible depuis Caen centre. Vous arrivez, on s'occupe du reste."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels tarifs pour un team building ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "À partir de 35 €/personne en semaine, 45 €/personne en soirée. Dégressif au volume. Grille tarifaire détaillée ou demande de devis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut faire un séminaire résidentiel ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pas d'hébergement sur place — partenariats avec hôtels Caen centre (Mercure, Ibis, IBIS Budget Mondeville) à 5-10 min, navette possible."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/events/evjf</div>
+        <h3 class="faq-title">EVJF — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 7 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel format pour un EVJF ?</div>
+          <div class="faq-a">Le plus demandé : 2h escape game (Psychiatric ou Garde à Vue) + 1h30 quiz musique + buffet. Adaptation sur-mesure selon vos envies. Format aussi disponible en demi-journée ou journée complète.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut être combien de copines ?</div>
+          <div class="faq-a">De 4 à 12. Au-delà, on bascule sur privatisation partielle jusqu'à 30 personnes.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien ça coûte ?</div>
+          <div class="faq-a">À partir de 65 €/personne pour la formule complète (escape + quiz + buffet). Dégressif à partir de 8 personnes. <a href="/events/entreprises/devis">Demande de devis</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous fournissez les déco / accessoires EVJF ?</div>
+          <div class="faq-a">Pack EVJF en option : écharpe, couronne, défis surprise, cadeau personnalisé pour la future mariée. À demander au moment du devis (+ 12 €/personne).</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Le buffet est compris ?</div>
+          <div class="faq-a">Selon formule. Formule complète = buffet salé/sucré + 1 cocktail/personne. Formule courte = sans restauration. Possibilité d'ajouter à la carte.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut amener un gâteau ?</div>
+          <div class="faq-a">Oui, sans surcoût. Si vous avez un thème particulier, prévenez-nous : on prépare la salle en cohérence.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quel délai pour réserver un EVJF ?</div>
+          <div class="faq-a">Idéal : 4 semaines avant. Possible jusqu'à 10 jours selon disponibilité — week-ends de printemps/été partent vite. <a href="/contact">Contact</a>.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quel format pour un EVJF ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le plus demandé : 2h escape game (Psychiatric ou Garde à Vue) + 1h30 quiz musique + buffet. Adaptation sur-mesure selon vos envies. Format aussi disponible en demi-journée ou journée complète."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut être combien de copines ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "De 4 à 12. Au-delà, on bascule sur privatisation partielle jusqu'à 30 personnes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien ça coûte ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "À partir de 65 €/personne pour la formule complète (escape + quiz + buffet). Dégressif à partir de 8 personnes. Demande de devis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous fournissez les déco / accessoires EVJF ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pack EVJF en option : écharpe, couronne, défis surprise, cadeau personnalisé pour la future mariée. À demander au moment du devis (+ 12 €/personne)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le buffet est compris ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Selon formule. Formule complète = buffet salé/sucré + 1 cocktail/personne. Formule courte = sans restauration. Possibilité d'ajouter à la carte."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut amener un gâteau ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, sans surcoût. Si vous avez un thème particulier, prévenez-nous : on prépare la salle en cohérence."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quel délai pour réserver un EVJF ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Idéal : 4 semaines avant. Possible jusqu'à 10 jours selon disponibilité — week-ends de printemps/été partent vite. Contact."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/reserver</div>
+        <h3 class="faq-title">Réservation — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 6 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Comment réserver en ligne ?</div>
+          <div class="faq-a">Choisissez votre univers (escape, quiz), votre salle ou format, votre créneau. Vous êtes redirigé vers notre prestataire de réservation Bookeo pour le paiement sécurisé. Confirmation immédiate par email.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Quels moyens de paiement ?</div>
+          <div class="faq-a">CB (Visa, Mastercard, Amex), Apple Pay, Google Pay. Chèques cadeaux et cartes cadeaux GAMEDOOR·41 acceptés au comptoir uniquement.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Je peux réserver pour un grand groupe ?</div>
+          <div class="faq-a">Au-delà de 8 personnes, passez par <a href="/contact">le formulaire de contact</a> ou <a href="/events/entreprises/devis">demande de devis</a>. Tarifs dégressifs et créneaux dédiés.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">On peut modifier ma réservation ?</div>
+          <div class="faq-a">Oui, jusqu'à 48h avant. Connectez-vous au lien envoyé par email ou contactez-nous.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Annulation : quelles conditions ?</div>
+          <div class="faq-a">Gratuite jusqu'à 48h avant. Entre 48h et 24h : avoir valable 1 an. Moins de 24h : non remboursable. Détails dans nos <a href="/cgv">CGV</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Je n'ai pas reçu ma confirmation ?</div>
+          <div class="faq-a">Vérifiez vos spams. Si toujours rien sous 30 minutes, écrivez-nous à <a href="/contact">contact</a> — nous régularisons sous 1h ouvrée.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Comment réserver en ligne ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choisissez votre univers (escape, quiz), votre salle ou format, votre créneau. Vous êtes redirigé vers notre prestataire de réservation Bookeo pour le paiement sécurisé. Confirmation immédiate par email."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels moyens de paiement ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CB (Visa, Mastercard, Amex), Apple Pay, Google Pay. Chèques cadeaux et cartes cadeaux GAMEDOOR·41 acceptés au comptoir uniquement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Je peux réserver pour un grand groupe ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Au-delà de 8 personnes, passez par le formulaire de contact ou demande de devis. Tarifs dégressifs et créneaux dédiés."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "On peut modifier ma réservation ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, jusqu'à 48h avant. Connectez-vous au lien envoyé par email ou contactez-nous."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Annulation : quelles conditions ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gratuite jusqu'à 48h avant. Entre 48h et 24h : avoir valable 1 an. Moins de 24h : non remboursable. Détails dans nos CGV."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Je n'ai pas reçu ma confirmation ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vérifiez vos spams. Si toujours rien sous 30 minutes, écrivez-nous à contact — nous régularisons sous 1h ouvrée."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/tarifs</div>
+        <h3 class="faq-title">Tarifs — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 6 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien coûte un escape game ?</div>
+          <div class="faq-a">Back to 80's : 25-30 €/joueur. Garde à Vue : 25-30 €/joueur. Psychiatric : 28-32 €/joueur. Tarif semaine moins cher que week-end. Dégressif à partir de 5 joueurs.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien coûte une soirée quiz ?</div>
+          <div class="faq-a">18 €/joueur en soirée publique (1 boisson incluse). 22 €/joueur en privatisation. Dégressif à partir de 15 joueurs.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Tarifs entreprise ?</div>
+          <div class="faq-a">Team building dès 35 €/personne, séminaire 1/2 journée dès 80 €/personne, journée dès 130 €/personne. Voir <a href="/events/entreprises/tarifs-et-formules">tarifs entreprises</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous avez des tarifs étudiants ?</div>
+          <div class="faq-a">Oui, -10 % sur présentation de la carte étudiante du lundi au jeudi (hors vacances scolaires).</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Et pour les enfants ?</div>
+          <div class="faq-a">Tarif unique : - 18 ans = -5 € sur le tarif adulte sur Back to 80's et Garde à Vue. Pas d'enfant à Psychiatric.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous faites des promos ?</div>
+          <div class="faq-a">Pas de promos régulières — un prix juste toute l'année. Offres ponctuelles : Black Friday, Saint-Valentin, fête des mères/pères. Inscrivez-vous à <a href="/newsletter">la newsletter</a> pour être prévenu.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Combien coûte un escape game ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Back to 80's : 25-30 €/joueur. Garde à Vue : 25-30 €/joueur. Psychiatric : 28-32 €/joueur. Tarif semaine moins cher que week-end. Dégressif à partir de 5 joueurs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien coûte une soirée quiz ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "18 €/joueur en soirée publique (1 boisson incluse). 22 €/joueur en privatisation. Dégressif à partir de 15 joueurs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tarifs entreprise ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Team building dès 35 €/personne, séminaire 1/2 journée dès 80 €/personne, journée dès 130 €/personne. Voir tarifs entreprises."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous avez des tarifs étudiants ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, -10 % sur présentation de la carte étudiante du lundi au jeudi (hors vacances scolaires)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Et pour les enfants ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tarif unique : - 18 ans = -5 € sur le tarif adulte sur Back to 80's et Garde à Vue. Pas d'enfant à Psychiatric."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous faites des promos ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pas de promos régulières — un prix juste toute l'année. Offres ponctuelles : Black Friday, Saint-Valentin, fête des mères/pères. Inscrivez-vous à la newsletter pour être prévenu."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/acces</div>
+        <h3 class="faq-title">Accès &amp; venue — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 6 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Quelle est l'adresse exacte ?</div>
+          <div class="faq-a">GAMEDOOR·41, 41 bis rue Pasteur, 14120 Mondeville. Coordonnées GPS : 49.1735° N, 0.3175° W.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Combien de temps depuis Caen centre ?</div>
+          <div class="faq-a">5 minutes en voiture, 12 minutes en tram T1 (arrêt « Mondeville Pasteur »), 15 minutes à vélo (piste cyclable directe).</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Y a-t-il un parking ?</div>
+          <div class="faq-a">Oui, parking gratuit de 40 places juste devant le bâtiment. Parking complémentaire à 100 m (centre commercial Mondeville 2).</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">C'est accessible aux personnes à mobilité réduite ?</div>
+          <div class="faq-a">Oui, accès PMR de plain-pied, ascenseur entre les niveaux, sanitaires adaptés. Garde à Vue et Back to 80's sont 100 % jouables en fauteuil. Détails sur <a href="/accessibilite">accessibilité</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Tram et bus desservent ?</div>
+          <div class="faq-a">Tram T1 arrêt « Mondeville Pasteur », à 4 min à pied. Bus ligne 6 arrêt « Pasteur ». Dernier tram pour Caen centre à 0h30.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Restaurants à proximité ?</div>
+          <div class="faq-a">Centre commercial Mondeville 2 à 2 min : restauration rapide. Caen centre à 5 min : restaurants gastronomiques. Sur demande, partenariats avec restaurateurs proches.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quelle est l'adresse exacte ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GAMEDOOR·41, 41 bis rue Pasteur, 14120 Mondeville. Coordonnées GPS : 49.1735° N, 0.3175° W."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de temps depuis Caen centre ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "5 minutes en voiture, 12 minutes en tram T1 (arrêt « Mondeville Pasteur »), 15 minutes à vélo (piste cyclable directe)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Y a-t-il un parking ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, parking gratuit de 40 places juste devant le bâtiment. Parking complémentaire à 100 m (centre commercial Mondeville 2)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "C'est accessible aux personnes à mobilité réduite ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, accès PMR de plain-pied, ascenseur entre les niveaux, sanitaires adaptés. Garde à Vue et Back to 80's sont 100 % jouables en fauteuil. Détails sur accessibilité."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tram et bus desservent ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tram T1 arrêt « Mondeville Pasteur », à 4 min à pied. Bus ligne 6 arrêt « Pasteur ». Dernier tram pour Caen centre à 0h30."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Restaurants à proximité ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Centre commercial Mondeville 2 à 2 min : restauration rapide. Caen centre à 5 min : restaurants gastronomiques. Sur demande, partenariats avec restaurateurs proches."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div><div class="faq-block">
+    <div class="faq-head">
+      <div>
+        <div class="faq-url">/contact</div>
+        <h3 class="faq-title">Contact — questions fréquentes</h3>
+      </div>
+      <span class="faq-tag">FAQPage · 6 Q/R</span>
+    </div>
+    <div class="faq-list">
+      
+        <div class="faq-item">
+          <div class="faq-q">Comment vous joindre ?</div>
+          <div class="faq-a">Téléphone : 02 31 XX XX XX (du mardi au samedi 10h-19h). Email : contact@gamedoor41.fr. WhatsApp : 06 XX XX XX XX. Réponse sous 24h ouvrées.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Pour une demande de devis entreprise ?</div>
+          <div class="faq-a">Passez plutôt par <a href="/events/entreprises/devis">le formulaire dédié</a> — vous accédez à un chargé d'événementiel directement, réponse sous 24h.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Je suis journaliste, qui contacter ?</div>
+          <div class="faq-a">Espace dédié : <a href="/presse">/presse</a>. Communiqués, kit presse, photos HD, contact attaché de presse.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Vous recrutez ?</div>
+          <div class="faq-a">Oui, postes Game Master, animation quiz, événementiel, accueil. Voir <a href="/on-recrute">on recrute</a>.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">J'ai oublié quelque chose dans une salle ?</div>
+          <div class="faq-a">Contactez-nous sous 7 jours par téléphone ou email avec votre nom et la date du créneau. Objets retrouvés conservés 30 jours.</div>
+        </div>
+      
+        <div class="faq-item">
+          <div class="faq-q">Je veux faire une réclamation ?</div>
+          <div class="faq-a">Email à <a href="mailto:contact@gamedoor41.fr">contact@gamedoor41.fr</a> avec « Réclamation » en objet. Réponse personnelle sous 48h ouvrées.</div>
+        </div>
+      
+    </div>
+    <div class="faq-jsonld">
+      <div class="jsonld-label">JSON-LD FAQPage</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Comment vous joindre ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Téléphone : 02 31 XX XX XX (du mardi au samedi 10h-19h). Email : contact@gamedoor41.fr. WhatsApp : 06 XX XX XX XX. Réponse sous 24h ouvrées."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Pour une demande de devis entreprise ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Passez plutôt par le formulaire dédié — vous accédez à un chargé d'événementiel directement, réponse sous 24h."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Je suis journaliste, qui contacter ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Espace dédié : /presse. Communiqués, kit presse, photos HD, contact attaché de presse."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vous recrutez ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, postes Game Master, animation quiz, événementiel, accueil. Voir on recrute."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "J'ai oublié quelque chose dans une salle ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Contactez-nous sous 7 jours par téléphone ou email avec votre nom et la date du créneau. Objets retrouvés conservés 30 jours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Je veux faire une réclamation ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Email à contact@gamedoor41.fr avec « Réclamation » en objet. Réponse personnelle sous 48h ouvrées."
+      }
+    }
+  ]
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4 — SCHEMAS ============ -->
+<section class="sec">
+  <div class="sec-num">Section 4</div>
+  <h2 class="sec-title">Schema.org roadmap</h2>
+  <p class="sec-lead">
+    41 schemas spécifiés pour les 12 pages de la Vague 1.
+    Pour chacun : propriétés <span class="ptag req" style="display:inline-block">obligatoires</span>
+    / <span class="ptag rec" style="display:inline-block">recommandées</span>
+    / <span class="ptag opt" style="display:inline-block">optionnelles</span>,
+    exemple JSON-LD prêt à adapter, pièges à éviter.
+  </p>
+
+  <div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/</div>
+      <h3 class="sch-title">Home</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Organization</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, url, logo</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">sameAs, contactPoint, description</span></div>
+          <div class="sch-prop"><span class="ptag opt">Optionnel</span><span class="pval">foundingDate, founders</span></div>
+          <div class="sch-note">Global, pose l'identité de marque pour le Knowledge Graph Google.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: WebSite</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, url</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">potentialAction (SearchAction)</span></div>
+          
+          <div class="sch-note">Active la search box sitelinks dans le SERP.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: LocalBusiness</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, address, telephone</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">openingHoursSpecification, geo, priceRange, image</span></div>
+          <div class="sch-prop"><span class="ptag opt">Optionnel</span><span class="pval">sameAs, hasMap</span></div>
+          <div class="sch-note">Type spécifique à utiliser : EntertainmentBusiness ou subType. Pose les bases pour Google Maps + Local Pack.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          <div class="sch-note">Sur toutes les pages.</div>
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "EntertainmentBusiness",
+  "name": "GAMEDOOR·41",
+  "url": "https://gamedoor41.fr",
+  "logo": "https://gamedoor41.fr/assets/logo-horizontal.svg",
+  "image": "https://gamedoor41.fr/assets/og-cover.jpg",
+  "description": "Maison du jeu à Caen — escape game, quiz, action games et events au 41 bis rue Pasteur, Mondeville.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "41 bis rue Pasteur",
+    "addressLocality": "Mondeville",
+    "postalCode": "14120",
+    "addressCountry": "FR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 49.1735, "longitude": -0.3175 },
+  "telephone": "+33 2 31 XX XX XX",
+  "priceRange": "€€",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday"], "opens": "14:00", "closes": "23:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "11:00", "closes": "01:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:00", "closes": "21:00" }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/gamedoor41",
+    "https://www.facebook.com/gamedoor41",
+    "https://www.linkedin.com/company/gamedoor41"
+  ]
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Ne pas inventer d'AggregateRating sans vraies reviews structurées (sanction Google).</li><li>openingHours doivent matcher Google My Business à 100 %.</li><li>Ne pas multiplier les LocalBusiness (un seul par site).</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/escape-game</div>
+      <h3 class="sch-title">Escape Game (pilier)</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          <div class="sch-note">Home &gt; Escape Game</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: ItemList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">name</span></div>
+          
+          <div class="sch-note">Liste des 3 salles, chaque item référence la page enfant.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity (Question + Answer)</span></div>
+          
+          
+          <div class="sch-note">Si bloc FAQ présent.</div>
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Salles d'escape game à Caen",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "https://gamedoor41.fr/escape-game/psychiatric",
+      "name": "Psychiatric"
+    },
+    { "@type": "ListItem", "position": 2, "url": "https://gamedoor41.fr/escape-game/garde-a-vue", "name": "Garde à Vue" },
+    { "@type": "ListItem", "position": 3, "url": "https://gamedoor41.fr/escape-game/back-to-80s", "name": "Back to 80's" }
+  ]
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>ItemList sans URL valides cassent l'enrichissement.</li><li>FAQPage doit contenir EXACTEMENT les Q/R visibles à l'écran (pas plus, pas moins).</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/escape-game/psychiatric</div>
+      <h3 class="sch-title">Psychiatric</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Product</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, image, description</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">offers, aggregateRating, review</span></div>
+          <div class="sch-prop"><span class="ptag opt">Optionnel</span><span class="pval">sku</span></div>
+          <div class="sch-note">Représente la salle comme un produit réservable.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Offer</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">price, priceCurrency, availability</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">url, validFrom</span></div>
+          
+          <div class="sch-note">Prix de la session.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          <div class="sch-note">Bloc FAQ déjà spécifié.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Psychiatric — Escape Game horreur à Caen",
+  "image": "https://gamedoor41.fr/assets/photos/psychiatric-cover.jpg",
+  "description": "Salle d'escape game horreur à Caen. 60 minutes, 2 à 6 joueurs, à partir de 16 ans.",
+  "brand": { "@type": "Brand", "name": "GAMEDOOR·41" },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://gamedoor41.fr/reserver",
+    "priceCurrency": "EUR",
+    "price": "28.00",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "28.00",
+      "priceCurrency": "EUR",
+      "unitText": "par joueur"
+    },
+    "availability": "https://schema.org/InStock"
+  }
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>AggregateRating uniquement si vraies reviews dans le DOM ou via plateforme tierce vérifiable.</li><li>Pas inclure de Review fictive.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/escape-game/garde-a-vue</div>
+      <h3 class="sch-title">Garde à Vue</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Product</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, image, description</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">offers, aggregateRating</span></div>
+          
+          <div class="sch-note">Idem Psychiatric.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Offer</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">price, priceCurrency, availability</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">url</span></div>
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Garde à Vue — Escape Game enquête à Caen",
+  "image": "https://gamedoor41.fr/assets/photos/garde-a-vue-cover.jpg",
+  "description": "Salle d'escape game enquête policière à Caen. 60 minutes, 3 à 6 joueurs, à partir de 12 ans.",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://gamedoor41.fr/reserver",
+    "priceCurrency": "EUR",
+    "price": "25.00",
+    "availability": "https://schema.org/InStock"
+  }
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Cohérence âge minimum entre H1, FAQ et schema.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/quiz</div>
+      <h3 class="sch-title">Quiz (pilier)</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Service</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, provider, areaServed</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">offers, serviceType</span></div>
+          <div class="sch-prop"><span class="ptag opt">Optionnel</span><span class="pval">audience</span></div>
+          <div class="sch-note">Le quiz est un service plus qu'un produit physique.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Quiz live Buzz Your Brain à Caen",
+  "serviceType": "Quiz interactif avec buzzers",
+  "provider": { "@type": "Organization", "name": "GAMEDOOR·41" },
+  "areaServed": { "@type": "City", "name": "Caen" },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "18.00",
+    "url": "https://gamedoor41.fr/reserver"
+  }
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Service vs Product : ne pas mélanger.</li><li>areaServed bien spécifié (ville/région).</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/events</div>
+      <h3 class="sch-title">Events (pilier)</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Service</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, provider, areaServed</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">serviceType</span></div>
+          
+          <div class="sch-note">Hub events = catalogue de services.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: OfferCatalog</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">name</span></div>
+          
+          <div class="sch-note">Liste des sous-formats events.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Privatisations &amp; événements GAMEDOOR·41",
+  "provider": { "@type": "Organization", "name": "GAMEDOOR·41" },
+  "areaServed": { "@type": "City", "name": "Caen" },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Formules événementielles",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Séminaire d'entreprise" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Team Building" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "EVJF" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Anniversaire" } }
+    ]
+  }
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Ne pas utiliser le type Event (qui veut dire événement daté).</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/events/entreprises</div>
+      <h3 class="sch-title">Entreprises</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Service</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, provider, areaServed</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">audience, serviceType</span></div>
+          
+          <div class="sch-note">audience = BusinessAudience pour cibler B2B.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Événementiel B2B à Caen",
+  "provider": { "@type": "Organization", "name": "GAMEDOOR·41" },
+  "areaServed": [
+    { "@type": "City", "name": "Caen" },
+    { "@type": "AdministrativeArea", "name": "Normandie" }
+  ],
+  "audience": { "@type": "BusinessAudience" },
+  "serviceType": "Team building, séminaire, soirée d'entreprise"
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>audience = BusinessAudience explicit, pas Audience générique.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/events/evjf</div>
+      <h3 class="sch-title">EVJF</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Service</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, provider, areaServed</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">audience, offers</span></div>
+          
+          <div class="sch-note">Service EVJF.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "EVJF à Caen — formule complète",
+  "provider": { "@type": "Organization", "name": "GAMEDOOR·41" },
+  "areaServed": { "@type": "City", "name": "Caen" },
+  "offers": {
+    "@type": "Offer",
+    "price": "65.00",
+    "priceCurrency": "EUR",
+    "description": "Formule EVJF complète : escape + quiz + buffet, à partir de 65 €/personne"
+  }
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>EVJF n'est pas un Event (pas daté à l'avance), c'est un Service.</li><li>Ne pas combiner Event + Service sur la même page.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/reserver</div>
+      <h3 class="sch-title">Réserver</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: ReserveAction</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">target, object</span></div>
+          
+          
+          <div class="sch-note">Indique l'action de réservation pour Actions on Google et SERP enrichi.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "EntertainmentBusiness",
+  "name": "GAMEDOOR·41",
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://gamedoor41.bookeo.com/start",
+      "actionPlatform": ["http://schema.org/DesktopWebPlatform","http://schema.org/MobileWebPlatform"]
+    },
+    "result": { "@type": "Reservation" }
+  }
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Bookeo doit être joignable depuis le target sans cloaking.</li><li>Tester avec l'outil Rich Results de Google.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/tarifs</div>
+      <h3 class="sch-title">Tarifs</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: PriceSpecification</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">price, priceCurrency</span></div>
+          
+          
+          <div class="sch-note">Pour chaque ligne tarifaire.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "PriceSpecification",
+  "name": "Tarif Escape Game GAMEDOOR·41",
+  "price": "25.00",
+  "priceCurrency": "EUR",
+  "valueAddedTaxIncluded": true,
+  "unitText": "par joueur"
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Ne pas générer un schema Product complet ici (déjà sur les pages salles).</li><li>TVA explicite obligatoire pour la France.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/acces</div>
+      <h3 class="sch-title">Accès</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Place</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, address</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">geo, hasMap, publicAccess</span></div>
+          <div class="sch-prop"><span class="ptag opt">Optionnel</span><span class="pval">openingHoursSpecification</span></div>
+          <div class="sch-note">Type Place pour la cartographie.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: LocalBusiness</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, address</span></div>
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">telephone, openingHoursSpecification</span></div>
+          
+          <div class="sch-note">Renforce la cohérence Local Pack.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "name": "GAMEDOOR·41",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "41 bis rue Pasteur",
+    "addressLocality": "Mondeville",
+    "postalCode": "14120",
+    "addressCountry": "FR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 49.1735, "longitude": -0.3175 },
+  "hasMap": "https://goo.gl/maps/XXX",
+  "publicAccess": true
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Coordonnées GPS doivent matcher Google My Business.</li><li>hasMap = vrai lien Google Maps officiel.</li></ul>
+    </div>
+  </div><div class="sch-block">
+    <div class="sch-head">
+      <div class="sch-url">/contact</div>
+      <h3 class="sch-title">Contact</h3>
+    </div>
+    <div class="sch-list">
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: ContactPage</div>
+          
+          <div class="sch-prop"><span class="ptag rec">Recommandé</span><span class="pval">mainEntity</span></div>
+          
+          <div class="sch-note">WebPage spécialisée.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: Organization</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">name, contactPoint</span></div>
+          
+          
+          <div class="sch-note">Avec contactPoint.</div>
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: FAQPage</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">mainEntity</span></div>
+          
+          
+          
+        </div>
+      
+        <div class="sch-row">
+          <div class="sch-name">@type: BreadcrumbList</div>
+          <div class="sch-prop"><span class="ptag req">Obligatoire</span><span class="pval">itemListElement</span></div>
+          
+          
+          
+        </div>
+      
+    </div>
+    <div class="sch-json-section">
+      <div class="jsonld-label">Exemple JSON-LD</div>
+      <pre class="jsonld">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "GAMEDOOR·41",
+  "url": "https://gamedoor41.fr",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+33 2 31 XX XX XX",
+      "contactType": "customer service",
+      "areaServed": "FR",
+      "availableLanguage": ["French","English"]
+    },
+    {
+      "@type": "ContactPoint",
+      "email": "contact@gamedoor41.fr",
+      "contactType": "customer service"
+    }
+  ]
+}</pre>
+    </div>
+    <div class="pitfalls">
+      <div class="pitfalls-l">⚠ Pièges à éviter</div>
+      <ul><li>Plusieurs ContactPoint = OK si contactType différent.</li><li>Ne pas dupliquer Organization global et page contact.</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5 — STRATEGY ============ -->
+<section class="sec">
+  <div class="sec-num">Section 5</div>
+  <h2 class="sec-title">Recommandations stratégiques</h2>
+  <p class="sec-lead">
+    Quick wins post-lancement, risques identifiés à monitorer, et leviers d'autorité topique
+    pour construire la légitimité GAMEDOOR·41 sur les 18 prochains mois.
+  </p>
+
+  
+  <div class="strat-cols">
+    <div class="strat-col qw">
+      <div class="strat-h"><div class="strat-icn">QW</div><h3>Quick wins</h3></div>
+      <div class="strat-item"><div class="strat-t">Inscrire GAMEDOOR·41 dans Google Business Profile dès J-1</div><div class="strat-d">Avant même la mise en ligne du site. Coordonnées, horaires, photos venue, catégorie EntertainmentBusiness. Premier signal de Local Pack.</div></div><div class="strat-item"><div class="strat-t">Récupérer le jus SEO de brain-escape-game.fr et buzzyourbrain.fr</div><div class="strat-d">Redirections 301 thématiques (pas wholesale 301 vers la home) — chaque ancienne page redirige vers son équivalent GAMEDOOR·41 le plus proche. Préserver entre 60 et 80 % du link juice.</div></div><div class="strat-item"><div class="strat-t">Bloquer immédiatement les 12 mots-clés Vague 1 dans GA4 + GSC</div><div class="strat-d">Suivi quotidien dès J0. Pas attendre 3 mois pour voir si ça remonte.</div></div><div class="strat-item"><div class="strat-t">Lancer la matrice locale 'Caen' (7 pages) en Vague 2 (J+30)</div><div class="strat-d">Le complexe est physiquement à Mondeville mais 'Caen' est le mot-clé qui ramène le volume. Doublon SEO sur /events/X et /ou-jouer/caen/X = légitime, angle différent.</div></div><div class="strat-item"><div class="strat-t">Demander à 50 premiers clients un avis Google + un avis Trustpilot</div><div class="strat-d">Source de vérité pour AggregateRating. Sans vraies reviews, pas de schema Review = pas d'étoiles dans le SERP. À déclencher dans l'email post-séance.</div></div>
+    </div>
+    <div class="strat-col risk">
+      <div class="strat-h"><div class="strat-icn">!</div><h3>Risques</h3></div>
+      <div class="strat-item"><div class="strat-t">Cannibalisation /events/evjf vs /ou-jouer/caen/evjf</div><div class="strat-d">Risque de splitter le ranking entre 2 pages sur 'evjf caen'. Mitigation : titles différents, intent angle différent (formules vs lieu). À monitorer dans GSC après 3 mois — fusionner si besoin.</div></div><div class="strat-item"><div class="strat-t">Death Eyes / Death Floor en no-index trop longtemps = pages 'fantômes'</div><div class="strat-d">Si l'ouverture Action glisse à +12 mois, ces pages restent en no-index. Soit retirer du sitemap.xml, soit basculer en redirect vers /action en attendant.</div></div><div class="strat-item"><div class="strat-t">Bookeo lien sortant = perte d'attribution si mal taggué</div><div class="strat-d">Sans UTM ou paramètre de tracking sur le lien, impossible de mesurer le taux de conversion réel par page d'origine. À paramétrer dès J0.</div></div><div class="strat-item"><div class="strat-t">Sous-arbre EN/ partiel risque Soft 404 sur les liens orphelins</div><div class="strat-d">Si /en/escape-room pointe vers /en/quiz mais que /en/quiz n'existe pas, Google rapporte des erreurs. Soit construire les ~12 pages EN d'un bloc, soit ne pas linker depuis le FR.</div></div><div class="strat-item"><div class="strat-t">Charte concurrence 'EVJF caen' = Forte (DR 40+)</div><div class="strat-d">Agences EVJF nationales sont très ancrées. Pas de top 3 attendu avant 9-12 mois sur ce terme. Cible court-terme = top 10 + capter via long-tail (evjf original caen, evjf sur-mesure caen).</div></div>
+    </div>
+    <div class="strat-col auth">
+      <div class="strat-h"><div class="strat-icn">A+</div><h3>Autorité topique</h3></div>
+      <div class="strat-item"><div class="strat-t">Magazine éditorial — 1 article/semaine pendant 6 mois</div><div class="strat-d">30 articles guides + actus. Levier #1 d'autorité topique. À démarrer dès la mise en ligne.</div></div><div class="strat-item"><div class="strat-t">Backlinks locaux : Caen.fr, Mondeville.fr, Calvados Tourisme, Petit Futé Caen</div><div class="strat-d">Annuaires officiels + médias locaux. Ouest-France Caen, Liberté Caen pour relais presse fusion. Cible : 8-12 backlinks DR 30+ dans les 6 premiers mois.</div></div><div class="strat-item"><div class="strat-t">Partenariats créateurs locaux : Escape Reviewer, blogs sortie Caen, influenceurs Insta Caen</div><div class="strat-d">Échange séance gratuite contre review honnête + lien suivi. 5-10 partenariats par trimestre.</div></div><div class="strat-item"><div class="strat-t">Webinaires / conférences pro pour le silo B2B</div><div class="strat-d">Organiser 2 événements/an sur le team-building post-COVID, l'engagement collaborateur. Inviter DRH locaux. Crée du contenu evergreen + génère des leads B2B + des backlinks.</div></div><div class="strat-item"><div class="strat-t">Dossier 'Comment on a créé Psychiatric' pour la presse spécialisée</div><div class="strat-d">Pitch à Stratégies, Réflexes Magazine, Loisirs Pro. Dossier de fond + photos behind-the-scenes = gros backlinks de domaines à autorité.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot">Architecture SEO V2 · GAMEDOOR · 41 · Avril 2026 · Estimations à valider Ahrefs / SEMrush</div>
+
+<script>
+(async () => {
+  try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch(e){}
+  await new Promise(r => setTimeout(r, 600));
+  window.print();
+})();
+</script>
+</body>
+</html>

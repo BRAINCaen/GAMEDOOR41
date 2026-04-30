@@ -1,0 +1,183 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "name": "GAMEDOOR·41 Design System",
+    "version": "2.0.0",
+    "lastUpdated": "2026-04-27",
+    "author": "Allan Boehme — SARL La Boehme",
+    "description": "Tokens canoniques de la marque GAMEDOOR·41. Compatible Style Dictionary, Tokens Studio (Figma), Tailwind theme."
+  },
+
+  "color": {
+    "brand": {
+      "orange":      { "value": "#E07020", "type": "color", "description": "Couleur signature. Accents, CTA, kickers, soulignements H2." },
+      "orangeDark":  { "value": "#B85A18", "type": "color", "description": "État hover/pressed du orange." },
+      "orangeLight": { "value": "#F08F45", "type": "color", "description": "État disabled/subtle du orange." },
+      "black":       { "value": "#0C0800", "type": "color", "description": "Noir chaleureux. Fond dominant. ~40% du système." },
+      "cream":       { "value": "#F0EBE2", "type": "color", "description": "Crème lisible. Texte sur sombre, fond clair. ~40% du système." }
+    },
+    "surface": {
+      "cardBg":      { "value": "#1A1610", "type": "color", "description": "Fond de carte sur fond noir." },
+      "cardBgHover": { "value": "#221C14", "type": "color", "description": "Fond de carte au survol." },
+      "border":      { "value": "#2E2820", "type": "color", "description": "Bordure interne mode sombre." },
+      "borderLight": { "value": "#E8E6E2", "type": "color", "description": "Bordure mode clair." }
+    },
+    "neutral": {
+      "greyLight":  { "value": "#C8C2B8", "type": "color", "description": "Texte secondaire sur sombre." },
+      "greyMedium": { "value": "#8A8078", "type": "color", "description": "Texte tertiaire / metadata." },
+      "greyDark":   { "value": "#6A6460", "type": "color", "description": "Légendes, captions sur sombre." }
+    },
+    "subBrand": {
+      "escape": { "value": "#C62828", "type": "color", "description": "Univers Escape Game. Rouge intense, Pantone 1797 C." },
+      "quiz":   { "value": "#00E5FF", "type": "color", "description": "Univers Quiz Game. Cyan électrique, Pantone 306 C." },
+      "action": { "value": "#76FF03", "type": "color", "description": "Univers Action. Vert fluo, Pantone 802 C." },
+      "events": { "value": "#FFD740", "type": "color", "description": "Univers Events. Or, Pantone 114 C." }
+    },
+    "semantic": {
+      "success": { "value": "#2E7D32", "type": "color" },
+      "warning": { "value": "#FF9800", "type": "color" },
+      "error":   { "value": "#C62828", "type": "color" },
+      "info":    { "value": "#00E5FF", "type": "color" }
+    }
+  },
+
+  "font": {
+    "family": {
+      "display": {
+        "value": "'Barlow Condensed', 'Oswald', system-ui, sans-serif",
+        "type": "fontFamily",
+        "description": "Police d'affichage. Logo, titres, kickers, chiffres-clés."
+      },
+      "body": {
+        "value": "'DM Sans', 'Inter', system-ui, sans-serif",
+        "type": "fontFamily",
+        "description": "Police de texte courant. Body, UI, formulaires."
+      },
+      "mono": {
+        "value": "'JetBrains Mono', 'Menlo', monospace",
+        "type": "fontFamily",
+        "description": "Police monospace. Code, specs, identifiants techniques."
+      }
+    },
+    "weight": {
+      "light":      { "value": 300, "type": "fontWeight", "description": "DOOR dans le logo, italique éditorial." },
+      "regular":    { "value": 400, "type": "fontWeight" },
+      "medium":     { "value": 500, "type": "fontWeight" },
+      "semibold":   { "value": 600, "type": "fontWeight", "description": "Kickers, eyebrows." },
+      "bold":       { "value": 700, "type": "fontWeight" },
+      "extrabold":  { "value": 800, "type": "fontWeight" },
+      "black":      { "value": 900, "type": "fontWeight", "description": "GAME et 41 dans le logo, hero display." }
+    },
+    "size": {
+      "xs":      { "value": "11px", "type": "dimension" },
+      "sm":      { "value": "13px", "type": "dimension" },
+      "base":    { "value": "15px", "type": "dimension" },
+      "lg":      { "value": "17px", "type": "dimension" },
+      "h4":      { "value": "14px", "type": "dimension" },
+      "h3":      { "value": "22px", "type": "dimension" },
+      "h2":      { "value": "36px", "type": "dimension" },
+      "h1":      { "value": "56px", "type": "dimension" },
+      "hero":    { "value": "88px", "type": "dimension" },
+      "display": { "value": "112px", "type": "dimension" }
+    },
+    "tracking": {
+      "tight":   { "value": "-2px",  "type": "dimension", "description": "Logo, hero." },
+      "snug":    { "value": "-1px",  "type": "dimension", "description": "H1, H2." },
+      "normal":  { "value": "0",     "type": "dimension", "description": "Body." },
+      "wide":    { "value": "1px",   "type": "dimension", "description": "H4, labels." },
+      "wider":   { "value": "3px",   "type": "dimension", "description": "Spec labels, captions." },
+      "widest":  { "value": "6px",   "type": "dimension", "description": "Eyebrows, kickers." }
+    },
+    "lineHeight": {
+      "none":   { "value": 1,    "type": "number" },
+      "tight":  { "value": 1.1,  "type": "number" },
+      "snug":   { "value": 1.3,  "type": "number" },
+      "normal": { "value": 1.6,  "type": "number" }
+    }
+  },
+
+  "spacing": {
+    "1":  { "value": "4px",   "type": "dimension" },
+    "2":  { "value": "8px",   "type": "dimension" },
+    "3":  { "value": "12px",  "type": "dimension" },
+    "4":  { "value": "16px",  "type": "dimension" },
+    "5":  { "value": "20px",  "type": "dimension" },
+    "6":  { "value": "24px",  "type": "dimension" },
+    "8":  { "value": "32px",  "type": "dimension" },
+    "10": { "value": "40px",  "type": "dimension" },
+    "12": { "value": "48px",  "type": "dimension" },
+    "14": { "value": "56px",  "type": "dimension" },
+    "16": { "value": "64px",  "type": "dimension" },
+    "20": { "value": "80px",  "type": "dimension" },
+    "24": { "value": "96px",  "type": "dimension" },
+    "32": { "value": "128px", "type": "dimension" }
+  },
+
+  "radius": {
+    "none": { "value": "0",     "type": "dimension" },
+    "sm":   { "value": "4px",   "type": "dimension", "description": "Inputs, tags." },
+    "md":   { "value": "8px",   "type": "dimension", "description": "Boutons, cards." },
+    "lg":   { "value": "12px",  "type": "dimension", "description": "Sections, panels." },
+    "xl":   { "value": "16px",  "type": "dimension", "description": "Cover, hero containers." },
+    "full": { "value": "9999px","type": "dimension", "description": "Pills, badges ronds." }
+  },
+
+  "shadow": {
+    "sm":  { "value": "0 1px 3px rgba(0,0,0,0.06)",   "type": "shadow" },
+    "md":  { "value": "0 4px 16px rgba(0,0,0,0.10)",  "type": "shadow" },
+    "lg":  { "value": "0 10px 30px rgba(0,0,0,0.15)", "type": "shadow" },
+    "xl":  { "value": "0 20px 60px rgba(0,0,0,0.20)", "type": "shadow" },
+    "glowOrange": {
+      "value": "0 0 0 1px rgba(224,112,32,0.3), 0 8px 24px rgba(224,112,32,0.15)",
+      "type": "shadow",
+      "description": "Glow signature autour des CTA principaux au hover."
+    }
+  },
+
+  "border": {
+    "thin":   { "value": "1px", "type": "dimension" },
+    "medium": { "value": "2px", "type": "dimension" },
+    "thick":  { "value": "3px", "type": "dimension", "description": "Souligné H2 (orange) — pattern signature." }
+  },
+
+  "container": {
+    "sm":  { "value": "640px",  "type": "dimension" },
+    "md":  { "value": "768px",  "type": "dimension" },
+    "lg":  { "value": "1024px", "type": "dimension" },
+    "xl":  { "value": "1100px", "type": "dimension", "description": "Container principal de la charte." },
+    "2xl": { "value": "1280px", "type": "dimension" }
+  },
+
+  "transition": {
+    "fast": { "value": "150ms ease-out", "type": "string" },
+    "base": { "value": "250ms ease-out", "type": "string" },
+    "slow": { "value": "400ms cubic-bezier(0.4, 0, 0.2, 1)", "type": "string" }
+  },
+
+  "ratio": {
+    "businessCard":  { "value": "85/55", "type": "string", "description": "Carte de visite européenne." },
+    "instagramPost": { "value": "1/1",    "type": "string" },
+    "instagramReel": { "value": "9/16",   "type": "string" },
+    "video":         { "value": "16/9",   "type": "string" }
+  },
+
+  "rules": {
+    "colorProportion": {
+      "value": "40/40/15/5",
+      "description": "Règle stricte de balance des couleurs : 40% noir, 40% crème, 15% orange, 5% accents sous-marques. Toute composition doit respecter ces proportions à l'échelle d'une page ou d'un écran."
+    },
+    "logoSafeZone": {
+      "value": "X = hauteur du caractère 4",
+      "description": "Zone de protection minimale autour du logo. Aucun élément ne peut empiéter."
+    },
+    "logoMinSize": {
+      "screen": "80px de largeur",
+      "print": "25mm de largeur"
+    },
+    "midDot": {
+      "character": "·",
+      "unicode": "U+00B7",
+      "description": "Le point médian est OBLIGATOIRE entre DOOR et 41. Jamais remplacé par un point classique (.) ou un tiret (-)."
+    }
+  }
+}

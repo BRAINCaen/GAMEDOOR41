@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMEDOOR·41 — Design System Showcase</title>
+<link rel="stylesheet" href="./02-design-tokens.css">
+<style>
+/* Layout du showcase uniquement — pas de la marque */
+body { padding: 48px 24px; }
+.showcase { max-width: 1100px; margin: 0 auto; }
+.showcase-block { margin-bottom: 80px; }
+.showcase-block > .gd-eyebrow { margin-bottom: 12px; }
+.showcase-block > .gd-h2 { margin-bottom: 32px; }
+.demo {
+  background: var(--gd-card-bg);
+  border: 1px solid var(--gd-border);
+  border-radius: var(--gd-radius-lg);
+  padding: 32px;
+  margin: 16px 0;
+}
+.demo-light {
+  background: var(--gd-cream);
+  color: var(--gd-black);
+  border: 1px solid var(--gd-border-light);
+  border-radius: var(--gd-radius-lg);
+  padding: 32px;
+  margin: 16px 0;
+}
+.demo-orange {
+  background: var(--gd-orange);
+  color: var(--gd-black);
+  border-radius: var(--gd-radius-lg);
+  padding: 32px;
+  margin: 16px 0;
+}
+.cluster { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.swatch-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.swatch-block { padding: 16px; border-radius: 8px; min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; font-family: var(--gd-font-display); font-size: 12px; font-weight: 700; }
+.code {
+  background: var(--gd-black);
+  color: var(--gd-cream);
+  padding: 16px 20px;
+  border-radius: var(--gd-radius-md);
+  font-family: var(--gd-font-mono);
+  font-size: 12px;
+  margin: 12px 0;
+  overflow-x: auto;
+  border-left: 3px solid var(--gd-orange);
+}
+hr { border: none; border-top: 1px solid var(--gd-border); margin: 64px 0; }
+</style>
+</head>
+<body>
+
+<div class="showcase">
+
+  <!-- ============================================================ -->
+  <!-- HEADER -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">Design System · Reference</div>
+    <h1 class="gd-h1">GAMEDOOR·41</h1>
+    <p class="gd-lead">Showcase canonique du design system. Chaque composant est rendu avec ses tokens — toute génération AI doit s'appuyer sur ces patterns, pas sur des défauts génériques.</p>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- LOGO -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">01 · Logotype</div>
+    <h2 class="gd-h2">Logo</h2>
+
+    <div class="demo">
+      <div class="gd-logo" style="font-size: 88px; color: var(--gd-cream);">
+        <span class="game">GAME</span><span class="door">DOOR</span><span class="dot">·</span><span class="num">41</span>
+      </div>
+    </div>
+
+    <div class="demo-light">
+      <div class="gd-logo" style="font-size: 56px; color: var(--gd-black);">
+        <span class="game">GAME</span><span class="door">DOOR</span><span class="dot">·</span><span class="num">41</span>
+      </div>
+    </div>
+
+    <div class="demo-orange">
+      <div class="gd-logo" style="font-size: 56px; color: var(--gd-black);">
+        <span class="game">GAME</span><span class="door">DOOR</span><span style="color:var(--gd-black);">·</span><span style="color:var(--gd-black); font-weight:900;">41</span>
+      </div>
+    </div>
+
+    <p class="gd-small" style="margin-top:16px;">Anatomie : <strong>GAME</strong> en weight 900 + <strong>DOOR</strong> en weight 300 + <strong>·</strong> orange (U+00B7) + <strong>41</strong> en weight 900 orange. Letter-spacing toujours -2px. Casse toujours UPPERCASE.</p>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- COULEURS -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">02 · Couleurs</div>
+    <h2 class="gd-h2">Palette</h2>
+
+    <h3 class="gd-h3" style="margin: 24px 0 12px;">Primaires</h3>
+    <div class="swatch-row">
+      <div class="swatch-block" style="background:#E07020; color:#0C0800;">Orange<br>#E07020</div>
+      <div class="swatch-block" style="background:#0C0800; color:#E07020;">Noir<br>#0C0800</div>
+      <div class="swatch-block" style="background:#F0EBE2; color:#0C0800;">Crème<br>#F0EBE2</div>
+      <div class="swatch-block" style="background:#1A1610; color:#E07020;">Card BG<br>#1A1610</div>
+    </div>
+
+    <h3 class="gd-h3" style="margin: 24px 0 12px;">Sous-marques (5% max d'usage)</h3>
+    <div class="swatch-row">
+      <div class="swatch-block" style="background:#C62828; color:#F0EBE2;">Escape<br>#C62828</div>
+      <div class="swatch-block" style="background:#00E5FF; color:#0C0800;">Quiz<br>#00E5FF</div>
+      <div class="swatch-block" style="background:#76FF03; color:#0C0800;">Action<br>#76FF03</div>
+      <div class="swatch-block" style="background:#FFD740; color:#0C0800;">Events<br>#FFD740</div>
+    </div>
+
+    <h3 class="gd-h3" style="margin: 24px 0 12px;">Règle 40 / 40 / 15 / 5</h3>
+    <div style="display:flex; height:48px; border-radius:8px; overflow:hidden; margin: 8px 0;">
+      <div style="flex:40; background:#0C0800; color:#F0EBE2; display:flex; align-items:center; justify-content:center; font-family:var(--gd-font-display); font-size:13px; font-weight:700; letter-spacing:1px;">40% NOIR</div>
+      <div style="flex:40; background:#F0EBE2; color:#0C0800; display:flex; align-items:center; justify-content:center; font-family:var(--gd-font-display); font-size:13px; font-weight:700; letter-spacing:1px;">40% CRÈME</div>
+      <div style="flex:15; background:#E07020; color:#0C0800; display:flex; align-items:center; justify-content:center; font-family:var(--gd-font-display); font-size:13px; font-weight:700; letter-spacing:1px;">15% ORANGE</div>
+      <div style="flex:5; background:linear-gradient(90deg,#C62828,#00E5FF,#76FF03,#FFD740); display:flex; align-items:center; justify-content:center; color:#0C0800; font-family:var(--gd-font-display); font-size:11px; font-weight:700;">5%</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- TYPOGRAPHIE -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">03 · Typographie</div>
+    <h2 class="gd-h2">Hiérarchie</h2>
+
+    <div class="demo">
+      <div class="gd-eyebrow">Eyebrow · 11px · LS 6px</div>
+      <div class="gd-h1" style="margin: 8px 0;">H1 · Le grand titre</div>
+      <div class="gd-h2" style="margin: 16px 0;">H2 · Section</div>
+      <div class="gd-h3" style="margin: 16px 0;">H3 · Sous-section</div>
+      <div class="gd-h4" style="margin: 16px 0;">H4 · LABEL</div>
+      <p class="gd-lead" style="margin: 16px 0;">Lead · DM Sans 17px. Le paragraphe d'accroche, plus respirant que le body.</p>
+      <p class="gd-body">Body · DM Sans 15px. Texte principal, optimisé pour la lecture longue. Interligne 1.6, alignement à gauche. Jamais de justification.</p>
+      <p class="gd-small" style="margin-top: 8px;">Small · DM Sans 13px. Mentions secondaires, notes, légendes.</p>
+      <div class="gd-caption" style="margin-top: 8px;">Caption · 11px · LS 1px</div>
+    </div>
+
+    <div class="code">
+font-family: 'Barlow Condensed' → titres, logo, kickers, chiffres, CTA
+font-family: 'DM Sans'          → body, paragraphes, formulaires, UI
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- BOUTONS -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">04 · Composants</div>
+    <h2 class="gd-h2">Boutons</h2>
+
+    <div class="demo">
+      <div class="cluster">
+        <button class="gd-btn gd-btn-primary">Réserver une salle</button>
+        <button class="gd-btn gd-btn-secondary">En savoir plus</button>
+        <button class="gd-btn gd-btn-ghost">Plus tard →</button>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- CARTES -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">05 · Composants</div>
+    <h2 class="gd-h2">Cartes</h2>
+
+    <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+      <div class="gd-card">
+        <div class="gd-kicker">01 · Salle</div>
+        <h3 class="gd-h3" style="margin: 8px 0;">Death Eyes</h3>
+        <p class="gd-small">Action game immersif, 28 m². 4 panneaux LED yeux géants, 26 boutons tactiles, capteurs de mouvement.</p>
+        <div style="margin-top: 16px;">
+          <span class="gd-badge gd-badge-action">Action · 60 min</span>
+        </div>
+      </div>
+      <div class="gd-card">
+        <div class="gd-kicker">02 · Salle</div>
+        <h3 class="gd-h3" style="margin: 8px 0;">Garde à vue</h3>
+        <p class="gd-small">Escape game thématisé interrogatoire. 3 à 6 joueurs. Difficulté élevée.</p>
+        <div style="margin-top: 16px;">
+          <span class="gd-badge gd-badge-escape">Escape · 60 min</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- BADGES -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">06 · Composants</div>
+    <h2 class="gd-h2">Badges</h2>
+
+    <div class="demo">
+      <div class="cluster">
+        <span class="gd-badge">Default</span>
+        <span class="gd-badge gd-badge-escape">Escape</span>
+        <span class="gd-badge gd-badge-quiz">Quiz</span>
+        <span class="gd-badge gd-badge-action">Action</span>
+        <span class="gd-badge gd-badge-events">Events</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- FORMULAIRES -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">07 · Composants</div>
+    <h2 class="gd-h2">Formulaires</h2>
+
+    <div class="demo">
+      <div style="max-width: 480px;">
+        <label class="gd-label">Votre nom</label>
+        <input type="text" class="gd-input" placeholder="Allan Boehme" style="margin-bottom: 16px;">
+
+        <label class="gd-label">Date souhaitée</label>
+        <input type="date" class="gd-input" style="margin-bottom: 16px;">
+
+        <label class="gd-label">Message</label>
+        <textarea class="gd-textarea" rows="4" placeholder="On organise un EVJF, on aurait besoin de privatiser…" style="margin-bottom: 24px;"></textarea>
+
+        <button class="gd-btn gd-btn-primary">Envoyer la demande</button>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- HERO PATTERN -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">08 · Pattern</div>
+    <h2 class="gd-h2">Hero — pattern signature</h2>
+
+    <div style="background: var(--gd-black); padding: 80px 48px; border-radius: 16px; text-align: center; position: relative; overflow: hidden;">
+      <div class="gd-eyebrow" style="margin-bottom: 24px;">L'endroit où on joue · Caen</div>
+      <div class="gd-logo" style="font-size: clamp(56px, 9vw, 112px); color: var(--gd-cream); margin: 16px 0;">
+        <span class="game">GAME</span><span class="door">DOOR</span><span class="dot">·</span><span class="num">41</span>
+      </div>
+      <div style="font-family: var(--gd-font-display); font-size: 18px; letter-spacing: 8px; text-transform: uppercase; color: var(--gd-cream); margin-top: 16px;">Entrez · Jouez · Vivez</div>
+      <div style="margin-top: 40px;">
+        <button class="gd-btn gd-btn-primary">Réserver maintenant</button>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- DON'TS -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">09 · Garde-fous</div>
+    <h2 class="gd-h2">À ne JAMAIS faire</h2>
+
+    <div class="demo">
+      <ul style="color: var(--gd-cream); padding-left: 20px;">
+        <li class="gd-body">❌ Pas de purple gradients (purple-on-white est interdit)</li>
+        <li class="gd-body">❌ Pas de fonts génériques (Inter, Roboto, Arial, system-ui en première intention)</li>
+        <li class="gd-body">❌ Pas de illustrations 3D génériques type Lottie, isometric SaaS</li>
+        <li class="gd-body">❌ Pas de glassmorphism / neumorphism</li>
+        <li class="gd-body">❌ Le point dans le logo est <strong>·</strong> (U+00B7), JAMAIS un point classique <strong>.</strong></li>
+        <li class="gd-body">❌ Pas de body text justifié — toujours aligné à gauche</li>
+        <li class="gd-body">❌ Pas de letter-spacing positif sur le body</li>
+        <li class="gd-body">❌ Pas d'ombres ou de glow sur le logo</li>
+        <li class="gd-body">❌ Pas de logo sur fond chargé / photo non maîtrisée</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- VOIX -->
+  <!-- ============================================================ -->
+  <div class="showcase-block">
+    <div class="gd-eyebrow">10 · Voix</div>
+    <h2 class="gd-h2">Ton de marque</h2>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div style="background: rgba(118, 255, 3, 0.08); border: 1px solid var(--gd-action); padding: 24px; border-radius: 12px;">
+        <div class="gd-h4" style="color: var(--gd-action);">À FAIRE</div>
+        <p class="gd-body" style="margin-top: 12px;">« On vous attend pour jouer. »</p>
+        <p class="gd-body" style="margin-top: 12px;">« Vendredi, on buzz. Réserve ton créneau. »</p>
+      </div>
+      <div style="background: rgba(198, 40, 40, 0.08); border: 1px solid var(--gd-escape); padding: 24px; border-radius: 12px;">
+        <div class="gd-h4" style="color: var(--gd-escape);">À NE PAS FAIRE</div>
+        <p class="gd-body" style="margin-top: 12px;">« Nous serions ravis de vous accueillir dans nos locaux. »</p>
+        <p class="gd-body" style="margin-top: 12px;">« Profitez de notre offre exceptionnelle de quiz interactif. »</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ const images = [
     label: 'escape (cellule)'
   },
   {
-    src: '/home/user/GAMEDOOR41/img/escape/psychiatric-main.jpg',
+    src: '/home/user/GAMEDOOR41/img/escape/psychiatric-poignet.jpg',
     out: '/home/user/GAMEDOOR41/img/og/og-psychiatric.jpg',
     label: 'psychiatric'
   },

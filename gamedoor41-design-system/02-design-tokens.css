@@ -1,0 +1,450 @@
+/* =====================================================================
+   GAMEDOOR·41 — DESIGN SYSTEM
+   Version 2.0 · Avril 2026
+   Source unique de vérité pour couleurs, typographies, espacements,
+   rayons, ombres et composants.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. IMPORT POLICES
+   --------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;700&display=swap');
+
+/* ---------------------------------------------------------------------
+   2. DESIGN TOKENS — CSS CUSTOM PROPERTIES
+   --------------------------------------------------------------------- */
+:root {
+  /* === COULEURS PRIMAIRES =========================================== */
+  --gd-orange: #E07020;          /* Signal, accent, CTA, highlights */
+  --gd-orange-dark: #B85A18;     /* Hover/pressed state */
+  --gd-orange-light: #F08F45;    /* Disabled/subtle */
+  --gd-black: #0C0800;           /* Fond principal sombre */
+  --gd-cream: #F0EBE2;           /* Texte sur sombre, fond clair principal */
+
+  /* === COULEURS SURFACES (mode sombre par défaut) ================== */
+  --gd-card-bg: #1A1610;         /* Cards sur fond noir */
+  --gd-card-bg-hover: #221C14;   /* Cards au survol */
+  --gd-border: #2E2820;          /* Bordures internes mode sombre */
+  --gd-border-light: #E8E6E2;    /* Bordures mode clair */
+
+  /* === COULEURS GRIS NEUTRES ======================================= */
+  --gd-grey-light: #C8C2B8;      /* Texte secondaire sur sombre */
+  --gd-grey-medium: #8A8078;     /* Texte tertiaire / metadata */
+  --gd-grey-dark: #6A6460;       /* Légende, captions sur sombre */
+
+  /* === COULEURS SOUS-MARQUES ======================================= */
+  --gd-escape: #C62828;          /* Escape Game — rouge intense */
+  --gd-quiz: #00E5FF;            /* Quiz Game — cyan électrique */
+  --gd-action: #76FF03;          /* Action — vert fluo */
+  --gd-events: #FFD740;          /* Events — or */
+
+  /* === ÉTATS SÉMANTIQUES =========================================== */
+  --gd-success: #2E7D32;
+  --gd-warning: #FF9800;
+  --gd-error: #C62828;
+  --gd-info: #00E5FF;
+
+  /* === TYPOGRAPHIE — FAMILLES ====================================== */
+  --gd-font-display: 'Barlow Condensed', 'Oswald', system-ui, sans-serif;
+  --gd-font-body: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --gd-font-mono: 'JetBrains Mono', 'Menlo', monospace;
+
+  /* === TYPOGRAPHIE — TAILLES ======================================= */
+  --gd-text-xs: 11px;            /* Captions, metadata */
+  --gd-text-sm: 13px;            /* Small body, footnotes */
+  --gd-text-base: 15px;          /* Body principal */
+  --gd-text-lg: 17px;            /* Lead paragraph */
+  --gd-text-h4: 14px;            /* Labels, étiquettes */
+  --gd-text-h3: 22px;            /* Sous-sections */
+  --gd-text-h2: 36px;            /* Sections */
+  --gd-text-h1: 56px;            /* Titres principaux */
+  --gd-text-hero: 88px;          /* Hero / logo display */
+  --gd-text-display: 112px;      /* Display géant (cover) */
+
+  /* === TYPOGRAPHIE — POIDS ========================================= */
+  --gd-weight-light: 300;        /* DOOR dans le logo */
+  --gd-weight-regular: 400;
+  --gd-weight-medium: 500;
+  --gd-weight-semibold: 600;     /* Kickers */
+  --gd-weight-bold: 700;
+  --gd-weight-extrabold: 800;
+  --gd-weight-black: 900;        /* GAME et 41 dans le logo */
+
+  /* === TYPOGRAPHIE — TRACKING / LETTER-SPACING ===================== */
+  --gd-tracking-tight: -2px;     /* Logo, hero display */
+  --gd-tracking-snug: -1px;      /* H1, H2 condensé */
+  --gd-tracking-normal: 0;       /* Body */
+  --gd-tracking-wide: 1px;       /* H4 labels */
+  --gd-tracking-wider: 3px;      /* Spec labels, captions */
+  --gd-tracking-widest: 6px;     /* Eyebrow, kickers */
+
+  /* === TYPOGRAPHIE — LINE HEIGHTS ================================== */
+  --gd-leading-none: 1;          /* Logo, gros titres */
+  --gd-leading-tight: 1.1;       /* Titres */
+  --gd-leading-snug: 1.3;
+  --gd-leading-normal: 1.6;      /* Body principal */
+
+  /* === ESPACEMENTS (échelle 4px base) ============================== */
+  --gd-space-1: 4px;
+  --gd-space-2: 8px;
+  --gd-space-3: 12px;
+  --gd-space-4: 16px;
+  --gd-space-5: 20px;
+  --gd-space-6: 24px;
+  --gd-space-8: 32px;
+  --gd-space-10: 40px;
+  --gd-space-12: 48px;
+  --gd-space-14: 56px;
+  --gd-space-16: 64px;
+  --gd-space-20: 80px;
+  --gd-space-24: 96px;
+  --gd-space-32: 128px;
+
+  /* === RAYONS ====================================================== */
+  --gd-radius-none: 0;
+  --gd-radius-sm: 4px;           /* Inputs, tags */
+  --gd-radius-md: 8px;           /* Cards, buttons */
+  --gd-radius-lg: 12px;          /* Sections, panels */
+  --gd-radius-xl: 16px;          /* Cover, hero */
+  --gd-radius-full: 9999px;      /* Pills, badges ronds */
+
+  /* === OMBRES ====================================================== */
+  --gd-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --gd-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
+  --gd-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --gd-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.20);
+  --gd-shadow-glow-orange: 0 0 0 1px rgba(224, 112, 32, 0.3),
+                            0 8px 24px rgba(224, 112, 32, 0.15);
+
+  /* === BORDURES ==================================================== */
+  --gd-border-thin: 1px;
+  --gd-border-medium: 2px;
+  --gd-border-thick: 3px;        /* Souligné H2 (orange) */
+
+  /* === LARGEURS DE CONTAINER ======================================= */
+  --gd-container-sm: 640px;
+  --gd-container-md: 768px;
+  --gd-container-lg: 1024px;
+  --gd-container-xl: 1100px;     /* Container principal de la charte */
+  --gd-container-2xl: 1280px;
+
+  /* === TRANSITIONS ================================================= */
+  --gd-transition-fast: 150ms ease-out;
+  --gd-transition-base: 250ms ease-out;
+  --gd-transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Z-INDEX ===================================================== */
+  --gd-z-base: 0;
+  --gd-z-dropdown: 10;
+  --gd-z-sticky: 20;
+  --gd-z-overlay: 30;
+  --gd-z-modal: 40;
+  --gd-z-toast: 50;
+}
+
+/* ---------------------------------------------------------------------
+   3. RESET & BASE
+   --------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--gd-font-body);
+  font-size: var(--gd-text-base);
+  font-weight: var(--gd-weight-regular);
+  line-height: var(--gd-leading-normal);
+  color: var(--gd-cream);
+  background: var(--gd-black);
+}
+
+/* ---------------------------------------------------------------------
+   4. TYPOGRAPHIE — UTILITAIRES SÉMANTIQUES
+   --------------------------------------------------------------------- */
+
+/* Hero display — la plus grande typographie (cover, splash) */
+.gd-hero {
+  font-family: var(--gd-font-display);
+  font-size: clamp(56px, 9vw, var(--gd-text-display));
+  font-weight: var(--gd-weight-black);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-tight);
+  line-height: var(--gd-leading-none);
+}
+
+/* Eyebrow — petit label au-dessus d'un titre, toujours orange */
+.gd-eyebrow {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-xs);
+  font-weight: var(--gd-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-widest);
+  color: var(--gd-orange);
+}
+
+/* Kicker — variante d'eyebrow pour cartes et posts */
+.gd-kicker {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-xs);
+  font-weight: var(--gd-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gd-orange);
+}
+
+/* Hiérarchie de titres */
+.gd-h1 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h1);
+  font-weight: var(--gd-weight-black);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-snug);
+  line-height: var(--gd-leading-none);
+}
+
+.gd-h2 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h2);
+  font-weight: var(--gd-weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-snug);
+  line-height: var(--gd-leading-tight);
+  border-bottom: var(--gd-border-thick) solid var(--gd-orange);
+  display: inline-block;
+  padding-bottom: var(--gd-space-3);
+}
+
+.gd-h3 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h3);
+  font-weight: var(--gd-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wide);
+}
+
+.gd-h4 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h4);
+  font-weight: var(--gd-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wider);
+  color: var(--gd-grey-light);
+}
+
+/* Body */
+.gd-lead {
+  font-size: var(--gd-text-lg);
+  line-height: var(--gd-leading-normal);
+  color: var(--gd-grey-light);
+  max-width: 70ch;
+}
+
+.gd-body { font-size: var(--gd-text-base); }
+.gd-small { font-size: var(--gd-text-sm); color: var(--gd-grey-light); }
+.gd-caption {
+  font-family: var(--gd-font-body);
+  font-size: var(--gd-text-xs);
+  letter-spacing: var(--gd-tracking-wide);
+  text-transform: uppercase;
+  color: var(--gd-grey-medium);
+}
+
+/* Logo — utilisable directement en HTML quand le SVG n'est pas dispo */
+.gd-logo {
+  font-family: var(--gd-font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-tight);
+  line-height: var(--gd-leading-none);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+}
+.gd-logo .game { font-weight: var(--gd-weight-black); color: currentColor; }
+.gd-logo .door { font-weight: var(--gd-weight-light); color: currentColor; }
+.gd-logo .dot { color: var(--gd-orange); font-weight: var(--gd-weight-black); }
+.gd-logo .num { color: var(--gd-orange); font-weight: var(--gd-weight-black); }
+
+/* ---------------------------------------------------------------------
+   5. COMPOSANTS — BOUTONS
+   --------------------------------------------------------------------- */
+.gd-btn {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h4);
+  font-weight: var(--gd-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wide);
+  padding: var(--gd-space-3) var(--gd-space-6);
+  border-radius: var(--gd-radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--gd-transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gd-space-2);
+  text-decoration: none;
+}
+
+.gd-btn-primary {
+  background: var(--gd-orange);
+  color: var(--gd-black);
+}
+.gd-btn-primary:hover {
+  background: var(--gd-orange-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--gd-shadow-glow-orange);
+}
+
+.gd-btn-secondary {
+  background: transparent;
+  color: var(--gd-cream);
+  border: var(--gd-border-medium) solid var(--gd-cream);
+}
+.gd-btn-secondary:hover {
+  background: var(--gd-cream);
+  color: var(--gd-black);
+}
+
+.gd-btn-ghost {
+  background: transparent;
+  color: var(--gd-orange);
+}
+.gd-btn-ghost:hover { color: var(--gd-orange-dark); }
+
+/* ---------------------------------------------------------------------
+   6. COMPOSANTS — CARTES & SURFACES
+   --------------------------------------------------------------------- */
+.gd-card {
+  background: var(--gd-card-bg);
+  border: var(--gd-border-thin) solid var(--gd-border);
+  border-radius: var(--gd-radius-lg);
+  padding: var(--gd-space-6);
+  transition: all var(--gd-transition-base);
+}
+.gd-card:hover {
+  background: var(--gd-card-bg-hover);
+  border-color: var(--gd-orange);
+}
+
+.gd-card-light {
+  background: var(--gd-cream);
+  color: var(--gd-black);
+  border: var(--gd-border-thin) solid var(--gd-border-light);
+}
+
+.gd-section {
+  background: var(--gd-card-bg);
+  border-radius: var(--gd-radius-lg);
+  padding: var(--gd-space-14) var(--gd-space-12);
+  margin-bottom: var(--gd-space-8);
+  position: relative;
+}
+
+/* Numéro de section décoratif (pattern récurrent dans la charte) */
+.gd-section-num {
+  position: absolute;
+  top: var(--gd-space-8);
+  right: var(--gd-space-12);
+  font-family: var(--gd-font-display);
+  font-size: 80px;
+  font-weight: var(--gd-weight-black);
+  color: rgba(224, 112, 32, 0.08);
+  line-height: var(--gd-leading-none);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------
+   7. COMPOSANTS — INPUTS & FORMULAIRES
+   --------------------------------------------------------------------- */
+.gd-input,
+.gd-textarea,
+.gd-select {
+  font-family: var(--gd-font-body);
+  font-size: var(--gd-text-base);
+  padding: var(--gd-space-3) var(--gd-space-4);
+  background: var(--gd-card-bg);
+  color: var(--gd-cream);
+  border: var(--gd-border-thin) solid var(--gd-border);
+  border-radius: var(--gd-radius-md);
+  width: 100%;
+  transition: border-color var(--gd-transition-fast);
+}
+.gd-input:focus,
+.gd-textarea:focus,
+.gd-select:focus {
+  outline: none;
+  border-color: var(--gd-orange);
+}
+
+.gd-label {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-xs);
+  font-weight: var(--gd-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wider);
+  color: var(--gd-grey-medium);
+  margin-bottom: var(--gd-space-2);
+  display: block;
+}
+
+/* ---------------------------------------------------------------------
+   8. COMPOSANTS — BADGES & TAGS
+   --------------------------------------------------------------------- */
+.gd-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-xs);
+  font-weight: var(--gd-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wide);
+  padding: var(--gd-space-1) var(--gd-space-3);
+  border-radius: var(--gd-radius-full);
+  background: var(--gd-orange);
+  color: var(--gd-black);
+}
+
+.gd-badge-escape  { background: var(--gd-escape); color: var(--gd-cream); }
+.gd-badge-quiz    { background: var(--gd-quiz); color: var(--gd-black); }
+.gd-badge-action  { background: var(--gd-action); color: var(--gd-black); }
+.gd-badge-events  { background: var(--gd-events); color: var(--gd-black); }
+
+/* ---------------------------------------------------------------------
+   9. UTILITAIRES — PROPORTIONS DE COULEURS
+   Règle 40 / 40 / 15 / 5 — toujours respecter cette balance
+   --------------------------------------------------------------------- */
+.gd-bg-black  { background: var(--gd-black); color: var(--gd-cream); }
+.gd-bg-cream  { background: var(--gd-cream); color: var(--gd-black); }
+.gd-bg-orange { background: var(--gd-orange); color: var(--gd-black); }
+.gd-bg-card   { background: var(--gd-card-bg); color: var(--gd-cream); }
+
+/* ---------------------------------------------------------------------
+   10. ACCESSIBILITÉ — FOCUS VISIBLE
+   --------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--gd-orange);
+  outline-offset: 2px;
+  border-radius: var(--gd-radius-sm);
+}
+
+/* ---------------------------------------------------------------------
+   11. RESPONSIVE — BREAKPOINTS DE RÉFÉRENCE
+   sm: 640px · md: 768px · lg: 1024px · xl: 1280px
+   --------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --gd-text-h1: 40px;
+    --gd-text-h2: 28px;
+    --gd-text-hero: 56px;
+  }
+  .gd-section {
+    padding: var(--gd-space-8) var(--gd-space-6);
+  }
+}

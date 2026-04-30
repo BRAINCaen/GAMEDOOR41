@@ -1,0 +1,138 @@
+[
+  {
+    "uuid": "6e03ae80-4d1c-4357-b34a-7382e63dd967",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 5983.9,
+    "hint": null
+  },
+  {
+    "uuid": "6d114990-c639-46ce-bd9e-af389272a06e",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 1839.7,
+    "hint": null
+  },
+  {
+    "uuid": "844abe87-432b-44ca-92da-c858d1bdfe6d",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 1603.4,
+    "hint": null
+  },
+  {
+    "uuid": "26eeba8d-d68f-43a3-ba60-100a652734d5",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 1314.3,
+    "hint": null
+  },
+  {
+    "uuid": "6d177fed-1442-4977-955a-99028d76c5a2",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 712.9,
+    "hint": null
+  },
+  {
+    "uuid": "edfbc079-0718-4791-bde0-36d6ead8e492",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 349.8,
+    "hint": null
+  },
+  {
+    "uuid": "f4a08051-1b8d-4ca2-9ecf-67ea0c0c7544",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 276.9,
+    "hint": null
+  },
+  {
+    "uuid": "75965ad2-9d62-4d8d-8d69-8815b9aea0a5",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 233.4,
+    "hint": null
+  },
+  {
+    "uuid": "c0242933-a008-4a2b-9a68-f8cdd397f18c",
+    "mime": "image/jpeg",
+    "ext": "jpg",
+    "compressed": false,
+    "sizeKB": 145.9,
+    "hint": null
+  },
+  {
+    "uuid": "7cc5d017-2aca-47af-96e7-a104af033d81",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 102.9,
+    "hint": null
+  },
+  {
+    "uuid": "23eb8c7d-bb3a-457e-b596-42aea4e6086e",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 102.4,
+    "hint": null
+  },
+  {
+    "uuid": "a0027790-47e3-48fc-a85e-8dace50ffed7",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 101.9,
+    "hint": null
+  },
+  {
+    "uuid": "01bcd060-295c-4bfe-97f8-7757c9b33eb8",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 101.4,
+    "hint": null
+  },
+  {
+    "uuid": "f4a9915f-a736-4419-b7d3-754d021723bb",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 95.7,
+    "hint": null
+  },
+  {
+    "uuid": "fd793500-a169-4586-a414-e3fb9eb1e28b",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 94.9,
+    "hint": null
+  },
+  {
+    "uuid": "23ab0592-c0d2-492f-8789-5d9a4195f71a",
+    "mime": "font/ttf",
+    "ext": "bin",
+    "compressed": true,
+    "sizeKB": 94.4,
+    "hint": null
+  },
+  {
+    "uuid": "a9224e36-292a-4253-b414-fba2028ceeda",
+    "mime": "image/svg+xml",
+    "ext": "svg",
+    "compressed": true,
+    "sizeKB": 1.2,
+    "hint": null
+  }
+]

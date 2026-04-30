@@ -22,8 +22,27 @@
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" type="image/avif" imagesrcset="/img/escape/garde-a-vue-cellule-480w.avif 480w, /img/escape/garde-a-vue-cellule-768w.avif 768w, /img/escape/garde-a-vue-cellule-1024w.avif 1024w, /img/escape/garde-a-vue-cellule.avif 1400w" imagesizes="100vw">
+  <!-- Fonts V3.3 (Barlow Condensed pour le hero GAMEDOOR·ESCAPE) -->
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" type="image/avif" imagesrcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.avif 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.avif 1672w" imagesizes="100vw">
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* === V3.3 hero — GAMEDOOR·ESCAPE (préfixé .gd-hero-* pour éviter tout conflit) === */
+    .gd-hero { position:relative; min-height:62vh; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center; padding:clamp(40px,5vw,72px) 0; background:#0C0800; }
+    .gd-hero-bg { position:absolute; inset:0; z-index:0; overflow:hidden; }
+    .gd-hero-bg picture, .gd-hero-bg img { width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(1.05); }
+    .gd-hero-bg::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 25%, rgba(12,8,0,.85) 100%); pointer-events:none; }
+    .gd-hero-inner { position:relative; z-index:2; width:100%; max-width:1100px; padding:0 24px; }
+    .gd-hero-eyebrow { display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:12px; font-weight:600; letter-spacing:.32em; text-transform:uppercase; color:#E07020; border-top:1px solid rgba(224,112,32,.45); border-bottom:1px solid rgba(224,112,32,.45); padding:7px 16px; margin-bottom:28px; }
+    .gd-hero-h1 { font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-1.5px; line-height:.92; font-size:clamp(44px,7vw,104px); color:#F0EBE2; margin:0 0 18px; }
+    .gd-hero-h1 strong { font-weight:900; }
+    .gd-hero-h1 .light { font-weight:300; }
+    .gd-hero-h1 .accent { color:#E07020; font-weight:900; display:inline-block; }
+    .gd-hero-subtitle { font-family:'Barlow Condensed','Oswald',sans-serif; font-size:clamp(14px,1.6vw,18px); font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#C8C2B8; margin:0 0 36px; }
+    .gd-hero-subtitle .sep { color:#E07020; margin:0 .55em; }
+    .gd-hero-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
+    @media (max-width: 720px) { .gd-hero { min-height:54vh; } .gd-hero-h1 { letter-spacing:-.5px; } }
+  </style>
   
   <script type="application/ld+json">
   {
@@ -152,20 +171,26 @@
     </div>
   </div>
 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-              <picture>
-            <source type="image/avif" srcset="/img/escape/garde-a-vue-cellule-480w.avif 480w, /img/escape/garde-a-vue-cellule-768w.avif 768w, /img/escape/garde-a-vue-cellule-1024w.avif 1024w, /img/escape/garde-a-vue-cellule.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/garde-a-vue-cellule-480w.webp 480w, /img/escape/garde-a-vue-cellule-768w.webp 768w, /img/escape/garde-a-vue-cellule-1024w.webp 1024w, /img/escape/garde-a-vue-cellule.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/garde-a-vue-cellule.jpg" srcset="/img/escape/garde-a-vue-cellule-480w.jpg 480w, /img/escape/garde-a-vue-cellule-768w.jpg 768w, /img/escape/garde-a-vue-cellule-1024w.jpg 1024w, /img/escape/garde-a-vue-cellule.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Escape Game Caen - In Prison" width="1400" height="1054" loading="eager" decoding="async" fetchpriority="high">
-          </picture>
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-      <p class="kicker" style="color:var(--red);">Brain Escape Game · chez GAMEDOOR•41</p>
-      <h1>Escape Game <span class="accent">à Caen</span></h1>
-      <p class="subtitle">3 salles · Game master acteur · 60 minutes · Dès 25€/pers.</p>
-      <div style="margin-top:24px;">
+  <!-- PAGE HERO — V3.3 GAMEDOOR·ESCAPE -->
+  <section class="gd-hero" id="hero">
+    <div class="gd-hero-bg" aria-hidden="true">
+      <picture>
+        <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.avif 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.avif 1672w" sizes="100vw">
+        <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.webp 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.webp 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.webp 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.webp 1672w" sizes="100vw">
+        <img src="/img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.jpg 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.jpg 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.jpg 1672w" sizes="100vw" alt="Vue à travers les barreaux d'une cellule – escape game GAMEDOOR·41 Caen" width="1672" height="941" loading="eager" decoding="async" fetchpriority="high">
+      </picture>
+    </div>
+    <div class="gd-hero-inner">
+      <span class="gd-hero-eyebrow">3 salles · Game master acteur · 60 minutes</span>
+      <h1 class="gd-hero-h1">
+        <strong>GAME</strong><span class="light">DOOR</span><span class="accent">·ESCAPE</span>
+      </h1>
+      <p class="gd-hero-subtitle">
+        Garde à Vue <span class="sep">·</span> Psychiatric <span class="sep">·</span> Back to the 80's
+      </p>
+      <div class="gd-hero-actions">
         <a href="https://braincaen.4escape.io/booking" class="btn btn-red" target="_blank" rel="noopener">Réserver une salle</a>
+        <a href="#in-prison" class="btn btn-outline">Découvrir les salles</a>
       </div>
     </div>
   </section>
@@ -289,14 +314,24 @@
             <img src="/img/escape/psychiatric-lit.jpg" srcset="/img/escape/psychiatric-lit-480w.jpg 480w, /img/escape/psychiatric-lit-768w.jpg 768w, /img/escape/psychiatric-lit-1024w.jpg 1024w, /img/escape/psychiatric-lit.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Lit hôpital psychiatrique escape game Caen" width="1400" height="1054" loading="lazy" decoding="async">
           </picture>
                       <picture>
-            <source type="image/avif" srcset="/img/escape/psychiatric-main-480w.avif 480w, /img/escape/psychiatric-main-768w.avif 768w, /img/escape/psychiatric-main-1024w.avif 1024w, /img/escape/psychiatric-main.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/psychiatric-main-480w.webp 480w, /img/escape/psychiatric-main-768w.webp 768w, /img/escape/psychiatric-main-1024w.webp 1024w, /img/escape/psychiatric-main.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/psychiatric-main.jpg" srcset="/img/escape/psychiatric-main-480w.jpg 480w, /img/escape/psychiatric-main-768w.jpg 768w, /img/escape/psychiatric-main-1024w.jpg 1024w, /img/escape/psychiatric-main.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Main attachée escape game horreur Caen" width="1400" height="1867" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="/img/escape/psychiatric-poignet-480w.avif 480w, /img/escape/psychiatric-poignet-768w.avif 768w, /img/escape/psychiatric-poignet-1024w.avif 1024w, /img/escape/psychiatric-poignet.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-poignet-480w.webp 480w, /img/escape/psychiatric-poignet-768w.webp 768w, /img/escape/psychiatric-poignet-1024w.webp 1024w, /img/escape/psychiatric-poignet.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-poignet.jpg" srcset="/img/escape/psychiatric-poignet-480w.jpg 480w, /img/escape/psychiatric-poignet-768w.jpg 768w, /img/escape/psychiatric-poignet-1024w.jpg 1024w, /img/escape/psychiatric-poignet.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Poignet entravé sur lit de contention – escape game horreur Caen" width="1086" height="1448" loading="lazy" decoding="async">
           </picture>
                       <picture>
-            <source type="image/avif" srcset="/img/escape/psychiatric-sangles-480w.avif 480w, /img/escape/psychiatric-sangles-768w.avif 768w, /img/escape/psychiatric-sangles-1024w.avif 1024w, /img/escape/psychiatric-sangles.avif 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/psychiatric-sangles-480w.webp 480w, /img/escape/psychiatric-sangles-768w.webp 768w, /img/escape/psychiatric-sangles-1024w.webp 1024w, /img/escape/psychiatric-sangles.webp 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/psychiatric-sangles.jpg" srcset="/img/escape/psychiatric-sangles-480w.jpg 480w, /img/escape/psychiatric-sangles-768w.jpg 768w, /img/escape/psychiatric-sangles-1024w.jpg 1024w, /img/escape/psychiatric-sangles.jpg 1400w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Sangles psychiatrique escape game Caen" width="1400" height="1867" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="/img/escape/psychiatric-sangle-service-480w.avif 480w, /img/escape/psychiatric-sangle-service-768w.avif 768w, /img/escape/psychiatric-sangle-service-1024w.avif 1024w, /img/escape/psychiatric-sangle-service.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-sangle-service-480w.webp 480w, /img/escape/psychiatric-sangle-service-768w.webp 768w, /img/escape/psychiatric-sangle-service-1024w.webp 1024w, /img/escape/psychiatric-sangle-service.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-sangle-service.jpg" srcset="/img/escape/psychiatric-sangle-service-480w.jpg 480w, /img/escape/psychiatric-sangle-service-768w.jpg 768w, /img/escape/psychiatric-sangle-service-1024w.jpg 1024w, /img/escape/psychiatric-sangle-service.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Sangle de contention service psychiatrique – escape game Caen" width="1086" height="1448" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w, /img/escape/psychiatric-couloir-1024w.avif 1024w, /img/escape/psychiatric-couloir.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-couloir-480w.webp 480w, /img/escape/psychiatric-couloir-768w.webp 768w, /img/escape/psychiatric-couloir-1024w.webp 1024w, /img/escape/psychiatric-couloir.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-couloir.jpg" srcset="/img/escape/psychiatric-couloir-480w.jpg 480w, /img/escape/psychiatric-couloir-768w.jpg 768w, /img/escape/psychiatric-couloir-1024w.jpg 1024w, /img/escape/psychiatric-couloir.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Couloir hôpital psychiatrique abandonné avec fauteuil roulant – escape game Caen" width="1086" height="1448" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-porte-sang-480w.avif 480w, /img/escape/psychiatric-porte-sang-768w.avif 768w, /img/escape/psychiatric-porte-sang-1024w.avif 1024w, /img/escape/psychiatric-porte-sang.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-porte-sang-480w.webp 480w, /img/escape/psychiatric-porte-sang-768w.webp 768w, /img/escape/psychiatric-porte-sang-1024w.webp 1024w, /img/escape/psychiatric-porte-sang.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-porte-sang.jpg" srcset="/img/escape/psychiatric-porte-sang-480w.jpg 480w, /img/escape/psychiatric-porte-sang-768w.jpg 768w, /img/escape/psychiatric-porte-sang-1024w.jpg 1024w, /img/escape/psychiatric-porte-sang.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Porte griffée avec empreintes de mains sanglantes – escape game horreur Caen" width="1086" height="1448" loading="lazy" decoding="async">
           </picture>
           </div>
 

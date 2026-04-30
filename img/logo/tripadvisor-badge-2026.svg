@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 256" role="img" aria-label="Tripadvisor Travelers' Choice 2026">
+  <!-- Tombstone background (rounded top, flat bottom with small radius) -->
+  <path d="M100 4 C50 4 4 42 4 100 L4 246 C4 251 8 254 12 254 L188 254 C192 254 196 251 196 246 L196 100 C196 42 150 4 100 4 Z"
+        fill="#34E0A1" stroke="#063927" stroke-width="3"/>
+
+  <!-- Owl: left eye -->
+  <circle cx="72" cy="86" r="28" fill="#063927"/>
+  <circle cx="72" cy="86" r="20" fill="#34E0A1"/>
+  <circle cx="72" cy="86" r="10" fill="#063927"/>
+
+  <!-- Owl: right eye -->
+  <circle cx="128" cy="86" r="28" fill="#063927"/>
+  <circle cx="128" cy="86" r="20" fill="#34E0A1"/>
+  <circle cx="128" cy="86" r="10" fill="#063927"/>
+
+  <!-- Owl: beak -->
+  <path d="M85 116 L100 138 L115 116 Z" fill="#063927"/>
+
+  <!-- Laurel left (6 leaves following a curve) -->
+  <g fill="#063927">
+    <ellipse cx="34" cy="56" rx="5" ry="12" transform="rotate(-55 34 56)"/>
+    <ellipse cx="26" cy="80" rx="5" ry="12" transform="rotate(-32 26 80)"/>
+    <ellipse cx="24" cy="106" rx="5" ry="12" transform="rotate(-12 24 106)"/>
+    <ellipse cx="30" cy="132" rx="5" ry="12" transform="rotate(18 30 132)"/>
+    <ellipse cx="44" cy="154" rx="5" ry="12" transform="rotate(45 44 154)"/>
+    <ellipse cx="62" cy="170" rx="5" ry="12" transform="rotate(70 62 170)"/>
+  </g>
+
+  <!-- Laurel right (mirrored) -->
+  <g fill="#063927">
+    <ellipse cx="166" cy="56" rx="5" ry="12" transform="rotate(55 166 56)"/>
+    <ellipse cx="174" cy="80" rx="5" ry="12" transform="rotate(32 174 80)"/>
+    <ellipse cx="176" cy="106" rx="5" ry="12" transform="rotate(12 176 106)"/>
+    <ellipse cx="170" cy="132" rx="5" ry="12" transform="rotate(-18 170 132)"/>
+    <ellipse cx="156" cy="154" rx="5" ry="12" transform="rotate(-45 156 154)"/>
+    <ellipse cx="138" cy="170" rx="5" ry="12" transform="rotate(-70 138 170)"/>
+  </g>
+
+  <!-- Stem dot connecting laurel tips at the base of the wreath -->
+  <circle cx="100" cy="180" r="4" fill="#063927"/>
+
+  <!-- "2026" text -->
+  <text x="100" y="232"
+        text-anchor="middle"
+        font-family="Arial Black, Helvetica, Arial, sans-serif"
+        font-weight="900"
+        font-size="46"
+        letter-spacing="-2"
+        fill="#063927">2026</text>
+</svg>

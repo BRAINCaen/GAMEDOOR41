@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GAMEDOOR·41 — La maison du jeu · Mondeville</title>
+<meta name="description" content="Quatre univers, un seul toit. Escape, Quiz, Action, Events. À cinq minutes de Caen, 1500 m² dédiés au jeu.">
+<link rel="icon" href="a9224e36-292a-4253-b414-fba2028ceeda">
+
+<style>/* =====================================================================
+   GAMEDOOR·41 — Colors & Type
+   Source: 02-design-tokens.css from the brand kit (V2.0 / Avril 2026)
+   Scope: foundational tokens + semantic helpers. Component CSS lives
+   in components.css.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. WEBFONTS — local TTFs (variable for DM Sans, multi-weight for Barlow)
+   --------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("23ab0592-c0d2-492f-8789-5d9a4195f71a") format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("fd793500-a169-4586-a414-e3fb9eb1e28b") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("f4a9915f-a736-4419-b7d3-754d021723bb") format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("01bcd060-295c-4bfe-97f8-7757c9b33eb8") format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("a0027790-47e3-48fc-a85e-8dace50ffed7") format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("23eb8c7d-bb3a-457e-b596-42aea4e6086e") format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url("7cc5d017-2aca-47af-96e7-a104af033d81") format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url("75965ad2-9d62-4d8d-8d69-8815b9aea0a5") format('truetype-variations'),
+       url("75965ad2-9d62-4d8d-8d69-8815b9aea0a5") format('truetype');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url("f4a08051-1b8d-4ca2-9ecf-67ea0c0c7544") format('truetype-variations'),
+       url("f4a08051-1b8d-4ca2-9ecf-67ea0c0c7544") format('truetype');
+  font-weight: 100 1000;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------------
+   2. DESIGN TOKENS
+   --------------------------------------------------------------------- */
+:root {
+  /* === Primaires =================================================== */
+  --gd-orange: #E07020;
+  --gd-orange-dark: #B85A18;
+  --gd-orange-light: #F08F45;
+  --gd-black: #0C0800;
+  --gd-cream: #F0EBE2;
+
+  /* === Surfaces (dark mode default) ================================ */
+  --gd-card-bg: #1A1610;
+  --gd-card-bg-hover: #221C14;
+  --gd-border: #2E2820;
+  --gd-border-light: #E8E6E2;
+
+  /* === Neutres ===================================================== */
+  --gd-grey-light: #C8C2B8;     /* Texte secondaire sur sombre */
+  --gd-grey-medium: #8A8078;    /* Tertiaire / metadata */
+  --gd-grey-dark: #6A6460;      /* Captions */
+
+  /* === Sous-marques (5% MAX d'usage) =============================== */
+  --gd-escape: #1B2A4E;         /* nuit profonde — peur / enquête / fun */
+  --gd-quiz:   #9D4EDD;         /* violet Buzz — héritage Buzz Your Brain */
+  --gd-action: #BE1B1B;         /* rouge Stranger Things — arcade-réflexes */
+  --gd-events: #FFD740;         /* or */
+  --gd-action-glow: rgba(229, 9, 20, 0.8); /* halo néon optionnel sur fond noir pur */
+
+  /* === Sémantique ================================================== */
+  --gd-success: #2E7D32;
+  --gd-warning: #FF9800;
+  --gd-error:   #C62828;
+  --gd-info:    #00E5FF;
+
+  /* === Sémantique de texte (dark surface) ========================== */
+  --fg1: var(--gd-cream);       /* texte principal */
+  --fg2: var(--gd-grey-light);  /* secondaire */
+  --fg3: var(--gd-grey-medium); /* tertiaire */
+  --fg-accent: var(--gd-orange);
+  --bg1: var(--gd-black);
+  --bg2: var(--gd-card-bg);
+  --bg3: var(--gd-card-bg-hover);
+  --border1: var(--gd-border);
+
+  /* === Familles ==================================================== */
+  --gd-font-display: 'Barlow Condensed', 'Oswald', system-ui, sans-serif;
+  --gd-font-body: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --gd-font-mono: 'JetBrains Mono', 'Menlo', monospace;
+  --serif-display: var(--gd-font-display); /* alias */
+  --sans-body: var(--gd-font-body);
+
+  /* === Tailles ===================================================== */
+  --gd-text-xs: 11px;
+  --gd-text-sm: 13px;
+  --gd-text-base: 15px;
+  --gd-text-lg: 17px;
+  --gd-text-h4: 14px;
+  --gd-text-h3: 22px;
+  --gd-text-h2: 36px;
+  --gd-text-h1: 56px;
+  --gd-text-hero: 88px;
+  --gd-text-display: 112px;
+
+  /* === Poids ======================================================= */
+  --gd-weight-light: 300;
+  --gd-weight-regular: 400;
+  --gd-weight-medium: 500;
+  --gd-weight-semibold: 600;
+  --gd-weight-bold: 700;
+  --gd-weight-extrabold: 800;
+  --gd-weight-black: 900;
+
+  /* === Tracking ==================================================== */
+  --gd-tracking-tight: -2px;
+  --gd-tracking-snug: -1px;
+  --gd-tracking-normal: 0;
+  --gd-tracking-wide: 1px;
+  --gd-tracking-wider: 3px;
+  --gd-tracking-widest: 6px;
+
+  /* === Line heights ================================================ */
+  --gd-leading-none: 1;
+  --gd-leading-tight: 1.1;
+  --gd-leading-snug: 1.3;
+  --gd-leading-normal: 1.6;
+
+  /* === Espacements (4px base) ====================================== */
+  --gd-space-1: 4px;
+  --gd-space-2: 8px;
+  --gd-space-3: 12px;
+  --gd-space-4: 16px;
+  --gd-space-5: 20px;
+  --gd-space-6: 24px;
+  --gd-space-8: 32px;
+  --gd-space-10: 40px;
+  --gd-space-12: 48px;
+  --gd-space-14: 56px;
+  --gd-space-16: 64px;
+  --gd-space-20: 80px;
+  --gd-space-24: 96px;
+  --gd-space-32: 128px;
+
+  /* === Rayons ====================================================== */
+  --gd-radius-none: 0;
+  --gd-radius-sm: 4px;
+  --gd-radius-md: 8px;
+  --gd-radius-lg: 12px;
+  --gd-radius-xl: 16px;
+  --gd-radius-full: 9999px;
+
+  /* === Ombres ====================================================== */
+  --gd-shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+  --gd-shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --gd-shadow-lg: 0 10px 30px rgba(0,0,0,.15);
+  --gd-shadow-xl: 0 20px 60px rgba(0,0,0,.20);
+  --gd-shadow-glow-orange:
+    0 0 0 1px rgba(224,112,32,.30),
+    0 8px 24px rgba(224,112,32,.15);
+
+  /* === Bordures ==================================================== */
+  --gd-border-thin: 1px;
+  --gd-border-medium: 2px;
+  --gd-border-thick: 3px; /* H2 underline */
+
+  /* === Containers ================================================== */
+  --gd-container-sm: 640px;
+  --gd-container-md: 768px;
+  --gd-container-lg: 1024px;
+  --gd-container-xl: 1100px;
+  --gd-container-2xl: 1280px;
+
+  /* === Transitions ================================================= */
+  --gd-transition-fast: 150ms ease-out;
+  --gd-transition-base: 250ms ease-out;
+  --gd-transition-slow: 400ms cubic-bezier(.4,0,.2,1);
+
+  /* === Z ========================================================== */
+  --gd-z-base: 0;
+  --gd-z-dropdown: 10;
+  --gd-z-sticky: 20;
+  --gd-z-overlay: 30;
+  --gd-z-modal: 40;
+  --gd-z-toast: 50;
+}
+
+/* ---------------------------------------------------------------------
+   3. RESET & BASE
+   --------------------------------------------------------------------- */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-family: var(--gd-font-body);
+  font-size: var(--gd-text-base);
+  font-weight: var(--gd-weight-regular);
+  line-height: var(--gd-leading-normal);
+  color: var(--fg1);
+  background: var(--bg1);
+  text-align: left;
+}
+
+/* ---------------------------------------------------------------------
+   4. TYPOGRAPHIE — utilitaires sémantiques
+   --------------------------------------------------------------------- */
+.gd-hero {
+  font-family: var(--gd-font-display);
+  font-size: clamp(56px, 9vw, var(--gd-text-display));
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-tight);
+  line-height: 1;
+}
+.gd-eyebrow,
+.gd-kicker {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-widest);
+  color: var(--gd-orange);
+}
+.gd-kicker { letter-spacing: 3px; }
+
+.gd-h1 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h1);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-snug);
+  line-height: 1;
+}
+.gd-h2 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h2);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-snug);
+  line-height: 1.1;
+  border-bottom: 3px solid var(--gd-orange);
+  display: inline-block;
+  padding-bottom: var(--gd-space-3);
+}
+.gd-h3 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wide);
+}
+.gd-h4 {
+  font-family: var(--gd-font-display);
+  font-size: var(--gd-text-h4);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-wider);
+  color: var(--gd-grey-light);
+}
+.gd-lead {
+  font-size: var(--gd-text-lg);
+  line-height: 1.6;
+  color: var(--gd-grey-light);
+  max-width: 70ch;
+}
+.gd-body { font-size: var(--gd-text-base); }
+.gd-small { font-size: var(--gd-text-sm); color: var(--gd-grey-light); }
+.gd-caption {
+  font-family: var(--gd-font-body);
+  font-size: var(--gd-text-xs);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gd-grey-medium);
+}
+
+/* Logo (HTML fallback when SVG unavailable) */
+.gd-logo {
+  font-family: var(--gd-font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--gd-tracking-tight);
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+}
+.gd-logo .game { font-weight: 900; color: currentColor; }
+.gd-logo .door { font-weight: 300; color: currentColor; }
+.gd-logo .dot  { color: var(--gd-orange); font-weight: 900; }
+.gd-logo .num  { color: var(--gd-orange); font-weight: 900; }
+
+/* ---------------------------------------------------------------------
+   5. UTILITAIRES — règle 40 / 40 / 15 / 5
+   --------------------------------------------------------------------- */
+.gd-bg-black  { background: var(--gd-black); color: var(--gd-cream); }
+.gd-bg-cream  { background: var(--gd-cream); color: var(--gd-black); }
+.gd-bg-orange { background: var(--gd-orange); color: var(--gd-black); }
+.gd-bg-card   { background: var(--gd-card-bg); color: var(--gd-cream); }
+
+:focus-visible {
+  outline: 2px solid var(--gd-orange);
+  outline-offset: 2px;
+  border-radius: var(--gd-radius-sm);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --gd-text-h1: 40px;
+    --gd-text-h2: 28px;
+    --gd-text-hero: 56px;
+  }
+}
+</style>
+<style>
+/* =============================================================
+   V3 — LOUNGE PREMIUM DARK
+   Black dominant · sub-brand accents · photos en fallback créatif
+   ============================================================= */
+
+:root{
+  --section-pad-y: clamp(80px, 10vw, 140px);
+  --container: 1280px;
+  --container-wide: 1440px;
+  --overlay-strong: rgba(12,8,0,.55);
+  --overlay-soft:   rgba(12,8,0,.35);
+  --hairline:       rgba(240,235,226,.10);
+  --hairline-strong:rgba(240,235,226,.18);
+}
+
+html, body { background: var(--gd-black); color: var(--gd-cream); overflow-x: hidden; }
+body { font-feature-settings: "ss01", "ss02"; }
+
+::selection { background: var(--gd-orange); color: var(--gd-black); }
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+img { display: block; max-width: 100%; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+.container-wide { max-width: var(--container-wide); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+/* ---------- Eyebrow ---------- */
+.eyebrow {
+  font-family: var(--gd-font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gd-orange);
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ""; display: inline-block; width: 28px; height: 1px;
+  background: var(--gd-orange);
+  opacity: .5;
+}
+.eyebrow.no-rules::before, .eyebrow.no-rules::after { display: none; }
+.eyebrow .dot { color: var(--gd-orange); }
+
+/* ---------- Headings ---------- */
+.h-display {
+  font-family: var(--gd-font-display);
+  font-weight: 900; text-transform: uppercase;
+  letter-spacing: -2px; line-height: .92;
+  font-size: clamp(56px, 8.5vw, 132px);
+}
+.h-xl {
+  font-family: var(--gd-font-display);
+  font-weight: 800; text-transform: uppercase;
+  letter-spacing: -1.5px; line-height: 1;
+  font-size: clamp(40px, 5.5vw, 80px);
+  position: relative;
+}
+/* H2 underline pattern (DS signature) */
+.h-xl.ds-underline::after {
+  content: "";
+  display: block;
+  width: 64px; height: 3px;
+  background: var(--gd-orange);
+  margin-top: 24px;
+}
+.h-lg {
+  font-family: var(--gd-font-display);
+  font-weight: 800; text-transform: uppercase;
+  letter-spacing: -.5px; line-height: 1.05;
+  font-size: clamp(28px, 3.2vw, 44px);
+}
+.h-md {
+  font-family: var(--gd-font-display);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; line-height: 1.1;
+  font-size: clamp(20px, 1.8vw, 26px);
+}
+.lead { font-size: 18px; line-height: 1.55; color: var(--gd-grey-light); max-width: 60ch; }
+.italic { font-style: italic; font-weight: 400; color: var(--gd-grey-light); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 26px;
+  font-family: var(--gd-font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  border: 1px solid transparent;
+  transition: all 220ms ease;
+  position: relative; overflow: hidden;
+}
+.btn-primary {
+  background: var(--gd-orange); color: var(--gd-black);
+}
+.btn-primary:hover {
+  background: var(--gd-orange-dark); color: var(--gd-cream);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(224,112,32,.30), 0 8px 24px rgba(224,112,32,.20);
+}
+.btn-ghost {
+  background: transparent; color: var(--gd-cream);
+  border-color: var(--hairline-strong);
+}
+.btn-ghost:hover { border-color: var(--gd-cream); background: rgba(240,235,226,.04); }
+.btn-arrow::after {
+  content: "→"; font-family: var(--gd-font-body); font-weight: 400;
+  font-size: 16px; letter-spacing: 0;
+  transition: transform 220ms ease;
+}
+.btn-arrow:hover::after { transform: translateX(3px); }
+
+/* ---------- Sub-brand badges ---------- */
+.brand-badge {
+  display: inline-flex; align-items: center;
+  padding: 6px 10px;
+  font-family: var(--gd-font-display);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gd-cream);
+}
+.brand-badge.escape { background: var(--gd-escape); }
+.brand-badge.quiz   { background: var(--gd-quiz); }
+.brand-badge.action { background: var(--gd-action); }
+.brand-badge.events { background: var(--gd-events); color: var(--gd-black); }
+
+/* ---------- Placeholders for missing data ---------- */
+.ph {
+  display: inline-block;
+  background: rgba(255,215,64,.15);
+  border: 1px dashed rgba(255,215,64,.55);
+  padding: 1px 8px;
+  font-family: var(--gd-font-mono);
+  font-size: .85em;
+  color: var(--gd-events);
+  border-radius: 3px;
+}
+
+/* =============================================================
+   01. STICKY NAV
+   ============================================================= */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(12,8,0,.72);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+          backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--hairline);
+  transition: background 220ms ease;
+}
+.nav-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 0;
+}
+.nav-logo {
+  display: inline-flex; align-items: baseline;
+  font-family: var(--gd-font-display);
+  font-weight: 900; letter-spacing: -1px;
+  text-transform: uppercase; font-size: 22px; line-height: 1;
+}
+.nav-logo .door { font-weight: 300; }
+.nav-logo .num  { color: var(--gd-orange); margin-left: 2px; font-size: 16px; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-link {
+  font-family: var(--gd-font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+  position: relative; padding: 6px 0;
+  transition: color 200ms ease;
+}
+.nav-link:hover { color: var(--gd-cream); }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: var(--gd-cream);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 250ms ease;
+}
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-cta {
+  padding: 10px 18px; font-size: 12px; letter-spacing: 2.5px;
+}
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+}
+
+/* =============================================================
+   02. HERO BENTO
+   ============================================================= */
+.hero { padding: 60px 0 var(--section-pad-y); position: relative; }
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(157,78,221,.06), transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 100%, rgba(27,42,78,.10), transparent 60%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; }
+.hero-head {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 60px; align-items: end;
+  margin-bottom: 56px;
+}
+.hero-h1 { color: var(--gd-cream); }
+.hero .h-display .accent {
+  font-style: italic; font-weight: 400;
+  color: var(--gd-orange);
+}
+.hero-tagline {
+  font-family: var(--gd-font-display);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 6px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+  margin-top: 22px;
+}
+.hero-tagline .sep { color: var(--gd-orange); padding: 0 4px; }
+.hero-side { padding-bottom: 8px; }
+
+/* Bento grid */
+.bento {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 380px 220px;
+  gap: 14px;
+  perspective: 1200px;
+}
+.bento.is-hovering .card:not(.is-focus) {
+  filter: brightness(.35) saturate(.6);
+  transform: scale(.98);
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--gd-card-bg);
+  border: 1px solid var(--hairline);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 24px;
+  transition: filter 380ms ease, transform 380ms ease, border-color 280ms ease;
+  cursor: pointer;
+}
+.card.is-focus {
+  transform: scale(1.015);
+  border-color: var(--hairline-strong);
+  z-index: 2;
+}
+.card .visual {
+  position: absolute; inset: 0;
+  z-index: 0;
+  transition: transform 600ms cubic-bezier(.2,.6,.2,1), filter 380ms ease;
+}
+.card:hover .visual { transform: scale(1.05); }
+.card .visual::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12,8,0,.20) 0%, rgba(12,8,0,.55) 60%, rgba(12,8,0,.85) 100%);
+}
+.card .meta { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.card .body { position: relative; z-index: 1; }
+.card .num {
+  position: absolute; top: 18px; right: 22px; z-index: 1;
+  font-family: var(--gd-font-display);
+  font-size: 64px; font-weight: 900;
+  letter-spacing: -2px; line-height: 1;
+  color: rgba(240,235,226,.10);
+  transition: color 280ms ease;
+}
+.card.is-focus .num { color: var(--card-accent, rgba(240,235,226,.25)); }
+.card-title {
+  font-family: var(--gd-font-display);
+  font-size: clamp(28px, 2.6vw, 38px);
+  font-weight: 900; text-transform: uppercase;
+  letter-spacing: -1px; line-height: .95;
+  color: var(--gd-cream);
+}
+.card-sub {
+  font-size: 14px; color: var(--gd-grey-light);
+  margin-top: 8px; max-width: 36ch;
+}
+.card-bottom {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
+  margin-top: 18px;
+}
+.card-price {
+  font-family: var(--gd-font-display);
+  font-size: 20px; font-weight: 700;
+  letter-spacing: 0; text-transform: none;
+}
+.card-price small {
+  font-family: var(--gd-font-body);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+  display: block; margin-top: 2px;
+}
+.card-cta {
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  border-bottom: 1px solid var(--gd-cream);
+  padding-bottom: 2px;
+}
+
+/* Card placement */
+.card-escape { grid-column: 1; grid-row: 1 / span 2; --card-accent: var(--gd-escape); }
+.card-quiz   { grid-column: 2; grid-row: 1; --card-accent: var(--gd-quiz); }
+.card-action { grid-column: 3; grid-row: 1; --card-accent: var(--gd-action); }
+.card-events { grid-column: 2 / span 2; grid-row: 2; --card-accent: var(--gd-events); }
+
+.card.is-focus { border-color: var(--card-accent); }
+.card.is-focus.card-events { color: var(--gd-cream); }
+
+/* ------- Visuals (fallback creatives — pas de photos dispo) ------- */
+.viz {
+  position: absolute; inset: 0; overflow: hidden;
+  background: var(--gd-black);
+}
+
+/* Escape — Psychiatric: chambre clinique cinéma */
+.viz-escape {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(157,78,221,.10) 0%, transparent 70%),
+    linear-gradient(180deg, #0c0f1c 0%, #0c0800 100%);
+}
+.viz-escape::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,
+      rgba(240,235,226,.04) 0px, rgba(240,235,226,.04) 1px,
+      transparent 1px, transparent 38px),
+    repeating-linear-gradient(90deg,
+      rgba(240,235,226,.04) 0px, rgba(240,235,226,.04) 1px,
+      transparent 1px, transparent 38px);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 30%, transparent 80%);
+}
+.viz-escape::after {
+  content: ""; position: absolute;
+  left: 50%; top: 56%; transform: translate(-50%, -50%);
+  width: 70%; aspect-ratio: 1.4;
+  background: radial-gradient(ellipse 50% 40% at 50% 30%, rgba(240,235,226,.08), transparent 65%);
+  border: 1px solid rgba(240,235,226,.06);
+  filter: blur(.5px);
+}
+/* Bed silhouette */
+.viz-escape .bed {
+  position: absolute; left: 22%; right: 22%; bottom: 18%;
+  height: 18%;
+  background: linear-gradient(180deg, rgba(240,235,226,.15) 0%, rgba(240,235,226,.04) 100%);
+  border-top: 1px solid rgba(240,235,226,.20);
+  border-radius: 4px 4px 0 0;
+}
+.viz-escape .lamp {
+  position: absolute; right: 14%; top: 14%;
+  width: 28px; height: 28px;
+  background: var(--gd-events);
+  border-radius: 50%;
+  box-shadow: 0 0 60px 20px rgba(255,215,64,.18);
+  opacity: .55;
+  animation: flicker 3.4s ease-in-out infinite;
+}
+
+/* Quiz — Buzzers en perspective */
+.viz-quiz {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 70%, rgba(157,78,221,.18) 0%, transparent 70%),
+    linear-gradient(180deg, #1a0d2e 0%, #0c0800 100%);
+}
+.viz-quiz::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(180deg, transparent 60%, rgba(157,78,221,.15) 100%),
+    repeating-linear-gradient(90deg,
+      rgba(157,78,221,.06) 0px, rgba(157,78,221,.06) 2px,
+      transparent 2px, transparent 60px);
+}
+/* Buzzers row */
+.viz-quiz .buzzer-row {
+  position: absolute; left: 0; right: 0; bottom: 12%;
+  display: flex; justify-content: center; gap: 18%;
+  perspective: 600px;
+}
+.viz-quiz .buzzer {
+  width: 14%; aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #d97aff 0%, #9D4EDD 50%, #6a2c9c 100%);
+  box-shadow:
+    0 0 40px rgba(157,78,221,.55),
+    inset 0 -6px 0 rgba(0,0,0,.35);
+  transform: rotateX(35deg);
+}
+.viz-quiz .buzzer:nth-child(2) { transform: rotateX(35deg) translateY(-20%) scale(1.15); }
+
+/* Action — bientôt, énergie rouge */
+.viz-action {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(190,27,27,.20) 0%, transparent 70%),
+    linear-gradient(135deg, #0c0800 60%, #2d0808 100%);
+}
+.viz-action::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(190,27,27,.08) 0px, rgba(190,27,27,.08) 14px,
+      transparent 14px, transparent 28px);
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, transparent 75%);
+}
+.viz-action .target {
+  position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%);
+  width: 50%; aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(240,235,226,.15);
+  box-shadow:
+    inset 0 0 0 1px rgba(190,27,27,.20),
+    inset 0 0 40px rgba(190,27,27,.25);
+}
+.viz-action .target::before, .viz-action .target::after {
+  content: ""; position: absolute; inset: 18%;
+  border: 1px solid rgba(190,27,27,.30); border-radius: 50%;
+}
+.viz-action .target::after {
+  inset: 38%;
+  background: radial-gradient(circle, var(--gd-action) 30%, transparent 70%);
+  border: none;
+}
+.viz-action .pulse {
+  position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gd-action);
+  box-shadow: 0 0 30px 8px rgba(190,27,27,.7);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+/* Events — or, motif géométrique */
+.viz-events {
+  background:
+    linear-gradient(135deg, #0c0800 50%, rgba(255,215,64,.18) 100%);
+}
+.viz-events::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 80% 80%, rgba(255,215,64,.10) 0%, transparent 50%),
+    repeating-linear-gradient(45deg,
+      rgba(255,215,64,.05) 0px, rgba(255,215,64,.05) 1px,
+      transparent 1px, transparent 24px),
+    repeating-linear-gradient(-45deg,
+      rgba(255,215,64,.05) 0px, rgba(255,215,64,.05) 1px,
+      transparent 1px, transparent 24px);
+}
+.viz-events .ring {
+  position: absolute; right: -8%; bottom: -10%;
+  width: 50%; aspect-ratio: 1;
+  border: 1px solid rgba(255,215,64,.30);
+  border-radius: 50%;
+}
+.viz-events .ring::before {
+  content: ""; position: absolute; inset: 12%;
+  border: 1px solid rgba(255,215,64,.20);
+  border-radius: 50%;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: .55; }
+  48% { opacity: .55; }
+  50% { opacity: .15; }
+  52% { opacity: .55; }
+  84% { opacity: .55; }
+  86% { opacity: .25; }
+  88% { opacity: .55; }
+}
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(2.2); opacity: .4; }
+}
+
+/* "Bientôt" badge */
+.soon-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  background: var(--gd-action); color: var(--gd-cream);
+  animation: pulseBadge 2.6s ease-in-out infinite;
+}
+.soon-badge::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gd-cream);
+}
+@keyframes pulseBadge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(190,27,27,.5); }
+  50%      { box-shadow: 0 0 0 8px rgba(190,27,27,0); }
+}
+
+/* Photo-missing flag (visible on photos that should be there) */
+.photo-flag {
+  position: absolute; top: 12px; left: 12px;
+  z-index: 3;
+  font-family: var(--gd-font-mono);
+  font-size: 9px; letter-spacing: 1px;
+  color: rgba(255,215,64,.85);
+  background: rgba(12,8,0,.65);
+  border: 1px dashed rgba(255,215,64,.45);
+  padding: 3px 6px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@media (max-width: 980px) {
+  .hero-head { grid-template-columns: 1fr; gap: 30px; }
+  .bento {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 320px 220px 220px;
+  }
+  .card-escape { grid-column: 1 / span 2; grid-row: 1; }
+  .card-quiz   { grid-column: 1; grid-row: 2; }
+  .card-action { grid-column: 2; grid-row: 2; }
+  .card-events { grid-column: 1 / span 2; grid-row: 3; }
+}
+
+/* =============================================================
+   03. BANDEAU LOCALISATION
+   ============================================================= */
+.locate {
+  background: var(--gd-black);
+  padding: var(--section-pad-y) 0;
+  border-top: 1px solid var(--hairline);
+  position: relative; overflow: hidden;
+}
+.locate-bg {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: .35;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+}
+.locate-bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.55) saturate(1.1);
+  mix-blend-mode: screen;
+}
+.locate::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 60% 80% at 30% 50%, rgba(12,8,0,.6), transparent 70%);
+}
+.locate::after {
+  content: ""; position: absolute;
+  left: 50%; bottom: 0; width: 180vw; height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent 0%, var(--gd-orange) 50%, transparent 100%);
+  opacity: .55;
+}
+.locate-grid {
+  display: grid; grid-template-columns: 1.3fr 1fr;
+  gap: 80px; align-items: end;
+}
+.locate h2 { color: var(--gd-cream); }
+.locate h2 em {
+  font-style: italic; font-weight: 400;
+  color: var(--gd-orange);
+}
+.stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--hairline-strong);
+  margin-top: 40px;
+}
+.stat { padding: 28px 0 4px; border-right: 1px solid var(--hairline); }
+.stat:last-child { border-right: 0; }
+.stat-num {
+  font-family: var(--gd-font-display);
+  font-size: clamp(48px, 5.5vw, 84px);
+  font-weight: 900; line-height: 1;
+  letter-spacing: -2px;
+  color: var(--gd-cream);
+}
+.stat-num em {
+  font-style: normal; color: var(--gd-orange);
+  font-size: .55em; vertical-align: super;
+  letter-spacing: 0;
+}
+.stat-label {
+  font-family: var(--gd-font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+  margin-top: 10px;
+}
+
+@media (max-width: 980px) {
+  .locate-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* =============================================================
+   04. COMPARATEUR
+   ============================================================= */
+.compare {
+  padding: var(--section-pad-y) 0;
+  border-top: 1px solid var(--hairline);
+}
+.compare-head {
+  display: flex; justify-content: space-between; align-items: end;
+  gap: 40px; margin-bottom: 56px; flex-wrap: wrap;
+}
+.compare-head h2 { max-width: 14ch; }
+.compare-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.cmp {
+  background: var(--gd-card-bg);
+  border: 1px solid var(--hairline);
+  padding: 32px 28px 36px;
+  position: relative;
+  transition: all 280ms ease;
+  display: flex; flex-direction: column;
+}
+.cmp:hover {
+  border-color: var(--cmp-accent);
+  background: linear-gradient(180deg, var(--gd-card-bg) 0%, color-mix(in srgb, var(--cmp-accent) 12%, var(--gd-card-bg)) 100%);
+  transform: translateY(-3px);
+}
+.cmp-escape { --cmp-accent: var(--gd-escape); }
+.cmp-quiz   { --cmp-accent: var(--gd-quiz); }
+.cmp-events { --cmp-accent: var(--gd-events); }
+
+.cmp-num {
+  position: absolute; top: 16px; right: 24px;
+  font-family: var(--gd-font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(240,235,226,.25);
+}
+.cmp:hover .cmp-num { color: var(--cmp-accent); }
+.cmp-events:hover .cmp-num { color: var(--gd-events); }
+
+.cmp-eyebrow {
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+  margin-bottom: 18px;
+}
+.cmp-title {
+  font-family: var(--gd-font-display);
+  font-size: 32px; font-weight: 900;
+  letter-spacing: -1px; text-transform: uppercase;
+  color: var(--gd-cream);
+  line-height: .95;
+}
+.cmp-pitch {
+  font-style: italic; color: var(--gd-grey-light);
+  margin-top: 12px; font-size: 15px; line-height: 1.5;
+  max-width: 32ch;
+}
+.cmp-rows {
+  margin-top: 28px; padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.cmp-row { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+.cmp-row dt {
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gd-grey-medium);
+}
+.cmp-row dd {
+  font-family: var(--gd-font-body);
+  font-size: 14px; font-weight: 600;
+  color: var(--gd-cream);
+  text-align: right;
+}
+.cmp-cta {
+  margin-top: auto; padding-top: 26px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--gd-font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gd-cream);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+  align-self: flex-start;
+  transition: color 220ms ease;
+}
+.cmp:hover .cmp-cta { color: var(--cmp-accent); }
+.cmp-events:hover .cmp-cta { color: var(--gd-events); }
+.cmp-cta::after { content: "→"; }
+
+@media (max-width: 980px) {
+  .compare-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================================
+   05. AVIS
+   ============================================================= */
+.reviews {
+  padding: var(--section-pad-y) 0;
+  border-top: 1px solid var(--hairline);
+}
+.reviews-head {
+  display: flex; justify-content: space-between; align-items: end;
+  gap: 40px; margin-bottom: 56px; flex-wrap: wrap;
+}
+.reviews-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.review {
+  background: var(--gd-card-bg);
+  border: 1px solid var(--hairline);
+  padding: 32px 28px;
+  display: flex; flex-direction: column;
+  min-height: 260px;
+  transition: all 280ms ease;
+}
+.review:hover { border-color: var(--hairline-strong); background: var(--gd-card-bg-hover); }
+.review-stars {
+  color: var(--gd-orange);
+  letter-spacing: 4px; font-size: 16px;
+  margin-bottom: 18px;
+}
+.review-quote {
+  font-family: var(--gd-font-body);
+  font-size: 16px; line-height: 1.55;
+  color: var(--gd-cream);
+  font-style: italic;
+  flex: 1;
+}
+.review-quote::before { content: "« "; color: var(--gd-orange); }
+.review-quote::after  { content: " »"; color: var(--gd-orange); }
+.review-meta {
+  margin-top: 22px; padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.review-name {
+  font-family: var(--gd-font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gd-cream);
+}
+.review-date {
+  font-family: var(--gd-font-mono);
+  font-size: 11px; color: var(--gd-grey-medium);
+}
+
+@media (max-width: 900px) {
+  .reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================================
+   06. BANDEAU B2B
+   ============================================================= */
+.b2b {
+  position: relative;
+  padding: var(--section-pad-y) 0;
+  overflow: hidden;
+  border-top: 1px solid var(--hairline);
+}
+.b2b-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--gd-black);
+  overflow: hidden;
+}
+.b2b-bg img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.42) saturate(.85);
+  transform: scale(1.05);
+}
+.b2b-inner { position: relative; z-index: 1; }
+.b2b-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  gap: 80px; align-items: end;
+}
+.b2b h2 em {
+  font-style: italic; font-weight: 400; color: var(--gd-grey-light);
+}
+.tag-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 36px;
+}
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 10px 16px;
+  font-family: var(--gd-font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  background: rgba(240,235,226,.06);
+  border: 1px solid var(--hairline-strong);
+  color: var(--gd-cream);
+  transition: all 220ms ease;
+}
+.tag:hover {
+  background: rgba(240,235,226,.10);
+  border-color: var(--gd-cream);
+}
+.b2b-side { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.b2b-stats {
+  display: flex; gap: 32px; padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  margin-top: 32px; width: 100%;
+}
+.b2b-stat-num {
+  font-family: var(--gd-font-display);
+  font-size: 36px; font-weight: 900;
+  letter-spacing: -1px; line-height: 1;
+  color: var(--gd-cream);
+}
+.b2b-stat-label {
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+  margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+  .b2b-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* =============================================================
+   07. MAGAZINE
+   ============================================================= */
+.mag {
+  padding: var(--section-pad-y) 0;
+  border-top: 1px solid var(--hairline);
+}
+.mag-head {
+  display: flex; justify-content: space-between; align-items: end;
+  gap: 40px; margin-bottom: 56px; flex-wrap: wrap;
+}
+.mag-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.article {
+  background: var(--gd-card-bg);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: all 280ms ease;
+  cursor: pointer;
+}
+.article:hover { border-color: var(--hairline-strong); transform: translateY(-2px); }
+.article-viz {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--gd-black);
+}
+.article-viz > .viz {
+  position: absolute; inset: 0;
+  transition: transform 600ms cubic-bezier(.2,.6,.2,1);
+}
+.article:hover .article-viz > .viz { transform: scale(1.05); }
+.article-body {
+  padding: 24px 26px 28px;
+  display: flex; flex-direction: column; flex: 1;
+}
+.article-cat {
+  display: inline-flex; align-items: center;
+  padding: 4px 10px;
+  font-family: var(--gd-font-display);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gd-cream);
+  align-self: flex-start;
+  margin-bottom: 16px;
+}
+.article-cat.escape { background: var(--gd-escape); }
+.article-cat.quiz   { background: var(--gd-quiz); }
+.article-cat.action { background: var(--gd-action); }
+
+.article-title {
+  font-family: var(--gd-font-display);
+  font-size: 22px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: -.5px;
+  line-height: 1.05;
+  color: var(--gd-cream);
+}
+.article-excerpt {
+  font-size: 14px; line-height: 1.55;
+  color: var(--gd-grey-light);
+  margin-top: 12px;
+  flex: 1;
+}
+.article-meta {
+  margin-top: 22px;
+  font-family: var(--gd-font-mono);
+  font-size: 11px; color: var(--gd-grey-medium);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+  .mag-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================================
+   08. CTA FINAL
+   ============================================================= */
+.cta-final {
+  position: relative;
+  padding: clamp(120px, 15vw, 200px) 0;
+  background: linear-gradient(135deg, var(--gd-black) 60%, var(--gd-escape) 140%);
+  border-top: 1px solid var(--hairline);
+  overflow: hidden;
+  text-align: center;
+}
+.cta-final::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 100%, rgba(27,42,78,.45) 0%, transparent 70%);
+}
+.cta-final::after {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,
+      rgba(240,235,226,.02) 0px, rgba(240,235,226,.02) 1px,
+      transparent 1px, transparent 60px);
+}
+.cta-final-inner { position: relative; z-index: 1; }
+.cta-final h2 {
+  color: var(--gd-cream);
+  margin: 0 auto;
+  max-width: 16ch;
+}
+.cta-final h2 em {
+  font-style: italic; font-weight: 400; color: var(--gd-orange);
+}
+.cta-final p { margin: 24px auto 40px; max-width: 36ch; }
+.cta-final-btn {
+  padding: 22px 44px;
+  font-size: 14px; letter-spacing: 4px;
+}
+.cta-hours {
+  margin-top: 28px;
+  font-family: var(--gd-font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gd-grey-light);
+}
+.cta-hours .dot { color: var(--gd-orange); padding: 0 8px; }
+
+/* =============================================================
+   09. FOOTER
+   ============================================================= */
+.footer {
+  background: var(--gd-black);
+  border-top: 1px solid var(--hairline);
+  padding: 80px 0 0;
+}
+.footer-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  padding-bottom: 60px;
+}
+.footer-col h4 {
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gd-cream);
+  margin-bottom: 22px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a {
+  font-size: 14px; color: var(--gd-grey-light);
+  transition: color 200ms ease;
+}
+.footer-col a:hover { color: var(--gd-cream); }
+.footer-col p { font-size: 14px; color: var(--gd-grey-light); line-height: 1.65; }
+.footer-col .addr { color: var(--gd-cream); font-weight: 500; }
+
+.footer-bottom {
+  border-top: 1px solid var(--hairline);
+  padding: 28px 0;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+  font-family: var(--gd-font-mono);
+  font-size: 12px;
+  color: var(--gd-grey-medium);
+}
+.footer-bottom a { color: var(--gd-grey-medium); }
+.footer-bottom a:hover { color: var(--gd-cream); }
+.footer-bottom-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-logo {
+  font-family: var(--gd-font-display);
+  font-weight: 900; letter-spacing: -1px;
+  text-transform: uppercase; font-size: 22px; line-height: 1;
+  color: var(--gd-cream);
+  margin-bottom: 22px;
+  display: inline-block;
+}
+.footer-logo .door { font-weight: 300; }
+.footer-logo .num { color: var(--gd-orange); margin-left: 2px; font-size: 16px; }
+
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================================
+   REVEAL ANIMATIONS
+   ============================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms cubic-bezier(.2,.6,.2,1), transform 700ms cubic-bezier(.2,.6,.2,1);
+}
+.reveal.in {
+  opacity: 1; transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 80ms; }
+.reveal-d2 { transition-delay: 160ms; }
+.reveal-d3 { transition-delay: 240ms; }
+
+/* Ken burns hero */
+@keyframes kenburns {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+.viz-escape { animation: kenburns 18s ease-in-out infinite; transform-origin: center 60%; }
+
+/* =============================================================
+   BANNER (V3 NOTICE)
+   ============================================================= */
+.v3-banner {
+  background: var(--gd-orange);
+  color: var(--gd-black);
+  padding: 10px 0;
+  font-family: var(--gd-font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  text-align: center;
+}
+.v3-banner a {
+  text-decoration: underline; text-underline-offset: 3px;
+  margin-left: 12px;
+}
+</style>
+</head>
+<body>
+
+<!-- Mini banner V3.3 -->
+<div class="v3-banner">
+  V3.3 — DS GAMEDOOR·41 strict · Orange signal · Photos réelles
+  <a href="home-propositions-index.html">← Retour aux propositions</a>
+</div>
+
+<!-- =====================================================
+     01. STICKY NAV
+===================================================== -->
+<header class="nav" id="nav">
+  <div class="container container-wide">
+    <div class="nav-row">
+      <a href="#" class="nav-logo">
+        GAME<span class="door">DOOR</span><span class="num">·41</span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="#escape" class="nav-link">Escape</a>
+        <a href="#quiz" class="nav-link">Quiz</a>
+        <a href="#action" class="nav-link">Action</a>
+        <a href="#events" class="nav-link">Events</a>
+        <a href="#magazine" class="nav-link">Magazine</a>
+      </nav>
+      <a href="#reserver" class="btn btn-primary nav-cta">Réserver</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- =====================================================
+     02. HERO BENTO
+===================================================== -->
+<section class="hero">
+  <div class="container container-wide hero-inner">
+    <div class="hero-head">
+      <div class="reveal">
+        <div class="eyebrow"><span>La maison du jeu <span class="dot">·</span> Mondeville <span class="dot">·</span> 5 min de Caen</span></div>
+        <h1 class="h-display" style="margin-top:24px;">
+          Quatre univers,<br>
+          <span class="accent">un seul toit.</span>
+        </h1>
+        <div class="hero-tagline">
+          Escape <span class="sep">·</span> Quiz <span class="sep">·</span> Action <span class="sep">·</span> Events
+        </div>
+      </div>
+      <aside class="hero-side reveal reveal-d2">
+        <p class="lead italic">
+          1 500 m² dédiés au jeu, à cinq minutes de Caen centre.
+          Quatre portes&nbsp;: vous choisissez l'expérience, on s'occupe du reste.
+        </p>
+      </aside>
+    </div>
+
+    <!-- Bento -->
+    <div class="bento" id="bento">
+
+      <!-- Card Escape — Psychiatric (photo iconique) -->
+      <article class="card card-escape" data-card="escape" id="escape">
+        <div class="visual" aria-hidden="true" style="background: #0c0800;">
+          <img src="844abe87-432b-44ca-92da-c858d1bdfe6d" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;filter:brightness(.65) saturate(.95) contrast(1.05);">
+        </div>
+        <div class="num">01<span style="opacity:.5">/04</span></div>
+
+        <div class="meta">
+          <span class="brand-badge escape">Escape Game</span>
+        </div>
+        <div class="body" style="margin-top:auto;">
+          <h2 class="card-title">Garde à vue<br>Psychiatric<br><span style="opacity:.7">Bunker (bientôt)</span></h2>
+          <p class="card-sub">Trois salles immersives. 60 minutes pour sortir.</p>
+          <div class="card-bottom">
+            <div class="card-price">
+              dès 24€
+              <small>par joueur · de 2 à 6</small>
+            </div>
+            <span class="card-cta">Réserver</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card Quiz — Buzzers premier plan -->
+      <article class="card card-quiz" data-card="quiz" id="quiz">
+        <div class="visual" aria-hidden="true" style="background: #0c0800;">
+          <img src="26eeba8d-d68f-43a3-ba60-100a652734d5" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.78) saturate(1.05);">
+        </div>
+        <div class="num">02<span style="opacity:.5">/04</span></div>
+
+        <div class="meta">
+          <span class="brand-badge quiz">Quiz</span>
+        </div>
+        <div class="body" style="margin-top:auto;">
+          <h2 class="card-title">Buzz<br>Your Brain</h2>
+          <div class="card-bottom">
+            <div class="card-price">
+              dès 15€
+              <small>par candidat</small>
+            </div>
+            <span class="card-cta">Jouer</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card Action -->
+      <article class="card card-action" data-card="action" id="action">
+        <div class="visual viz viz-action" aria-hidden="true">
+          <div class="target"></div>
+          <div class="pulse"></div>
+        </div>
+        <div class="num">03<span style="opacity:.5">/04</span></div>
+
+        <div class="meta">
+          <span class="brand-badge action">Action</span>
+          <span class="soon-badge">Bientôt</span>
+        </div>
+        <div class="body" style="margin-top:auto;">
+          <h2 class="card-title">Action<br>Games</h2>
+          <p class="card-sub">Arcade · réflexes · adrénaline.</p>
+          <span class="card-cta" style="margin-top:14px;display:inline-block;">En savoir plus</span>
+        </div>
+      </article>
+
+      <!-- Card Events -->
+      <article class="card card-events" data-card="events" id="events">
+        <div class="visual viz viz-events" aria-hidden="true">
+          <div class="ring"></div>
+        </div>
+        <div class="num">04<span style="opacity:.5">/04</span></div>
+
+        <div class="meta">
+          <span class="brand-badge events">Events</span>
+        </div>
+        <div class="body" style="margin-top:auto;">
+          <h2 class="card-title" style="max-width:18ch;">Privatisez la maison.</h2>
+          <p class="card-sub">Séminaires · EVJF · EVG · Anniversaires · Team buildings.</p>
+          <div class="card-bottom">
+            <div class="card-price" style="font-size:16px;">
+              Sur devis
+              <small>jusqu'à <span class="ph">[CAPACITÉ]</span> personnes</small>
+            </div>
+            <span class="card-cta">Demander</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     03. BANDEAU LOCALISATION
+===================================================== -->
+<section class="locate">
+  <div class="locate-bg" aria-hidden="true">
+    <img src="c0242933-a008-4a2b-9a68-f8cdd397f18c" alt="">
+  </div>
+  <div class="container container-wide" style="position:relative; z-index:1;">
+    <div class="locate-grid">
+      <div class="reveal">
+        <div class="eyebrow"><span>À cinq minutes de Caen centre</span></div>
+        <h2 class="h-xl ds-underline" style="margin-top:24px;">
+          5 min de Caen.<br>
+          Quatre univers <em>immersifs.</em>
+        </h2>
+      </div>
+      <div class="reveal reveal-d1">
+        <p class="lead">
+          41 bis rue Pasteur, à Mondeville. Parking gratuit, accès direct depuis le périphérique.
+          Un lieu pensé comme une maison&nbsp;: vous entrez, vous choisissez votre porte.
+        </p>
+      </div>
+    </div>
+
+    <div class="stats reveal reveal-d2">
+      <div class="stat">
+        <div class="stat-num">1<span style="opacity:.55">&nbsp;</span>500<em>m²</em></div>
+        <div class="stat-label">Dédiés au jeu</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Univers sous un toit</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7<span style="opacity:.55">/</span>7</div>
+        <div class="stat-label">Ouvert · 10h30 → 23h</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     04. COMPARATEUR
+===================================================== -->
+<section class="compare">
+  <div class="container container-wide">
+    <div class="compare-head">
+      <div class="reveal">
+        <div class="eyebrow"><span>Choisissez votre expérience</span></div>
+        <h2 class="h-xl ds-underline" style="margin-top:24px;">Quatre portes.<br>Une maison du jeu.</h2>
+      </div>
+      <p class="lead reveal reveal-d1">
+        Selon le nombre de joueurs, l'humeur, le budget — chaque univers a sa logique propre.
+      </p>
+    </div>
+
+    <div class="compare-grid">
+
+      <article class="cmp cmp-escape reveal">
+        <span class="cmp-num">01 / 04</span>
+        <div class="cmp-eyebrow">Escape Game</div>
+        <h3 class="cmp-title">Vous &amp; vos<br>complices.</h3>
+        <p class="cmp-pitch">60 minutes pour sortir. Vous transpirez, vous riez, vous gagnez.</p>
+        <dl class="cmp-rows">
+          <div class="cmp-row"><dt>Joueurs</dt><dd>2 à 6</dd></div>
+          <div class="cmp-row"><dt>Durée</dt><dd>60 min</dd></div>
+          <div class="cmp-row"><dt>Ambiance</dt><dd>Immersif · cinéma</dd></div>
+          <div class="cmp-row"><dt>Tarif</dt><dd>dès 24€/joueur</dd></div>
+        </dl>
+        <a href="#" class="cmp-cta">Voir les salles</a>
+      </article>
+
+      <article class="cmp cmp-quiz reveal reveal-d1">
+        <span class="cmp-num">02 / 04</span>
+        <div class="cmp-eyebrow">Quiz Buzz Your Brain</div>
+        <h3 class="cmp-title">Le plateau,<br>vous dedans.</h3>
+        <p class="cmp-pitch">Buzzers, lumières, animateur. Le plus gros groupe gagne.</p>
+        <dl class="cmp-rows">
+          <div class="cmp-row"><dt>Candidats</dt><dd>4 à <span class="ph">[CAP]</span></dd></div>
+          <div class="cmp-row"><dt>Durée</dt><dd>~75 min</dd></div>
+          <div class="cmp-row"><dt>Ambiance</dt><dd>Showtime · social</dd></div>
+          <div class="cmp-row"><dt>Tarif</dt><dd>dès 15€/candidat</dd></div>
+        </dl>
+        <a href="#" class="cmp-cta">Réserver le plateau</a>
+      </article>
+
+      <article class="cmp cmp-events reveal reveal-d2">
+        <span class="cmp-num">04 / 04</span>
+        <div class="cmp-eyebrow">Events · Privatisation</div>
+        <h3 class="cmp-title">Toute la<br>maison<br>pour vous.</h3>
+        <p class="cmp-pitch">Séminaires, EVJF, anniversaires. On orchestre votre date.</p>
+        <dl class="cmp-rows">
+          <div class="cmp-row"><dt>Capacité</dt><dd>jusqu'à <span class="ph">[CAP_PRIV]</span></dd></div>
+          <div class="cmp-row"><dt>Formules</dt><dd>Sur mesure</dd></div>
+          <div class="cmp-row"><dt>Ambiance</dt><dd>Premium · privatif</dd></div>
+          <div class="cmp-row"><dt>Tarif</dt><dd>Sur devis</dd></div>
+        </dl>
+        <a href="#" class="cmp-cta">Demander un devis</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     05. AVIS GOOGLE
+===================================================== -->
+<section class="reviews">
+  <div class="container container-wide">
+    <div class="reviews-head">
+      <div class="reveal">
+        <div class="eyebrow"><span>Ils ont joué chez nous</span></div>
+        <h2 class="h-xl ds-underline" style="margin-top:24px;">La maison<br>en confiance.</h2>
+      </div>
+      <div class="reveal reveal-d1" style="text-align:right;">
+        <div style="font-family:var(--gd-font-display); font-size:48px; font-weight:900; color:var(--gd-orange); letter-spacing:-1px; line-height:1;">
+          ★ <span class="ph" style="font-size:.5em;">[NOTE]</span>
+        </div>
+        <div style="font-family:var(--gd-font-display); font-size:11px; letter-spacing:2.5px; color:var(--gd-grey-light); text-transform:uppercase; margin-top:8px;">
+          <span class="ph">[NB_AVIS]</span> avis Google
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <!-- AVIS À VENIR -->
+      <article class="review reveal">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote">
+          <span class="ph">[CITATION_AVIS_1]</span> — extraite des avis Google les plus parlants sur l'expérience cinéma de la salle Psychiatric.
+        </p>
+        <div class="review-meta">
+          <span class="review-name"><span class="ph">[Prénom L.]</span></span>
+          <span class="review-date"><span class="ph">[mois 2025]</span></span>
+        </div>
+      </article>
+      <!-- AVIS À VENIR -->
+      <article class="review reveal reveal-d1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote">
+          <span class="ph">[CITATION_AVIS_2]</span> — un avis qui parle de l'ambiance plateau de Buzz Your Brain et du rôle de l'animateur.
+        </p>
+        <div class="review-meta">
+          <span class="review-name"><span class="ph">[Prénom L.]</span></span>
+          <span class="review-date"><span class="ph">[mois 2025]</span></span>
+        </div>
+      </article>
+      <!-- AVIS À VENIR -->
+      <article class="review reveal reveal-d2">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote">
+          <span class="ph">[CITATION_AVIS_3]</span> — un retour B2B (séminaire ou EVJF) sur la coordination et le sens du détail.
+        </p>
+        <div class="review-meta">
+          <span class="review-name"><span class="ph">[Prénom L.]</span></span>
+          <span class="review-date"><span class="ph">[mois 2025]</span></span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     06. BANDEAU B2B
+===================================================== -->
+<section class="b2b" id="reserver">
+  <div class="b2b-bg" aria-hidden="true">
+    <img src="6d177fed-1442-4977-955a-99028d76c5a2" alt="">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(12,8,0,.92) 0%, rgba(12,8,0,.5) 60%, rgba(12,8,0,.75) 100%);"></div>
+  </div>
+  <div class="container container-wide b2b-inner">
+    <div class="b2b-grid">
+
+      <div class="reveal">
+        <div class="eyebrow"><span>Privatisez votre événement</span></div>
+        <h2 class="h-xl ds-underline" style="margin-top:24px;">
+          Du séminaire au EVJF,<br>
+          on transforme votre date <em>en mémoire.</em>
+        </h2>
+
+        <div class="tag-row">
+          <span class="tag">Séminaire</span>
+          <span class="tag">Team building</span>
+          <span class="tag">EVJF</span>
+          <span class="tag">EVG</span>
+          <span class="tag">Anniversaire</span>
+          <span class="tag">Privatisation totale</span>
+        </div>
+      </div>
+
+      <div class="b2b-side reveal reveal-d1">
+        <a href="#" class="btn btn-primary btn-arrow">Demander un devis</a>
+        <a href="#" class="btn btn-ghost btn-arrow">Découvrir les events</a>
+
+        <div class="b2b-stats">
+          <div>
+            <div class="b2b-stat-num"><span class="ph">[N]</span></div>
+            <div class="b2b-stat-label">Événements / an</div>
+          </div>
+          <div>
+            <div class="b2b-stat-num"><span class="ph">[CAP]</span></div>
+            <div class="b2b-stat-label">Personnes max</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     07. MAGAZINE
+===================================================== -->
+<section class="mag" id="magazine">
+  <div class="container container-wide">
+    <div class="mag-head">
+      <div class="reveal">
+        <div class="eyebrow"><span>Le magazine</span></div>
+        <h2 class="h-xl ds-underline" style="margin-top:24px;">Coulisses,<br>récits, conseils.</h2>
+      </div>
+      <a href="#" class="btn btn-ghost btn-arrow reveal reveal-d1">Tout le magazine</a>
+    </div>
+
+    <div class="mag-grid">
+
+      <article class="article reveal">
+        <div class="article-viz">
+          <div class="viz" aria-hidden="true" style="background: #0c0800;">
+            <img src="6d114990-c639-46ce-bd9e-af389272a06e" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(1.05);">
+          </div>
+        </div>
+        <div class="article-body">
+          <span class="article-cat quiz">Quiz</span>
+          <h3 class="article-title"><span class="ph">[Titre article quiz]</span></h3>
+          <p class="article-excerpt">Comment l'animateur du plateau Buzz Your Brain transforme un groupe de collègues en équipe soudée.</p>
+          <div class="article-meta">5 min · <span class="ph">[date]</span></div>
+        </div>
+      </article>
+
+      <article class="article reveal reveal-d1">
+        <div class="article-viz">
+          <div class="viz" aria-hidden="true" style="background: #0c0800;">
+            <img src="6e03ae80-4d1c-4357-b34a-7382e63dd967" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.7) saturate(.95);">
+          </div>
+        </div>
+        <div class="article-body">
+          <span class="article-cat escape">Escape</span>
+          <h3 class="article-title"><span class="ph">[Titre article escape]</span></h3>
+          <p class="article-excerpt">Garde à Vue, dans les coulisses du scénario&nbsp;: comment on construit 60 minutes qui marquent.</p>
+          <div class="article-meta">7 min · <span class="ph">[date]</span></div>
+        </div>
+      </article>
+
+      <article class="article reveal reveal-d2">
+        <div class="article-viz">
+          <div class="viz" aria-hidden="true" style="background: linear-gradient(135deg, #1a0d2e 0%, #0c0800 100%);">
+            <img src="edfbc079-0718-4791-bde0-36d6ead8e492" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:8%;filter:invert(1) brightness(.95);mix-blend-mode:screen;">
+          </div>
+        </div>
+        <div class="article-body">
+          <span class="article-cat escape">Psychiatric</span>
+          <h3 class="article-title"><span class="ph">[Titre article psychiatric]</span></h3>
+          <p class="article-excerpt">Pourquoi cette salle dérange — et ce qu'elle dit du jeu d'évasion en 2026.</p>
+          <div class="article-meta">9 min · <span class="ph">[date]</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     08. CTA FINAL
+===================================================== -->
+<section class="cta-final">
+  <div class="container cta-final-inner">
+    <div class="reveal">
+      <div class="eyebrow no-rules" style="justify-content:center; display:flex;"><span>Réservez votre première heure</span></div>
+      <h2 class="h-display" style="margin-top:32px;">
+        Quatre portes<br>
+        <em>vous attendent.</em>
+      </h2>
+      <p class="lead" style="text-align:center;">
+        Réservez votre créneau en ligne, payez sur place. On s'occupe du reste.
+      </p>
+      <div style="margin-top:8px;">
+        <a href="#" class="btn btn-primary cta-final-btn btn-arrow">Réserver maintenant</a>
+      </div>
+      <div class="cta-hours">
+        Ouvert 7j/7 <span class="dot">·</span> Lun → Sam 10h30–23h <span class="dot">·</span> Dim 10h30–21h
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- =====================================================
+     09. FOOTER
+===================================================== -->
+<footer class="footer">
+  <div class="container container-wide">
+    <div class="footer-grid">
+
+      <div class="footer-col">
+        <a href="#" class="footer-logo">GAME<span class="door">DOOR</span><span class="num">·41</span></a>
+        <p>1 500 m² dédiés au jeu, à cinq minutes de Caen centre.</p>
+        <p class="addr" style="margin-top:14px;">41 bis rue Pasteur<br>14120 Mondeville</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Univers</h4>
+        <ul>
+          <li><a href="#">Escape Game</a></li>
+          <li><a href="#">Quiz · Buzz Your Brain</a></li>
+          <li><a href="#">Action Games</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Magazine</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Events</h4>
+        <ul>
+          <li><a href="#">Entreprises</a></li>
+          <li><a href="#">EVJF</a></li>
+          <li><a href="#">EVG</a></li>
+          <li><a href="#">Anniversaires</a></li>
+          <li><a href="#">Privatisation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Infos</h4>
+        <ul>
+          <li><a href="#">Accès &amp; parking</a></li>
+          <li><a href="#">Tarifs</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Accessibilité</a></li>
+          <li><a href="#">Avis Google</a></li>
+        </ul>
+        <h4 style="margin-top:32px;">Contact</h4>
+        <ul>
+          <li><a href="tel:#"><span class="ph">[TEL_PRINCIPAL]</span></a></li>
+          <li><a href="mailto:#"><span class="ph">[EMAIL_CONTACT]</span></a></li>
+          <li><a href="#"><span class="ph">[WhatsApp]</span></a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 SARL La Boehme · GAMEDOOR·41</span>
+      <div class="footer-bottom-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   Bento hover — dim-others / focus
+   ============================================================ */
+(function () {
+  var bento = document.getElementById('bento');
+  if (!bento) return;
+  var cards = bento.querySelectorAll('.card');
+  cards.forEach(function (c) {
+    c.addEventListener('mouseenter', function () {
+      bento.classList.add('is-hovering');
+      cards.forEach(function (x) { x.classList.remove('is-focus'); });
+      c.classList.add('is-focus');
+    });
+    c.addEventListener('mouseleave', function () {
+      bento.classList.remove('is-hovering');
+      c.classList.remove('is-focus');
+    });
+  });
+})();
+
+/* ============================================================
+   Reveal-on-scroll
+   ============================================================ */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (e) { e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function (e) { io.observe(e); });
+})();
+
+/* ============================================================
+   Smooth scroll for in-page anchors
+   ============================================================ */
+(function () {
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var t = document.querySelector(id);
+      if (!t) return;
+      e.preventDefault();
+      window.scrollTo({ top: t.offsetTop - 70, behavior: 'smooth' });
+    });
+  });
+})();
+
+/* ============================================================
+   Nav background intensify on scroll
+   ============================================================ */
+(function () {
+  var nav = document.getElementById('nav');
+  function upd() {
+    if (window.scrollY > 40) nav.style.background = 'rgba(12,8,0,.92)';
+    else nav.style.background = 'rgba(12,8,0,.72)';
+  }
+  window.addEventListener('scroll', upd, { passive: true });
+  upd();
+})();
+</script>
+
+
+
+</body></html>
