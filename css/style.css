@@ -91,7 +91,7 @@ p[style*="text-align: center"],
 .kicker {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--orange);
@@ -194,7 +194,7 @@ p[style*="text-align: center"],
 .nav-links a {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--grey-light);
@@ -218,7 +218,7 @@ p[style*="text-align: center"],
 .nav-cta {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 10px 24px;
@@ -424,7 +424,7 @@ body.menu-open { overflow: hidden; }
   display: inline-block;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   padding: 4px 12px;
@@ -436,7 +436,7 @@ body.menu-open { overflow: hidden; }
 .badge-soon { background: var(--orange); color: white; }
 .exp-card h3 { margin-bottom: 6px; }
 .exp-card p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--grey-light);
   line-height: 1.4;
 }
@@ -510,7 +510,7 @@ body.menu-open { overflow: hidden; }
   flex-wrap: wrap;
 }
 .room-card-meta span {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--grey);
   display: flex;
   align-items: center;
@@ -518,7 +518,7 @@ body.menu-open { overflow: hidden; }
 }
 .room-card-meta .icon { font-size: 1rem; }
 .room-card-body p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--grey-light);
   margin-bottom: 20px;
   line-height: 1.5;
@@ -536,7 +536,7 @@ body.menu-open { overflow: hidden; }
 }
 .room-price small {
   font-weight: 400;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--grey);
 }
 
@@ -583,7 +583,7 @@ body.menu-open { overflow: hidden; }
   color: var(--white);
 }
 .info-item p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--grey);
   margin: 0 auto;
 }
@@ -610,7 +610,7 @@ body.menu-open { overflow: hidden; }
   line-height: 1;
 }
 .proof-stat .label {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--grey);
   margin-top: 4px;
 }
@@ -636,11 +636,11 @@ body.menu-open { overflow: hidden; }
 .devis-progress-step .step-num {
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-weight: 700; font-size: 0.85rem;
+  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
   background: var(--dark-card); color: var(--grey); border: 2px solid var(--dark-border);
   transition: var(--transition);
 }
-.devis-progress-step .step-label { font-size: 0.7rem; color: var(--grey); }
+.devis-progress-step .step-label { font-size: 1rem; color: var(--grey); }
 .devis-progress-step.active .step-num { background: var(--orange); color: white; border-color: var(--orange); }
 .devis-progress-step.active .step-label { color: var(--orange); }
 .devis-progress-step.done .step-num { background: #22c55e; color: white; border-color: #22c55e; }
@@ -652,9 +652,9 @@ body.menu-open { overflow: hidden; }
 .devis-step-title { font-size: 1.3rem; margin-bottom: 24px; text-align: center; }
 
 .devis-field { margin-bottom: 20px; }
-.devis-label { display: block; font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--grey-light); margin-bottom: 8px; border: none; padding: 0; }
+.devis-label { display: block; font-family: var(--font-display); font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--grey-light); margin-bottom: 8px; border: none; padding: 0; }
 .devis-label .required { color: var(--orange); }
-.devis-label .optional { font-weight: 400; text-transform: none; font-size: 0.75rem; color: var(--grey); }
+.devis-label .optional { font-weight: 400; text-transform: none; font-size: 1rem; color: var(--grey); }
 
 .devis-input {
   width: 100%; padding: 12px 16px;
@@ -682,7 +682,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 }
 .devis-counter-btn:hover { background: var(--orange); }
 
-.devis-hint { font-size: 0.8rem; color: var(--grey); text-align: center; margin-top: 6px; }
+.devis-hint { font-size: 1rem; color: var(--grey); text-align: center; margin-top: 6px; }
 
 /* Card selection (radio/checkbox) */
 .devis-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -697,14 +697,14 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 }
 .devis-card input:checked + .devis-card-inner { border-color: var(--orange); background: rgba(245,130,32,0.1); }
 .devis-card:hover .devis-card-inner { border-color: var(--orange); }
-.devis-card-title { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--white); margin-bottom: 4px; }
-.devis-card-desc { font-size: 0.7rem; color: var(--grey); line-height: 1.3; }
+.devis-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: 4px; }
+.devis-card-desc { font-size: 1rem; color: var(--grey); line-height: 1.3; }
 
 .devis-card-check { display: block; }
 .devis-card-check .devis-card-inner {
   flex-direction: row; gap: 12px; padding: 14px 16px; text-align: left; align-items: flex-start;
 }
-.devis-card-check .devis-card-title { font-size: 0.9rem; }
+.devis-card-check .devis-card-title { font-size: 1rem; }
 
 /* Estimate */
 .devis-estimate {
@@ -712,22 +712,22 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   background: rgba(245,130,32,0.08); border: 1px solid rgba(245,130,32,0.2);
   border-radius: var(--radius); margin-top: 16px;
 }
-.devis-estimate-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--grey); margin-bottom: 4px; }
+.devis-estimate-label { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--grey); margin-bottom: 4px; }
 .devis-estimate-price { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--orange); }
 
 /* Recap */
 .devis-recap { margin-bottom: 20px; }
-.devis-recap-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.devis-recap-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
 .devis-recap-table td { padding: 8px 0; border-bottom: 1px solid var(--dark-border); }
 .devis-recap-table td:first-child { color: var(--grey); width: 40%; }
 .devis-recap-table td:last-child { color: var(--white); font-weight: 500; }
 
 .devis-price-summary { background: var(--dark-card); border-radius: var(--radius); padding: 16px; margin-top: 16px; }
-.devis-price-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem; color: var(--grey-light); }
+.devis-price-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 1rem; color: var(--grey-light); }
 .devis-price-total { border-top: 2px solid var(--dark-border); padding-top: 10px; margin-top: 4px; }
 .devis-price-total span:last-child { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--orange); }
-.devis-price-pp span:last-child { color: #22c55e; font-size: 0.85rem; }
-.devis-price-note { font-size: 0.7rem; color: var(--grey); margin-top: 10px; font-style: italic; }
+.devis-price-pp span:last-child { color: #22c55e; font-size: 1rem; }
+.devis-price-note { font-size: 1rem; color: var(--grey); margin-top: 10px; font-style: italic; }
 
 /* Navigation */
 .devis-nav { display: flex; justify-content: space-between; margin-top: 24px; gap: 12px; }
@@ -735,10 +735,10 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .devis-nav .btn[hidden] { display: none; }
 
 /* Errors */
-.devis-error { color: #ef4444; font-size: 0.85rem; margin-top: 8px; padding: 8px 12px; background: rgba(239,68,68,0.1); border-radius: var(--radius); }
+.devis-error { color: #ef4444; font-size: 1rem; margin-top: 8px; padding: 8px 12px; background: rgba(239,68,68,0.1); border-radius: var(--radius); }
 
 /* Reassurance */
-.devis-reassurance { text-align: center; font-size: 0.85rem; color: var(--grey-light); padding: 12px; background: rgba(34,197,94,0.08); border-radius: var(--radius); margin-top: 8px; }
+.devis-reassurance { text-align: center; font-size: 1rem; color: var(--grey-light); padding: 12px; background: rgba(34,197,94,0.08); border-radius: var(--radius); margin-top: 8px; }
 
 /* Confirmation */
 .devis-confirmation { text-align: center; padding: 40px 0; }
@@ -749,7 +749,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   font-size: 2rem; font-weight: 700;
 }
 .devis-confirmation h2 { font-size: 1.5rem; margin-bottom: 8px; }
-.devis-ref { color: var(--orange); font-size: 0.9rem; margin-bottom: 16px; }
+.devis-ref { color: var(--orange); font-size: 1rem; margin-bottom: 16px; }
 
 @media (max-width: 480px) {
   .devis-cards { grid-template-columns: 1fr; }
@@ -772,17 +772,17 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   margin-bottom: 40px;
 }
 .footer-brand .nav-logo { margin-bottom: 12px; }
-.footer-brand p { color: var(--grey); font-size: 0.9rem; max-width: 35ch; }
+.footer-brand p { color: var(--grey); font-size: 1rem; max-width: 35ch; }
 .footer-col h4 {
   margin-bottom: 16px;
   color: var(--orange);
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 0.15em;
 }
 .footer-col a {
   display: block;
   color: var(--grey);
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 4px 0;
   transition: var(--transition);
 }
@@ -797,7 +797,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   gap: 16px;
 }
 .footer-bottom p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--grey);
 }
 
@@ -811,7 +811,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   .proof-strip { padding: 24px 0; }
   .proof-stats { gap: 20px; }
   .proof-stat .number { font-size: clamp(1.5rem, 3vw, 2rem); }
-  .proof-stat .label { font-size: 0.75rem; }
+  .proof-stat .label { font-size: 1rem; }
   .exp-grid { grid-template-columns: 1fr; }
   .proof-stats { gap: 32px; }
   .info-bar { grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -843,7 +843,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   flex: 1;
   justify-content: center;
   padding: 12px 16px;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 @media (max-width: 768px) {
   .sticky-cta { display: block; }
@@ -862,7 +862,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .migration-banner p {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--orange);
@@ -874,7 +874,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   color: var(--grey-light);
 }
 @media (max-width: 768px) {
-  .migration-banner p { font-size: 0.7rem; letter-spacing: 0.03em; }
+  .migration-banner p { font-size: 1rem; letter-spacing: 0.03em; }
   .migration-banner span { display: block; margin-top: 4px; }
 }
 
@@ -884,7 +884,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   align-items: center;
   gap: 6px;
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--grey);
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--dark-border);
@@ -946,7 +946,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--grey);
   white-space: nowrap;
   overflow: hidden;
@@ -956,7 +956,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .breadcrumb a:hover { color: var(--orange); }
 .breadcrumb .sep { color: var(--grey); }
 @media (max-width: 480px) {
-  .breadcrumb { font-size: 0.78rem; gap: 5px; }
+  .breadcrumb { font-size: 1rem; gap: 5px; }
 }
 
 /* --- Gallery Grid --- */
@@ -1010,7 +1010,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   color: white;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 1rem;
   letter-spacing: 0.15em;
   padding: 4px 16px;
   border-radius: 20px;
@@ -1026,7 +1026,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .price-amount small { font-size: 1rem; font-weight: 400; color: var(--grey); }
 .price-details {
   color: var(--grey-light);
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin-bottom: 24px;
 }
 .price-details li {
@@ -1064,7 +1064,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .trust-logo-item span {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--grey);
@@ -1077,18 +1077,18 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .trust-text-list {
   text-align: center;
   color: var(--grey);
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin-top: 24px;
   line-height: 1.8;
 }
 .trust-text-list .trust-names {
   color: var(--grey-light);
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 .trust-disclaimer {
   text-align: center;
   color: var(--grey);
-  font-size: 0.75rem;
+  font-size: 1rem;
   margin-top: 12px;
   font-style: italic;
   max-width: 720px;
@@ -1112,7 +1112,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .trust-cat-label {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 1rem;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--orange);
@@ -1161,7 +1161,7 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
     min-height: 56px;
   }
   .trust-logo-item span {
-    font-size: 0.7rem;
+    font-size: 1rem;
   }
 }
 @media (max-width: 480px) {
@@ -1265,7 +1265,7 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   border-left: 4px solid var(--orange);
   border-radius: 12px;
   color: var(--grey-light);
-  font-size: 0.92rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .access-notice .access-notice-icon {
@@ -1281,13 +1281,13 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 1rem;
   display: block;
   margin-bottom: 4px;
 }
 .access-notice.compact {
   padding: 12px 16px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   margin: 16px 0;
 }
 .access-notice.compact .access-notice-icon {
@@ -1297,6 +1297,6 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 @media (max-width: 600px) {
   .access-notice {
     padding: 14px 16px;
-    font-size: 0.88rem;
+    font-size: 1rem;
   }
 }

@@ -323,7 +323,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Eyebrow ---------- */
 .eyebrow {
   font-family: var(--gd-font-display);
-  font-size: 13px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 4px; text-transform: uppercase;
   color: var(--gd-orange);
   display: inline-flex; align-items: center; gap: 14px;
@@ -360,7 +360,7 @@ img { display: block; max-width: 100%; }
 .trust-item.trust-rating:hover { opacity: .82; }
 .trust-stars {
   color: var(--gd-orange);
-  font-size: 14px; letter-spacing: 1px; line-height: 1;
+  font-size: 16px; letter-spacing: 1px; line-height: 1;
 }
 .trust-num {
   font-weight: 900; font-size: 22px; line-height: 1;
@@ -374,20 +374,20 @@ img { display: block; max-width: 100%; }
   margin-left: 1px;
 }
 .trust-item strong {
-  font-weight: 800; font-size: 13px; letter-spacing: 2px;
+  font-weight: 800; font-size: 16px; letter-spacing: 2px;
   color: var(--gd-cream);
   display: block; line-height: 1.05;
 }
 .trust-item small {
   font-family: var(--gd-font-body);
-  font-size: 11px; font-weight: 500;
+  font-size: 16px; font-weight: 500;
   letter-spacing: .5px; text-transform: none;
   color: var(--gd-grey-light);
   display: block; margin-top: 2px;
   line-height: 1.2;
 }
 .trust-item .trust-label {
-  font-size: 11px; font-weight: 500;
+  font-size: 16px; font-weight: 500;
   letter-spacing: 1.5px;
   color: var(--gd-grey-light);
 }
@@ -445,7 +445,7 @@ img { display: block; max-width: 100%; }
   display: inline-flex; align-items: center; gap: 10px;
   padding: 18px 30px;
   font-family: var(--gd-font-display);
-  font-size: 15px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 2px; text-transform: uppercase;
   border: 1px solid transparent;
   transition: all 220ms ease;
@@ -734,7 +734,7 @@ img { display: block; max-width: 100%; }
 }
 .hero-subtitle {
   font-family: var(--gd-font-display);
-  font-size: clamp(14px, 1.4vw, 19px);
+  font-size: clamp(16px, 1.4vw,19px);
   font-weight: 600;
   letter-spacing: 3.5px; text-transform: uppercase;
   color: var(--gd-cream);
@@ -840,8 +840,8 @@ a.hero-tripadvisor:hover {
 }
 @media (max-width: 480px) {
   .hero-tripadvisor { padding: 10px 14px; }
-  .hero-tripadvisor-text strong { font-size: 12px; letter-spacing: 1.5px; }
-  .hero-tripadvisor-text small { font-size: 10.5px; }
+  .hero-tripadvisor-text strong { font-size: 16px; letter-spacing: 1.5px; }
+  .hero-tripadvisor-text small { font-size: 16px; }
 }
 .hero-actions {
   display: flex; justify-content: center; gap: 14px;
@@ -1005,7 +1005,7 @@ a.hero-tripadvisor:hover {
 }
 .hero-tagline {
   font-family: var(--gd-font-display);
-  font-size: 14px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 6px; text-transform: uppercase;
   color: var(--gd-grey-light);
   margin-top: 22px;
@@ -1292,7 +1292,7 @@ a.hero-tripadvisor:hover {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 6px 12px;
   font-family: var(--gd-font-display);
-  font-size: 11px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 2.5px; text-transform: uppercase;
   background: var(--gd-action); color: var(--gd-cream);
   animation: pulseBadge 2.6s ease-in-out infinite;
@@ -1311,7 +1311,7 @@ a.hero-tripadvisor:hover {
   position: absolute; top: 12px; left: 12px;
   z-index: 3;
   font-family: var(--gd-font-mono);
-  font-size: 9px; letter-spacing: 1px;
+  font-size: 16px; letter-spacing: 1px;
   color: rgba(255,215,64,.85);
   background: rgba(12,8,0,.65);
   border: 1px dashed rgba(255,215,64,.45);
@@ -1394,7 +1394,7 @@ a.hero-tripadvisor:hover {
 }
 .stat-label {
   font-family: var(--gd-font-display);
-  font-size: 12px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 3px; text-transform: uppercase;
   color: var(--gd-grey-light);
   margin-top: 10px;
@@ -1440,7 +1440,7 @@ a.hero-tripadvisor:hover {
 .cmp-num {
   position: absolute; top: 16px; right: 24px;
   font-family: var(--gd-font-display);
-  font-size: 13px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 2px;
   color: rgba(240,235,226,.25);
 }
@@ -1449,7 +1449,7 @@ a.hero-tripadvisor:hover {
 
 .cmp-eyebrow {
   font-family: var(--gd-font-display);
-  font-size: 11px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 2.5px; text-transform: uppercase;
   color: var(--gd-grey-light);
   margin-bottom: 18px;
@@ -1463,7 +1463,7 @@ a.hero-tripadvisor:hover {
 }
 .cmp-pitch {
   font-style: italic; color: var(--gd-grey-light);
-  margin-top: 12px; font-size: 15px; line-height: 1.5;
+  margin-top: 12px; font-size: 16px; line-height: 1.5;
   max-width: 32ch;
 }
 .cmp-rows {
@@ -1474,13 +1474,13 @@ a.hero-tripadvisor:hover {
 .cmp-row { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
 .cmp-row dt {
   font-family: var(--gd-font-display);
-  font-size: 11px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--gd-grey-medium);
 }
 .cmp-row dd {
   font-family: var(--gd-font-body);
-  font-size: 14px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   color: var(--gd-cream);
   text-align: right;
 }
@@ -1488,7 +1488,7 @@ a.hero-tripadvisor:hover {
   margin-top: auto; padding-top: 26px;
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--gd-font-display);
-  font-size: 12px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 2.5px; text-transform: uppercase;
   color: var(--gd-cream);
   border-bottom: 1px solid currentColor;
@@ -1549,13 +1549,13 @@ a.hero-tripadvisor:hover {
 }
 .review-name {
   font-family: var(--gd-font-display);
-  font-size: 13px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--gd-cream);
 }
 .review-date {
   font-family: var(--gd-font-mono);
-  font-size: 11px; color: var(--gd-grey-medium);
+  font-size: 16px; color: var(--gd-grey-medium);
 }
 
 @media (max-width: 900px) {
@@ -1623,7 +1623,7 @@ a.hero-tripadvisor:hover {
 }
 .b2b-stat-label {
   font-family: var(--gd-font-display);
-  font-size: 11px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--gd-grey-light);
   margin-top: 6px;
@@ -1676,7 +1676,7 @@ a.hero-tripadvisor:hover {
   display: inline-flex; align-items: center;
   padding: 4px 10px;
   font-family: var(--gd-font-display);
-  font-size: 10px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 2px; text-transform: uppercase;
   color: var(--gd-cream);
   align-self: flex-start;
@@ -1694,7 +1694,7 @@ a.hero-tripadvisor:hover {
   color: var(--gd-cream);
 }
 .article-excerpt {
-  font-size: 14px; line-height: 1.55;
+  font-size: 16px; line-height: 1.55;
   color: var(--gd-grey-light);
   margin-top: 12px;
   flex: 1;
@@ -1702,7 +1702,7 @@ a.hero-tripadvisor:hover {
 .article-meta {
   margin-top: 22px;
   font-family: var(--gd-font-mono);
-  font-size: 11px; color: var(--gd-grey-medium);
+  font-size: 16px; color: var(--gd-grey-medium);
   letter-spacing: 1px;
 }
 
@@ -1745,12 +1745,12 @@ a.hero-tripadvisor:hover {
 .cta-final p { margin: 24px auto 40px; max-width: 36ch; }
 .cta-final-btn {
   padding: 22px 44px;
-  font-size: 14px; letter-spacing: 4px;
+  font-size: 16px; letter-spacing: 4px;
 }
 .cta-hours {
   margin-top: 28px;
   font-family: var(--gd-font-display);
-  font-size: 12px; font-weight: 600;
+  font-size: 16px; font-weight: 600;
   letter-spacing: 3px; text-transform: uppercase;
   color: var(--gd-grey-light);
 }
@@ -1771,18 +1771,18 @@ a.hero-tripadvisor:hover {
 }
 .footer-col h4 {
   font-family: var(--gd-font-display);
-  font-size: 11px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   letter-spacing: 3px; text-transform: uppercase;
   color: var(--gd-cream);
   margin-bottom: 22px;
 }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .footer-col a {
-  font-size: 14px; color: var(--gd-grey-light);
+  font-size: 16px; color: var(--gd-grey-light);
   transition: color 200ms ease;
 }
 .footer-col a:hover { color: var(--gd-cream); }
-.footer-col p { font-size: 14px; color: var(--gd-grey-light); line-height: 1.65; }
+.footer-col p { font-size: 16px; color: var(--gd-grey-light); line-height: 1.65; }
 .footer-col .addr { color: var(--gd-cream); font-weight: 500; }
 
 .footer-bottom {
@@ -1791,7 +1791,7 @@ a.hero-tripadvisor:hover {
   display: flex; justify-content: space-between; align-items: center;
   gap: 16px; flex-wrap: wrap;
   font-family: var(--gd-font-mono);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--gd-grey-medium);
 }
 .footer-bottom a { color: var(--gd-grey-medium); }
