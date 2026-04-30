@@ -1022,6 +1022,19 @@ a.hero-tripadvisor:hover {
   border-bottom: 1px solid var(--gd-cream);
   padding-bottom: 3px;
 }
+/* Overlay anchor : rend toute la card cliquable (stretched link pattern) */
+.card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.card:hover .card-cta {
+  border-bottom-color: var(--gd-orange);
+  color: var(--gd-orange);
+}
 
 /* Card placement */
 .card-escape { grid-column: 1; grid-row: 1 / span 2; --card-accent: var(--gd-escape); }
