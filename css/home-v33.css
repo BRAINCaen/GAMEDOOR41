@@ -1927,3 +1927,182 @@ a.hero-tripadvisor:hover {
   color: var(--gd-grey-light);
 }
 
+/* =============================================================
+   CTA FINAL — animation premium "Sois le prochain à pousser la porte"
+   ============================================================= */
+.cta-final-h2 {
+  perspective: 1000px;
+  line-height: 1.05;
+  text-align: center;
+}
+.cta-final-h2 .cta-word {
+  display: inline-block;
+  margin-right: 0.18em;
+  opacity: 0;
+  transform: translateY(80px) rotateX(-30deg);
+  filter: blur(12px);
+}
+.cta-final-h2.is-revealed .cta-word {
+  animation: cta-word-rise 1s cubic-bezier(.16,.84,.3,1) forwards;
+  animation-delay: calc(var(--d) * 110ms);
+}
+@keyframes cta-word-rise {
+  0%   { opacity: 0; transform: translateY(80px) rotateX(-30deg); filter: blur(12px); }
+  60%  { opacity: 1; transform: translateY(-6px) rotateX(4deg); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0); filter: blur(0); }
+}
+
+/* "LA PORTE" — mot-vedette avec glow + scan */
+.cta-door-wrap {
+  display: inline-block;
+  position: relative;
+}
+.cta-door {
+  color: var(--gd-orange);
+  position: relative;
+  cursor: default;
+  transition: transform .35s cubic-bezier(.16,.84,.3,1), letter-spacing .35s ease;
+  text-shadow:
+    0 0 30px rgba(224,112,32,.55),
+    0 0 60px rgba(224,112,32,.30),
+    0 0 120px rgba(224,112,32,.15);
+}
+.cta-final-h2.is-revealed .cta-door {
+  animation:
+    cta-word-rise 1s cubic-bezier(.16,.84,.3,1) calc(5 * 110ms) forwards,
+    cta-door-pulse 2.6s ease-in-out calc(5 * 110ms + 1200ms) infinite;
+}
+@keyframes cta-door-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 30px rgba(224,112,32,.55),
+      0 0 60px rgba(224,112,32,.30),
+      0 0 120px rgba(224,112,32,.15);
+  }
+  50% {
+    text-shadow:
+      0 0 50px rgba(224,112,32,.85),
+      0 0 90px rgba(224,112,32,.55),
+      0 0 180px rgba(224,112,32,.30);
+  }
+}
+.cta-door:hover {
+  letter-spacing: 0.04em;
+  transform: scale(1.02);
+}
+
+/* Scan line traversant le mot toutes les ~6s */
+.cta-door-scan {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.cta-door-scan::before {
+  content: "";
+  position: absolute;
+  top: -10%; bottom: -10%;
+  width: 30%;
+  left: -40%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,235,200,.55) 50%, transparent 100%);
+  filter: blur(2px);
+  mix-blend-mode: screen;
+}
+.cta-final-h2.is-revealed .cta-door-scan::before {
+  animation: cta-scan 6s ease-in-out 2.5s infinite;
+}
+@keyframes cta-scan {
+  0%   { left: -40%; opacity: 0; }
+  10%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { left: 110%; opacity: 0; }
+}
+
+/* Halo orange pulsant derrière la porte */
+.cta-door-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 130%; height: 160%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(224,112,32,.30) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  filter: blur(20px);
+}
+.cta-final-h2.is-revealed .cta-door-glow {
+  animation: cta-door-glow 2.6s ease-in-out calc(5 * 110ms + 1200ms) infinite;
+}
+@keyframes cta-door-glow {
+  0%, 100% { opacity: .45; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: .95; transform: translate(-50%, -50%) scale(1.18); }
+}
+
+/* Lead + bouton fade-in après les mots du H2 */
+.cta-final .cta-lead,
+.cta-final .cta-button-wrap {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 800ms ease, transform 800ms ease;
+}
+.cta-final .reveal.is-revealed .cta-lead {
+  opacity: 1; transform: translateY(0);
+  transition-delay: 1500ms;
+}
+.cta-final .reveal.is-revealed .cta-button-wrap {
+  opacity: 1; transform: translateY(0);
+  transition-delay: 1700ms;
+}
+
+/* Bouton CTA avec aura orange pulsante */
+.cta-final-btn {
+  position: relative;
+  font-size: 18px !important;
+  letter-spacing: 1.5px;
+  padding: 22px 44px !important;
+  overflow: visible;
+  isolation: isolate;
+}
+.cta-final-btn::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, var(--gd-orange) 0%, #f0a050 50%, var(--gd-orange) 100%);
+  background-size: 200% 200%;
+  z-index: -1;
+  filter: blur(16px);
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+.cta-final .reveal.is-revealed .cta-final-btn::before {
+  opacity: .55;
+  animation: cta-btn-aura 3s ease-in-out 2.2s infinite;
+}
+@keyframes cta-btn-aura {
+  0%, 100% { opacity: .45; background-position: 0% 50%; }
+  50%      { opacity: .85; background-position: 100% 50%; }
+}
+.cta-final-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(224,112,32,.45);
+}
+.cta-final-btn:hover::before { opacity: .9 !important; }
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .cta-final-h2 .cta-word {
+    opacity: 1; transform: none; filter: none; animation: none !important;
+  }
+  .cta-final-h2.is-revealed .cta-door,
+  .cta-final-h2.is-revealed .cta-door-scan::before,
+  .cta-final-h2.is-revealed .cta-door-glow,
+  .cta-final .reveal.is-revealed .cta-final-btn::before {
+    animation: none !important;
+  }
+  .cta-final .cta-lead,
+  .cta-final .cta-button-wrap { opacity: 1; transform: none; }
+}
+

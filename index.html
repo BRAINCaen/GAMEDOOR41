@@ -588,18 +588,25 @@
 <!-- =====================================================
      07. CTA FINAL
 ===================================================== -->
-<section class="cta-final">
+<section class="cta-final" id="cta-final-section">
   <div class="container cta-final-inner">
     <div class="reveal">
       <div class="eyebrow no-rules" style="justify-content:center; display:flex;"><span>Prêt à entrer ?</span></div>
-      <h2 class="h-display" style="margin-top:32px;">
-        Le prochain à pousser la porte,<br>
-        <em>c'est vous.</em>
+      <h2 class="h-display cta-final-h2" style="margin-top:32px;" aria-label="Sois le prochain à pousser la porte">
+        <span class="cta-word" style="--d:0">Sois</span>
+        <span class="cta-word" style="--d:1">le</span>
+        <span class="cta-word" style="--d:2">prochain</span>
+        <span class="cta-word" style="--d:3">à</span>
+        <span class="cta-word" style="--d:4">pousser</span>
+        <br>
+        <span class="cta-door-wrap" aria-hidden="true">
+          <span class="cta-word cta-door" style="--d:5">la&nbsp;porte<span class="cta-door-glow"></span><span class="cta-door-scan"></span></span>
+        </span>
       </h2>
-      <p class="lead" style="text-align:center;">
+      <p class="lead cta-lead" style="text-align:center;">
         Booking en ligne 24/7. Paiement immédiat. Vous arrivez, vous jouez.
       </p>
-      <div style="margin-top:8px;">
+      <div style="margin-top:8px;" class="cta-button-wrap">
         <a href="/escape-game-caen/" class="btn btn-primary cta-final-btn btn-arrow">Choisir mon créneau</a>
       </div>
       <div class="cta-hours">
@@ -1006,6 +1013,33 @@
   }
   window.addEventListener('scroll', upd, { passive: true });
   upd();
+})();
+
+/* ============================================================
+   CTA Final — déclenche l'animation des mots quand la section
+   entre dans le viewport (sinon elle joue avant que le user voie).
+   ============================================================ */
+(function () {
+  var sect = document.getElementById('cta-final-section');
+  if (!sect) return;
+  var h2 = sect.querySelector('.cta-final-h2');
+  var reveal = sect.querySelector('.reveal');
+  if (!h2 || !reveal) return;
+  if (!('IntersectionObserver' in window)) {
+    h2.classList.add('is-revealed');
+    reveal.classList.add('is-revealed');
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        h2.classList.add('is-revealed');
+        reveal.classList.add('is-revealed');
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+  io.observe(sect);
 })();
 </script>
 </body>
