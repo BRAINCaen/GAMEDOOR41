@@ -867,13 +867,17 @@ a.hero-tripadvisor:hover {
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
 }
+/* Heritage band — bordure animée style "star-border" (comètes orange
+   qui font le tour de la box en boucle 2.5s, épaisseur visuelle 4px) */
 .heritage-band {
+  position: relative;
+  isolation: isolate;
   display: flex; align-items: center; flex-wrap: wrap;
   justify-content: center;
   gap: 14px 22px;
   padding: 22px 32px;
-  border: 2px solid var(--gd-orange);
-  border-radius: 4px;
+  border: 2px solid rgba(224, 112, 32, .35);
+  border-radius: 8px;
   background: linear-gradient(90deg, rgba(224,112,32,.08) 0%, rgba(224,112,32,.04) 50%, rgba(224,112,32,.08) 100%);
   font-family: var(--gd-font-display);
   font-weight: 700;
@@ -881,6 +885,52 @@ a.hero-tripadvisor:hover {
   font-size: 16px;
   text-align: center;
   color: var(--gd-orange);
+  overflow: hidden;
+}
+/* 2 comètes qui voyagent le long du périmètre (offset-path: rectangle).
+   Phase opposée pour avoir 2 points lumineux toujours visibles. */
+.heritage-band::before,
+.heritage-band::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 110px;
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(224, 112, 32, .85) 25%,
+    rgba(255, 240, 200, 1) 50%,
+    rgba(224, 112, 32, .85) 75%,
+    transparent 100%);
+  filter: blur(2px);
+  offset-path: rect(0 100% 100% 0 round 8px);
+  offset-rotate: auto;
+  offset-anchor: center;
+  animation: heritage-star-travel 2.5s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.heritage-band::after {
+  animation-delay: -1.25s;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 200, 110, .7) 25%,
+    rgba(255, 255, 230, 1) 50%,
+    rgba(255, 200, 110, .7) 75%,
+    transparent 100%);
+}
+@keyframes heritage-star-travel {
+  from { offset-distance: 0%; }
+  to   { offset-distance: 100%; }
+}
+@supports not (offset-path: rect(0 100% 100% 0 round 8px)) {
+  /* Fallback : bordure orange pleine (pas d'animation) */
+  .heritage-band { border-color: var(--gd-orange); }
+  .heritage-band::before, .heritage-band::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heritage-band::before, .heritage-band::after { animation: none; opacity: 0; }
+  .heritage-band { border-color: var(--gd-orange); }
 }
 .heritage-band strong { font-weight: 900; }
 .heritage-band .heritage-tag { color: var(--gd-cream); font-weight: 600; }
