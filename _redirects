@@ -12,3 +12,18 @@
 /post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-à-caen  /post/escape-game-back-to-80s-famille-caen/  301
 /blog  /magazine/  301
 /blog/*  /magazine/  301
+
+# Magazine — anciens slugs Brain (accents) → nouveaux slugs Gamedoor
+/post/escape-game-à-caen-guide-complet-2026-salles-tarifs-conseils-pour-réussir  /post/escape-game-caen-guide-complet-2026/  301
+/post/escape-game-à-caen-brain-étudiant-e-le-tarif-étudiant-e-que-vous-cherchiez  /post/escape-game-caen-tarif-etudiant/  301
+/post/evjf-evg-à-caen-vivez-une-expérience-quiz-game-inoubliable-avec-buzz-your-brain  /post/evjf-evg-caen-quiz-buzz-your-brain/  301
+/post/quiz-game-noël-caen-buzz-your-brain-activité-spécial-fêtes-b-r-a-i-n  /post/quiz-game-noel-caen-buzz-your-brain/  301
+/post/carte-cadeau-escape-game-quiz-game-caen  /post/carte-cadeau-escape-quiz-caen/  301
+/post/organisez-un-evjf-evg-inoubliable-à-caen-avec-brain-escape-quiz-game  /post/organiser-evjf-evg-inoubliable-caen/  301
+/post/buzz-your-brain-le-jeu-télévisé-réaliste-à-caen-un-nouveau-concept-complètement-déjanté  /post/buzz-your-brain-jeu-televise-realiste-caen/  301
+/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-à-caen  /post/escape-game-horreur-psychiatric-caen/  301
+/post/escape-game-à-deux-astuces-et-avantages-pour-une-expérience-unique  /post/escape-game-a-deux-astuces-avantages/  301
+/post/organiser-un-team-building-réussi-à-caen-avec-un-escape-game  /post/team-building-reussi-caen-escape-game/  301
+/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-à-caen  /post/escape-game-back-to-80s-famille-caen/  301
+/blog  /magazine/  301
+/blog/*  /magazine/  301
