@@ -49,7 +49,14 @@ async function fetchPlace() {
       'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress,places.reviews',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, maxResultCount: 5 }),
+    body: JSON.stringify({
+      textQuery: SEARCH_QUERY,
+      maxResultCount: 5,
+      // Force les avis en français (sinon Google retourne souvent l'anglais
+      // par défaut). Couvre 99 % de la clientèle locale.
+      languageCode: 'fr',
+      regionCode: 'FR',
+    }),
   });
   if (!res.ok) {
     const body = await res.text();
