@@ -155,13 +155,13 @@
         <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" class="logo-img" width="224" height="32" decoding="async">
       </a>
       <nav class="nav-links" aria-label="Navigation principale">
-        <a href="#escape" class="nav-link">Escape</a>
-        <a href="#quiz" class="nav-link">Quiz</a>
+        <a href="/escape-game-caen/" class="nav-link">Escape</a>
+        <a href="/quiz-game-caen/" class="nav-link">Quiz</a>
         <a href="#action" class="nav-link">Action</a>
-        <a href="#events" class="nav-link">Events</a>
-        <a href="#magazine" class="nav-link">Magazine</a>
+        <a href="/team-building-caen/" class="nav-link">Events</a>
+        <a href="/magazine/" class="nav-link">Magazine</a>
       </nav>
-      <a href="#reserver" class="btn btn-primary nav-cta">Réserver</a>
+      <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener" class="btn btn-primary nav-cta">Réserver</a>
     </div>
   </div>
 </header>
@@ -592,17 +592,31 @@
   <div class="container cta-final-inner">
     <div class="reveal">
       <div class="eyebrow no-rules" style="justify-content:center; display:flex;"><span>Prêt à entrer ?</span></div>
-      <h2 class="h-display cta-final-h2" style="margin-top:32px;" aria-label="Sois le prochain à pousser la porte">
+      <h2 class="h-display cta-final-h2" style="margin-top:32px;" aria-label="Sois le prochain à pousser la porte GAMEDOOR·41">
         <span class="cta-word" style="--d:0">Sois</span>
         <span class="cta-word" style="--d:1">le</span>
         <span class="cta-word" style="--d:2">prochain</span>
         <span class="cta-word" style="--d:3">à</span>
         <span class="cta-word" style="--d:4">pousser</span>
-        <br>
-        <span class="cta-door-wrap" aria-hidden="true">
-          <span class="cta-word cta-door" style="--d:5">la&nbsp;porte<span class="cta-door-glow"></span><span class="cta-door-scan"></span></span>
-        </span>
       </h2>
+
+      <!-- Scène porte 3D + logo. Le "·" du logo joue le rôle de poignée.
+           Les 2 panneaux s'écartent quand la section est centrée dans le viewport
+           via --door-progress (0 = fermé, 1 = grand ouvert), géré en JS. -->
+      <div class="door-stage" aria-hidden="true">
+        <div class="door-stage-light"></div>
+        <div class="door-stage-rays"></div>
+        <div class="door-stage-leaf door-stage-leaf-left">
+          <div class="door-stage-panel"></div>
+        </div>
+        <div class="door-stage-leaf door-stage-leaf-right">
+          <div class="door-stage-panel"></div>
+        </div>
+        <div class="door-stage-frame"></div>
+      </div>
+      <div class="cta-logo-wrap">
+        <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" class="cta-final-logo" decoding="async" loading="lazy">
+      </div>
       <p class="lead cta-lead" style="text-align:center;">
         Booking en ligne 24/7. Paiement immédiat. Vous arrivez, vous jouez.
       </p>
@@ -1017,29 +1031,60 @@
 
 /* ============================================================
    CTA Final — déclenche l'animation des mots quand la section
-   entre dans le viewport (sinon elle joue avant que le user voie).
+   entre dans le viewport + scroll-driven door progress
    ============================================================ */
 (function () {
   var sect = document.getElementById('cta-final-section');
   if (!sect) return;
   var h2 = sect.querySelector('.cta-final-h2');
   var reveal = sect.querySelector('.reveal');
-  if (!h2 || !reveal) return;
-  if (!('IntersectionObserver' in window)) {
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1) Reveal des mots au premier passage
+  if ('IntersectionObserver' in window && h2 && reveal) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          h2.classList.add('is-revealed');
+          reveal.classList.add('is-revealed');
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    io.observe(sect);
+  } else if (h2 && reveal) {
     h2.classList.add('is-revealed');
     reveal.classList.add('is-revealed');
+  }
+
+  // 2) Scroll-driven door progress: porte s'ouvre quand la section
+  //    se rapproche du centre du viewport, se ferme quand elle s'éloigne
+  if (prefersReduced) {
+    sect.style.setProperty('--door-progress', '0.6');
     return;
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        h2.classList.add('is-revealed');
-        reveal.classList.add('is-revealed');
-        io.disconnect();
-      }
-    });
-  }, { threshold: 0.25 });
-  io.observe(sect);
+  var rafId = null;
+  function update() {
+    rafId = null;
+    var rect = sect.getBoundingClientRect();
+    var winH = window.innerHeight || document.documentElement.clientHeight;
+    var sectionMid = rect.top + rect.height / 2;
+    var viewportMid = winH / 2;
+    var distance = Math.abs(sectionMid - viewportMid);
+    // Plage active = 70 % de la hauteur viewport (au-delà, porte fermée)
+    var range = winH * 0.7;
+    var p = Math.max(0, Math.min(1, 1 - distance / range));
+    // Petit easing pour rendre l'ouverture plus marquée
+    p = p * p * (3 - 2 * p);
+    sect.style.setProperty('--door-progress', p.toFixed(3));
+  }
+  function onScroll() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(update);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
 })();
 </script>
 </body>
