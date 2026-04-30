@@ -879,7 +879,7 @@ a.hero-tripadvisor:hover {
    03. BENTO SECTION (was inside .hero in V3.3)
    ============================================================= */
 .bento-section {
-  padding: clamp(60px, 8vw, 100px) 0 clamp(80px, 10vw, 140px);
+  padding: clamp(40px, 5vw, 64px) 0 clamp(48px, 6vw, 80px);
   position: relative;
   border-top: 1px solid var(--hairline);
 }
@@ -892,11 +892,11 @@ a.hero-tripadvisor:hover {
 }
 .bento-head {
   text-align: center;
-  margin-bottom: clamp(40px, 5vw, 64px);
+  margin-bottom: clamp(24px, 3vw, 40px);
   position: relative; z-index: 1;
 }
 .bento-h2 {
-  font-size: clamp(40px, 6vw, 92px) !important;
+  font-size: clamp(28px, 3.6vw, 56px) !important;
 }
 .bento-h2 .accent {
   font-style: normal; font-weight: 900;
@@ -933,13 +933,16 @@ a.hero-tripadvisor:hover {
 .hero-tagline .sep { color: var(--gd-orange); padding: 0 4px; }
 .hero-side { padding-bottom: 8px; }
 
-/* Bento grid */
+/* Bento grid — responsive viewport (l'utilisateur veut voir les 4 expériences d'un coup d'œil) */
 .bento {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
-  grid-template-rows: 380px 220px;
+  grid-template-rows: clamp(260px, 34vh, 360px) clamp(160px, 20vh, 200px);
   gap: 14px;
   perspective: 1200px;
+}
+@media (max-width: 720px) {
+  .bento { grid-template-rows: auto; }
 }
 .bento.is-hovering .card:not(.is-focus) {
   filter: brightness(.35) saturate(.6);
