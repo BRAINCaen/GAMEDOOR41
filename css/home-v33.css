@@ -1649,6 +1649,7 @@ a.hero-tripadvisor:hover {
   gap: 16px;
 }
 .article {
+  position: relative;
   background: var(--gd-card-bg);
   border: 1px solid var(--hairline);
   overflow: hidden;
@@ -1656,7 +1657,18 @@ a.hero-tripadvisor:hover {
   transition: all 280ms ease;
   cursor: pointer;
 }
-.article:hover { border-color: var(--hairline-strong); transform: translateY(-2px); }
+.article:hover { border-color: var(--gd-orange); transform: translateY(-2px); }
+.article:hover .article-title { color: var(--gd-orange); }
+.article-title { transition: color .2s ease; }
+/* Stretched-link overlay : toute la card est cliquable */
+.article-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+}
 .article-viz {
   position: relative;
   aspect-ratio: 16 / 10;

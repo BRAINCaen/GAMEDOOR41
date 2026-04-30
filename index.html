@@ -531,12 +531,13 @@
         <div class="eyebrow"><span>Le magazine</span></div>
         <h2 class="h-xl ds-underline" style="margin-top:24px;">Coulisses,<br>récits, conseils.</h2>
       </div>
-      <a href="#magazine" class="btn btn-ghost btn-arrow reveal reveal-d1">Tout le magazine</a>
+      <a href="/magazine/" class="btn btn-ghost btn-arrow reveal reveal-d1">Tout le magazine</a>
     </div>
 
     <div class="mag-grid">
 
       <article class="article reveal">
+        <a href="/post/buzz-your-brain-jeu-televise-realiste-caen/" class="article-link" aria-label="Lire : Buzz Your Brain — le jeu télévisé réaliste à Caen"></a>
         <div class="article-viz">
           <div class="viz" aria-hidden="true" style="background: #0c0800;">
             <picture>
@@ -548,13 +549,14 @@
         </div>
         <div class="article-body">
           <span class="article-cat quiz">Quiz</span>
-          <h3 class="article-title"><span class="ph">[Titre article quiz]</span></h3>
-          <p class="article-excerpt">Comment l'animateur du plateau Buzz Your Brain transforme un groupe de collègues en équipe soudée.</p>
-          <div class="article-meta">5 min · <span class="ph">[date]</span></div>
+          <h3 class="article-title">Buzz Your Brain — le jeu télévisé réaliste à Caen</h3>
+          <p class="article-excerpt">Un nouveau concept de loisir à Caen : un plateau TV grandeur nature, 8 pupitres, buzzers, blind tests et quiz vidéos. Pour tous, sans culture générale requise.</p>
+          <div class="article-meta">4 min · <time datetime="2024-09-09">9 septembre 2024</time></div>
         </div>
       </article>
 
       <article class="article reveal reveal-d1">
+        <a href="/post/escape-game-caen-guide-complet-2026/" class="article-link" aria-label="Lire : Escape Game à Caen — Guide complet 2026"></a>
         <div class="article-viz">
           <div class="viz" aria-hidden="true" style="background: #0c0800;">
             <picture>
@@ -566,13 +568,14 @@
         </div>
         <div class="article-body">
           <span class="article-cat escape">Escape</span>
-          <h3 class="article-title"><span class="ph">[Titre article escape]</span></h3>
-          <p class="article-excerpt">Garde à Vue, dans les coulisses du scénario&nbsp;: comment on construit 60 minutes qui marquent.</p>
-          <div class="article-meta">7 min · <span class="ph">[date]</span></div>
+          <h3 class="article-title">Escape Game à Caen — Guide complet 2026</h3>
+          <p class="article-excerpt">Le guide pour choisir votre escape game à Caen : 3 thèmes, conseils pour réussir et tarifs 2026 — adapté aux familles, étudiants, couples et entreprises.</p>
+          <div class="article-meta">6 min · <time datetime="2026-02-03">3 février 2026</time></div>
         </div>
       </article>
 
       <article class="article reveal reveal-d2">
+        <a href="/post/escape-game-horreur-psychiatric-caen/" class="article-link" aria-label="Lire : Plongez dans l'horreur — Escape Game Psychiatric à Caen"></a>
         <div class="article-viz">
           <div class="viz" aria-hidden="true" style="background: linear-gradient(135deg, #1a0d2e 0%, #0c0800 100%);">
             <picture>
@@ -584,9 +587,9 @@
         </div>
         <div class="article-body">
           <span class="article-cat escape">Psychiatric</span>
-          <h3 class="article-title"><span class="ph">[Titre article psychiatric]</span></h3>
-          <p class="article-excerpt">Pourquoi cette salle dérange — et ce qu'elle dit du jeu d'évasion en 2026.</p>
-          <div class="article-meta">9 min · <span class="ph">[date]</span></div>
+          <h3 class="article-title">Plongez dans l'horreur — Escape Game Psychiatric à Caen</h3>
+          <p class="article-excerpt">Hôpital St-Brain abandonné, 2 chambres identiques (jusqu'à 12 en duel), niveau ajustable. La salle horreur de référence à Caen depuis 2017.</p>
+          <div class="article-meta">2 min · <time datetime="2024-09-08">8 septembre 2024</time></div>
         </div>
       </article>
 
@@ -609,13 +612,16 @@
         <span class="cta-word" style="--d:4">entrer</span>
       </h2>
 
-      <!-- Scène porte 3D contenue autour du logo (ne masque plus le reste du contenu)
+      <!-- Scène porte 3D : le logo est PLACÉ DERRIÈRE les panneaux.
+           Quand les portes sont fermées, on ne voit que le bois.
+           Quand elles s'ouvrent, le logo apparaît dans la lumière.
            --door-progress (0 fermé → 1 grand ouvert) piloté en JS au scroll. -->
       <div class="cta-logo-wrap">
         <div class="door-stage" aria-hidden="true">
           <div class="door-stage-bg"></div>
           <div class="door-stage-rays"></div>
           <div class="door-stage-light"></div>
+          <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" class="cta-final-logo" decoding="async" loading="lazy">
           <div class="door-stage-leaf door-stage-leaf-left">
             <div class="door-stage-panel"></div>
             <span class="door-stage-handle"></span>
@@ -627,7 +633,6 @@
           <div class="door-stage-frame"></div>
           <div class="door-stage-floor"></div>
         </div>
-        <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" class="cta-final-logo" decoding="async" loading="lazy">
       </div>
       <p class="lead cta-lead" style="text-align:center;">
         Booking en ligne 24/7. Paiement immédiat. Vous arrivez, vous jouez.
