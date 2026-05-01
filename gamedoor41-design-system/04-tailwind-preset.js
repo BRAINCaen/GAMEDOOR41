@@ -25,6 +25,7 @@ module.exports = {
           'grey-medium': '#8A8078',
           'grey-dark': '#6A6460',
           escape: '#1B2A4E',
+          'escape-on-dark': '#3D5DC0', // navy éclairci pour texte/accent sur fond sombre
           quiz: '#9D4EDD',
           action: '#BE1B1B',
           events: '#FFD740',

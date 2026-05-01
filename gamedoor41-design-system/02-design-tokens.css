@@ -33,10 +33,16 @@
   --gd-grey-dark: #6A6460;       /* Légende, captions sur sombre */
 
   /* === COULEURS SOUS-MARQUES ======================================= */
-  --gd-escape: #1B2A4E;          /* Escape Game — bleu nuit profond */
+  --gd-escape: #1B2A4E;           /* Escape Game — bleu nuit profond */
   --gd-quiz: #9D4EDD;             /* Quiz Game — violet */
   --gd-action: #BE1B1B;           /* Action — rouge intense */
   --gd-events: #FFD740;           /* Events — or */
+
+  /* Variantes "on dark" — navy escape éclairci pour texte/accent sur fond sombre.
+     À utiliser quand la sous-marque est appliquée comme couleur de TEXTE direct
+     (pas comme background de badge) et que le fond est sombre.
+     Pattern utilisé sur le cryptex hero de la home + accent ·ESCAPE des heros sub-brand. */
+  --gd-escape-on-dark: #3D5DC0;
 
   /* === ÉTATS SÉMANTIQUES =========================================== */
   --gd-success: #2E7D32;

@@ -22,6 +22,17 @@
   --cyan: #00e5ff;
   --cyan-glow: rgba(0, 229, 255, 0.25);
   --purple: #9c27b0;
+
+  /* === Sous-marques GAMEDOOR·41 — DS officiel (gamedoor41-design-system/02-design-tokens.css) ===
+     Aligné sur :root du DS. Disponible sur toutes les pages qui chargent style.css.
+     Pour usage sur fond sombre : voir variantes -on-dark plus claires. */
+  --gd-escape: #1B2A4E;          /* Escape — bleu nuit profond */
+  --gd-quiz:   #9D4EDD;          /* Quiz — violet */
+  --gd-action: #BE1B1B;          /* Action — rouge intense */
+  --gd-events: #FFD740;          /* Events — or */
+  --gd-escape-on-dark: #3D5DC0;  /* navy éclairci pour texte/accent sur fond noir (cf. cryptex home) */
+  --gd-cream:  #F0EBE2;          /* texte sur badges sous-marques */
+  --gd-black:  #0C0800;          /* noir DS */
   
   --font-display: 'Oswald', sans-serif;
   --font-body: 'DM Sans', sans-serif;

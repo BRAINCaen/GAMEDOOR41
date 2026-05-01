@@ -40,6 +40,7 @@
   --gd-quiz:   #9D4EDD;         /* violet Buzz — héritage Buzz Your Brain */
   --gd-action: #BE1B1B;         /* rouge Stranger Things — arcade-réflexes */
   --gd-events: #FFD740;         /* or */
+  --gd-escape-on-dark: #3D5DC0; /* navy éclairci — texte/accent sur fond sombre (cryptex hero) */
   --gd-action-glow: rgba(229, 9, 20, 0.8); /* halo néon optionnel sur fond noir pur */
 
   /* === Sémantique ================================================== */

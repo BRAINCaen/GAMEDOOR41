@@ -28,10 +28,11 @@
       "greyDark":   { "value": "#6A6460", "type": "color", "description": "Légendes, captions sur sombre." }
     },
     "subBrand": {
-      "escape": { "value": "#1B2A4E", "type": "color", "description": "Univers Escape Game. Bleu nuit profond." },
-      "quiz":   { "value": "#9D4EDD", "type": "color", "description": "Univers Quiz Game. Violet." },
-      "action": { "value": "#BE1B1B", "type": "color", "description": "Univers Action. Rouge intense." },
-      "events": { "value": "#FFD740", "type": "color", "description": "Univers Events. Or." }
+      "escape":       { "value": "#1B2A4E", "type": "color", "description": "Univers Escape Game. Bleu nuit profond. À utiliser comme background de badge ou sur fond clair." },
+      "escapeOnDark": { "value": "#3D5DC0", "type": "color", "description": "Variante éclaircie de escape. À utiliser comme couleur de TEXTE/accent sur fond sombre (cryptex hero, accent ·ESCAPE des heros sous-marque)." },
+      "quiz":         { "value": "#9D4EDD", "type": "color", "description": "Univers Quiz Game. Violet." },
+      "action":       { "value": "#BE1B1B", "type": "color", "description": "Univers Action. Rouge intense." },
+      "events":       { "value": "#FFD740", "type": "color", "description": "Univers Events. Or." }
     },
     "semantic": {
       "success": { "value": "#2E7D32", "type": "color" },
