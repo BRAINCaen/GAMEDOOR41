@@ -48,6 +48,56 @@
     /* === Pattern DS « Brand · Decorative section number » + kicker numéroté magazine ===
        Appliqué sur les sections salles pour rendu éditorial premium-immersif. */
     /* ============================================================
+       BLOC ORIENTATION — « Quelle expérience est faite pour vous ? »
+       ============================================================ */
+    .exp-orient-card {
+      position:relative; display:flex; flex-direction:column;
+      gap:10px; padding:22px 22px 20px;
+      background:linear-gradient(155deg, rgba(61,93,192,0.06) 0%, rgba(20,18,16,0.55) 65%);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;
+      text-decoration:none;
+      transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
+      overflow:hidden; isolation:isolate;
+    }
+    .exp-orient-card::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(circle at top right, rgba(61,93,192,0.18) 0%, transparent 55%);
+      opacity:.65; transition:opacity .25s ease;
+      z-index:-1;
+    }
+    .exp-orient-card:hover {
+      transform:translateY(-3px);
+      border-color:rgba(61,93,192,0.45);
+      box-shadow:0 14px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(61,93,192,0.15);
+    }
+    .exp-orient-card:hover::before { opacity:1; }
+    .exp-orient-ico {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:48px; height:48px;
+      background:linear-gradient(135deg, rgba(61,93,192,0.22), rgba(61,93,192,0.08));
+      border:1px solid rgba(61,93,192,0.35);
+      color:#3D5DC0;
+      border-radius:12px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 12px rgba(61,93,192,0.18);
+      transition:color .25s ease, border-color .25s ease, transform .25s ease;
+    }
+    .exp-orient-card:hover .exp-orient-ico {
+      color:#5B7BD8;
+      border-color:rgba(91,123,216,0.6);
+      transform:scale(1.04);
+    }
+    .exp-orient-q {
+      font-family:var(--font-display); color:#F0EBE2;
+      font-weight:600; font-size:1rem; margin:0; line-height:1.35;
+    }
+    .exp-orient-room {
+      display:flex; align-items:center; gap:6px;
+      color:#3D5DC0; font-size:1rem; font-weight:600; margin:0;
+      font-family:var(--font-display); letter-spacing:.02em;
+    }
+
+    /* ============================================================
        SALLE SECTION — cinéma immersif inspiré ledonjon.fr
        Chaque salle = 1 viewport. Vidéo full-bleed en fond.
        Panel translucide latéral avec tout le contenu.
@@ -331,20 +381,26 @@
       <div class="fade-in" style="max-width:800px;margin:0 auto;text-align:center;">
         <h2 style="font-size:1.3rem;margin-bottom:20px;">Quelle expérience est faite pour vous ?</h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
-          <a href="#psychiatric" style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:border-color 0.2s;">
-            <p style="font-size:1.2rem;margin-bottom:6px;">🔥</p>
-            <p style="color:var(--white);font-weight:600;font-size:1rem;margin-bottom:4px;">Vous aimez les sensations fortes ?</p>
-            <p style="color:var(--gd-escape-on-dark);font-size:1rem;"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
+          <a href="#psychiatric" class="exp-orient-card">
+            <span class="exp-orient-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.6" fill="currentColor"/><circle cx="15" cy="12" r="0.6" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></svg>
+            </span>
+            <p class="exp-orient-q">Vous aimez les sensations fortes ?</p>
+            <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
           </a>
-          <a href="#in-prison" style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:border-color 0.2s;">
-            <p style="font-size:1.2rem;margin-bottom:6px;">🔒</p>
-            <p style="color:var(--white);font-weight:600;font-size:1rem;margin-bottom:4px;">Vous voulez tester votre cohésion ?</p>
-            <p style="color:var(--gd-escape-on-dark);font-size:1rem;"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
+          <a href="#in-prison" class="exp-orient-card">
+            <span class="exp-orient-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12,2 14,8 20,8 15,12 17,18 12,14 7,18 9,12 4,8 10,8"/><circle cx="12" cy="11" r="2" fill="currentColor"/></svg>
+            </span>
+            <p class="exp-orient-q">Vous voulez tester votre cohésion ?</p>
+            <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
           </a>
-          <a href="#back-80s" style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:border-color 0.2s;">
-            <p style="font-size:1.2rem;margin-bottom:6px;">🕹️</p>
-            <p style="color:var(--white);font-weight:600;font-size:1rem;margin-bottom:4px;">Vous cherchez une aventure fun ?</p>
-            <p style="color:var(--gd-escape-on-dark);font-size:1rem;"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
+          <a href="#back-80s" class="exp-orient-card">
+            <span class="exp-orient-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+            </span>
+            <p class="exp-orient-q">Vous cherchez une aventure fun ?</p>
+            <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
           </a>
         </div>
       </div>
