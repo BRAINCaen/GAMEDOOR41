@@ -47,15 +47,55 @@
 
     /* === Pattern DS « Brand · Decorative section number » + kicker numéroté magazine ===
        Appliqué sur les sections salles pour rendu éditorial premium-immersif. */
-    .salle-section { position:relative; overflow:hidden; }
-    .salle-section .container { position:relative; z-index:2; }
+    /* ============================================================
+       SALLE SECTION — split-screen full-bleed cinématographique
+       ============================================================ */
+    .salle-section { position:relative; overflow:hidden; padding:0 !important; }
+    .salle-section .container { max-width:100% !important; padding:0 !important; position:relative; z-index:2; }
+
     .salle-num-deco {
-      position:absolute; top:24px; right:24px; z-index:1; pointer-events:none;
+      position:absolute; top:24px; right:24px; z-index:3; pointer-events:none;
       font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; line-height:.85;
       font-size:clamp(140px, 22vw, 280px); letter-spacing:-6px;
-      /* Pattern DS « numéro décoratif » teinté à la sous-marque escape (navy on-dark transparent) */
-      color:rgba(61,93,192,0.12);
+      color:rgba(61,93,192,0.18);
+      mix-blend-mode:screen;
     }
+
+    .salle-grid {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      align-items:stretch;
+      min-height: clamp(560px, 80vh, 900px);
+      width:100%; gap:0;
+    }
+    .salle-grid > * { min-width:0; }
+
+    .salle-media { position:relative; overflow:hidden; background:var(--dark); }
+    .salle-media video {
+      width:100% !important; height:100% !important;
+      max-height:none !important;
+      min-height:clamp(320px, 50vw, 700px);
+      object-fit:cover !important;
+      border-radius:0 !important;
+      display:block;
+    }
+
+    .salle-body {
+      padding: clamp(48px, 6vw, 96px) clamp(24px, 4vw, 64px);
+      max-width: 760px;
+      width:100%;
+      display:flex; flex-direction:column; justify-content:center;
+      box-sizing:border-box;
+    }
+    .salle-body p, .salle-body span, .salle-body li, .salle-body a, .salle-body small {
+      font-size: max(1rem, 16px);
+    }
+
+    /* Reverse layout (Psychiatric : texte à gauche, vidéo à droite) */
+    .salle-reverse .salle-media { order:2; }
+    .salle-reverse .salle-body { order:1; margin-left:auto; }
+    .salle-reverse .salle-num-deco { right:auto; left:24px; }
+
     .salle-kicker {
       display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif;
       font-size:16px; font-weight:600; letter-spacing:.32em; text-transform:uppercase;
@@ -68,6 +108,27 @@
       text-transform:uppercase; letter-spacing:.18em;
       padding:6px 14px; border-radius:999px; margin-bottom:18px;
       background:var(--gd-escape); color:var(--gd-cream);
+    }
+
+    /* Responsive : stack mobile, vidéo d'abord, texte ensuite */
+    @media (max-width: 900px) {
+      .salle-grid {
+        grid-template-columns: 1fr;
+        min-height:auto;
+      }
+      .salle-grid .salle-media,
+      .salle-reverse .salle-media { order:1; }
+      .salle-grid .salle-body,
+      .salle-reverse .salle-body { order:2; margin-left:0; max-width:100%; }
+      .salle-media video {
+        height:auto !important; min-height:auto;
+        aspect-ratio: 16 / 10;
+      }
+      .salle-body { padding: clamp(32px, 8vw, 56px) clamp(20px, 5vw, 32px); }
+      .salle-num-deco,
+      .salle-reverse .salle-num-deco {
+        top:8px; right:12px; left:auto; font-size:clamp(80px, 18vw, 140px);
+      }
     }
     @media (max-width: 720px) {
       .salle-num-deco { top:8px; right:12px; font-size:120px; }
@@ -255,13 +316,13 @@
   <section class="section salle-section" id="in-prison" style="background:var(--dark);">
     <div class="salle-num-deco" aria-hidden="true">01</div>
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
-        <div>
-          <video autoplay muted loop playsinline preload="none" style="width:100%;max-height:70vh;border-radius:var(--radius);object-fit:contain;" poster="/img/promo/affiche-garde-a-vue.jpg">
+      <div class="salle-grid fade-in">
+        <div class="salle-media">
+          <video autoplay muted loop playsinline preload="none" poster="/img/promo/affiche-garde-a-vue.jpg">
             <source src="/video/garde-a-vue.mp4" type="video/mp4">
           </video>
         </div>
-        <div>
+        <div class="salle-body">
           <p class="salle-kicker"><span class="num">01</span> Salle</p>
           <span class="salle-badge-sub">Escape · 60 min</span>
           <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
@@ -313,13 +374,13 @@
   <section class="section salle-section" id="psychiatric">
     <div class="salle-num-deco" aria-hidden="true">02</div>
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
-        <div style="order:2;">
-          <video autoplay muted loop playsinline preload="none" style="width:100%;max-height:70vh;border-radius:var(--radius);object-fit:contain;" poster="/img/promo/affiche-psychiatric.jpg">
+      <div class="salle-grid salle-reverse fade-in">
+        <div class="salle-media">
+          <video autoplay muted loop playsinline preload="none" poster="/img/promo/affiche-psychiatric.jpg">
             <source src="/video/psychiatric.mp4" type="video/mp4">
           </video>
         </div>
-        <div style="order:1;">
+        <div class="salle-body">
           <p class="salle-kicker"><span class="num">02</span> Salle</p>
           <span class="salle-badge-sub">Escape · 60 min</span>
           <div class="room-vintage-tag"><span class="dot"></span> Depuis 2017 · 26 000+ joueur·euse·s</div>
@@ -372,13 +433,13 @@
   <section class="section salle-section" id="back-80s" style="background:var(--dark);">
     <div class="salle-num-deco" aria-hidden="true">03</div>
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
-        <div>
-          <video autoplay muted loop playsinline preload="none" style="width:100%;max-height:70vh;border-radius:var(--radius);object-fit:contain;" poster="/img/promo/affiche-80s.jpg">
+      <div class="salle-grid fade-in">
+        <div class="salle-media">
+          <video autoplay muted loop playsinline preload="none" poster="/img/promo/affiche-80s.jpg">
             <source src="/video/80s.mp4" type="video/mp4">
           </video>
         </div>
-        <div>
+        <div class="salle-body">
           <p class="salle-kicker"><span class="num">03</span> Salle</p>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
             <span class="salle-badge-sub" style="margin-bottom:0;">Escape · 60 min</span>
