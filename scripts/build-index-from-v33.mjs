@@ -18,7 +18,7 @@ const OUT_CSS = join(ROOT, 'css', 'home-v33.css');
 // Map UUID → /img path + alt text + sizes hint
 const IMG_MAP = {
   '844abe87-432b-44ca-92da-c858d1bdfe6d': {
-    base: '/img/escape/salle-psychiatric-lit-fauteuil',
+    base: '/img/escape/psychiatric-couloir',
     widths: [480, 768, 1024],
     fullW: 4080,
     alt: 'Lit clinique avec empreintes de mains sur les murs — salle Psychiatric escape game GAMEDOOR·41 Caen',
@@ -53,7 +53,7 @@ const IMG_MAP = {
     sizes: '(max-width: 900px) 100vw, 33vw',
   },
   '6e03ae80-4d1c-4357-b34a-7382e63dd967': {
-    base: '/img/escape/salle-garde-a-vue-scanner-empreintes',
+    base: '/img/escape/salle-garde-a-vue-scanner-empreinte-entree',
     widths: [480, 768, 1024],
     fullW: 4590,
     alt: 'Scanner d\'empreintes de la salle Garde à Vue — escape game GAMEDOOR·41 Caen',
@@ -238,7 +238,7 @@ ${components}`;
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 
   <!-- Preload LCP image (hero card escape) -->
-  <link rel="preload" as="image" type="image/avif" href="/img/escape/salle-psychiatric-lit-fauteuil-1024w.avif" imagesrcset="/img/escape/salle-psychiatric-lit-fauteuil-480w.avif 480w, /img/escape/salle-psychiatric-lit-fauteuil-768w.avif 768w, /img/escape/salle-psychiatric-lit-fauteuil-1024w.avif 1024w" imagesizes="(max-width: 980px) 100vw, 60vw">
+  <link rel="preload" as="image" type="image/avif" href="/img/escape/psychiatric-couloir-1024w.avif" imagesrcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w, /img/escape/psychiatric-couloir-1024w.avif 1024w" imagesizes="(max-width: 980px) 100vw, 60vw">
 
   <!-- Styles -->
   <link rel="stylesheet" href="/css/home-v33.css">

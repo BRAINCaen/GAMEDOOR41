@@ -15,7 +15,7 @@ const images = [
     label: 'quiz (salle quiz)'
   },
   {
-    src: '/home/user/GAMEDOOR41/img/escape/garde-a-vue-cellule.jpg',
+    src: '/home/user/GAMEDOOR41/img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg',
     out: '/home/user/GAMEDOOR41/img/og/og-escape.jpg',
     label: 'escape (cellule)'
   },
@@ -25,7 +25,7 @@ const images = [
     label: 'psychiatric'
   },
   {
-    src: '/home/user/GAMEDOOR41/img/escape/80s-jukebox.jpg',
+    src: '/home/user/GAMEDOOR41/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.jpg',
     out: '/home/user/GAMEDOOR41/img/og/og-80s.jpg',
     label: '80s'
   }
