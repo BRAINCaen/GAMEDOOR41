@@ -44,6 +44,33 @@
     .gd-hero-subtitle .sep { color:#E07020; margin:0 .55em; }
     .gd-hero-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
     @media (max-width: 720px) { .gd-hero { min-height:54vh; } .gd-hero-h1 { letter-spacing:-.5px; } }
+
+    /* === Pattern DS « Brand · Decorative section number » + kicker numéroté magazine ===
+       Appliqué sur les sections salles pour rendu éditorial premium-immersif. */
+    .salle-section { position:relative; overflow:hidden; }
+    .salle-section .container { position:relative; z-index:2; }
+    .salle-num-deco {
+      position:absolute; top:24px; right:24px; z-index:1; pointer-events:none;
+      font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; line-height:.85;
+      font-size:clamp(140px, 22vw, 280px); letter-spacing:-6px;
+      color:rgba(224,112,32,0.08);
+    }
+    .salle-kicker {
+      display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-size:16px; font-weight:600; letter-spacing:.32em; text-transform:uppercase;
+      color:#E07020; margin-bottom:12px;
+    }
+    .salle-kicker .num { color:#F0EBE2; margin-right:.6em; }
+    .salle-badge-sub {
+      display:inline-flex; align-items:center; gap:.5em;
+      font-family:'Barlow Condensed','Oswald',sans-serif; font-size:16px; font-weight:700;
+      text-transform:uppercase; letter-spacing:.18em;
+      padding:6px 14px; border-radius:999px; margin-bottom:18px;
+      background:var(--gd-escape); color:var(--gd-cream);
+    }
+    @media (max-width: 720px) {
+      .salle-num-deco { top:8px; right:12px; font-size:120px; }
+    }
   </style>
   
   <script type="application/ld+json">
@@ -236,7 +263,8 @@
   </section>
 
   <!-- SALLE 1: GARDE À VUE -->
-  <section class="section" id="in-prison" style="background:var(--dark);">
+  <section class="section salle-section" id="in-prison" style="background:var(--dark);">
+    <div class="salle-num-deco" aria-hidden="true">01</div>
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
         <div>
@@ -245,7 +273,8 @@
           </video>
         </div>
         <div>
-          <span class="exp-card-badge badge-escape" style="margin-bottom:16px;display:inline-block;">Escape Game</span>
+          <p class="salle-kicker"><span class="num">01</span> Salle</p>
+          <span class="salle-badge-sub">Escape · 60 min</span>
           <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
           <h2 style="margin-bottom:12px;">Garde à Vue</h2>
           <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">« Plus rien à perdre »</p>
@@ -288,7 +317,8 @@
   </section>
 
   <!-- SALLE 2: PSYCHIATRIC -->
-  <section class="section" id="psychiatric">
+  <section class="section salle-section" id="psychiatric">
+    <div class="salle-num-deco" aria-hidden="true">02</div>
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
         <div style="order:2;">
@@ -297,7 +327,8 @@
           </video>
         </div>
         <div style="order:1;">
-          <span class="exp-card-badge badge-escape" style="margin-bottom:16px;display:inline-block;">Escape Game</span>
+          <p class="salle-kicker"><span class="num">02</span> Salle</p>
+          <span class="salle-badge-sub">Escape · 60 min</span>
           <div class="room-vintage-tag"><span class="dot"></span> Depuis 2017 · 26 000+ joueur·euse·s</div>
           <h2 style="margin-bottom:12px;">Psychiatric</h2>
           <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">« La peur commence ici »</p>
@@ -349,7 +380,8 @@
   </section>
 
   <!-- SALLE 3: BACK TO THE 80'S -->
-  <section class="section" id="back-80s" style="background:var(--dark);">
+  <section class="section salle-section" id="back-80s" style="background:var(--dark);">
+    <div class="salle-num-deco" aria-hidden="true">03</div>
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
         <div>
@@ -358,8 +390,9 @@
           </video>
         </div>
         <div>
+          <p class="salle-kicker"><span class="num">03</span> Salle</p>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
-            <span class="exp-card-badge badge-escape" style="margin-bottom:0;">Escape Game</span>
+            <span class="salle-badge-sub" style="margin-bottom:0;">Escape · 60 min</span>
             <span class="exp-card-badge" style="margin-bottom:0;">Nommée Top 100 France</span>
           </div>
           <div class="room-vintage-tag"><span class="dot"></span> Depuis 2021 · 12 000+ joueur·euse·s</div>
