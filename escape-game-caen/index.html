@@ -97,6 +97,18 @@
       font-family:var(--font-display); letter-spacing:.02em;
     }
 
+    /* Scroll-snap : 1 scroll = 1 salle (desktop seulement, proximity pour ne pas casser les autres sections) */
+    @media (min-width: 901px) {
+      html {
+        scroll-snap-type: y proximity;
+        scroll-padding-top: 0;
+      }
+      .salle-section {
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+    }
+
     /* ============================================================
        SALLE SECTION — cinéma immersif inspiré ledonjon.fr
        Chaque salle = 1 viewport. Vidéo full-bleed en fond.
@@ -108,7 +120,8 @@
     }
     .salle-section .container {
       max-width:100% !important; padding:0 !important;
-      position:relative; z-index:2; width:100%;
+      position:relative; width:100%;
+      /* pas de z-index ici sinon ça crée un stacking context qui cache le numéro déco */
     }
     .salle-grid {
       display:block !important;
@@ -144,13 +157,14 @@
         linear-gradient(270deg, rgba(12,8,0,0.55) 0%, rgba(12,8,0,0) 55%);
     }
 
-    /* Numéro décoratif géant, watermark navy escape */
+    /* Numéro décoratif géant, watermark navy escape — z-index entre vidéo (0) et panel (3) */
     .salle-num-deco {
       position:absolute; top:6vh; right:clamp(24px, 4vw, 64px); z-index:2; pointer-events:none;
       font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; line-height:.85;
-      font-size:clamp(160px, 24vw, 320px); letter-spacing:-8px;
-      color:rgba(61,93,192,0.22);
+      font-size:clamp(180px, 26vw, 360px); letter-spacing:-8px;
+      color:rgba(91, 123, 216, 0.32);
       mix-blend-mode:screen;
+      text-shadow: 0 0 40px rgba(61,93,192,0.25);
     }
     .salle-reverse .salle-num-deco { right:auto; left:clamp(24px, 4vw, 64px); }
 
