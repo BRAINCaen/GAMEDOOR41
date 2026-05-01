@@ -158,6 +158,20 @@ p[style*="text-align: center"],
 }
 .btn-cyan:hover { background: #33ebff; transform: translateY(-2px); }
 
+/* CTA sous-marques DS — fond navy/violet, texte cream, glow assorti */
+.btn-escape {
+  background: var(--gd-escape-on-dark);
+  color: var(--gd-cream);
+  box-shadow: 0 0 20px rgba(61, 93, 192, 0.35);
+}
+.btn-escape:hover { background: #4D6DD0; transform: translateY(-2px); box-shadow: 0 0 32px rgba(61, 93, 192, 0.5); }
+.btn-quiz {
+  background: var(--gd-quiz);
+  color: var(--gd-cream);
+  box-shadow: 0 0 20px rgba(157, 78, 221, 0.35);
+}
+.btn-quiz:hover { background: #B070E5; transform: translateY(-2px); box-shadow: 0 0 32px rgba(157, 78, 221, 0.5); }
+
 /* --- Header / Nav --- */
 .site-header {
   position: fixed;
