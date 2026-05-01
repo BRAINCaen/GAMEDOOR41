@@ -963,8 +963,8 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 .breadcrumb-bar {
   position: relative;
   z-index: 1;
-  padding-top: calc(var(--header-h) + 12px);
-  padding-bottom: 12px;
+  padding-top: calc(var(--header-h) + 4px);
+  padding-bottom: 4px;
   background: var(--black);
 }
 .breadcrumb {
