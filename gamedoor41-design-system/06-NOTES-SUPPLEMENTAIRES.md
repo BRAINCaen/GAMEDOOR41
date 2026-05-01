@@ -79,9 +79,9 @@ Quand tu génères une UI, un component, un poster ou une page :
 Quatre univers, chacun avec sa couleur d'accent (utilisée à dose 
 homéopathique — 5% max) :
 
-• Escape Game → Rouge intense (#C62828) — drame, suspense, immersif
-• Quiz Game   → Cyan électrique (#00E5FF) — fun, fédérateur, dynamique
-• Action      → Vert fluo (#76FF03) — physique, outdoor, énergique
+• Escape Game → Bleu nuit profond (#1B2A4E) — mystère, immersif, nocturne
+• Quiz Game   → Violet (#9D4EDD) — fun, fédérateur, électrique
+• Action      → Rouge intense (#BE1B1B) — physique, énergie, urgence
 • Events      → Or (#FFD740) — premium, soirée, célébration
 
 Quand tu designs pour un univers spécifique, l'accent prend cette 

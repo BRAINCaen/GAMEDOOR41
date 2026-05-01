@@ -28,10 +28,10 @@
       "greyDark":   { "value": "#6A6460", "type": "color", "description": "Légendes, captions sur sombre." }
     },
     "subBrand": {
-      "escape": { "value": "#C62828", "type": "color", "description": "Univers Escape Game. Rouge intense, Pantone 1797 C." },
-      "quiz":   { "value": "#00E5FF", "type": "color", "description": "Univers Quiz Game. Cyan électrique, Pantone 306 C." },
-      "action": { "value": "#76FF03", "type": "color", "description": "Univers Action. Vert fluo, Pantone 802 C." },
-      "events": { "value": "#FFD740", "type": "color", "description": "Univers Events. Or, Pantone 114 C." }
+      "escape": { "value": "#1B2A4E", "type": "color", "description": "Univers Escape Game. Bleu nuit profond." },
+      "quiz":   { "value": "#9D4EDD", "type": "color", "description": "Univers Quiz Game. Violet." },
+      "action": { "value": "#BE1B1B", "type": "color", "description": "Univers Action. Rouge intense." },
+      "events": { "value": "#FFD740", "type": "color", "description": "Univers Events. Or." }
     },
     "semantic": {
       "success": { "value": "#2E7D32", "type": "color" },

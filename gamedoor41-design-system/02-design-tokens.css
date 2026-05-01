@@ -33,10 +33,10 @@
   --gd-grey-dark: #6A6460;       /* Légende, captions sur sombre */
 
   /* === COULEURS SOUS-MARQUES ======================================= */
-  --gd-escape: #C62828;          /* Escape Game — rouge intense */
-  --gd-quiz: #00E5FF;            /* Quiz Game — cyan électrique */
-  --gd-action: #76FF03;          /* Action — vert fluo */
-  --gd-events: #FFD740;          /* Events — or */
+  --gd-escape: #1B2A4E;          /* Escape Game — bleu nuit profond */
+  --gd-quiz: #9D4EDD;             /* Quiz Game — violet */
+  --gd-action: #BE1B1B;           /* Action — rouge intense */
+  --gd-events: #FFD740;           /* Events — or */
 
   /* === ÉTATS SÉMANTIQUES =========================================== */
   --gd-success: #2E7D32;

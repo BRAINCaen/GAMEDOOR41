@@ -61,9 +61,9 @@ Tous les fichiers sont au format SVG, dans le dossier `/img/logo/` de ton site/p
 - [ ] `logo-watermark.svg` — filigrane (pour photos, vidéos)
 
 ### Logos sous-marques
-- [ ] `logo-escape.svg` — déclinaison Escape Game (rouge #C62828)
-- [ ] `logo-quiz.svg` — déclinaison Quiz Game (cyan #00E5FF)
-- [ ] `logo-action.svg` — déclinaison Action (vert #76FF03)
+- [ ] `logo-escape.svg` — déclinaison Escape Game (bleu nuit #1B2A4E)
+- [ ] `logo-quiz.svg` — déclinaison Quiz Game (violet #9D4EDD)
+- [ ] `logo-action.svg` — déclinaison Action (rouge #BE1B1B)
 - [ ] `logo-events.svg` — déclinaison Events (or #FFD740)
 
 ---

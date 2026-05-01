@@ -33,13 +33,14 @@
     .gd-hero-bg picture, .gd-hero-bg img { width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(1.05); }
     .gd-hero-bg::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 25%, rgba(12,8,0,.85) 100%); pointer-events:none; }
     .gd-hero-inner { position:relative; z-index:2; width:100%; max-width:1100px; padding:0 24px; }
-    .gd-hero-eyebrow { display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:16px; font-weight:600; letter-spacing:.32em; text-transform:uppercase; color:#C62828; border-top:1px solid rgba(198,40,40,.45); border-bottom:1px solid rgba(198,40,40,.45); padding:7px 16px; margin-bottom:28px; }
+    .gd-hero-eyebrow { display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:16px; font-weight:600; letter-spacing:.32em; text-transform:uppercase; color:#E07020; border-top:1px solid rgba(224,112,32,.45); border-bottom:1px solid rgba(224,112,32,.45); padding:7px 16px; margin-bottom:28px; }
     .gd-hero-h1 { font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-1.5px; line-height:.92; font-size:clamp(44px,7vw,104px); color:#F0EBE2; margin:0 0 18px; }
     .gd-hero-h1 strong { font-weight:900; }
     .gd-hero-h1 .light { font-weight:300; }
-    .gd-hero-h1 .accent { color:#C62828; font-weight:900; display:inline-block; } /* rouge sous-marque Escape Game */
+    /* Sous-marque Escape Game — bleu nuit #1B2A4E (DS). Badge cream/navy pour rester lisible sur fond sombre. */
+    .gd-hero-h1 .accent { color:#F0EBE2; background:#1B2A4E; padding:0 .12em .04em; border-radius:6px; font-weight:900; display:inline-block; box-shadow:0 4px 18px rgba(27,42,78,.5); }
     .gd-hero-subtitle { font-family:'Barlow Condensed','Oswald',sans-serif; font-size:clamp(16px,1.6vw,18px); font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#C8C2B8; margin:0 0 36px; }
-    .gd-hero-subtitle .sep { color:#C62828; margin:0 .55em; }
+    .gd-hero-subtitle .sep { color:#E07020; margin:0 .55em; }
     .gd-hero-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
     @media (max-width: 720px) { .gd-hero { min-height:54vh; } .gd-hero-h1 { letter-spacing:-.5px; } }
   </style>
@@ -163,7 +164,7 @@
 
   <div class="breadcrumb-bar">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <nav class="breadcrumb" aria-label="Fil d'Ariane" style="justify-content:center;text-align:center;">
         <a href="/">GAMEDOOR•41</a>
         <span class="sep">›</span>
         <span>Escape Game Caen</span>
@@ -200,7 +201,7 @@
     <div class="container">
       <div class="fade-in" style="max-width:800px;margin:0 auto;text-align:center;">
         <h2 style="font-size:1.6rem;margin-bottom:16px;">Le seul escape game à Caen avec game master acteur.</h2>
-        <p style="color:var(--grey-light);margin-bottom:12px;">Chez GAMEDOOR·ESCAPE, le game master ne vous surveille pas derrière un écran : il interagit avec vous, suit votre aventure et joue son rôle à vos côtés. Policier, infirmier, personnage — il réagit à vos actions, improvise, vous met la pression ou vous aide en temps réel. Chaque game master s'occupe d'un seul groupe à la fois, pour une expérience entièrement personnalisée et qualitative.</p>
+        <p style="color:var(--grey-light);margin-bottom:12px;">Chez GAMEDOOR·ESCAPE, le game master ne vous envoie pas des indices sur un écran : il interagit avec vous, suit votre aventure et joue son rôle à vos côtés. Policier, infirmier, personnage — il réagit à vos actions, improvise, vous met la pression ou vous aide en temps réel. Chaque game master s'occupe d'un seul groupe à la fois, pour une expérience entièrement personnalisée et qualitative.</p>
         <p style="color:var(--grey-light);">C'est ce qui fait la différence entre un escape game et une vraie expérience immersive. 2 098 avis Google, note de 4.9/5. Nos joueurs ne s'y trompent pas.</p>
         <p style="color:var(--grey-light);margin-top:12px;">Trois univers. Trois façons de jouer. Choisissez selon votre envie, votre groupe ou votre niveau.</p>
       </div>
