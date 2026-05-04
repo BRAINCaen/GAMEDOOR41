@@ -968,13 +968,40 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   height: 100%;
   object-fit: cover;
   object-position: center;
+  /* Désature légèrement et assombrit l'image de fond pour que le texte reste lisible.
+     Sans ça les hero très saturés (Back to the 80's) écrasaient les titres blancs. */
+  filter: saturate(0.78) brightness(0.72) contrast(1.02);
 }
-.page-hero .hero-overlay { z-index: 1; }
+/* Scrim dédié page-hero : plus marqué que le scrim hero d'accueil, et orienté
+   diagonal pour assombrir le bas-gauche où sont les textes. */
+.page-hero .hero-overlay {
+  z-index: 1;
+  background:
+    linear-gradient(135deg, rgba(8,8,8,0.78) 0%, rgba(8,8,8,0.45) 45%, rgba(8,8,8,0.35) 70%, rgba(8,8,8,0.85) 100%),
+    radial-gradient(ellipse 80% 60% at 25% 75%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 70%);
+}
 .page-hero .hero-content {
   position: relative;
   z-index: 2;
   text-align: left;
   width: 100%;
+}
+/* Lisibilité titres + kicker + subtitle sur fond image */
+.page-hero .kicker {
+  text-shadow: 0 2px 12px rgba(0,0,0,0.85);
+}
+.page-hero h1 {
+  text-shadow:
+    0 4px 24px rgba(0,0,0,0.55),
+    0 2px 8px rgba(0,0,0,0.85);
+}
+.page-hero h1 .accent {
+  text-shadow:
+    0 4px 24px rgba(0,0,0,0.55),
+    0 2px 8px rgba(0,0,0,0.85);
+}
+.page-hero .subtitle {
+  text-shadow: 0 2px 12px rgba(0,0,0,0.85);
 }
 /* --- Breadcrumb Bar (between fixed header and hero) --- */
 .breadcrumb-bar {
