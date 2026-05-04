@@ -296,44 +296,75 @@
     </div>
   </section>
 
-  <!-- POLAROÏDS — captures du plateau -->
-  <section class="section dossier-band" style="padding:64px 0;">
+  <!-- ÉCRANS RÉGIE TV — feed des 3 caméras du plateau -->
+  <section class="section plateau-tv-band" style="padding:64px 0;">
     <div class="container">
-      <div class="dossier-band-header fade-in">
-        <p class="kicker" style="color:var(--gd-quiz);">▸ Captures du plateau</p>
-        <h2 class="dossier-band-title">Le show <span style="color:var(--gd-quiz);">Buzz Your Brain</span></h2>
-        <p class="dossier-band-sub">Trois clichés du plateau. Le reste se vit en live.</p>
+      <div class="plateau-tv-header fade-in">
+        <p class="kicker" style="color:var(--gd-quiz);">▸ Régie · feed live</p>
+        <h2 class="plateau-tv-title">3 caméras sur <span style="color:var(--gd-quiz);">Buzz Your Brain</span></h2>
+        <p class="plateau-tv-sub">Les écrans de la régie ne mentent pas. Le reste se vit en plateau.</p>
       </div>
-      <div class="dossier-photos fade-in">
-        <figure class="dossier-photo dossier-photo-1">
-          <picture>
-            <source type="image/avif" srcset="/img/quiz/salle-quiz-buzzers-premier-plan-480w.avif 480w, /img/quiz/salle-quiz-buzzers-premier-plan-768w.avif 768w, /img/quiz/salle-quiz-buzzers-premier-plan-1024w.avif 1024w" sizes="(max-width:768px) 90vw, 33vw">
-            <source type="image/webp" srcset="/img/quiz/salle-quiz-buzzers-premier-plan-480w.webp 480w, /img/quiz/salle-quiz-buzzers-premier-plan-768w.webp 768w, /img/quiz/salle-quiz-buzzers-premier-plan-1024w.webp 1024w" sizes="(max-width:768px) 90vw, 33vw">
-            <img src="/img/quiz/salle-quiz-buzzers-premier-plan-768w.jpg" srcset="/img/quiz/salle-quiz-buzzers-premier-plan-480w.jpg 480w, /img/quiz/salle-quiz-buzzers-premier-plan-768w.jpg 768w, /img/quiz/salle-quiz-buzzers-premier-plan-1024w.jpg 1024w" sizes="(max-width:768px) 90vw, 33vw" alt="Buzzers premier plan — quiz game Buzz Your Brain Caen" loading="lazy" decoding="async">
-          </picture>
-          <span class="dossier-stamp">Cliché · Les Buzzers</span>
-          <span class="dossier-tape dossier-tape-tl"></span>
-          <span class="dossier-tape dossier-tape-br"></span>
+      <div class="plateau-tv-grid fade-in">
+
+        <figure class="plateau-tv-frame">
+          <span class="plateau-tv-cam">CAM 01</span>
+          <span class="plateau-tv-rec"><span class="plateau-tv-led" aria-hidden="true"></span>REC</span>
+          <div class="plateau-tv-screen">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/salle-quiz-buzzers-premier-plan-480w.avif 480w, /img/quiz/salle-quiz-buzzers-premier-plan-768w.avif 768w, /img/quiz/salle-quiz-buzzers-premier-plan-1024w.avif 1024w" sizes="(max-width:768px) 90vw, 33vw">
+              <source type="image/webp" srcset="/img/quiz/salle-quiz-buzzers-premier-plan-480w.webp 480w, /img/quiz/salle-quiz-buzzers-premier-plan-768w.webp 768w, /img/quiz/salle-quiz-buzzers-premier-plan-1024w.webp 1024w" sizes="(max-width:768px) 90vw, 33vw">
+              <img src="/img/quiz/salle-quiz-buzzers-premier-plan-768w.jpg" srcset="/img/quiz/salle-quiz-buzzers-premier-plan-480w.jpg 480w, /img/quiz/salle-quiz-buzzers-premier-plan-768w.jpg 768w, /img/quiz/salle-quiz-buzzers-premier-plan-1024w.jpg 1024w" sizes="(max-width:768px) 90vw, 33vw" alt="Buzzers premier plan — quiz Buzz Your Brain Caen" loading="lazy" decoding="async">
+            </picture>
+            <span class="plateau-tv-scanlines" aria-hidden="true"></span>
+            <span class="plateau-tv-glare" aria-hidden="true"></span>
+          </div>
+          <div class="plateau-tv-bottom">
+            <span class="plateau-tv-tc">TC 00:01:42</span>
+            <span class="plateau-tv-label">Les Buzzers</span>
+            <span class="plateau-tv-logo">BYB</span>
+          </div>
         </figure>
-        <figure class="dossier-photo dossier-photo-2">
-          <picture>
-            <source type="image/avif" srcset="/img/quiz/buzzer-action-480w.avif 480w, /img/quiz/buzzer-action-768w.avif 768w, /img/quiz/buzzer-action-1024w.avif 1024w" sizes="(max-width:768px) 90vw, 33vw">
-            <source type="image/webp" srcset="/img/quiz/buzzer-action-480w.webp 480w, /img/quiz/buzzer-action-768w.webp 768w, /img/quiz/buzzer-action-1024w.webp 1024w" sizes="(max-width:768px) 90vw, 33vw">
-            <img src="/img/quiz/buzzer-action-768w.jpg" srcset="/img/quiz/buzzer-action-480w.jpg 480w, /img/quiz/buzzer-action-768w.jpg 768w, /img/quiz/buzzer-action-1024w.jpg 1024w" sizes="(max-width:768px) 90vw, 33vw" alt="Main qui appuie sur un buzzer — quiz Buzz Your Brain Caen" loading="lazy" decoding="async">
-          </picture>
-          <span class="dossier-stamp">Cliché · L'Action</span>
-          <span class="dossier-tape dossier-tape-tr"></span>
+
+        <figure class="plateau-tv-frame">
+          <span class="plateau-tv-cam">CAM 02</span>
+          <span class="plateau-tv-rec"><span class="plateau-tv-led" aria-hidden="true"></span>REC</span>
+          <div class="plateau-tv-screen">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/buzzer-action-480w.avif 480w, /img/quiz/buzzer-action-768w.avif 768w, /img/quiz/buzzer-action-1024w.avif 1024w" sizes="(max-width:768px) 90vw, 33vw">
+              <source type="image/webp" srcset="/img/quiz/buzzer-action-480w.webp 480w, /img/quiz/buzzer-action-768w.webp 768w, /img/quiz/buzzer-action-1024w.webp 1024w" sizes="(max-width:768px) 90vw, 33vw">
+              <img src="/img/quiz/buzzer-action-768w.jpg" srcset="/img/quiz/buzzer-action-480w.jpg 480w, /img/quiz/buzzer-action-768w.jpg 768w, /img/quiz/buzzer-action-1024w.jpg 1024w" sizes="(max-width:768px) 90vw, 33vw" alt="Main qui appuie sur un buzzer — quiz Buzz Your Brain Caen" loading="lazy" decoding="async">
+            </picture>
+            <span class="plateau-tv-scanlines" aria-hidden="true"></span>
+            <span class="plateau-tv-glare" aria-hidden="true"></span>
+          </div>
+          <div class="plateau-tv-bottom">
+            <span class="plateau-tv-tc">TC 00:14:08</span>
+            <span class="plateau-tv-label">L'Action</span>
+            <span class="plateau-tv-logo">BYB</span>
+          </div>
         </figure>
-        <figure class="dossier-photo dossier-photo-3">
-          <picture>
-            <source type="image/avif" srcset="/img/quiz/salle-quiz-perspective-rasante-480w.avif 480w, /img/quiz/salle-quiz-perspective-rasante-768w.avif 768w, /img/quiz/salle-quiz-perspective-rasante-1024w.avif 1024w" sizes="(max-width:768px) 90vw, 33vw">
-            <source type="image/webp" srcset="/img/quiz/salle-quiz-perspective-rasante-480w.webp 480w, /img/quiz/salle-quiz-perspective-rasante-768w.webp 768w, /img/quiz/salle-quiz-perspective-rasante-1024w.webp 1024w" sizes="(max-width:768px) 90vw, 33vw">
-            <img src="/img/quiz/salle-quiz-perspective-rasante-768w.jpg" srcset="/img/quiz/salle-quiz-perspective-rasante-480w.jpg 480w, /img/quiz/salle-quiz-perspective-rasante-768w.jpg 768w, /img/quiz/salle-quiz-perspective-rasante-1024w.jpg 1024w" sizes="(max-width:768px) 90vw, 33vw" alt="Perspective rasante du plateau quiz — Buzz Your Brain Caen" loading="lazy" decoding="async">
-          </picture>
-          <span class="dossier-stamp">Cliché · Le Plateau</span>
-          <span class="dossier-tape dossier-tape-bl"></span>
+
+        <figure class="plateau-tv-frame">
+          <span class="plateau-tv-cam">CAM 03</span>
+          <span class="plateau-tv-rec"><span class="plateau-tv-led" aria-hidden="true"></span>REC</span>
+          <div class="plateau-tv-screen">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/salle-quiz-perspective-rasante-480w.avif 480w, /img/quiz/salle-quiz-perspective-rasante-768w.avif 768w, /img/quiz/salle-quiz-perspective-rasante-1024w.avif 1024w" sizes="(max-width:768px) 90vw, 33vw">
+              <source type="image/webp" srcset="/img/quiz/salle-quiz-perspective-rasante-480w.webp 480w, /img/quiz/salle-quiz-perspective-rasante-768w.webp 768w, /img/quiz/salle-quiz-perspective-rasante-1024w.webp 1024w" sizes="(max-width:768px) 90vw, 33vw">
+              <img src="/img/quiz/salle-quiz-perspective-rasante-768w.jpg" srcset="/img/quiz/salle-quiz-perspective-rasante-480w.jpg 480w, /img/quiz/salle-quiz-perspective-rasante-768w.jpg 768w, /img/quiz/salle-quiz-perspective-rasante-1024w.jpg 1024w" sizes="(max-width:768px) 90vw, 33vw" alt="Perspective rasante du plateau quiz — Buzz Your Brain Caen" loading="lazy" decoding="async">
+            </picture>
+            <span class="plateau-tv-scanlines" aria-hidden="true"></span>
+            <span class="plateau-tv-glare" aria-hidden="true"></span>
+          </div>
+          <div class="plateau-tv-bottom">
+            <span class="plateau-tv-tc">TC 00:42:55</span>
+            <span class="plateau-tv-label">Le Plateau</span>
+            <span class="plateau-tv-logo">BYB</span>
+          </div>
         </figure>
+
       </div>
+      <p class="plateau-tv-footer fade-in">▸ <strong>ON AIR</strong> · 60 min d'émission · 3 manches · 4 jokers · 1 seul groupe gagnant</p>
     </div>
   </section>
 

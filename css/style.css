@@ -970,6 +970,242 @@ body.quiz-room-page .stats-band {
 body.quiz-room-page .room-cinema-overlay {
   background: linear-gradient(135deg, rgba(8,8,8,0.78) 0%, rgba(8,8,8,0.5) 50%, rgba(157,78,221,0.18) 100%);
 }
+
+/* ============================================================
+   ÉCRANS RÉGIE TV — Buzz Your Brain (page Quiz)
+   3 cadres TV alignés façon plateau de contrôle / régie :
+   badge CAM, badge REC + LED clignotante, scanlines, reflet
+   d'écran, timecode + logo BYB. Couleurs DS quiz violet.
+   ============================================================ */
+.plateau-tv-band {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(157,78,221,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(157,78,221,0.05) 0%, transparent 55%),
+    var(--dark, #1a1410);
+  position: relative;
+  overflow: hidden;
+}
+.plateau-tv-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 3px, rgba(255,255,255,0.01) 4px);
+  pointer-events: none;
+}
+.plateau-tv-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+.plateau-tv-header .kicker {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+.plateau-tv-title {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+.plateau-tv-sub {
+  color: var(--grey-light);
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+}
+.plateau-tv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 32px);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+@media (max-width: 760px) {
+  .plateau-tv-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* Cadre TV / régie */
+.plateau-tv-frame {
+  position: relative;
+  background: linear-gradient(160deg, #0d0d0f 0%, #161618 100%);
+  border-radius: 8px;
+  padding: 36px 14px 50px;
+  margin: 0;
+  box-shadow:
+    0 0 0 1px rgba(157,78,221,0.28),
+    0 14px 36px rgba(0,0,0,0.55),
+    0 4px 10px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  isolation: isolate;
+  transition: transform .35s cubic-bezier(.2,.8,.3,1.2), box-shadow .35s ease;
+}
+.plateau-tv-frame:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 0 1px rgba(157,78,221,0.55),
+    0 24px 48px rgba(0,0,0,0.65),
+    0 0 40px rgba(157,78,221,0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  .plateau-tv-frame { transition: none; }
+}
+
+/* Badge CAM (haut gauche) */
+.plateau-tv-cam {
+  position: absolute;
+  top: 10px; left: 14px;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gd-quiz, #9D4EDD);
+  padding: 4px 10px;
+  border: 1px solid rgba(157,78,221,0.5);
+  border-radius: 3px;
+  background: rgba(0,0,0,0.55);
+  z-index: 3;
+}
+
+/* Badge REC + LED clignotante (haut droit) */
+.plateau-tv-rec {
+  position: absolute;
+  top: 10px; right: 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #F0EBE2;
+  padding: 4px 10px;
+  background: var(--gd-quiz, #9D4EDD);
+  border-radius: 3px;
+  z-index: 3;
+  box-shadow: 0 0 12px rgba(157,78,221,0.55);
+}
+.plateau-tv-led {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #F0EBE2;
+  box-shadow: 0 0 8px #F0EBE2;
+  animation: tv-led-blink 1.4s ease-in-out infinite;
+}
+@keyframes tv-led-blink {
+  0%, 50% { opacity: 1; }
+  60%, 100% { opacity: 0.18; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plateau-tv-led { animation: none; }
+}
+
+/* Écran (image) avec scanlines + reflet courbe */
+.plateau-tv-screen {
+  position: relative;
+  display: block;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #000;
+  margin: 0;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+}
+.plateau-tv-screen picture,
+.plateau-tv-screen img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.05);
+}
+.plateau-tv-scanlines {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(0deg,
+    rgba(255,255,255,0) 0,
+    rgba(255,255,255,0) 2px,
+    rgba(255,255,255,0.04) 2px,
+    rgba(255,255,255,0.04) 3px);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+.plateau-tv-glare {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.18) 100%),
+    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 50%);
+  pointer-events: none;
+}
+
+/* Barre du bas : timecode · label · logo BYB */
+.plateau-tv-bottom {
+  position: absolute;
+  bottom: 12px; left: 14px; right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 3;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.plateau-tv-tc {
+  font-family: 'JetBrains Mono', 'Courier New', ui-monospace, monospace;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  background: rgba(157,78,221,0.18);
+  border: 1px solid rgba(157,78,221,0.4);
+  color: var(--gd-quiz, #9D4EDD);
+  padding: 3px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.plateau-tv-label {
+  flex: 1;
+  text-align: center;
+  color: #F0EBE2;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.plateau-tv-logo {
+  background: var(--gd-quiz, #9D4EDD);
+  color: #F0EBE2;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  box-shadow: 0 0 10px rgba(157,78,221,0.4);
+}
+
+/* Pied de section ON AIR */
+.plateau-tv-footer {
+  text-align: center;
+  margin-top: 32px;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey-light);
+}
+.plateau-tv-footer strong {
+  color: var(--gd-quiz, #9D4EDD);
+  margin: 0 4px;
+  text-shadow: 0 0 12px rgba(157,78,221,0.55);
+}
+
+@media (max-width: 480px) {
+  .plateau-tv-cam, .plateau-tv-rec { font-size: 16px; padding: 3px 8px; }
+  .plateau-tv-bottom { gap: 6px; }
+  .plateau-tv-tc, .plateau-tv-logo, .plateau-tv-bottom { font-size: 16px; }
+}
 .quiz-accent .room-card:hover {
   border-color: var(--cyan);
   box-shadow: 0 0 30px var(--cyan-glow);
