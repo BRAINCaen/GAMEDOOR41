@@ -1915,6 +1915,220 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .dossier-photo { transition: none; }
 }
 
+/* ============================================================
+   DOSSIER PATIENT — fiche médicale (Psychiatric / Saint-Brain)
+   Cards style chart hospitalier : papier crème, bandeau navy
+   avec croix médicale, métadonnées cliniques, stamp + code-barres.
+   DS strict : escape navy uniquement, pas d'orange ni de rouge.
+   ============================================================ */
+.patient-file-band {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(61,93,192,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(61,93,192,0.04) 0%, transparent 55%),
+    var(--dark, #1a1410);
+  position: relative;
+  overflow: hidden;
+}
+.patient-file-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 3px, rgba(255,255,255,0.01) 4px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 3px, rgba(255,255,255,0.01) 4px);
+  pointer-events: none;
+}
+.patient-file-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+.patient-file-header .kicker {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+.patient-file-title {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+.patient-file-sub {
+  color: var(--grey-light);
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+}
+.patient-file-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+@media (max-width: 760px) {
+  .patient-file-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+.patient-file-card {
+  position: relative;
+  background:
+    repeating-linear-gradient(180deg, rgba(27,42,78,0.045) 0px, rgba(27,42,78,0.045) 1px, transparent 1px, transparent 28px),
+    #F4EFE0;
+  padding: 0 0 70px;
+  border-radius: 2px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform .35s cubic-bezier(.2,.8,.3,1.2), box-shadow .35s ease;
+  margin: 0;
+  overflow: hidden;
+}
+.patient-file-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.65), 0 0 0 2px rgba(61,93,192,0.4), 0 0 40px rgba(61,93,192,0.3);
+  z-index: 2;
+}
+/* Bandeau médical en haut (navy + croix + tag) */
+.patient-file-medical-bar {
+  background: #1B2A4E;
+  color: #F0EBE2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.patient-file-bar-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 16px; }
+.patient-file-bar-tag {
+  background: rgba(240,235,226,0.14);
+  border: 1px solid rgba(240,235,226,0.35);
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+/* Croix médicale tracée en CSS (pas de SVG inline) */
+.patient-file-cross {
+  position: relative;
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 1.5px solid #F0EBE2;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.patient-file-cross::before,
+.patient-file-cross::after {
+  content: '';
+  position: absolute;
+  background: #F0EBE2;
+}
+.patient-file-cross::before { top: 4px; bottom: 4px; left: 50%; width: 2px; transform: translateX(-50%); }
+.patient-file-cross::after  { left: 4px; right: 4px; top: 50%; height: 2px; transform: translateY(-50%); }
+
+/* Métadonnées cliniques */
+.patient-file-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(27,42,78,0.7);
+  margin: 0;
+  padding: 12px 16px;
+  border-bottom: 1px dashed rgba(27,42,78,0.25);
+  background: rgba(27,42,78,0.03);
+}
+.patient-file-meta b { color: #1B2A4E; font-weight: 700; }
+
+/* Photo encadrée comme un cliché médical agrafé */
+.patient-file-photo {
+  position: relative;
+  margin: 16px;
+  padding: 6px;
+  background: #FFFEF8;
+  border: 1px solid rgba(27,42,78,0.18);
+  box-shadow: inset 0 0 0 1px rgba(27,42,78,0.06);
+}
+.patient-file-photo::before,
+.patient-file-photo::after {
+  /* agrafes simulées aux deux coins du haut */
+  content: '';
+  position: absolute;
+  top: -1px;
+  width: 14px; height: 4px;
+  background: #1B2A4E;
+  opacity: 0.55;
+  z-index: 2;
+}
+.patient-file-photo::before { left: 14px; transform: rotate(-8deg); }
+.patient-file-photo::after  { right: 14px; transform: rotate(8deg); }
+.patient-file-photo picture,
+.patient-file-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: grayscale(0.18) contrast(1.05);
+  transition: filter .35s ease;
+}
+.patient-file-card:hover .patient-file-photo img { filter: grayscale(0) contrast(1.1); }
+
+/* Stamp clinique en bas, légèrement incliné */
+.patient-file-stamp {
+  position: absolute;
+  bottom: 18px; left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(27, 42, 78, 0.82);
+  padding: 5px 14px;
+  border: 2px solid rgba(27, 42, 78, 0.55);
+  border-radius: 2px;
+  white-space: nowrap;
+  background: rgba(245, 240, 225, 0.7);
+}
+/* Code-barres décoratif coin bas-gauche */
+.patient-file-barcode {
+  position: absolute;
+  bottom: 12px; left: 16px;
+  width: 64px; height: 22px;
+  background: repeating-linear-gradient(90deg,
+    #1B2A4E 0, #1B2A4E 1px,
+    transparent 1px, transparent 3px,
+    #1B2A4E 3px, #1B2A4E 5px,
+    transparent 5px, transparent 7px,
+    #1B2A4E 7px, #1B2A4E 8px,
+    transparent 8px, transparent 11px,
+    #1B2A4E 11px, #1B2A4E 12px,
+    transparent 12px, transparent 14px);
+  opacity: 0.55;
+  pointer-events: none;
+  border-bottom: 2px solid rgba(27,42,78,0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .patient-file-card { transition: none; }
+}
+@media (max-width: 480px) {
+  .patient-file-medical-bar { font-size: 16px; letter-spacing: 0.1em; padding: 7px 10px; gap: 8px; }
+  .patient-file-bar-title, .patient-file-bar-tag { font-size: 16px; }
+  .patient-file-meta { font-size: 16px; }
+  .patient-file-stamp { font-size: 16px; padding: 4px 10px; }
+}
+
 /* Marquee bandeau audacieux entre sections */
 .marquee-band {
   background: var(--gd-escape, #1B2A4E);
