@@ -146,32 +146,11 @@
       font-family:var(--font-display); letter-spacing:.02em;
     }
 
-    /* Scroll-snap MANDATORY uniquement à l'intérieur du rail des salles (desktop ≥901px).
-       En dehors du rail (hero, FAQ, footer…), scroll libre normal. */
-    @media (min-width: 901px) {
-      html {
-        scroll-padding-top: var(--header-h, 72px);
-      }
-      .salles-rail {
-        scroll-snap-type: y mandatory;
-        height: 100vh;
-        overflow-y: auto;
-        overscroll-behavior-y: auto;
-        scroll-padding-top: var(--header-h, 72px);
-      }
-      .salles-rail::-webkit-scrollbar { width:0; }
-      .salles-rail .salle-section {
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-        min-height: calc(100vh - var(--header-h, 72px));
-      }
-      .salles-rail .salle-section .salle-grid {
-        min-height: calc(100vh - var(--header-h, 72px)) !important;
-      }
-      .salles-rail .salle-section .salle-body {
-        max-height: calc(100vh - var(--header-h, 72px) - clamp(60px, 10vh, 120px)) !important;
-      }
-    }
+    /* Scroll naturel : pas de snap forcé. On garde juste le scroll-padding-top
+       pour les ancres (#in-prison, #psychiatric, #back-80s) qui doivent atterrir
+       sous le menu fixe. */
+    html { scroll-padding-top: var(--header-h, 72px); }
+    .salle-section { scroll-margin-top: var(--header-h, 72px); }
 
     /* ============================================================
        SALLE SECTION — cinéma immersif inspiré ledonjon.fr
@@ -499,8 +478,6 @@
     </div>
   </section>
 
-  <!-- RAIL DES SALLES — scroll-snap mandatory desktop, défilement classique mobile -->
-  <div class="salles-rail">
   <!-- SALLE 01: BACK TO THE 80'S -->
   <section class="section salle-section" id="back-80s" style="background:var(--dark);">
     <div class="salle-num-deco" aria-hidden="true">01</div>
@@ -674,8 +651,6 @@
       </div>
     </div>
   </section>
-  </div>
-  <!-- /RAIL DES SALLES -->
 
 <!-- PRICING QUICK -->
   <section class="section">
