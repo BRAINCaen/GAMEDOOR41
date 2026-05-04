@@ -1582,6 +1582,7 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 .room-cinema {
   position: relative;
   min-height: calc(100vh - var(--header-h, 72px));
+  height: calc(100vh - var(--header-h, 72px));
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -1595,24 +1596,24 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 .room-cinema-bg img {
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(0.42) saturate(1.05);
+  filter: brightness(0.38) saturate(1.05);
 }
 .room-cinema-overlay {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 75% center, rgba(12,8,0,0.92) 0%, rgba(12,8,0,0.55) 40%, rgba(12,8,0,0.2) 75%),
-    linear-gradient(180deg, rgba(12,8,0,0.4) 0%, transparent 30%, transparent 70%, rgba(12,8,0,0.85) 100%);
+    radial-gradient(ellipse at 30% center, rgba(12,8,0,0.4) 0%, rgba(12,8,0,0.78) 60%),
+    linear-gradient(180deg, rgba(12,8,0,0.3) 0%, transparent 25%, transparent 75%, rgba(12,8,0,0.7) 100%);
 }
 .room-cinema-poster {
   position: absolute;
-  left: clamp(20px, 4vw, 64px);
+  left: clamp(20px, 3vw, 56px);
   top: 50%;
   transform: translateY(-50%) rotate(-2deg);
   z-index: 2;
-  width: clamp(180px, 22vw, 320px);
+  width: clamp(160px, 18vw, 260px);
   display: block;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 8px 16px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 6px 14px rgba(0,0,0,0.4);
   border: 4px solid rgba(240, 235, 226, 0.92);
   border-radius: 4px;
   overflow: hidden;
@@ -1629,21 +1630,39 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 .room-cinema-container {
   position: relative; z-index: 3;
   width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
   display: flex;
   justify-content: flex-end;
-  padding: clamp(40px, 5vh, 72px) clamp(20px, 4vw, 48px);
+  padding: clamp(20px, 3vh, 40px) clamp(20px, 4vw, 48px);
   box-sizing: border-box;
 }
 .room-cinema-panel {
-  background: rgba(12, 8, 0, 0.7);
+  background: rgba(12, 8, 0, 0.72);
   backdrop-filter: blur(20px) saturate(1.1);
   -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border: 1px solid rgba(61, 93, 192, 0.22);
   border-radius: 14px;
-  padding: clamp(24px, 3vh, 38px) clamp(24px, 2.6vw, 36px);
-  max-width: 580px;
-  width: 100%;
+  padding: clamp(20px, 2.5vh, 32px) clamp(22px, 2.4vw, 34px);
+  width: clamp(560px, 58vw, 820px);
+  max-width: calc(100vw - clamp(40px, 8vw, 120px));
   box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 6px 18px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+/* Body en 2 colonnes pour casser la verticalité */
+.room-cinema-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  margin: 6px 0 14px;
+}
+.room-cinema-body > .room-cinema-col-left,
+.room-cinema-body > .room-cinema-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .room-cinema-panel-head {
   display: flex;
@@ -1670,16 +1689,16 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   border-radius: 50%;
 }
 .room-cinema-h2 {
-  font-size: clamp(1.6rem, 3vw, 2.2rem) !important;
-  margin: 0 0 6px !important;
+  font-size: clamp(1.5rem, 2.4vw, 2rem) !important;
+  margin: 0 0 4px !important;
   line-height: 1.05;
   color: var(--gd-cream, #F0EBE2);
 }
 .room-cinema-subtitle {
   color: var(--gd-escape-on-dark, #3D5DC0);
   font-family: var(--font-display);
-  font-size: 1rem;
-  margin: 0 0 14px;
+  font-size: 0.9375rem;
+  margin: 0 0 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -1687,9 +1706,11 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 .room-cinema-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 14px;
-  margin-bottom: 14px;
-  font-size: 1rem;
+  gap: 6px 12px;
+  margin-bottom: 10px;
+  font-size: 0.9375rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(61,93,192,0.15);
 }
 .room-cinema-meta span {
   display: inline-flex;
@@ -1699,25 +1720,27 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 }
 .room-cinema-pitch {
   color: var(--grey-light, #E8E2D6);
-  font-size: 1rem;
-  line-height: 1.45;
-  margin: 0 0 10px;
+  font-size: 0.9375rem;
+  line-height: 1.42;
+  margin: 0;
 }
 .room-cinema-quote {
-  margin: 10px 0 !important;
-  font-size: 1rem !important;
-  padding: 10px 14px !important;
+  margin: 0 !important;
+  font-size: 0.9375rem !important;
+  padding: 8px 12px !important;
+  line-height: 1.4;
 }
 .room-cinema-tag {
-  margin: 10px 0 !important;
-  font-size: 1rem !important;
+  margin: 0 !important;
+  font-size: 0.9375rem !important;
+  padding-left: 12px !important;
 }
 .room-cinema-final {
   color: var(--gd-cream, #F0EBE2);
   font-family: var(--font-display);
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-  margin: 12px 0 18px;
+  margin: 0;
   line-height: 1.35;
 }
 .room-cinema-final strong {
@@ -1729,14 +1752,23 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   gap: 14px;
   align-items: center;
   flex-wrap: wrap;
+  margin-top: 6px;
 }
 
-/* Mobile : poster masqué, panel pleine largeur */
+/* Tablet/Mobile : passage en 1 colonne */
 @media (max-width: 900px) {
-  .room-cinema { min-height: auto; padding: 60px 0; }
+  .room-cinema {
+    min-height: auto;
+    height: auto;
+    padding: 56px 0;
+  }
   .room-cinema-poster { display: none; }
   .room-cinema-container { justify-content: center; padding: 24px 16px; }
-  .room-cinema-panel { max-width: 100%; }
+  .room-cinema-panel { width: 100%; max-width: 100%; }
+  .room-cinema-body {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
   .room-cinema-overlay {
     background:
       radial-gradient(ellipse at center, rgba(12,8,0,0.85) 0%, rgba(12,8,0,0.6) 60%),
