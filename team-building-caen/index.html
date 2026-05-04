@@ -494,39 +494,58 @@
         <h2>Côté <span style="color:var(--orange);">opérationnel</span></h2>
       </div>
 
-      <div class="info-grid-magazine fade-in" style="margin-top:32px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">Devis sous 48h</h3>
+      <div class="tb-ops fade-in">
+
+        <a href="/devis/?type=entreprise&amp;occasion=teambuilding" class="tb-ops-card tb-ops-card-link" data-cat="primary">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/calendar.svg" alt=""></span>
+          <h3>Devis sous 48h</h3>
           <p>Réponse rapide pour caler dans vos process internes (validation N+1, comité achat, etc.).</p>
+          <span class="tb-ops-link">Demander un devis</span>
+        </a>
+
+        <div class="tb-ops-card">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/check.svg" alt=""></span>
+          <h3>Facture entreprise</h3>
+          <p>Facture nominative au nom de votre société, TVA 10% détaillée, déductible. Envoyée selon votre process compta.</p>
         </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">Facture entreprise</h3>
-          <p>Facture nominative au nom de votre société, TVA détaillée, déductible. Envoyée selon votre process compta.</p>
-        </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">Paiement entreprise</h3>
+
+        <div class="tb-ops-card">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/euro.svg" alt=""></span>
+          <h3>Paiement entreprise</h3>
           <p>Bon de commande, virement bancaire, CB. Acompte à la réservation, solde avant l'événement.</p>
         </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">ANCV &amp; CSE</h3>
+
+        <div class="tb-ops-card">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/heart.svg" alt=""></span>
+          <h3>ANCV &amp; CSE</h3>
           <p>Chèques ANCV et chèques cadeau CSE acceptés. Conventionné CSE de plusieurs groupes locaux.</p>
         </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">Privatisation totale</h3>
-          <p>Espace entièrement réservé pour votre groupe. 5 salles d'escape + plateau quiz à votre dispo.</p>
-        </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">Garantie report · 5€ TTC/activité</h3>
+
+        <a href="/devis/?type=entreprise&amp;occasion=teambuilding" class="tb-ops-card tb-ops-card-link">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/building.svg" alt=""></span>
+          <h3>Privatisation totale</h3>
+          <p>Espace entièrement réservé pour votre groupe : 5 salles d'escape + plateau quiz à votre dispo.</p>
+          <span class="tb-ops-link">Demander un devis</span>
+        </a>
+
+        <div class="tb-ops-card">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/star.svg" alt=""></span>
+          <h3>Garantie report · 5€ TTC</h3>
           <p>Option à la réservation à <strong>5€ TTC par activité</strong> : report sans justificatif si imprévu d'agenda. Sécurité pour vos engagements pris loin.</p>
         </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">5 min de Caen centre · direct périphérique</h3>
-          <p>41 bis rue Pasteur, 14120 Mondeville. <strong>Sortie périphérique Mondeville</strong>, grand parking gratuit, bus ligne 9, accessible depuis tout le bassin caennais.</p>
+
+        <div class="tb-ops-card">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/pin.svg" alt=""></span>
+          <h3>5 min de Caen centre</h3>
+          <p>41 bis rue Pasteur, 14120 Mondeville. <strong>Sortie périphérique Mondeville</strong>, grand parking gratuit, bus ligne 9.</p>
         </div>
-        <div class="info-card-mag">
-          <h3 style="font-size:1rem;">2 100 avis · 4.9/5</h3>
+
+        <div class="tb-ops-card">
+          <span class="tb-ops-icon" aria-hidden="true"><img src="/img/icons/trophy.svg" alt=""></span>
+          <h3>2 100 avis · 4.9/5</h3>
           <p>Des PME, grands groupes, banques régionales, collectivités, CSE — tous nous recommandent.</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -632,23 +651,23 @@
   <!-- ACCÈS ==================================================== -->
   <section class="section" style="padding:48px 0;background:var(--dark);">
     <div class="container">
-      <div class="fade-in" style="max-width:880px;">
+      <div class="fade-in" style="max-width:1100px;margin:0 auto;text-align:center;">
         <p class="kicker" style="color:var(--orange);margin-bottom:8px;">Logistique du jour J</p>
         <h2 style="font-size:1.3rem;margin-bottom:20px;">Accès &amp; stationnement</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
-          <div style="padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:18px;text-align:left;">
+          <div style="flex:1 1 220px;max-width:260px;padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
             <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Adresse</h3>
             <p style="color:var(--grey-light);font-size:0.95rem;">41 bis rue Pasteur<br>14120 Mondeville</p>
           </div>
-          <div style="padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <div style="flex:1 1 220px;max-width:260px;padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
             <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Transport</h3>
             <p style="color:var(--grey-light);font-size:0.95rem;">Bus ligne 9 à 2 min<br>5 min de Caen centre en voiture</p>
           </div>
-          <div style="padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <div style="flex:1 1 220px;max-width:260px;padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
             <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Parking</h3>
             <p style="color:var(--grey-light);font-size:0.95rem;">Grand parking gratuit sur place</p>
           </div>
-          <div style="padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
+          <div style="flex:1 1 220px;max-width:260px;padding:14px 16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
             <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Zone desservie</h3>
             <p style="color:var(--grey-light);font-size:0.95rem;">Caen, Mondeville, Hérouville, Ifs, Ouistreham, Lisieux, Bayeux, Falaise, toute l'agglomération caennaise et le Calvados.</p>
           </div>
