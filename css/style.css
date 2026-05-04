@@ -1884,6 +1884,77 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .escape-room-page .stats-band-inner { gap: 24px; }
 }
 
+/* Stats band — variant team building (même format que escape, accent orange) */
+.team-building-page .stats-band {
+  background: #110A05; /* dark orange-tinted */
+  color: var(--gd-cream, #F0EBE2);
+  padding: clamp(28px, 4vh, 52px) 0;
+  border-top: 1px solid rgba(224,112,32,0.45);
+  border-bottom: 1px solid rgba(224,112,32,0.45);
+  position: relative;
+  overflow: hidden;
+}
+.team-building-page .stats-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(224,112,32,0.20) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 50%, rgba(224,112,32,0.14) 0%, transparent 55%);
+  pointer-events: none;
+}
+.team-building-page .stats-band-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 56px);
+  flex-wrap: wrap;
+  text-align: center;
+}
+.team-building-page .stats-band-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  min-width: 150px;
+}
+.team-building-page .stats-band-item .num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--orange, #E07020);
+  display: inline-block;
+}
+.team-building-page .stats-band-item .num small {
+  font-size: 0.45em;
+  font-weight: 600;
+  color: rgba(224,112,32,0.6);
+  letter-spacing: 0;
+  margin-left: 2px;
+}
+.team-building-page .stats-band-item .label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240,235,226,0.7);
+  margin-top: 4px;
+}
+.team-building-page .stats-band-sep {
+  font-size: 22px;
+  color: var(--orange, #E07020);
+  font-weight: 900;
+  display: inline-block;
+  align-self: center;
+}
+@media (max-width: 720px) {
+  .team-building-page .stats-band-sep { display: none; }
+  .team-building-page .stats-band-inner { gap: 24px; }
+}
+
 /* ============================================================
    ROOM CINEMA — section salle full-bleed cinéma, panel flottant
    1 viewport, photo bg + affiche BRAIN flottante + panel translucide
