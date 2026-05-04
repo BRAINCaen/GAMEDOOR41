@@ -144,7 +144,7 @@
   }
   </script>
 </head>
-<body>
+<body class="escape-room-page">
 
   <header class="site-header scrolled" role="banner">
     <div class="nav-inner">
@@ -189,7 +189,7 @@
           </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content container">
-      <p class="kicker" style="color:var(--gd-escape-on-dark);">GAMEDOOR·41 · Caen</p>
+      <p class="kicker" style="color:var(--gd-escape-on-dark);">BRAIN · Caen</p>
       <h1>Escape Game Garde à Vue <span class="accent">à Caen</span></h1>
       <p class="subtitle">Notre salle d'enquête historique · 18 000+ joueurs depuis 2018</p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:24px;align-items:center;">
@@ -199,23 +199,39 @@
     </div>
   </section>
 
-  <!-- PROOF BAR -->
-  <div class="proof-strip" style="padding:20px 0;">
+  <!-- PROOF BAR — stats audacieuses XXL -->
+  <div class="proof-strip" style="padding:48px 0;">
     <div class="container">
-      <div class="proof-stats" style="gap:40px;">
+      <div class="proof-stats" style="gap:clamp(40px, 6vw, 80px);">
         <div class="proof-stat">
-          <div class="number" style="font-size:1.8rem;">4.9<small>/5</small></div>
-          <div class="label">Google (2 100 avis)</div>
+          <div class="number">4.9<small style="font-size:.5em;color:var(--grey);">/5</small></div>
+          <div class="label">Google · 2 100 avis</div>
         </div>
         <div class="proof-stat">
-          <div class="number" style="font-size:1.8rem;">18 000+</div>
-          <div class="label">joueur·euse·s accueilli·e·s</div>
+          <div class="number">18 000<small style="font-size:.5em;color:var(--grey);">+</small></div>
+          <div class="label">joueur·euse·s depuis 2018</div>
         </div>
         <div class="proof-stat">
-          <div class="number" style="font-size:1.8rem;">1-2</div>
-          <div class="label">niveau (Découverte / Intermédiaire)</div>
+          <div class="number">1-2</div>
+          <div class="label">Niveau · Découverte / Intermédiaire</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE BAND — bandeau audacieux qui défile -->
+  <div class="marquee-band" aria-hidden="true">
+    <div class="marquee-band-track">
+      <span>« Plus rien à perdre »</span><span class="accent">•</span>
+      <span>L'enquête dont vous êtes le suspect</span><span class="accent">•</span>
+      <span>Brian a disparu</span><span class="accent">•</span>
+      <span>Chantal attend sa retraite depuis 2017</span><span class="accent">•</span>
+      <span>60 minutes pour s'en sortir</span><span class="accent">•</span>
+      <span>« Plus rien à perdre »</span><span class="accent">•</span>
+      <span>L'enquête dont vous êtes le suspect</span><span class="accent">•</span>
+      <span>Brian a disparu</span><span class="accent">•</span>
+      <span>Chantal attend sa retraite depuis 2017</span><span class="accent">•</span>
+      <span>60 minutes pour s'en sortir</span><span class="accent">•</span>
     </div>
   </div>
 
@@ -224,7 +240,7 @@
   <section class="section" style="background:var(--dark);padding-top:60px;padding-bottom:60px;">
     <div class="container">
       <div class="section-header fade-in">
-        <h2>Une expérience historique <span class="text-orange">depuis 2018</span></h2>
+        <h2>Une expérience historique <span style="color:var(--gd-escape-on-dark);">depuis 2018</span></h2>
       </div>
       <div class="credibility-grid fade-in">
 
@@ -327,7 +343,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="kicker" style="color:var(--gd-escape-on-dark);">Comment ça se passe ?</p>
-        <h2>Votre escape en <span class="text-red">3 étapes</span></h2>
+        <h2>Votre escape en <span style="color:var(--gd-escape-on-dark);">3 étapes</span></h2>
       </div>
       <div class="info-bar fade-in" style="border:none;">
         <div class="info-item">
@@ -372,7 +388,7 @@
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
           <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Est-ce adapté aux entreprises et team building ?</h3>
-          <p style="color:var(--grey-light);">Oui. L'évasion demande communication, stratégie et cohésion — exactement ce qu'on attend d'un team building réussi. Parfait aussi pour un EVG ou un moment entre collègues. <a href="/devis/" style="color:var(--orange);">Devis en ligne</a> pour les groupes.</p>
+          <p style="color:var(--grey-light);">Oui. L'évasion demande communication, stratégie et cohésion — exactement ce qu'on attend d'un team building réussi. Parfait aussi pour un EVG ou un moment entre collègues. <a href="/devis/" style="color:var(--gd-escape-on-dark);">Devis en ligne</a> pour les groupes.</p>
         </div>
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
@@ -398,7 +414,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <p class="kicker" style="color:var(--gd-escape-on-dark);">Nos autres salles</p>
-        <h2>Envie d'un autre <span class="text-orange">univers</span> ?</h2>
+        <h2>Envie d'un autre <span style="color:var(--gd-escape-on-dark);">univers</span> ?</h2>
       </div>
       <div class="room-grid fade-in">
         <a href="/escape-game-caen/psychiatric/" class="room-card" style="text-decoration:none;">
@@ -435,7 +451,7 @@
             <h3>Back to the 80's</h3>
             <p style="color:var(--gd-escape-on-dark);font-style:italic;font-size:1rem;margin:4px 0 8px;">« Retour vers le fun »</p>
             <div class="room-card-meta">
-              <span style="color:var(--orange);"><img src="/img/icons/trophy.svg" class="gd-icon" alt="" aria-hidden="true"> Top 100 France</span>
+              <span style="color:var(--gd-escape-on-dark);"><img src="/img/icons/trophy.svg" class="gd-icon" alt="" aria-hidden="true"> Top 100 France</span>
               <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2-6 joueurs</span>
               <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 7 ans (avec adulte)</span>
             </div>
@@ -450,33 +466,33 @@
     </div>
   </section>
 
-  <!-- FRICTION REDUCTION -->
-  <section class="section" style="padding:40px 0;">
+  <!-- FRICTION REDUCTION — magazine bento avec numéros décoratifs -->
+  <section class="section" style="padding:48px 0;">
     <div class="container">
-      <div class="section-header fade-in" style="margin-bottom:24px;">
-        <p class="kicker" style="color:var(--gd-escape-on-dark);">Avant de réserver</p>
-        <h2>À savoir</h2>
+      <div class="section-header-editorial fade-in" data-num="05">
+        <p class="kicker">Avant de réserver</p>
+        <h2>À savoir avant de débarquer<br><span style="color:var(--gd-escape-on-dark);">au commissariat</span></h2>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto;" class="fade-in">
-        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
-          <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Débutant·e motivé·e ? OK.</h3>
-          <p style="color:var(--grey-light);font-size:1rem;">Niveau 1 ou 2. Le game master vous guide en temps réel si besoin.</p>
+      <div class="info-grid-magazine fade-in">
+        <div class="info-card-mag" data-num="01">
+          <h3>Débutant·e motivé·e ? OK.</h3>
+          <p>Niveau 1 ou 2 (Découverte / Intermédiaire). Le game master vous guide en temps réel si besoin.</p>
         </div>
-        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
-          <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Communication essentielle</h3>
-          <p style="color:var(--grey-light);font-size:1rem;">Parlez-vous, partagez vos trouvailles. L'évasion est un travail d'équipe.</p>
+        <div class="info-card-mag" data-num="02">
+          <h3>Communication = clé</h3>
+          <p>Parlez-vous, partagez vos trouvailles. L'évasion est un travail d'équipe — Brian compte sur vous.</p>
         </div>
-        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
-          <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">En retard ?</h3>
-          <p style="color:var(--grey-light);font-size:1rem;">Prévenez-nous par téléphone. Le temps de jeu est réduit d'autant — chaque minute compte.</p>
+        <div class="info-card-mag" data-num="03">
+          <h3>À l'heure pile</h3>
+          <p>Nous n'ouvrons pas avant. En cas de retard, le temps de jeu est réduit d'autant. <strong>Garantie report en option</strong>.</p>
         </div>
-        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
-          <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Groupe / entreprise</h3>
-          <p style="color:var(--grey-light);font-size:1rem;">2-6 joueurs par bureau, 2 bureaux (jusqu'à 12 en duel). Idéal team building, EVG ou soirée entre ami·e·s. <strong>Garantie report en option</strong>.</p>
+        <div class="info-card-mag" data-num="04">
+          <h3>Groupe / entreprise</h3>
+          <p>2–6 joueurs par bureau, 2 bureaux (jusqu'à 12 en duel). Idéal team building, EVG ou soirée entre ami·e·s.</p>
         </div>
-        <div style="padding:16px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);">
-          <h3 style="font-size:1rem;margin-bottom:6px;color:var(--white);">Âge minimum : 10 ans</h3>
-          <p style="color:var(--grey-light);font-size:1rem;">Mineurs (10-13 ans) accompagnés obligatoirement d'un adulte. Dès 14 ans en autonomie. Ambiance polar humour noir, sans horreur — adapté aux familles motivées.</p>
+        <div class="info-card-mag" data-num="05">
+          <h3>Âge minimum : 10 ans</h3>
+          <p>Mineurs (10-13 ans) accompagnés obligatoirement d'un adulte. Dès 14 ans en autonomie. Polar humour noir, sans horreur — familles motivées bienvenues.</p>
         </div>
       </div>
     </div>
@@ -498,7 +514,7 @@
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="cta-banner fade-in">
-        <h2>Prêts pour la <span class="text-red">garde à vue</span> ?</h2>
+        <h2>Prêts pour la <span style="color:var(--gd-escape-on-dark);">garde à vue</span> ?</h2>
         <p>Choisissez votre créneau et réservez en ligne. Paiement en ligne sécurisé. <strong>Garantie report en option</strong> · <strong>Arrivez à l'heure pile : nous n'ouvrons pas avant</strong>.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-reserver-garde-a-vue">Réserver maintenant</a>

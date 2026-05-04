@@ -456,7 +456,7 @@ body.menu-open { overflow: hidden; }
   border-radius: 4px;
   margin-bottom: 8px;
 }
-.badge-escape { background: var(--red); color: white; }
+.badge-escape { background: var(--gd-escape, #1B2A4E); color: var(--gd-cream, #F0EBE2); }
 .badge-quiz { background: var(--cyan); color: var(--black); }
 .badge-soon { background: var(--orange); color: white; }
 .exp-card h3 { margin-bottom: 6px; }
@@ -1409,7 +1409,7 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   font-family: var(--font-display, 'Barlow Condensed'), sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--orange, #E07020);
+  color: var(--gd-escape-on-dark, #3D5DC0);
 }
 .price-block .price-main small {
   font-weight: 400;
@@ -1421,4 +1421,152 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   color: rgba(232, 226, 214, 0.7);
   font-style: italic;
   line-height: 1.4;
+}
+
+/* ============================================================
+   ESCAPE ROOM PAGE — overrides DS strict (zéro orange/rouge,
+   accent escape navy uniquement) + patterns éditoriaux audacieux
+   ============================================================ */
+.escape-room-page .kicker { color: var(--gd-escape-on-dark, #3D5DC0) !important; }
+.escape-room-page .proof-stat .number { color: var(--gd-escape-on-dark, #3D5DC0); }
+.escape-room-page .cta-banner {
+  background: linear-gradient(135deg, var(--dark) 0%, rgba(61,93,192,0.16) 100%);
+  border: 1px solid rgba(61, 93, 192, 0.22);
+}
+
+/* Proof strip audacieuse — grandes stats, layout asymétrique, hairline bleu */
+.escape-room-page .proof-strip {
+  background: linear-gradient(180deg, var(--black) 0%, rgba(61,93,192,0.04) 100%);
+  border-top: 1px solid rgba(61,93,192,0.12);
+  border-bottom: 1px solid rgba(61,93,192,0.12);
+}
+.escape-room-page .proof-stat .number {
+  font-size: clamp(2.6rem, 5.4vw, 4.8rem) !important;
+  letter-spacing: -0.02em;
+  line-height: .9;
+}
+.escape-room-page .proof-stat .label {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 13px;
+  color: var(--grey-light);
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* Magazine bento "À savoir" — décoratif, asymétrique, accent navy */
+.escape-room-page .info-grid-magazine {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.escape-room-page .info-card-mag {
+  position: relative;
+  padding: 28px 22px 22px;
+  background: linear-gradient(155deg, rgba(61,93,192,0.06) 0%, rgba(20,18,16,0.5) 65%);
+  border: 1px solid rgba(61,93,192,0.18);
+  border-radius: 12px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.escape-room-page .info-card-mag::before {
+  content: attr(data-num);
+  position: absolute;
+  top: -8px; right: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8vw, 88px);
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(61,93,192,0.14);
+  pointer-events: none;
+  z-index: -1;
+}
+.escape-room-page .info-card-mag:hover {
+  transform: translateY(-3px);
+  border-color: rgba(61,93,192,0.4);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.4);
+}
+.escape-room-page .info-card-mag h3 {
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: var(--gd-cream, #F0EBE2);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.escape-room-page .info-card-mag p {
+  color: var(--grey-light);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Marquee bandeau audacieux entre sections */
+.marquee-band {
+  background: var(--gd-escape, #1B2A4E);
+  color: var(--gd-cream, #F0EBE2);
+  padding: 18px 0;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  border-top: 1px solid rgba(61,93,192,0.4);
+  border-bottom: 1px solid rgba(61,93,192,0.4);
+}
+.marquee-band-track {
+  display: inline-block;
+  animation: marquee-slide 32s linear infinite;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(20px, 2.5vw, 32px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.marquee-band-track span {
+  display: inline-block;
+  padding: 0 clamp(20px, 3vw, 40px);
+}
+.marquee-band-track .accent { color: var(--gd-escape-on-dark, #3D5DC0); }
+@keyframes marquee-slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-band-track { animation: none; }
+}
+
+/* Section header éditorial avec numéro décoratif */
+.escape-room-page .section-header-editorial {
+  position: relative;
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto 32px;
+  padding-left: clamp(20px, 6vw, 80px);
+}
+.escape-room-page .section-header-editorial::before {
+  content: attr(data-num);
+  position: absolute;
+  top: -12px; left: -8px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(80px, 12vw, 160px);
+  line-height: 0.9;
+  color: rgba(61,93,192,0.12);
+  pointer-events: none;
+  z-index: -1;
+}
+.escape-room-page .section-header-editorial .kicker {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1px solid rgba(61,93,192,0.4);
+  border-radius: 999px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+.escape-room-page .section-header-editorial h2 {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  line-height: 1.1;
+  margin: 0;
 }
