@@ -1575,6 +1575,145 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .escape-room-page .stats-band-inner { gap: 24px; }
 }
 
+/* ============================================================
+   DOSSIER D'ENQUÊTE — pièces à conviction style police board
+   3 polaroids inclinés avec stamps + tape + hover qui redresse
+   ============================================================ */
+.dossier-band {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(61,93,192,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(61,93,192,0.04) 0%, transparent 55%),
+    var(--dark, #1a1410);
+  position: relative;
+  overflow: hidden;
+}
+.dossier-band::before {
+  /* texture papier subtile */
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 3px, rgba(255,255,255,0.01) 4px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 3px, rgba(255,255,255,0.01) 4px);
+  pointer-events: none;
+}
+.dossier-band-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+.dossier-band-header .kicker {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+.dossier-band-title {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+.dossier-band-sub {
+  color: var(--grey-light);
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+}
+.dossier-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+@media (max-width: 760px) {
+  .dossier-photos { grid-template-columns: 1fr; gap: 60px; }
+}
+.dossier-photo {
+  position: relative;
+  background: #F0EBE2;
+  padding: 14px 14px 50px;
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform .35s cubic-bezier(.2,.8,.3,1.2), box-shadow .35s ease;
+  cursor: pointer;
+  margin: 0;
+}
+.dossier-photo-1 { transform: rotate(-3.5deg); }
+.dossier-photo-2 { transform: rotate(2deg) translateY(8px); }
+.dossier-photo-3 { transform: rotate(-1.5deg); }
+.dossier-photo:hover {
+  transform: rotate(0deg) translateY(-8px) scale(1.04);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.65), 0 0 0 2px rgba(61,93,192,0.4), 0 0 40px rgba(61,93,192,0.3);
+  z-index: 2;
+}
+.dossier-photo picture,
+.dossier-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 2px;
+  filter: grayscale(0.15) contrast(1.05);
+  transition: filter .35s ease;
+}
+.dossier-photo:hover img { filter: grayscale(0) contrast(1.1); }
+.dossier-stamp {
+  position: absolute;
+  bottom: 10px; left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(27, 42, 78, 0.78);
+  padding: 4px 12px;
+  border: 2px solid rgba(27, 42, 78, 0.65);
+  border-radius: 3px;
+  white-space: nowrap;
+  background: rgba(240, 235, 226, 0.6);
+}
+/* Ruban adhésif aux coins */
+.dossier-tape {
+  position: absolute;
+  width: 64px; height: 22px;
+  background: rgba(240, 235, 226, 0.55);
+  border-left: 1px dashed rgba(180, 174, 160, 0.4);
+  border-right: 1px dashed rgba(180, 174, 160, 0.4);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+.dossier-tape-tl { top: -10px; left: -10px; transform: rotate(-32deg); }
+.dossier-tape-tr { top: -10px; right: -10px; transform: rotate(28deg); }
+.dossier-tape-bl { bottom: 30px; left: -10px; transform: rotate(38deg); }
+.dossier-tape-br { bottom: 30px; right: -10px; transform: rotate(-30deg); }
+
+.dossier-band-classified {
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(198, 40, 40, 0.55);
+  padding: 8px 16px;
+  border-top: 1px dashed rgba(198, 40, 40, 0.3);
+  border-bottom: 1px dashed rgba(198, 40, 40, 0.3);
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dossier-photo { transition: none; }
+}
+
 /* Marquee bandeau audacieux entre sections */
 .marquee-band {
   background: var(--gd-escape, #1B2A4E);
