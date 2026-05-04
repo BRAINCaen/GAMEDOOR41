@@ -920,26 +920,91 @@
 
   <script src="/js/main.js"></script>
   <script>
-  // Carrousel univers Plateau TV — boucle infinie continue (marquee).
-  // Clone le set de cartes une fois pour que l'animation CSS translateX(-50%) reboucle sans couture.
+  // Carrousel univers Plateau TV — auto-scroll continu en boucle infinie + flèches prev/next + drag
   (function () {
     var root = document.querySelector('[data-tv-carousel]');
     if (!root) return;
+    var viewport = root.querySelector('[data-tv-viewport]');
     var track = root.querySelector('[data-tv-track]');
-    if (!track) return;
+    var prev = root.querySelector('[data-tv-prev]');
+    var next = root.querySelector('[data-tv-next]');
+    if (!viewport || !track) return;
 
+    // Clone le set complet une fois pour permettre la boucle sans couture
     var originals = Array.prototype.slice.call(track.children);
     if (originals.length === 0) return;
-
     originals.forEach(function (node) {
       var clone = node.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
-      // Coupe les liens/focus dans le clone pour éviter les doublons sémantiques
       Array.prototype.forEach.call(clone.querySelectorAll('a, button, [tabindex]'), function (el) {
         el.setAttribute('tabindex', '-1');
       });
       track.appendChild(clone);
     });
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SPEED = 0.7; // px par frame (~42px/s à 60fps)
+    var paused = reduceMotion;
+    var rafId = null;
+
+    function tick() {
+      if (!paused) {
+        viewport.scrollLeft += SPEED;
+        var half = track.scrollWidth / 2;
+        if (half > 0 && viewport.scrollLeft >= half) {
+          viewport.scrollLeft -= half;
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+    if (!reduceMotion) rafId = requestAnimationFrame(tick);
+
+    function pause()  { paused = true;  }
+    function resume() { paused = reduceMotion ? true : false; }
+
+    viewport.addEventListener('mouseenter', pause);
+    viewport.addEventListener('mouseleave', resume);
+    viewport.addEventListener('focusin',  pause);
+    viewport.addEventListener('focusout', resume);
+
+    // Step nav (prev / next)
+    function step() {
+      var first = track.querySelector('.tv-card');
+      if (!first) return 320;
+      var rect = first.getBoundingClientRect();
+      var trackStyle = window.getComputedStyle(track);
+      var gap = parseInt(trackStyle.columnGap || trackStyle.gap || 18, 10) || 18;
+      return rect.width + gap;
+    }
+    function nudgeAndResume(delta) {
+      pause();
+      viewport.scrollBy({ left: delta, behavior: 'smooth' });
+      // Reprend l'auto-scroll après l'animation smooth
+      window.clearTimeout(nudgeAndResume._t);
+      nudgeAndResume._t = window.setTimeout(resume, 700);
+    }
+    if (prev) prev.addEventListener('click', function () { nudgeAndResume(-step()); });
+    if (next) next.addEventListener('click', function () { nudgeAndResume( step()); });
+
+    // Drag-to-scroll
+    var isDown = false, startX = 0, startScroll = 0, dragged = false;
+    viewport.addEventListener('mousedown', function (e) {
+      isDown = true; dragged = false; pause();
+      startX = e.pageX; startScroll = viewport.scrollLeft;
+      viewport.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mouseup', function () {
+      if (isDown) { isDown = false; viewport.style.cursor = ''; resume(); }
+    });
+    viewport.addEventListener('mousemove', function (e) {
+      if (!isDown) return;
+      var dx = e.pageX - startX;
+      if (Math.abs(dx) > 4) dragged = true;
+      viewport.scrollLeft = startScroll - dx;
+    });
+    viewport.addEventListener('click', function (e) {
+      if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; }
+    }, true);
   })();
   </script>
   <style>
