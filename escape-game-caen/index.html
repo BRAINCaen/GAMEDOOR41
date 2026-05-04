@@ -153,6 +153,71 @@
     .salle-section { scroll-margin-top: var(--header-h, 72px); }
 
     /* ============================================================
+       CROSS-SELL QUIZ — bandeau sous les salles, couleur sous-marque ·QUIZ
+       ============================================================ */
+    .quiz-cross-sell {
+      position:relative; overflow:hidden; isolation:isolate;
+      padding:clamp(56px, 10vh, 120px) 0;
+      background:#0C0800;
+    }
+    .quiz-cross-sell-bg {
+      position:absolute; inset:0; z-index:0; display:block;
+    }
+    .quiz-cross-sell-bg img {
+      width:100%; height:100%;
+      object-fit:cover;
+      filter:brightness(.45) saturate(1.15);
+    }
+    .quiz-cross-sell-overlay {
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:
+        radial-gradient(ellipse at 25% center, rgba(157,78,221,0.42) 0%, transparent 50%),
+        linear-gradient(90deg, rgba(12,8,0,0.88) 0%, rgba(12,8,0,0.55) 55%, rgba(12,8,0,0.25) 100%);
+    }
+    .quiz-cross-sell-content {
+      position:relative; z-index:2; max-width:720px;
+    }
+    .quiz-kicker {
+      display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-size:16px; font-weight:700; letter-spacing:.32em; text-transform:uppercase;
+      color:#B070E5;
+      border-top:1px solid rgba(176,112,229,.5); border-bottom:1px solid rgba(176,112,229,.5);
+      padding:6px 14px; margin-bottom:16px;
+    }
+    .quiz-headline {
+      font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-weight:900; text-transform:uppercase;
+      font-size:clamp(2rem, 4.4vw, 3rem);
+      line-height:1.05; color:#F0EBE2;
+      margin:0 0 14px; letter-spacing:-.5px;
+    }
+    .quiz-accent { color:#B070E5; }
+    .quiz-pitch {
+      color:#E8E2D6; font-size:1.05rem; line-height:1.55;
+      margin:0 0 18px;
+    }
+    .quiz-meta {
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-bottom:22px;
+    }
+    .quiz-meta span {
+      color:#E8E2D6; font-size:1rem;
+      background:rgba(157,78,221,0.14);
+      border:1px solid rgba(176,112,229,0.32);
+      padding:6px 14px; border-radius:999px;
+    }
+    .quiz-cta { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .quiz-cta .btn-quiz { box-shadow:0 0 24px rgba(157,78,221,0.4); }
+
+    @media (max-width: 760px) {
+      .quiz-cross-sell-overlay {
+        background:
+          radial-gradient(ellipse at center 70%, rgba(157,78,221,0.4) 0%, transparent 65%),
+          linear-gradient(180deg, rgba(12,8,0,0.45) 0%, rgba(12,8,0,0.85) 100%);
+      }
+    }
+
+    /* ============================================================
        SALLE SECTION — cinéma immersif inspiré ledonjon.fr
        Chaque salle = 1 viewport. Vidéo full-bleed en fond.
        Panel translucide latéral avec tout le contenu.
@@ -647,6 +712,33 @@
             <span style="font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--orange);">Dès 24€ <small style="font-weight:400;font-size:1rem;color:var(--grey);">/pers.</small></span>
           </div>
           <p style="color:var(--grey);font-style:italic;font-size:1rem;margin-top:16px;">Frisson et tension psychologique</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CROSS-SELL QUIZ GAME — pousse vers la sous-marque ·QUIZ après les salles escape -->
+  <section class="quiz-cross-sell" aria-labelledby="quiz-cross-sell-h">
+    <picture class="quiz-cross-sell-bg">
+      <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
+      <source type="image/webp" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.webp 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.webp 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.webp 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.webp 1400w" sizes="100vw">
+      <img src="/img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="100vw" alt="Plateau TV Quiz Game Buzz Your Brain — GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+    </picture>
+    <div class="quiz-cross-sell-overlay" aria-hidden="true"></div>
+    <div class="container">
+      <div class="quiz-cross-sell-content fade-in">
+        <span class="quiz-kicker">Aussi chez GAMEDOOR·41</span>
+        <h2 id="quiz-cross-sell-h" class="quiz-headline">Découvrez aussi notre <span class="quiz-accent">plateau TV Quiz Game</span></h2>
+        <p class="quiz-pitch">Un présentateur, des buzzers, des équipes — façon « N'oubliez pas les paroles » mais <strong>en vrai</strong>. De 4 à 40 joueurs, idéal pour anniversaires, EVJF, EVG, séminaires d'entreprise.</p>
+        <div class="quiz-meta">
+          <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 4 à 40 joueurs</span>
+          <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> ~90 min</span>
+          <span><img src="/img/icons/mic.svg" class="gd-icon" alt="" aria-hidden="true"> Présentateur + buzzers</span>
+          <span><img src="/img/icons/euro.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 22€/pers.</span>
+        </div>
+        <div class="quiz-cta">
+          <a href="/quiz-game-caen/" class="btn btn-quiz">Découvrir le Quiz Game</a>
+          <a href="https://braincaen.4escape.io/booking" class="btn btn-outline" target="_blank" rel="noopener">Réserver maintenant</a>
         </div>
       </div>
     </div>
