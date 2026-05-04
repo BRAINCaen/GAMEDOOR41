@@ -998,48 +998,26 @@
 
   <script src="/js/main.js"></script>
   <script>
-  // Carrousel univers Plateau TV — prev/next + drag-to-scroll
+  // Carrousel univers Plateau TV — boucle infinie continue (marquee).
+  // Clone le set de cartes une fois pour que l'animation CSS translateX(-50%) reboucle sans couture.
   (function () {
     var root = document.querySelector('[data-tv-carousel]');
     if (!root) return;
-    var viewport = root.querySelector('[data-tv-viewport]');
     var track = root.querySelector('[data-tv-track]');
-    var prev = root.querySelector('[data-tv-prev]');
-    var next = root.querySelector('[data-tv-next]');
-    if (!viewport || !track) return;
+    if (!track) return;
 
-    function step() {
-      var first = track.querySelector('.tv-card');
-      if (!first) return 320;
-      var rect = first.getBoundingClientRect();
-      // largeur d'une carte + gap (18px desktop / 14px mobile — approx via getBoundingClientRect du track)
-      var trackStyle = window.getComputedStyle(track);
-      var gap = parseInt(trackStyle.columnGap || trackStyle.gap || 18, 10) || 18;
-      return rect.width + gap;
-    }
-    if (prev) prev.addEventListener('click', function () { viewport.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    if (next) next.addEventListener('click', function () { viewport.scrollBy({ left:  step(), behavior: 'smooth' }); });
+    var originals = Array.prototype.slice.call(track.children);
+    if (originals.length === 0) return;
 
-    // Drag-to-scroll (souris)
-    var isDown = false, startX = 0, startScroll = 0, dragged = false;
-    viewport.addEventListener('mousedown', function (e) {
-      isDown = true; dragged = false;
-      startX = e.pageX; startScroll = viewport.scrollLeft;
-      viewport.style.cursor = 'grabbing';
+    originals.forEach(function (node) {
+      var clone = node.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      // Coupe les liens/focus dans le clone pour éviter les doublons sémantiques
+      Array.prototype.forEach.call(clone.querySelectorAll('a, button, [tabindex]'), function (el) {
+        el.setAttribute('tabindex', '-1');
+      });
+      track.appendChild(clone);
     });
-    window.addEventListener('mouseup', function () {
-      isDown = false; viewport.style.cursor = '';
-    });
-    viewport.addEventListener('mousemove', function (e) {
-      if (!isDown) return;
-      var dx = e.pageX - startX;
-      if (Math.abs(dx) > 4) dragged = true;
-      viewport.scrollLeft = startScroll - dx;
-    });
-    // Évite la navigation au mouse-up si on a fait glisser
-    viewport.addEventListener('click', function (e) {
-      if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; }
-    }, true);
   })();
   </script>
   <style>

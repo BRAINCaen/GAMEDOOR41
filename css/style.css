@@ -2707,41 +2707,44 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   font-size: 16px;
 }
 
-/* Carousel layout */
+/* Carousel layout — marquee infini en boucle */
 .tv-carousel {
   position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: stretch;
-  gap: 8px;
+  display: block;
 }
 .tv-viewport {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: 16px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
   /* fade edges */
-  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
 }
-.tv-viewport::-webkit-scrollbar { height: 8px; }
-.tv-viewport::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 999px; }
-.tv-viewport::-webkit-scrollbar-thumb { background: rgba(157,78,221,0.35); border-radius: 999px; }
 
 .tv-track {
   list-style: none;
-  margin: 0; padding: 8px 16px 18px;
+  margin: 0; padding: 8px 0 18px;
   display: flex;
   gap: 18px;
   align-items: stretch;
+  width: max-content;
+  animation: tv-marquee 90s linear infinite;
+  will-change: transform;
+}
+.tv-track:hover,
+.tv-track:focus-within {
+  animation-play-state: paused;
+}
+@keyframes tv-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tv-track { animation: none; width: 100%; flex-wrap: wrap; justify-content: center; }
 }
 
 /* Cards */
 .tv-card {
   --tv-accent: #9D4EDD;
   flex: 0 0 280px;
-  scroll-snap-align: start;
   display: flex; flex-direction: column;
   background: linear-gradient(180deg, rgba(20,14,28,0.85) 0%, rgba(12,10,18,0.95) 100%);
   border: 1px solid rgba(255,255,255,0.07);
@@ -2843,45 +2846,12 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   margin: 0;
 }
 
-/* Nav buttons */
-.tv-nav {
-  flex: 0 0 auto;
-  align-self: center;
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(157,78,221,0.45);
-  background: rgba(15,10,22,0.85);
-  color: var(--gd-cream, #F5EFE0);
-  font-size: 28px; line-height: 1;
-  cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center;
-  transition: background .25s ease, border-color .25s ease, transform .25s ease;
-  z-index: 5;
-}
-.tv-nav:hover {
-  background: var(--gd-quiz, #9D4EDD);
-  border-color: var(--gd-quiz, #9D4EDD);
-  color: #fff;
-  transform: scale(1.05);
-}
-.tv-nav:focus-visible {
-  outline: 2px solid var(--gd-quiz, #9D4EDD);
-  outline-offset: 2px;
-}
-
-/* Auto-marquee (subtle drift while not interacting) */
-@keyframes tv-drift {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-12px); }
-}
-.tv-track:not(:hover):not(:focus-within) {
-  animation: none; /* JS gère le défilement réel ; CSS reste calme. */
-}
+/* Nav buttons cachés en mode marquee continu */
+.tv-nav { display: none; }
 
 @media (max-width: 640px) {
   .tv-carousel-section { padding: 48px 0 40px; }
   .tv-card { flex-basis: 240px; }
   .tv-card-feature { flex-basis: 260px; }
-  .tv-nav { width: 38px; height: 38px; font-size: 22px; }
-  .tv-track { gap: 14px; padding: 8px 12px 16px; }
+  .tv-track { gap: 14px; padding: 8px 0 16px; animation-duration: 70s; }
 }
