@@ -50,7 +50,8 @@
     "provider": {
       "@type": "EntertainmentBusiness",
       "name": "GAMEDOOR•41",
-      "address": {"@type": "PostalAddress", "streetAddress": "41 bis rue Pasteur", "addressLocality": "Mondeville", "postalCode": "14120", "addressCountry": "FR"}
+      "address": {"@type": "PostalAddress", "streetAddress": "41 bis rue Pasteur", "addressLocality": "Mondeville", "postalCode": "14120", "addressCountry": "FR"},
+      "geo": {"@type": "GeoCoordinates", "latitude": 49.18125, "longitude": -0.31995}
     },
     "offers": {"@type": "Offer", "priceCurrency": "EUR", "price": "15", "description": "À partir de 15€ par personne (tarif dégressif selon le nombre de candidats)"},
     "interactionStatistic": {"@type": "InteractionCounter", "interactionType": "https://schema.org/PlayAction", "userInteractionCount": "13000"}
@@ -119,8 +120,8 @@
       },
       {
         "@type": "Question",
-        "name": "Peut-on personnaliser les questions ?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Oui ! Univers thématiques au choix (Disney, EVJF, Apéro, Kids…). Pour les EVJF/EVG, nous intégrons des questions sur les mariés (anecdotes, défis). Pour les entreprises, sur votre secteur, votre équipe, votre histoire. Envoyez-nous les infos à l'avance, on prépare votre session sur-mesure."}
+        "name": "Quelles thématiques de quiz proposez-vous ?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Plusieurs univers au choix selon votre groupe : Quiz Original (le mix ultime, format le plus demandé), Blind Test (tubes des années 80 à aujourd'hui), Quiz Disney, Quiz Apéro, Quiz EVJF/EVG (univers thème mariage avec défis et blind test mariage), Quiz Kids (dès 8 ans). Le chauffeur de salle adapte le ton et le rythme à votre groupe."}
       },
       {
         "@type": "Question",
@@ -419,28 +420,307 @@
         </div>
       </div>
 
-      <div class="info-grid-magazine fade-in" style="margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-        <div class="info-card-mag">
+      <div class="info-grid-magazine joker-grid fade-in" style="margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+        <div class="info-card-mag joker-card">
+          <div class="joker-art" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/joker-le-tricheur-480w.avif 480w, /img/quiz/joker-le-tricheur-768w.avif 768w, /img/quiz/joker-le-tricheur-1024w.avif 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <source type="image/webp" srcset="/img/quiz/joker-le-tricheur-480w.webp 480w, /img/quiz/joker-le-tricheur-768w.webp 768w, /img/quiz/joker-le-tricheur-1024w.webp 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <img src="/img/quiz/joker-le-tricheur-480w.png" alt="" loading="lazy" decoding="async" width="480" height="313">
+            </picture>
+          </div>
           <div style="margin-bottom:10px;font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gd-quiz);">▸ Joker · Vol</div>
           <h3 style="font-size:1rem;">Volez les points</h3>
           <p>Un candidat a buzzé juste ? Activez le joker et ses points sont à vous. <strong>Sadique mais tellement drôle.</strong></p>
         </div>
-        <div class="info-card-mag">
+        <div class="info-card-mag joker-card">
+          <div class="joker-art" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/joker-coup-de-pression-480w.avif 480w, /img/quiz/joker-coup-de-pression-768w.avif 768w, /img/quiz/joker-coup-de-pression-1024w.avif 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <source type="image/webp" srcset="/img/quiz/joker-coup-de-pression-480w.webp 480w, /img/quiz/joker-coup-de-pression-768w.webp 768w, /img/quiz/joker-coup-de-pression-1024w.webp 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <img src="/img/quiz/joker-coup-de-pression-480w.png" alt="" loading="lazy" decoding="async" width="480" height="313">
+            </picture>
+          </div>
           <div style="margin-bottom:10px;font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gd-quiz);">▸ Joker · Force</div>
           <h3 style="font-size:1rem;">Forcez la réponse</h3>
           <p>Désignez un candidat et obligez-le à répondre. <strong>S'il se trompe, vos points montent.</strong></p>
         </div>
-        <div class="info-card-mag">
+        <div class="info-card-mag joker-card">
+          <div class="joker-art" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/joker-gel-de-cerveau-480w.avif 480w, /img/quiz/joker-gel-de-cerveau-768w.avif 768w, /img/quiz/joker-gel-de-cerveau-1024w.avif 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <source type="image/webp" srcset="/img/quiz/joker-gel-de-cerveau-480w.webp 480w, /img/quiz/joker-gel-de-cerveau-768w.webp 768w, /img/quiz/joker-gel-de-cerveau-1024w.webp 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <img src="/img/quiz/joker-gel-de-cerveau-480w.png" alt="" loading="lazy" decoding="async" width="480" height="313">
+            </picture>
+          </div>
           <div style="margin-bottom:10px;font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gd-quiz);">▸ Joker · Bloc</div>
           <h3 style="font-size:1rem;">Bloquez le buzzer</h3>
           <p>Empêchez vos adversaires de répondre pendant un tour. <strong>Le silence est d'or.</strong></p>
         </div>
-        <div class="info-card-mag">
+        <div class="info-card-mag joker-card">
+          <div class="joker-art" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/quiz/joker-le-petit-joueur-480w.avif 480w, /img/quiz/joker-le-petit-joueur-768w.avif 768w, /img/quiz/joker-le-petit-joueur-1024w.avif 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <source type="image/webp" srcset="/img/quiz/joker-le-petit-joueur-480w.webp 480w, /img/quiz/joker-le-petit-joueur-768w.webp 768w, /img/quiz/joker-le-petit-joueur-1024w.webp 1024w" sizes="(max-width:480px) 60vw, 220px">
+              <img src="/img/quiz/joker-le-petit-joueur-480w.png" alt="" loading="lazy" decoding="async" width="480" height="313">
+            </picture>
+          </div>
           <div style="margin-bottom:10px;font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gd-quiz);">▸ Joker · 50/50</div>
           <h3 style="font-size:1rem;">Une chance sur deux</h3>
           <p>Pile ou face. Soit tu rafles tout, soit tu perds tout. <strong>À toi de juger si tu te sens chanceux.</strong></p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ========= CARROUSEL UNIVERS THÉMATIQUES — Plateau TV ========= -->
+  <section class="tv-carousel-section" aria-label="Univers thématiques du quiz">
+    <div class="container container-wide">
+
+      <div class="tv-onair-bar fade-in" role="presentation">
+        <span class="tv-led" aria-hidden="true"></span>
+        <span class="tv-onair">ON&nbsp;AIR</span>
+        <span class="tv-sep" aria-hidden="true">·</span>
+        <span class="tv-channel">CH&nbsp;41</span>
+        <span class="tv-sep" aria-hidden="true">·</span>
+        <span class="tv-channel">QUIZ&nbsp;THÉMATIQUE</span>
+        <span class="tv-sep tv-sep-flex" aria-hidden="true"></span>
+        <span class="tv-time">60&nbsp;MIN</span>
+      </div>
+
+      <div class="section-header-editorial fade-in" data-num="04">
+        <p class="kicker">Programme du jour</p>
+        <h2>Choisissez votre <span style="color:var(--gd-quiz);">émission</span></h2>
+      </div>
+      <p class="tv-lead fade-in">Plus de 10 univers au choix. Le chauffeur de salle adapte le rythme et le ton à votre groupe — anniv', EVJF, séminaire, soirée entre potes.</p>
+
+      <div class="tv-carousel" data-tv-carousel>
+        <button type="button" class="tv-nav tv-nav-prev" aria-label="Programme précédent" data-tv-prev>‹</button>
+        <div class="tv-viewport" data-tv-viewport>
+          <ul class="tv-track" data-tv-track role="list">
+
+            <!-- 1. Blind Test (affiche premium 100%) -->
+            <li class="tv-card tv-card-feature" data-univers="blindtest" style="--tv-accent:#9D4EDD;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/affiche-blindtest-100-violette-480w.avif 480w, /img/quiz/affiche-blindtest-100-violette-768w.avif 768w, /img/quiz/affiche-blindtest-100-violette-1024w.avif 1024w" sizes="(max-width:768px) 80vw, 360px">
+                  <source type="image/webp" srcset="/img/quiz/affiche-blindtest-100-violette-480w.webp 480w, /img/quiz/affiche-blindtest-100-violette-768w.webp 768w, /img/quiz/affiche-blindtest-100-violette-1024w.webp 1024w" sizes="(max-width:768px) 80vw, 360px">
+                  <img src="/img/quiz/affiche-blindtest-100-violette-768w.png" alt="100% Blind Test — quiz musical Buzz Your Brain Caen" loading="lazy" decoding="async" width="768" height="1024">
+                </picture>
+                <span class="tv-corner-tag">100% MUSIQUE</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Format star</span>
+                <h3>100% Blind Test</h3>
+                <p>Tubes 80→aujourd'hui, intros déformées, paroles modifiées. <strong>Toutes les époques sur la table.</strong></p>
+              </div>
+            </li>
+
+            <!-- 2. Blind Test 80's -->
+            <li class="tv-card" data-univers="80s" style="--tv-accent:#E07020;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-blindtest-80s-480w.avif 480w, /img/quiz/univers-quiz-blindtest-80s-768w.avif 768w, /img/quiz/univers-quiz-blindtest-80s-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-blindtest-80s-480w.webp 480w, /img/quiz/univers-quiz-blindtest-80s-768w.webp 768w, /img/quiz/univers-quiz-blindtest-80s-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-blindtest-80s-480w.png" alt="Quiz Blind Test années 80 — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">CH 80</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Blind Test</span>
+                <h3>Années 80</h3>
+                <p>Néons, mulets, synthés. Les hits qui ont fait danser papa-maman.</p>
+              </div>
+            </li>
+
+            <!-- 3. Blind Test 90's -->
+            <li class="tv-card" data-univers="90s" style="--tv-accent:#3D5DC0;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-blindtest-90s-480w.avif 480w, /img/quiz/univers-quiz-blindtest-90s-768w.avif 768w, /img/quiz/univers-quiz-blindtest-90s-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-blindtest-90s-480w.webp 480w, /img/quiz/univers-quiz-blindtest-90s-768w.webp 768w, /img/quiz/univers-quiz-blindtest-90s-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-blindtest-90s-480w.png" alt="Quiz Blind Test années 90 — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">CH 90</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Blind Test</span>
+                <h3>Années 90</h3>
+                <p>Pop FM, premiers boys-bands, eurodance. La décennie la plus karaoké.</p>
+              </div>
+            </li>
+
+            <!-- 4. Blind Test 2000's -->
+            <li class="tv-card" data-univers="2000s" style="--tv-accent:#9D4EDD;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-blindtest-2000s-480w.avif 480w, /img/quiz/univers-quiz-blindtest-2000s-768w.avif 768w, /img/quiz/univers-quiz-blindtest-2000s-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-blindtest-2000s-480w.webp 480w, /img/quiz/univers-quiz-blindtest-2000s-768w.webp 768w, /img/quiz/univers-quiz-blindtest-2000s-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-blindtest-2000s-480w.png" alt="Quiz Blind Test années 2000 — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">CH 00</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Blind Test</span>
+                <h3>Années 2000</h3>
+                <p>R&amp;B, rap français, pop teen. Le millénaire MTV est de retour.</p>
+              </div>
+            </li>
+
+            <!-- 5. Cinema -->
+            <li class="tv-card" data-univers="cinema" style="--tv-accent:#E07020;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-cinema-480w.avif 480w, /img/quiz/univers-quiz-cinema-768w.avif 768w, /img/quiz/univers-quiz-cinema-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-cinema-480w.webp 480w, /img/quiz/univers-quiz-cinema-768w.webp 768w, /img/quiz/univers-quiz-cinema-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-cinema-480w.png" alt="Quiz Cinéma — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">CINÉ</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Quiz vidéo</span>
+                <h3>Cinéma</h3>
+                <p>Extraits, répliques cultes, BO de films. Pour les vrais cinéphiles… et les autres.</p>
+              </div>
+            </li>
+
+            <!-- 6. Apéro -->
+            <li class="tv-card" data-univers="apero" style="--tv-accent:#9D4EDD;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-apero-480w.avif 480w, /img/quiz/univers-quiz-apero-768w.avif 768w, /img/quiz/univers-quiz-apero-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-apero-480w.webp 480w, /img/quiz/univers-quiz-apero-768w.webp 768w, /img/quiz/univers-quiz-apero-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-apero-480w.png" alt="Quiz Apéro — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">APÉRO</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Soirée</span>
+                <h3>Apéro</h3>
+                <p>Entre potes, ambiance détendue, défis loufoques. Le format zéro pression.</p>
+              </div>
+            </li>
+
+            <!-- 7. EVJF / EVG -->
+            <li class="tv-card" data-univers="evjf-evg" style="--tv-accent:#E07020;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-evjf-evg-480w.avif 480w, /img/quiz/univers-quiz-evjf-evg-768w.avif 768w, /img/quiz/univers-quiz-evjf-evg-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-evjf-evg-480w.webp 480w, /img/quiz/univers-quiz-evjf-evg-768w.webp 768w, /img/quiz/univers-quiz-evjf-evg-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-evjf-evg-480w.png" alt="Quiz EVJF EVG — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">MARIAGE</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Format mariage</span>
+                <h3>EVJF / EVG</h3>
+                <p>Défis, blind test mariage. <strong>Mariée·marié offert·e</strong> avec le code MARIAGE.</p>
+              </div>
+            </li>
+
+            <!-- 8. Kids -->
+            <li class="tv-card" data-univers="kids" style="--tv-accent:#9D4EDD;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-kids-480w.avif 480w, /img/quiz/univers-quiz-kids-768w.avif 768w, /img/quiz/univers-quiz-kids-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-kids-480w.webp 480w, /img/quiz/univers-quiz-kids-768w.webp 768w, /img/quiz/univers-quiz-kids-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-kids-480w.png" alt="Quiz Kids — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">KIDS · 8+</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Anniversaire</span>
+                <h3>Kids</h3>
+                <p>Dès 8 ans. Dessins animés, jeux vidéo, héros pop. Énigmes calibrées pour eux.</p>
+              </div>
+            </li>
+
+            <!-- 9. Ados -->
+            <li class="tv-card" data-univers="ados" style="--tv-accent:#3D5DC0;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-ados-480w.avif 480w, /img/quiz/univers-quiz-ados-768w.avif 768w, /img/quiz/univers-quiz-ados-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-ados-480w.webp 480w, /img/quiz/univers-quiz-ados-768w.webp 768w, /img/quiz/univers-quiz-ados-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-ados-480w.png" alt="Quiz Ados — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">ADOS</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Teen</span>
+                <h3>Ados</h3>
+                <p>TikTok, séries Netflix, hits du moment. Calibré pour les 12-17 ans.</p>
+              </div>
+            </li>
+
+            <!-- 10. Anglais -->
+            <li class="tv-card" data-univers="anglais" style="--tv-accent:#E07020;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-anglais-480w.avif 480w, /img/quiz/univers-quiz-anglais-768w.avif 768w, /img/quiz/univers-quiz-anglais-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-anglais-480w.webp 480w, /img/quiz/univers-quiz-anglais-768w.webp 768w, /img/quiz/univers-quiz-anglais-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-anglais-480w.png" alt="Quiz Anglais — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">EN</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Bilingue</span>
+                <h3>Anglais</h3>
+                <p>Pop culture US/UK, séries, musique. Idéal team building international.</p>
+              </div>
+            </li>
+
+            <!-- 11. Japon -->
+            <li class="tv-card" data-univers="japon" style="--tv-accent:#9D4EDD;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-japon-480w.avif 480w, /img/quiz/univers-quiz-japon-768w.avif 768w, /img/quiz/univers-quiz-japon-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-japon-480w.webp 480w, /img/quiz/univers-quiz-japon-768w.webp 768w, /img/quiz/univers-quiz-japon-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-japon-480w.png" alt="Quiz Japon — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">JP</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Pop culture</span>
+                <h3>Japon</h3>
+                <p>Mangas, animés, J-pop, jeux vidéo. Pour les vrais geeks et les curieux.</p>
+              </div>
+            </li>
+
+            <!-- 12. FA (Familles & Amis) -->
+            <li class="tv-card" data-univers="fa" style="--tv-accent:#3D5DC0;">
+              <div class="tv-screen">
+                <span class="tv-scanlines" aria-hidden="true"></span>
+                <picture>
+                  <source type="image/avif" srcset="/img/quiz/univers-quiz-fa-480w.avif 480w, /img/quiz/univers-quiz-fa-768w.avif 768w, /img/quiz/univers-quiz-fa-1024w.avif 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <source type="image/webp" srcset="/img/quiz/univers-quiz-fa-480w.webp 480w, /img/quiz/univers-quiz-fa-768w.webp 768w, /img/quiz/univers-quiz-fa-1024w.webp 1024w" sizes="(max-width:768px) 75vw, 320px">
+                  <img src="/img/quiz/univers-quiz-fa-480w.png" alt="Quiz Familles &amp; Amis — Buzz Your Brain Caen" loading="lazy" decoding="async" width="480" height="640">
+                </picture>
+                <span class="tv-corner-tag">FAMILLE</span>
+              </div>
+              <div class="tv-meta">
+                <span class="tv-kicker">▸ Tous âges</span>
+                <h3>Familles &amp; Amis</h3>
+                <p>Format intergénérationnel. Petits et grands à égalité sur les buzzers.</p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+        <button type="button" class="tv-nav tv-nav-next" aria-label="Programme suivant" data-tv-next>›</button>
+      </div>
+
+      <p class="tv-footer fade-in">▸ <strong>Le chauffeur de salle</strong> compose votre programme. Mix d'univers possible sur la même session.</p>
     </div>
   </section>
 
@@ -465,7 +745,7 @@
         <div class="info-item">
           <div class="icon"><span class="step-number">3</span></div>
           <h4>60 min de show</h4>
-          <p>Culture gé, blind test, questions personnalisées. Les buzzers claquent, l'ambiance monte. Classement final live.</p>
+          <p>3 manches, jokers diaboliques, blind test. Les buzzers claquent, l'ambiance monte. Classement final live.</p>
         </div>
       </div>
     </div>
@@ -498,8 +778,8 @@
         </div>
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Peut-on personnaliser les questions ?</h3>
-          <p style="color:var(--grey-light);">Oui ! Pour les <strong>EVJF/EVG</strong>, nous intégrons des questions sur les mariés (anecdotes, défis, blind test thème mariage). Pour les <strong>entreprises</strong>, des questions sur votre secteur, votre équipe, votre histoire. Contactez-nous pour personnaliser votre session.</p>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quelles thématiques de quiz proposez-vous ?</h3>
+          <p style="color:var(--grey-light);">Plusieurs <strong>univers au choix</strong> selon votre groupe : <strong style="color:var(--gd-quiz);">Quiz Original</strong> (le mix ultime, format le plus demandé), <strong>Blind Test</strong> (tubes des années 80 à aujourd'hui), <strong>Quiz Disney</strong>, <strong>Quiz Apéro</strong>, <strong>Quiz EVJF/EVG</strong> (univers thème mariage avec défis et blind test mariage), <strong>Quiz Kids</strong> (dès 8 ans). Le chauffeur de salle adapte le ton et le rythme à votre groupe.</p>
         </div>
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
@@ -595,7 +875,7 @@
               <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 4-16 candidats</span>
               <span><img src="/img/icons/ring.svg" class="gd-icon" alt="" aria-hidden="true"> Personnalisé</span>
             </div>
-            <p>Questions personnalisées sur les mariés. Anecdotes, défis, blind test. <strong>Place offerte pour la mariée·marié</strong> avec le code MARIAGE — déguisement fortement conseillé.</p>
+            <p>Univers thème mariage : défis et blind test sur le mariage. <strong>Place offerte pour la mariée·marié</strong> avec le code MARIAGE — déguisement fortement conseillé.</p>
             <div class="room-card-footer">
               <div class="room-price" style="color:var(--gd-quiz);">Dès 15€ <small>/pers.</small></div>
               <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" style="padding:10px 20px;font-size:1rem;">Réserver</a>
@@ -617,15 +897,15 @@
       <div class="info-grid-magazine fade-in">
         <div class="info-card-mag" data-num="01">
           <h3>Aucune culture générale requise</h3>
-          <p>Le chauffeur de salle adapte le niveau au groupe. Blind tests déformés, défis loufoques, jokers diaboliques : <strong>tout le monde a sa chance</strong>, dès 8 ans.</p>
+          <p>Le chauffeur de salle adapte le choix de l'émission au groupe. Blind tests déformés, défis loufoques, jokers diaboliques : <strong>tout le monde a sa chance</strong>.</p>
         </div>
         <div class="info-card-mag" data-num="02">
           <h3>EVJF / EVG · place offerte</h3>
-          <p>La <strong>mariée ou le marié joue gratuitement</strong> avec le code <strong style="color:var(--gd-quiz);">MARIAGE</strong>. Déguisement fortement conseillé. Questions personnalisées sur les mariés.</p>
+          <p>La <strong>mariée ou le marié joue gratuitement</strong> avec le code <strong style="color:var(--gd-quiz);">MARIAGE</strong>. Déguisement fortement conseillé. Univers thème mariage avec défis et blind test mariage.</p>
         </div>
         <div class="info-card-mag" data-num="03">
           <h3>Tarif entreprise · 15€ HT</h3>
-          <p>Tarif négocié pour entreprises, CSE, associations : <strong>15€/pers. (13,63€ HT)</strong> quel que soit le nombre de candidats. Privatisation possible, devis sur-mesure au-delà de 16.</p>
+          <p>Tarif négocié pour entreprises, CSE, associations : <strong>15€/pers. (13,63€ HT)</strong> quel que soit le nombre de candidats. Privatisation possible, devis sur-mesure au-delà de 16 avec activités escape game.</p>
         </div>
         <div class="info-card-mag" data-num="04">
           <h3>À l'heure pile</h3>
@@ -664,6 +944,32 @@
     </div>
   </section>
 
+  <!-- =====================================================
+       BANDEAU BRAIN HERITAGE — continuité Brain → GAMEDOOR·41
+  ===================================================== -->
+  <section class="heritage" aria-label="Continuité de l'équipe Brain Escape Game">
+    <div class="container container-wide">
+      <div class="heritage-band reveal">
+        <span class="heritage-eq"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></span>
+        <span class="heritage-sep" aria-hidden="true">·</span>
+        <span class="heritage-tag">
+          <img src="/img/icons/users.svg" alt="" aria-hidden="true" class="heritage-ico">
+          Même équipe
+        </span>
+        <span class="heritage-sep" aria-hidden="true">·</span>
+        <span class="heritage-tag">
+          <img src="/img/icons/pin.svg" alt="" aria-hidden="true" class="heritage-ico">
+          Même adresse
+        </span>
+        <span class="heritage-sep" aria-hidden="true">·</span>
+        <span class="heritage-tag">
+          <img src="/img/icons/gamepad.svg" alt="" aria-hidden="true" class="heritage-ico">
+          Plus de jeux
+        </span>
+      </div>
+    </div>
+  </section>
+
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="footer-grid">
@@ -691,6 +997,51 @@
   </div>
 
   <script src="/js/main.js"></script>
+  <script>
+  // Carrousel univers Plateau TV — prev/next + drag-to-scroll
+  (function () {
+    var root = document.querySelector('[data-tv-carousel]');
+    if (!root) return;
+    var viewport = root.querySelector('[data-tv-viewport]');
+    var track = root.querySelector('[data-tv-track]');
+    var prev = root.querySelector('[data-tv-prev]');
+    var next = root.querySelector('[data-tv-next]');
+    if (!viewport || !track) return;
+
+    function step() {
+      var first = track.querySelector('.tv-card');
+      if (!first) return 320;
+      var rect = first.getBoundingClientRect();
+      // largeur d'une carte + gap (18px desktop / 14px mobile — approx via getBoundingClientRect du track)
+      var trackStyle = window.getComputedStyle(track);
+      var gap = parseInt(trackStyle.columnGap || trackStyle.gap || 18, 10) || 18;
+      return rect.width + gap;
+    }
+    if (prev) prev.addEventListener('click', function () { viewport.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { viewport.scrollBy({ left:  step(), behavior: 'smooth' }); });
+
+    // Drag-to-scroll (souris)
+    var isDown = false, startX = 0, startScroll = 0, dragged = false;
+    viewport.addEventListener('mousedown', function (e) {
+      isDown = true; dragged = false;
+      startX = e.pageX; startScroll = viewport.scrollLeft;
+      viewport.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mouseup', function () {
+      isDown = false; viewport.style.cursor = '';
+    });
+    viewport.addEventListener('mousemove', function (e) {
+      if (!isDown) return;
+      var dx = e.pageX - startX;
+      if (Math.abs(dx) > 4) dragged = true;
+      viewport.scrollLeft = startScroll - dx;
+    });
+    // Évite la navigation au mouse-up si on a fait glisser
+    viewport.addEventListener('click', function (e) {
+      if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; }
+    }, true);
+  })();
+  </script>
   <style>
     @media (max-width: 768px) {
       .section > .container > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }

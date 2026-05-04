@@ -2492,3 +2492,396 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   line-height: 1.1;
   margin: 0;
 }
+
+/* =============================================================
+   HERITAGE BANNER — Brain → GAMEDOOR continuité (toutes pages)
+   Reprise du bandeau de la home (home-v33.css §02b) pour
+   l'afficher partout sur le site.
+   ============================================================= */
+.heritage {
+  background: var(--gd-black, #0a0a0a);
+  padding: clamp(40px, 6vw, 64px) 0;
+  border-top: 1px solid var(--hairline, rgba(255,255,255,.08));
+  border-bottom: 1px solid var(--hairline, rgba(255,255,255,.08));
+}
+.heritage-band {
+  position: relative;
+  isolation: isolate;
+  display: flex; align-items: center; flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 22px;
+  padding: 22px 32px;
+  border: 2px solid rgba(224, 112, 32, .35);
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(224,112,32,.08) 0%, rgba(224,112,32,.04) 50%, rgba(224,112,32,.08) 100%);
+  font-family: var(--gd-font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  font-size: 16px;
+  text-align: center;
+  color: var(--gd-orange, #E07020);
+  overflow: hidden;
+}
+.heritage-band::before,
+.heritage-band::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 110px;
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(224, 112, 32, .85) 25%,
+    rgba(255, 240, 200, 1) 50%,
+    rgba(224, 112, 32, .85) 75%,
+    transparent 100%);
+  filter: blur(2px);
+  offset-path: rect(0 100% 100% 0 round 8px);
+  offset-rotate: auto;
+  offset-anchor: center;
+  animation: heritage-star-travel 2.5s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+.heritage-band::after {
+  animation-delay: -1.25s;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 200, 110, .7) 25%,
+    rgba(255, 255, 230, 1) 50%,
+    rgba(255, 200, 110, .7) 75%,
+    transparent 100%);
+}
+@keyframes heritage-star-travel {
+  from { offset-distance: 0%; }
+  to   { offset-distance: 100%; }
+}
+@supports not (offset-path: rect(0 100% 100% 0 round 8px)) {
+  .heritage-band { border-color: var(--gd-orange, #E07020); }
+  .heritage-band::before, .heritage-band::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heritage-band::before, .heritage-band::after { animation: none; opacity: 0; }
+  .heritage-band { border-color: var(--gd-orange, #E07020); }
+}
+.heritage-band strong { font-weight: 900; }
+.heritage-band .heritage-tag {
+  color: var(--gd-cream, #F5EFE0);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.heritage-band .heritage-sep { color: var(--gd-orange, #E07020); opacity: .5; }
+.heritage-ico {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(94%) sepia(8%) saturate(248%) hue-rotate(13deg) brightness(101%) contrast(91%);
+  display: block;
+}
+@media (max-width: 720px) {
+  .heritage-band { padding: 18px 20px; gap: 8px 14px; letter-spacing: 1.5px; }
+}
+
+/* =============================================================
+   JOKER CARDS — visuel transparent sur les 4 cartes joker
+   (page quiz-game-caen, section "3 manches + jokers diaboliques")
+   ============================================================= */
+.joker-card { position: relative; overflow: hidden; }
+.joker-card .joker-art {
+  display: block;
+  margin: -8px -8px 12px;
+  aspect-ratio: 480 / 313;
+  background:
+    radial-gradient(ellipse at center, rgba(157,78,221,0.22) 0%, rgba(157,78,221,0.05) 60%, transparent 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.0) 60%, rgba(0,0,0,0.35) 100%);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.joker-card .joker-art picture,
+.joker-card .joker-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .5s ease;
+  filter: drop-shadow(0 8px 22px rgba(0,0,0,0.55));
+}
+.joker-card:hover .joker-art img {
+  transform: scale(1.06) rotate(-1deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .joker-card .joker-art img { transition: none; }
+  .joker-card:hover .joker-art img { transform: none; }
+}
+
+/* =============================================================
+   CARROUSEL UNIVERS — Plateau TV
+   (page quiz-game-caen, section "Programme du jour")
+   ============================================================= */
+.tv-carousel-section {
+  background:
+    radial-gradient(1200px 600px at 50% 0%, rgba(157,78,221,0.10), transparent 60%),
+    linear-gradient(180deg, rgba(10,8,16,0.6) 0%, rgba(8,6,12,0.95) 100%);
+  padding: 64px 0 56px;
+  position: relative;
+  overflow: hidden;
+}
+.tv-carousel-section::before {
+  /* léger fond "scanlines" CRT global */
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 2px,
+    rgba(255,255,255,0.018) 3px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.tv-carousel-section > .container { position: relative; z-index: 1; }
+
+/* ON AIR header bar */
+.tv-onair-bar {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 18px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(157,78,221,0.45);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(157,78,221,0.10), rgba(255,40,80,0.06) 50%, rgba(157,78,221,0.10));
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--gd-cream, #F5EFE0);
+  width: max-content;
+  max-width: 100%;
+}
+.tv-onair-bar .tv-led {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #ff2a4d;
+  box-shadow: 0 0 10px #ff2a4d, 0 0 20px rgba(255,42,77,0.6);
+  animation: tv-led-blink 1.6s ease-in-out infinite;
+  flex: 0 0 auto;
+}
+@keyframes tv-led-blink {
+  0%, 60% { opacity: 1; box-shadow: 0 0 10px #ff2a4d, 0 0 20px rgba(255,42,77,0.6); }
+  70% { opacity: 0.35; box-shadow: 0 0 4px #ff2a4d; }
+  100% { opacity: 1; box-shadow: 0 0 10px #ff2a4d, 0 0 20px rgba(255,42,77,0.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tv-onair-bar .tv-led { animation: none; }
+}
+.tv-onair-bar .tv-onair { color: #ff5577; }
+.tv-onair-bar .tv-channel { color: var(--gd-quiz, #9D4EDD); }
+.tv-onair-bar .tv-time { color: var(--gd-cream, #F5EFE0); margin-left: auto; }
+.tv-onair-bar .tv-sep { opacity: 0.45; color: var(--gd-cream, #F5EFE0); }
+.tv-onair-bar .tv-sep-flex { flex: 1; min-width: 0; }
+@media (max-width: 640px) {
+  .tv-onair-bar { font-size: 12px; padding: 8px 14px; gap: 8px; }
+  .tv-onair-bar .tv-time { margin-left: 0; }
+}
+
+.tv-lead {
+  color: var(--grey-light, #c9c2b8);
+  max-width: 720px;
+  margin: 12px 0 28px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+.tv-footer {
+  text-align: center;
+  margin-top: 28px;
+  color: var(--gd-cream, #F5EFE0);
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+/* Carousel layout */
+.tv-carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+  gap: 8px;
+}
+.tv-viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 16px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  /* fade edges */
+  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+.tv-viewport::-webkit-scrollbar { height: 8px; }
+.tv-viewport::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 999px; }
+.tv-viewport::-webkit-scrollbar-thumb { background: rgba(157,78,221,0.35); border-radius: 999px; }
+
+.tv-track {
+  list-style: none;
+  margin: 0; padding: 8px 16px 18px;
+  display: flex;
+  gap: 18px;
+  align-items: stretch;
+}
+
+/* Cards */
+.tv-card {
+  --tv-accent: #9D4EDD;
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, rgba(20,14,28,0.85) 0%, rgba(12,10,18,0.95) 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  position: relative;
+}
+.tv-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--tv-accent);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 0 1px var(--tv-accent), 0 0 28px -6px var(--tv-accent);
+}
+.tv-card-feature { flex-basis: 320px; }
+
+/* Screen (poster zone, TV-frame) */
+.tv-card .tv-screen {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #0a0612;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.tv-card .tv-screen picture,
+.tv-card .tv-screen img {
+  width: 100%; height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .8s ease;
+}
+.tv-card:hover .tv-screen img { transform: scale(1.05); }
+
+.tv-card .tv-scanlines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0.0) 0,
+    rgba(0,0,0,0.0) 2px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0.0) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+}
+/* Subtle vignette + screen flicker tint on hover */
+.tv-card .tv-screen::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 30%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Corner channel tag (CH 80, CINÉ, etc.) */
+.tv-card .tv-corner-tag {
+  position: absolute;
+  top: 10px; right: 10px;
+  z-index: 3;
+  padding: 4px 10px;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid var(--tv-accent);
+  color: var(--tv-accent);
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
+  text-shadow: 0 0 8px var(--tv-accent);
+}
+
+/* Meta block under poster */
+.tv-card .tv-meta { padding: 16px 18px 20px; }
+.tv-card .tv-kicker {
+  display: inline-block;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tv-accent);
+  margin-bottom: 8px;
+}
+.tv-card h3 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+  color: var(--gd-cream, #F5EFE0);
+  line-height: 1.2;
+}
+.tv-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--grey-light, #c9c2b8);
+  margin: 0;
+}
+
+/* Nav buttons */
+.tv-nav {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(157,78,221,0.45);
+  background: rgba(15,10,22,0.85);
+  color: var(--gd-cream, #F5EFE0);
+  font-size: 28px; line-height: 1;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease;
+  z-index: 5;
+}
+.tv-nav:hover {
+  background: var(--gd-quiz, #9D4EDD);
+  border-color: var(--gd-quiz, #9D4EDD);
+  color: #fff;
+  transform: scale(1.05);
+}
+.tv-nav:focus-visible {
+  outline: 2px solid var(--gd-quiz, #9D4EDD);
+  outline-offset: 2px;
+}
+
+/* Auto-marquee (subtle drift while not interacting) */
+@keyframes tv-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-12px); }
+}
+.tv-track:not(:hover):not(:focus-within) {
+  animation: none; /* JS gère le défilement réel ; CSS reste calme. */
+}
+
+@media (max-width: 640px) {
+  .tv-carousel-section { padding: 48px 0 40px; }
+  .tv-card { flex-basis: 240px; }
+  .tv-card-feature { flex-basis: 260px; }
+  .tv-nav { width: 38px; height: 38px; font-size: 22px; }
+  .tv-track { gap: 14px; padding: 8px 12px 16px; }
+}
