@@ -146,11 +146,11 @@
       font-family:var(--font-display); letter-spacing:.02em;
     }
 
-    /* Scroll naturel : pas de snap forcé. On garde juste le scroll-padding-top
-       pour les ancres (#in-prison, #psychiatric, #back-80s) qui doivent atterrir
-       sous le menu fixe. */
-    html { scroll-padding-top: var(--header-h, 72px); }
-    .salle-section { scroll-margin-top: var(--header-h, 72px); }
+    /* Scroll naturel : la section démarre dès le haut du viewport, le menu fixe
+       overlaie le bg image (effet full-bleed cinéma). Le panel a un margin-top qui
+       clear le menu pour que son contenu commence juste sous lui. */
+    html { scroll-padding-top: 0; }
+    .salle-section { scroll-margin-top: 0; }
 
     /* ============================================================
        CROSS-SELL QUIZ — bandeau sous les salles, couleur sous-marque ·QUIZ
@@ -822,7 +822,7 @@
         </a>
         <a href="/tarifs/" style="padding:24px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:var(--transition);">
           <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img src="/img/icons/euro.svg" class="gd-icon" alt="" aria-hidden="true"> Tarifs</h3>
-          <p style="color:var(--grey-light);font-size:1rem;">Dès 24€/pers. Tarif dégressif selon la taille du groupe. <strong style="color:var(--orange);">Nombreuses réductions</strong> : étudiant, demandeur d'emploi, offre EVJF/mariage, cartes <strong>Trip Normand · Cezam · PAN · CSE</strong>… — <span style="text-decoration:underline;">détails sur la page tarifs</span>. Paiement en ligne sécurisé.</p>
+          <p style="color:var(--grey-light);font-size:1rem;">Dès 24€/pers. Tarif dégressif selon la taille du groupe. <strong style="color:var(--orange);">Nombreuses réductions</strong> : étudiant, offre EVJF/mariage, cartes <strong>Trip Normand · Cezam · PAN · CSE</strong>… — <span style="text-decoration:underline;">détails sur la page tarifs</span>. Paiement en ligne sécurisé.</p>
         </a>
       </div>
     </div>
