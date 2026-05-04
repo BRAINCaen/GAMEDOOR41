@@ -1325,3 +1325,100 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
     font-size: 1rem;
   }
 }
+
+/* ============================================================
+   PATTERNS ÉDITORIAUX SALLES — tag bleu signature, quote block,
+   cross-link saga (L'HISTOIRE NARI), price block avec tarif réduit
+   ============================================================ */
+.tag-blue {
+  color: var(--gd-escape-on-dark, #3D5DC0);
+  font-style: italic;
+  font-size: 1.0625rem;
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--gd-escape-on-dark, #3D5DC0);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.quote-block {
+  background: rgba(61, 93, 192, 0.07);
+  padding: 0.875rem 1.25rem;
+  border-left: 3px solid var(--gd-escape-on-dark, #3D5DC0);
+  font-style: italic;
+  font-size: 1.0625rem;
+  margin: 1rem 0;
+  color: var(--grey-light, #E8E2D6);
+  border-radius: 0 6px 6px 0;
+}
+.crosslink-saga {
+  background: linear-gradient(135deg, #0C0800 0%, rgba(61,93,192,0.08) 100%);
+  color: #F0EBE2;
+  padding: clamp(48px, 6vh, 80px) clamp(20px, 3vw, 48px);
+  border-radius: 12px;
+  margin: 0 auto;
+  max-width: 1100px;
+  text-align: center;
+  border: 1px solid rgba(61, 93, 192, 0.18);
+}
+.crosslink-saga .crosslink-eyebrow {
+  color: var(--gd-escape-on-dark, #3D5DC0);
+  font-family: var(--font-display, 'Barlow Condensed'), sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.crosslink-saga h3 {
+  font-size: clamp(1.4rem, 2.4vw, 1.875rem);
+  margin: 0 0 1rem;
+  color: #F0EBE2;
+  line-height: 1.2;
+}
+.crosslink-saga p {
+  font-size: 1.0625rem;
+  margin: 0 auto 1.75rem;
+  color: rgba(240, 235, 226, 0.85);
+  max-width: 620px;
+  line-height: 1.55;
+}
+.crosslink-saga .btn-saga {
+  display: inline-block;
+  padding: 0.875rem 1.75rem;
+  border: 1px solid var(--gd-escape-on-dark, #3D5DC0);
+  color: var(--gd-escape-on-dark, #3D5DC0);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+.crosslink-saga .btn-saga:hover {
+  background: var(--gd-escape-on-dark, #3D5DC0);
+  color: #F0EBE2;
+  transform: translateY(-2px);
+}
+.price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+.price-block .price-main {
+  font-family: var(--font-display, 'Barlow Condensed'), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--orange, #E07020);
+}
+.price-block .price-main small {
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--grey, #999);
+}
+.price-block .price-reduced {
+  font-size: 1rem;
+  color: rgba(232, 226, 214, 0.7);
+  font-style: italic;
+  line-height: 1.4;
+}
