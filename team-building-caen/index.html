@@ -355,38 +355,101 @@
         <h2>Tarifs <span style="color:var(--orange);">transparents</span> · facture entreprise</h2>
       </div>
 
-      <div class="fade-in" style="margin-top:18px;display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border:1px solid rgba(224,112,32,0.45);border-radius:999px;background:rgba(224,112,32,0.08);font-family:var(--font-display, 'Barlow Condensed', sans-serif);font-weight:700;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);">
-        <span aria-hidden="true">●</span>
-        <span>Tarifs réservés aux professionnels</span>
+      <div class="fade-in" style="margin-top:20px;display:flex;justify-content:center;">
+        <span class="tb-pro-badge">
+          <span class="tb-pro-led" aria-hidden="true"></span>
+          Tarifs réservés aux professionnels
+        </span>
       </div>
 
-      <div class="info-grid-magazine fade-in" style="margin-top:24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
-        <div class="info-card-mag" style="border-left:3px solid #3D5DC0;">
-          <p class="kicker" style="color:#3D5DC0;margin-bottom:8px;">▸ Escape game</p>
-          <h3 style="font-size:1.4rem;color:var(--white);margin-bottom:2px;">17,50€ <small style="font-size:0.55em;color:var(--grey-light);font-weight:600;letter-spacing:0;">TTC / pers.</small></h3>
-          <p style="font-size:0.85rem;color:#3D5DC0;font-weight:700;letter-spacing:0.05em;margin-bottom:8px;">15,91€ HT · TVA 10%</p>
-          <p>Brief + 60 min de jeu + debrief par équipe. Jusqu'à 30 collaborateurs en simultané sur 5 salles.</p>
-        </div>
-        <div class="info-card-mag" style="border-left:3px solid var(--gd-quiz, #9D4EDD);">
-          <p class="kicker" style="color:var(--gd-quiz, #9D4EDD);margin-bottom:8px;">▸ Quiz game</p>
-          <h3 style="font-size:1.4rem;color:var(--white);margin-bottom:2px;">15€ <small style="font-size:0.55em;color:var(--grey-light);font-weight:600;letter-spacing:0;">TTC / pers.</small></h3>
-          <p style="font-size:0.85rem;color:var(--gd-quiz, #9D4EDD);font-weight:700;letter-spacing:0.05em;margin-bottom:8px;">13,64€ HT · TVA 10%</p>
-          <p>Quel que soit le nombre de candidats. 60 min sur le plateau TV.</p>
-        </div>
-        <div class="info-card-mag" style="border-left:3px solid var(--orange);">
-          <p class="kicker" style="color:var(--orange);margin-bottom:8px;">▸ Combo demi-journée</p>
-          <h3 style="font-size:1.4rem;color:var(--white);margin-bottom:8px;">Sur devis</h3>
-          <p>Escape + quiz, jusqu'à <strong>46 collaborateurs</strong> en simultané (30 escape sur 5 salles + 16 quiz). Privatisation totale possible.</p>
-        </div>
-        <div class="info-card-mag" style="border-left:3px solid var(--orange);">
-          <p class="kicker" style="color:var(--orange);margin-bottom:8px;">▸ Au-delà de 16</p>
-          <h3 style="font-size:1.05rem;margin-bottom:8px;">Devis sur-mesure</h3>
-          <p>Au-delà de 16 candidats, devis sur-mesure avec activités escape game pour absorber les gros effectifs.</p>
-        </div>
+      <div class="tb-tarifs fade-in">
+
+        <article class="tb-tarif-card" data-cat="escape">
+          <div class="tb-tarif-head">
+            <span class="tb-tarif-icon" aria-hidden="true">🚪</span>
+            <span class="tb-tarif-tag">Escape Game</span>
+          </div>
+          <div class="tb-tarif-prices">
+            <div class="tb-tarif-ttc">
+              <span class="tb-tarif-amount">17,50<span class="tb-tarif-currency">€</span></span>
+              <span class="tb-tarif-unit">TTC&nbsp;·&nbsp;par&nbsp;personne</span>
+            </div>
+            <div class="tb-tarif-ht">
+              <span class="tb-tarif-ht-amount">15,91€&nbsp;HT</span>
+              <span class="tb-tarif-ht-tva">TVA&nbsp;10%</span>
+            </div>
+          </div>
+          <div class="tb-tarif-meta">
+            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 1h30 par équipe</span>
+            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 30 max · 5 salles</span>
+          </div>
+          <p class="tb-tarif-desc">15 min accueil &amp; brief + <strong>60 min de jeu</strong> + 15 min débrief &amp; photo. Jusqu'à 30 collaborateurs en simultané sur les 5 salles physiques.</p>
+        </article>
+
+        <article class="tb-tarif-card" data-cat="quiz">
+          <div class="tb-tarif-head">
+            <span class="tb-tarif-icon" aria-hidden="true">🎤</span>
+            <span class="tb-tarif-tag">Quiz Game</span>
+          </div>
+          <div class="tb-tarif-prices">
+            <div class="tb-tarif-ttc">
+              <span class="tb-tarif-amount">15<span class="tb-tarif-currency">€</span></span>
+              <span class="tb-tarif-unit">TTC&nbsp;·&nbsp;par&nbsp;personne</span>
+            </div>
+            <div class="tb-tarif-ht">
+              <span class="tb-tarif-ht-amount">13,64€&nbsp;HT</span>
+              <span class="tb-tarif-ht-tva">TVA&nbsp;10%</span>
+            </div>
+          </div>
+          <div class="tb-tarif-meta">
+            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 1h30 d'émission</span>
+            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 4-16 candidats</span>
+          </div>
+          <p class="tb-tarif-desc">Quel que soit le nombre de candidats. <strong>60 min sur le plateau TV</strong>, 8 pupitres avec buzzers, chauffeur de salle live.</p>
+        </article>
+
+        <article class="tb-tarif-card" data-cat="combo">
+          <div class="tb-tarif-head">
+            <span class="tb-tarif-icon" aria-hidden="true">🎮</span>
+            <span class="tb-tarif-tag">Combo demi-journée</span>
+          </div>
+          <div class="tb-tarif-prices">
+            <div class="tb-tarif-ttc">
+              <span class="tb-tarif-amount tb-tarif-amount-text">Sur&nbsp;devis</span>
+              <span class="tb-tarif-unit">Format star séminaire</span>
+            </div>
+          </div>
+          <div class="tb-tarif-meta">
+            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 3 à 4h en tout</span>
+            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> Jusqu'à 46 pers.</span>
+          </div>
+          <p class="tb-tarif-desc">Escape + quiz en simultané : <strong>30 escape</strong> sur 5 salles + <strong>16 quiz</strong> sur le plateau TV. Privatisation totale possible.</p>
+        </article>
+
+        <article class="tb-tarif-card" data-cat="surmesure">
+          <div class="tb-tarif-head">
+            <span class="tb-tarif-icon" aria-hidden="true">📋</span>
+            <span class="tb-tarif-tag">Au-delà de 16</span>
+          </div>
+          <div class="tb-tarif-prices">
+            <div class="tb-tarif-ttc">
+              <span class="tb-tarif-amount tb-tarif-amount-text">Sur&nbsp;mesure</span>
+              <span class="tb-tarif-unit">Effectifs &gt; 16 collaborateurs</span>
+            </div>
+          </div>
+          <div class="tb-tarif-meta">
+            <span><img src="/img/icons/check.svg" class="gd-icon" alt="" aria-hidden="true"> Plusieurs créneaux</span>
+            <span><img src="/img/icons/check.svg" class="gd-icon" alt="" aria-hidden="true"> Privatisation</span>
+          </div>
+          <p class="tb-tarif-desc">Devis sur-mesure avec activités escape game pour absorber les gros effectifs sur la journée.</p>
+        </article>
+
       </div>
 
-      <p style="text-align:center;color:var(--grey-light);margin-top:24px;font-size:0.95rem;" class="fade-in">▸ <strong>Modes de paiement :</strong> bon de commande · virement · CB · ANCV · chèques cadeau CSE · facture entreprise (TVA 10% déductible).</p>
-      <p style="text-align:center;color:var(--grey);margin-top:8px;font-size:0.82rem;font-style:italic;" class="fade-in">Tarifs entreprise sur présentation d'un justificatif professionnel (Kbis, n° SIRET, bon de commande au nom de la société). Particuliers : voir <a href="/tarifs/" style="color:var(--orange);">grille tarifs publique</a>.</p>
+      <div class="tb-tarif-footnote fade-in">
+        <p class="tb-tarif-payment"><strong>Modes de paiement :</strong> bon de commande · virement · CB · ANCV · chèques cadeau CSE · facture entreprise (TVA 10% déductible).</p>
+        <p class="tb-tarif-disclaimer">Tarifs entreprise sur présentation d'un justificatif professionnel (Kbis, n°&nbsp;SIRET, bon de commande au nom de la société). Particuliers&nbsp;: voir <a href="/tarifs/">grille tarifs publique</a>.</p>
+      </div>
     </div>
   </section>
 

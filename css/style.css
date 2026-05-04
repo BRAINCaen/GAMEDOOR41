@@ -2071,6 +2071,245 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
 }
 
 /* ============================================================
+   TB TARIFS — section tarification entreprise
+   (page team-building-caen, section "Tarifs transparents")
+   ============================================================ */
+.tb-pro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1px solid rgba(224,112,32,0.55);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(224,112,32,0.10) 0%, rgba(224,112,32,0.18) 50%, rgba(224,112,32,0.10) 100%);
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange, #E07020);
+  white-space: nowrap;
+  box-shadow: 0 4px 14px -4px rgba(224,112,32,0.4);
+}
+.tb-pro-led {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange, #E07020);
+  box-shadow: 0 0 8px var(--orange, #E07020), 0 0 16px rgba(224,112,32,0.4);
+  animation: tb-pro-pulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes tb-pro-pulse {
+  0%, 70% { opacity: 1; }
+  85% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tb-pro-led { animation: none; }
+}
+
+.tb-tarifs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+}
+.tb-tarif-card {
+  --tb-cat-color: #E07020;
+  --tb-cat-rgb: 224,112,32;
+  position: relative;
+  padding: 26px 24px 24px;
+  background: linear-gradient(180deg, rgba(28,18,10,0.9) 0%, rgba(18,12,6,0.98) 100%);
+  border: 1px solid rgba(var(--tb-cat-rgb), 0.22);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  overflow: hidden;
+}
+.tb-tarif-card::before {
+  /* barre verticale gauche pleine couleur catégorie */
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: var(--tb-cat-color);
+  box-shadow: 0 0 16px -2px var(--tb-cat-color);
+}
+.tb-tarif-card::after {
+  /* halo subtil top-right */
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 140px; height: 140px;
+  background: radial-gradient(circle at top right, rgba(var(--tb-cat-rgb), 0.18) 0%, transparent 65%);
+  pointer-events: none;
+  border-top-right-radius: 16px;
+}
+.tb-tarif-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--tb-cat-rgb), 0.55);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.5), 0 0 32px -8px rgba(var(--tb-cat-rgb), 0.45);
+}
+.tb-tarif-head {
+  display: flex; align-items: center; gap: 10px;
+  position: relative; z-index: 1;
+}
+.tb-tarif-icon {
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+.tb-tarif-tag {
+  display: inline-block;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(var(--tb-cat-rgb), 0.14);
+  color: var(--tb-cat-color);
+  border: 1px solid rgba(var(--tb-cat-rgb), 0.36);
+}
+
+/* Bloc prix : grand TTC à gauche, chip HT à droite */
+.tb-tarif-prices {
+  display: flex; align-items: flex-end;
+  gap: 14px; flex-wrap: wrap;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(var(--tb-cat-rgb), 0.18);
+  position: relative; z-index: 1;
+}
+.tb-tarif-ttc {
+  display: flex; flex-direction: column; gap: 2px;
+  flex: 1; min-width: 130px;
+}
+.tb-tarif-amount {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 5vw, 3.4rem);
+  line-height: 0.95;
+  color: var(--gd-cream, #F5EFE0);
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: baseline;
+}
+.tb-tarif-amount-text {
+  font-size: clamp(1.6rem, 3.4vw, 2.1rem);
+  line-height: 1.1;
+  color: var(--tb-cat-color);
+  letter-spacing: 0;
+}
+.tb-tarif-currency {
+  font-size: 0.55em;
+  font-weight: 700;
+  margin-left: 2px;
+  color: var(--tb-cat-color);
+}
+.tb-tarif-unit {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245,239,224,0.55);
+  margin-top: 4px;
+}
+.tb-tarif-ht {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(var(--tb-cat-rgb), 0.10);
+  border: 1px solid rgba(var(--tb-cat-rgb), 0.32);
+  flex-shrink: 0;
+}
+.tb-tarif-ht-amount {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--tb-cat-color);
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.tb-tarif-ht-tva {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,239,224,0.55);
+}
+
+.tb-tarif-meta {
+  display: flex; flex-wrap: wrap; gap: 8px 16px;
+  position: relative; z-index: 1;
+}
+.tb-tarif-meta span {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.85rem;
+  color: var(--grey-light, #c9c2b8);
+  font-weight: 500;
+}
+.tb-tarif-meta .gd-icon {
+  width: 14px; height: 14px;
+  filter: brightness(0) saturate(100%) invert(56%) sepia(64%) saturate(2120%) hue-rotate(355deg) brightness(96%) contrast(91%);
+}
+.tb-tarif-card[data-cat="quiz"] .tb-tarif-meta .gd-icon {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(36%) saturate(1248%) hue-rotate(228deg) brightness(101%) contrast(96%);
+}
+.tb-tarif-card[data-cat="escape"] .tb-tarif-meta .gd-icon {
+  filter: brightness(0) saturate(100%) invert(58%) sepia(43%) saturate(622%) hue-rotate(187deg) brightness(91%) contrast(89%);
+}
+.tb-tarif-desc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--grey-light, #c9c2b8);
+  margin: 0;
+  position: relative; z-index: 1;
+}
+.tb-tarif-desc strong { color: var(--gd-cream, #F5EFE0); font-weight: 700; }
+
+/* Variantes catégories */
+.tb-tarif-card[data-cat="escape"]    { --tb-cat-color: #6383d6; --tb-cat-rgb: 99,131,214; }
+.tb-tarif-card[data-cat="quiz"]      { --tb-cat-color: #c489f5; --tb-cat-rgb: 196,137,245; }
+.tb-tarif-card[data-cat="combo"]     { --tb-cat-color: #E07020; --tb-cat-rgb: 224,112,32; }
+.tb-tarif-card[data-cat="surmesure"] { --tb-cat-color: #E07020; --tb-cat-rgb: 224,112,32; }
+
+/* Footnote */
+.tb-tarif-footnote {
+  margin-top: 28px;
+  text-align: center;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tb-tarif-payment {
+  color: var(--grey-light, #c9c2b8);
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+}
+.tb-tarif-payment strong { color: var(--gd-cream, #F5EFE0); }
+.tb-tarif-disclaimer {
+  color: var(--grey, #8a847b);
+  font-size: 0.82rem;
+  font-style: italic;
+  margin: 0;
+}
+.tb-tarif-disclaimer a { color: var(--orange, #E07020); }
+
+@media (max-width: 600px) {
+  .tb-tarif-card { padding: 22px 20px; }
+  .tb-tarif-prices { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .tb-tarif-ht { align-self: stretch; flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+/* ============================================================
    ROOM CINEMA — section salle full-bleed cinéma, panel flottant
    1 viewport, photo bg + affiche BRAIN flottante + panel translucide
    ============================================================ */
