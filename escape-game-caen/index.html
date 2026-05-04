@@ -135,11 +135,18 @@
       z-index:0; width:100%; height:100%;
       background:var(--dark);
     }
-    .salle-media video {
+    .salle-media video,
+    .salle-media picture {
       position:absolute; inset:0;
+      width:100%; height:100%;
+      display:block;
+    }
+    .salle-media video,
+    .salle-media img {
       width:100% !important; height:100% !important;
       max-height:none !important;
       object-fit:cover !important;
+      object-position:center;
       border-radius:0 !important;
       display:block;
     }
@@ -440,9 +447,11 @@
     <div class="container">
       <div class="salle-grid fade-in">
         <div class="salle-media">
-          <video autoplay muted loop playsinline preload="none" poster="/img/promo/affiche-garde-a-vue.jpg">
-            <source src="/video/garde-a-vue.mp4" type="video/mp4">
-          </video>
+          <picture>
+            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.avif 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.avif 1672w" sizes="(max-width: 900px) 100vw, 50vw">
+            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.webp 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.webp 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.webp 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.webp 1672w" sizes="(max-width: 900px) 100vw, 50vw">
+            <img src="/img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.jpg 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.jpg 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.jpg 1672w" sizes="(max-width: 900px) 100vw, 50vw" alt="Bureau de garde à vue avec barreaux de cellule — escape game GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="salle-body">
           <p class="salle-kicker"><span class="num">01</span> Salle</p>
@@ -456,8 +465,6 @@
             <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
             <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans</span>
           </div>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Benjamin s'est évadé. <strong>Et il a un message pour vous.</strong></p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Sur la clé USB qu'il a envoyée à l'Inspecteur Brian : des dossiers compromettants et <strong>vos noms, surlignés au fluo</strong>.</p>
           <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« Convocation immédiate au commissariat. Refus = poursuites. »</p>
           <p style="color:var(--grey-light);margin-bottom:14px;">Vous voilà à la brigade. Vous avez obéi.</p>
           <p style="color:var(--grey-light);margin-bottom:14px;">Sauf que cette brigade-là… disons qu'elle a connu des heures plus glorieuses. L'Inspecteur Brian, lui, a disparu. Chantal attend sa retraite depuis 2017, et on dirait que Benjamin a un coup d'avance sur tout le monde ici.</p>
@@ -498,9 +505,11 @@
     <div class="container">
       <div class="salle-grid salle-reverse fade-in">
         <div class="salle-media">
-          <video autoplay muted loop playsinline preload="none" poster="/img/promo/affiche-psychiatric.jpg">
-            <source src="/video/psychiatric.mp4" type="video/mp4">
-          </video>
+          <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w, /img/escape/psychiatric-couloir-1024w.avif 1024w, /img/escape/psychiatric-couloir.avif 1086w" sizes="(max-width: 900px) 100vw, 50vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-couloir-480w.webp 480w, /img/escape/psychiatric-couloir-768w.webp 768w, /img/escape/psychiatric-couloir-1024w.webp 1024w, /img/escape/psychiatric-couloir.webp 1086w" sizes="(max-width: 900px) 100vw, 50vw">
+            <img src="/img/escape/psychiatric-couloir-1024w.jpg" srcset="/img/escape/psychiatric-couloir-480w.jpg 480w, /img/escape/psychiatric-couloir-768w.jpg 768w, /img/escape/psychiatric-couloir-1024w.jpg 1024w, /img/escape/psychiatric-couloir.jpg 1086w" sizes="(max-width: 900px) 100vw, 50vw" alt="Couloir d'hôpital psychiatrique abandonné avec fauteuil roulant — escape game horreur GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="salle-body">
           <p class="salle-kicker"><span class="num">02</span> Salle</p>
@@ -557,9 +566,11 @@
     <div class="container">
       <div class="salle-grid fade-in">
         <div class="salle-media">
-          <video autoplay muted loop playsinline preload="none" poster="/img/promo/affiche-80s.jpg">
-            <source src="/video/80s.mp4" type="video/mp4">
-          </video>
+          <picture>
+            <source type="image/avif" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.avif 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.avif 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.avif 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.avif 1466w" sizes="(max-width: 900px) 100vw, 50vw">
+            <source type="image/webp" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.webp 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.webp 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.webp 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.webp 1466w" sizes="(max-width: 900px) 100vw, 50vw">
+            <img src="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.jpg" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.jpg 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.jpg 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.jpg 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.jpg 1466w" sizes="(max-width: 900px) 100vw, 50vw" alt="Jukebox Wurlitzer et figurines vintage — escape game Back to the 80's GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="salle-body">
           <p class="salle-kicker"><span class="num">03</span> Salle</p>
