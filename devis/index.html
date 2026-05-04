@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demande de Devis — Team Building Escape Game & Quiz à Caen | GAMEDOOR•41</title>
-  <meta name="description" content="Demandez votre devis en ligne pour un team building à Caen. Escape game ou quiz game, de 2 à 46 participants. 750+ entreprises accueillies depuis 2017. Réponse sous 24h. GAMEDOOR•41.">
+  <title>Simulateur de tarifs &amp; devis — Escape, Quiz, Team Building, EVJF/EVG | GAMEDOOR·41</title>
+  <meta name="description" content="Simulez votre événement en 2 min : escape game, quiz Buzz Your Brain, team building, EVJF/EVG, anniversaire. Tarifs en direct, devis envoyé par email sous 48h. GAMEDOOR·41 Caen.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://gamedoor41.fr/devis/">
 
-  <meta property="og:title" content="Demande de Devis — Team Building à Caen | GAMEDOOR•41">
-  <meta property="og:description" content="Devis en ligne en 2 minutes. Escape game ou quiz game pour votre team building. 750+ entreprises accueillies. Réponse sous 24h.">
+  <meta property="og:title" content="Simulateur de tarifs &amp; devis — GAMEDOOR·41 Caen">
+  <meta property="og:description" content="Simulez votre événement en 2 min : escape, quiz, team building, EVJF/EVG. Tarifs en direct, devis sous 48h.">
   <meta property="og:url" content="https://gamedoor41.fr/devis/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
@@ -17,8 +17,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Demande de Devis — Team Building à Caen | GAMEDOOR•41">
-  <meta name="twitter:description" content="Devis en ligne en 2 minutes. Escape game ou quiz game. 750+ entreprises accueillies.">
+  <meta name="twitter:title" content="Simulateur de tarifs &amp; devis — GAMEDOOR·41">
+  <meta name="twitter:description" content="Simulez votre événement en 2 min. Devis sous 48h.">
   <meta name="twitter:image" content="https://gamedoor41.fr/img/og/og-default.jpg">
 
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
@@ -33,24 +33,75 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "GAMEDOOR•41", "item": "https://gamedoor41.fr/"},
-      {"@type": "ListItem", "position": 2, "name": "Team Building", "item": "https://gamedoor41.fr/team-building-caen/"},
-      {"@type": "ListItem", "position": 3, "name": "Demande de devis", "item": "https://gamedoor41.fr/devis/"}
+      {"@type": "ListItem", "position": 1, "name": "GAMEDOOR·41", "item": "https://gamedoor41.fr/"},
+      {"@type": "ListItem", "position": 2, "name": "Demande de devis", "item": "https://gamedoor41.fr/devis/"}
     ]
   }
   </script>
+
+  <!-- Tailwind CDN configuré aux tokens GAMEDOOR·41 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'gd-orange': '#E07020',
+            'gd-orange-dark': '#B85A18',
+            'gd-quiz': '#9D4EDD',
+            'gd-escape': '#3D5DC0',
+            'gd-cream': '#F5EFE0',
+            'gd-black': '#0a0606',
+            'gd-dark': '#14100c',
+            'gd-card': '#1f1812',
+            'gd-card-soft': '#241c14',
+            'gd-border': '#2a2118',
+          },
+          fontFamily: {
+            display: ['"Barlow Condensed"', 'system-ui', 'sans-serif'],
+            body: ['"DM Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- React + Babel standalone + jsPDF + EmailJS -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function () { try { emailjs.init("rGgrPogMTC1wL0aOv"); } catch (e) { /* clé EmailJS GAMEDOOR — à mettre à jour si besoin */ } })();
+  </script>
+
+  <style>
+    /* Page-level overrides pour le simulateur */
+    body.devis-page { font-family: 'DM Sans', system-ui, sans-serif; }
+    .sim-app, .sim-app * { font-family: 'DM Sans', system-ui, sans-serif; }
+    .sim-app .sim-display { font-family: 'Barlow Condensed', system-ui, sans-serif; letter-spacing: 0.01em; }
+    .sim-app input, .sim-app select, .sim-app button { font-family: inherit; }
+    .sim-app input, .sim-app select, .sim-app textarea { font-size: 16px; } /* iOS no-zoom + lisibilité */
+    .sim-app button:focus-visible { outline: 2px solid #E07020; outline-offset: 2px; }
+    .sim-step-indicator { transition: transform .3s ease, background-color .3s ease; }
+    .sim-shell { box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(224,112,32,0.18) inset; }
+    @media (prefers-reduced-motion: reduce) {
+      .sim-app * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
 </head>
-<body>
+<body class="devis-page">
 
   <header class="site-header scrolled" role="banner">
     <div class="nav-inner">
-      <a href="/" class="nav-logo"><img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img" width="224" height="32"></a>
+      <a href="/" class="nav-logo"><img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img" width="224" height="32"></a>
       <nav class="nav-links" role="navigation" aria-label="Navigation principale">
         <a href="/" class="mobile-only">Accueil</a>
         <a href="/escape-game-caen/">Escape Game</a>
         <a href="/quiz-game-caen/">Quiz Game</a>
         <a href="/team-building-caen/">Team Building</a>
-        <a href="/evjf-caen/" class="desktop-only">EVJF & Anniversaire</a>
+        <a href="/evjf-caen/" class="desktop-only">EVJF &amp; Anniversaire</a>
         <a href="/evjf-caen/" class="mobile-only">EVJF</a>
         <a href="/evg-caen/" class="mobile-only">EVG</a>
         <a href="/anniversaire-caen/" class="mobile-only">Anniversaire</a>
@@ -67,237 +118,61 @@
   <div class="breadcrumb-bar">
     <div class="container">
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
-        <a href="/">GAMEDOOR•41</a>
+        <a href="/">GAMEDOOR·41</a>
         <span class="sep">›</span>
-        <a href="/team-building-caen/">Team Building</a>
-        <span class="sep">›</span>
-        <span>Demande de devis</span>
+        <span>Simulateur &amp; devis</span>
       </nav>
     </div>
   </div>
 
-  <!-- ===== HERO COMPACT ===== -->
-  <section class="page-hero" style="min-height:35vh;">
-    <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0d0d0d 0%,#1a1008 100%);"></div>
+  <!-- HERO COMPACT -->
+  <section class="page-hero" style="min-height: 36vh;">
+    <picture>
+      <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
+      <source type="image/webp" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.webp 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.webp 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.webp 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.webp 1400w" sizes="100vw">
+      <img src="/img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="100vw" alt="Plateau GAMEDOOR·41 Caen — escape, quiz, team building" width="1400" height="788" loading="eager" decoding="async" fetchpriority="high">
+    </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content container">
-      <p class="kicker">Devis en ligne</p>
-      <h1>Votre devis en <span class="accent">2 minutes</span></h1>
-      <p class="subtitle">Réponse sous 24h ouvrées — on bloque les créneaux après validation.</p>
+      <p class="kicker" style="color: var(--orange);">SIMULATEUR · DEVIS EN LIGNE</p>
+      <h1>Simulez votre événement<br><span class="accent">en 2 minutes</span></h1>
+      <p class="subtitle" style="margin-top: 16px;">Escape · Quiz Buzz Your Brain · Team building · EVJF · EVG · Anniversaire — tarifs en direct, devis envoyé par email sous 48h.</p>
     </div>
   </section>
 
-  <!-- ===== FORMULAIRE DEVIS ===== -->
-  <section class="section devis-section">
-    <div class="container" style="max-width:640px;">
+  <!-- SIMULATEUR -->
+  <section style="padding: 48px 0 64px; background: linear-gradient(180deg, var(--gd-black, #0a0606) 0%, var(--dark, #14100c) 100%);">
+    <div class="container container-wide">
+      <div id="root" class="sim-app"></div>
+      <p style="text-align: center; color: var(--grey); font-size: 0.9rem; margin-top: 24px;">▸ Données traitées localement · email envoyé uniquement à votre validation · réponse sous <strong style="color: var(--orange);">48h ouvrées</strong>.</p>
+    </div>
+  </section>
 
-      <!-- Progress -->
-      <div class="devis-progress" id="devis-progress">
-        <div class="devis-progress-step active" data-step="1"><span class="step-num">1</span><span class="step-label">Projet</span></div>
-        <div class="devis-progress-line"></div>
-        <div class="devis-progress-step" data-step="2"><span class="step-num">2</span><span class="step-label">Planning</span></div>
-        <div class="devis-progress-line"></div>
-        <div class="devis-progress-step" data-step="3"><span class="step-num">3</span><span class="step-label">Contact</span></div>
-        <div class="devis-progress-line"></div>
-        <div class="devis-progress-step" data-step="4"><span class="step-num">4</span><span class="step-label">Récap</span></div>
+  <!-- INFO PRATIQUE -->
+  <section class="section" style="background: var(--dark); padding: 48px 0;">
+    <div class="container">
+      <div class="fade-in" style="max-width: 880px;">
+        <p class="kicker" style="color: var(--orange); margin-bottom: 8px;">Bon à savoir</p>
+        <h2 style="font-size: 1.3rem; margin-bottom: 18px;">Avant de simuler</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+          <div style="padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
+            <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Réservation</h3>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Particuliers : réservation directe possible <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener" style="color: var(--orange);">en ligne</a>. Pros / privatisation / restauration : devis sous 48h.</p>
+          </div>
+          <div style="padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
+            <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Paiement</h3>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Exclusivement en ligne au booking. Pros : bon de commande / virement / CB. ANCV et chèques cadeau CSE acceptés.</p>
+          </div>
+          <div style="padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
+            <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Codes promo</h3>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Code à signaler à la simulation puis à justifier sur place (carte / pass). Sans justificatif, le tarif standard s'applique.</p>
+          </div>
+          <div style="padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
+            <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Restauration</h3>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> de l'espace. Cocktails, plateaux, viennoiseries, boissons.</p>
+          </div>
+        </div>
       </div>
-
-      <!-- Form (Netlify) -->
-      <form id="devis-form" name="devis-gamedoor41" method="POST" action="/devis/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-        <input type="hidden" name="form-name" value="devis-gamedoor41">
-        <input type="hidden" name="devis-id" id="field-devis-id">
-        <input type="hidden" name="estimation-ht" id="field-estimation-ht">
-        <input type="hidden" name="estimation-ttc" id="field-estimation-ttc">
-        <p style="display:none"><label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-
-        <!-- ====== STEP 1: Projet ====== -->
-        <div class="devis-step active" id="step-1">
-          <h2 class="devis-step-title">Votre projet</h2>
-
-          <fieldset class="devis-field">
-            <legend class="devis-label">Type d'organisation</legend>
-            <div class="devis-cards" id="cards-type">
-              <label class="devis-card">
-                <input type="radio" name="type" value="entreprise" required>
-                <span class="devis-card-inner">
-                  <span class="devis-card-title">Entreprise</span>
-                  <span class="devis-card-desc">CE, CSE, séminaire</span>
-                </span>
-              </label>
-              <label class="devis-card">
-                <input type="radio" name="type" value="association">
-                <span class="devis-card-inner">
-                  <span class="devis-card-title">Association</span>
-                  <span class="devis-card-desc">Club, fédération</span>
-                </span>
-              </label>
-              <label class="devis-card">
-                <input type="radio" name="type" value="particulier">
-                <span class="devis-card-inner">
-                  <span class="devis-card-title">Particulier</span>
-                  <span class="devis-card-desc">Groupe privé</span>
-                </span>
-              </label>
-            </div>
-          </fieldset>
-
-          <fieldset class="devis-field">
-            <legend class="devis-label">Activité souhaitée</legend>
-            <div class="devis-cards" id="cards-activite">
-              <label class="devis-card">
-                <input type="radio" name="activite" value="escape" required>
-                <span class="devis-card-inner">
-                  <span class="devis-card-title">Escape Game</span>
-                  <span class="devis-card-desc">2-30 pers. · 60 min</span>
-                </span>
-              </label>
-              <label class="devis-card">
-                <input type="radio" name="activite" value="quiz">
-                <span class="devis-card-inner">
-                  <span class="devis-card-title">Quiz Game</span>
-                  <span class="devis-card-desc">4-16 pers. · 90 min</span>
-                </span>
-              </label>
-              <label class="devis-card">
-                <input type="radio" name="activite" value="combo">
-                <span class="devis-card-inner">
-                  <span class="devis-card-title">Combo Escape + Quiz</span>
-                  <span class="devis-card-desc">6-46 pers. · demi-journée</span>
-                </span>
-              </label>
-            </div>
-          </fieldset>
-          <p class="devis-error" id="error-step1" hidden>Veuillez sélectionner un type et une activité.</p>
-        </div>
-
-        <!-- ====== STEP 2: Planning ====== -->
-        <div class="devis-step" id="step-2">
-          <h2 class="devis-step-title">Participants & planning</h2>
-
-          <div class="devis-field">
-            <label class="devis-label" for="participants">Nombre de participants</label>
-            <div class="devis-counter">
-              <button type="button" class="devis-counter-btn" id="btn-minus" aria-label="Moins">−</button>
-              <input type="number" id="participants" name="participants" min="2" max="46" value="6" required class="devis-input devis-input-number" inputmode="numeric">
-              <button type="button" class="devis-counter-btn" id="btn-plus" aria-label="Plus">+</button>
-            </div>
-            <p class="devis-hint" id="capacity-hint">2 à 30 participants</p>
-            <p class="devis-error" id="error-capacity" hidden></p>
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-label" for="date">Date souhaitée</label>
-            <input type="date" id="date" name="date" required class="devis-input">
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-label" for="creneau">Créneau horaire</label>
-            <select id="creneau" name="creneau" required class="devis-input">
-              <option value="">— Choisir —</option>
-              <option value="matin (9h-12h)">Matin (9h-12h)</option>
-              <option value="apres-midi (14h-18h)">Après-midi (14h-18h)</option>
-              <option value="soiree (18h-22h)">Soirée (18h-22h)</option>
-              <option value="flexible">Flexible / À discuter</option>
-            </select>
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-card devis-card-check">
-              <input type="checkbox" name="privatisation" id="privatisation" value="oui">
-              <span class="devis-card-inner">
-                <span class="devis-card-title">Privatisation de l'espace</span>
-                <span class="devis-card-desc">Espace dédié pour votre groupe · sur devis</span>
-              </span>
-            </label>
-          </div>
-
-          <!-- Live estimate -->
-          <div class="devis-estimate" id="live-estimate" hidden>
-            <p class="devis-estimate-label">Estimation indicative</p>
-            <p class="devis-estimate-price" id="estimate-price"></p>
-          </div>
-          <p class="devis-error" id="error-step2" hidden>Veuillez remplir tous les champs.</p>
-        </div>
-
-        <!-- ====== STEP 3: Contact ====== -->
-        <div class="devis-step" id="step-3">
-          <h2 class="devis-step-title">Vos coordonnées</h2>
-
-          <div class="devis-field" id="field-societe-wrap">
-            <label class="devis-label" for="societe">Société / Organisation</label>
-            <input type="text" id="societe" name="societe" class="devis-input" placeholder="Nom de votre entreprise" autocomplete="organization">
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-label" for="nom">Nom complet <span class="required">*</span></label>
-            <input type="text" id="nom" name="nom" required class="devis-input" placeholder="Prénom Nom" autocomplete="name">
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-label" for="telephone">Téléphone <span class="required">*</span></label>
-            <input type="tel" id="telephone" name="telephone" required class="devis-input" placeholder="06 XX XX XX XX" autocomplete="tel">
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-label" for="email">Email <span class="required">*</span></label>
-            <input type="email" id="email" name="email" required class="devis-input" placeholder="votre@email.com" autocomplete="email">
-          </div>
-          <p class="devis-error" id="error-step3" hidden>Veuillez remplir tous les champs obligatoires.</p>
-        </div>
-
-        <!-- ====== STEP 4: Récap ====== -->
-        <div class="devis-step" id="step-4">
-          <h2 class="devis-step-title">Récapitulatif</h2>
-
-          <div class="devis-recap" id="recap-content">
-            <!-- Dynamically generated -->
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-label" for="notes">Notes / Contraintes <span class="optional">(optionnel)</span></label>
-            <textarea id="notes" name="notes" class="devis-input" rows="3" placeholder="Langue, facturation spécifique, besoins particuliers, restauration souhaitée..."></textarea>
-          </div>
-
-          <div class="devis-field">
-            <label class="devis-card devis-card-check">
-              <input type="checkbox" id="rappel" name="rappel" value="oui">
-              <span class="devis-card-inner">
-                <span class="devis-card-title">Je souhaite être rappelé·e</span>
-                <span class="devis-card-desc">Un conseiller vous contacte par téléphone</span>
-              </span>
-            </label>
-          </div>
-
-          <p class="devis-reassurance">Réponse sous 24h ouvrées — on bloque les créneaux après validation du devis.</p>
-          <p class="devis-error" id="error-step4" hidden></p>
-        </div>
-
-        <!-- Navigation -->
-        <div class="devis-nav">
-          <button type="button" id="devis-prev" class="btn btn-outline" hidden>Précédent</button>
-          <button type="button" id="devis-next" class="btn btn-primary">Suivant</button>
-          <button type="submit" id="devis-submit" class="btn btn-primary" hidden>Envoyer ma demande</button>
-        </div>
-      </form>
-
-      <!-- Confirmation -->
-      <div id="devis-confirmation" class="devis-confirmation" hidden>
-        <div class="devis-success-icon">&#10003;</div>
-        <h2>Demande envoyée !</h2>
-        <p class="devis-ref">Référence : <strong id="confirm-id"></strong></p>
-        <p>Un devis personnalisé vous sera envoyé sous <strong>48h ouvrées</strong> à l'adresse <strong id="confirm-email"></strong>.</p>
-        <div id="confirm-recap" class="devis-recap"></div>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
-          <button type="button" id="download-pdf" class="btn btn-primary">Télécharger la confirmation (PDF)</button>
-          <a href="/" class="btn btn-outline">Retour à l'accueil</a>
-        </div>
-        <div id="confirm-email-fallback" hidden style="margin-top:20px;padding:16px;background:rgba(245,130,32,0.1);border:1px solid rgba(245,130,32,0.3);border-radius:8px;">
-          <p style="margin-bottom:10px;font-size:0.9rem;">Pour finaliser votre demande, cliquez ci-dessous pour nous envoyer le récap par email :</p>
-          <a href="#" class="btn btn-primary" style="display:inline-flex;">Envoyer par email</a>
-        </div>
-        <p style="margin-top:16px;font-size:0.8rem;color:var(--grey-light);">Un problème ? Contactez-nous : <a href="tel:+33231530751" style="color:var(--orange);">02 31 53 07 51</a></p>
-      </div>
-
     </div>
   </section>
 
@@ -305,7 +180,7 @@
        BANDEAU BRAIN HERITAGE — continuité Brain → GAMEDOOR·41
   ===================================================== -->
   <section class="heritage" aria-label="Continuité de l'équipe Brain Escape Game">
-    <div class="container container-wide">
+    <div class="container">
       <div class="heritage-band reveal">
         <span class="heritage-eq"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></span>
         <span class="heritage-sep" aria-hidden="true">·</span>
@@ -331,7 +206,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo"><img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img footer-logo-img" width="266" height="38"></div>
+          <div class="nav-logo"><img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img footer-logo-img" width="266" height="38"></div>
           <p>Escape game, quiz game et activités de groupe à Caen. <strong style='color:var(--orange);'>Entrez · Jouez · Vivez.</strong></p>
           <p style="margin-top:12px;"><a href="tel:+33231530751" style="color:var(--orange);">02 31 53 07 51</a><br><a href="mailto:contact@gamedoor41.fr">contact@gamedoor41.fr</a></p>
         </div>
@@ -340,14 +215,1185 @@
         <div class="footer-col"><h4>Occasions</h4><a href="/team-building-caen/">Team Building</a><a href="/references-entreprises-caen/">Références</a><a href="/evjf-caen/">EVJF</a><a href="/evg-caen/">EVG</a><a href="/anniversaire-caen/">Anniversaire</a></div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 GAMEDOOR•41 — 41 bis rue Pasteur, 14120 Mondeville</p>
+        <p>© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville</p>
         <p>Escape game : <strong>Brain Escape Game</strong> · Quiz game : <strong>Buzz Your Brain</strong></p>
       </div>
     </div>
   </footer>
 
-  <script src="/js/jspdf.umd.min.js" defer></script>
-  <script src="/js/main.js" defer></script>
-  <script src="/js/devis.js" defer></script>
+  <script src="/js/main.js"></script>
+
+  <!-- ============================================================
+       SIMULATEUR REACT — restylé GAMEDOOR·41 (Tailwind brand tokens)
+       Logique reprise du simulateur B.R.A.I.N., adaptée aux 5 salles
+       physiques (Psy×2 / GàV×2 / 80's×1), tarifs pro 17,50/15 TTC,
+       consignes business GAMEDOOR (pas de paiement sur place,
+       pas de questions personnalisées, place mariée·marié offerte).
+  ============================================================ -->
+  <script type="text/babel">
+  const { useState, useEffect, useMemo } = React;
+  const { jsPDF } = window.jspdf;
+
+  // ===== CONSTANTES MÉTIER =====
+  const MAX_ESCAPE = 30;
+  const MAX_QUIZ = 16;
+  const MAX_TOTAL = 46;
+
+  // 5 salles physiques (3 univers thématiques)
+  const ESCAPE_ROOMS = [
+    { id: 'gardeavue1', name: 'Garde à Vue · Cellule 1',  univers: 'Garde à Vue',   theme: 'Action · Enquête policière',     minAge: 12, icon: '👮' },
+    { id: 'gardeavue2', name: 'Garde à Vue · Cellule 2',  univers: 'Garde à Vue',   theme: 'Action · Enquête policière',     minAge: 12, icon: '👮' },
+    { id: 'psychiatric1', name: 'Psychiatric · Couloir 1', univers: 'Psychiatric',  theme: 'Horreur · Tension psychologique', minAge: 14, icon: '🧠' },
+    { id: 'psychiatric2', name: 'Psychiatric · Couloir 2', univers: 'Psychiatric',  theme: 'Horreur · Tension psychologique', minAge: 14, icon: '🧠' },
+    { id: 'backto80s',  name: "Back to the 80's",          univers: "Back to the 80's", theme: 'Fun · Vintage · Famille',     minAge: 7,  icon: '📼' }
+  ];
+
+  // Tarifs pro (TVA 10%)
+  const TARIFS_PRO_HT  = { escape: 15.91, quiz: 13.64 };
+  const TARIFS_PRO_TTC = { escape: 17.50, quiz: 15.00 };
+
+  // Tarifs publics — grille particuliers (TTC, TVA 10%)
+  const ESCAPE_PRICES_TTC = { 2: 74, 3: 84, 4: 100, 5: 120, 6: 144 };
+  const QUIZ_PRICES_TTC   = { 4: 84, 5: 105, 6: 126, 7: 133, 8: 144, 9: 153, 10: 170, 11: 176, 12: 192, 13: 195, 14: 210, 15: 225, 16: 240 };
+  const toHT = (ttc) => ttc / 1.10;
+
+  // Cartes cadeau (vente directe via shop 4escape.io — bouton externe)
+  const GIFT_CARDS = {
+    escape: [
+      { id: 'escape2', name: 'Escape Room — 2 personnes', priceTTC: 74,  persons: 2 },
+      { id: 'escape3', name: 'Escape Room — 3 personnes', priceTTC: 84,  persons: 3 },
+      { id: 'escape4', name: 'Escape Room — 4 personnes', priceTTC: 100, persons: 4 },
+      { id: 'escape5', name: 'Escape Room — 5 personnes', priceTTC: 120, persons: 5 },
+      { id: 'escape6', name: 'Escape Room — 6 personnes', priceTTC: 144, persons: 6 }
+    ],
+    quiz: [
+      { id: 'quiz4',  name: 'Quiz Buzz Your Brain — 4 pers.',  priceTTC: 84,  persons: 4  },
+      { id: 'quiz6',  name: 'Quiz Buzz Your Brain — 6 pers.',  priceTTC: 126, persons: 6  },
+      { id: 'quiz8',  name: 'Quiz Buzz Your Brain — 8 pers.',  priceTTC: 144, persons: 8  },
+      { id: 'quiz10', name: 'Quiz Buzz Your Brain — 10 pers.', priceTTC: 170, persons: 10 },
+      { id: 'quiz12', name: 'Quiz Buzz Your Brain — 12 pers.', priceTTC: 192, persons: 12 },
+      { id: 'quiz16', name: 'Quiz Buzz Your Brain — 16 pers.', priceTTC: 240, persons: 16 }
+    ],
+    libre: [
+      { id: 'libre30',  name: "Bon d'achat — 30€",  priceTTC: 30,  persons: 1 },
+      { id: 'libre50',  name: "Bon d'achat — 50€",  priceTTC: 50,  persons: 1 },
+      { id: 'libre80',  name: "Bon d'achat — 80€",  priceTTC: 80,  persons: 1 },
+      { id: 'libre100', name: "Bon d'achat — 100€", priceTTC: 100, persons: 1 },
+      { id: 'libre150', name: "Bon d'achat — 150€", priceTTC: 150, persons: 1 },
+      { id: 'libre200', name: "Bon d'achat — 200€", priceTTC: 200, persons: 1 }
+    ]
+  };
+
+  // Réductions (escape) — codes business GAMEDOOR
+  const REDUCTIONS_ESCAPE = [
+    { id: 'none',         name: 'Aucune réduction',           discount: 0,    code: null },
+    { id: 'etudiant',     name: 'Étudiant (sur justificatif)', discount: 0.10, code: 'ETUDIANT' },
+    { id: 'cezam',        name: "Carte CEZAM",                discount: 0.10, code: 'CEZAM' },
+    { id: 'trip',         name: "Trip Normand",               discount: 0.10, code: 'TRIP' },
+    { id: 'ambassadeur',  name: 'Pass Ambassadeur Normandie', discount: 0.10, code: 'PAN' },
+    { id: 'citypass',     name: 'City Pass Caen',             discount: 0.10, code: 'CITYPASS' },
+    { id: 'rdn',          name: 'Réduc de Normandie',         discount: 0.10, code: 'RDN' },
+    { id: 'cse',          name: 'Carte CSE / Comité',         discount: 0.10, code: 'CSE' },
+    { id: 'ancv',         name: 'Chèques Vacances ANCV',      discount: 0,    code: 'ANCV',     bonus: 'Paiement accepté' },
+    { id: 'mariage',      name: 'EVJF / EVG',                 discount: 0,    code: 'MARIAGE',  bonus: '1 place offerte mariée·marié*', note: '* Mariée·marié offert·e sur déguisement à l\'arrivée.' }
+  ];
+
+  // Réductions (quiz) — moins d'options sur le quiz
+  const REDUCTIONS_QUIZ = [
+    { id: 'none',     name: 'Aucune réduction',           discount: 0, code: null },
+    { id: 'etudiant', name: 'Étudiant (sur justificatif)', discount: 0.10, code: 'ETUDIANT' },
+    { id: 'mariage',  name: 'EVJF / EVG',                 discount: 0, code: 'MARIAGE',  bonus: '1 place offerte mariée·marié*', note: '* Mariée·marié offert·e sur déguisement à l\'arrivée.' }
+  ];
+
+  const PRIVATISATION = {
+    horaire:    { name: 'Privatisation 1 heure',        priceTTC: 220,  priceHT: 200.00 },
+    demiJournee:{ name: 'Privatisation Demi-journée',   priceTTC: 550,  priceHT: 500.00 },
+    journee:    { name: 'Privatisation Journée complète', priceTTC: 1800, priceHT: 1636.36 }
+  };
+
+  const RESTAURATION = {
+    cocktails: [
+      { id: 'cocktail8',  name: 'Cocktail découverte 8 pièces — salé',         priceTTC: 13, priceHT: 11.82, perPerson: true,  tva: 10 },
+      { id: 'cocktail10', name: 'Cocktail découverte 10 pièces — salé',        priceTTC: 15, priceHT: 13.64, perPerson: true,  tva: 10 },
+      { id: 'cocktail18', name: 'Cocktail finesse 18 pièces — sucré/salé',     priceTTC: 25, priceHT: 22.73, perPerson: true,  tva: 10 },
+      { id: 'cocktail20', name: 'Cocktail saveur 20 pièces — sucré/salé',      priceTTC: 30, priceHT: 27.27, perPerson: true,  tva: 10 },
+      { id: 'cocktail22', name: 'Cocktail saveur 22 pièces — sucré/salé',      priceTTC: 33, priceHT: 30.00, perPerson: true,  tva: 10 }
+    ],
+    plateaux: [
+      { id: 'plateau10', name: 'Plateau fromage & charcuterie 10 pers.', priceTTC: 110, priceHT: 100.00, tva: 10 },
+      { id: 'plateau15', name: 'Plateau fromage & charcuterie 15 pers.', priceTTC: 165, priceHT: 150.00, tva: 10 },
+      { id: 'plateau20', name: 'Plateau fromage & charcuterie 20 pers.', priceTTC: 220, priceHT: 200.00, tva: 10 },
+      { id: 'plateau30', name: 'Plateau fromage & charcuterie 30 pers.', priceTTC: 330, priceHT: 300.00, tva: 10 },
+      { id: 'plateau50', name: 'Plateau fromage & charcuterie 50 pers.', priceTTC: 550, priceHT: 500.00, tva: 10 }
+    ],
+    viennoiseries: [
+      { id: 'chouquettes',     name: '12 chouquettes',                          priceTTC: 3.20,  priceHT: 2.91,  tva: 10 },
+      { id: 'tartinettes',     name: '12 tartinettes amande',                   priceTTC: 4.30,  priceHT: 3.91,  tva: 10 },
+      { id: 'tartinettesChoco',name: '12 tartinettes amande/chocolat',          priceTTC: 4.40,  priceHT: 4.00,  tva: 10 },
+      { id: 'viennoiseries',   name: '12 petites viennoiseries',                priceTTC: 7.00,  priceHT: 6.36,  tva: 10 },
+      { id: 'packGourmand',    name: 'Pack petit-déjeuner gourmand 36 pièces',  priceTTC: 13.00, priceHT: 11.82, tva: 10 }
+    ],
+    desserts: [
+      { id: 'macarons12',    name: 'Assortiment 12 macarons',          priceTTC: 6.60,  priceHT: 6.00,  tva: 10 },
+      { id: 'macarons16',    name: 'Assortiment 16 macarons',          priceTTC: 7.15,  priceHT: 6.50,  tva: 10 },
+      { id: 'mignardises16', name: 'Mignardises (16 pièces)',          priceTTC: 11.00, priceHT: 10.00, tva: 10 },
+      { id: 'petitsFours16', name: 'Assortiment 16 petits fours sucrés', priceTTC: 12.10, priceHT: 11.00, tva: 10 }
+    ],
+    boissons: [
+      { id: 'sansAlcool',  name: 'Sans alcool',                       priceTTC: 1.00,  priceHT: 0.91,  perPerson: true, tva: 10 },
+      { id: 'biere',       name: 'Bière',                             priceTTC: 2.28,  priceHT: 1.90,  perPerson: true, tva: 20, isAlcool: true },
+      { id: 'cidre',       name: 'Bouteille de cidre (75 cl)',        priceTTC: 7.50,  priceHT: 6.25,  tva: 20, isAlcool: true },
+      { id: 'methode',     name: 'Méthode traditionnelle (75 cl)',    priceTTC: 9.50,  priceHT: 7.92,  tva: 20, isAlcool: true },
+      { id: 'sauvignon',   name: 'Sauvignon de Touraine 75 cl',       priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
+      { id: 'rose',        name: 'Rosé de Provence',                  priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
+      { id: 'bordeaux',    name: 'Bordeaux rouge',                    priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
+      { id: 'vouvray',     name: 'Vouvray (75 cl)',                   priceTTC: 13.00, priceHT: 10.83, tva: 20, isAlcool: true },
+      { id: 'cassis',      name: 'Crème de cassis (100 cl)',          priceTTC: 15.00, priceHT: 12.50, tva: 20, isAlcool: true },
+      { id: 'saintEmilion',name: 'Saint-Émilion',                     priceTTC: 17.00, priceHT: 14.17, tva: 20, isAlcool: true },
+      { id: 'champagne',   name: 'Champagne (75 cl)',                 priceTTC: 23.00, priceHT: 19.17, tva: 20, isAlcool: true }
+    ]
+  };
+
+  // ===== HELPERS UI =====
+  const cls = (...arr) => arr.filter(Boolean).join(' ');
+
+  function SimulateurGamedoor() {
+    const [step, setStep] = useState(1);
+    const [clientType, setClientType] = useState(null);   // 'entreprise' | 'association' | 'particulier'
+    const [isGift, setIsGift] = useState(false);
+    const [selectedActivity, setSelectedActivity] = useState(null); // 'escape' | 'quiz' | 'both'
+    const [participants, setParticipants] = useState(4);
+    const [selectedRooms, setSelectedRooms] = useState({});  // { roomId: nbPlayers }
+    const [quizParticipants, setQuizParticipants] = useState(0);
+    const [reduction, setReduction] = useState('none');
+    const [wantsRestauration, setWantsRestauration] = useState(null);
+    const [privatisation, setPrivatisation] = useState(null);
+    const [selectedRestauration, setSelectedRestauration] = useState({});
+    const [showSummary, setShowSummary] = useState(false);
+    const [showDevisForm, setShowDevisForm] = useState(false);
+    const [selectedGiftCard, setSelectedGiftCard] = useState(null);
+    const [wantPhysicalBox, setWantPhysicalBox] = useState(false);
+    const [devisForm, setDevisForm] = useState({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureArrivee: '', message: '' });
+    const [emailSent, setEmailSent] = useState(false);
+    const [emailSending, setEmailSending] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+
+    // Préselection via URL (?type=entreprise|association|particulier&activity=escape|quiz|both&occasion=evjf|evg|anniv|teambuilding)
+    useEffect(() => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const t = params.get('type');
+        const a = params.get('activity');
+        const o = params.get('occasion');
+        if (t && ['entreprise', 'association', 'particulier'].includes(t)) {
+          setClientType(t);
+          setStep(2);
+        } else if (o === 'teambuilding') {
+          setClientType('entreprise');
+          setStep(2);
+        } else if (o === 'evjf' || o === 'evg' || o === 'anniv') {
+          setClientType('particulier');
+          setStep(2);
+        }
+        if (a && ['escape', 'quiz', 'both'].includes(a)) {
+          setSelectedActivity(a);
+        }
+        if (o === 'evjf' || o === 'evg') {
+          // pré-sélection EVJF/EVG : code MARIAGE
+          setReduction('mariage');
+        }
+      } catch (e) { /* no-op */ }
+    }, []);
+
+    const isPro = clientType === 'entreprise' || clientType === 'association';
+    const hasExtras = privatisation || Object.values(selectedRestauration).some(qty => qty > 0);
+    const needsDevis = isPro || (clientType === 'particulier' && hasExtras);
+
+    const getEscapeCapacity = () => Object.values(selectedRooms).reduce((acc, n) => acc + (n || 0), 0);
+    const nbPersons = selectedActivity === 'both' ? getEscapeCapacity() + quizParticipants : participants;
+
+    const updateRestaQty = (itemId, delta) => {
+      setSelectedRestauration(prev => {
+        const current = prev[itemId] || 0;
+        return { ...prev, [itemId]: Math.max(0, current + delta) };
+      });
+    };
+
+    const calculateTotal = () => {
+      let totalHT = 0, tva10 = 0, tva20 = 0, totalTTC = 0;
+      const details = [];
+      let totalPersons = 0;
+
+      // ===== Carte cadeau =====
+      if (isGift && selectedGiftCard) {
+        const allCards = [...GIFT_CARDS.escape, ...GIFT_CARDS.quiz, ...GIFT_CARDS.libre];
+        const card = allCards.find(c => c.id === selectedGiftCard);
+        if (card) {
+          const ht = toHT(card.priceTTC);
+          totalHT += ht; tva10 += card.priceTTC - ht; totalTTC += card.priceTTC;
+          details.push({ name: '🎁 ' + card.name, priceHT: ht, priceTTC: card.priceTTC, qty: 1, tva: 10 });
+          totalPersons = card.persons;
+          if (wantPhysicalBox) {
+            const boxHT = toHT(10);
+            totalHT += boxHT; tva10 += 10 - boxHT; totalTTC += 10;
+            details.push({ name: 'Coffret cadeau physique', priceHT: boxHT, priceTTC: 10, qty: 1, tva: 10 });
+          }
+        }
+        const perPersonHT = card && card.persons > 1 ? totalHT / card.persons : totalHT;
+        const perPersonTTC = card && card.persons > 1 ? totalTTC / card.persons : totalTTC;
+        return { totalHT, tva10, tva20, totalTTC, details, perPersonHT, perPersonTTC, totalPersons: card?.persons || 1, isGiftCard: true };
+      }
+
+      const reducList = selectedActivity === 'quiz' ? REDUCTIONS_QUIZ : REDUCTIONS_ESCAPE;
+      const reduc = reducList.find(r => r.id === reduction);
+      const hasDiscount = reduc && reduc.discount > 0;
+      const isMariage = reduction === 'mariage';
+
+      // ===== Quiz =====
+      if (selectedActivity === 'quiz' || selectedActivity === 'both') {
+        const nbQ = selectedActivity === 'quiz' ? participants : quizParticipants;
+        if (nbQ > 0) {
+          totalPersons += nbQ;
+          if (isPro) {
+            const ht = nbQ * TARIFS_PRO_HT.quiz;
+            const ttc = nbQ * TARIFS_PRO_TTC.quiz;
+            totalHT += ht; tva10 += ttc - ht; totalTTC += ttc;
+            details.push({ name: 'Quiz Buzz Your Brain', priceHT: TARIFS_PRO_HT.quiz, priceTTC: TARIFS_PRO_TTC.quiz, qty: nbQ, subtotalHT: ht, subtotalTTC: ttc, unit: '/pers', tva: 10 });
+          } else {
+            const nbQuiz = Math.min(16, Math.max(4, nbQ));
+            let ttc = QUIZ_PRICES_TTC[nbQuiz] || QUIZ_PRICES_TTC[16];
+            if (hasDiscount) ttc = ttc * (1 - reduc.discount);
+            const ht = toHT(ttc);
+            totalHT += ht; tva10 += ttc - ht; totalTTC += ttc;
+            details.push({ name: 'Quiz Buzz Your Brain — ' + nbQ + ' pers.' + (hasDiscount ? ' (-10%)' : ''), priceHT: ht, priceTTC: ttc, qty: 1, subtotalHT: ht, subtotalTTC: ttc, tva: 10 });
+          }
+          if (isMariage && !isPro && selectedActivity === 'quiz') {
+            details.push({ name: '💍 Place mariée·marié offerte (code MARIAGE)', priceHT: 0, priceTTC: 0, qty: 1, bonus: true });
+          }
+        }
+      }
+
+      // ===== Escape =====
+      if (selectedActivity === 'escape' || selectedActivity === 'both') {
+        const escapeRoomsSelected = Object.values(selectedRooms).some(v => v > 0);
+        if (!escapeRoomsSelected && selectedActivity === 'escape') {
+          const nbE = Math.min(6, Math.max(2, participants));
+          totalPersons += participants;
+          if (isPro) {
+            const ht = participants * TARIFS_PRO_HT.escape;
+            const ttc = participants * TARIFS_PRO_TTC.escape;
+            totalHT += ht; tva10 += ttc - ht; totalTTC += ttc;
+            details.push({ name: 'Escape Game — ' + participants + ' pers.', priceHT: TARIFS_PRO_HT.escape, priceTTC: TARIFS_PRO_TTC.escape, qty: participants, subtotalHT: ht, subtotalTTC: ttc, unit: '/pers', tva: 10 });
+          } else {
+            let ttc = ESCAPE_PRICES_TTC[nbE] || 144;
+            if (hasDiscount) ttc = ttc * (1 - reduc.discount);
+            const ht = toHT(ttc);
+            totalHT += ht; tva10 += ttc - ht; totalTTC += ttc;
+            details.push({ name: 'Escape Room — ' + participants + ' pers.' + (hasDiscount ? ' (-10%)' : ''), priceHT: ht, priceTTC: ttc, qty: 1, subtotalHT: ht, subtotalTTC: ttc, tva: 10 });
+          }
+        } else {
+          Object.entries(selectedRooms).forEach(([roomId, players]) => {
+            const room = ESCAPE_ROOMS.find(r => r.id === roomId);
+            if (room && players > 0) {
+              totalPersons += players;
+              if (isPro) {
+                const ht = players * TARIFS_PRO_HT.escape;
+                const ttc = players * TARIFS_PRO_TTC.escape;
+                totalHT += ht; tva10 += ttc - ht; totalTTC += ttc;
+                details.push({ name: room.name, priceHT: TARIFS_PRO_HT.escape, priceTTC: TARIFS_PRO_TTC.escape, qty: players, subtotalHT: ht, subtotalTTC: ttc, unit: '/pers', tva: 10 });
+              } else {
+                let ttc = ESCAPE_PRICES_TTC[players] || 144;
+                if (hasDiscount) ttc = ttc * (1 - reduc.discount);
+                const ht = toHT(ttc);
+                totalHT += ht; tva10 += ttc - ht; totalTTC += ttc;
+                details.push({ name: room.name + ' — ' + players + ' pers.' + (hasDiscount ? ' (-10%)' : ''), priceHT: ht, priceTTC: ttc, qty: 1, subtotalHT: ht, subtotalTTC: ttc, tva: 10 });
+              }
+            }
+          });
+        }
+        if (isMariage && !isPro) {
+          details.push({ name: '💍 Place mariée·marié offerte (code MARIAGE)', priceHT: 0, priceTTC: 0, qty: 1, bonus: true });
+        }
+      }
+
+      // ===== Privatisation =====
+      if (privatisation) {
+        const priv = PRIVATISATION[privatisation];
+        totalHT += priv.priceHT; tva20 += priv.priceTTC - priv.priceHT; totalTTC += priv.priceTTC;
+        details.push({ name: priv.name, priceHT: priv.priceHT, priceTTC: priv.priceTTC, qty: 1, subtotalHT: priv.priceHT, subtotalTTC: priv.priceTTC, tva: 20 });
+      }
+
+      // ===== Restauration =====
+      const allRestaItems = [
+        ...RESTAURATION.cocktails,
+        ...RESTAURATION.plateaux,
+        ...RESTAURATION.viennoiseries,
+        ...RESTAURATION.desserts,
+        ...RESTAURATION.boissons,
+      ];
+      Object.entries(selectedRestauration).forEach(([itemId, qty]) => {
+        if (qty > 0) {
+          const item = allRestaItems.find(i => i.id === itemId);
+          if (item) {
+            const itemHT = item.priceHT * qty;
+            const itemTTC = item.priceTTC * qty;
+            totalHT += itemHT;
+            if (item.tva === 20 || item.isAlcool) { tva20 += itemTTC - itemHT; } else { tva10 += itemTTC - itemHT; }
+            totalTTC += itemTTC;
+            details.push({ name: item.name, priceHT: item.priceHT, priceTTC: item.priceTTC, qty, subtotalHT: itemHT, subtotalTTC: itemTTC, editable: true, id: itemId, tva: item.tva || 10 });
+          }
+        }
+      });
+
+      const perPersonHT = totalPersons > 0 ? totalHT / totalPersons : 0;
+      const perPersonTTC = totalPersons > 0 ? totalTTC / totalPersons : 0;
+      return { totalHT, tva10, tva20, totalTTC, details, perPersonHT, perPersonTTC, totalPersons };
+    };
+
+    // ===== TEXT du devis (clipboard / fallback) =====
+    const generateDevisText = () => {
+      const r = calculateTotal();
+      const dateStr = new Date().toLocaleDateString('fr-FR');
+      let t = 'DEMANDE DE DEVIS — GAMEDOOR·41\n';
+      t += 'Date : ' + dateStr + '\n\n';
+
+      if (isPro) {
+        t += '--- INFORMATIONS CLIENT ---\n';
+        t += 'Type : ' + (clientType === 'entreprise' ? 'Entreprise' : 'Association') + '\n';
+        if (devisForm.societe) t += 'Société/Asso : ' + devisForm.societe + '\n';
+      } else {
+        t += '--- CLIENT PARTICULIER ---\n';
+      }
+      if (devisForm.contact)   t += 'Contact : ' + devisForm.contact + '\n';
+      if (devisForm.telephone) t += 'Téléphone : ' + devisForm.telephone + '\n';
+      if (devisForm.email)     t += 'Email : ' + devisForm.email + '\n';
+
+      t += '\n--- ACTIVITÉ ---\n';
+      t += (selectedActivity === 'both' ? 'Escape Game + Quiz Buzz Your Brain' : selectedActivity === 'escape' ? 'Escape Game' : 'Quiz Buzz Your Brain') + '\n';
+      t += 'Participants : ' + r.totalPersons + '\n';
+      if (devisForm.dateSouhaitee) t += 'Date souhaitée : ' + devisForm.dateSouhaitee + '\n';
+      if (devisForm.heureActivite) t += 'Heure souhaitée : ' + devisForm.heureActivite + '\n';
+      if (devisForm.heureArrivee && privatisation) t += "Heure d'arrivée : " + devisForm.heureArrivee + '\n';
+
+      t += '\n--- DÉTAIL ---\n';
+      r.details.forEach(d => {
+        if (d.bonus) t += '* ' + d.name + ' : OFFERT\n';
+        else if (d.qty > 1 && d.unit) t += '* ' + d.name + ' (' + d.qty + ' x ' + d.priceHT.toFixed(2) + '€ HT' + d.unit + ') : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT\n';
+        else if (d.qty > 1) t += '* ' + d.name + ' x ' + d.qty + ' : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT\n';
+        else t += '* ' + d.name + ' : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT\n';
+      });
+
+      t += '\n--- TOTAUX ---\n';
+      t += 'Total HT : ' + r.totalHT.toFixed(2) + '€\n';
+      if (r.tva10 > 0) t += 'TVA 10% : ' + r.tva10.toFixed(2) + '€\n';
+      if (r.tva20 > 0) t += 'TVA 20% : ' + r.tva20.toFixed(2) + '€\n';
+      t += 'TOTAL TTC : ' + r.totalTTC.toFixed(2) + '€\n';
+      t += '\nPar personne : ' + r.perPersonHT.toFixed(2) + '€ HT / ' + r.perPersonTTC.toFixed(2) + '€ TTC\n';
+
+      if (devisForm.message) t += '\n--- MESSAGE ---\n' + devisForm.message + '\n';
+
+      t += '\n--- CONTACT GAMEDOOR·41 ---\n';
+      t += '41 bis rue Pasteur, 14120 Mondeville\n';
+      t += 'contact@gamedoor41.fr · 02 31 53 07 51\n';
+      return t;
+    };
+
+    const sendEmail = () => {
+      setEmailSending(true);
+      setEmailError(false);
+      const r = calculateTotal();
+      const detailLines = r.details.map(d => {
+        if (d.bonus) return d.name + ' : OFFERT';
+        if (d.qty > 1 && d.unit) return d.name + ' (' + d.qty + ' x ' + d.priceHT.toFixed(2) + '€' + d.unit + ') : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT';
+        if (d.qty > 1) return d.name + ' x ' + d.qty + ' : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT';
+        return d.name + ' : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT';
+      }).join('\n');
+
+      const params = {
+        to_email: 'contact@gamedoor41.fr',
+        from_name: devisForm.contact || 'Client',
+        from_email: devisForm.email || 'non-renseigné',
+        societe: devisForm.societe || '-',
+        telephone: devisForm.telephone || 'non-renseigné',
+        client_type: clientType === 'entreprise' ? 'Entreprise' : clientType === 'association' ? 'Association' : 'Particulier',
+        activite: selectedActivity === 'both' ? 'Escape + Quiz' : selectedActivity === 'escape' ? 'Escape Game' : 'Quiz Buzz Your Brain',
+        participants: r.totalPersons,
+        date_souhaitee: devisForm.dateSouhaitee || 'non-renseignée',
+        heure_activite: devisForm.heureActivite || 'non-renseignée',
+        heure_arrivee: devisForm.heureArrivee || '-',
+        detail: detailLines,
+        total_ht: r.totalHT.toFixed(2) + '€',
+        tva_10: r.tva10.toFixed(2) + '€',
+        tva_20: r.tva20.toFixed(2) + '€',
+        total_ttc: r.totalTTC.toFixed(2) + '€',
+        prix_personne_ht: r.perPersonHT.toFixed(2) + '€',
+        prix_personne_ttc: r.perPersonTTC.toFixed(2) + '€',
+        message: generateDevisText()
+      };
+
+      try {
+        emailjs.send('service_4o68wv7', 'template_rv60k0d', params)
+          .then(() => { setEmailSending(false); setEmailSent(true); })
+          .catch((err) => { console.error('emailjs', err); setEmailSending(false); setEmailError(true); });
+      } catch (e) { setEmailSending(false); setEmailError(true); }
+    };
+
+    const copyToClipboard = () => {
+      const text = generateDevisText();
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => alert('Devis copié ! Envoyez-le à contact@gamedoor41.fr'));
+    };
+
+    const downloadPDF = () => {
+      const r = calculateTotal();
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('fr-FR');
+      const doc = new jsPDF();
+
+      // Header
+      doc.setFillColor(224, 112, 32); // gd-orange
+      doc.rect(0, 0, 210, 30, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.text('GAMEDOOR·41', 105, 15, { align: 'center' });
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Escape · Quiz · Team building — Caen', 105, 23, { align: 'center' });
+
+      doc.setTextColor(224, 112, 32);
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('SIMULATION DE TARIFS', 105, 45, { align: 'center' });
+      doc.setTextColor(110, 110, 110);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Générée le ' + dateStr, 105, 52, { align: 'center' });
+
+      let y = 65;
+      doc.setTextColor(224, 112, 32);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('INFORMATIONS', 20, y);
+      y += 8;
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Type : ' + (clientType === 'entreprise' ? 'Entreprise' : clientType === 'association' ? 'Association' : 'Particulier'), 20, y);
+      doc.text('Activité : ' + (selectedActivity === 'both' ? 'Escape + Quiz' : selectedActivity || '-'), 110, y);
+      y += 6;
+      doc.text('Participants : ' + r.totalPersons, 20, y);
+      if (devisForm.contact) doc.text('Contact : ' + devisForm.contact, 110, y);
+      y += 6;
+      if (devisForm.societe)   doc.text('Société : ' + devisForm.societe, 20, y);
+      if (devisForm.telephone) doc.text('Tél : ' + devisForm.telephone, 110, y);
+
+      y += 12;
+      doc.setFillColor(50, 50, 80);
+      doc.rect(20, y, 170, 8, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text('DÉSIGNATION', 25, y + 5.5);
+      doc.text('QTÉ', 120, y + 5.5);
+      doc.text('P.U. HT', 140, y + 5.5);
+      doc.text('TOTAL HT', 165, y + 5.5);
+      y += 10;
+
+      doc.setFont('helvetica', 'normal');
+      r.details.forEach((d, i) => {
+        if (i % 2 === 0) { doc.setFillColor(244, 240, 232); doc.rect(20, y - 4, 170, 7, 'F'); }
+        doc.setTextColor(d.bonus ? 200 : 30, d.bonus ? 130 : 30, d.bonus ? 0 : 30);
+        doc.text(d.name.substring(0, 40), 25, y);
+        doc.text(d.qty.toString(), 125, y);
+        doc.text(d.bonus ? '-' : d.priceHT.toFixed(2) + '€', 140, y);
+        doc.text(d.bonus ? 'OFFERT' : (d.subtotalHT || d.priceHT).toFixed(2) + '€', 165, y);
+        y += 7;
+      });
+
+      y += 5;
+      doc.setFillColor(50, 50, 80);
+      doc.rect(110, y, 80, 35, 'F');
+      y += 8;
+      doc.setTextColor(220, 220, 220);
+      doc.setFontSize(10);
+      doc.text('Total HT :', 115, y);
+      doc.text(r.totalHT.toFixed(2) + '€', 175, y);
+      y += 7;
+      if (r.tva10 > 0) { doc.text('TVA 10% :', 115, y); doc.text(r.tva10.toFixed(2) + '€', 175, y); y += 7; }
+      if (r.tva20 > 0) { doc.text('TVA 20% :', 115, y); doc.text(r.tva20.toFixed(2) + '€', 175, y); y += 7; }
+      doc.setTextColor(255, 200, 110);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('TOTAL TTC :', 115, y);
+      doc.text(r.totalTTC.toFixed(2) + '€', 170, y);
+
+      y += 12;
+      doc.setTextColor(0, 130, 0);
+      doc.setFontSize(10);
+      doc.text('Par personne : ' + r.perPersonHT.toFixed(2) + '€ HT / ' + r.perPersonTTC.toFixed(2) + '€ TTC', 20, y);
+
+      doc.setFillColor(224, 112, 32);
+      doc.rect(0, 275, 210, 22, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(9);
+      doc.text('41 bis rue Pasteur, 14120 Mondeville', 105, 283, { align: 'center' });
+      doc.text('contact@gamedoor41.fr · gamedoor41.fr', 105, 290, { align: 'center' });
+
+      doc.save('GAMEDOOR41_Simulation_' + now.toISOString().split('T')[0] + '.pdf');
+    };
+
+    // ===== UI helpers =====
+    const ChipKicker = ({ children, color = 'gd-orange' }) => (
+      <span className={cls('inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md sim-display text-[12px] font-bold uppercase tracking-[0.18em] border')} style={{ background: 'rgba(224,112,32,0.10)', borderColor: 'rgba(224,112,32,0.32)', color: '#E07020' }}>
+        {children}
+      </span>
+    );
+
+    const StepDot = ({ active, done }) => (
+      <div className={cls('w-2.5 h-2.5 rounded-full sim-step-indicator', active ? 'bg-gd-orange scale-125' : done ? 'bg-emerald-500' : 'bg-gd-border')} />
+    );
+
+    // Live summary bar (top-strip with current selection)
+    const LiveSummary = () => {
+      const r = calculateTotal();
+      if (!clientType || step === 1 || showSummary) return null;
+      const activityLabel = selectedActivity === 'both' ? 'Escape + Quiz' : selectedActivity === 'escape' ? 'Escape' : selectedActivity === 'quiz' ? 'Quiz' : '—';
+      const display = r.totalPersons > 0 ? r.totalPersons : participants;
+      return (
+        <div className="border-b border-gd-border/60 px-4 py-2.5" style={{ background: 'linear-gradient(90deg, rgba(224,112,32,0.08), rgba(157,78,221,0.05))' }}>
+          <div className="max-w-3xl mx-auto flex items-center justify-between gap-3 flex-wrap text-[13px]">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="px-2 py-0.5 rounded sim-display font-bold tracking-wider uppercase text-[11px]" style={{ background: 'rgba(224,112,32,0.18)', color: '#E07020' }}>
+                {clientType === 'entreprise' ? '🏢 Entreprise' : clientType === 'association' ? '🤝 Association' : '👥 Particulier'}
+              </span>
+              {selectedActivity && <span className="px-2 py-0.5 rounded sim-display font-bold tracking-wider uppercase text-[11px]" style={{ background: 'rgba(157,78,221,0.18)', color: '#c489f5' }}>🎮 {activityLabel}</span>}
+              {display > 0 && <span className="px-2 py-0.5 rounded sim-display font-bold tracking-wider uppercase text-[11px]" style={{ background: 'rgba(99,131,214,0.18)', color: '#9bb0e8' }}>👤 {display} pers.</span>}
+            </div>
+            <div className="text-right">
+              {r.totalTTC > 0 && (
+                <div className="flex flex-col items-end leading-tight">
+                  {isPro && <span className="text-amber-400 sim-display font-bold tracking-wider">{r.totalHT.toFixed(0)}€ HT</span>}
+                  <span className="text-emerald-400 sim-display font-black text-base">{r.totalTTC.toFixed(0)}€ TTC</span>
+                  {display > 0 && <span className="text-gd-cream/60 text-[11px]">{isPro ? r.perPersonHT.toFixed(1) + '€ HT' : r.perPersonTTC.toFixed(1) + '€'}/pers</span>}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // ===== STEPS =====
+    const renderStep1 = () => (
+      <div className="space-y-6">
+        <div className="text-center">
+          <h2 className="sim-display text-3xl md:text-4xl font-black text-gd-cream tracking-tight">Bienvenue chez GAMEDOOR·41</h2>
+          <p className="text-gd-cream/70 mt-2">Configurez votre événement en 2 minutes.</p>
+        </div>
+        <p className="text-gd-orange sim-display tracking-widest uppercase text-sm text-center">▸ Vous êtes…</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { id: 'entreprise',  icon: '🏢', label: 'Entreprise',  desc: 'Team building · Séminaire · Kickoff' },
+            { id: 'association', icon: '🤝', label: 'Association', desc: 'Événement · Sortie · CSE' },
+            { id: 'particulier', icon: '👥', label: 'Particulier', desc: 'Groupe · Amis · Famille' }
+          ].map(t => (
+            <button key={t.id} onClick={() => { setClientType(t.id); setIsGift(false); }}
+              className={cls('p-5 rounded-xl border-2 transition-all flex flex-col items-center gap-2 text-center bg-gd-card/60',
+                clientType === t.id && !isGift ? 'border-gd-orange bg-gd-orange/15 shadow-lg shadow-gd-orange/20' : 'border-gd-border hover:border-gd-orange/60')}>
+              <span className="text-4xl">{t.icon}</span>
+              <span className="sim-display font-bold text-gd-cream">{t.label}</span>
+              <span className="text-xs text-gd-cream/60 leading-snug">{t.desc}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+
+    const renderParticulierChoice = () => (
+      <div className="space-y-6">
+        <div className="text-center">
+          <h2 className="sim-display text-2xl md:text-3xl font-black text-gd-cream">Que souhaitez-vous faire ?</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
+          <button onClick={() => setIsGift(false)}
+            className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-3 transition-all',
+              !isGift ? 'border-gd-orange bg-gd-orange/15' : 'border-gd-border hover:border-gd-orange/60')}>
+            <span className="text-4xl">🎮</span>
+            <span className="sim-display font-bold text-gd-cream text-lg">Réserver</span>
+            <span className="text-sm text-gd-cream/60">Pour mon groupe</span>
+          </button>
+          <button onClick={() => setIsGift(true)}
+            className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-3 transition-all',
+              isGift ? 'border-amber-400 bg-amber-400/15' : 'border-gd-border hover:border-amber-400/60')}>
+            <span className="text-4xl">🎁</span>
+            <span className="sim-display font-bold text-gd-cream text-lg">Offrir</span>
+            <span className="text-sm text-gd-cream/60">Carte cadeau</span>
+          </button>
+        </div>
+      </div>
+    );
+
+    const renderGiftCards = () => (
+      <div className="space-y-5">
+        <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🎁 Choisissez une carte cadeau</h2>
+        {['escape', 'quiz', 'libre'].map(cat => (
+          <div key={cat} className="space-y-2">
+            <h3 className="sim-display tracking-wider uppercase text-sm font-bold" style={{ color: cat === 'escape' ? '#3D5DC0' : cat === 'quiz' ? '#9D4EDD' : '#E07020' }}>
+              {cat === 'escape' ? '🚪 Escape Game' : cat === 'quiz' ? '🎤 Quiz Buzz Your Brain' : '💳 Bon d\'achat libre'}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {GIFT_CARDS[cat].map(card => (
+                <button key={card.id} onClick={() => setSelectedGiftCard(card.id)}
+                  className={cls('p-3 rounded-lg border text-left transition-all',
+                    selectedGiftCard === card.id ? 'border-amber-400 bg-amber-400/15' : 'border-gd-border bg-gd-card hover:border-amber-400/60')}>
+                  <p className="text-gd-cream text-sm font-medium leading-tight">{card.name}</p>
+                  <p className="text-amber-400 sim-display font-black text-lg mt-1">{card.priceTTC}€</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+        <label className="flex items-center gap-3 p-4 bg-gd-card border border-gd-border rounded-lg cursor-pointer hover:border-amber-400/60">
+          <input type="checkbox" checked={wantPhysicalBox} onChange={(e) => setWantPhysicalBox(e.target.checked)} className="accent-amber-500 w-5 h-5" />
+          <span className="text-gd-cream text-sm">📦 Coffret cadeau physique <span className="text-amber-400 font-bold">+10€</span></span>
+        </label>
+      </div>
+    );
+
+    const renderActivitySelection = () => (
+      <div className="space-y-5">
+        <div className="text-center">
+          <h2 className="sim-display text-2xl md:text-3xl font-black text-gd-cream">Quelle activité ?</h2>
+          {isPro && <p className="text-amber-400 text-xs mt-1 sim-display tracking-wider uppercase">Tarifs réservés aux professionnels · TVA 10%</p>}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button onClick={() => { setSelectedActivity('escape'); setQuizParticipants(0); }}
+            className={cls('rounded-xl border-2 overflow-hidden transition-all',
+              selectedActivity === 'escape' ? 'border-gd-escape shadow-lg shadow-gd-escape/30' : 'border-gd-border hover:border-gd-escape/60')}>
+            <div className="h-20 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1B2A4E 0%, #3D5DC0 100%)' }}>
+              <span className="text-4xl">🚪</span>
+            </div>
+            <div className="p-3 bg-gd-card text-left">
+              <h3 className="sim-display font-bold text-gd-cream">Escape Game</h3>
+              <p className="text-xs text-gd-cream/60 mt-1">5 salles · 2-6/salle · 60 min</p>
+              {isPro
+                ? <p className="text-xs text-amber-400 mt-1">{TARIFS_PRO_HT.escape.toFixed(2)}€ HT/pers ({TARIFS_PRO_TTC.escape.toFixed(2)}€ TTC)</p>
+                : <p className="text-xs text-emerald-400 mt-1">Dès 74€/équipe (2 pers.)</p>}
+            </div>
+          </button>
+          <button onClick={() => { setSelectedActivity('quiz'); setSelectedRooms({}); }}
+            className={cls('rounded-xl border-2 overflow-hidden transition-all',
+              selectedActivity === 'quiz' ? 'border-gd-quiz shadow-lg shadow-gd-quiz/30' : 'border-gd-border hover:border-gd-quiz/60')}>
+            <div className="h-20 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #2a1640 0%, #9D4EDD 100%)' }}>
+              <span className="text-4xl">🎤</span>
+            </div>
+            <div className="p-3 bg-gd-card text-left">
+              <h3 className="sim-display font-bold text-gd-cream">Quiz Buzz Your Brain</h3>
+              <p className="text-xs text-gd-cream/60 mt-1">4-16 candidats · 60 min</p>
+              {isPro
+                ? <p className="text-xs text-amber-400 mt-1">{TARIFS_PRO_HT.quiz.toFixed(2)}€ HT/pers ({TARIFS_PRO_TTC.quiz.toFixed(2)}€ TTC)</p>
+                : <p className="text-xs text-emerald-400 mt-1">Dès 84€ (4 pers.)</p>}
+            </div>
+          </button>
+          <button onClick={() => setSelectedActivity('both')}
+            className={cls('sm:col-span-2 p-4 rounded-xl border-2 text-left transition-all',
+              selectedActivity === 'both' ? 'border-gd-orange bg-gd-orange/15 shadow-lg shadow-gd-orange/30' : 'border-gd-border hover:border-gd-orange/60')}>
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">🎮</span>
+              <div className="flex-1">
+                <h3 className="sim-display font-bold text-gd-cream">Combo Escape + Quiz</h3>
+                <p className="text-xs text-gd-cream/60">Format star séminaire · jusqu'à 46 personnes</p>
+              </div>
+              <span className="text-3xl">🎤</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    );
+
+    const renderParticipantsSimple = () => {
+      const max = selectedActivity === 'escape' ? MAX_ESCAPE : MAX_QUIZ;
+      const min = selectedActivity === 'quiz' ? 4 : 2;
+      const isOverLimit = participants > max;
+      return (
+        <div className="space-y-5">
+          <div className="text-center">
+            <h2 className="sim-display text-2xl font-black text-gd-cream">Combien de participants ?</h2>
+            <p className="text-gd-cream/60 text-sm mt-1">{selectedActivity === 'quiz' ? 'Quiz : 4 à 16 candidats' : 'Escape : 2 à 30 joueurs (5 salles physiques)'}</p>
+          </div>
+          <div className="flex items-center justify-center gap-6 my-6">
+            <button onClick={() => setParticipants(Math.max(min, participants - 1))}
+              className="w-14 h-14 rounded-full border-2 border-gd-orange text-gd-cream text-2xl hover:bg-gd-orange transition-all">−</button>
+            <div className="text-center min-w-[120px]">
+              <span className={cls('sim-display text-6xl font-black tabular-nums', isOverLimit ? 'text-amber-400' : 'text-emerald-400')}>{participants}</span>
+              <p className="text-gd-cream/60 text-sm mt-1">participants</p>
+            </div>
+            <button onClick={() => setParticipants(participants + 1)}
+              className="w-14 h-14 rounded-full border-2 border-gd-orange text-gd-cream text-2xl hover:bg-gd-orange transition-all">+</button>
+          </div>
+          {isOverLimit && (
+            <div className="p-4 bg-amber-500/15 border border-amber-500/40 rounded-lg text-center space-y-3">
+              <p className="text-amber-400 font-semibold">⚠ Le {selectedActivity === 'quiz' ? 'quiz' : 'escape'} est limité à {max} personnes par session</p>
+              <p className="text-gd-cream/70 text-sm">Pour {participants} participants, passez au format Combo (jusqu'à 46) !</p>
+              <button onClick={() => { setSelectedActivity('both'); if (selectedActivity === 'quiz') setQuizParticipants(Math.min(16, participants)); }}
+                className="px-6 py-2 bg-gd-orange text-black rounded-lg font-bold hover:bg-gd-orange/90 transition-all">🎮 Passer au Combo Escape + Quiz</button>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const renderComboConfig = () => {
+      const escapeCapacity = getEscapeCapacity();
+      const totalSelected = escapeCapacity + quizParticipants;
+      return (
+        <div className="space-y-4">
+          <div className="text-center">
+            <h2 className="sim-display text-2xl font-black text-gd-cream">Configuration Combo</h2>
+            <p className={cls('text-sm mt-1', totalSelected > MAX_TOTAL ? 'text-red-400' : 'text-emerald-400')}>{totalSelected} / {MAX_TOTAL} participants</p>
+          </div>
+          {totalSelected > MAX_TOTAL && (
+            <div className="p-3 bg-red-500/15 border border-red-500/40 rounded-lg text-center">
+              <p className="text-red-400 text-sm">⚠ Limite dépassée — réduisez le nombre de participants.</p>
+            </div>
+          )}
+          <div className="bg-gd-card border border-gd-border rounded-lg p-3">
+            <h3 className="sim-display tracking-wider uppercase text-sm font-bold mb-3" style={{ color: '#3D5DC0' }}>🚪 Escape Game (max 30 sur 5 salles)</h3>
+            {ESCAPE_ROOMS.map(room => {
+              const players = selectedRooms[room.id] || 0;
+              return (
+                <div key={room.id} className="flex items-center justify-between py-2 border-b border-gd-border/40 last:border-0">
+                  <div>
+                    <p className="text-gd-cream text-sm">{room.icon} <strong>{room.name}</strong></p>
+                    <p className="text-gd-cream/50 text-xs">{room.theme} · dès {room.minAge} ans</p>
+                  </div>
+                  <select value={players} onChange={(e) => setSelectedRooms(prev => ({ ...prev, [room.id]: parseInt(e.target.value) }))}
+                    className="bg-gd-card-soft border border-gd-border text-gd-cream text-sm rounded-md px-3 py-1.5 focus:border-gd-escape outline-none">
+                    <option value={0}>Non utilisée</option>
+                    <option value={2}>2 joueurs</option>
+                    <option value={3}>3 joueurs</option>
+                    <option value={4}>4 joueurs</option>
+                    <option value={5}>5 joueurs</option>
+                    <option value={6}>6 joueurs</option>
+                  </select>
+                </div>
+              );
+            })}
+            <p className="text-right text-gd-cream/60 text-xs mt-2">Sous-total escape : <strong className="text-gd-cream">{escapeCapacity}</strong> joueurs</p>
+          </div>
+          <div className="bg-gd-card border border-gd-border rounded-lg p-3">
+            <h3 className="sim-display tracking-wider uppercase text-sm font-bold mb-2" style={{ color: '#9D4EDD' }}>🎤 Quiz Buzz Your Brain (4-16)</h3>
+            <div className="flex items-center justify-center gap-4 py-2">
+              <button onClick={() => setQuizParticipants(Math.max(0, quizParticipants - 1))}
+                className="w-10 h-10 rounded-full border border-gd-quiz text-gd-cream hover:bg-gd-quiz transition-all">−</button>
+              <span className="sim-display text-3xl font-black text-gd-quiz tabular-nums min-w-[60px] text-center">{quizParticipants}</span>
+              <button onClick={() => setQuizParticipants(Math.min(16, quizParticipants + 1))}
+                className="w-10 h-10 rounded-full border border-gd-quiz text-gd-cream hover:bg-gd-quiz transition-all">+</button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const renderRoomSelection = () => (
+      <div className="space-y-3">
+        <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🚪 Choix des salles</h2>
+        <p className="text-center text-gd-cream/60 text-sm">Répartissez vos {participants} participants sur les 5 salles physiques</p>
+        {ESCAPE_ROOMS.map(room => {
+          const players = selectedRooms[room.id] || 0;
+          return (
+            <div key={room.id} className="bg-gd-card border border-gd-border rounded-lg p-3 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-gd-cream font-medium">{room.icon} {room.name}</p>
+                <p className="text-gd-cream/50 text-xs">{room.theme} · dès {room.minAge} ans</p>
+              </div>
+              <select value={players} onChange={(e) => setSelectedRooms(prev => ({ ...prev, [room.id]: parseInt(e.target.value) }))}
+                className="bg-gd-card-soft border border-gd-border text-gd-cream text-sm rounded-md px-3 py-1.5 focus:border-gd-escape outline-none">
+                <option value={0}>Non utilisée</option>
+                <option value={2}>2 joueurs</option>
+                <option value={3}>3 joueurs</option>
+                <option value={4}>4 joueurs</option>
+                <option value={5}>5 joueurs</option>
+                <option value={6}>6 joueurs</option>
+              </select>
+            </div>
+          );
+        })}
+        <div className="text-center p-3 bg-gd-card border border-gd-border rounded-lg">
+          <span className="text-gd-cream/60 text-sm">Capacité réservée : </span>
+          <span className={cls('sim-display font-black text-xl', getEscapeCapacity() >= participants ? 'text-emerald-400' : 'text-red-400')}>{getEscapeCapacity()}</span>
+          <span className="text-gd-cream/60 text-sm"> / {participants} participants</span>
+        </div>
+      </div>
+    );
+
+    const renderReductions = () => {
+      const list = selectedActivity === 'quiz' ? REDUCTIONS_QUIZ : REDUCTIONS_ESCAPE;
+      return (
+        <div className="space-y-3">
+          <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🎟 Code promo / réduction</h2>
+          <div className="p-3 bg-gd-orange/10 border border-gd-orange/40 rounded-lg">
+            <p className="text-gd-orange text-sm text-center sim-display tracking-wider uppercase font-bold">⚠ À justifier sur place</p>
+            <p className="text-gd-cream/80 text-xs text-center mt-1">Tout code promo doit être justifié à l'arrivée (carte, pass, justificatif). Sans justificatif, le tarif standard s'applique.</p>
+          </div>
+          <div className="space-y-2">
+            {list.map(r => (
+              <button key={r.id} onClick={() => setReduction(r.id)}
+                className={cls('w-full p-3 rounded-lg border text-left transition-all',
+                  reduction === r.id ? 'border-emerald-500 bg-emerald-500/10' : 'border-gd-border bg-gd-card hover:border-emerald-500/60')}>
+                <div className="flex justify-between items-center gap-3 flex-wrap">
+                  <div className="flex-1 min-w-[180px]">
+                    <span className="text-gd-cream">{r.name}</span>
+                    {r.code && <span className="ml-2 px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[11px] rounded sim-display tracking-wider font-bold">CODE : {r.code}</span>}
+                  </div>
+                  <span className="text-emerald-400 text-sm font-bold">{r.discount > 0 ? '-10%' : (r.bonus || '')}</span>
+                </div>
+                {r.note && <p className="text-gd-orange text-xs mt-1">{r.note}</p>}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    const renderRestaurationQuestion = () => (
+      <div className="space-y-4">
+        <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Souhaitez-vous de la restauration ?</h2>
+        <p className="text-center text-gd-orange text-sm sim-display tracking-wider uppercase font-bold">⚠ La privatisation est obligatoire pour la restauration sur place</p>
+        <div className="grid grid-cols-2 gap-4">
+          <button onClick={() => setWantsRestauration(true)}
+            className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
+              wantsRestauration === true ? 'border-emerald-500 bg-emerald-500/15' : 'border-gd-border hover:border-emerald-500/60')}>
+            <span className="text-3xl">✓</span>
+            <span className="text-gd-cream font-bold sim-display">Oui</span>
+          </button>
+          <button onClick={() => setWantsRestauration(false)}
+            className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
+              wantsRestauration === false ? 'border-red-500 bg-red-500/15' : 'border-gd-border hover:border-red-500/60')}>
+            <span className="text-3xl">✕</span>
+            <span className="text-gd-cream font-bold sim-display">Non</span>
+          </button>
+        </div>
+      </div>
+    );
+
+    const RestaSection = ({ title, items, colorHex, perPerson = false, showFor20Plus = false }) => {
+      if (showFor20Plus && nbPersons < 20) return null;
+      return (
+        <div className="bg-gd-card border border-gd-border rounded-lg p-3">
+          <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: colorHex }}>{title}</h3>
+          {items.map(item => (
+            <label key={item.id} className="flex items-center gap-2 p-1.5 hover:bg-gd-card-soft rounded cursor-pointer">
+              <input type="checkbox" checked={(selectedRestauration[item.id] || 0) > 0}
+                onChange={(e) => setSelectedRestauration(prev => e.target.checked
+                  ? { ...prev, [item.id]: item.perPerson ? nbPersons : 1 }
+                  : { ...prev, [item.id]: 0 })}
+                className="accent-gd-orange w-4 h-4" />
+              <span className="flex-1 text-gd-cream text-sm">{item.name}</span>
+              <span className="text-emerald-400 text-xs sim-display tracking-wide">
+                {isPro ? item.priceHT.toFixed(2) + '€ HT' : item.priceTTC.toFixed(2) + '€'}
+                {item.perPerson && <span className="opacity-70">/p</span>}
+                {item.isAlcool && <span className="text-gd-orange ml-1">(20%)</span>}
+              </span>
+            </label>
+          ))}
+        </div>
+      );
+    };
+
+    const renderMenu = () => (
+      <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+        <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Menu Restauration</h2>
+        <div className="p-3 bg-gd-orange/10 border border-gd-orange/40 rounded-lg">
+          <p className="text-gd-orange text-sm text-center sim-display tracking-wider uppercase font-bold">⚠ Privatisation obligatoire pour consommer sur place</p>
+        </div>
+        <div className="bg-gd-card border border-gd-border rounded-lg p-3">
+          <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: '#E07020' }}>🏢 Privatisation <span className="text-gd-orange">(obligatoire)</span></h3>
+          {Object.entries(PRIVATISATION).map(([key, priv]) => (
+            <label key={key} className="flex items-center gap-2 p-1.5 hover:bg-gd-card-soft rounded cursor-pointer">
+              <input type="radio" name="privatisation" checked={privatisation === key} onChange={() => setPrivatisation(key)} className="accent-gd-orange w-4 h-4" />
+              <span className="flex-1 text-gd-cream text-sm">{priv.name}</span>
+              <span className="text-emerald-400 text-xs sim-display tracking-wide">{isPro ? priv.priceHT.toFixed(0) + '€ HT' : priv.priceTTC + '€'}</span>
+            </label>
+          ))}
+        </div>
+        <RestaSection title="🥂 Cocktails traiteur (dès 20 pers.)" items={RESTAURATION.cocktails} colorHex="#E07020" showFor20Plus />
+        <RestaSection title="🧀 Plateaux"        items={RESTAURATION.plateaux}      colorHex="#E07020" />
+        <RestaSection title="🥐 Viennoiseries"   items={RESTAURATION.viennoiseries} colorHex="#E07020" />
+        <RestaSection title="🍰 Desserts"        items={RESTAURATION.desserts}      colorHex="#E07020" />
+        <RestaSection title="🍷 Boissons"        items={RESTAURATION.boissons}      colorHex="#E07020" />
+      </div>
+    );
+
+    const isValidPhone = (phone) => phone && phone.replace(/\s/g, '').match(/^0[67]\d{8}$/);
+
+    const renderDevisForm = () => (
+      <div className="space-y-2.5">
+        {isPro && (
+          <input type="text" placeholder="Nom société / association *" value={devisForm.societe}
+            onChange={(e) => setDevisForm(prev => ({ ...prev, societe: e.target.value }))}
+            className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none" />
+        )}
+        <input type="text" placeholder="Nom du contact *" value={devisForm.contact}
+          onChange={(e) => setDevisForm(prev => ({ ...prev, contact: e.target.value }))}
+          className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none" />
+        <div>
+          <input type="tel" placeholder="Téléphone portable (06 ou 07) *" value={devisForm.telephone}
+            onChange={(e) => setDevisForm(prev => ({ ...prev, telephone: e.target.value }))}
+            className={cls('w-full p-2.5 bg-gd-card border rounded text-gd-cream text-sm outline-none',
+              devisForm.telephone && !isValidPhone(devisForm.telephone) ? 'border-red-500' : 'border-gd-border focus:border-gd-orange')} />
+          {devisForm.telephone && !isValidPhone(devisForm.telephone) && (
+            <p className="text-red-400 text-xs mt-1">⚠ Numéro portable obligatoire (06 ou 07)</p>
+          )}
+        </div>
+        <input type="email" placeholder="Email *" value={devisForm.email}
+          onChange={(e) => setDevisForm(prev => ({ ...prev, email: e.target.value }))}
+          className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none" />
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <input type="date" value={devisForm.dateSouhaitee}
+              onChange={(e) => setDevisForm(prev => ({ ...prev, dateSouhaitee: e.target.value }))}
+              className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none" />
+            <p className="text-gd-cream/50 text-[11px] mt-1">Date souhaitée</p>
+          </div>
+          <div>
+            <input type="text" placeholder="Heure (ex 14h00)" value={devisForm.heureActivite}
+              onChange={(e) => setDevisForm(prev => ({ ...prev, heureActivite: e.target.value }))}
+              className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none" />
+            <p className="text-gd-cream/50 text-[11px] mt-1">Heure activité</p>
+          </div>
+        </div>
+        {privatisation && wantsRestauration && (
+          <input type="text" placeholder="Heure d'arrivée (ex 12h00)" value={devisForm.heureArrivee}
+            onChange={(e) => setDevisForm(prev => ({ ...prev, heureArrivee: e.target.value }))}
+            className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none" />
+        )}
+        <textarea placeholder="Message libre (objectif, contraintes, options spéciales…)" value={devisForm.message}
+          onChange={(e) => setDevisForm(prev => ({ ...prev, message: e.target.value }))}
+          rows={3}
+          className="w-full p-2.5 bg-gd-card border border-gd-border rounded text-gd-cream text-sm focus:border-gd-orange outline-none resize-none" />
+      </div>
+    );
+
+    const renderSummary = () => {
+      const r = calculateTotal();
+      return (
+        <div className="space-y-4">
+          <h2 className="sim-display text-2xl font-black text-gd-cream text-center">📋 Récapitulatif</h2>
+          {!isGift && (
+            <div className="bg-gd-card border border-gd-border rounded-lg p-3 text-xs grid grid-cols-2 gap-2">
+              <div><span className="text-gd-cream/60">Type :</span> <span className="text-gd-cream capitalize ml-1">{clientType}</span></div>
+              <div><span className="text-gd-cream/60">Activité :</span> <span className="text-gd-cream ml-1">{selectedActivity === 'both' ? 'Combo' : selectedActivity}</span></div>
+              <div><span className="text-gd-cream/60">Participants :</span> <span className="text-gd-cream ml-1">{r.totalPersons}</span></div>
+              {isPro && <div><span className="text-amber-400 sim-display tracking-wider">Tarif Pro · TVA 10%</span></div>}
+            </div>
+          )}
+          <div className="rounded-lg p-3 sim-shell" style={{ background: 'linear-gradient(180deg, rgba(224,112,32,0.08) 0%, rgba(224,112,32,0.03) 100%)', border: '1px solid rgba(224,112,32,0.30)' }}>
+            <h3 className="sim-display tracking-wider uppercase text-sm font-bold text-gd-cream mb-2">💰 Détail</h3>
+            <div className="space-y-1 max-h-60 overflow-y-auto pr-1">
+              {r.details.map((d, i) => (
+                <div key={i} className="flex items-center justify-between py-1.5 border-b border-gd-border/30 last:border-0 gap-2">
+                  <span className={cls('text-xs flex-1', d.bonus ? 'text-amber-400' : 'text-gd-cream/85')}>
+                    {d.name} {d.qty > 1 && !d.editable && '(×' + d.qty + ')'}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {d.editable && (
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => updateRestaQty(d.id, -1)} className="w-6 h-6 rounded bg-gd-card-soft border border-gd-border text-gd-cream text-xs hover:bg-gd-orange/30">−</button>
+                        <span className="text-gd-cream text-xs w-6 text-center tabular-nums">{d.qty}</span>
+                        <button onClick={() => updateRestaQty(d.id, 1)}  className="w-6 h-6 rounded bg-gd-card-soft border border-gd-border text-gd-cream text-xs hover:bg-gd-orange/30">+</button>
+                      </div>
+                    )}
+                    <span className="text-gd-cream text-xs w-20 text-right tabular-nums sim-display tracking-wide">
+                      {d.bonus ? 'OFFERT' : (d.subtotalHT || d.priceHT).toFixed(2) + '€'}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="border-t-2 border-gd-border pt-2 mt-2 space-y-1 text-sm">
+              <div className="flex justify-between"><span className="text-gd-cream/60">Total HT</span><span className="text-gd-cream sim-display tracking-wide">{r.totalHT.toFixed(2)}€</span></div>
+              {r.tva10 > 0 && <div className="flex justify-between text-xs"><span className="text-gd-cream/50">TVA 10%</span><span className="text-gd-cream/70">{r.tva10.toFixed(2)}€</span></div>}
+              {r.tva20 > 0 && <div className="flex justify-between text-xs"><span className="text-gd-cream/50">TVA 20%</span><span className="text-gd-cream/70">{r.tva20.toFixed(2)}€</span></div>}
+              <div className="flex justify-between pt-1 border-t border-gd-border/60">
+                <span className="sim-display font-black text-gd-cream tracking-wider uppercase text-base">TOTAL TTC</span>
+                <span className="sim-display text-2xl font-black text-gd-orange">{r.totalTTC.toFixed(2)}€</span>
+              </div>
+              {r.totalPersons > 0 && (
+                <div className="flex justify-between text-xs">
+                  <span className="text-gd-cream/60">Par personne</span>
+                  <span className="text-emerald-400 sim-display tracking-wide">{r.perPersonHT.toFixed(2)}€ HT / {r.perPersonTTC.toFixed(2)}€ TTC</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <button onClick={downloadPDF} className="py-2.5 bg-gd-escape text-white rounded-lg text-sm hover:bg-gd-escape/90 transition-all sim-display tracking-wider uppercase font-bold flex items-center justify-center gap-2">
+              📄 Télécharger PDF
+            </button>
+            <button onClick={copyToClipboard} className="py-2.5 bg-gd-card border border-gd-border text-gd-cream rounded-lg text-sm hover:bg-gd-card-soft transition-all sim-display tracking-wider uppercase font-bold flex items-center justify-center gap-2">
+              📋 Copier
+            </button>
+          </div>
+
+          {isGift ? (
+            <a href="https://braincaen.4escape.io/shop" target="_blank" rel="noopener noreferrer" className="block text-center py-3 bg-amber-400 text-black rounded-lg sim-display font-black tracking-wider uppercase hover:bg-amber-300 transition-all">🎁 Offrir cette carte cadeau</a>
+          ) : needsDevis ? (
+            showDevisForm ? (
+              <div className="space-y-3">
+                <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener noreferrer"
+                  className="block w-full py-2 bg-gd-escape text-white rounded-lg text-sm text-center hover:bg-gd-escape/90 transition-all sim-display tracking-wider uppercase font-bold">
+                  📅 Consulter nos disponibilités
+                </a>
+                {renderDevisForm()}
+                <button onClick={sendEmail} disabled={emailSending || emailSent || !isValidPhone(devisForm.telephone) || !devisForm.email || !devisForm.contact}
+                  className={cls('w-full py-3 rounded-lg sim-display font-black tracking-wider uppercase transition-all',
+                    emailSent ? 'bg-emerald-600 text-white' : emailSending ? 'bg-gd-card text-gd-cream/50' : 'bg-gd-orange text-black hover:bg-gd-orange/90 disabled:bg-gd-card disabled:text-gd-cream/40 disabled:cursor-not-allowed')}>
+                  {emailSent ? '✓ Devis envoyé' : emailSending ? '⏳ Envoi en cours…' : '📧 Envoyer la demande de devis'}
+                </button>
+                {emailSent && (
+                  <div className="p-3 bg-emerald-500/15 border border-emerald-500/40 rounded-lg text-center">
+                    <p className="text-emerald-400 sim-display font-bold tracking-wider uppercase">✓ Demande envoyée</p>
+                    <p className="text-gd-cream text-sm mt-1">Réponse sous 48h ouvrées à <strong>{devisForm.email}</strong>.</p>
+                  </div>
+                )}
+                {emailError && (
+                  <div className="p-3 bg-red-500/15 border border-red-500/40 rounded-lg text-center space-y-2">
+                    <p className="text-red-400 sim-display font-bold tracking-wider uppercase">✕ Erreur d'envoi</p>
+                    <button onClick={copyToClipboard} className="px-4 py-1.5 bg-gd-card border border-gd-border text-gd-cream rounded text-sm hover:bg-gd-card-soft">📋 Copier le devis manuellement</button>
+                    <p className="text-gd-cream/60 text-xs">Envoyez-le à : <strong className="text-gd-orange">contact@gamedoor41.fr</strong></p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button onClick={() => setShowDevisForm(true)} className="w-full py-3 bg-gd-orange text-black rounded-lg sim-display font-black tracking-wider uppercase hover:bg-gd-orange/90 transition-all">📝 Demander un devis</button>
+            )
+          ) : (
+            <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener noreferrer" className="block text-center py-3 bg-emerald-600 text-white rounded-lg sim-display font-black tracking-wider uppercase hover:bg-emerald-500 transition-all">📅 Réserver maintenant</a>
+          )}
+
+          <button onClick={() => {
+            setStep(1); setShowSummary(false); setShowDevisForm(false); setClientType(null); setIsGift(false);
+            setSelectedActivity(null); setParticipants(4); setSelectedRooms({}); setQuizParticipants(0);
+            setReduction('none'); setWantsRestauration(null); setPrivatisation(null); setSelectedRestauration({});
+            setSelectedGiftCard(null); setWantPhysicalBox(false); setDevisForm({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureArrivee: '', message: '' });
+            setEmailSent(false); setEmailSending(false); setEmailError(false);
+          }} className="w-full py-2 border border-gd-border text-gd-cream rounded-lg text-sm hover:bg-gd-card transition-all">🔄 Nouvelle simulation</button>
+
+          <p className="text-center text-gd-cream/50 text-xs">📍 41 bis rue Pasteur, 14120 Mondeville · 5 min de Caen centre</p>
+        </div>
+      );
+    };
+
+    // ===== Routing entre les étapes =====
+    const getStepContent = () => {
+      if (showSummary) return renderSummary();
+      if (clientType === 'particulier' && isGift) {
+        if (step === 2) return renderParticulierChoice();
+        if (step === 3) return renderGiftCards();
+        setShowSummary(true); return null;
+      }
+      switch (step) {
+        case 1: return renderStep1();
+        case 2: return clientType === 'particulier' ? renderParticulierChoice() : renderActivitySelection();
+        case 3:
+          if (clientType === 'particulier') return renderActivitySelection();
+          return selectedActivity === 'both' ? renderComboConfig() : renderParticipantsSimple();
+        case 4:
+          if (clientType === 'particulier') return selectedActivity === 'both' ? renderComboConfig() : renderParticipantsSimple();
+          return selectedActivity === 'escape' ? renderRoomSelection() : renderRestaurationQuestion();
+        case 5:
+          if (clientType === 'particulier') {
+            if (selectedActivity === 'escape') return renderRoomSelection();
+            return renderReductions();
+          }
+          return renderRestaurationQuestion();
+        case 6:
+          if (clientType === 'particulier') {
+            if (selectedActivity === 'escape') return renderReductions();
+            return renderRestaurationQuestion();
+          }
+          if (wantsRestauration) return renderMenu();
+          setShowSummary(true); return null;
+        case 7:
+          if (clientType === 'particulier') {
+            if (selectedActivity === 'quiz') {
+              if (wantsRestauration) return renderMenu();
+              setShowSummary(true); return null;
+            }
+            return renderRestaurationQuestion();
+          }
+          if (wantsRestauration) return renderMenu();
+          setShowSummary(true); return null;
+        case 8:
+          if (wantsRestauration) return renderMenu();
+          setShowSummary(true); return null;
+        default: setShowSummary(true); return null;
+      }
+    };
+
+    const canProceed = () => {
+      if (clientType === 'particulier' && isGift) return step === 3 ? selectedGiftCard !== null : true;
+      switch (step) {
+        case 1: return clientType !== null;
+        case 2: return clientType === 'particulier' ? true : selectedActivity !== null;
+        case 3:
+          if (clientType === 'particulier') return selectedActivity !== null;
+          if (selectedActivity === 'both') { const t = getEscapeCapacity() + quizParticipants; return t <= MAX_TOTAL && t > 0; }
+          { const min = selectedActivity === 'quiz' ? 4 : 2; const max = selectedActivity === 'quiz' ? MAX_QUIZ : MAX_ESCAPE; return participants >= min && participants <= max; }
+        case 4:
+          if (clientType === 'particulier') {
+            if (selectedActivity === 'both') { const t = getEscapeCapacity() + quizParticipants; return t <= MAX_TOTAL && t > 0; }
+            const min = selectedActivity === 'quiz' ? 4 : 2; const max = selectedActivity === 'quiz' ? MAX_QUIZ : MAX_ESCAPE;
+            return participants >= min && participants <= max;
+          }
+          if (selectedActivity === 'escape') return getEscapeCapacity() >= participants;
+          return true;
+        case 5:
+          if (clientType === 'particulier' && selectedActivity === 'escape') return getEscapeCapacity() >= participants;
+          return true;
+        default: return true;
+      }
+    };
+
+    const handleNext = () => {
+      if (clientType === 'particulier' && isGift && step >= 3) { setShowSummary(true); return; }
+      if (step >= 8) setShowSummary(true); else setStep(step + 1);
+    };
+
+    return (
+      <div className="rounded-2xl overflow-hidden sim-shell" style={{ background: 'linear-gradient(180deg, rgba(20,16,12,0.95) 0%, rgba(10,6,6,0.98) 100%)' }}>
+        {/* Header */}
+        <div className="px-5 py-4 text-center" style={{ background: 'linear-gradient(90deg, #B85A18 0%, #E07020 50%, #B85A18 100%)' }}>
+          <h1 className="sim-display text-xl md:text-2xl font-black text-white tracking-wider">SIMULATEUR GAMEDOOR·41</h1>
+          <p className="text-white/85 text-xs mt-1 sim-display tracking-wider uppercase">Escape · Quiz · Team building · EVJF/EVG · Anniversaire</p>
+        </div>
+
+        <LiveSummary />
+
+        {!showSummary && (
+          <div className="flex justify-center gap-1.5 py-3 bg-black/40 border-b border-gd-border/50">
+            {Array.from({ length: 8 }, (_, i) => (<StepDot key={i} active={i + 1 === step} done={i + 1 < step} />))}
+          </div>
+        )}
+
+        <main className="max-w-xl mx-auto p-5 md:p-7">{getStepContent()}</main>
+
+        {!showSummary && (
+          <nav className="flex justify-between max-w-xl mx-auto px-5 pb-5">
+            <button onClick={() => step > 1 && setStep(step - 1)}
+              className={cls('px-4 py-2 rounded-lg border border-gd-border text-gd-cream text-sm hover:bg-gd-card transition-all', step === 1 ? 'invisible' : '')}>← Retour</button>
+            <button onClick={handleNext} disabled={!canProceed()}
+              className="px-5 py-2 rounded-lg bg-gd-orange text-black sim-display font-black tracking-wider uppercase text-sm hover:bg-gd-orange/90 disabled:bg-gd-card disabled:text-gd-cream/40 disabled:cursor-not-allowed transition-all">Continuer →</button>
+          </nav>
+        )}
+      </div>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<SimulateurGamedoor />);
+  </script>
 </body>
 </html>
