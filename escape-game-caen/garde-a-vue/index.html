@@ -231,11 +231,10 @@
     </picture>
     <div class="room-cinema-overlay" aria-hidden="true"></div>
 
-    <!-- Affiche BRAIN flottante à gauche -->
-    <picture class="room-cinema-poster" aria-hidden="true">
-      <source type="image/avif" srcset="/img/promo/affiche-garde-a-vue-480w.avif 480w, /img/promo/affiche-garde-a-vue-768w.avif 768w" sizes="(max-width:760px) 200px, 320px">
-      <img src="/img/promo/affiche-garde-a-vue.jpg" alt="" loading="lazy" decoding="async">
-    </picture>
+    <!-- Vidéo BRAIN flottante à gauche (remplace l'affiche) -->
+    <video class="room-cinema-poster" autoplay muted loop playsinline preload="metadata" poster="/img/promo/affiche-garde-a-vue.jpg" aria-hidden="true">
+      <source src="/video/garde-a-vue.mp4" type="video/mp4">
+    </video>
 
     <div class="container room-cinema-container">
       <div class="room-cinema-panel fade-in">
