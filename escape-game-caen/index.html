@@ -168,46 +168,59 @@
     }
     .salle-reverse .salle-num-deco { right:auto; left:clamp(24px, 4vw, 64px); }
 
-    /* Panel translucide flottant — contient tout le contenu de la salle */
+    /* Panel translucide flottant — contient tout le contenu de la salle, calé sur 1 viewport */
     .salle-body {
       position:relative; z-index:3;
-      background:rgba(12, 8, 0, 0.62);
+      background:rgba(12, 8, 0, 0.66);
       backdrop-filter:blur(18px) saturate(1.1);
       -webkit-backdrop-filter:blur(18px) saturate(1.1);
       border:1px solid rgba(255, 255, 255, 0.08);
       border-radius:14px;
-      width:clamp(320px, 48vw, 620px);
-      max-width:calc(100vw - 64px);
-      margin:clamp(80px, 12vh, 160px) auto clamp(48px, 6vh, 96px) clamp(32px, 6vw, 96px);
-      padding:clamp(28px, 3vh, 44px) clamp(28px, 3vw, 44px);
+      width:clamp(320px, 46vw, 580px);
+      max-width:calc(100vw - 48px);
+      max-height:calc(100vh - clamp(80px, 12vh, 140px));
+      margin:clamp(56px, 8vh, 110px) auto clamp(24px, 4vh, 56px) clamp(24px, 5vw, 80px);
+      padding:clamp(16px, 2vh, 26px) clamp(20px, 2.4vw, 30px);
       box-sizing:border-box;
       box-shadow:0 24px 60px rgba(0,0,0,0.55), 0 6px 18px rgba(0,0,0,0.35);
+      display:flex; flex-direction:column;
+      overflow-y:auto; overflow-x:hidden;
+      overscroll-behavior:contain;
     }
+    .salle-body > * { flex-shrink:0; }
+    .salle-body::-webkit-scrollbar { width:4px; }
+    .salle-body::-webkit-scrollbar-track { background:transparent; }
+    .salle-body::-webkit-scrollbar-thumb { background:rgba(91,123,216,0.4); border-radius:2px; }
     .salle-reverse .salle-body {
-      margin-left:auto; margin-right:clamp(32px, 6vw, 96px);
+      margin-left:auto; margin-right:clamp(24px, 5vw, 80px);
     }
 
     .salle-body p, .salle-body span, .salle-body li, .salle-body a, .salle-body small {
       font-size:max(1rem, 16px);
     }
 
-    /* Densité serrée — tout tient en 1 viewport */
-    .salle-body p { margin-bottom:8px !important; line-height:1.45; color:#E8E2D6 !important; }
-    .salle-body h2 { font-size:clamp(2rem, 4.4vw, 3rem); margin-bottom:6px !important; line-height:1.02; color:#F0EBE2; }
-    .salle-body .salle-kicker { margin-bottom:6px !important; color:#E07020; }
-    .salle-body .salle-badge-sub { margin-bottom:8px !important; }
+    /* Densité ULTRA serrée — tout doit tenir en 1 viewport */
+    .salle-body p { margin-bottom:5px !important; line-height:1.4; color:#E8E2D6 !important; }
+    .salle-body h2 { font-size:clamp(1.6rem, 3.6vw, 2.4rem); margin-bottom:3px !important; line-height:1.04; color:#F0EBE2; }
+    .salle-body .salle-kicker { margin-bottom:3px !important; color:#E07020; }
+    .salle-body .salle-badge-sub { margin-bottom:4px !important; padding:4px 12px; }
     .salle-body .room-vintage-tag {
-      margin-bottom:10px !important; padding:4px 10px;
+      margin-bottom:4px !important; padding:3px 9px;
       background:rgba(255,255,255,0.06); color:#E8E2D6;
       border-color:rgba(255,255,255,0.12);
     }
-    .salle-body .room-card-meta { margin-bottom:14px !important; gap:14px; }
+    .salle-body .room-card-meta { margin-bottom:8px !important; gap:12px; }
     .salle-body .room-card-meta span { color:#E8E2D6 !important; }
-    .salle-body .gallery-grid { margin-bottom:14px !important; gap:6px; grid-template-columns:repeat(3, 1fr) !important; }
-    .salle-body .gallery-grid picture { height:clamp(64px, 10vh, 110px); overflow:hidden; border-radius:6px; display:block; }
+    .salle-body .gallery-grid { margin-bottom:8px !important; gap:5px; grid-template-columns:repeat(3, 1fr) !important; }
+    .salle-body .gallery-grid picture { height:clamp(50px, 7vh, 78px); overflow:hidden; border-radius:5px; display:block; }
     .salle-body .gallery-grid picture img { width:100% !important; height:100% !important; object-fit:cover !important; display:block; }
-    .salle-body > div[style*="display:flex;gap:12px"] { gap:10px !important; flex-wrap:wrap; align-items:center; }
-    .salle-body > p[style*="font-style:italic"]:last-child { margin-top:6px; margin-bottom:0 !important; color:#B8B0A2 !important; }
+    .salle-body > div[style*="display:flex;gap:12px"] {
+      gap:10px !important; flex-wrap:wrap; align-items:center;
+      margin-top:auto !important; padding-top:8px;
+    }
+    .salle-body > p[style*="font-style:italic"]:last-child {
+      margin-top:4px; margin-bottom:0 !important; color:#B8B0A2 !important;
+    }
 
     .salle-kicker {
       display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif;
