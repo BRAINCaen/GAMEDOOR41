@@ -941,6 +941,35 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
 /* --- Quiz Page Specifics --- */
 .quiz-accent { --accent: var(--cyan); }
 .quiz-accent .kicker { color: var(--cyan); }
+
+/* Quiz room-page (Buzz Your Brain) — réutilise les composants escape-room-page
+   (stats-band / room-cinema / dossier-band / info-card-mag / section-header-editorial)
+   en remappant la couleur d'accent navy escape vers le violet quiz. */
+body.quiz-room-page {
+  --gd-escape:        var(--gd-quiz);
+  --gd-escape-on-dark: var(--gd-quiz);
+}
+body.quiz-room-page .escape-room-page,
+body.quiz-room-page.escape-room-page {
+  --gd-escape:        var(--gd-quiz);
+  --gd-escape-on-dark: var(--gd-quiz);
+}
+/* Forcer les bordures et hovers à la couleur violet quiz pour les composants partagés */
+body.quiz-room-page .info-card-mag {
+  background: linear-gradient(155deg, rgba(157,78,221,0.08) 0%, rgba(20,18,16,0.5) 65%);
+  border-color: rgba(157,78,221,0.22);
+}
+body.quiz-room-page .info-card-mag:hover {
+  border-color: rgba(157,78,221,0.55);
+}
+body.quiz-room-page .stats-band {
+  background: linear-gradient(180deg, rgba(157,78,221,0.10) 0%, rgba(157,78,221,0.04) 100%);
+  border-top-color: rgba(157,78,221,0.28);
+  border-bottom-color: rgba(157,78,221,0.28);
+}
+body.quiz-room-page .room-cinema-overlay {
+  background: linear-gradient(135deg, rgba(8,8,8,0.78) 0%, rgba(8,8,8,0.5) 50%, rgba(157,78,221,0.18) 100%);
+}
 .quiz-accent .room-card:hover {
   border-color: var(--cyan);
   box-shadow: 0 0 30px var(--cyan-glow);
