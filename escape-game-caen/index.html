@@ -28,22 +28,71 @@
     <link rel="preload" as="image" type="image/avif" imagesrcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.avif 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.avif 1672w" imagesizes="100vw">
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    /* === V3.3 hero — GAMEDOOR·ESCAPE (préfixé .gd-hero-* pour éviter tout conflit) === */
-    .gd-hero { position:relative; min-height:62vh; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center; padding:clamp(40px,5vw,72px) 0; background:#0C0800; }
+    /* === Hero GAMEDOOR·ESCAPE — refonte compacte & audacieuse : eyebrow + wordmark + 3 cards d'orientation directes === */
+    .gd-hero {
+      position:relative; min-height:auto;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden; text-align:center;
+      padding:clamp(24px, 3.5vw, 56px) 0 clamp(28px, 4vw, 64px);
+      background:#0C0800;
+    }
     .gd-hero-bg { position:absolute; inset:0; z-index:0; overflow:hidden; }
-    .gd-hero-bg picture, .gd-hero-bg img { width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(1.05); }
-    .gd-hero-bg::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 25%, rgba(12,8,0,.85) 100%); pointer-events:none; }
-    .gd-hero-inner { position:relative; z-index:2; width:100%; max-width:1100px; padding:0 24px; }
-    .gd-hero-eyebrow { display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:16px; font-weight:600; letter-spacing:.32em; text-transform:uppercase; color:#E07020; border-top:1px solid rgba(224,112,32,.45); border-bottom:1px solid rgba(224,112,32,.45); padding:7px 16px; margin-bottom:28px; }
-    .gd-hero-h1 { font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-1.5px; line-height:.92; font-size:clamp(44px,7vw,104px); color:#F0EBE2; margin:0 0 18px; }
+    .gd-hero-bg picture, .gd-hero-bg img { width:100%; height:100%; object-fit:cover; filter:brightness(.38) saturate(1.05); }
+    .gd-hero-bg::after {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse at center, transparent 20%, rgba(12,8,0,.92) 100%),
+        linear-gradient(180deg, rgba(12,8,0,0.4) 0%, transparent 30%, transparent 70%, rgba(12,8,0,0.85) 100%);
+    }
+    .gd-hero-inner { position:relative; z-index:2; width:100%; max-width:1100px; padding:0 clamp(16px, 3vw, 32px); }
+    .gd-hero-eyebrow {
+      display:inline-block; font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-size:16px; font-weight:600; letter-spacing:.32em; text-transform:uppercase;
+      color:#E07020;
+      border-top:1px solid rgba(224,112,32,.45); border-bottom:1px solid rgba(224,112,32,.45);
+      padding:6px 14px; margin-bottom:14px;
+    }
+    .gd-hero-h1 {
+      font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900;
+      text-transform:uppercase; letter-spacing:-1.5px; line-height:.92;
+      font-size:clamp(40px, 6.4vw, 88px);
+      color:#F0EBE2; margin:0 0 10px;
+    }
     .gd-hero-h1 strong { font-weight:900; }
     .gd-hero-h1 .light { font-weight:300; }
-    /* Sous-marque Escape Game — navy DS (#1B2A4E) éclairci pour lisibilité sur fond sombre. Variable centralisée dans style.css : var(--gd-escape-on-dark). Cohérence avec le cryptex home. */
     .gd-hero-h1 .accent { color:var(--gd-escape-on-dark); font-weight:900; display:inline-block; }
-    .gd-hero-subtitle { font-family:'Barlow Condensed','Oswald',sans-serif; font-size:clamp(16px,1.6vw,18px); font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#C8C2B8; margin:0 0 36px; display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:.35em .55em; text-align:center; }
-    .gd-hero-subtitle .sep { color:#E07020; margin:0 .55em; }
-    .gd-hero-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
-    @media (max-width: 720px) { .gd-hero { min-height:54vh; } .gd-hero-h1 { letter-spacing:-.5px; } }
+    .gd-hero-microcopy {
+      font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-size:16px; font-weight:500; letter-spacing:.28em; text-transform:uppercase;
+      color:#A8A095; margin:0 0 22px;
+    }
+
+    /* Grille d'orientation directement dans le hero */
+    .gd-hero-orient-grid {
+      display:grid; grid-template-columns:repeat(3, 1fr);
+      gap:14px; max-width:980px; margin:0 auto;
+    }
+    @media (max-width: 760px) {
+      .gd-hero-orient-grid { grid-template-columns:1fr; gap:10px; max-width:480px; }
+    }
+
+    /* Liens secondaires sous les cards */
+    .gd-hero-secondary {
+      display:flex; gap:clamp(12px, 2vw, 24px);
+      justify-content:center; flex-wrap:wrap;
+      margin-top:22px;
+    }
+    .gd-hero-secondary a {
+      color:#C8C2B8; text-decoration:none;
+      font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-size:16px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+      padding:8px 0;
+      border-bottom:1px solid rgba(200,194,184,0.18);
+      transition:color .2s, border-color .2s;
+    }
+    .gd-hero-secondary a:hover { color:#E07020; border-bottom-color:#E07020; }
+    .gd-hero-secondary .arrow { display:inline-block; margin-left:6px; transition:transform .2s; }
+    .gd-hero-secondary a:hover .arrow { transform:translateX(3px); }
 
     /* === Pattern DS « Brand · Decorative section number » + kicker numéroté magazine ===
        Appliqué sur les sections salles pour rendu éditorial premium-immersif. */
@@ -402,165 +451,42 @@
       <h1 class="gd-hero-h1">
         <strong>GAME</strong><span class="light">DOOR</span><span class="accent">·ESCAPE</span>
       </h1>
-      <div class="gd-hero-actions">
-        <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener">Réserver une salle</a>
-        <a href="#in-prison" class="btn btn-outline">Découvrir les salles</a>
+      <p class="gd-hero-microcopy">Choisissez votre expérience</p>
+
+      <div class="gd-hero-orient-grid">
+        <a href="#back-80s" class="exp-orient-card">
+          <span class="exp-orient-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+          </span>
+          <p class="exp-orient-q">Vous cherchez une aventure fun ?</p>
+          <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
+        </a>
+        <a href="#in-prison" class="exp-orient-card">
+          <span class="exp-orient-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12,2 14,8 20,8 15,12 17,18 12,14 7,18 9,12 4,8 10,8"/><circle cx="12" cy="11" r="2" fill="currentColor"/></svg>
+          </span>
+          <p class="exp-orient-q">Vous voulez tester votre cohésion ?</p>
+          <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
+        </a>
+        <a href="#psychiatric" class="exp-orient-card">
+          <span class="exp-orient-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.6" fill="currentColor"/><circle cx="15" cy="12" r="0.6" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></svg>
+          </span>
+          <p class="exp-orient-q">Vous aimez les sensations fortes ?</p>
+          <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
+        </a>
+      </div>
+
+      <div class="gd-hero-secondary">
+        <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener">Réserver maintenant <span class="arrow">↗</span></a>
+        <a href="/tarifs/">Voir les tarifs <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- BLOC ORIENTATION -->
-  <section class="section" style="padding-top:0;padding-bottom:40px;">
-    <div class="container">
-      <div class="fade-in" style="max-width:800px;margin:0 auto;text-align:center;">
-        <h2 style="font-size:1.3rem;margin-bottom:20px;">Quelle expérience est faite pour vous ?</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
-          <a href="#psychiatric" class="exp-orient-card">
-            <span class="exp-orient-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.6" fill="currentColor"/><circle cx="15" cy="12" r="0.6" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></svg>
-            </span>
-            <p class="exp-orient-q">Vous aimez les sensations fortes ?</p>
-            <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
-          </a>
-          <a href="#in-prison" class="exp-orient-card">
-            <span class="exp-orient-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12,2 14,8 20,8 15,12 17,18 12,14 7,18 9,12 4,8 10,8"/><circle cx="12" cy="11" r="2" fill="currentColor"/></svg>
-            </span>
-            <p class="exp-orient-q">Vous voulez tester votre cohésion ?</p>
-            <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
-          </a>
-          <a href="#back-80s" class="exp-orient-card">
-            <span class="exp-orient-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
-            </span>
-            <p class="exp-orient-q">Vous cherchez une aventure fun ?</p>
-            <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SALLE 1: GARDE À VUE -->
-  <section class="section salle-section" id="in-prison" style="background:var(--dark);">
-    <div class="salle-num-deco" aria-hidden="true">01</div>
-    <div class="container">
-      <div class="salle-grid fade-in">
-        <div class="salle-media">
-          <picture>
-            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.avif 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.avif 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.avif 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.avif 1448w" sizes="(max-width: 900px) 100vw, 50vw">
-            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.webp 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.webp 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.webp 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.webp 1448w" sizes="(max-width: 900px) 100vw, 50vw">
-            <img src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.jpg 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="(max-width: 900px) 100vw, 50vw" alt="Cellule de garde à vue avec banc, mobilier et toilettes — escape game GAMEDOOR·41 Caen" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <div class="salle-body">
-          <p class="salle-kicker"><span class="num">01</span> Salle</p>
-          <span class="salle-badge-sub">Escape · 60 min</span>
-          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
-          <h2 style="margin-bottom:12px;">Garde à Vue</h2>
-          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'enquête dont vous êtes le suspect</p>
-          <div class="room-card-meta" style="margin-bottom:16px;">
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par bureau · 2 bureaux</span>
-            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
-            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans</span>
-          </div>
-          <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« Convocation immédiate au commissariat. Refus = poursuites. »</p>
-          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:18px;font-weight:700;">60 minutes pour prouver votre innocence. Avant les flics.</p>
-          
-          <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-                      <picture>
-            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.avif 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.avif 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.avif 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.avif 1448w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.webp 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.webp 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.webp 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.webp 1448w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.jpg 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Cellule de garde à vue avec banc et toilettes – escape game Caen" width="1448" height="1086" loading="lazy" decoding="async">
-          </picture>
-                      <picture>
-            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-menottes-barreaux-wc-480w.avif 480w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc-768w.avif 768w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc.avif 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-menottes-barreaux-wc-480w.webp 480w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc-768w.webp 768w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc.webp 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/salle-garde-a-vue-menottes-barreaux-wc.jpg" srcset="/img/escape/salle-garde-a-vue-menottes-barreaux-wc-480w.jpg 480w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc-768w.jpg 768w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc.jpg 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Menottes derrière les barreaux de la cellule – escape game Garde à Vue Caen" width="941" height="1672" loading="lazy" decoding="async">
-          </picture>
-                      <picture>
-            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-scanner-empreinte-entree-480w.avif 480w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree-768w.avif 768w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree.avif 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-scanner-empreinte-entree-480w.webp 480w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree-768w.webp 768w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree.webp 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/salle-garde-a-vue-scanner-empreinte-entree.jpg" srcset="/img/escape/salle-garde-a-vue-scanner-empreinte-entree-480w.jpg 480w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree-768w.jpg 768w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree.jpg 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Scanner d'empreinte digitale à l'entrée – escape game Garde à Vue Caen" width="941" height="1672" loading="lazy" decoding="async">
-          </picture>
-          </div>
-
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-            <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener">Réserver Garde à Vue</a>
-            <a href="/escape-game-caen/garde-a-vue/" class="btn btn-outline" style="padding:10px 20px;font-size:1rem;">En savoir plus</a>
-            <span style="font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--orange);">Dès 24€ <small style="font-weight:400;font-size:1rem;color:var(--grey);">/pers.</small></span>
-          </div>
-          <p style="color:var(--grey);font-style:italic;font-size:1rem;margin-top:16px;">Cohésion et stratégie sous pression</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SALLE 2: PSYCHIATRIC -->
-  <section class="section salle-section" id="psychiatric">
-    <div class="salle-num-deco" aria-hidden="true">02</div>
-    <div class="container">
-      <div class="salle-grid salle-reverse fade-in">
-        <div class="salle-media">
-          <picture>
-            <source type="image/avif" srcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w, /img/escape/psychiatric-couloir-1024w.avif 1024w, /img/escape/psychiatric-couloir.avif 1086w" sizes="(max-width: 900px) 100vw, 50vw">
-            <source type="image/webp" srcset="/img/escape/psychiatric-couloir-480w.webp 480w, /img/escape/psychiatric-couloir-768w.webp 768w, /img/escape/psychiatric-couloir-1024w.webp 1024w, /img/escape/psychiatric-couloir.webp 1086w" sizes="(max-width: 900px) 100vw, 50vw">
-            <img src="/img/escape/psychiatric-couloir-1024w.jpg" srcset="/img/escape/psychiatric-couloir-480w.jpg 480w, /img/escape/psychiatric-couloir-768w.jpg 768w, /img/escape/psychiatric-couloir-1024w.jpg 1024w, /img/escape/psychiatric-couloir.jpg 1086w" sizes="(max-width: 900px) 100vw, 50vw" alt="Couloir d'hôpital psychiatrique abandonné avec fauteuil roulant — escape game horreur GAMEDOOR·41 Caen" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <div class="salle-body">
-          <p class="salle-kicker"><span class="num">02</span> Salle</p>
-          <span class="salle-badge-sub">Escape · 60 min</span>
-          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2017 · 26 000+ joueur·euse·s</div>
-          <h2 style="margin-bottom:12px;">Psychiatric</h2>
-          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'évasion mentale en mode survie</p>
-          <div class="room-card-meta" style="margin-bottom:16px;">
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par chambre · 2 chambres</span>
-            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
-            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 12 ans</span>
-          </div>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Vous aviez rendez-vous. <strong>Mais pas de dossier à votre nom.</strong></p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Pourtant vos noms apparaissent quelque part : dans le dossier de <strong>Benjamin Nari</strong>. Patient évadé ce matin.</p>
-          <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« On va vous garder en observation. »</p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Sauf que… le voisin de palier parle aux murs depuis 1998. La femme du troisième cherche quelqu'un à mordre. Et les soignants — si ce sont bien des soignants — n'ont pas l'air pressés de vous sortir d'ici.</p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Quelque part, une voix se met à chuchoter votre nom à travers le mur.</p>
-          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:14px;font-weight:700;">Soixante minutes pour sortir de l'hôpital Saint-Brain avant qu'ils n'arrivent.</p>
-          <p style="color:var(--grey-light);margin-bottom:24px;font-style:italic;">Et surtout : ne posez aucune question sur ce qu'on fait vraiment ici.</p>
-          
-          <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-                      <picture>
-            <source type="image/avif" srcset="/img/escape/psychiatric-poignet-480w.avif 480w, /img/escape/psychiatric-poignet-768w.avif 768w, /img/escape/psychiatric-poignet-1024w.avif 1024w, /img/escape/psychiatric-poignet.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/psychiatric-poignet-480w.webp 480w, /img/escape/psychiatric-poignet-768w.webp 768w, /img/escape/psychiatric-poignet-1024w.webp 1024w, /img/escape/psychiatric-poignet.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/psychiatric-poignet.jpg" srcset="/img/escape/psychiatric-poignet-480w.jpg 480w, /img/escape/psychiatric-poignet-768w.jpg 768w, /img/escape/psychiatric-poignet-1024w.jpg 1024w, /img/escape/psychiatric-poignet.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Poignet entravé sur lit de contention – escape game horreur Caen" width="1086" height="1448" loading="lazy" decoding="async">
-          </picture>
-                      <picture>
-            <source type="image/avif" srcset="/img/escape/psychiatric-sangle-service-480w.avif 480w, /img/escape/psychiatric-sangle-service-768w.avif 768w, /img/escape/psychiatric-sangle-service-1024w.avif 1024w, /img/escape/psychiatric-sangle-service.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/psychiatric-sangle-service-480w.webp 480w, /img/escape/psychiatric-sangle-service-768w.webp 768w, /img/escape/psychiatric-sangle-service-1024w.webp 1024w, /img/escape/psychiatric-sangle-service.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/psychiatric-sangle-service.jpg" srcset="/img/escape/psychiatric-sangle-service-480w.jpg 480w, /img/escape/psychiatric-sangle-service-768w.jpg 768w, /img/escape/psychiatric-sangle-service-1024w.jpg 1024w, /img/escape/psychiatric-sangle-service.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Sangle de contention service psychiatrique – escape game Caen" width="1086" height="1448" loading="lazy" decoding="async">
-          </picture>
-                      <picture>
-            <source type="image/avif" srcset="/img/escape/psychiatric-porte-sang-480w.avif 480w, /img/escape/psychiatric-porte-sang-768w.avif 768w, /img/escape/psychiatric-porte-sang-1024w.avif 1024w, /img/escape/psychiatric-porte-sang.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <source type="image/webp" srcset="/img/escape/psychiatric-porte-sang-480w.webp 480w, /img/escape/psychiatric-porte-sang-768w.webp 768w, /img/escape/psychiatric-porte-sang-1024w.webp 1024w, /img/escape/psychiatric-porte-sang.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
-            <img src="/img/escape/psychiatric-porte-sang.jpg" srcset="/img/escape/psychiatric-porte-sang-480w.jpg 480w, /img/escape/psychiatric-porte-sang-768w.jpg 768w, /img/escape/psychiatric-porte-sang-1024w.jpg 1024w, /img/escape/psychiatric-porte-sang.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Porte griffée avec empreintes de mains sanglantes – escape game horreur Caen" width="1086" height="1448" loading="lazy" decoding="async">
-          </picture>
-          </div>
-
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-            <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener">Réserver Psychiatric</a>
-            <a href="/escape-game-caen/psychiatric/" class="btn btn-outline" style="padding:10px 20px;font-size:1rem;">En savoir plus</a>
-            <span style="font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--orange);">Dès 24€ <small style="font-weight:400;font-size:1rem;color:var(--grey);">/pers.</small></span>
-          </div>
-          <p style="color:var(--grey);font-style:italic;font-size:1rem;margin-top:16px;">Frisson et tension psychologique</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SALLE 3: BACK TO THE 80'S -->
+  <!-- SALLE 01: BACK TO THE 80'S -->
   <section class="section salle-section" id="back-80s" style="background:var(--dark);">
-    <div class="salle-num-deco" aria-hidden="true">03</div>
+    <div class="salle-num-deco" aria-hidden="true">01</div>
     <div class="container">
       <div class="salle-grid fade-in">
         <div class="salle-media">
@@ -571,7 +497,7 @@
           </picture>
         </div>
         <div class="salle-body">
-          <p class="salle-kicker"><span class="num">03</span> Salle</p>
+          <p class="salle-kicker"><span class="num">01</span> Salle</p>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
             <span class="salle-badge-sub" style="margin-bottom:0;">Escape · 60 min</span>
             <span class="exp-card-badge" style="margin-bottom:0;">Nommée Top 100 France</span>
@@ -585,13 +511,9 @@
             <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Difficulté 2/5</span>
             <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans</span>
           </div>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Vous connaissez Samuel ? Non ? <strong>Tant mieux pour vous.</strong></p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Moi, il me pourrit la vie depuis trop longtemps. Il squatte mon appart, mange mes pâtes, ne se lave jamais. <strong>Impossible de s'en débarrasser.</strong></p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Sauf qu'il y a une solution. Une seule.</p>
           <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">▸ Remonter en 1989. Avant que Samuel ne devienne… Samuel.</p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Un ami chez BRAIN m'a filé le tuyau : leur nouvelle machine temporelle est prête. J'y suis allé. J'ai tout raté. Je suis revenu bredouille — et avec des séquelles pour le reste de ma vie.</p>
-          <p style="color:var(--grey-light);margin-bottom:14px;">Mais on m'a dit que vous étiez doués. Genre vraiment doués. Bien plus malins que moi, en tout cas.</p>
-          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:24px;font-weight:700;">Donc voilà : vous y allez à ma place !</p>
+          <p style="color:var(--grey-light);margin-bottom:14px;">Samuel squatte l'appart, bouffe les pâtes, ne se lave jamais. <strong>La solution :</strong> jukebox Wurlitzer, borne d'arcade Pac-Man, vinyles, rollers — et un saut dans le temps.</p>
+          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:18px;font-weight:700;">60 minutes pour empêcher Samuel d'exister. Vous y allez à ma place !</p>
           
           <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
                       <picture>
@@ -622,7 +544,120 @@
     </div>
   </section>
 
-  <!-- PRICING QUICK -->
+  <!-- SALLE 02: GARDE À VUE -->
+  <section class="section salle-section" id="in-prison" style="background:var(--dark);">
+    <div class="salle-num-deco" aria-hidden="true">02</div>
+    <div class="container">
+      <div class="salle-grid fade-in">
+        <div class="salle-media">
+          <picture>
+            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.avif 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.avif 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.avif 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.avif 1448w" sizes="(max-width: 900px) 100vw, 50vw">
+            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.webp 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.webp 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.webp 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.webp 1448w" sizes="(max-width: 900px) 100vw, 50vw">
+            <img src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.jpg 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="(max-width: 900px) 100vw, 50vw" alt="Cellule de garde à vue avec banc, mobilier et toilettes — escape game GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="salle-body">
+          <p class="salle-kicker"><span class="num">02</span> Salle</p>
+          <span class="salle-badge-sub">Escape · 60 min</span>
+          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
+          <h2 style="margin-bottom:12px;">Garde à Vue</h2>
+          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'enquête dont vous êtes le suspect</p>
+          <div class="room-card-meta" style="margin-bottom:16px;">
+            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par bureau · 2 bureaux</span>
+            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
+            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans</span>
+          </div>
+          <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« Convocation immédiate au commissariat. Refus = poursuites. »</p>
+          <p style="color:var(--grey-light);margin-bottom:14px;">Sauf que <strong>Brian a disparu</strong>, Chantal attend sa retraite depuis 2017, et le distributeur de café est cassé depuis l'été. Bienvenue à la brigade la moins glorieuse du coin.</p>
+          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:18px;font-weight:700;">Et c'est vous, le suspect. 60 minutes.</p>
+          
+          <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.avif 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.avif 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.avif 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.avif 1448w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.webp 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.webp 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.webp 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.webp 1448w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.jpg 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Cellule de garde à vue avec banc et toilettes – escape game Caen" width="1448" height="1086" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-menottes-barreaux-wc-480w.avif 480w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc-768w.avif 768w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc.avif 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-menottes-barreaux-wc-480w.webp 480w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc-768w.webp 768w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc.webp 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/salle-garde-a-vue-menottes-barreaux-wc.jpg" srcset="/img/escape/salle-garde-a-vue-menottes-barreaux-wc-480w.jpg 480w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc-768w.jpg 768w, /img/escape/salle-garde-a-vue-menottes-barreaux-wc.jpg 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Menottes derrière les barreaux de la cellule – escape game Garde à Vue Caen" width="941" height="1672" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-scanner-empreinte-entree-480w.avif 480w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree-768w.avif 768w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree.avif 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-scanner-empreinte-entree-480w.webp 480w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree-768w.webp 768w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree.webp 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/salle-garde-a-vue-scanner-empreinte-entree.jpg" srcset="/img/escape/salle-garde-a-vue-scanner-empreinte-entree-480w.jpg 480w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree-768w.jpg 768w, /img/escape/salle-garde-a-vue-scanner-empreinte-entree.jpg 941w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Scanner d'empreinte digitale à l'entrée – escape game Garde à Vue Caen" width="941" height="1672" loading="lazy" decoding="async">
+          </picture>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener">Réserver Garde à Vue</a>
+            <a href="/escape-game-caen/garde-a-vue/" class="btn btn-outline" style="padding:10px 20px;font-size:1rem;">En savoir plus</a>
+            <span style="font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--orange);">Dès 24€ <small style="font-weight:400;font-size:1rem;color:var(--grey);">/pers.</small></span>
+          </div>
+          <p style="color:var(--grey);font-style:italic;font-size:1rem;margin-top:16px;">Cohésion et stratégie sous pression</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SALLE 03: PSYCHIATRIC -->
+  <section class="section salle-section" id="psychiatric">
+    <div class="salle-num-deco" aria-hidden="true">03</div>
+    <div class="container">
+      <div class="salle-grid salle-reverse fade-in">
+        <div class="salle-media">
+          <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w, /img/escape/psychiatric-couloir-1024w.avif 1024w, /img/escape/psychiatric-couloir.avif 1086w" sizes="(max-width: 900px) 100vw, 50vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-couloir-480w.webp 480w, /img/escape/psychiatric-couloir-768w.webp 768w, /img/escape/psychiatric-couloir-1024w.webp 1024w, /img/escape/psychiatric-couloir.webp 1086w" sizes="(max-width: 900px) 100vw, 50vw">
+            <img src="/img/escape/psychiatric-couloir-1024w.jpg" srcset="/img/escape/psychiatric-couloir-480w.jpg 480w, /img/escape/psychiatric-couloir-768w.jpg 768w, /img/escape/psychiatric-couloir-1024w.jpg 1024w, /img/escape/psychiatric-couloir.jpg 1086w" sizes="(max-width: 900px) 100vw, 50vw" alt="Couloir d'hôpital psychiatrique abandonné avec fauteuil roulant — escape game horreur GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="salle-body">
+          <p class="salle-kicker"><span class="num">03</span> Salle</p>
+          <span class="salle-badge-sub">Escape · 60 min</span>
+          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2017 · 26 000+ joueur·euse·s</div>
+          <h2 style="margin-bottom:12px;">Psychiatric</h2>
+          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'évasion mentale en mode survie</p>
+          <div class="room-card-meta" style="margin-bottom:16px;">
+            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par chambre · 2 chambres</span>
+            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
+            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 12 ans</span>
+          </div>
+          <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« On va vous garder en observation. »</p>
+          <p style="color:var(--grey-light);margin-bottom:14px;">Le voisin parle aux murs depuis 1998. Une voix chuchote votre nom à travers la cloison. <strong>Et personne ici n'a vraiment l'air d'être un soignant.</strong></p>
+          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:18px;font-weight:700;">60 minutes pour quitter l'hôpital Saint-Brain. Sans poser une seule question.</p>
+          
+          <div class="gallery-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-poignet-480w.avif 480w, /img/escape/psychiatric-poignet-768w.avif 768w, /img/escape/psychiatric-poignet-1024w.avif 1024w, /img/escape/psychiatric-poignet.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-poignet-480w.webp 480w, /img/escape/psychiatric-poignet-768w.webp 768w, /img/escape/psychiatric-poignet-1024w.webp 1024w, /img/escape/psychiatric-poignet.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-poignet.jpg" srcset="/img/escape/psychiatric-poignet-480w.jpg 480w, /img/escape/psychiatric-poignet-768w.jpg 768w, /img/escape/psychiatric-poignet-1024w.jpg 1024w, /img/escape/psychiatric-poignet.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Poignet entravé sur lit de contention – escape game horreur Caen" width="1086" height="1448" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-sangle-service-480w.avif 480w, /img/escape/psychiatric-sangle-service-768w.avif 768w, /img/escape/psychiatric-sangle-service-1024w.avif 1024w, /img/escape/psychiatric-sangle-service.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-sangle-service-480w.webp 480w, /img/escape/psychiatric-sangle-service-768w.webp 768w, /img/escape/psychiatric-sangle-service-1024w.webp 1024w, /img/escape/psychiatric-sangle-service.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-sangle-service.jpg" srcset="/img/escape/psychiatric-sangle-service-480w.jpg 480w, /img/escape/psychiatric-sangle-service-768w.jpg 768w, /img/escape/psychiatric-sangle-service-1024w.jpg 1024w, /img/escape/psychiatric-sangle-service.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Sangle de contention service psychiatrique – escape game Caen" width="1086" height="1448" loading="lazy" decoding="async">
+          </picture>
+                      <picture>
+            <source type="image/avif" srcset="/img/escape/psychiatric-porte-sang-480w.avif 480w, /img/escape/psychiatric-porte-sang-768w.avif 768w, /img/escape/psychiatric-porte-sang-1024w.avif 1024w, /img/escape/psychiatric-porte-sang.avif 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <source type="image/webp" srcset="/img/escape/psychiatric-porte-sang-480w.webp 480w, /img/escape/psychiatric-porte-sang-768w.webp 768w, /img/escape/psychiatric-porte-sang-1024w.webp 1024w, /img/escape/psychiatric-porte-sang.webp 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw">
+            <img src="/img/escape/psychiatric-porte-sang.jpg" srcset="/img/escape/psychiatric-porte-sang-480w.jpg 480w, /img/escape/psychiatric-porte-sang-768w.jpg 768w, /img/escape/psychiatric-porte-sang-1024w.jpg 1024w, /img/escape/psychiatric-porte-sang.jpg 1086w" sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt="Porte griffée avec empreintes de mains sanglantes – escape game horreur Caen" width="1086" height="1448" loading="lazy" decoding="async">
+          </picture>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener">Réserver Psychiatric</a>
+            <a href="/escape-game-caen/psychiatric/" class="btn btn-outline" style="padding:10px 20px;font-size:1rem;">En savoir plus</a>
+            <span style="font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--orange);">Dès 24€ <small style="font-weight:400;font-size:1rem;color:var(--grey);">/pers.</small></span>
+          </div>
+          <p style="color:var(--grey);font-style:italic;font-size:1rem;margin-top:16px;">Frisson et tension psychologique</p>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- PRICING QUICK -->
   <section class="section">
     <div class="container">
       <div class="section-header fade-in">
