@@ -222,38 +222,46 @@
   </div>
 
 
-  <!-- ROOM DETAILS -->
-  <section class="section" style="background:var(--dark);padding-top:60px;">
-    <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;" class="fade-in">
-        <div>
-          <video autoplay muted loop playsinline preload="none" style="width:100%;max-height:70vh;border-radius:var(--radius);object-fit:contain;" poster="/img/promo/affiche-garde-a-vue.jpg">
-            <source src="/video/garde-a-vue.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div>
-          <span class="exp-card-badge badge-escape" style="margin-bottom:16px;display:inline-block;">Escape Game Policier</span>
-          <div class="room-vintage-tag"><span class="dot"></span> Depuis 2018 · 18 000+ joueur·euse·s</div>
-          <h2 style="margin-bottom:12px;">L'interrogatoire commence.</h2>
-          <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'enquête dont vous êtes le suspect</p>
-          <div class="room-card-meta" style="margin-bottom:16px;">
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par bureau · 2 bureaux · jusqu'à 12 en duel</span>
-            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 — Découverte / Intermédiaire</span>
-            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans (en famille)</span>
-          </div>
-          <p style="color:var(--grey-light);margin-bottom:10px;line-height:1.45;">Benjamin s'est évadé. <strong>Et il vous a envoyé un message.</strong> Sur la clé USB qu'il a glissée à l'Inspecteur Brian : des dossiers, des photos floues, et <strong>vos noms entourés au stylo</strong>.</p>
-          <p class="quote-block" style="margin:10px 0;">« Convocation au commissariat. On a quelques questions à vous poser. »</p>
-          <p style="color:var(--grey-light);margin-bottom:10px;line-height:1.45;">Vous voilà à la brigade. Sauf que cette brigade-là… disons qu'elle a connu des heures plus glorieuses. L'Inspecteur Brian, lui, a disparu. Chantal attend sa retraite depuis 2017. Et on dirait que Benjamin a un coup d'avance sur tout le monde ici.</p>
-          <p class="tag-blue" style="margin:10px 0;">▸ Dans quel pétrin Benjamin vous a fourrés.</p>
-          <p style="color:var(--grey-light);margin-bottom:18px;line-height:1.45;">Soixante minutes pour comprendre ce que Benjamin sait. Soixante minutes pour fouiller le bureau de Brian. Soixante minutes pour sortir d'ici avant que les policiers, en salle de pause, ne se réveillent.</p>
+  <!-- ROOM DETAILS — cinéma immersif full-bleed, panel droit, fits 1 viewport -->
+  <section class="room-cinema" id="room-details" aria-label="Détails de la salle Garde à Vue">
+    <picture class="room-cinema-bg">
+      <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.avif 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.avif 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.avif 1448w" sizes="100vw">
+      <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.webp 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.webp 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.webp 1448w" sizes="100vw">
+      <img src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="100vw" alt="Cellule de garde à vue avec banc et toilettes — escape game GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+    </picture>
+    <div class="room-cinema-overlay" aria-hidden="true"></div>
 
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-            <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-reserver-garde-a-vue">Réserver Garde à Vue</a>
-            <div class="price-block">
-              <span class="price-main">Dès 24€ <small>/pers. (5-6 joueurs)</small></span>
-              <span class="price-reduced">À partir de 21,60€/pers. avec carte Trip Normand · Cezam · PAN · CSE ou tarif étudiant</span>
-            </div>
+    <!-- Affiche BRAIN flottante à gauche -->
+    <picture class="room-cinema-poster" aria-hidden="true">
+      <source type="image/avif" srcset="/img/promo/affiche-garde-a-vue-480w.avif 480w, /img/promo/affiche-garde-a-vue-768w.avif 768w" sizes="(max-width:760px) 200px, 320px">
+      <img src="/img/promo/affiche-garde-a-vue.jpg" alt="" loading="lazy" decoding="async">
+    </picture>
+
+    <div class="container room-cinema-container">
+      <div class="room-cinema-panel fade-in">
+        <div class="room-cinema-panel-head">
+          <span class="exp-card-badge badge-escape">Escape Game Policier</span>
+          <span class="room-cinema-vintage"><span class="dot"></span> Depuis 2018 · 18 000+ joueurs</span>
+        </div>
+        <h2 class="room-cinema-h2">L'interrogatoire commence.</h2>
+        <p class="room-cinema-subtitle">L'enquête dont vous êtes le suspect</p>
+        <div class="room-cinema-meta">
+          <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6/bureau · 2 bureaux · jusqu'à 12 en duel</span>
+          <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+          <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1-2 · Découverte / Intermédiaire</span>
+          <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans (en famille)</span>
+        </div>
+        <p class="room-cinema-pitch">Benjamin s'est évadé. <strong>Et il vous a envoyé un message.</strong> Sur la clé USB glissée à l'Inspecteur Brian : des dossiers, des photos floues, et <strong>vos noms entourés au stylo</strong>.</p>
+        <p class="quote-block room-cinema-quote">« Convocation au commissariat. On a quelques questions à vous poser. »</p>
+        <p class="room-cinema-pitch">Brian a disparu. Chantal attend sa retraite depuis 2017. Benjamin a un coup d'avance sur tout le monde ici.</p>
+        <p class="tag-blue room-cinema-tag">▸ Dans quel pétrin Benjamin vous a fourrés.</p>
+        <p class="room-cinema-final"><strong>60 minutes</strong> pour comprendre. <strong>60 minutes</strong> pour fouiller le bureau de Brian. <strong>60 minutes</strong> pour sortir avant que les flics, en salle de pause, ne se réveillent.</p>
+
+        <div class="room-cinema-cta">
+          <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-reserver-garde-a-vue">Réserver Garde à Vue</a>
+          <div class="price-block">
+            <span class="price-main">Dès 24€ <small>/pers. (5-6 joueurs)</small></span>
+            <span class="price-reduced">À partir de 21,60€ avec Trip Normand · Cezam · PAN · CSE ou étudiant</span>
           </div>
         </div>
       </div>
