@@ -2026,6 +2026,65 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .evjf-page .stats-band-inner { gap: 24px; }
 }
 
+/* Stats band — variant Anniversaire (même format que escape, accent orange ·41 vif) */
+.anniversaire-page .stats-band {
+  background: #110a05;
+  color: var(--gd-cream, #F0EBE2);
+  padding: clamp(28px, 4vh, 52px) 0;
+  border-top: 1px solid rgba(224,112,32,0.45);
+  border-bottom: 1px solid rgba(224,112,32,0.45);
+  position: relative;
+  overflow: hidden;
+}
+.anniversaire-page .stats-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(224,112,32,0.20) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 50%, rgba(224,112,32,0.14) 0%, transparent 55%);
+  pointer-events: none;
+}
+.anniversaire-page .stats-band-inner {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(20px, 4vw, 56px);
+  flex-wrap: wrap; text-align: center;
+}
+.anniversaire-page .stats-band-item {
+  display: flex; flex-direction: column; gap: 6px;
+  align-items: center; min-width: 150px;
+}
+.anniversaire-page .stats-band-item .num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.9; letter-spacing: -0.02em;
+  color: var(--orange, #E07020);
+  display: inline-block;
+}
+.anniversaire-page .stats-band-item .num small {
+  font-size: 0.45em;
+  font-weight: 600;
+  color: rgba(224,112,32,0.6);
+  letter-spacing: 0; margin-left: 2px;
+}
+.anniversaire-page .stats-band-item .label {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,235,226,0.7); margin-top: 4px;
+}
+.anniversaire-page .stats-band-sep {
+  font-size: 22px;
+  color: var(--orange, #E07020);
+  font-weight: 900;
+  display: inline-block; align-self: center;
+}
+@media (max-width: 720px) {
+  .anniversaire-page .stats-band-sep { display: none; }
+  .anniversaire-page .stats-band-inner { gap: 24px; }
+}
+
 /* ============================================================
    TB OCCASIONS — grid de cas d'usage team building
    (page team-building-caen, section "Toutes les occasions")
