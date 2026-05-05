@@ -276,6 +276,27 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 768px) {
   .desktop-only { display: none; }
   .nav-toggle { display: flex; }
+
+  /* CRITIQUE : .site-header a backdrop-filter qui crée un nouveau
+     containing block, empêchant .nav-links {position:fixed} de
+     se référer au viewport. Quand le menu est ouvert, on retire
+     le backdrop-filter pour que l'overlay couvre tout l'écran. */
+  body.menu-open .site-header,
+  body.menu-open .site-header.scrolled {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  body.menu-open .nav-inner {
+    position: relative;
+    z-index: 1001;
+  }
+  body.menu-open .nav-toggle {
+    position: relative;
+    z-index: 1001;
+  }
+
   .nav-links {
     display: none;
     position: fixed;
