@@ -3488,6 +3488,14 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
    JOKER CARDS — visuel transparent sur les 4 cartes joker
    (page quiz-game-caen, section "3 manches + jokers diaboliques")
    ============================================================= */
+/* Grille jokers : règle de base. Sur mobile (≤900px) override en 2 col
+   stricts via la règle media query plus bas (cf. fix mobile). */
+.joker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
 .joker-card { position: relative; overflow: hidden; }
 .joker-card .joker-art {
   display: block;
