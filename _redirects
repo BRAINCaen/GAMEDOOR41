@@ -45,3 +45,33 @@
 
 # ----- DOMAINE BRAIN → GAMEDOOR (au cas où l'ancien domaine pointerait vers Netlify) -----
 # (Géré côté DNS / Netlify domain settings — pas de redirection HTML ici)
+
+# ----- BLOG WIX — patterns auto-générés (catégories, tags, archives) -----
+/blog/categories/*                        /magazine/                             301
+/blog/tags/*                              /magazine/                             301
+/blog/archives/*                          /magazine/                             301
+/blog-feed.xml                            /sitemap.xml                           301
+/feed.xml                                 /sitemap.xml                           301
+/rss                                      /magazine/                             301
+/rss.xml                                  /magazine/                             301
+
+# ----- ASSETS WIX (anciennes URLs d'images potentiellement référencées ailleurs) -----
+/_files/*                                 /                                      301
+/_assets/*                                /                                      301
+/static/media/*                           /                                      301
+
+# ----- DEVIS/CONTACT WIX SHORT URLS -----
+/contact-1                                /contact/                              301
+/contact-2                                /contact/                              301
+/booking                                  https://braincaen.4escape.io/booking   301
+/reservation                              https://braincaen.4escape.io/booking   301
+/reserver                                 https://braincaen.4escape.io/booking   301
+/shop                                     https://braincaen.4escape.io/shop      301
+
+# ----- CATCH-ALL ANTI-LIEN-CASSÉ (TOUJOURS EN DERNIER) -----
+# Toute URL Brain inconnue qui n'a pas matché ci-dessus est redirigée vers la home
+# pour ne JAMAIS casser un backlink externe (Google Business, réseaux sociaux,
+# annuaires, anciens posts forum, etc.). 301 + Google retransfère le PageRank.
+# /* /  301
+# (commenté pour l'instant — à activer côté propriétaire quand le DNS Brain
+#  bascule sur Netlify et que toutes les URLs d'origine sont vérifiées.)
