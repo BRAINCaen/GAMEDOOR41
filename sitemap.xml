@@ -1,78 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Pages coeur -->
+
+  <!-- ===== PAGE D'ACCUEIL ===== -->
   <url>
     <loc>https://gamedoor41.fr/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- ===== ACTIVITÉS PRINCIPALES ===== -->
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/quiz-game-caen/</loc>
     <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/team-building-caen/</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gamedoor41.fr/tarifs/</loc>
+    <loc>https://gamedoor41.fr/mariage-caen/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamedoor41.fr/contact/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
 
-  <!-- Pages salles (escape) -->
+  <!-- ===== SALLES ESCAPE (univers) ===== -->
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/garde-a-vue/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/psychiatric/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/back-to-the-80s/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
 
-  <!-- Pages intentions (conversion + SEO) -->
-  <url>
-    <loc>https://gamedoor41.fr/team-building-caen/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <!-- ===== OCCASIONS (sous-pages mariage + anniversaire) ===== -->
   <url>
     <loc>https://gamedoor41.fr/evjf-caen/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/evg-caen/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/anniversaire-caen/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamedoor41.fr/cadeau/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/references-entreprises-caen/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- ===== TRANSACTIONNELLES ===== -->
+  <url>
+    <loc>https://gamedoor41.fr/tarifs/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/cadeau/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/devis/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/contact/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== MAGAZINE / BLOG ===== -->
+  <url>
+    <loc>https://gamedoor41.fr/magazine/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/escape-game-caen-guide-complet-2026/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/buzz-your-brain-jeu-televise-realiste-caen/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/team-building-reussi-caen-escape-game/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/escape-game-caen-tarif-etudiant/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/escape-game-a-deux-astuces-avantages/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/carte-cadeau-escape-quiz-caen/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/escape-game-back-to-80s-famille-caen/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/escape-game-horreur-psychiatric-caen/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/evjf-evg-caen-quiz-buzz-your-brain/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/organiser-evjf-evg-inoubliable-caen/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/quiz-game-noel-caen-buzz-your-brain/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ===== PAGES LÉGALES ===== -->
+  <url>
+    <loc>https://gamedoor41.fr/mentions-legales/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/politique-confidentialite/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/termes-conditions/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/politique-cookies/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>

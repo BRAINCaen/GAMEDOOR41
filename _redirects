@@ -1,29 +1,47 @@
-# Magazine — anciens slugs Brain (accents) → nouveaux slugs Gamedoor
-/post/escape-game-à-caen-guide-complet-2026-salles-tarifs-conseils-pour-réussir  /post/escape-game-caen-guide-complet-2026/  301
-/post/escape-game-à-caen-brain-étudiant-e-le-tarif-étudiant-e-que-vous-cherchiez  /post/escape-game-caen-tarif-etudiant/  301
-/post/evjf-evg-à-caen-vivez-une-expérience-quiz-game-inoubliable-avec-buzz-your-brain  /post/evjf-evg-caen-quiz-buzz-your-brain/  301
-/post/quiz-game-noël-caen-buzz-your-brain-activité-spécial-fêtes-b-r-a-i-n  /post/quiz-game-noel-caen-buzz-your-brain/  301
-/post/carte-cadeau-escape-game-quiz-game-caen  /post/carte-cadeau-escape-quiz-caen/  301
-/post/organisez-un-evjf-evg-inoubliable-à-caen-avec-brain-escape-quiz-game  /post/organiser-evjf-evg-inoubliable-caen/  301
-/post/buzz-your-brain-le-jeu-télévisé-réaliste-à-caen-un-nouveau-concept-complètement-déjanté  /post/buzz-your-brain-jeu-televise-realiste-caen/  301
-/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-à-caen  /post/escape-game-horreur-psychiatric-caen/  301
-/post/escape-game-à-deux-astuces-et-avantages-pour-une-expérience-unique  /post/escape-game-a-deux-astuces-avantages/  301
-/post/organiser-un-team-building-réussi-à-caen-avec-un-escape-game  /post/team-building-reussi-caen-escape-game/  301
-/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-à-caen  /post/escape-game-back-to-80s-famille-caen/  301
-/blog  /magazine/  301
-/blog/*  /magazine/  301
+# =============================================================
+# REDIRECTS BRAIN → GAMEDOOR·41 — préservation SEO
+# Source : sitemap brain-escapegame-caen.fr/pages-sitemap.xml
+# =============================================================
 
-# Magazine — anciens slugs Brain (accents) → nouveaux slugs Gamedoor
-/post/escape-game-à-caen-guide-complet-2026-salles-tarifs-conseils-pour-réussir  /post/escape-game-caen-guide-complet-2026/  301
-/post/escape-game-à-caen-brain-étudiant-e-le-tarif-étudiant-e-que-vous-cherchiez  /post/escape-game-caen-tarif-etudiant/  301
+# ----- PAGES PRINCIPALES BRAIN → GAMEDOOR -----
+/escape-inprison                          /escape-game-caen/garde-a-vue/         301
+/horreur-escape-psychiatric               /escape-game-caen/psychiatric/         301
+/escape-back-to-80s                       /escape-game-caen/back-to-the-80s/     301
+/quiz-game-plateau                        /quiz-game-caen/                       301
+/quiz-game-nos-emissions                  /quiz-game-caen/                       301
+/quiz-evenements-saintvalentain-noel-halloween  /quiz-game-caen/                 301
+/teambuilding-cse                         /team-building-caen/                   301
+/billeterie-cse-entreprises               /team-building-caen/                   301
+/centre-animations-loisirs                /                                      301
+/evjf-evg-mariage                         /mariage-caen/                         301
+/preparez-votre-experience                /contact/                              301
+/copie-de-alternances                     /cadeau/                               301
+/reductions-offres                        /tarifs/                               301
+/faq-infos                                /contact/                              301
+/plan-du-site                             /sitemap.xml                           301
+/blog                                     /magazine/                             301
+/blog/*                                   /magazine/                             301
+/emploi-escape-game-caen                  /contact/                              301
+/alternance-brain-caen                    /contact/                              301
+
+# ----- PAGES LÉGALES BRAIN → GAMEDOOR -----
+/politique-de-cookies                     /politique-cookies/                    301
+/politique-de-confidentialite             /politique-confidentialite/            301
+/termes-et-conditions                     /termes-conditions/                    301
+# /mentions-legales : même slug des deux côtés, pas besoin
+
+# ----- ARTICLES MAGAZINE (slugs Brain avec accents → slugs GAMEDOOR sans accents) -----
+/post/escape-game-à-caen-guide-complet-2026-salles-tarifs-conseils-pour-réussir   /post/escape-game-caen-guide-complet-2026/  301
+/post/escape-game-à-caen-brain-étudiant-e-le-tarif-étudiant-e-que-vous-cherchiez  /post/escape-game-caen-tarif-etudiant/      301
 /post/evjf-evg-à-caen-vivez-une-expérience-quiz-game-inoubliable-avec-buzz-your-brain  /post/evjf-evg-caen-quiz-buzz-your-brain/  301
-/post/quiz-game-noël-caen-buzz-your-brain-activité-spécial-fêtes-b-r-a-i-n  /post/quiz-game-noel-caen-buzz-your-brain/  301
-/post/carte-cadeau-escape-game-quiz-game-caen  /post/carte-cadeau-escape-quiz-caen/  301
-/post/organisez-un-evjf-evg-inoubliable-à-caen-avec-brain-escape-quiz-game  /post/organiser-evjf-evg-inoubliable-caen/  301
+/post/quiz-game-noël-caen-buzz-your-brain-activité-spécial-fêtes-b-r-a-i-n        /post/quiz-game-noel-caen-buzz-your-brain/  301
+/post/carte-cadeau-escape-game-quiz-game-caen                                     /post/carte-cadeau-escape-quiz-caen/        301
+/post/organisez-un-evjf-evg-inoubliable-à-caen-avec-brain-escape-quiz-game        /post/organiser-evjf-evg-inoubliable-caen/  301
 /post/buzz-your-brain-le-jeu-télévisé-réaliste-à-caen-un-nouveau-concept-complètement-déjanté  /post/buzz-your-brain-jeu-televise-realiste-caen/  301
-/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-à-caen  /post/escape-game-horreur-psychiatric-caen/  301
-/post/escape-game-à-deux-astuces-et-avantages-pour-une-expérience-unique  /post/escape-game-a-deux-astuces-avantages/  301
-/post/organiser-un-team-building-réussi-à-caen-avec-un-escape-game  /post/team-building-reussi-caen-escape-game/  301
-/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-à-caen  /post/escape-game-back-to-80s-famille-caen/  301
-/blog  /magazine/  301
-/blog/*  /magazine/  301
+/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-à-caen            /post/escape-game-horreur-psychiatric-caen/ 301
+/post/escape-game-à-deux-astuces-et-avantages-pour-une-expérience-unique          /post/escape-game-a-deux-astuces-avantages/ 301
+/post/organiser-un-team-building-réussi-à-caen-avec-un-escape-game                /post/team-building-reussi-caen-escape-game/  301
+/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-à-caen           /post/escape-game-back-to-80s-famille-caen/ 301
+
+# ----- DOMAINE BRAIN → GAMEDOOR (au cas où l'ancien domaine pointerait vers Netlify) -----
+# (Géré côté DNS / Netlify domain settings — pas de redirection HTML ici)
