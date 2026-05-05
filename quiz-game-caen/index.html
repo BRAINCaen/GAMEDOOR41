@@ -945,8 +945,12 @@
     });
 
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* Sur touch devices (smartphone/tablette), pas d'autoscroll continu.
+       Le swipe natif (overflow-x:auto + -webkit-overflow-scrolling) suffit
+       et l'autoscroll JS interfère avec le geste utilisateur. */
+    var isTouchDevice = !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     var SPEED = 0.7; // px par frame (~42px/s à 60fps)
-    var paused = reduceMotion;
+    var paused = reduceMotion || isTouchDevice;
     var rafId = null;
 
     function tick() {
@@ -962,7 +966,7 @@
     if (!reduceMotion) rafId = requestAnimationFrame(tick);
 
     function pause()  { paused = true;  }
-    function resume() { paused = reduceMotion ? true : false; }
+    function resume() { paused = (reduceMotion || isTouchDevice) ? true : false; }
 
     viewport.addEventListener('mouseenter', pause);
     viewport.addEventListener('mouseleave', resume);
