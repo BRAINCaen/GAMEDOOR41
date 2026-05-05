@@ -2841,6 +2841,48 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
     max-width: calc(100vw - 48px);
   }
 
+  /* Page tarifs : cards trop volumineuses sur mobile + features répétées
+     ("60 min de jeu", "Game master acteur", "Brief + débrief + photo")
+     identiques dans CHAQUE card. On les cache sur mobile + on compacte
+     le reste pour limiter le scroll. Les features sont déjà détaillées
+     sur les pages escape/quiz, pas besoin de les répéter à chaque tarif. */
+  .tarifs-card-includes {
+    display: none !important;
+  }
+  .tarifs-card {
+    padding: 16px 14px !important;
+  }
+  .tarifs-card-head {
+    margin-bottom: 8px !important;
+  }
+  .tarifs-card-prices {
+    margin-bottom: 4px !important;
+  }
+  .tarifs-card-amount {
+    font-size: 2.4rem !important;
+    line-height: 1 !important;
+  }
+  .tarifs-card-currency {
+    font-size: 1.4rem !important;
+  }
+  .tarifs-card-unit {
+    font-size: 0.85rem !important;
+  }
+  .tarifs-card-team {
+    font-size: 0.92rem !important;
+    margin: 0 0 12px !important;
+  }
+  .tarifs-card .btn {
+    padding: 10px 14px !important;
+    font-size: 0.9rem !important;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .tarifs-grid {
+    gap: 14px !important;
+  }
+
   /* Hero pages mariage / EVJF / EVG / anniversaire :
      l'image néon en arrière-plan (enseigne EVJF/EVG, BUZZ YOUR BRAIN…)
      parasite la lisibilité du texte sur mobile. On floute l'image et
