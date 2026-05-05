@@ -3523,3 +3523,459 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .tv-nav { width: 38px; height: 38px; font-size: 22px; }
   .tv-track { gap: 14px; padding: 8px 0 16px; }
 }
+
+/* ============================================================
+   MARIAGE → ANNIVERSAIRE CTA banner (prominent)
+   ============================================================ */
+.mariage-anniv-cta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 32px auto 0;
+  max-width: 880px;
+  padding: 22px 26px;
+  border: 2px solid rgba(224,112,32,0.50);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(224,112,32,0.14) 0%, rgba(224,112,32,0.04) 60%, rgba(157,78,221,0.06) 100%);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 14px 32px -10px rgba(224,112,32,0.25);
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, background .35s ease;
+}
+.mariage-anniv-cta:hover {
+  transform: translateY(-3px);
+  border-color: var(--orange, #E07020);
+  box-shadow: 0 22px 44px -10px rgba(224,112,32,0.45), 0 0 28px -10px rgba(224,112,32,0.6);
+  background: linear-gradient(135deg, rgba(224,112,32,0.22) 0%, rgba(224,112,32,0.08) 60%, rgba(157,78,221,0.10) 100%);
+  text-decoration: none;
+}
+.mariage-anniv-icon {
+  flex: 0 0 auto;
+  width: 64px; height: 64px;
+  border-radius: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(224,112,32,0.18);
+  border: 1px solid rgba(224,112,32,0.42);
+  font-size: 32px;
+  line-height: 1;
+  transition: transform .35s ease, background .35s ease;
+}
+.mariage-anniv-cta:hover .mariage-anniv-icon {
+  transform: rotate(-6deg) scale(1.06);
+  background: rgba(224,112,32,0.32);
+}
+.mariage-anniv-content {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.mariage-anniv-kicker {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--orange, #E07020);
+}
+.mariage-anniv-title {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--gd-cream, #F5EFE0);
+  line-height: 1.2;
+  margin: 4px 0 2px;
+}
+.mariage-anniv-desc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--grey-light, #c9c2b8);
+}
+.mariage-anniv-arrow {
+  flex: 0 0 auto;
+  font-size: 28px;
+  color: var(--orange, #E07020);
+  font-weight: 900;
+  transition: transform .3s ease;
+}
+.mariage-anniv-cta:hover .mariage-anniv-arrow {
+  transform: translateX(6px);
+}
+@media (max-width: 600px) {
+  .mariage-anniv-cta { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; }
+  .mariage-anniv-arrow { align-self: flex-end; }
+}
+
+/* ============================================================
+   PAGE TARIFS — design system complet
+   ============================================================ */
+
+/* Stats band variant orange (réutilisé team-building / anniversaire / tarifs) */
+.tarifs-page .stats-band {
+  background: #110a05;
+  color: var(--gd-cream, #F0EBE2);
+  padding: clamp(28px, 4vh, 52px) 0;
+  border-top: 1px solid rgba(224,112,32,0.45);
+  border-bottom: 1px solid rgba(224,112,32,0.45);
+  position: relative; overflow: hidden;
+}
+.tarifs-page .stats-band::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(224,112,32,0.20) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 50%, rgba(224,112,32,0.14) 0%, transparent 55%);
+  pointer-events: none;
+}
+.tarifs-page .stats-band-inner {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(20px, 4vw, 56px);
+  flex-wrap: wrap; text-align: center;
+}
+.tarifs-page .stats-band-item {
+  display: flex; flex-direction: column; gap: 6px;
+  align-items: center; min-width: 150px;
+}
+.tarifs-page .stats-band-item .num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.9; letter-spacing: -0.02em;
+  color: var(--orange, #E07020);
+  display: inline-block;
+}
+.tarifs-page .stats-band-item .num small {
+  font-size: 0.45em; font-weight: 600;
+  color: rgba(224,112,32,0.6);
+  letter-spacing: 0; margin-left: 2px;
+}
+.tarifs-page .stats-band-item .label {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,235,226,0.7); margin-top: 4px;
+}
+.tarifs-page .stats-band-sep {
+  font-size: 22px; color: var(--orange, #E07020);
+  font-weight: 900; display: inline-block; align-self: center;
+}
+@media (max-width: 720px) {
+  .tarifs-page .stats-band-sep { display: none; }
+  .tarifs-page .stats-band-inner { gap: 24px; }
+}
+
+/* TL;DR — 3 info cards */
+.tarifs-tldr {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+}
+.tarifs-tldr-card {
+  padding: 22px 22px;
+  background: linear-gradient(180deg, rgba(28,18,10,0.88) 0%, rgba(18,12,6,0.96) 100%);
+  border: 1px solid rgba(224,112,32,0.20);
+  border-radius: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.tarifs-tldr-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(224,112,32,0.55);
+  box-shadow: 0 14px 28px -8px rgba(224,112,32,0.32);
+}
+.tarifs-tldr-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(224,112,32,0.14);
+  border: 1px solid rgba(224,112,32,0.32);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.tarifs-tldr-icon img {
+  width: 20px; height: 20px;
+  filter: brightness(0) saturate(100%) invert(56%) sepia(64%) saturate(2120%) hue-rotate(355deg) brightness(96%) contrast(91%);
+}
+.tarifs-tldr-card h3 {
+  font-size: 1.1rem; margin: 0;
+  color: var(--gd-cream, #F5EFE0); font-weight: 700;
+}
+.tarifs-tldr-card p {
+  font-size: 0.95rem; line-height: 1.55;
+  color: var(--grey-light, #c9c2b8); margin: 0;
+}
+.tarifs-tldr-card a { color: var(--orange, #E07020); text-decoration: none; }
+.tarifs-tldr-card a:hover { text-decoration: underline; }
+
+/* Tarifs grid (escape & quiz) */
+.tarifs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+  max-width: 1100px;
+  margin-left: auto; margin-right: auto;
+}
+.tarifs-grid-quiz { max-width: 900px; }
+.tarifs-card {
+  --tc-color: #6383d6;
+  --tc-rgb: 99,131,214;
+  position: relative;
+  padding: 24px 22px 22px;
+  background: linear-gradient(180deg, rgba(20,16,28,0.92) 0%, rgba(12,10,18,0.97) 100%);
+  border: 1px solid rgba(var(--tc-rgb), 0.22);
+  border-radius: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.tarifs-card[data-cat="escape"] { --tc-color: #6383d6; --tc-rgb: 99,131,214; }
+.tarifs-card[data-cat="quiz"]   { --tc-color: #c489f5; --tc-rgb: 196,137,245; }
+.tarifs-card::before {
+  content: ""; position: absolute; top: 0; left: 0; bottom: 0;
+  width: 4px; background: var(--tc-color);
+  box-shadow: 0 0 16px -2px var(--tc-color);
+}
+.tarifs-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--tc-rgb), 0.55);
+  box-shadow: 0 18px 36px -10px rgba(0,0,0,0.5), 0 0 28px -8px rgba(var(--tc-rgb), 0.4);
+}
+.tarifs-card-featured {
+  border-color: rgba(var(--tc-rgb), 0.55);
+  background: linear-gradient(180deg, rgba(var(--tc-rgb),0.10) 0%, rgba(12,10,18,0.97) 100%);
+  box-shadow: 0 8px 28px -10px rgba(var(--tc-rgb), 0.45);
+}
+.tarifs-card-flag {
+  position: absolute;
+  top: -10px; right: 16px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--tc-color);
+  color: #fff;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  box-shadow: 0 4px 14px -4px rgba(0,0,0,0.5);
+}
+.tarifs-card-head { display: flex; align-items: center; }
+.tarifs-card-badge {
+  display: inline-block;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 4px;
+  background: rgba(var(--tc-rgb), 0.14);
+  color: var(--tc-color);
+  border: 1px solid rgba(var(--tc-rgb), 0.36);
+}
+.tarifs-card-prices {
+  display: flex; flex-direction: column;
+  gap: 2px;
+  padding: 4px 0 12px;
+  border-bottom: 1px solid rgba(var(--tc-rgb), 0.18);
+}
+.tarifs-card-amount {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  line-height: 0.9; letter-spacing: -0.02em;
+  color: var(--gd-cream, #F5EFE0);
+  display: inline-flex; align-items: baseline;
+}
+.tarifs-card-currency {
+  font-size: 0.55em; font-weight: 700;
+  margin-left: 2px;
+  color: var(--tc-color);
+}
+.tarifs-card-unit {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(245,239,224,0.55);
+  margin-top: 4px;
+}
+.tarifs-card-team {
+  font-size: 0.92rem;
+  color: var(--tc-color);
+  margin: 0;
+  font-weight: 700;
+}
+.tarifs-card-includes {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 0.9rem; color: var(--grey-light, #c9c2b8);
+}
+.tarifs-card-includes li {
+  position: relative;
+  padding-left: 18px;
+}
+.tarifs-card-includes li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--tc-color);
+  font-weight: 800;
+}
+.tarifs-card .btn { margin-top: 4px; padding: 11px 18px; font-size: 0.95rem; font-weight: 700; }
+
+/* Réductions grid */
+.reductions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+}
+.reduction-card {
+  --rc-color: #E07020;
+  --rc-rgb: 224,112,32;
+  position: relative;
+  padding: 22px 22px;
+  background: linear-gradient(180deg, rgba(28,18,10,0.92) 0%, rgba(18,12,6,0.97) 100%);
+  border: 1px solid rgba(var(--rc-rgb), 0.30);
+  border-radius: 14px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.reduction-card-feature {
+  border-color: rgba(var(--rc-rgb), 0.55);
+  background: linear-gradient(180deg, rgba(var(--rc-rgb),0.12) 0%, rgba(18,12,6,0.97) 100%);
+  box-shadow: 0 8px 28px -10px rgba(var(--rc-rgb), 0.40);
+}
+.reduction-card-mariage { --rc-color: #9D4EDD; --rc-rgb: 157,78,221; }
+.reduction-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--rc-rgb), 0.65);
+  box-shadow: 0 16px 32px -8px rgba(0,0,0,0.5), 0 0 24px -8px rgba(var(--rc-rgb), 0.45);
+}
+.reduction-card-head {
+  display: flex; align-items: center; gap: 14px;
+}
+.reduction-card-icon {
+  flex: 0 0 auto;
+  width: 44px; height: 44px;
+  border-radius: 11px;
+  background: rgba(var(--rc-rgb), 0.16);
+  border: 1px solid rgba(var(--rc-rgb), 0.40);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.reduction-card-icon img {
+  width: 22px; height: 22px;
+}
+.reduction-card[data-cat="etudiant"] .reduction-card-icon img,
+.reduction-card[data-cat="cartes"] .reduction-card-icon img,
+.reduction-card[data-cat="ancv"] .reduction-card-icon img,
+.reduction-card-mariage .reduction-card-icon img {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(64%) saturate(2120%) hue-rotate(355deg) brightness(96%) contrast(91%);
+}
+.reduction-card-mariage .reduction-card-icon img {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(36%) saturate(1248%) hue-rotate(228deg) brightness(101%) contrast(96%);
+}
+.reduction-card-tag {
+  display: inline-block;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rc-color);
+  margin-bottom: 4px;
+}
+.reduction-card h3 {
+  font-size: 1.1rem; margin: 0;
+  color: var(--gd-cream, #F5EFE0);
+  line-height: 1.25;
+}
+.reduction-card-discount {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(var(--rc-rgb), 0.14);
+  color: var(--rc-color);
+  border: 1px solid rgba(var(--rc-rgb), 0.42);
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.reduction-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--grey-light, #c9c2b8);
+  margin: 0;
+}
+.reduction-card-desc strong { color: var(--gd-cream, #F5EFE0); }
+.reduction-card-list {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px;
+  font-size: 0.92rem; color: var(--grey-light, #c9c2b8);
+}
+.reduction-card-list li {
+  position: relative;
+  padding-left: 14px;
+}
+.reduction-card-list li::before {
+  content: "•"; position: absolute; left: 0;
+  color: var(--rc-color); font-weight: 900;
+}
+.reduction-card-note {
+  font-size: 0.88rem;
+  color: var(--rc-color);
+  font-weight: 600;
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid rgba(var(--rc-rgb), 0.18);
+}
+@media (max-width: 480px) {
+  .reduction-card-list { grid-template-columns: 1fr; }
+  .reduction-card-discount { font-size: 12px; padding: 4px 10px; }
+}
+
+/* Warning banner — justificatif obligatoire */
+.tarifs-warning {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin: 32px auto 0;
+  max-width: 880px;
+  padding: 22px 26px;
+  background: linear-gradient(135deg, rgba(255,90,30,0.14) 0%, rgba(224,112,32,0.06) 100%);
+  border: 2px solid rgba(255,90,30,0.55);
+  border-radius: 14px;
+  box-shadow: 0 14px 32px -10px rgba(255,90,30,0.25);
+}
+.tarifs-warning-icon {
+  flex: 0 0 auto;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,90,30,0.20);
+  border: 1px solid rgba(255,90,30,0.55);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 900;
+  color: #ff7a40;
+  line-height: 1;
+}
+.tarifs-warning h3 {
+  font-size: 1.15rem; margin: 0 0 8px;
+  color: #ffaa75;
+  line-height: 1.25;
+  font-weight: 800;
+}
+.tarifs-warning p {
+  font-size: 0.96rem; line-height: 1.55;
+  color: var(--gd-cream, #F5EFE0);
+  margin: 0;
+}
+.tarifs-warning p strong { color: #ffaa75; }
+
+/* Pro banner */
+.tarifs-pro-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(224,112,32,0.10) 0%, rgba(28,18,10,0.95) 60%, rgba(157,78,221,0.06) 100%);
+  border: 1px solid rgba(224,112,32,0.30);
+  border-radius: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.tarifs-pro-banner h2 { margin: 0; font-size: 1.5rem; }
+.tarifs-pro-actions { display: flex; gap: 10px; flex-wrap: wrap; flex-shrink: 0; }
+@media (max-width: 768px) {
+  .tarifs-pro-banner { padding: 22px; }
+  .tarifs-pro-actions { width: 100%; }
+  .tarifs-pro-actions .btn { flex: 1 1 auto; }
+}
