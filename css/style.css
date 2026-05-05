@@ -2762,10 +2762,35 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .room-card-footer { margin-top: 8px !important; }
   .room-card-footer .room-price { display: none !important; }
   .room-card-footer .btn { width: 100%; text-align: center; }
-  /* Joker grid : 2 colonnes sur mobile pour réduire le scroll */
-  .joker-grid .joker-card { padding: 14px 12px !important; }
-  .joker-card h3 { font-size: 0.95rem !important; }
-  .joker-card p { font-size: 0.88rem !important; line-height: 1.4 !important; }
+  /* Joker grid : FORCER 2 colonnes sur mobile pour réduire le scroll
+     (le minmax(140px) inline ne suffit pas à cause de la spécificité
+     CSS d'autres règles parents). */
+  .joker-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .joker-grid .joker-card {
+    padding: 12px 10px !important;
+    min-width: 0 !important;
+  }
+  .joker-grid .joker-card .joker-art {
+    aspect-ratio: 1 / 1 !important;
+    margin: -4px -4px 8px !important;
+  }
+  .joker-card h3 {
+    font-size: 0.92rem !important;
+    margin-top: 6px;
+  }
+  .joker-card > div[style*="kicker"],
+  .joker-card > div[style*="font-display"] {
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 6px !important;
+  }
+  .joker-card p {
+    font-size: 0.85rem !important;
+    line-height: 1.35 !important;
+  }
 
   /* Étapes "Comment ça se passe ?" / "Votre escape en 3 étapes" :
      trop hautes verticalement → layout grid 2 colonnes compact
