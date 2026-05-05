@@ -2741,7 +2741,31 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
     height: auto;
     padding: 56px 0;
   }
-  .room-cinema-poster { display: none; }
+  /* La vidéo ne s'autoplay pas sur certains navigateurs mobile :
+     un contrôle "play" overlay s'affiche par-dessus le poster,
+     gênant visuellement. On force l'invisibilité totale. */
+  .room-cinema-poster,
+  body .room-cinema-poster,
+  .room-cinema video.room-cinema-poster {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+  }
+  /* "Autres salles" en bas de page : version compacte = image + titre + bouton.
+     Le user veut juste l'essentiel pour découvrir, pas re-décrire chaque salle. */
+  .room-card-body > *:not(h3):not(.room-card-footer) {
+    display: none !important;
+  }
+  .room-card-body { padding: 18px 16px !important; }
+  .room-card-body h3 { margin-bottom: 10px !important; font-size: 1.4rem !important; }
+  .room-card-footer { margin-top: 8px !important; }
+  .room-card-footer .room-price { display: none !important; }
+  .room-card-footer .btn { width: 100%; text-align: center; }
+  /* Joker grid : 2 colonnes sur mobile pour réduire le scroll */
+  .joker-grid .joker-card { padding: 14px 12px !important; }
+  .joker-card h3 { font-size: 0.95rem !important; }
+  .joker-card p { font-size: 0.88rem !important; line-height: 1.4 !important; }
   .room-cinema-container { justify-content: center; padding: 24px 16px; }
   .room-cinema-panel { width: 100%; max-width: 100%; }
   .room-cinema-body {
