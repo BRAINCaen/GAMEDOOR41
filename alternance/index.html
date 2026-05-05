@@ -63,8 +63,35 @@
 
   <style>
     body.alternance-page {
-      background: var(--dark);
-      color: var(--cream);
+      background: #0c0800;
+      color: #f0ebe2;
+    }
+    /* FORCE TOUS LES TITRES ET TEXTES À ÊTRE LISIBLES sur fond sombre.
+       Override agressif car style.css définit des couleurs sombres par défaut
+       qui ne ressortent pas sur le fond noir de cette page. */
+    body.alternance-page h1,
+    body.alternance-page h2,
+    body.alternance-page h3,
+    body.alternance-page h4 {
+      color: #ffffff !important;
+    }
+    body.alternance-page p,
+    body.alternance-page li,
+    body.alternance-page span:not(.kicker):not([class*="badge"]):not([class*="icon"]):not([class*="emoji"]):not(.req):not(.alt-team-name):not(.alt-team-role):not(.alt-formation-emoji):not(.alt-icon):not(.alt-perk-icon):not(.alt-proof-icon):not(.alt-hero-cta span):not(.recruit-banner span) {
+      color: #e8e2d6 !important;
+    }
+    body.alternance-page .section-header-editorial h2 {
+      color: #ffffff !important;
+      font-weight: 900;
+    }
+    body.alternance-page .kicker {
+      color: var(--orange, #E07020) !important;
+    }
+    /* Section-header-editorial utilise un data-num pour le numéro géant.
+       Sur cette page, force la couleur en orange visible. */
+    body.alternance-page .section-header-editorial[data-num]::before,
+    body.alternance-page .section-header-editorial::before {
+      color: rgba(224, 112, 32, 0.18) !important;
     }
 
     /* Bandeau urgence haut */
@@ -467,17 +494,21 @@
     }
     .alt-postuler h2 {
       text-align: center;
-      color: var(--white);
+      color: #ffffff !important;
       font-size: 2.2rem;
       letter-spacing: 0.04em;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
     }
     .alt-postuler-lead {
       text-align: center;
-      color: rgba(255, 255, 255, 0.9);
+      color: #ffffff !important;
       max-width: 640px;
       margin: 0 auto 32px;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      line-height: 1.55;
+      font-weight: 500;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
     }
     .alt-form {
       max-width: 560px;
@@ -485,35 +516,38 @@
       padding: 32px 28px;
       background: rgba(12, 8, 0, 0.95);
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
     }
     .alt-form label {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--cream);
-      margin-bottom: 8px;
-      font-weight: 700;
+      display: block !important;
+      font-family: 'Barlow Condensed', 'Oswald', sans-serif !important;
+      font-size: 0.9rem !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: #ffe0b8 !important;
+      margin-bottom: 10px !important;
+      font-weight: 800 !important;
     }
-    .alt-form label .req { color: var(--orange); }
+    .alt-form label .req { color: #ff8533 !important; }
     .alt-form input[type="text"],
     .alt-form input[type="email"],
     .alt-form input[type="tel"],
     .alt-form input[type="file"],
     .alt-form textarea {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      color: var(--white);
-      font-family: inherit;
-      font-size: 1rem;
-      margin-bottom: 18px;
-      box-sizing: border-box;
+      width: 100% !important;
+      padding: 14px 16px !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 8px !important;
+      color: #ffffff !important;
+      font-family: inherit !important;
+      font-size: 1rem !important;
+      margin-bottom: 18px !important;
+      box-sizing: border-box !important;
     }
+    .alt-form input::placeholder,
+    .alt-form textarea::placeholder { color: rgba(255,255,255,0.4) !important; }
     .alt-form input:focus,
     .alt-form textarea:focus {
       outline: none;
@@ -528,14 +562,19 @@
       margin-bottom: 18px;
     }
     .alt-form-radio {
-      display: flex;
+      display: flex !important;
       align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 12px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.06) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
       border-radius: 8px;
       cursor: pointer;
+      color: #ffffff !important;
+      font-size: 1rem !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      font-weight: 500 !important;
       transition: border-color .2s ease, background .2s ease;
     }
     .alt-form-radio:hover {
@@ -1102,9 +1141,18 @@
       });
       const target = boxes[key];
       if (target) {
+        // Délai pour laisser le temps à la fiche de s'ouvrir (animation max-height)
         setTimeout(() => {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 180);
+          // Calcul dynamique de l'offset = hauteur du header + bandeau recrutement
+          // pour scroller au DÉBUT de la fiche, pas en plein milieu (header masquait le haut)
+          const banner = document.getElementById('recruit-banner');
+          const header = document.querySelector('.site-header');
+          const bannerH = banner ? banner.offsetHeight : 0;
+          const headerH = header ? header.offsetHeight : 0;
+          const offset = bannerH + headerH + 16; // +16px de marge
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }, 220);
       }
     }
 
