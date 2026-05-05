@@ -84,10 +84,38 @@
 /reserver                                 https://braincaen.4escape.io/booking   301
 /shop                                     https://braincaen.4escape.io/shop      301
 
-# ----- CATCH-ALL ANTI-LIEN-CASSÉ (TOUJOURS EN DERNIER) -----
-# Toute URL Brain inconnue qui n'a pas matché ci-dessus est redirigée vers la home
-# pour ne JAMAIS casser un backlink externe (Google Business, réseaux sociaux,
-# annuaires, anciens posts forum, etc.). 301 + Google retransfère le PageRank.
-# /* /  301
-# (commenté pour l'instant — à activer côté propriétaire quand le DNS Brain
-#  bascule sur Netlify et que toutes les URLs d'origine sont vérifiées.)
+# =============================================================
+# CATCH-ALL HOST-LEVEL — domaines Brain/Buzz/Backroom → GAMEDOOR·41
+# =============================================================
+# Pour chaque domaine secondaire pointé sur Netlify, on redirige TOUT
+# en préservant le path : ainsi les rules ciblées path-relative
+# ci-dessus convertissent les vieux slugs Brain vers les bons slugs
+# Gamedoor (ex: /escape-inprison → /escape-game-caen/garde-a-vue/).
+# Les paths inconnus tombent sur 404.html (UX propre avec navigation).
+# Le `301!` force la redirection même si un fichier existe.
+
+https://brain-escapegame-caen.fr/*        https://gamedoor41.fr/:splat   301!
+https://www.brain-escapegame-caen.fr/*    https://gamedoor41.fr/:splat   301!
+https://brain-escapegame-caen.com/*       https://gamedoor41.fr/:splat   301!
+https://www.brain-escapegame-caen.com/*   https://gamedoor41.fr/:splat   301!
+https://brain-quiz-caen.fr/*              https://gamedoor41.fr/:splat   301!
+https://www.brain-quiz-caen.fr/*          https://gamedoor41.fr/:splat   301!
+https://brain-quiz-caen.com/*             https://gamedoor41.fr/:splat   301!
+https://www.brain-quiz-caen.com/*         https://gamedoor41.fr/:splat   301!
+https://buzz-your-brain-caen.fr/*         https://gamedoor41.fr/:splat   301!
+https://www.buzz-your-brain-caen.fr/*     https://gamedoor41.fr/:splat   301!
+https://buzzyourbrain-caen.fr/*           https://gamedoor41.fr/:splat   301!
+https://www.buzzyourbrain-caen.fr/*       https://gamedoor41.fr/:splat   301!
+https://buzzyourbraincaen.fr/*            https://gamedoor41.fr/:splat   301!
+https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/:splat   301!
+https://braincaen.fr/*                    https://gamedoor41.fr/:splat   301!
+https://www.braincaen.fr/*                https://gamedoor41.fr/:splat   301!
+
+# Domaine .com GAMEDOOR → .fr (canonisation marque)
+https://gamedoor41.com/*                  https://gamedoor41.fr/:splat   301!
+https://www.gamedoor41.com/*              https://gamedoor41.fr/:splat   301!
+
+# www GAMEDOOR → apex
+https://www.gamedoor41.fr/*               https://gamedoor41.fr/:splat   301!
+
+# NOTE : backroom-caen.fr volontairement non redirigé — futur projet séparé.
