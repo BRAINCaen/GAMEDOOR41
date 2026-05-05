@@ -2841,6 +2841,43 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
     max-width: calc(100vw - 48px);
   }
 
+  /* Page contact — card "Adresse · GPS" : le texte "41 bis rue Pasteur"
+     wrappait caractère par caractère ("41/bis/rue/Pasteur" en colonne)
+     car l'action "Ouvrir Google Maps →" en white-space:nowrap mangeait
+     toute la largeur disponible sur mobile. On fait passer l'action
+     en dessous (wrap) et on libère la place pour le content. */
+  .contact-card {
+    flex-wrap: wrap !important;
+    padding: 16px !important;
+    gap: 12px !important;
+  }
+  .contact-card-icon {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 22px !important;
+  }
+  .contact-card > div {
+    flex: 1 1 calc(100% - 56px) !important;
+    min-width: 0 !important;
+  }
+  .contact-card-value {
+    font-size: 1.15rem !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+  .contact-card-sub {
+    font-size: 0.88rem !important;
+  }
+  .contact-card-action {
+    flex: 0 0 100% !important;
+    align-self: flex-start !important;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: right;
+    font-size: 11px !important;
+  }
+
   /* Page tarifs : cards trop volumineuses sur mobile + features répétées
      ("60 min de jeu", "Game master acteur", "Brief + débrief + photo")
      identiques dans CHAQUE card. On les cache sur mobile + on compacte
