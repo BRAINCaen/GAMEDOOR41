@@ -2340,3 +2340,114 @@ a.hero-tripadvisor:hover {
   .cta-final .cta-button-wrap { opacity: 1; transform: none; }
 }
 
+/* =============================================================
+   MOBILE FIXES — ajout 2026-05-05
+   Scope strictement mobile, zéro impact desktop.
+   ============================================================= */
+
+/* --- Burger menu (la home n'avait pas de toggle visible sur mobile) --- */
+.nav-toggle {
+  display: none; /* caché sur desktop par défaut */
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  transition: background 200ms;
+  z-index: 110;
+}
+.nav-toggle:hover { background: rgba(240,235,226,.06); }
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--gd-cream);
+  border-radius: 1px;
+  transition: transform 220ms ease, opacity 180ms ease;
+  transform-origin: center;
+}
+
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-flex; }
+
+  /* Drawer du menu déployé sous le header quand ouvert */
+  .nav-row.menu-open {
+    position: relative;
+  }
+  .nav-row.menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(12,8,0,.98);
+    border: 1px solid rgba(240,235,226,.12);
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 105;
+  }
+  .nav-row.menu-open .nav-links .nav-link {
+    padding: 14px 6px;
+    border-bottom: 1px solid rgba(240,235,226,.08);
+    font-size: 17px;
+    text-align: left;
+    width: 100%;
+  }
+  .nav-row.menu-open .nav-links .nav-link:last-child { border-bottom: 0; }
+  .nav-row.menu-open .nav-links .nav-link::after { display: none; }
+
+  /* Burger animé en croix quand ouvert */
+  .nav-row.menu-open .nav-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-row.menu-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-row.menu-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+/* --- Hero stats : décrasper sur mobile --- */
+@media (max-width: 720px) {
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 18px 28px;
+    justify-content: space-around;
+  }
+  .hero-stats .number,
+  .hero-stat-num {
+    font-size: 46px;
+    letter-spacing: -.4px; /* au lieu de -1.5px qui écrase */
+    line-height: 1.05;
+  }
+  .hero-stats .number small,
+  .hero-stat-num small {
+    font-size: .42em;
+    margin-left: 6px;
+    letter-spacing: 0;
+    opacity: .85;
+  }
+  .hero-stat-label {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    margin-top: 8px;
+  }
+  .hero-stat-stars {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+}
+
