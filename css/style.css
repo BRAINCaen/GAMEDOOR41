@@ -2821,6 +2821,30 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
     line-height: 1.35;
     max-width: calc(100vw - 48px);
   }
+
+  /* Hero pages mariage / EVJF / EVG / anniversaire :
+     l'image néon en arrière-plan (enseigne EVJF/EVG, BUZZ YOUR BRAIN…)
+     parasite la lisibilité du texte sur mobile. On floute l'image et
+     on assombrit fortement le voile pour faire ressortir le titre. */
+  .evjf-page .page-hero picture img,
+  .anniversaire-page .page-hero picture img {
+    filter: brightness(0.42) blur(3px) saturate(0.85);
+  }
+  .evjf-page .page-hero .hero-overlay,
+  .anniversaire-page .page-hero .hero-overlay {
+    background:
+      linear-gradient(180deg,
+        rgba(12,8,0,0.78) 0%,
+        rgba(12,8,0,0.65) 40%,
+        rgba(12,8,0,0.92) 100%) !important;
+  }
+  .evjf-page .page-hero .hero-overlay::after,
+  .anniversaire-page .page-hero .hero-overlay::after {
+    background:
+      radial-gradient(ellipse 75% 55% at center 50%,
+        rgba(12,8,0,0.45) 0%,
+        rgba(12,8,0,0) 75%) !important;
+  }
   .room-cinema-container { justify-content: center; padding: 24px 16px; }
   .room-cinema-panel { width: 100%; max-width: 100%; }
   .room-cinema-body {
