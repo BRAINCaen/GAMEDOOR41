@@ -2766,6 +2766,48 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .joker-grid .joker-card { padding: 14px 12px !important; }
   .joker-card h3 { font-size: 0.95rem !important; }
   .joker-card p { font-size: 0.88rem !important; line-height: 1.4 !important; }
+
+  /* Étapes "Comment ça se passe ?" / "Votre escape en 3 étapes" :
+     trop hautes verticalement, on passe en layout horizontal compact
+     (numéro à gauche, texte à droite) — divise par 3 le scroll. */
+  .info-bar {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .info-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 16px;
+    text-align: left !important;
+    padding: 14px 12px !important;
+    border: 1px solid rgba(240, 235, 226, 0.06);
+    border-radius: 10px;
+    background: rgba(240, 235, 226, 0.02);
+  }
+  .info-item .icon,
+  .info-item .icon:has(.step-number) {
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  .step-number {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 22px !important;
+  }
+  .step-number::before { inset: -4px !important; }
+  .info-item h4 {
+    margin-bottom: 4px !important;
+    font-size: 1rem !important;
+    text-align: left !important;
+  }
+  .info-item p {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
   .room-cinema-container { justify-content: center; padding: 24px 16px; }
   .room-cinema-panel { width: 100%; max-width: 100%; }
   .room-cinema-body {
