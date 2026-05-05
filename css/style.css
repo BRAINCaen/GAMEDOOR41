@@ -4520,3 +4520,23 @@ a.contact-method-value:hover {
   margin-top: 2px;
   line-height: 1.45;
 }
+
+/* ============================================================
+   FOOTER LEGAL LINKS — bandeau discret en bas de footer
+   ============================================================ */
+.footer-legal-links {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--grey, #8a847b);
+  opacity: 0.85;
+  line-height: 1.6;
+}
+.footer-legal-links a {
+  color: var(--grey-light, #c9c2b8);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.footer-legal-links a:hover {
+  color: var(--orange, #E07020);
+  text-decoration: underline;
+}
