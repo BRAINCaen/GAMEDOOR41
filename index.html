@@ -979,10 +979,17 @@
 
 /* ============================================================
    Bento hover — dim-others / focus
+   Réservé aux devices qui ont un vrai hover (souris).
+   Sur touch, le mouseenter persiste après le tap → autres cards
+   restent foncées au retour de page. On bypass entièrement.
    ============================================================ */
 (function () {
   var bento = document.getElementById('bento');
   if (!bento) return;
+  /* Bypass sur touch devices (smartphone, tablette) */
+  if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    return;
+  }
   var cards = bento.querySelectorAll('.card');
   cards.forEach(function (c) {
     c.addEventListener('mouseenter', function () {

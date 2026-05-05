@@ -2451,3 +2451,46 @@ a.hero-tripadvisor:hover {
   }
 }
 
+/* --- Bento : empêcher le débordement des badges (Death Zone "BIENTÔT") --- */
+@media (max-width: 720px) {
+  .card .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .brand-badge,
+  .soon-badge {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    padding: 5px 10px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .card-title {
+    font-size: 26px;
+  }
+  .card .num {
+    font-size: 48px;
+    top: 14px;
+    right: 16px;
+  }
+}
+
+/* --- Touch devices : neutraliser les effets hover qui restent collés --- */
+@media (hover: none) {
+  .bento.is-hovering .card:not(.is-focus) {
+    filter: none !important;
+    transform: none !important;
+  }
+  .card.is-focus {
+    transform: none !important;
+  }
+  .card:hover .visual {
+    transform: none !important;
+  }
+  .card:hover .card-cta {
+    border-bottom-color: inherit;
+    color: inherit;
+  }
+}
+
