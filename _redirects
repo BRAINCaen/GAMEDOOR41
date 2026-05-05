@@ -30,7 +30,7 @@
 /termes-et-conditions                     /termes-conditions/                    301
 # /mentions-legales : même slug des deux côtés, pas besoin
 
-# ----- ARTICLES MAGAZINE (slugs Brain avec accents → slugs GAMEDOOR sans accents) -----
+# ----- ARTICLES MAGAZINE — slugs Brain (accents UTF-8) → slugs GAMEDOOR (sans accents) -----
 /post/escape-game-à-caen-guide-complet-2026-salles-tarifs-conseils-pour-réussir   /post/escape-game-caen-guide-complet-2026/  301
 /post/escape-game-à-caen-brain-étudiant-e-le-tarif-étudiant-e-que-vous-cherchiez  /post/escape-game-caen-tarif-etudiant/      301
 /post/evjf-evg-à-caen-vivez-une-expérience-quiz-game-inoubliable-avec-buzz-your-brain  /post/evjf-evg-caen-quiz-buzz-your-brain/  301
@@ -43,6 +43,20 @@
 /post/organiser-un-team-building-réussi-à-caen-avec-un-escape-game                /post/team-building-reussi-caen-escape-game/  301
 /post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-à-caen           /post/escape-game-back-to-80s-famille-caen/ 301
 
+# ----- VARIANTES URL-ENCODÉES (%C3%A0=à, %C3%A9=é, etc.) — sécurité Netlify -----
+# Au cas où Netlify ne décoderait pas automatiquement les URLs percent-encoded
+# (cas typique : liens dans flux RSS, certains crawlers, signets bookmarkés depuis Wix)
+/post/escape-game-%C3%A0-caen-guide-complet-2026-salles-tarifs-conseils-pour-r%C3%A9ussir       /post/escape-game-caen-guide-complet-2026/  301
+/post/escape-game-%C3%A0-caen-brain-%C3%A9tudiant-e-le-tarif-%C3%A9tudiant-e-que-vous-cherchiez /post/escape-game-caen-tarif-etudiant/      301
+/post/evjf-evg-%C3%A0-caen-vivez-une-exp%C3%A9rience-quiz-game-inoubliable-avec-buzz-your-brain /post/evjf-evg-caen-quiz-buzz-your-brain/   301
+/post/quiz-game-no%C3%ABl-caen-buzz-your-brain-activit%C3%A9-sp%C3%A9cial-f%C3%AAtes-b-r-a-i-n  /post/quiz-game-noel-caen-buzz-your-brain/  301
+/post/organisez-un-evjf-evg-inoubliable-%C3%A0-caen-avec-brain-escape-quiz-game                 /post/organiser-evjf-evg-inoubliable-caen/  301
+/post/buzz-your-brain-le-jeu-t%C3%A9l%C3%A9vis%C3%A9-r%C3%A9aliste-%C3%A0-caen-un-nouveau-concept-compl%C3%A8tement-d%C3%A9jant%C3%A9  /post/buzz-your-brain-jeu-televise-realiste-caen/  301
+/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-%C3%A0-caen                     /post/escape-game-horreur-psychiatric-caen/ 301
+/post/escape-game-%C3%A0-deux-astuces-et-avantages-pour-une-exp%C3%A9rience-unique              /post/escape-game-a-deux-astuces-avantages/ 301
+/post/organiser-un-team-building-r%C3%A9ussi-%C3%A0-caen-avec-un-escape-game                    /post/team-building-reussi-caen-escape-game/  301
+/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-%C3%A0-caen                    /post/escape-game-back-to-80s-famille-caen/ 301
+
 # ----- DOMAINE BRAIN → GAMEDOOR (au cas où l'ancien domaine pointerait vers Netlify) -----
 # (Géré côté DNS / Netlify domain settings — pas de redirection HTML ici)
 
@@ -50,10 +64,12 @@
 /blog/categories/*                        /magazine/                             301
 /blog/tags/*                              /magazine/                             301
 /blog/archives/*                          /magazine/                             301
-/blog-feed.xml                            /sitemap.xml                           301
-/feed.xml                                 /sitemap.xml                           301
-/rss                                      /magazine/                             301
-/rss.xml                                  /magazine/                             301
+# /blog-feed.xml : on sert un vrai RSS feed (pas redirect) — abonnés RSS Brain conservés
+/feed.xml                                 /blog-feed.xml                         301
+/rss                                      /blog-feed.xml                         301
+/rss.xml                                  /blog-feed.xml                         301
+/magazine/feed.xml                        /blog-feed.xml                         301
+/magazine/rss                             /blog-feed.xml                         301
 
 # ----- ASSETS WIX (anciennes URLs d'images potentiellement référencées ailleurs) -----
 /_files/*                                 /                                      301

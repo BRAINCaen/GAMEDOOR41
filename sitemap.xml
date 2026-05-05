@@ -153,6 +153,13 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- ===== FEED RSS ===== -->
+  <url>
+    <loc>https://gamedoor41.fr/blog-feed.xml</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
   <!-- ===== PAGES LÉGALES ===== -->
   <url>
     <loc>https://gamedoor41.fr/mentions-legales/</loc>
