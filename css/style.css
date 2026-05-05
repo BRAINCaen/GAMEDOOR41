@@ -3979,3 +3979,331 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   .tarifs-pro-actions { width: 100%; }
   .tarifs-pro-actions .btn { flex: 1 1 auto; }
 }
+
+/* ============================================================
+   PAGE CARTE CADEAU — design system complet
+   ============================================================ */
+
+/* Stats band orange variant pour cadeau */
+.cadeau-page .stats-band {
+  background: #110a05;
+  color: var(--gd-cream, #F0EBE2);
+  padding: clamp(28px, 4vh, 52px) 0;
+  border-top: 1px solid rgba(224,112,32,0.45);
+  border-bottom: 1px solid rgba(224,112,32,0.45);
+  position: relative; overflow: hidden;
+}
+.cadeau-page .stats-band::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(224,112,32,0.20) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 50%, rgba(224,112,32,0.14) 0%, transparent 55%);
+  pointer-events: none;
+}
+.cadeau-page .stats-band-inner {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(20px, 4vw, 56px);
+  flex-wrap: wrap; text-align: center;
+}
+.cadeau-page .stats-band-item {
+  display: flex; flex-direction: column; gap: 6px;
+  align-items: center; min-width: 150px;
+}
+.cadeau-page .stats-band-item .num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.9; letter-spacing: -0.02em;
+  color: var(--orange, #E07020);
+  display: inline-block;
+}
+.cadeau-page .stats-band-item .num small {
+  font-size: 0.45em; font-weight: 600;
+  color: rgba(224,112,32,0.6);
+  letter-spacing: 0; margin-left: 2px;
+}
+.cadeau-page .stats-band-item .label {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,235,226,0.7); margin-top: 4px;
+}
+.cadeau-page .stats-band-sep {
+  font-size: 22px; color: var(--orange, #E07020);
+  font-weight: 900; display: inline-block; align-self: center;
+}
+@media (max-width: 720px) {
+  .cadeau-page .stats-band-sep { display: none; }
+  .cadeau-page .stats-band-inner { gap: 24px; }
+}
+
+/* Modes de remise (numérique / coffret) */
+.cadeau-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+  max-width: 880px;
+  margin-left: auto; margin-right: auto;
+}
+.cadeau-mode-card {
+  --cm-color: #6383d6;
+  --cm-rgb: 99,131,214;
+  position: relative;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(20,16,28,0.9) 0%, rgba(12,10,18,0.97) 100%);
+  border: 1px solid rgba(var(--cm-rgb), 0.30);
+  border-radius: 14px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.cadeau-mode-feature {
+  --cm-color: #E07020;
+  --cm-rgb: 224,112,32;
+  border-color: rgba(var(--cm-rgb), 0.55);
+  background: linear-gradient(180deg, rgba(var(--cm-rgb),0.12) 0%, rgba(12,10,18,0.97) 100%);
+  box-shadow: 0 14px 32px -10px rgba(var(--cm-rgb), 0.40);
+}
+.cadeau-mode-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--cm-rgb), 0.65);
+  box-shadow: 0 18px 36px -10px rgba(0,0,0,0.5), 0 0 28px -8px rgba(var(--cm-rgb), 0.45);
+}
+.cadeau-mode-flag-top {
+  position: absolute;
+  top: -10px; right: 18px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: var(--orange, #E07020);
+  color: #fff;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  box-shadow: 0 4px 14px -4px rgba(0,0,0,0.5);
+}
+.cadeau-mode-head {
+  display: flex; align-items: center; gap: 14px;
+}
+.cadeau-mode-icon {
+  flex: 0 0 auto;
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  background: rgba(var(--cm-rgb), 0.16);
+  border: 1px solid rgba(var(--cm-rgb), 0.40);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.cadeau-mode-tag {
+  display: inline-block;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cm-color);
+  margin-bottom: 4px;
+}
+.cadeau-mode-card h3 {
+  font-size: 1.1rem; margin: 0;
+  color: var(--gd-cream, #F5EFE0);
+  line-height: 1.25;
+}
+.cadeau-mode-flag {
+  margin-left: auto;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(var(--cm-rgb), 0.16);
+  color: var(--cm-color);
+  border: 1px solid rgba(var(--cm-rgb), 0.45);
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.cadeau-mode-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 8px;
+  font-size: 0.95rem;
+  color: var(--grey-light, #c9c2b8);
+}
+.cadeau-mode-list li {
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+.cadeau-mode-list li::before {
+  content: "✓";
+  position: absolute; left: 0;
+  color: var(--cm-color);
+  font-weight: 800;
+}
+
+/* Section formule (escape / quiz / libre) */
+.cadeau-formule-section {
+  --cf-color: #E07020;
+  --cf-rgb: 224,112,32;
+  margin-top: 32px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(20,16,12,0.65) 0%, rgba(12,10,8,0.85) 100%);
+  border: 1px solid rgba(var(--cf-rgb), 0.18);
+  border-radius: 16px;
+}
+.cadeau-formule-head {
+  display: flex; align-items: center; gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(var(--cf-rgb), 0.20);
+  margin-bottom: 18px;
+}
+.cadeau-formule-icon {
+  flex: 0 0 auto;
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: rgba(var(--cf-rgb), 0.16);
+  border: 1px solid rgba(var(--cf-rgb), 0.42);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+.cadeau-formule-tag {
+  display: inline-block;
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cf-color);
+  margin-bottom: 4px;
+}
+.cadeau-formule-head h3 {
+  font-size: 1.3rem; margin: 0 0 4px;
+  color: var(--gd-cream, #F5EFE0);
+  line-height: 1.2;
+}
+.cadeau-formule-head p {
+  font-size: 0.92rem;
+  color: var(--grey-light, #c9c2b8);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Grille de montants (cards cliquables vers shop) */
+.cadeau-amounts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+.cadeau-amount-card {
+  --ca-color: #E07020;
+  --ca-rgb: 224,112,32;
+  position: relative;
+  padding: 16px 14px;
+  background: linear-gradient(180deg, rgba(28,18,10,0.90) 0%, rgba(18,12,6,0.97) 100%);
+  border: 1px solid rgba(var(--ca-rgb), 0.30);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+.cadeau-amount-card[data-color="escape"] { --ca-color: #6383d6; --ca-rgb: 99,131,214; }
+.cadeau-amount-card[data-color="quiz"]   { --ca-color: #c489f5; --ca-rgb: 196,137,245; }
+.cadeau-amount-card[data-color="libre"]  { --ca-color: #E07020; --ca-rgb: 224,112,32; }
+.cadeau-amount-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--ca-rgb), 0.65);
+  background: linear-gradient(180deg, rgba(var(--ca-rgb),0.12) 0%, rgba(18,12,6,0.97) 100%);
+  box-shadow: 0 10px 22px -6px rgba(var(--ca-rgb), 0.45);
+  text-decoration: none;
+}
+.cadeau-amount-label {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(245,239,224,0.55);
+}
+.cadeau-amount-price {
+  font-family: var(--font-display, 'Barlow Condensed', sans-serif);
+  font-weight: 900;
+  font-size: 1.65rem;
+  line-height: 1;
+  color: var(--ca-color);
+}
+.cadeau-amount-sub {
+  font-size: 0.78rem;
+  color: var(--grey-light, #c9c2b8);
+}
+.cadeau-amount-card-libre {
+  padding: 22px 14px;
+}
+.cadeau-amount-card-libre .cadeau-amount-price {
+  font-size: 2rem;
+}
+
+/* Occasions chips */
+.cadeau-occasions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 32px auto 24px;
+  max-width: 880px;
+}
+.cadeau-occasion-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: rgba(224,112,32,0.10);
+  border: 1px solid rgba(224,112,32,0.32);
+  border-radius: 999px;
+  color: var(--gd-cream, #F5EFE0);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+.cadeau-occasion-chip:hover {
+  background: rgba(224,112,32,0.20);
+  border-color: rgba(224,112,32,0.55);
+  transform: translateY(-1px);
+}
+
+/* "Why" cards */
+.cadeau-why {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+.cadeau-why-card {
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(28,18,10,0.85) 0%, rgba(18,12,6,0.95) 100%);
+  border: 1px solid rgba(224,112,32,0.20);
+  border-radius: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: transform .3s ease, border-color .3s ease;
+}
+.cadeau-why-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(224,112,32,0.50);
+}
+.cadeau-why-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.cadeau-why-card h3 {
+  font-size: 1rem; margin: 0;
+  color: var(--gd-cream, #F5EFE0);
+  font-weight: 700;
+}
+.cadeau-why-card p {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--grey-light, #c9c2b8);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .cadeau-mode-head { flex-wrap: wrap; }
+  .cadeau-mode-flag { margin-left: 0; }
+  .cadeau-amount-card { padding: 14px 12px; }
+  .cadeau-amount-price { font-size: 1.4rem; }
+  .cadeau-amount-card-libre .cadeau-amount-price { font-size: 1.6rem; }
+}
