@@ -1,6 +1,15 @@
 /* GAMEDOOR•41 — Main JS */
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* --- Supprime les vidéos décoratives .room-cinema-poster sur mobile ---
+     Sur certains navigateurs mobile, l'autoplay est bloqué et un contrôle
+     "play" overlay s'affiche par-dessus le poster, gênant visuellement.
+     Le CSS display:none ne suffit pas dans tous les cas — on supprime
+     carrément l'élément du DOM. PC garde la vidéo intacte. */
+  if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) {
+    document.querySelectorAll('.room-cinema-poster').forEach(v => v.remove());
+  }
+
   /* --- Scroll Header + dynamic --header-h --- */
   const header = document.querySelector('.site-header');
   if (header) {
