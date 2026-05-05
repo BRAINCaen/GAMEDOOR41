@@ -1,6 +1,37 @@
 /* GAMEDOOR•41 — Main JS */
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* --- Bandeau recrutement Alternance 2026 — injecté en haut de chaque page
+     (sauf la home qui a déjà son bandeau, et la page alternance elle-même) --- */
+  (function injectRecruitBanner() {
+    const path = window.location.pathname;
+    if (path === '/' || path.indexOf('/alternance') === 0) return;
+    if (document.getElementById('recruit-banner')) return;
+
+    const banner = document.createElement('a');
+    banner.id = 'recruit-banner';
+    banner.href = '/alternance/';
+    banner.setAttribute('aria-label', 'On recrute 3 alternants pour la rentrée 2026');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 14px;background:linear-gradient(90deg,#c62828 0%,#E07020 50%,#c62828 100%);color:#fff;text-decoration:none;font-family:"Barlow Condensed","Oswald",sans-serif;font-weight:800;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;text-align:center;border-bottom:2px solid rgba(255,255,255,0.15);z-index:1100;flex-wrap:wrap;';
+    banner.innerHTML = '<span>🎓 ON RECRUTE · <strong style="color:#ffe082;">3 ALTERNANT·ES</strong> RENTRÉE 2026</span><span style="opacity:0.9;text-decoration:underline;">→ Postule</span>';
+
+    document.body.insertBefore(banner, document.body.firstChild);
+    const bh = banner.offsetHeight;
+
+    // Décale le header fixed pour qu'il soit sous le bandeau
+    const header = document.querySelector('.site-header');
+    if (header) {
+      header.style.top = bh + 'px';
+    }
+    // Décale le breadcrumb-bar si présent
+    const breadcrumb = document.querySelector('.breadcrumb-bar');
+    if (breadcrumb && getComputedStyle(breadcrumb).position === 'fixed') {
+      breadcrumb.style.top = bh + 'px';
+    }
+    // Compense la hauteur du bandeau sur le body pour que le scroll-padding fonctionne
+    document.documentElement.style.scrollPaddingTop = (bh + 60) + 'px';
+  })();
+
   /* --- Supprime les vidéos décoratives .room-cinema-poster sur mobile ---
      Sur certains navigateurs mobile, l'autoplay est bloqué et un contrôle
      "play" overlay s'affiche par-dessus le poster, gênant visuellement.

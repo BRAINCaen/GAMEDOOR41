@@ -69,6 +69,13 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ===== RECRUTEMENT ===== -->
+  <url>
+    <loc>https://gamedoor41.fr/alternance/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- ===== TRANSACTIONNELLES ===== -->
   <url>
     <loc>https://gamedoor41.fr/tarifs/</loc>

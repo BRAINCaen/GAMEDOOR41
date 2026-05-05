@@ -21,8 +21,10 @@
 /plan-du-site                             /sitemap.xml                           301
 /blog                                     /magazine/                             301
 /blog/*                                   /magazine/                             301
-/emploi-escape-game-caen                  /contact/                              301
-/alternance-brain-caen                    /contact/                              301
+/emploi-escape-game-caen                  /alternance/                           301
+/alternance-brain-caen                    /alternance/                           301
+/alternances                              /alternance/                           301
+/alternance                               /alternance/                           301
 
 # ----- PAGES LÉGALES BRAIN → GAMEDOOR -----
 /politique-de-cookies                     /politique-cookies/                    301
