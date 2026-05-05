@@ -2808,6 +2808,19 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
     margin-right: 0 !important;
     text-align: left !important;
   }
+
+  /* Badge pro / LED (.tb-pro-badge) sur mobile : autoriser le wrap
+     pour que le texte ne déborde pas à droite ("Tarif particulier
+     · pas de tarif fixe mariage" coupé à "MARIA..."). */
+  .tb-pro-badge {
+    white-space: normal !important;
+    text-align: center;
+    letter-spacing: 0.16em !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    line-height: 1.35;
+    max-width: calc(100vw - 48px);
+  }
   .room-cinema-container { justify-content: center; padding: 24px 16px; }
   .room-cinema-panel { width: 100%; max-width: 100%; }
   .room-cinema-body {
