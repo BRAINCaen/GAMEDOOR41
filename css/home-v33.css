@@ -762,18 +762,21 @@ img { display: block; max-width: 100%; }
 .hero-stats .number,
 .hero-stat-num {
   font-family: var(--gd-font-display);
-  font-size: clamp(34px, 4.4vw, 56px);
-  font-weight: 900;
-  letter-spacing: -1.5px;
+  font-size: clamp(38px, 4.6vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.3px;
   color: var(--gd-orange);
-  line-height: 1;
+  line-height: 1.05;
 }
 .hero-stats .number small,
 .hero-stat-num small {
-  font-size: .48em; color: var(--gd-cream); opacity: .8;
-  font-weight: 800;
-  margin-left: 2px;
-  letter-spacing: -.5px;
+  font-size: .42em; color: var(--gd-cream); opacity: .85;
+  font-weight: 700;
+  margin-left: 6px;
+  letter-spacing: 0;
+}
+.hero-stat-label {
+  margin-top: 12px;
 }
 .hero-stat-label {
   font-family: var(--gd-font-display);
@@ -2373,8 +2376,34 @@ a.hero-tripadvisor:hover {
   transform-origin: center;
 }
 
+/* Visibilité mobile/desktop des liens du menu home */
+.nav-link-mobile { display: none; }
+.nav-link-desktop { display: inline-flex; }
+
 @media (max-width: 900px) {
   .nav-toggle { display: inline-flex; }
+
+  .nav-link-mobile { display: inline-flex !important; }
+  .nav-link-desktop { display: none !important; }
+
+  /* Bouton RÉSERVER haut écrasé entre logo et burger : on le cache sur
+     mobile (le menu drawer contient déjà tout l'accès, et le sticky-cta
+     en bas affiche un bouton Réserver dédié). */
+  .nav-row > .nav-cta {
+    display: none !important;
+  }
+
+  /* Icônes via data-icon devant chaque lien du menu drawer mobile */
+  .nav-row.menu-open .nav-links .nav-link[data-icon]::before {
+    content: attr(data-icon);
+    display: inline-block;
+    width: 28px;
+    margin-right: 12px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1;
+    vertical-align: -2px;
+  }
 
   /* Drawer du menu déployé sous le header quand ouvert */
   .nav-row.menu-open {
