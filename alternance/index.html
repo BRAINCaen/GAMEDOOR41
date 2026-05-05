@@ -88,40 +88,125 @@
 
     /* Hero */
     .alt-hero {
-      padding: 64px 0 48px;
+      padding: 80px 24px 64px;
       text-align: center;
       position: relative;
       overflow: hidden;
       background:
-        radial-gradient(ellipse 60% 60% at 50% 30%, rgba(224, 112, 32, 0.18) 0%, transparent 70%),
-        linear-gradient(180deg, #0f0a05 0%, #0c0800 100%);
+        radial-gradient(ellipse 70% 50% at 50% 30%, rgba(224, 112, 32, 0.28) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 50% 80%, rgba(198, 40, 40, 0.22) 0%, transparent 70%),
+        linear-gradient(180deg, #1a0f06 0%, #0c0800 100%);
+      border-bottom: 1px solid rgba(224, 112, 32, 0.25);
+    }
+    .alt-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(224,112,32,0.15) 1px, transparent 0);
+      background-size: 32px 32px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .alt-hero > .container { position: relative; z-index: 1; }
+    .alt-hero .kicker {
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid rgba(224, 112, 32, 0.5);
+      border-radius: 999px;
+      background: rgba(224, 112, 32, 0.12);
+      font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ffb37a;
+      margin-bottom: 24px;
     }
     .alt-hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      line-height: 1.05;
-      margin: 16px auto 18px;
-      max-width: 900px;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      line-height: 1.02;
+      margin: 8px auto 22px;
+      max-width: 1000px;
+      color: #ffffff;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
     }
-    .alt-hero .accent { color: var(--orange); }
+    .alt-hero h1 .accent {
+      color: var(--orange, #E07020);
+      display: inline-block;
+      text-shadow: 0 0 32px rgba(224, 112, 32, 0.4);
+    }
     .alt-hero .lead {
-      font-size: 1.1rem;
-      max-width: 760px;
-      margin: 0 auto 24px;
-      color: var(--grey-light);
-      line-height: 1.55;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      max-width: 780px;
+      margin: 0 auto 32px;
+      color: #e8e2d6;
+      line-height: 1.6;
+    }
+    .alt-hero .lead strong {
+      color: #ffb37a;
+      font-weight: 700;
+    }
+    .alt-hero-cta {
+      display: inline-flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 12px 0 28px;
+    }
+    .alt-hero-cta .btn {
+      padding: 16px 32px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .alt-hero-cta .btn-orange {
+      background: linear-gradient(135deg, #E07020 0%, #ff8533 100%);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(224, 112, 32, 0.45);
+    }
+    .alt-hero-cta .btn-orange:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(224, 112, 32, 0.6);
+    }
+    .alt-hero-cta .btn-ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .alt-hero-cta .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-3px);
     }
     .alt-hero-meta {
       display: inline-flex;
       flex-wrap: wrap;
-      gap: 12px 22px;
+      gap: 14px 24px;
       justify-content: center;
-      margin-top: 18px;
-      font-family: var(--font-display);
+      margin-top: 24px;
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-family: 'Barlow Condensed', 'Oswald', sans-serif;
       font-size: 0.95rem;
-      color: var(--cream);
+      color: #f5efe0;
+      font-weight: 600;
     }
     .alt-hero-meta span {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    @media (max-width: 720px) {
+      .alt-hero { padding: 48px 16px 40px; }
+      .alt-hero h1 { font-size: clamp(1.8rem, 8vw, 2.6rem) !important; }
+      .alt-hero .lead { font-size: 0.98rem; }
+      .alt-hero-cta .btn { padding: 13px 22px; font-size: 0.95rem; width: 100%; }
+      .alt-hero-meta { font-size: 0.85rem; padding: 12px 14px; }
     }
 
     /* Why us — 4 cards */
