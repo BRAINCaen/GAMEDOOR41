@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const banner = document.createElement('a');
     banner.id = 'recruit-banner';
     banner.href = '/alternance/';
-    banner.setAttribute('aria-label', 'On recrute 3 alternants pour la rentrée 2026');
+    banner.setAttribute('aria-label', 'On recrute 3 alternants — démarrage dès juillet 2026');
     banner.style.cssText = 'position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 14px;background:linear-gradient(90deg,#c62828 0%,#E07020 50%,#c62828 100%);color:#fff;text-decoration:none;font-family:"Barlow Condensed","Oswald",sans-serif;font-weight:800;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;text-align:center;border-bottom:2px solid rgba(255,255,255,0.15);z-index:1100;flex-wrap:wrap;';
-    banner.innerHTML = '<span>🎓 ON RECRUTE · <strong style="color:#ffe082;">3 ALTERNANT·ES</strong> RENTRÉE 2026</span><span style="opacity:0.9;text-decoration:underline;">→ Postule</span>';
+    banner.innerHTML = '<span>🎓 ON RECRUTE · <strong style="color:#ffe082;">3 ALTERNANT·ES</strong> · DÉMARRAGE DÈS JUILLET 2026</span><span style="opacity:0.9;text-decoration:underline;">→ Postule</span>';
 
     document.body.insertBefore(banner, document.body.firstChild);
     const bh = banner.offsetHeight;
