@@ -453,12 +453,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# CRITIQUE : Empêcher l'indexation du domaine netlify.app
-# Seul gamedoor41.fr doit être indexé
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
+# NOTE : pas de X-Robots-Tag global ici.
+# Le header `for = "/*"` s'applique à TOUS les hostnames et bloquait
+# aussi gamedoor41.fr (incident SEO 2026-05-05). La protection contre
+# le duplicate content (netlify.app, brain-*) est assurée par :
+#  1) <link rel="canonical"> pointant sur gamedoor41.fr dans chaque page
+#  2) Les 301 _redirects qui envoient brain-* vers gamedoor41.fr
+#  3) robots.txt servi sur gamedoor41.fr/sitemap.xml exclusivement
+# Si besoin un jour de bloquer netlify.app spécifiquement, utiliser une
+# Edge Function avec test du Host header, pas un header global.
 
 # Cache longue durée pour assets statiques
 [[headers]]
