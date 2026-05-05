@@ -38,4 +38,16 @@ jobs:
           RATING=$(node -e "console.log(require('./data/google-reviews.json').rating)")
           COUNT=$(node -e "console.log(require('./data/google-reviews.json').reviewCount)")
           git commit -m "chore(reviews): sync Google rating ${RATING} / ${COUNT} avis"
-          git push
+          # Rebase auto si main a bougé entre le checkout et le push (cas typique
+          # quand on push manuellement pendant que le workflow tourne).
+          # Jusqu'à 3 tentatives avec rebase + push pour gérer les courses.
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push OK (try $i)."
+              exit 0
+            fi
+            echo "Push rejected (try $i) — pulling latest main and rebasing…"
+            git pull --rebase origin main
+          done
+          echo "Push failed after 3 retries." >&2
+          exit 1
