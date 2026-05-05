@@ -363,6 +363,52 @@
     }
     @media (max-width: 720px) {
       .salle-num-deco { top:8px; right:12px; font-size:120px; }
+
+      /* Sections de salle : retirer le 100vh forcé qui crée d'énormes vides
+         sur mobile. La section s'adapte à son contenu. */
+      .salle-section {
+        min-height:auto !important;
+      }
+      .salle-grid {
+        min-height:auto !important;
+      }
+      .salle-body {
+        margin:24px 14px 24px !important;
+        padding:18px 18px !important;
+        background:rgba(12, 8, 0, 0.78);
+      }
+      .salle-reverse .salle-body {
+        margin:24px 14px 24px !important;
+      }
+      /* Photo de fond : on lui donne une hauteur visible au-dessus du panel */
+      .salle-media {
+        position:relative !important;
+        height:30vh;
+        min-height:200px;
+        max-height:280px;
+      }
+      .salle-grid { display:flex !important; flex-direction:column; }
+
+      /* Cards d'orientation : plus compactes et plus lisibles */
+      .exp-orient-card {
+        padding:14px 16px !important;
+        gap:6px !important;
+        background:linear-gradient(155deg, rgba(61,93,192,0.12) 0%, rgba(20,18,16,0.85) 65%) !important;
+      }
+      .exp-orient-ico {
+        width:36px !important; height:36px !important;
+        border-radius:9px !important;
+      }
+      .exp-orient-ico svg,
+      .exp-orient-ico img {
+        width:18px !important; height:18px !important;
+      }
+      .exp-orient-q {
+        font-size:0.95rem !important;
+      }
+      .exp-orient-room {
+        font-size:0.95rem !important;
+      }
     }
   </style>
   
