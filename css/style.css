@@ -3,7 +3,7 @@
    Dark cinematic entertainment venue
    ======================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+/* Google Fonts now loaded via deferred <link> in HTML head (perf: avoid blocking @import + extra round-trip) */
 
 /* --- CSS Variables --- */
 :root {
