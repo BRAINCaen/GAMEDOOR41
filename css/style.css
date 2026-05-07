@@ -201,12 +201,51 @@ p[style*="text-align: center"],
   padding: 0 24px;
 }
 .nav-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.28s ease;
+  position: relative;
+}
+.nav-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 14px rgba(224, 112, 32, 0.45));
+}
+.nav-logo:active {
+  transform: scale(0.97);
+}
+.nav-logo::after {
+  content: "↗ ACCUEIL";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--orange);
+  color: #0C0800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-display, 'Barlow Condensed'), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  margin-top: 4px;
+}
+.nav-logo:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(12px);
+}
+@media (max-width: 768px) {
+  .nav-logo::after { display: none; }
 }
 .logo-img {
-  height: 32px;
+  height: 34px;
   width: auto;
+  max-width: 240px;
 }
 .footer-logo-img {
   height: 38px;
