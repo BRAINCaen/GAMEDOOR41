@@ -358,49 +358,13 @@
   status = 301
   force = true
 
-# Blog posts → pages les plus proches sémantiquement
-[[redirects]]
-  from = "/post/plongez-en-famille-dans-notre-escape-game-back-to-the-80-s-*"
-  to = "/escape-game-caen/back-to-the-80s/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/post/organiser-un-team-building-r*"
-  to = "/team-building-caen/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/post/escape-game-*-deux*"
-  to = "/escape-game-caen/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/post/plongez-dans-l-horreur-avec-notre-escape-game-psychiatric-*"
-  to = "/escape-game-caen/psychiatric/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/post/buzz-your-brain-*"
-  to = "/quiz-game-caen/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/post/organisez-un-evjf-evg-*"
-  to = "/evjf-caen/"
-  status = 301
-  force = true
-
-# Catch-all pour les autres blog posts
-[[redirects]]
-  from = "/post/*"
-  to = "/"
-  status = 301
-  force = true
+# Vieux slugs Wix avec accents → redirects EXACTS dans _redirects
+# (slug complet avec lettres accentuées + variantes URL-encoded)
+# Les vrais articles GAMEDOOR /post/X/index.html sont servis directement
+# par Netlify. Plus de wildcards /post/X-* ni catch-all /post/* ici :
+# ils écrasaient nos vrais articles avec force=true (incident détecté
+# 2026-05-07). Si une vieille URL Wix non mappée arrive, elle tombe
+# proprement sur /404.html (page custom GAMEDOOR navigation).
 
 # --- Réservation ---
 
