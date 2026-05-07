@@ -563,6 +563,28 @@ img { display: block; max-width: 100%; }
   width: auto;
   max-width: 240px;
 }
+
+/* ============================================================
+   AUDIO READER WIDGET — magazine articles
+============================================================ */
+.audio-reader{display:flex;align-items:center;gap:14px;background:rgba(224,112,32,0.10);border:1px solid rgba(224,112,32,0.35);border-radius:12px;padding:14px 18px;margin:0 0 28px;font-family:'DM Sans',system-ui,sans-serif;position:relative;overflow:hidden;flex-wrap:wrap;}
+.audio-reader .ar-btn{flex-shrink:0;border-radius:50%;background:#E07020;color:#fff;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease;padding:0;}
+.audio-reader .ar-play-btn{width:46px;height:46px;}
+.audio-reader .ar-stop-btn,.audio-reader .ar-next-btn{width:38px;height:38px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#C8C2B8;}
+.audio-reader .ar-btn:hover{transform:scale(1.06);background:#F08530;}
+.audio-reader .ar-stop-btn:hover,.audio-reader .ar-next-btn:hover{background:rgba(255,255,255,.14);color:#F0EBE2;}
+.audio-reader .ar-btn:active{transform:scale(.94);}
+.audio-reader .ar-info{flex:1 1 auto;min-width:140px;display:flex;flex-direction:column;gap:2px;}
+.audio-reader .ar-title{font-family:'Barlow Condensed','DM Sans',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:#F0EBE2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.audio-reader .ar-meta{font-size:13px;color:#A8A095;line-height:1.3;}
+.audio-reader .ar-duration{color:#C8C2B8;font-weight:500;}
+.audio-reader .ar-controls{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.audio-reader .ar-speed{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:8px;overflow:hidden;}
+.audio-reader .ar-speed-btn{background:transparent;border:none;color:#A8A095;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:6px 10px;cursor:pointer;transition:background .2s,color .2s;min-height:30px;border-right:1px solid rgba(255,255,255,.08);}
+.audio-reader .ar-speed-btn:last-child{border-right:none;}
+.audio-reader .ar-speed-btn:hover{color:#F0EBE2;background:rgba(255,255,255,.04);}
+.audio-reader .ar-speed-btn.active{color:#0C0800;background:#E07020;}
+@media(max-width:640px){.audio-reader{padding:12px 14px;gap:10px;}.audio-reader .ar-play-btn{width:42px;height:42px;}.audio-reader .ar-info{flex-basis:calc(100% - 60px);order:2;}.audio-reader .ar-controls{flex-basis:100%;order:3;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:10px;margin-top:4px;}.audio-reader .ar-title{font-size:13px;}.audio-reader .ar-meta{font-size:12px;}.audio-reader .ar-speed-btn{padding:5px 8px;font-size:11px;}}
 .footer-logo .logo-img.footer-logo-img {
   height: 40px;
   width: auto;
