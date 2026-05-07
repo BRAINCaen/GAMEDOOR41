@@ -3,15 +3,22 @@
    Uses native Web Speech API (no backend, free, offline-capable)
    Inserts a play/pause/next widget at the top of each article body
    ============================================================ */
-(function () {
+function gd41InitAudioReader() {
   'use strict';
 
   // Run only on article pages
   var body = document.querySelector('.post-body');
-  if (!body) return;
+  if (!body) { console.log('[audio-reader] no .post-body found, abort'); return; }
 
   // Check Web Speech API support
-  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
+  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+    console.log('[audio-reader] Web Speech API not supported, abort');
+    return;
+  }
+
+  // Skip if already initialized
+  if (document.querySelector('.audio-reader')) { console.log('[audio-reader] already initialized'); return; }
+  console.log('[audio-reader] initializing...');
 
   // ===== Article playlist (ordered by relevance/freshness) =====
   // Used for the "Next article" button : when reading is over OR user clicks ⏭
@@ -313,4 +320,13 @@
   if (synth.getVoices().length === 0 && 'onvoiceschanged' in synth) {
     synth.addEventListener('voiceschanged', function () { /* voices ready */ }, { once: true });
   }
-})();
+
+  console.log('[audio-reader] widget injected successfully');
+}
+
+// Run when DOM is ready (defer should already wait for DOMContentLoaded but extra safety)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', gd41InitAudioReader);
+} else {
+  gd41InitAudioReader();
+}
