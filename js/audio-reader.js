@@ -3,6 +3,8 @@
    Widget HTML is inlined in each article (always visible).
    This script just attaches behavior to the existing buttons.
    ============================================================ */
+console.log('[audio-reader] file loaded ✓');
+
 (function () {
   'use strict';
 
