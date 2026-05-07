@@ -358,30 +358,55 @@ console.log('[audio-reader] file loaded ✓');
     }
 
     function start() {
+      // Cancel previous utterance and wait for it to fully stop
+      // (browsers fire onerror=interrupted otherwise)
+      var wasIdle = (state === 'idle');
       synth.cancel();
-      utterance = new SpeechSynthesisUtterance(fullText);
-      utterance.lang = 'fr-FR';
-      utterance.rate = currentSpeed;
-      var v = pickVoice(); if (v) utterance.voice = v;
 
-      utterance.onstart = function () {
-        state = 'playing'; showPause();
-        titleEl.textContent = 'Lecture en cours…';
-        if (stopBtn) stopBtn.style.display = 'inline-flex';
-        widget.classList.add('playing');
+      var startSpeak = function () {
+        utterance = new SpeechSynthesisUtterance(fullText);
+        utterance.lang = 'fr-FR';
+        utterance.rate = currentSpeed;
+        var v = pickVoice(); if (v) utterance.voice = v;
+
+        utterance.onstart = function () {
+          state = 'playing'; showPause();
+          titleEl.textContent = 'Lecture en cours…';
+          if (stopBtn) stopBtn.style.display = 'inline-flex';
+          widget.classList.add('playing');
+        };
+        utterance.onend = function () {
+          if (state === 'idle') return; // already stopped manually
+          state = 'idle'; showPlay();
+          titleEl.textContent = "Réécouter l'article";
+          if (stopBtn) stopBtn.style.display = 'none';
+          widget.classList.remove('playing');
+        };
+        utterance.onerror = function (e) {
+          var code = e.error || 'unknown';
+          console.warn('[audio-reader] utterance error:', code);
+          // Ignore expected interruptions (cancel, manual stop, restart)
+          if (code === 'canceled' || code === 'interrupted') return;
+          state = 'idle'; showPlay();
+          titleEl.textContent = 'Erreur — réessayez (' + code + ')';
+          widget.classList.remove('playing');
+        };
+
+        // Workaround Chrome bug : speech stops after ~15s. Keep alive.
+        var keepAlive = setInterval(function () {
+          if (!synth.speaking) { clearInterval(keepAlive); return; }
+          if (state === 'playing') { synth.pause(); synth.resume(); }
+        }, 10000);
+
+        synth.speak(utterance);
       };
-      utterance.onend = function () {
-        state = 'idle'; showPlay();
-        titleEl.textContent = "Réécouter l'article";
-        if (stopBtn) stopBtn.style.display = 'none';
-        widget.classList.remove('playing');
-      };
-      utterance.onerror = function (e) {
-        state = 'idle'; showPlay();
-        titleEl.textContent = 'Erreur — réessayez';
-        widget.classList.remove('playing');
-      };
-      synth.speak(utterance);
+
+      // Wait 100ms after cancel before starting (Chrome needs time to clear state)
+      if (wasIdle) {
+        startSpeak();
+      } else {
+        setTimeout(startSpeak, 120);
+      }
 
       if (typeof gtag === 'function') {
         gtag('event', 'audio_reader_play', {
