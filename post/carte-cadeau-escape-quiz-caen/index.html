@@ -385,55 +385,57 @@ console.log('[audio-reader] file loaded ✓');
     }
 
     function start() {
-      // Cancel previous utterance and wait for it to fully stop
-      // (browsers fire onerror=interrupted otherwise)
-      var wasIdle = (state === 'idle');
-      synth.cancel();
+      // Only cancel if something is actually playing (avoid spurious "interrupted")
+      if (synth.speaking || synth.pending) {
+        synth.cancel();
+      }
 
-      var startSpeak = function () {
+      // Tiny delay anyway to let Chrome finalize the cancel (no-op if nothing to cancel)
+      setTimeout(function () {
         utterance = new SpeechSynthesisUtterance(fullText);
         utterance.lang = 'fr-FR';
         utterance.rate = currentSpeed;
-        var v = pickVoice(); if (v) utterance.voice = v;
+        // NO voice selection — let the browser pick the default French voice
+        // (some Chrome installs choke on explicit .voice assignment)
 
         utterance.onstart = function () {
           state = 'playing'; showPause();
           titleEl.textContent = 'Lecture en cours…';
           if (stopBtn) stopBtn.style.display = 'inline-flex';
           widget.classList.add('playing');
+          console.log('[audio-reader] speech started');
         };
         utterance.onend = function () {
-          if (state === 'idle') return; // already stopped manually
+          if (state === 'idle') return;
           state = 'idle'; showPlay();
           titleEl.textContent = "Réécouter l'article";
           if (stopBtn) stopBtn.style.display = 'none';
           widget.classList.remove('playing');
+          console.log('[audio-reader] speech ended');
         };
         utterance.onerror = function (e) {
-          var code = e.error || 'unknown';
-          console.warn('[audio-reader] utterance error:', code);
-          // Ignore expected interruptions (cancel, manual stop, restart)
-          if (code === 'canceled' || code === 'interrupted') return;
+          var code = (e && e.error) ? e.error : 'unknown';
+          console.warn('[audio-reader] utterance error:', code, e);
+          if (code === 'canceled' || code === 'interrupted') return; // expected
           state = 'idle'; showPlay();
-          titleEl.textContent = 'Erreur — réessayez (' + code + ')';
+          titleEl.textContent = 'Erreur (' + code + ') — réessayez';
           widget.classList.remove('playing');
         };
 
-        // Workaround Chrome bug : speech stops after ~15s. Keep alive.
+        // Chrome workaround : speech cuts after ~15s on long texts
         var keepAlive = setInterval(function () {
-          if (!synth.speaking) { clearInterval(keepAlive); return; }
+          if (!synth.speaking && state !== 'playing') { clearInterval(keepAlive); return; }
           if (state === 'playing') { synth.pause(); synth.resume(); }
         }, 10000);
 
-        synth.speak(utterance);
-      };
-
-      // Wait 100ms after cancel before starting (Chrome needs time to clear state)
-      if (wasIdle) {
-        startSpeak();
-      } else {
-        setTimeout(startSpeak, 120);
-      }
+        try {
+          synth.speak(utterance);
+          console.log('[audio-reader] synth.speak() called');
+        } catch (err) {
+          console.error('[audio-reader] speak threw:', err);
+          titleEl.textContent = 'Erreur de synthèse vocale';
+        }
+      }, 50);
 
       if (typeof gtag === 'function') {
         gtag('event', 'audio_reader_play', {
