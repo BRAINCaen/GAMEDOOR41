@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre devis GAMEDOOR&middot;41</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Arial', sans-serif; background-color: #FAF7F2;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FAF7F2;">
+        <tr>
+            <td align="center" style="padding: 20px 10px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 600px;">
+
+                    <!-- Header GAMEDOOR -->
+                    <tr>
+                        <td style="background-color: #0C0800; padding: 40px 30px; text-align: center; border-bottom: 4px solid #E07020;">
+                            <h1 style="color: #ffffff; font-size: 32px; margin: 0 0 10px 0; font-weight: bold; letter-spacing: 1px;">
+                                GAMEDOOR&middot;41
+                            </h1>
+                            <p style="color: #E07020; font-size: 14px; margin: 0 0 16px 0; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">
+                                Devis professionnel
+                            </p>
+                            <p style="color: #ffffff; font-size: 22px; margin: 0; font-weight: 600;">
+                                Votre devis est pr&ecirc;t
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Message d'accueil -->
+                    <tr>
+                        <td style="padding: 40px 40px 20px;">
+                            <p style="margin: 0 0 15px; color: #0C0800; font-size: 17px; line-height: 1.6;">
+                                Bonjour
+                                {% if var:order.is_company %}
+                                    {{var:order.company.user.name:""}},
+                                {% else %}
+                                    {{var:order.customer.user.name.given_name:""}} {{var:order.customer.user.name.family_name:""}},
+                                {% endif %}
+                            </p>
+                            <p style="margin: 0; color: #2a2a2a; font-size: 16px; line-height: 1.7;">
+                                Voici votre devis pour votre &eacute;v&eacute;nement chez <strong style="color: #E07020;">GAMEDOOR&middot;41</strong> (anciennement Brain Escape Game). Notre &eacute;quipe a pr&eacute;par&eacute; une proposition adapt&eacute;e &agrave; votre demande.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- R&eacute;capitulatif devis -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FAF7F2; border-left: 4px solid #E07020; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 25px;">
+                                        <p style="margin: 0 0 18px 0; font-size: 16px; color: #0C0800; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                                            R&eacute;capitulatif
+                                        </p>
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Num&eacute;ro de devis
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:order.reference:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Date du devis
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:orderDate:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Date de l'&eacute;v&eacute;nement
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:orderPlayDateWithTime:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Nombre de joueurs
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:order.room_players:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 14px 0 8px;">
+                                                    <hr style="border: none; border-top: 2px solid #ece6db; margin: 0;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #0C0800; font-size: 17px; font-weight: bold; padding: 8px 0;">
+                                                    Montant total
+                                                </td>
+                                                <td style="color: #E07020; font-size: 24px; font-weight: bold; text-align: right; padding: 8px 0;">
+                                                    {{var:orderAmountChargedFormatted:""}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Boutons d'action -->
+                    <tr>
+                        <td style="padding: 0 40px 20px;">
+                            <p style="margin: 0 0 18px 0; text-align: center; color: #555; font-size: 14px;">
+                                Choisissez votre r&eacute;ponse&nbsp;:
+                            </p>
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+
+                                <!-- Bouton VALIDER -->
+                                <tr>
+                                    <td style="padding: 6px 0;">
+                                        <a href="mailto:contact@gamedoor41.fr?subject=Validation du devis {{var:order.reference}}&body=Bonjour,%0D%0A%0D%0AJe valide le devis {{var:order.reference}} et m'engage &agrave; respecter les Conditions G&eacute;n&eacute;rales de Vente.%0D%0A%0D%0AMontant : {{var:orderAmountChargedFormatted}}%0D%0ADate de l'&eacute;v&eacute;nement : {{var:orderPlayDateWithTime}}%0D%0A%0D%0A** MODE DE R&Egrave;GLEMENT CHOISI **%0D%0A(Cochez votre choix)%0D%0A%0D%0A[ ] CB en ligne (lien envoy&eacute; par email)%0D%0A[ ] CB sur place le jour de l'&eacute;v&eacute;nement%0D%0A[ ] Virement bancaire%0D%0A[ ] Bon de commande (services publics - Chorus)%0D%0A%0D%0ACordialement" style="display: block; background-color: #2D8C4E; color: #ffffff; text-decoration: none; padding: 16px 30px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 16px;">
+                                            Je valide le devis et accepte les CGV
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Bouton MODIFIER -->
+                                <tr>
+                                    <td style="padding: 6px 0;">
+                                        <a href="mailto:contact@gamedoor41.fr?subject=Modification du devis {{var:order.reference}}&body=Bonjour,%0D%0A%0D%0AJe souhaite modifier le devis {{var:order.reference}}.%0D%0A%0D%0AMa demande de modification :%0D%0A" style="display: block; background-color: #E07020; color: #ffffff; text-decoration: none; padding: 16px 30px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 16px;">
+                                            Je demande une modification
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Bouton REFUSER -->
+                                <tr>
+                                    <td style="padding: 6px 0;">
+                                        <a href="mailto:contact@gamedoor41.fr?subject=Refus du devis {{var:order.reference}}&body=Bonjour,%0D%0A%0D%0AJe d&eacute;cline le devis {{var:order.reference}}.%0D%0A%0D%0ARaison (facultatif) :%0D%0A" style="display: block; background-color: #6a6258; color: #ffffff; text-decoration: none; padding: 16px 30px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 16px;">
+                                            Je refuse le devis
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Avertissement expiration -->
+                    <tr>
+                        <td style="padding: 10px 40px 30px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fff8ed; border-left: 4px solid #E07020; border-radius: 6px;">
+                                <tr>
+                                    <td style="padding: 18px 20px;">
+                                        <p style="margin: 0; color: #8a4a10; font-size: 14px; line-height: 1.6;">
+                                            <strong>Validit&eacute; du devis&nbsp;:</strong> jusqu'au <strong>{{var:orderDueDate:""}}</strong>. Pass&eacute; ce d&eacute;lai, le devis est automatiquement annul&eacute; et une nouvelle demande sera n&eacute;cessaire.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- CGV B2B GAMEDOOR -->
+                    <tr>
+                        <td style="padding: 10px 40px 20px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FAF7F2; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 25px;">
+                                        <h2 style="margin: 0 0 18px; color: #0C0800; font-size: 17px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #E07020; padding-bottom: 10px;">
+                                            CGV B2B &agrave; lire avant validation
+                                        </h2>
+
+                                        <div style="color: #2a2a2a; font-size: 13px; line-height: 1.6;">
+
+                                            <p style="margin: 0 0 8px; color: #0C0800; font-weight: bold;">ARTICLE I &mdash; VALIDATION DU DEVIS</p>
+                                            <ol style="margin: 0 0 16px; padding-left: 22px;">
+                                                <li style="margin-bottom: 6px;">L'envoi par l'Entreprise du mail de validation constitue acceptation du devis et formalise le contrat&nbsp;: prix, prestations, date d'ex&eacute;cution.</li>
+                                                <li style="margin-bottom: 6px;">L'acceptation entra&icirc;ne consentement sans r&eacute;serve aux pr&eacute;sentes CGV et engage l'Entreprise &agrave; r&eacute;gler le montant total d&ucirc;.</li>
+                                                <li style="margin-bottom: 6px;"><strong>Annulation, non-pr&eacute;sentation ou retard des participants n'exon&egrave;rent pas l'Entreprise du paiement total.</strong></li>
+                                            </ol>
+
+                                            <p style="margin: 0 0 8px; color: #0C0800; font-weight: bold;">ARTICLE II &mdash; MODALIT&Eacute;S DE PAIEMENT</p>
+                                            <ol style="margin: 0 0 16px; padding-left: 22px;">
+                                                <li style="margin-bottom: 6px;">Un acompte sur produits compl&eacute;mentaires (restauration, options) peut &ecirc;tre exig&eacute; apr&egrave;s signature du devis pour conditionner les commandes prestataires.</li>
+                                                <li style="margin-bottom: 6px;">R&egrave;glement par CB&nbsp;: en ligne via lien s&eacute;curis&eacute; envoy&eacute; par email, ou sur place le jour de l'&eacute;v&eacute;nement (en un seul r&egrave;glement de la totalit&eacute;).</li>
+                                                <li style="margin-bottom: 6px;">Virement bancaire accept&eacute; sur demande.</li>
+                                                <li style="margin-bottom: 6px;">Services publics&nbsp;: bon de commande &agrave; transmettre avant la prestation pour enregistrement Chorus Pro.</li>
+                                                <li style="margin-bottom: 6px;"><strong>L'acc&egrave;s aux salles est conditionn&eacute; au paiement complet.</strong></li>
+                                            </ol>
+
+                                            <p style="margin: 0 0 8px; color: #0C0800; font-weight: bold;">ARTICLE III &mdash; EXCLUSION DU DROIT DE R&Eacute;TRACTATION</p>
+                                            <ol style="margin: 0 0 16px; padding-left: 22px;">
+                                                <li style="margin-bottom: 6px;">Les prestations GAMEDOOR&middot;41 sont &eacute;tablies sur sp&eacute;cifications de l'Entreprise (date, effectif, options).</li>
+                                                <li style="margin-bottom: 6px;">Aucun droit de r&eacute;tractation n'est applicable apr&egrave;s acceptation du devis (article L221-28 du Code de la consommation).</li>
+                                            </ol>
+
+                                            <p style="margin: 0 0 8px; color: #0C0800; font-weight: bold;">ARTICLE IV &mdash; MODIFICATIONS DU DEVIS</p>
+
+                                            <p style="margin: 8px 0 6px; font-weight: 600; color: #0C0800;">A. Modification de la date</p>
+                                            <ol style="margin: 0 0 12px; padding-left: 22px;">
+                                                <li style="margin-bottom: 6px;"><strong>Moins de 7 jours avant&nbsp;:</strong> changement interdit, paiement total d&ucirc;.</li>
+                                                <li style="margin-bottom: 6px;"><strong>Entre 7 et 15 jours avant&nbsp;:</strong> report possible avec frais de 20% du montant total.</li>
+                                                <li style="margin-bottom: 6px;"><strong>Plus de 15 jours avant&nbsp;:</strong> report gratuit selon disponibilit&eacute;s.</li>
+                                            </ol>
+
+                                            <p style="margin: 8px 0 6px; font-weight: 600; color: #0C0800;">B. Modification du nombre de participants</p>
+                                            <ol style="margin: 0 0 12px; padding-left: 22px;">
+                                                <li style="margin-bottom: 6px;"><strong>R&eacute;duction d'effectif&nbsp;:</strong> possible plus de 7 jours avant l'&eacute;v&eacute;nement.</li>
+                                                <li style="margin-bottom: 6px;"><strong>Augmentation d'effectif&nbsp;:</strong> possible selon disponibilit&eacute; des salles et capacit&eacute;s techniques (jusqu'&agrave; 30 joueurs simultan&eacute;s sur site).</li>
+                                            </ol>
+
+                                            <p style="margin: 18px 0 0; color: #0C0800; font-weight: 600; text-align: center;">
+                                                Toute l'&eacute;quipe GAMEDOOR&middot;41 reste &agrave; votre disposition.
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Message de cl&ocirc;ture -->
+                    <tr>
+                        <td style="padding: 10px 40px 30px;">
+                            <p style="margin: 0; color: #555; font-size: 16px; line-height: 1.6; text-align: center;">
+                                Une question avant de valider&nbsp;? Notre &eacute;quipe r&eacute;pond.<br>
+                                <a href="mailto:contact@gamedoor41.fr" style="color: #E07020; text-decoration: none; font-weight: bold;">contact@gamedoor41.fr</a>
+                                <span style="color: #999; margin: 0 6px;">&bull;</span>
+                                <a href="https://wa.me/33631469322" style="color: #E07020; text-decoration: none; font-weight: bold;">WhatsApp 06&nbsp;31&nbsp;46&nbsp;93&nbsp;22</a>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Trust badges -->
+                    <tr>
+                        <td style="background-color: #FAF7F2; padding: 25px 30px; text-align: center; border-top: 1px solid #ece6db;">
+                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td width="33%" style="padding: 6px; text-align: center;">
+                                        <p style="font-size: 20px; margin: 0 0 4px 0; color: #E07020; font-weight: bold;">4.9/5</p>
+                                        <p style="font-size: 12px; color: #555; margin: 0; font-weight: bold;">GOOGLE</p>
+                                    </td>
+                                    <td width="33%" style="padding: 6px; text-align: center; border-left: 1px solid #ece6db; border-right: 1px solid #ece6db;">
+                                        <p style="font-size: 20px; margin: 0 0 4px 0; color: #E07020; font-weight: bold;">750+</p>
+                                        <p style="font-size: 12px; color: #555; margin: 0; font-weight: bold;">ENTREPRISES</p>
+                                    </td>
+                                    <td width="33%" style="padding: 6px; text-align: center;">
+                                        <p style="font-size: 20px; margin: 0 0 4px 0; color: #E07020; font-weight: bold;">2017</p>
+                                        <p style="font-size: 12px; color: #555; margin: 0; font-weight: bold;">DEPUIS</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 30px 40px; background-color: #0C0800; color: #ffffff;">
+                            <p style="margin: 0 0 10px; text-align: center; color: #ffffff; font-size: 14px; font-weight: bold; letter-spacing: 1px;">
+                                GAMEDOOR&middot;41
+                            </p>
+                            <p style="margin: 0 0 12px; text-align: center; color: #b8b3aa; font-size: 13px; line-height: 1.6;">
+                                SARL BOEHME &middot; RCS Caen 823&nbsp;227&nbsp;111<br>
+                                41&nbsp;bis rue Pasteur &middot; 14120 Mondeville &middot; 5&nbsp;min de Caen
+                            </p>
+                            <p style="margin: 0 0 12px; text-align: center; font-size: 13px;">
+                                <a href="https://gamedoor41.fr" style="color: #E07020; text-decoration: none; font-weight: bold;">gamedoor41.fr</a>
+                                <span style="color: #4a4036; margin: 0 8px;">&bull;</span>
+                                <a href="mailto:contact@gamedoor41.fr" style="color: #E07020; text-decoration: none; font-weight: bold;">contact@gamedoor41.fr</a>
+                            </p>
+                            <p style="margin: 0; text-align: center; font-size: 11px; color: #6a6258;">
+                                Anciennement Brain Escape Game / Buzz Your Brain
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

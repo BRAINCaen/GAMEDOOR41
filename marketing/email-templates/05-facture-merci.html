@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre facture &middot; GAMEDOOR&middot;41</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Arial', sans-serif; background-color: #FAF7F2;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FAF7F2;">
+        <tr>
+            <td align="center" style="padding: 20px 10px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 600px;">
+
+                    <!-- Header GAMEDOOR -->
+                    <tr>
+                        <td style="background-color: #0C0800; padding: 40px 30px; text-align: center; border-bottom: 4px solid #E07020;">
+                            <h1 style="color: #ffffff; font-size: 30px; margin: 0 0 8px 0; font-weight: bold; letter-spacing: 1.5px;">
+                                GAMEDOOR&middot;41
+                            </h1>
+                            <p style="color: #E07020; font-size: 13px; margin: 0 0 14px 0; font-weight: bold; letter-spacing: 3px; text-transform: uppercase;">
+                                Merci pour votre confiance
+                            </p>
+                            <p style="color: #ffffff; font-size: 16px; margin: 0; opacity: 0.9;">
+                                Votre facture est prête.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Message de remerciement -->
+                    <tr>
+                        <td style="padding: 40px 40px 25px;">
+                            <p style="margin: 0 0 18px; color: #0C0800; font-size: 17px; line-height: 1.6;">
+                                Bonjour {{var:invoice.customer.user.name.given_name:""}} {{var:invoice.customer.user.name.family_name:""}},
+                            </p>
+                            <p style="margin: 0 0 14px; color: #2a2a2a; font-size: 16px; line-height: 1.7;">
+                                Merci d'avoir choisi <strong style="color: #E07020;">GAMEDOOR&middot;41</strong> (anciennement Brain Escape Game) pour votre &eacute;v&eacute;nement.
+                            </p>
+                            <p style="margin: 0; color: #2a2a2a; font-size: 16px; line-height: 1.7;">
+                                Ce fut un plaisir de vous accueillir. On esp&egrave;re que vous avez pass&eacute; un excellent moment avec nous.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Récapitulatif facture -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FAF7F2; border-left: 4px solid #E07020; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 25px;">
+                                        <p style="margin: 0 0 18px 0; font-size: 15px; color: #0C0800; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-align: center;">
+                                            Votre facture
+                                        </p>
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Num&eacute;ro de facture
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:invoice.reference:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Date
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:invoice.dateFormatted:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #555; font-size: 14px; padding: 8px 0;">
+                                                    Commande associ&eacute;e
+                                                </td>
+                                                <td style="color: #0C0800; font-size: 14px; text-align: right; padding: 8px 0; font-weight: bold;">
+                                                    {{var:invoice.order.reference:""}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 14px 0 8px;">
+                                                    <hr style="border: none; border-top: 2px solid #ece6db; margin: 0;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #0C0800; font-size: 17px; font-weight: bold; padding: 8px 0;">
+                                                    Montant pay&eacute;
+                                                </td>
+                                                <td style="color: #E07020; font-size: 24px; font-weight: bold; text-align: right; padding: 8px 0;">
+                                                    {{var:invoiceAmountChargedFormatted:""}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Pièce jointe -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;">
+                            <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.6; text-align: center;">
+                                Vous trouverez votre facture en pi&egrave;ce jointe de cet email.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Demande d'avis Google -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0C0800; border-radius: 10px; overflow: hidden;">
+                                <tr>
+                                    <td style="padding: 32px 28px; text-align: center;">
+                                        <p style="margin: 0 0 14px; color: #E07020; font-size: 13px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase;">
+                                            Votre avis nous aide
+                                        </p>
+                                        <h2 style="margin: 0 0 14px; color: #ffffff; font-size: 22px; font-weight: bold; line-height: 1.3;">
+                                            Vous avez appr&eacute;ci&eacute; l'exp&eacute;rience&nbsp;?
+                                        </h2>
+                                        <p style="margin: 0 0 25px; color: #b8b3aa; font-size: 14px; line-height: 1.6;">
+                                            Un avis Google de 30&nbsp;secondes nous fait gagner des semaines de travail.<br>
+                                            Et &ccedil;a aide les futurs visiteurs &agrave; nous trouver.
+                                        </p>
+
+                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin: 0 auto;">
+                                            <tr>
+                                                <td style="background-color: #E07020; border-radius: 50px;">
+                                                    <a href="https://g.page/r/CYsBAVRtGhivEBM/review" target="_blank" style="display: inline-block; padding: 16px 36px; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                                                        Laisser un avis Google
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <p style="margin: 22px 0 0; color: #6a6258; font-size: 12px; font-style: italic;">
+                                            Note actuelle&nbsp;: 4.9/5 sur 2&nbsp;100+ avis &middot; chaque retour compte.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Invitation à revenir -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FAF7F2; border-left: 4px solid #E07020; border-radius: 6px;">
+                                <tr>
+                                    <td style="padding: 20px 25px;">
+                                        <p style="margin: 0 0 6px 0; color: #0C0800; font-size: 16px; font-weight: bold;">
+                                            Envie de renouveler l'exp&eacute;rience&nbsp;?
+                                        </p>
+                                        <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.6;">
+                                            On a 3 escape games et un quiz Buzz Your Brain &mdash; il vous reste de la place pour explorer. Pour un prochain &eacute;v&eacute;nement, contactez-nous.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Contact -->
+                    <tr>
+                        <td style="padding: 0 40px 30px; text-align: center;">
+                            <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.7;">
+                                <a href="mailto:contact@gamedoor41.fr" style="color: #E07020; text-decoration: none; font-weight: bold;">contact@gamedoor41.fr</a>
+                                <span style="color: #999; margin: 0 8px;">&bull;</span>
+                                <a href="https://wa.me/33631469322" style="color: #E07020; text-decoration: none; font-weight: bold;">WhatsApp 06&nbsp;31&nbsp;46&nbsp;93&nbsp;22</a>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Message clôture -->
+                    <tr>
+                        <td style="padding: 0 40px 30px;">
+                            <p style="margin: 0; color: #555; font-size: 16px; line-height: 1.6; text-align: center;">
+                                Encore merci, et &agrave; tr&egrave;s bient&ocirc;t chez <strong style="color: #0C0800;">GAMEDOOR&middot;41</strong>.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #0C0800; padding: 30px; text-align: center;">
+                            <p style="color: #ffffff; font-size: 14px; margin: 0 0 10px 0; font-weight: bold; letter-spacing: 1.5px;">
+                                GAMEDOOR&middot;41
+                            </p>
+                            <p style="margin: 0 0 12px; color: #b8b3aa; font-size: 13px; line-height: 1.6;">
+                                Centre de loisirs immersifs &middot; Escape &amp; Quiz<br>
+                                41&nbsp;bis rue Pasteur &middot; 14120 Mondeville &middot; 5&nbsp;min de Caen
+                            </p>
+                            <p style="margin: 0 0 14px; font-size: 13px;">
+                                <a href="https://gamedoor41.fr" style="color: #E07020; text-decoration: none; font-weight: bold;">gamedoor41.fr</a>
+                                <span style="color: #4a4036; margin: 0 8px;">&bull;</span>
+                                <a href="mailto:contact@gamedoor41.fr" style="color: #E07020; text-decoration: none; font-weight: bold;">contact@gamedoor41.fr</a>
+                            </p>
+
+                            <!-- Réseaux sociaux -->
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin: 8px auto 12px;">
+                                <tr>
+                                    <td style="padding: 0 8px;">
+                                        <a href="{{var:organization.social_networks.facebook.link:""}}" style="display: inline-block;">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" style="width: 28px; height: 28px;">
+                                        </a>
+                                    </td>
+                                    <td style="padding: 0 8px;">
+                                        <a href="{{var:organization.social_networks.instagram.link:""}}" style="display: inline-block;">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 28px; height: 28px;">
+                                        </a>
+                                    </td>
+                                    <td style="padding: 0 8px;">
+                                        <a href="{{var:organization.social_networks.tripadvisor.link:""}}" style="display: inline-block;">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111573.png" alt="TripAdvisor" style="width: 28px; height: 28px;">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 11px; color: #6a6258;">
+                                Anciennement Brain Escape Game / Buzz Your Brain
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
