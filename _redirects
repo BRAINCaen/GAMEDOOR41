@@ -3,6 +3,23 @@
 # Source : sitemap brain-escapegame-caen.fr/pages-sitemap.xml
 # =============================================================
 
+# =============================================================
+# BUZZ YOUR BRAIN — TOUT le site → /quiz-game-caen/
+# =============================================================
+# Les domaines Buzz Your Brain étaient le site dédié quiz uniquement.
+# Toutes les pages (peu importe le path) doivent atterrir sur la
+# nouvelle page quiz GAMEDOOR·41. Placé en TÊTE du fichier pour que
+# le match host-level se déclenche AVANT les rules path-level qui
+# enverraient certains slugs (ex: /quiz-game-plateau) ailleurs.
+# Le `301!` force la redirection même si un fichier existe.
+
+https://buzz-your-brain-caen.fr/*         https://gamedoor41.fr/quiz-game-caen/   301!
+https://www.buzz-your-brain-caen.fr/*     https://gamedoor41.fr/quiz-game-caen/   301!
+https://buzzyourbrain-caen.fr/*           https://gamedoor41.fr/quiz-game-caen/   301!
+https://www.buzzyourbrain-caen.fr/*       https://gamedoor41.fr/quiz-game-caen/   301!
+https://buzzyourbraincaen.fr/*            https://gamedoor41.fr/quiz-game-caen/   301!
+https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/quiz-game-caen/   301!
+
 # ----- PAGES PRINCIPALES BRAIN → GAMEDOOR -----
 /escape-inprison                          /escape-game-caen/garde-a-vue/         301
 /horreur-escape-psychiatric               /escape-game-caen/psychiatric/         301
@@ -104,12 +121,8 @@ https://brain-quiz-caen.fr/*              https://gamedoor41.fr/:splat   301!
 https://www.brain-quiz-caen.fr/*          https://gamedoor41.fr/:splat   301!
 https://brain-quiz-caen.com/*             https://gamedoor41.fr/:splat   301!
 https://www.brain-quiz-caen.com/*         https://gamedoor41.fr/:splat   301!
-https://buzz-your-brain-caen.fr/*         https://gamedoor41.fr/:splat   301!
-https://www.buzz-your-brain-caen.fr/*     https://gamedoor41.fr/:splat   301!
-https://buzzyourbrain-caen.fr/*           https://gamedoor41.fr/:splat   301!
-https://www.buzzyourbrain-caen.fr/*       https://gamedoor41.fr/:splat   301!
-https://buzzyourbraincaen.fr/*            https://gamedoor41.fr/:splat   301!
-https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/:splat   301!
+# NOTE : domaines Buzz Your Brain traités en TÊTE du fichier
+# (toutes les pages → /quiz-game-caen/, pas de :splat)
 https://braincaen.fr/*                    https://gamedoor41.fr/:splat   301!
 https://www.braincaen.fr/*                https://gamedoor41.fr/:splat   301!
 
