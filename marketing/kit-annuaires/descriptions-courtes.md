@@ -100,6 +100,21 @@ Capacité jusqu'à 46 personnes en simultané. Idéal pour anniversaires, EVJF/E
 
 ---
 
+## ⚡ 999 caractères (Tripadvisor, GBP description)
+
+```
+GAMEDOOR·41 (anciennement Brain Escape Game + Buzz Your Brain) — centre de loisirs immersifs scénarisés à 5 min de Caen, à Mondeville. Trois escape games avec game master ACTEUR dans la salle (Garde à Vue enquête policière, Psychiatric oppressant, Back to the 80's nommée Top 100 France) et un plateau quiz Buzz Your Brain grandeur nature avec 8 pupitres, buzzers, joysticks et écrans.
+
+5 salles physiques, jusqu'à 30 joueurs simultanés et 46 au total. Familles (dès 7 ans selon la salle), groupes d'amis, EVJF/EVG, anniversaires, team building (750+ entreprises clientes).
+
+Tarif particulier dégressif dès 24 € escape / 15 € quiz. Tarif pro 17,50 € TTC escape, 15 € TTC quiz. Réductions Trip Normand, Cezam, PAN, CSE, étudiant adulte. Réservation 100% en ligne sur gamedoor41.fr.
+
+Tripadvisor Travelers' Choice 2026, 4.9/5 sur Google (2 100+ avis), 56 000 joueurs depuis 2017.
+```
+*(906 caractères — confortable dans la limite 999)*
+
+---
+
 ## ⚡ 1500-2000 caractères (formats riches Petit Futé / Le Routard)
 
 ```
