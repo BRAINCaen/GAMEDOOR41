@@ -1287,6 +1287,10 @@ body.quiz-room-page .room-cinema-overlay {
   min-height: 60vh;
   display: flex;
   align-items: flex-end;
+  /* padding-top critique : le header est position:fixed (~60-70px),
+     sans ce safety zone le contenu déborde par le haut quand le titre
+     est très grand (ex: team-building, alternance) et passe sous le menu. */
+  padding-top: 100px;
   padding-bottom: 60px;
   overflow: hidden;
 }
