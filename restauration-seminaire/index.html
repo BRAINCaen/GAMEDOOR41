@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restauration séminaire — Devis express · GAMEDOOR·41</title>
+  <meta name="description" content="Configurez votre restauration séminaire chez GAMEDOOR·41 en 2 minutes. Accueil café, déjeuner, apéritif. Demande de devis sous 48h.">
+  <!-- Page semi-privée : accessible par lien direct uniquement, pas dans le menu, pas dans le sitemap, pas indexée -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/logo/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;700&display=swap">
+  <style>
+    :root {
+      --orange: #E07020;
+      --noir: #0C0800;
+      --creme: #F0EBE2;
+      --card-bg: #1A1610;
+      --border: #2E2820;
+      --grey-light: #C8C2B8;
+      --grey-medium: #8A8078;
+      --green: #2D8C4E;
+      --red: #c0392b;
+      --gold: #FFD740;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--noir);
+      color: var(--creme);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* HEADER */
+    .resto-header {
+      background: rgba(12,8,0,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .resto-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: -0.5px;
+      color: var(--creme);
+    }
+    .resto-logo .dot { color: var(--orange); }
+    .resto-baseline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--grey-medium);
+    }
+
+    /* CONTAINER */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* HERO */
+    .hero {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background: linear-gradient(135deg, #1a1208 0%, #0C0800 100%);
+      border-bottom: 3px solid var(--orange);
+    }
+    .hero-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--orange);
+      font-weight: 700; margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: -1px; line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .hero h1 .accent { color: var(--orange); }
+    .hero p {
+      font-size: 17px; color: var(--grey-light);
+      max-width: 640px; margin: 0 auto 32px;
+    }
+    .hero-input-wrap {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--card-bg); padding: 12px 18px;
+      border: 2px solid var(--orange); border-radius: 8px;
+    }
+    .hero-input-wrap label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--orange);
+      font-weight: 700;
+    }
+    .hero-input-wrap input {
+      width: 80px; padding: 6px 10px;
+      background: var(--noir); color: var(--creme);
+      border: 1px solid var(--border); border-radius: 4px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700; text-align: center;
+    }
+
+    /* SECTIONS */
+    .resto-section { padding: 50px 0 30px; border-bottom: 1px solid var(--border); }
+    .resto-section:last-of-type { border-bottom: none; }
+    .section-head { margin-bottom: 30px; }
+    .section-head .meta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--grey-medium);
+      font-weight: 600; margin-bottom: 8px;
+    }
+    .section-head h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.5px;
+      line-height: 1.05; padding-bottom: 8px;
+      border-bottom: 3px solid var(--orange);
+      display: inline-block;
+    }
+    .section-head h2 .num { color: var(--orange); margin-right: 8px; }
+    .section-head p {
+      font-size: 14px; color: var(--grey-light);
+      max-width: 720px; margin-top: 14px; line-height: 1.55;
+    }
+
+    /* CARDS GRID */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+    /* CARD */
+    .resto-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      display: flex; flex-direction: column;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .resto-card:hover { border-color: var(--orange); }
+    .resto-card.selected {
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(224,112,32,0.12) 0%, var(--card-bg) 100%);
+      box-shadow: 0 8px 24px rgba(224,112,32,0.25);
+    }
+    .resto-card.recommended {
+      border-color: var(--gold);
+    }
+    .resto-card.recommended::before {
+      content: 'RECOMMANDÉ';
+      position: absolute; top: -12px; right: 16px;
+      background: var(--gold); color: var(--noir);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 2px; font-weight: 700;
+      padding: 4px 10px; border-radius: 4px;
+    }
+    .card-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--orange);
+      font-weight: 700; margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0;
+      line-height: 1.05; margin-bottom: 6px;
+    }
+    .card-subtitle {
+      font-size: 13px; color: var(--grey-light);
+      margin-bottom: 12px;
+    }
+    .card-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px; font-weight: 900;
+      color: var(--orange); line-height: 1;
+      letter-spacing: -1px; margin-bottom: 4px;
+    }
+    .card-price small {
+      font-size: 12px; color: var(--grey-medium);
+      font-weight: 500; font-family: 'DM Sans', sans-serif;
+      margin-left: 4px;
+    }
+    .card-price-ttc {
+      font-size: 11px; color: var(--grey-medium);
+      margin-bottom: 16px;
+    }
+    .card-includes {
+      list-style: none; margin: 0 0 16px 0; padding: 0;
+      font-size: 13px; color: var(--grey-light);
+      flex: 1; line-height: 1.55;
+    }
+    .card-includes li {
+      padding: 4px 0 4px 16px; position: relative;
+      border-bottom: 1px dotted var(--border);
+    }
+    .card-includes li:last-child { border-bottom: none; }
+    .card-includes li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--orange); font-weight: 700;
+    }
+    .card-actions {
+      display: flex; gap: 8px; align-items: center;
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-info {
+      background: transparent; border: 1px solid var(--grey-medium);
+      color: var(--grey-light); padding: 8px 12px;
+      border-radius: 6px; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; letter-spacing: 1px; font-weight: 600;
+      text-transform: uppercase; transition: all 0.15s;
+    }
+    .btn-info:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-toggle {
+      flex: 1; background: var(--orange); color: var(--noir);
+      border: none; padding: 10px 16px; border-radius: 6px;
+      cursor: pointer; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; letter-spacing: 1.5px; font-weight: 800;
+      text-transform: uppercase; transition: all 0.15s;
+    }
+    .btn-toggle:hover { background: #ff8838; }
+    .btn-toggle.selected { background: var(--green); color: var(--creme); }
+    .qty-controls {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 8px; justify-content: center;
+    }
+    .qty-controls button {
+      width: 32px; height: 32px;
+      background: var(--card-bg); color: var(--creme);
+      border: 1px solid var(--orange); border-radius: 4px;
+      cursor: pointer; font-size: 18px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .qty-controls button:hover { background: var(--orange); color: var(--noir); }
+    .qty-controls .qty-val {
+      min-width: 50px; text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 700;
+    }
+    .qty-controls .qty-unit {
+      font-size: 11px; color: var(--grey-medium);
+      margin-left: 4px;
+    }
+
+    /* BOISSONS */
+    .boissons-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .boissons-col h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--orange); padding-bottom: 8px;
+      border-bottom: 2px solid var(--orange);
+      margin-bottom: 12px;
+    }
+    .boisson-row {
+      display: grid; grid-template-columns: 1fr auto auto;
+      align-items: center; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px dotted var(--border);
+    }
+    .boisson-name { font-size: 14px; color: var(--creme); }
+    .boisson-name .vol { color: var(--grey-medium); font-size: 12px; }
+    .boisson-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      color: var(--orange); white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+    .boisson-qty {
+      display: flex; align-items: center; gap: 4px;
+    }
+    .boisson-qty button {
+      width: 26px; height: 26px;
+      background: var(--card-bg); color: var(--creme);
+      border: 1px solid var(--border); border-radius: 4px;
+      cursor: pointer; font-size: 14px; font-weight: 700;
+    }
+    .boisson-qty button:hover { border-color: var(--orange); color: var(--orange); }
+    .boisson-qty input {
+      width: 40px; padding: 4px;
+      background: var(--noir); color: var(--creme);
+      border: 1px solid var(--border); border-radius: 4px;
+      text-align: center; font-weight: 700;
+    }
+
+    /* PANIER STICKY */
+    .panier {
+      position: fixed; bottom: 20px; right: 20px;
+      width: 320px; max-height: 80vh;
+      background: var(--card-bg);
+      border: 2px solid var(--orange); border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+      z-index: 50;
+      display: flex; flex-direction: column;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+    .panier.collapsed { transform: translateX(calc(100% - 48px)); }
+    .panier-toggle {
+      position: absolute; left: -2px; top: 12px;
+      width: 48px; height: 48px;
+      background: var(--orange); color: var(--noir);
+      border: none; border-radius: 8px 0 0 8px;
+      cursor: pointer; font-size: 18px;
+      display: none; align-items: center; justify-content: center;
+    }
+    .panier.collapsed .panier-toggle { display: flex; }
+    .panier-head {
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .panier-head h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 800;
+      color: var(--orange);
+    }
+    .panier-toggle-small {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--grey-medium); padding: 4px 8px; border-radius: 4px;
+      cursor: pointer; font-size: 12px;
+    }
+    .panier-items {
+      flex: 1; overflow-y: auto;
+      padding: 12px 18px;
+      max-height: 320px;
+    }
+    .panier-item {
+      display: flex; justify-content: space-between;
+      padding: 6px 0; font-size: 12px;
+      border-bottom: 1px dotted var(--border);
+      gap: 8px;
+    }
+    .panier-item:last-child { border-bottom: none; }
+    .panier-item .pi-name { flex: 1; color: var(--grey-light); }
+    .panier-item .pi-qty { color: var(--orange); font-weight: 700; }
+    .panier-item .pi-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; color: var(--creme); white-space: nowrap;
+    }
+    .panier-empty {
+      text-align: center; padding: 30px 12px;
+      color: var(--grey-medium); font-size: 13px;
+      font-style: italic;
+    }
+    .panier-totals {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      background: rgba(224,112,32,0.05);
+    }
+    .panier-total-row {
+      display: flex; justify-content: space-between;
+      padding: 3px 0; font-size: 13px;
+    }
+    .panier-total-row.ttc {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 900;
+      color: var(--orange);
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      margin-top: 6px;
+    }
+
+    /* FORMULAIRE */
+    .form-section {
+      padding: 50px 0;
+      background: linear-gradient(135deg, #0d0a06 0%, #1a1208 100%);
+      border-top: 3px solid var(--orange);
+    }
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 720px; margin: 0 auto;
+    }
+    .form-card h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.5px;
+      margin-bottom: 8px; color: var(--creme);
+    }
+    .form-card .form-intro {
+      color: var(--grey-light); font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-row.full { grid-template-columns: 1fr; }
+    .form-group label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 700;
+      color: var(--orange); margin-bottom: 6px;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 10px 14px;
+      background: var(--noir); color: var(--creme);
+      border: 1px solid var(--border); border-radius: 6px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--orange);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+
+    /* BUTTONS */
+    .btn-submit {
+      width: 100%; padding: 16px 24px;
+      background: var(--orange); color: var(--noir);
+      border: none; border-radius: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; letter-spacing: 2px; font-weight: 800;
+      text-transform: uppercase; cursor: pointer;
+      transition: all 0.15s;
+      margin-top: 12px;
+    }
+    .btn-submit:hover:not(:disabled) { background: #ff8838; transform: translateY(-1px); }
+    .btn-submit:disabled { background: var(--card-bg); color: var(--grey-medium); cursor: not-allowed; }
+
+    .feedback-msg {
+      margin-top: 16px; padding: 14px 18px;
+      border-radius: 8px; font-weight: 600;
+      display: none;
+    }
+    .feedback-msg.success { background: rgba(45,140,78,0.15); border: 2px solid var(--green); color: var(--green); }
+    .feedback-msg.error { background: rgba(192,57,43,0.15); border: 2px solid var(--red); color: #ff6666; }
+
+    /* MODAL */
+    .modal-bg {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none; align-items: center; justify-content: center;
+      z-index: 200; padding: 20px;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--card-bg);
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      max-width: 600px; max-height: 85vh;
+      overflow-y: auto; padding: 28px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      background: var(--noir); color: var(--creme);
+      border: 1px solid var(--border); border-radius: 50%;
+      cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.5px;
+      color: var(--orange); margin-bottom: 4px;
+    }
+    .modal .modal-subtitle {
+      font-size: 13px; color: var(--grey-medium);
+      margin-bottom: 18px;
+    }
+    .modal h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 700;
+      color: var(--orange); margin: 18px 0 8px;
+    }
+    .modal p, .modal li {
+      font-size: 14px; color: var(--grey-light);
+      line-height: 1.6;
+    }
+    .modal ul { padding-left: 20px; }
+    .modal-source {
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--grey-medium);
+      font-style: italic;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .form-row { grid-template-columns: 1fr; }
+      .panier {
+        width: calc(100% - 24px); right: 12px; left: 12px;
+        max-height: 60vh;
+      }
+      .hero { padding: 40px 16px 30px; }
+      .resto-section { padding: 30px 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="resto-header">
+    <a href="/" style="display:flex;flex-direction:column;text-decoration:none;">
+      <span class="resto-logo">GAMEDOOR<span class="dot">·</span>41</span>
+      <span class="resto-baseline">Restauration séminaire</span>
+    </a>
+    <a href="mailto:contact@gamedoor41.fr" style="font-size:13px;color:var(--orange);">contact@gamedoor41.fr</a>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-kicker">Devis express · réponse sous 48 h</p>
+      <h1>Vous jouez. <span class="accent">On nourrit.</span></h1>
+      <p>Sélectionnez vos formules en quelques clics. On vous envoie un devis personnalisé sous 48 h ouvrées.</p>
+      <div class="hero-input-wrap">
+        <label for="nbPersonnes">Nombre de personnes</label>
+        <input type="number" id="nbPersonnes" min="1" max="100" value="10">
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 01 — ACCUEIL CAFÉ ========== -->
+  <section class="resto-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="meta">Au démarrage du séminaire</p>
+        <h2><span class="num">01</span>L'accueil café</h2>
+        <p>Vos équipes arrivent. Café Senseo en libre service, bouilloire thé, viennoiseries fraîches, jus en carafe. Pas d'attente.</p>
+      </div>
+      <div class="cards-grid" id="cards-accueil"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 02 — DÉJEUNER ========== -->
+  <section class="resto-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="meta">Entre deux activités ou en clôture</p>
+        <h2><span class="num">02</span>Le déjeuner</h2>
+        <p>Plateaux-repas frais livrés par <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand). Composition identique à partir de 4 plateaux. Option végétarienne incluse.</p>
+      </div>
+      <div class="cards-grid" id="cards-dejeuner"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 03 — APÉRITIF ========== -->
+  <section class="resto-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="meta">Pour célébrer la victoire</p>
+        <h2><span class="num">03</span>L'apéritif de clôture</h2>
+        <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment.</p>
+      </div>
+      <div class="cards-grid" id="cards-apero"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 04 — BOISSONS ========== -->
+  <section class="resto-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="meta">À la bouteille ouverte</p>
+        <h2><span class="num">04</span>La carte des boissons</h2>
+        <p>TVA 10 % sur eau, jus et café · TVA 20 % sur alcools, vins, apéritifs. Facturation à la bouteille ouverte.</p>
+      </div>
+      <div class="boissons-grid" id="boissons-grid"></div>
+    </div>
+  </section>
+
+  <!-- ========== FORMULAIRE CONTACT ========== -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-card">
+        <h2>Vos coordonnées</h2>
+        <p class="form-intro">Plus que quelques infos et on vous prépare un devis détaillé sous 48 h ouvrées.</p>
+
+        <form id="form-devis-resto">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="resto-societe">Société / Organisation *</label>
+              <input type="text" id="resto-societe" name="societe" required>
+            </div>
+            <div class="form-group">
+              <label for="resto-contact">Personne en charge *</label>
+              <input type="text" id="resto-contact" name="contact" placeholder="Prénom Nom" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="resto-email">Email *</label>
+              <input type="email" id="resto-email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="resto-tel">Téléphone *</label>
+              <input type="tel" id="resto-tel" name="telephone" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="resto-date">Date événement</label>
+              <input type="date" id="resto-date" name="date_event">
+            </div>
+            <div class="form-group">
+              <label for="resto-heure">Heure activité</label>
+              <input type="time" id="resto-heure" name="heure_event">
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label for="resto-message">Message libre (allergies, demandes spécifiques)</label>
+              <textarea id="resto-message" name="message" placeholder="Ex : 2 personnes végétariennes, 1 sans gluten, événement à clôturer vers 22h..."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
+
+          <div id="feedback-msg" class="feedback-msg"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PANIER STICKY ========== -->
+  <aside class="panier" id="panier">
+    <button class="panier-toggle" id="panier-show" aria-label="Afficher le panier">🛒</button>
+    <div class="panier-head">
+      <h3>Récap devis</h3>
+      <button class="panier-toggle-small" id="panier-hide">_</button>
+    </div>
+    <div class="panier-items" id="panier-items">
+      <div class="panier-empty">Aucune formule sélectionnée. Cochez les options qui vous intéressent.</div>
+    </div>
+    <div class="panier-totals" id="panier-totals" style="display:none;">
+      <div class="panier-total-row"><span>Total HT</span><span id="total-ht">0,00 €</span></div>
+      <div class="panier-total-row"><span>TVA estimée</span><span id="total-tva">0,00 €</span></div>
+      <div class="panier-total-row ttc"><span>Total TTC</span><span id="total-ttc">0,00 €</span></div>
+    </div>
+  </aside>
+
+  <!-- ========== MODAL ========== -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal">
+      <button class="modal-close" id="modal-close">×</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdfa9-4uXH213PJ-W7Kn89fkobThNybCw",
+      authDomain: "gamedoor41-site.firebaseapp.com",
+      projectId: "gamedoor41-site",
+      storageBucket: "gamedoor41-site.firebasestorage.app",
+      messagingSenderId: "253707893283",
+      appId: "1:253707893283:web:5aa8900b874f7e72b34f96"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // EmailJS config (réutilise template existant + payload formaté dans message)
+    const EMAILJS_SERVICE_ID  = "service_4o68wv7";
+    const EMAILJS_TEMPLATE_ID = "template_ah8ivhc";
+    const EMAILJS_PUBLIC_KEY  = "rGgrPogMTC1wL0aOv";
+
+    // ========== CATALOGUE PRODUITS ==========
+    const CATALOG = {
+      accueil: [
+        {
+          id: 'accueil-express', name: 'Express', tag: 'Accueil café',
+          price: 4.50, tva: 10, unit: '/ pers.',
+          subtitle: 'Le minimum efficace',
+          includes: ['1 viennoiserie par personne', 'Café Senseo libre service', 'Bouilloire + thés', 'Eau plate'],
+          info: {
+            details: '<p>Format compact pour démarrer un séminaire rapidement. Viennoiseries fraîches du jour livrées avec le café Senseo (capsules + bouilloire pour les thés).</p>',
+            inclus: ['1 mini-croissant <strong>OU</strong> mini-pain au chocolat <strong>OU</strong> mini-pain aux raisins (au choix selon dispo)', 'Café Senseo capsules en libre service', 'Bouilloire électrique + sélection de thés (Earl Grey, vert, infusion)', 'Eau plate 50 cl'],
+            allergenes: 'Viennoiseries : gluten, œufs, lait. Sur demande : version sans gluten possible.',
+            min: '8 personnes minimum'
+          }
+        },
+        {
+          id: 'accueil-complete', name: 'Complète', tag: 'Accueil café · Signature',
+          price: 7.50, tva: 10, unit: '/ pers.', recommended: true,
+          subtitle: 'Format signature séminaire',
+          includes: ['2 viennoiseries variées', 'Café Senseo + bouilloire thé', 'Jus de fruits en carafe', 'Eau plate'],
+          info: {
+            details: '<p>Format premium pour démarrer le séminaire confortablement. Deux viennoiseries variées par personne et jus de fruits en carafe au choix.</p>',
+            inclus: ['2 viennoiseries variées par personne (mini-croissant, mini-pain chocolat, mini-pain aux raisins, brioche)', 'Café Senseo capsules en libre service', 'Bouilloire électrique + sélection de thés', 'Jus de fruits en carafe au choix : pomme, orange ou multivitaminé', 'Eau plate'],
+            allergenes: 'Viennoiseries : gluten, œufs, lait. Sur demande : alternatives sans gluten.',
+            min: '8 personnes minimum'
+          }
+        }
+      ],
+      dejeuner: [
+        {
+          id: 'dej-pouce', name: 'Sur le pouce', tag: 'Essentiel',
+          price: 13.00, tva: 10, unit: '/ pers.',
+          subtitle: 'Wrap ou pasta box',
+          includes: ['1 wrap (8 variétés) OU 1 pasta box', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Couverts bois + pain + serviette'],
+          info: {
+            details: '<p>Format léger pour séminaires courts ou groupes au budget contenu. Composition identique pour tous à partir de 4 plateaux. Livré frais le matin.</p>',
+            inclus: ['1 wrap au choix (8 variétés : poulet curry, thon crudités, saumon, végétarien…) ou 1 pasta box (4 sauces au choix)', '1 dessert au choix : moelleux chocolat, salade de fruits, panna cotta', "Bouteille d'eau plate 50 cl", 'Couverts en bois + pain + serviette papier'],
+            allergenes: 'Selon la formule choisie : gluten (wrap, pâtes, pain), lactose (sauce, dessert), poisson (thon, saumon), œufs. Allergies à signaler à la commande.',
+            min: '4 plateaux minimum',
+            fournisseur: 'Grandsire Traiteur'
+          }
+        },
+        {
+          id: 'dej-confort', name: 'Plateau Kiwi / Orange', tag: 'Confort',
+          price: 17.75, tva: 10, unit: '/ pers.', recommended: true,
+          subtitle: '4 services au choix',
+          includes: ['Entrée raffinée au choix', 'Plat chaud ou froid au choix', 'Fromage normand', 'Dessert pâtissier'],
+          info: {
+            details: '<p>Le standard séminaire entreprise. 4 services au choix dans 2 gammes (Kiwi 16,50 € HT ou Orange 19 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
+            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat chaud ou froid</strong> au choix : suprême de volaille, filet de cabillaud, pavé de saumon, magret de canard, tagliatelles légumes (option végétarienne)…', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
+            allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
+            min: '4 plateaux minimum',
+            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau · Option végétarienne : 19 € HT',
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          }
+        },
+        {
+          id: 'dej-premium', name: 'Plateau Pomme', tag: 'Premium · Events',
+          price: 24.80, tva: 10, unit: '/ pers.',
+          subtitle: 'Gastronomique',
+          includes: ['Entrée gastronomique (rouget, burrata…)', 'Plat signature (filet de bœuf, gambas…)', 'Salade + fromage affiné', 'Dessert pâtisserie'],
+          info: {
+            details: '<p>Pour vos comités de direction, clients stratégiques, occasions spéciales. Composition élaborée par le chef Grandsire. Composition identique à partir de 4 plateaux.</p>',
+            inclus: ['<strong>Entrée gastronomique</strong> : rouget barbet en escabèche, burrata des Pouilles, foie gras maison, tartare de Saint-Jacques…', '<strong>Plat signature</strong> : filet de bœuf sauce poivre, gambas grillées risotto, suprême de pigeon, magret rôti aux figues…', '<strong>Salade composée</strong> + <strong>fromage affiné</strong> Conquérant', '<strong>Dessert pâtisserie</strong> finition chef : entremet, tartelette saison, sphère chocolat…', 'Pain frais + vaisselle premium (verre ou inox sur demande)'],
+            allergenes: 'Selon plats choisis : gluten, poissons, crustacés, mollusques, lait, œufs, fruits à coque possibles. Demandes spécifiques à signaler.',
+            min: '4 plateaux minimum',
+            options: 'Bocaux verre (look déjeuner d\'affaires) : 22 € HT/plateau · Service à table possible sur devis',
+            fournisseur: 'Grandsire Traiteur · cuisine du chef'
+          }
+        }
+      ],
+      apero: [
+        {
+          id: 'apero-cocktail', name: 'Formule 20 pièces', tag: 'Cocktail dînatoire',
+          price: 26.36, tva: 20, unit: '/ pers.',
+          subtitle: 'Remplace le déjeuner',
+          includes: ['10 pièces salées froides', '5 pièces salées chaudes', '5 pièces sucrées', 'Service en buffet'],
+          info: {
+            details: '<p>Format buffet 20 pièces par personne, idéal pour un cocktail-déjeuner ou un cocktail de fin d\'événement (remplace le déjeuner). Présentation soignée sur plateaux. Service en libre service.</p>',
+            inclus: [
+              '<strong>10 pièces salées froides</strong> (au choix) : rillettes de thon, brochettes de volaille marinées, wrap fish & chips, mini-club sandwich, tartines saumon fumé, tomate-mozza, tartelettes chèvre-miel…',
+              '<strong>5 pièces salées chaudes</strong> : mini hot-dog, croque-monsieur truite fumée, mini-bagels chauds, samosas, accras de morue…',
+              '<strong>5 pièces sucrées</strong> : tartelette banoffee, croquant citron, mini-financier, bouchée chocolat, panna cotta verrine…',
+              'Plateaux de présentation + serviettes cocktail + pics bois'
+            ],
+            allergenes: 'Cocktail varié : gluten, poissons, crustacés, lait, œufs, fruits à coque omniprésents. Régimes spécifiques sur demande (options végé, sans gluten possibles).',
+            min: '20 personnes minimum',
+            fournisseur: 'Grandsire Traiteur'
+          }
+        },
+        {
+          id: 'apero-conquerant', name: 'Les Conquérants', tag: 'Apéro terroir normand',
+          price: 9.00, tva: 20, unit: '/ pers.',
+          subtitle: 'Notre signature locale',
+          includes: ['Plateau fromages affinés au lait cru', 'Charcuterie fine 200 g/pers', "Sélection saisonnière", 'À compléter avec cidre ou crémant'],
+          info: {
+            details: '<p>Notre signature locale. Plateau gourmand mixte (fromages affinés + charcuterie fine) sélectionné par la <strong>Fromagerie Conquérant</strong> à Caen. Sélection saisonnière au lait cru. 200 g de produits par personne.</p>',
+            inclus: [
+              '<strong>Plateau Gourmand Mixte Fromagerie Conquérant</strong>',
+              'Sélection de fromages affinés au lait cru (5-6 variétés selon saison) : camembert au lait cru, livarot, pont-l\'évêque, neufchâtel, brie de Meaux, comté affiné…',
+              'Sélection de charcuteries fines (3-4 variétés) : jambon sec, saucisson sec, rosette, terrine maison, rillettes locales…',
+              'Pain de campagne tranché',
+              'Beurre demi-sel + cornichons + condiments',
+              'Présentation en planche bois ou carton premium'
+            ],
+            allergenes: 'Lait cru (fromages), porc (charcuterie), gluten (pain). Allergie lait : prévenir. Cette formule n\'est pas adaptée aux femmes enceintes (lait cru).',
+            min: '4 personnes minimum',
+            options: 'À compléter avec cidre brut normand 5 € HT/75 cl ou crémant de Loire 10 € HT/75 cl pour un apéro complet',
+            fournisseur: 'Fromagerie Conquérant · Caen · <a href="https://fromagerie-conquerant.com/products/plateau-gourmand-mixte" target="_blank" rel="noopener">Voir le produit</a>'
+          }
+        }
+      ],
+      boissons: {
+        soft: {
+          title: 'Soft & cafés (TVA 10 %)',
+          items: [
+            { id: 'b-eau-50', name: 'Eau plate Cristaline', vol: '50 cl', price: 0.90, tva: 10 },
+            { id: 'b-eau-150', name: 'Eau plate Cristaline', vol: '1,5 L', price: 1.50, tva: 10 },
+            { id: 'b-badoit', name: 'Eau gazeuse Badoit', vol: '1 L', price: 1.50, tva: 10 },
+            { id: 'b-coca', name: 'Coca-Cola', vol: '1,25 L', price: 3.00, tva: 10 },
+            { id: 'b-jus-or', name: "Jus d'orange", vol: '1 L', price: 3.00, tva: 10 },
+            { id: 'b-jus-po', name: 'Jus de pomme artisanal', vol: '1 L', price: 3.50, tva: 10 },
+            { id: 'b-cafe', name: 'Thermos de café', vol: '1 L', price: 15.00, tva: 10 }
+          ]
+        },
+        cidre: {
+          title: 'Cidre & bières (TVA 20 %)',
+          items: [
+            { id: 'b-cidre', name: 'Cidre normand', vol: '75 cl', price: 5.00, tva: 20 },
+            { id: 'b-biere', name: 'Bière', vol: '25 cl', price: 1.25, tva: 20 }
+          ]
+        },
+        vins: {
+          title: 'Vins (TVA 20 %)',
+          items: [
+            { id: 'b-sauvignon', name: 'Sauvignon de Touraine', vol: '75 cl', price: 8.00, tva: 20 },
+            { id: 'b-rose', name: 'Rosé de Provence', vol: '75 cl', price: 8.00, tva: 20 },
+            { id: 'b-bordeaux', name: 'Bordeaux rouge', vol: '75 cl', price: 8.00, tva: 20 },
+            { id: 'b-st-emilion', name: 'Saint-Émilion', vol: '75 cl', price: 14.00, tva: 20 }
+          ]
+        },
+        apero: {
+          title: 'Apéritifs & bulles (TVA 20 %)',
+          items: [
+            { id: 'b-cremant', name: 'Crémant de Loire', vol: '75 cl', price: 10.00, tva: 20 },
+            { id: 'b-methode', name: 'Méthode traditionnelle', vol: '75 cl', price: 7.00, tva: 20 },
+            { id: 'b-champ', name: 'Champagne', vol: '75 cl', price: 18.00, tva: 20 },
+            { id: 'b-cassis', name: 'Crème de cassis', vol: '1 L', price: 11.00, tva: 20 }
+          ]
+        }
+      }
+    };
+
+    // ========== ÉTAT GLOBAL ==========
+    const state = {
+      nbPersonnes: 10,
+      selection: {}  // { itemId: { qty, unit, price, tva, name } }
+    };
+
+    // ========== RENDU CARDS ==========
+    function renderCards(category, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = CATALOG[category].map(item => `
+        <div class="resto-card ${item.recommended ? 'recommended' : ''}" data-id="${item.id}">
+          <span class="card-tag">${item.tag}</span>
+          <h3 class="card-title">${item.name}</h3>
+          <p class="card-subtitle">${item.subtitle}</p>
+          <div class="card-price">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></div>
+          <div class="card-price-ttc">${(item.price * (1 + item.tva/100)).toFixed(2).replace('.', ',')} € TTC ${item.unit}</div>
+          <ul class="card-includes">
+            ${item.includes.map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <div class="card-actions">
+            <button class="btn-info" data-info="${item.id}">ⓘ Détails</button>
+            <button class="btn-toggle" data-toggle="${item.id}">+ Sélectionner</button>
+          </div>
+          <div class="qty-controls" data-qty="${item.id}" style="display:none;">
+            <button data-minus="${item.id}">−</button>
+            <span class="qty-val" data-qty-val="${item.id}">${state.nbPersonnes}</span>
+            <span class="qty-unit">pers.</span>
+            <button data-plus="${item.id}">+</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderBoissons() {
+      const container = document.getElementById('boissons-grid');
+      const cats = Object.keys(CATALOG.boissons);
+      container.innerHTML = cats.map(cat => {
+        const block = CATALOG.boissons[cat];
+        return `
+          <div class="boissons-col">
+            <h3>${block.title}</h3>
+            ${block.items.map(item => `
+              <div class="boisson-row">
+                <span class="boisson-name">${item.name} <span class="vol">${item.vol}</span></span>
+                <span class="boisson-price">${item.price.toFixed(2).replace('.', ',')} € HT</span>
+                <span class="boisson-qty">
+                  <button data-bminus="${item.id}">−</button>
+                  <input type="number" min="0" value="0" data-bqty="${item.id}">
+                  <button data-bplus="${item.id}">+</button>
+                </span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ========== GESTION SÉLECTION ==========
+    function toggleCard(itemId) {
+      const item = [...CATALOG.accueil, ...CATALOG.dejeuner, ...CATALOG.apero].find(i => i.id === itemId);
+      if (!item) return;
+      const card = document.querySelector(`[data-id="${itemId}"]`);
+      const btn = card.querySelector('[data-toggle]');
+      const qtyControls = card.querySelector('[data-qty]');
+
+      if (state.selection[itemId]) {
+        delete state.selection[itemId];
+        card.classList.remove('selected');
+        btn.textContent = '+ Sélectionner';
+        btn.classList.remove('selected');
+        qtyControls.style.display = 'none';
+      } else {
+        state.selection[itemId] = {
+          qty: state.nbPersonnes,
+          unit: item.unit,
+          price: item.price,
+          tva: item.tva,
+          name: item.name,
+          tag: item.tag
+        };
+        card.classList.add('selected');
+        btn.textContent = '✓ Sélectionné';
+        btn.classList.add('selected');
+        qtyControls.style.display = 'flex';
+      }
+      updatePanier();
+    }
+
+    function adjustQty(itemId, delta) {
+      if (!state.selection[itemId]) return;
+      const newQty = Math.max(1, state.selection[itemId].qty + delta);
+      state.selection[itemId].qty = newQty;
+      const qtyValEl = document.querySelector(`[data-qty-val="${itemId}"]`);
+      if (qtyValEl) qtyValEl.textContent = newQty;
+      updatePanier();
+    }
+
+    function setBoissonQty(itemId, qty) {
+      qty = Math.max(0, parseInt(qty) || 0);
+      const allBoissons = Object.values(CATALOG.boissons).flatMap(b => b.items);
+      const item = allBoissons.find(i => i.id === itemId);
+      if (!item) return;
+      if (qty === 0) {
+        delete state.selection[itemId];
+      } else {
+        state.selection[itemId] = {
+          qty,
+          unit: ' x ' + item.vol,
+          price: item.price,
+          tva: item.tva,
+          name: item.name + ' (' + item.vol + ')',
+          tag: 'Boisson'
+        };
+      }
+      const input = document.querySelector(`[data-bqty="${itemId}"]`);
+      if (input) input.value = qty;
+      updatePanier();
+    }
+
+    // ========== PANIER ==========
+    function updatePanier() {
+      const items = Object.entries(state.selection);
+      const itemsEl = document.getElementById('panier-items');
+      const totalsEl = document.getElementById('panier-totals');
+
+      if (items.length === 0) {
+        itemsEl.innerHTML = '<div class="panier-empty">Aucune formule sélectionnée. Cochez les options qui vous intéressent.</div>';
+        totalsEl.style.display = 'none';
+        return;
+      }
+
+      let totalHT = 0, totalTVA = 0;
+      itemsEl.innerHTML = items.map(([id, sel]) => {
+        const lineHT = sel.price * sel.qty;
+        const lineTVA = lineHT * (sel.tva / 100);
+        totalHT += lineHT;
+        totalTVA += lineTVA;
+        return `
+          <div class="panier-item">
+            <span class="pi-name">${sel.name}</span>
+            <span class="pi-qty">×${sel.qty}</span>
+            <span class="pi-price">${lineHT.toFixed(2).replace('.', ',')} €</span>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('total-ht').textContent = totalHT.toFixed(2).replace('.', ',') + ' €';
+      document.getElementById('total-tva').textContent = totalTVA.toFixed(2).replace('.', ',') + ' €';
+      document.getElementById('total-ttc').textContent = (totalHT + totalTVA).toFixed(2).replace('.', ',') + ' €';
+      totalsEl.style.display = 'block';
+    }
+
+    // ========== MODAL INFO ==========
+    function showInfo(itemId) {
+      const item = [...CATALOG.accueil, ...CATALOG.dejeuner, ...CATALOG.apero].find(i => i.id === itemId);
+      if (!item || !item.info) return;
+      const info = item.info;
+      const content = `
+        <h3>${item.name}</h3>
+        <p class="modal-subtitle">${item.tag} · ${item.price.toFixed(2).replace('.', ',')} € HT ${item.unit}</p>
+        ${info.details || ''}
+        ${info.inclus ? `<h4>Composition détaillée</h4><ul>${info.inclus.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
+        ${info.options ? `<h4>Options & variantes</h4><p>${info.options}</p>` : ''}
+        ${info.allergenes ? `<h4>Allergènes & régimes</h4><p>${info.allergenes}</p>` : ''}
+        ${info.min ? `<h4>Minimum de commande</h4><p>${info.min}</p>` : ''}
+        ${info.fournisseur ? `<div class="modal-source">Fournisseur : ${info.fournisseur}</div>` : ''}
+      `;
+      document.getElementById('modal-content').innerHTML = content;
+      document.getElementById('modal-bg').classList.add('open');
+    }
+
+    // ========== ENVOI DEMANDE ==========
+    function generateDevisText() {
+      const items = Object.entries(state.selection);
+      if (items.length === 0) return '(aucune sélection)';
+
+      let text = '═══════════════════════════════════\nDÉTAIL DE LA DEMANDE\n═══════════════════════════════════\n\n';
+      text += `Nombre de personnes : ${state.nbPersonnes}\n\n`;
+
+      let totalHT = 0, totalTVA = 0;
+      items.forEach(([id, sel]) => {
+        const lineHT = sel.price * sel.qty;
+        const lineTVA = lineHT * (sel.tva / 100);
+        totalHT += lineHT;
+        totalTVA += lineTVA;
+        text += `• ${sel.name}\n`;
+        text += `  ${sel.qty} ${sel.unit} × ${sel.price.toFixed(2)} € HT = ${lineHT.toFixed(2)} € HT (TVA ${sel.tva}%)\n\n`;
+      });
+
+      text += '\n═══════════════════════════════════\nTOTAUX\n═══════════════════════════════════\n';
+      text += `Total HT  : ${totalHT.toFixed(2).replace('.', ',')} €\n`;
+      text += `TVA       : ${totalTVA.toFixed(2).replace('.', ',')} €\n`;
+      text += `Total TTC : ${(totalHT + totalTVA).toFixed(2).replace('.', ',')} €\n`;
+      return text;
+    }
+
+    async function submitDevis(e) {
+      e.preventDefault();
+      const form = document.getElementById('form-devis-resto');
+      const feedback = document.getElementById('feedback-msg');
+      const btn = document.getElementById('btn-submit');
+
+      if (Object.keys(state.selection).length === 0) {
+        feedback.className = 'feedback-msg error';
+        feedback.style.display = 'block';
+        feedback.textContent = "❌ Sélectionnez au moins une formule avant d'envoyer la demande.";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Envoi en cours…";
+      feedback.style.display = 'none';
+
+      const formData = new FormData(form);
+      const data = {
+        societe: formData.get('societe'),
+        contact: formData.get('contact'),
+        email: formData.get('email'),
+        telephone: formData.get('telephone'),
+        date_event: formData.get('date_event') || '(non précisée)',
+        heure_event: formData.get('heure_event') || '(non précisée)',
+        message: formData.get('message') || '(aucun)',
+        nb_personnes: state.nbPersonnes,
+        selection: state.selection,
+        devis_text: generateDevisText(),
+        createdAt: serverTimestamp()
+      };
+
+      try {
+        // 1. EmailJS notif EN PREMIER (priorité : reception immédiate)
+        const messageDevis = `🍽️ NOUVELLE DEMANDE DE DEVIS RESTAURATION SÉMINAIRE\n\n` +
+          `═══════════════════════════════════\nCONTACT\n═══════════════════════════════════\n` +
+          `Société : ${data.societe}\n` +
+          `Contact : ${data.contact}\n` +
+          `Email   : ${data.email}\n` +
+          `Tél     : ${data.telephone}\n\n` +
+          `═══════════════════════════════════\nÉVÉNEMENT\n═══════════════════════════════════\n` +
+          `Date   : ${data.date_event}\n` +
+          `Heure  : ${data.heure_event}\n` +
+          `Pers.  : ${data.nb_personnes}\n\n` +
+          data.devis_text +
+          `\n\n═══════════════════════════════════\nMESSAGE LIBRE\n═══════════════════════════════════\n${data.message}`;
+
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          poste: 'DEVIS RESTAURATION SÉMINAIRE',
+          prenom: data.contact.split(' ')[0] || data.contact,
+          nom: data.societe,
+          email: data.email,
+          telephone: data.telephone,
+          ecole: data.societe,
+          niveau: data.nb_personnes + ' personnes',
+          message: messageDevis,
+          cv_url: '(pas de PJ)',
+          date: new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+        }, EMAILJS_PUBLIC_KEY);
+
+        // 2. Sauvegarde Firestore (best-effort, ne bloque pas si rules pas ajustées)
+        try {
+          await addDoc(collection(db, 'devis-restauration'), data);
+        } catch (firestoreErr) {
+          console.warn('[devis-resto] Firestore non sauvé (rules à ajuster) :', firestoreErr);
+        }
+
+        feedback.className = 'feedback-msg success';
+        feedback.style.display = 'block';
+        feedback.innerHTML = `✅ Demande envoyée. On revient vers <strong>${data.email}</strong> sous 48&nbsp;h ouvrées avec un devis personnalisé.`;
+        btn.textContent = '✅ Demande envoyée';
+        btn.style.background = 'var(--green)';
+        btn.style.color = 'var(--creme)';
+
+      } catch (err) {
+        console.error('[devis-resto] erreur :', err);
+        feedback.className = 'feedback-msg error';
+        feedback.style.display = 'block';
+        feedback.innerHTML = `❌ Erreur lors de l'envoi. Réessayez ou contactez-nous directement à <a href="mailto:contact@gamedoor41.fr" style="color:#ff9966;">contact@gamedoor41.fr</a>.`;
+        btn.disabled = false;
+        btn.textContent = 'Envoyer ma demande de devis';
+      }
+    }
+
+    // ========== INIT ==========
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCards('accueil', 'cards-accueil');
+      renderCards('dejeuner', 'cards-dejeuner');
+      renderCards('apero', 'cards-apero');
+      renderBoissons();
+
+      // Event delegation
+      document.body.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t.matches('[data-toggle]')) toggleCard(t.getAttribute('data-toggle'));
+        else if (t.matches('[data-info]')) showInfo(t.getAttribute('data-info'));
+        else if (t.matches('[data-plus]')) adjustQty(t.getAttribute('data-plus'), 1);
+        else if (t.matches('[data-minus]')) adjustQty(t.getAttribute('data-minus'), -1);
+        else if (t.matches('[data-bplus]')) {
+          const id = t.getAttribute('data-bplus');
+          const current = state.selection[id]?.qty || 0;
+          setBoissonQty(id, current + 1);
+        } else if (t.matches('[data-bminus]')) {
+          const id = t.getAttribute('data-bminus');
+          const current = state.selection[id]?.qty || 0;
+          setBoissonQty(id, current - 1);
+        } else if (t.id === 'modal-close' || t.id === 'modal-bg') {
+          document.getElementById('modal-bg').classList.remove('open');
+        } else if (t.id === 'panier-hide') {
+          document.getElementById('panier').classList.add('collapsed');
+        } else if (t.id === 'panier-show') {
+          document.getElementById('panier').classList.remove('collapsed');
+        }
+      });
+
+      document.body.addEventListener('input', (e) => {
+        if (e.target.id === 'nbPersonnes') {
+          state.nbPersonnes = Math.max(1, parseInt(e.target.value) || 1);
+          // Mise à jour de la qty par défaut pour les nouveaux ajouts uniquement
+          // Les sélections existantes gardent leur qty actuelle (l'utilisateur a peut-être ajusté)
+        } else if (e.target.matches('[data-bqty]')) {
+          setBoissonQty(e.target.getAttribute('data-bqty'), e.target.value);
+        }
+      });
+
+      document.getElementById('form-devis-resto').addEventListener('submit', submitDevis);
+    });
+  </script>
+
+</body>
+</html>
