@@ -1022,9 +1022,9 @@
     <section class="alt-postuler" id="postuler">
       <div class="container">
         <h2>📩 POSTULEZ</h2>
-        <p class="alt-postuler-lead">Envie de vivre l'aventure GAMEDOOR·41 ? Remplis le formulaire ci-dessous et joins ton CV. On revient vers toi sous 7 jours.</p>
+        <p class="alt-postuler-lead">Envie de vivre l'aventure GAMEDOOR·41 ? Remplis le formulaire ci-dessous et joins ton CV (PDF, 2 Mo max). On revient vers toi sous 7 jours.</p>
 
-        <form name="candidature-alternance" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data" class="alt-form" action="/alternance/merci/">
+        <form name="candidature-alternance" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data" class="alt-form" action="/alternance/merci/" onsubmit="return altValidateCv(this);">
           <input type="hidden" name="form-name" value="candidature-alternance">
           <p style="display:none;"><label>Ne pas remplir : <input name="bot-field"></label></p>
 
@@ -1056,8 +1056,9 @@
             </label>
           </div>
 
-          <label for="alt-cv">CV (PDF, max 5 Mo) <span class="req">*</span></label>
-          <input type="file" id="alt-cv" name="cv" accept=".pdf,.doc,.docx" required>
+          <label for="alt-cv">CV (PDF uniquement, 2 Mo max) <span class="req">*</span></label>
+          <input type="file" id="alt-cv" name="cv" accept="application/pdf,.pdf" required>
+          <small style="display:block;margin-top:6px;color:var(--grey,#888);font-size:0.85rem;">Conseil&nbsp;: si ton CV dépasse 2 Mo, exporte-le en PDF compressé (Aperçu sur Mac, Adobe sur Windows, ou <a href="https://smallpdf.com/fr/compresser-pdf" target="_blank" rel="noopener" style="color:var(--orange);">smallpdf.com</a>).</small>
 
           <label for="alt-motivation">Mot de motivation (optionnel)</label>
           <textarea id="alt-motivation" name="motivation" placeholder="Quelques lignes sur toi, pourquoi GAMEDOOR·41, ton planning école/entreprise…"></textarea>
@@ -1198,6 +1199,38 @@
 @media (max-width:768px){.wa-float{width:56px;height:56px;bottom:16px;right:16px;}.wa-float svg{width:28px;height:28px;}}
 @media (prefers-reduced-motion:reduce){.wa-float::before{animation:none;}}
 </style>
+
+<script>
+// Validation côté client du formulaire candidature alternance :
+// vérifie que le CV est un PDF et fait moins de 2 Mo avant submit.
+// Évite que Netlify Forms accepte des CV trop lourds qui saturent le
+// quota storage (10 Mo / mois sur le free tier).
+function altValidateCv(form) {
+  const input = form.querySelector('input[type="file"][name="cv"]');
+  if (!input || !input.files || input.files.length === 0) return true;
+  const file = input.files[0];
+  const MAX_BYTES = 2 * 1024 * 1024; // 2 Mo
+  if (file.size > MAX_BYTES) {
+    const sizeMb = (file.size / 1024 / 1024).toFixed(1);
+    alert(
+      'Ton CV fait ' + sizeMb + ' Mo, c\'est trop lourd (2 Mo max).\n\n' +
+      'Compresse-le sur smallpdf.com ou ré-exporte en PDF compressé, puis re-essaie.\n\n' +
+      'Astuce : un CV de 1-2 pages sans photo haute résolution tient facilement sous 2 Mo.'
+    );
+    input.focus();
+    return false;
+  }
+  if (file.type && file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    alert(
+      'Format non accepté : nous ne recevons que les PDF.\n\n' +
+      'Exporte ton CV en PDF depuis ton logiciel de traitement de texte (Word, Pages, Google Docs) avant de l\'envoyer.'
+    );
+    input.focus();
+    return false;
+  }
+  return true;
+}
+</script>
 
 </body>
 </html>
