@@ -126,12 +126,29 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
-// Trier par note desc puis date desc, ne garder que les avis utilisables
-// (texte non vide, longueur min). On reste tolérant : si moins de 3 avis 5★
-// disponibles on accepte les 4★ ; si vraiment rien, on retourne [] et le
-// HTML reste sur les placeholders.
-function pickReviews(rawReviews, count = 3, minLen = 30) {
-  const usable = (rawReviews || [])
+// Shuffle Fisher-Yates utilisant Math.random — la randomisation à chaque run
+// nocturne fait varier l'ordre des avis affichés sur la home (avant on prenait
+// toujours les 3 mêmes "top par note+date").
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Détecte les avis "constructifs" : longueur suffisante (anecdote vécue,
+// pas juste "super merci"), mention de détails (salle, équipe, ambiance,
+// game master, énigmes, accueil…). Filtre les avis trop courts ou
+// génériques pour ne pas laisser passer "TOP" ou "Génial" tout seul.
+const CONSTRUCTIVE_KEYWORDS = /\b(?:salle|salles|équipe|ambiance|game[ -]?master|sc[ée]nario|énigm|d[ée]cor|accueil|imm[eé]rsi|momentum|exp[ée]rience|game-master|escape|quiz|buzz|aventure|frisson|peur|psychiatric|garde|80|gard|sortie|anniversaire|EVJF|EVG|mariage|team|entreprise|enfant|famille|recommand|sympa|conseille|p[ée]p)/i;
+
+// Pick reviews avec filtres "positifs & constructifs", puis randomisation.
+// Stratégie en cascade : on essaie d'abord les 5★ vraiment constructifs,
+// sinon on assouplit pour ne pas laisser les slots vides.
+function pickReviews(rawReviews, count = 3) {
+  const all = (rawReviews || [])
     .map((r) => {
       const text = (r?.text?.text || r?.originalText?.text || '').trim();
       return {
@@ -140,13 +157,25 @@ function pickReviews(rawReviews, count = 3, minLen = 30) {
         author: r?.authorAttribution?.displayName || '',
         publishTime: r?.publishTime || '',
       };
-    })
-    .filter((r) => r.text.length >= minLen && r.rating >= 4)
-    .sort((a, b) => {
-      if (b.rating !== a.rating) return b.rating - a.rating;
-      return (b.publishTime || '').localeCompare(a.publishTime || '');
     });
-  return usable.slice(0, count);
+
+  // Filtre 1 (idéal) : 5★ + min 80 chars + au moins un mot-clé constructif
+  const ideal = all.filter(
+    (r) => r.rating === 5 && r.text.length >= 80 && CONSTRUCTIVE_KEYWORDS.test(r.text),
+  );
+  if (ideal.length >= count) {
+    return shuffle(ideal).slice(0, count);
+  }
+
+  // Filtre 2 (souple) : 5★ + min 60 chars (mot-clé optionnel)
+  const good = all.filter((r) => r.rating === 5 && r.text.length >= 60);
+  if (good.length >= count) {
+    return shuffle(good).slice(0, count);
+  }
+
+  // Filtre 3 (fallback) : 4-5★ + min 30 chars (comportement précédent)
+  const acceptable = all.filter((r) => r.rating >= 4 && r.text.length >= 30);
+  return shuffle(acceptable).slice(0, count);
 }
 
 function buildReviewArticleInner(review) {
