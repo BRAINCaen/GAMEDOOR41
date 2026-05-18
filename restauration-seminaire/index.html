@@ -255,7 +255,7 @@
       display: grid;
       grid-template-columns: 1.05fr 1fr;
       gap: 48px;
-      align-items: start;
+      align-items: stretch;
     }
     .accordion-list { display: flex; flex-direction: column; }
     .accordion-row {
@@ -362,17 +362,16 @@
 
     /* PREVIEW (right column) */
     .accordion-preview {
-      position: sticky; top: 92px;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 16px;
       overflow: hidden;
-      min-height: 520px;
+      display: flex;
     }
     .preview-inner {
-      padding: 40px 36px 28px;
+      flex: 1;
+      padding: 24px 28px 20px;
       position: relative;
-      min-height: 520px;
       display: flex; flex-direction: column;
       background: linear-gradient(135deg,
         rgba(224,112,32,0.06) 0%,
@@ -384,19 +383,24 @@
       from { opacity: 0; transform: scale(0.97) rotate(1deg); }
       to   { opacity: 1; transform: scale(1) rotate(0); }
     }
+    .preview-head {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 14px;
+    }
     .preview-icon-big {
       color: var(--orange);
       opacity: 0.85;
-      margin-bottom: 22px;
-      width: 110px; height: 110px;
+      width: 64px; height: 64px;
+      flex-shrink: 0;
     }
     .preview-icon-big svg { width: 100%; height: 100%; }
+    .preview-head-text { flex: 1; min-width: 0; }
     .preview-tag {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; letter-spacing: 3px;
+      font-size: 11px; letter-spacing: 3px;
       text-transform: uppercase; color: var(--orange);
-      font-weight: 700; margin-bottom: 10px;
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-weight: 700; margin-bottom: 6px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }
     .preview-rec {
       background: var(--gold); color: var(--noir);
@@ -405,43 +409,43 @@
     }
     .preview-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 40px; font-weight: 900;
+      font-size: 30px; font-weight: 900;
       text-transform: uppercase; letter-spacing: -1px;
-      line-height: 1; margin-bottom: 10px;
+      line-height: 1; margin-bottom: 4px;
       color: var(--creme);
     }
     .preview-subtitle {
-      font-size: 16px; color: var(--grey-light);
-      margin-bottom: 18px;
+      font-size: 14px; color: var(--grey-light);
+      margin-bottom: 14px;
     }
     .preview-price-block {
-      display: flex; align-items: baseline; gap: 16px;
-      margin-bottom: 18px;
+      display: flex; align-items: baseline; gap: 14px;
+      margin-bottom: 14px;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 14px 0;
+      padding: 10px 0;
       flex-wrap: wrap;
     }
     .preview-price-ht {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 42px; font-weight: 900;
+      font-size: 30px; font-weight: 900;
       color: var(--orange); line-height: 1;
       letter-spacing: -1px;
     }
     .preview-price-ht small {
       font-family: 'DM Sans', sans-serif;
-      font-size: 12px; color: var(--grey-medium);
-      margin-left: 6px; font-weight: 500;
+      font-size: 11px; color: var(--grey-medium);
+      margin-left: 4px; font-weight: 500;
     }
     .preview-price-ttc {
-      font-size: 13px; color: var(--grey-medium);
+      font-size: 12px; color: var(--grey-medium);
     }
     .preview-includes {
-      list-style: none; padding: 0; margin: 0 0 18px 0;
-      font-size: 15px; color: var(--grey-light);
+      list-style: none; padding: 0; margin: 0 0 12px 0;
+      font-size: 14px; color: var(--grey-light);
     }
     .preview-includes li {
-      padding: 7px 0 7px 20px; position: relative;
+      padding: 5px 0 5px 18px; position: relative;
       border-bottom: 1px dotted var(--border);
     }
     .preview-includes li:last-child { border-bottom: none; }
@@ -450,10 +454,12 @@
       color: var(--orange); font-weight: 700;
     }
     .preview-fig {
-      position: absolute; bottom: 16px; right: 24px;
+      margin-top: auto;
+      align-self: flex-end;
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-size: 11px; letter-spacing: 2px;
-      color: var(--grey-medium); opacity: 0.55;
+      color: var(--grey-medium); opacity: 0.45;
+      padding-top: 10px;
     }
 
     @media (max-width: 900px) {
@@ -1150,9 +1156,13 @@
       const totalItems = CATALOG.dejeuner.length;
       preview.innerHTML = `
         <div class="preview-inner">
-          <div class="preview-icon-big">${DEJEUNER_ICONS[item.id] || ''}</div>
-          <div class="preview-tag">${item.tag}${item.recommended ? '<span class="preview-rec">Recommandé</span>' : ''}</div>
-          <h3 class="preview-title">${item.name}</h3>
+          <div class="preview-head">
+            <div class="preview-icon-big">${DEJEUNER_ICONS[item.id] || ''}</div>
+            <div class="preview-head-text">
+              <div class="preview-tag">${item.tag}${item.recommended ? '<span class="preview-rec">Recommandé</span>' : ''}</div>
+              <h3 class="preview-title">${item.name}</h3>
+            </div>
+          </div>
           <p class="preview-subtitle">${item.subtitle}</p>
           <div class="preview-price-block">
             <span class="preview-price-ht">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
