@@ -250,6 +250,226 @@
       margin-left: 4px;
     }
 
+    /* ============ ACCORDION DÉJEUNER ============ */
+    .accordion-wrap {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .accordion-list { display: flex; flex-direction: column; }
+    .accordion-row {
+      position: relative;
+      border-bottom: 1px solid rgba(138,128,120,0.25);
+      cursor: pointer;
+      padding: 22px 0;
+      transition: padding-left 0.5s ease;
+    }
+    .accordion-row:hover { padding-left: 12px; }
+    .accordion-row.is-active { padding-left: 28px; }
+    .accordion-row .row-bar {
+      position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 0;
+      background: var(--orange);
+      transition: height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+      border-radius: 2px;
+    }
+    .accordion-row.is-active .row-bar {
+      height: calc(100% - 16px); opacity: 1;
+    }
+    .accordion-row .row-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .row-title-block { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .row-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; font-weight: 700;
+      color: var(--orange);
+      opacity: 0.55;
+      transition: opacity 0.3s ease;
+    }
+    .accordion-row.is-active .row-tag,
+    .accordion-row:hover .row-tag { opacity: 1; }
+    .row-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.5px;
+      line-height: 1.05;
+      color: var(--grey-medium);
+      transition: color 0.3s ease;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .accordion-row.is-active .row-title,
+    .accordion-row:hover .row-title { color: var(--creme); }
+    .row-rec-badge {
+      display: inline-block;
+      background: var(--gold); color: var(--noir);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; letter-spacing: 2px; font-weight: 700;
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .row-num {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 13px; font-weight: 500;
+      color: var(--grey-medium); opacity: 0.35;
+      transition: opacity 0.3s ease;
+      letter-spacing: 1px;
+    }
+    .accordion-row.is-active .row-num { opacity: 0.9; }
+    .row-collapse {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.55s ease, opacity 0.4s ease, margin-top 0.4s ease;
+      margin-top: 0;
+    }
+    .accordion-row.is-active .row-collapse {
+      max-height: 480px;
+      opacity: 1;
+      margin-top: 18px;
+    }
+    .row-sub {
+      font-size: 14px; color: var(--grey-light);
+      margin-bottom: 10px;
+    }
+    .row-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 900;
+      color: var(--orange); line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+    .row-price small {
+      font-size: 12px; color: var(--grey-medium);
+      font-weight: 500; font-family: 'DM Sans', sans-serif;
+      margin-left: 6px;
+    }
+    .row-includes {
+      list-style: none; margin: 0 0 14px 0; padding: 0;
+      font-size: 14px; color: var(--grey-light);
+    }
+    .row-includes li {
+      padding: 5px 0 5px 18px; position: relative;
+    }
+    .row-includes li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--orange); font-weight: 700;
+    }
+    .row-actions {
+      display: flex; gap: 10px; align-items: center;
+      margin-top: 4px;
+    }
+    .accordion-row.selected .row-tag { color: var(--green); opacity: 1; }
+    .accordion-row.selected .row-bar { background: var(--green); opacity: 1; height: calc(100% - 16px); }
+
+    /* PREVIEW (right column) */
+    .accordion-preview {
+      position: sticky; top: 92px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 520px;
+    }
+    .preview-inner {
+      padding: 40px 36px 28px;
+      position: relative;
+      min-height: 520px;
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg,
+        rgba(224,112,32,0.06) 0%,
+        var(--card-bg) 45%,
+        #000 130%);
+      animation: previewFadeIn 0.45s ease;
+    }
+    @keyframes previewFadeIn {
+      from { opacity: 0; transform: scale(0.97) rotate(1deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0); }
+    }
+    .preview-icon-big {
+      color: var(--orange);
+      opacity: 0.85;
+      margin-bottom: 22px;
+      width: 110px; height: 110px;
+    }
+    .preview-icon-big svg { width: 100%; height: 100%; }
+    .preview-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--orange);
+      font-weight: 700; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .preview-rec {
+      background: var(--gold); color: var(--noir);
+      font-size: 10px; letter-spacing: 2px;
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .preview-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 40px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: -1px;
+      line-height: 1; margin-bottom: 10px;
+      color: var(--creme);
+    }
+    .preview-subtitle {
+      font-size: 16px; color: var(--grey-light);
+      margin-bottom: 18px;
+    }
+    .preview-price-block {
+      display: flex; align-items: baseline; gap: 16px;
+      margin-bottom: 18px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      flex-wrap: wrap;
+    }
+    .preview-price-ht {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px; font-weight: 900;
+      color: var(--orange); line-height: 1;
+      letter-spacing: -1px;
+    }
+    .preview-price-ht small {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px; color: var(--grey-medium);
+      margin-left: 6px; font-weight: 500;
+    }
+    .preview-price-ttc {
+      font-size: 13px; color: var(--grey-medium);
+    }
+    .preview-includes {
+      list-style: none; padding: 0; margin: 0 0 18px 0;
+      font-size: 15px; color: var(--grey-light);
+    }
+    .preview-includes li {
+      padding: 7px 0 7px 20px; position: relative;
+      border-bottom: 1px dotted var(--border);
+    }
+    .preview-includes li:last-child { border-bottom: none; }
+    .preview-includes li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--orange); font-weight: 700;
+    }
+    .preview-fig {
+      position: absolute; bottom: 16px; right: 24px;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 11px; letter-spacing: 2px;
+      color: var(--grey-medium); opacity: 0.55;
+    }
+
+    @media (max-width: 900px) {
+      .accordion-wrap { grid-template-columns: 1fr; gap: 0; }
+      .accordion-preview { display: none; }
+      .accordion-row:hover { padding-left: 8px; }
+      .accordion-row.is-active { padding-left: 18px; }
+      .row-title { font-size: 24px; }
+    }
+
     /* BOISSONS */
     .boissons-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -548,7 +768,10 @@
         <h2><span class="num">02</span>Le déjeuner</h2>
         <p>Plateaux-repas frais livrés par <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand). Composition identique à partir de 4 plateaux. Option végétarienne incluse.</p>
       </div>
-      <div class="cards-grid" id="cards-dejeuner"></div>
+      <div class="accordion-wrap" id="dejeuner-accordion">
+        <div class="accordion-list" id="dejeuner-list"></div>
+        <aside class="accordion-preview" id="dejeuner-preview"></aside>
+      </div>
     </div>
   </section>
 
@@ -882,6 +1105,82 @@
       `).join('');
     }
 
+    // ========== ACCORDION DÉJEUNER ==========
+    const DEJEUNER_ICONS = {
+      'dej-pouce': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18l-2 8H5z"/><path d="M5 11V7a4 4 0 0 1 8 0v4"/><path d="M11 11V8a4 4 0 0 1 8 0v3"/></svg>',
+      'dej-kiwi': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>',
+      'dej-orange': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>',
+      'dej-premium': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 6a5 5 0 0 1-10 0z"/><path d="M12 14v6"/><path d="M8 20h8"/></svg>'
+    };
+
+    function renderDejeunerAccordion() {
+      const items = CATALOG.dejeuner;
+      const list = document.getElementById('dejeuner-list');
+      list.innerHTML = items.map((item, idx) => `
+        <article class="accordion-row${idx === 0 ? ' is-active' : ''}" data-id="${item.id}" data-idx="${idx}" data-accordion-row>
+          <span class="row-bar" aria-hidden="true"></span>
+          <div class="row-top">
+            <div class="row-title-block">
+              <span class="row-tag">${item.tag}</span>
+              <h3 class="row-title">${item.name}${item.recommended ? '<span class="row-rec-badge">Recommandé</span>' : ''}</h3>
+            </div>
+            <span class="row-num">0${idx + 1} / 0${items.length}</span>
+          </div>
+          <div class="row-collapse">
+            <p class="row-sub">${item.subtitle}</p>
+            <div class="row-price">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></div>
+            <ul class="row-includes">
+              ${item.includes.map(i => `<li>${i}</li>`).join('')}
+            </ul>
+            <div class="row-actions">
+              ${item.infoUrl
+                ? `<a class="btn-info" href="${item.infoUrl}" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>`
+                : `<button class="btn-info" data-info="${item.id}">ⓘ Détails</button>`}
+              <button class="btn-toggle" data-toggle="${item.id}">+ Sélectionner</button>
+            </div>
+            <div class="qty-controls" data-qty="${item.id}" style="display:none;">
+              <button data-minus="${item.id}">−</button>
+              <span class="qty-val" data-qty-val="${item.id}">${state.nbPersonnes}</span>
+              <span class="qty-unit">pers.</span>
+              <button data-plus="${item.id}">+</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+      renderDejeunerPreview(0);
+    }
+
+    function renderDejeunerPreview(idx) {
+      const item = CATALOG.dejeuner[idx];
+      const preview = document.getElementById('dejeuner-preview');
+      if (!preview || !item) return;
+      const totalItems = CATALOG.dejeuner.length;
+      preview.innerHTML = `
+        <div class="preview-inner">
+          <div class="preview-icon-big">${DEJEUNER_ICONS[item.id] || ''}</div>
+          <div class="preview-tag">${item.tag}${item.recommended ? '<span class="preview-rec">Recommandé</span>' : ''}</div>
+          <h3 class="preview-title">${item.name}</h3>
+          <p class="preview-subtitle">${item.subtitle}</p>
+          <div class="preview-price-block">
+            <span class="preview-price-ht">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
+            <span class="preview-price-ttc">${(item.price * (1 + item.tva/100)).toFixed(2).replace('.', ',')} € TTC ${item.unit}</span>
+          </div>
+          <ul class="preview-includes">
+            ${item.includes.map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <div class="preview-fig">FIG. 0${idx + 1} / 0${totalItems}</div>
+        </div>
+      `;
+    }
+
+    function setActiveDejeunerRow(row) {
+      if (!row || row.classList.contains('is-active')) return;
+      const list = document.getElementById('dejeuner-list');
+      list.querySelectorAll('.accordion-row.is-active').forEach(r => r.classList.remove('is-active'));
+      row.classList.add('is-active');
+      renderDejeunerPreview(parseInt(row.dataset.idx, 10));
+    }
+
     function renderBoissons() {
       const container = document.getElementById('boissons-grid');
       const cats = Object.keys(CATALOG.boissons);
@@ -1132,9 +1431,22 @@
     // ========== INIT ==========
     document.addEventListener('DOMContentLoaded', () => {
       renderCards('accueil', 'cards-accueil');
-      renderCards('dejeuner', 'cards-dejeuner');
+      renderDejeunerAccordion();
       renderCards('apero', 'cards-apero');
       renderBoissons();
+
+      // Accordion déjeuner : activation au survol (desktop) + clic (mobile / explicite)
+      const dejList = document.getElementById('dejeuner-list');
+      if (dejList) {
+        dejList.addEventListener('mouseover', (e) => {
+          const row = e.target.closest('[data-accordion-row]');
+          if (row) setActiveDejeunerRow(row);
+        });
+        dejList.addEventListener('click', (e) => {
+          const row = e.target.closest('[data-accordion-row]');
+          if (row) setActiveDejeunerRow(row);
+        });
+      }
 
       // Event delegation
       document.body.addEventListener('click', (e) => {
