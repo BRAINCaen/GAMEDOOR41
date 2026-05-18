@@ -719,16 +719,30 @@
           }
         },
         {
-          id: 'dej-confort', name: 'Plateau Kiwi / Orange', tag: 'Confort',
-          price: 17.75, tva: 10, unit: '/ pers.', recommended: true,
-          subtitle: '4 services au choix',
-          includes: ['Entrée raffinée au choix', 'Plat chaud ou froid au choix', 'Fromage normand', 'Dessert pâtissier'],
+          id: 'dej-kiwi', name: 'Plateau Kiwi', tag: 'Confort · Essentiel',
+          price: 16.50, tva: 10, unit: '/ pers.',
+          subtitle: '4 services · gamme essentielle',
+          includes: ['Entrée raffinée au choix', 'Plat au choix', 'Fromage normand', 'Dessert pâtissier'],
           info: {
-            details: '<p>Le standard séminaire entreprise. 4 services au choix dans 2 gammes (Kiwi 16,50 € HT ou Orange 19 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
-            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat chaud ou froid</strong> au choix : suprême de volaille, filet de cabillaud, pavé de saumon, magret de canard, tagliatelles légumes (option végétarienne)…', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
+            details: '<p>Le plateau séminaire entreprise standard. 4 services au choix dans la gamme Kiwi (16,50 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
+            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat</strong> au choix dans la gamme Kiwi', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
             allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
             min: '4 plateaux minimum',
-            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau · Option végétarienne : 19 € HT',
+            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau',
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          }
+        },
+        {
+          id: 'dej-orange', name: 'Plateau Orange', tag: 'Confort · Premium',
+          price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
+          subtitle: '4 services · gamme premium',
+          includes: ['Entrée raffinée au choix', 'Plat chaud ou froid au choix', 'Fromage normand affiné', 'Dessert pâtissier'],
+          info: {
+            details: '<p>La gamme premium du séminaire entreprise. 4 services au choix dans la gamme Orange (19 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
+            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat chaud ou froid</strong> au choix dans la gamme Orange : suprême de volaille, filet de cabillaud, pavé de saumon, magret de canard, tagliatelles légumes (option végétarienne)…', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
+            allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
+            min: '4 plateaux minimum',
+            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau · Option végétarienne incluse',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
@@ -849,7 +863,7 @@
             ${item.includes.map(i => `<li>${i}</li>`).join('')}
           </ul>
           <div class="card-actions">
-            <button class="btn-info" data-info="${item.id}">ⓘ Détails</button>
+            <a class="btn-info" href="https://grandsire.com/plateaux-en-livraison" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>
             <button class="btn-toggle" data-toggle="${item.id}">+ Sélectionner</button>
           </div>
           <div class="qty-controls" data-qty="${item.id}" style="display:none;">
