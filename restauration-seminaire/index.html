@@ -262,11 +262,11 @@
       position: relative;
       border-bottom: 1px solid rgba(138,128,120,0.25);
       cursor: pointer;
-      padding: 22px 0;
+      padding: 14px 0;
       transition: padding-left 0.5s ease;
     }
-    .accordion-row:hover { padding-left: 12px; }
-    .accordion-row.is-active { padding-left: 28px; }
+    .accordion-row:hover { padding-left: 10px; }
+    .accordion-row.is-active { padding-left: 22px; }
     .accordion-row .row-bar {
       position: absolute;
       left: 0; top: 50%; transform: translateY(-50%);
@@ -296,7 +296,7 @@
     .accordion-row:hover .row-tag { opacity: 1; }
     .row-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 28px; font-weight: 800;
+      font-size: 24px; font-weight: 800;
       text-transform: uppercase; letter-spacing: -0.5px;
       line-height: 1.05;
       color: var(--grey-medium);
@@ -328,36 +328,30 @@
       margin-top: 0;
     }
     .accordion-row.is-active .row-collapse {
-      max-height: 480px;
+      max-height: 180px;
       opacity: 1;
-      margin-top: 18px;
+      margin-top: 12px;
+    }
+    .row-meta-line {
+      display: flex; align-items: baseline; gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
     .row-sub {
       font-size: 14px; color: var(--grey-light);
-      margin-bottom: 10px;
+      flex: 1;
     }
-    .row-price {
+    .row-price-inline {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 28px; font-weight: 900;
+      font-size: 20px; font-weight: 800;
       color: var(--orange); line-height: 1;
-      letter-spacing: -1px;
-      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      white-space: nowrap;
     }
-    .row-price small {
-      font-size: 12px; color: var(--grey-medium);
+    .row-price-inline small {
+      font-size: 11px; color: var(--grey-medium);
       font-weight: 500; font-family: 'DM Sans', sans-serif;
-      margin-left: 6px;
-    }
-    .row-includes {
-      list-style: none; margin: 0 0 14px 0; padding: 0;
-      font-size: 14px; color: var(--grey-light);
-    }
-    .row-includes li {
-      padding: 5px 0 5px 18px; position: relative;
-    }
-    .row-includes li::before {
-      content: '→'; position: absolute; left: 0;
-      color: var(--orange); font-weight: 700;
+      margin-left: 4px;
     }
     .row-actions {
       display: flex; gap: 10px; align-items: center;
@@ -1127,11 +1121,10 @@
             <span class="row-num">0${idx + 1} / 0${items.length}</span>
           </div>
           <div class="row-collapse">
-            <p class="row-sub">${item.subtitle}</p>
-            <div class="row-price">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></div>
-            <ul class="row-includes">
-              ${item.includes.map(i => `<li>${i}</li>`).join('')}
-            </ul>
+            <div class="row-meta-line">
+              <p class="row-sub">${item.subtitle}</p>
+              <span class="row-price-inline">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
+            </div>
             <div class="row-actions">
               ${item.infoUrl
                 ? `<a class="btn-info" href="${item.infoUrl}" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>`
