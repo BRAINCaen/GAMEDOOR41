@@ -708,6 +708,7 @@
         {
           id: 'dej-pouce', name: 'Sur le pouce', tag: 'Essentiel',
           price: 13.00, tva: 10, unit: '/ pers.',
+          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: 'Wrap ou pasta box',
           includes: ['1 wrap (8 variétés) OU 1 pasta box', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Couverts bois + pain + serviette'],
           info: {
@@ -721,6 +722,7 @@
         {
           id: 'dej-kiwi', name: 'Plateau Kiwi', tag: 'Confort · Essentiel',
           price: 16.50, tva: 10, unit: '/ pers.',
+          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: '4 services · gamme essentielle',
           includes: ['Entrée raffinée au choix', 'Plat au choix', 'Fromage normand', 'Dessert pâtissier'],
           info: {
@@ -735,6 +737,7 @@
         {
           id: 'dej-orange', name: 'Plateau Orange', tag: 'Confort · Premium',
           price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
+          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: '4 services · gamme premium',
           includes: ['Entrée raffinée au choix', 'Plat chaud ou froid au choix', 'Fromage normand affiné', 'Dessert pâtissier'],
           info: {
@@ -749,6 +752,7 @@
         {
           id: 'dej-premium', name: 'Plateau Pomme', tag: 'Premium · Events',
           price: 24.80, tva: 10, unit: '/ pers.',
+          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: 'Gastronomique',
           includes: ['Entrée gastronomique (rouget, burrata…)', 'Plat signature (filet de bœuf, gambas…)', 'Salade + fromage affiné', 'Dessert pâtisserie'],
           info: {
@@ -863,7 +867,9 @@
             ${item.includes.map(i => `<li>${i}</li>`).join('')}
           </ul>
           <div class="card-actions">
-            <a class="btn-info" href="https://grandsire.com/plateaux-en-livraison" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>
+            ${item.infoUrl
+              ? `<a class="btn-info" href="${item.infoUrl}" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>`
+              : `<button class="btn-info" data-info="${item.id}">ⓘ Détails</button>`}
             <button class="btn-toggle" data-toggle="${item.id}">+ Sélectionner</button>
           </div>
           <div class="qty-controls" data-qty="${item.id}" style="display:none;">
