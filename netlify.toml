@@ -453,3 +453,11 @@
   for = "/css/style.css"
   [headers.values]
     Link = "<https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap>; rel=preload; as=style"
+
+# Flux RSS : crawlable par les lecteurs RSS, mais explicitement noindex pour
+# que Google le sorte de "Detectee actuellement non indexee" dans GSC (un
+# fichier XML n'est pas une page indexable, c'est un flux machine-to-machine).
+[[headers]]
+  for = "/blog-feed.xml"
+  [headers.values]
+    X-Robots-Tag = "noindex"
