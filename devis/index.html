@@ -664,6 +664,7 @@
         client_type: clientType === 'entreprise' ? 'Entreprise' : clientType === 'association' ? 'Association' : 'Particulier',
         activite: selectedActivity === 'both' ? 'Escape + Quiz' : selectedActivity === 'escape' ? 'Escape Game' : 'Quiz Buzz Your Brain',
         participants: r.totalPersons,
+        nb_personnes: r.totalPersons,
         date_souhaitee: devisForm.dateSouhaitee || 'non-renseignée',
         heure_activite: devisForm.heureActivite || 'non-renseignée',
         heure_arrivee: devisForm.heureArrivee || '-',
