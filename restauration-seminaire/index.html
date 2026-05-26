@@ -894,9 +894,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // EmailJS config (réutilise template existant + payload formaté dans message)
+    // EmailJS config — template_rv60k0d = template "Nouveau devis" (partagé avec /devis/)
     const EMAILJS_SERVICE_ID  = "service_4o68wv7";
-    const EMAILJS_TEMPLATE_ID = "template_ah8ivhc";
+    const EMAILJS_TEMPLATE_ID = "template_rv60k0d";
     const EMAILJS_PUBLIC_KEY  = "rGgrPogMTC1wL0aOv";
 
     // ========== CATALOGUE PRODUITS ==========
@@ -1380,7 +1380,22 @@
       };
 
       try {
-        // 1. EmailJS notif EN PREMIER (priorité : reception immédiate)
+        // 1. Calcul totaux + TVA split + détail formaté pour le template devis
+        const items = Object.entries(state.selection);
+        let totalHT = 0, tva10 = 0, tva20 = 0;
+        const detailLines = items.map(([id, sel]) => {
+          const lineHT = sel.price * sel.qty;
+          const lineTVA = lineHT * (sel.tva / 100);
+          totalHT += lineHT;
+          if (sel.tva === 10) tva10 += lineTVA;
+          else if (sel.tva === 20) tva20 += lineTVA;
+          return `• ${sel.name} — ${sel.qty} ${sel.unit} × ${sel.price.toFixed(2)}€ HT = ${lineHT.toFixed(2)}€ HT`;
+        }).join('\n');
+        const totalTTC = totalHT + tva10 + tva20;
+        const nbPers = parseInt(data.nb_personnes, 10) || 0;
+        const perPersonHT  = nbPers > 0 ? totalHT  / nbPers : 0;
+        const perPersonTTC = nbPers > 0 ? totalTTC / nbPers : 0;
+
         const messageDevis = `🍽️ NOUVELLE DEMANDE DE DEVIS RESTAURATION SÉMINAIRE\n\n` +
           `═══════════════════════════════════\nCONTACT\n═══════════════════════════════════\n` +
           `Société : ${data.societe}\n` +
@@ -1394,17 +1409,27 @@
           data.devis_text +
           `\n\n═══════════════════════════════════\nMESSAGE LIBRE\n═══════════════════════════════════\n${data.message}`;
 
+        // 2. EmailJS notif EN PREMIER (priorité : reception immédiate)
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          poste: 'DEVIS RESTAURATION SÉMINAIRE',
-          prenom: data.contact.split(' ')[0] || data.contact,
-          nom: data.societe,
-          email: data.email,
-          telephone: data.telephone,
-          ecole: data.societe,
-          niveau: data.nb_personnes + ' personnes',
-          message: messageDevis,
-          cv_url: '(pas de PJ)',
-          date: new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+          to_email: 'contact+forms@gamedoor41.fr',
+          from_name: data.contact || 'Client',
+          from_email: data.email || 'non-renseigné',
+          societe: data.societe || '-',
+          telephone: data.telephone || 'non-renseigné',
+          client_type: 'Restauration séminaire',
+          activite: 'Devis repas / cocktail / pause',
+          participants: data.nb_personnes,
+          date_souhaitee: data.date_event,
+          heure_activite: data.heure_event,
+          heure_arrivee: '-',
+          detail: detailLines,
+          total_ht: totalHT.toFixed(2) + '€',
+          tva_10: tva10.toFixed(2) + '€',
+          tva_20: tva20.toFixed(2) + '€',
+          total_ttc: totalTTC.toFixed(2) + '€',
+          prix_personne_ht: perPersonHT.toFixed(2) + '€',
+          prix_personne_ttc: perPersonTTC.toFixed(2) + '€',
+          message: messageDevis
         }, EMAILJS_PUBLIC_KEY);
 
         // 2. Sauvegarde Firestore (best-effort, ne bloque pas si rules pas ajustées)
