@@ -39,6 +39,7 @@ const HTML_FILES = [
   'references-entreprises-caen/index.html',
   'contact/index.html',
   'devis/index.html',
+  'avis/index.html',
 ];
 
 async function fetchPlace() {
