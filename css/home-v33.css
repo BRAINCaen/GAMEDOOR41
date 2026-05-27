@@ -503,7 +503,9 @@ img { display: block; max-width: 100%; }
    ============================================================= */
 .nav {
   /* fixed = visible en permanence pendant le scroll, plus robuste que sticky */
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  /* z-index: 1000 pour passer au-dessus de la bande recrutement (z-index:200)
+     afin que le dropdown 'Événements' s'affiche correctement par-dessus elle */
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   background: rgba(12,8,0,.85);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
           backdrop-filter: blur(18px) saturate(140%);
