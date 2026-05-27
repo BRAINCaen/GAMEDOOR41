@@ -624,7 +624,7 @@ img { display: block; max-width: 100%; }
   .nav-links { display: none; }
 }
 
-/* --- Nav Dropdown 'Privatiser' (desktop) --- */
+/* --- Nav Dropdown 'Événements' (desktop) --- */
 .nav-dropdown {
   position: relative;
   display: inline-flex;

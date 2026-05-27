@@ -383,7 +383,7 @@ body.menu-open { overflow: hidden; }
   }
 }
 
-/* --- Nav Dropdown 'Privatiser' (desktop) --- */
+/* --- Nav Dropdown 'Événements' (desktop) --- */
 .nav-dropdown {
   position: relative;
   display: inline-flex;

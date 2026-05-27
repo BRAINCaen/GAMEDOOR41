@@ -47,7 +47,7 @@ function buildMenuB(pageId, indent = '        ') {
 
   const dropdown =
     `<div class="nav-dropdown desktop-only">\n` +
-    `${indent}  <button type="button" class="nav-dropdown-toggle${toggleActive}" aria-expanded="false" aria-haspopup="true">Privatiser</button>\n` +
+    `${indent}  <button type="button" class="nav-dropdown-toggle${toggleActive}" aria-expanded="false" aria-haspopup="true">Événements</button>\n` +
     `${indent}  <div class="nav-dropdown-menu" role="menu">\n` +
     `${dropdownItems}\n` +
     `${indent}  </div>\n` +
@@ -75,7 +75,7 @@ function buildMenuA(pageId, indent = '        ') {
 
   const dropdown =
     `<div class="nav-dropdown nav-link-desktop">\n` +
-    `${indent}  <button type="button" class="nav-link nav-dropdown-toggle${toggleActive}" aria-expanded="false" aria-haspopup="true">Privatiser</button>\n` +
+    `${indent}  <button type="button" class="nav-link nav-dropdown-toggle${toggleActive}" aria-expanded="false" aria-haspopup="true">Événements</button>\n` +
     `${indent}  <div class="nav-dropdown-menu" role="menu">\n` +
     `${dropdownItems}\n` +
     `${indent}  </div>\n` +
