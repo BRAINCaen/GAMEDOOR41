@@ -624,6 +624,102 @@ img { display: block; max-width: 100%; }
   .nav-links { display: none; }
 }
 
+/* --- Nav Dropdown 'Privatiser' (desktop) --- */
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-dropdown-toggle {
+  font-family: var(--gd-font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--gd-grey-light);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+@media (min-width: 980px) and (max-width: 1280px) {
+  .nav-dropdown-toggle { font-size: 13px; letter-spacing: 0.8px; }
+}
+.nav-dropdown-toggle::after {
+  content: '\25BE';
+  font-size: 0.75em;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+.nav-dropdown:hover .nav-dropdown-toggle,
+.nav-dropdown:focus-within .nav-dropdown-toggle,
+.nav-dropdown-toggle.active { color: var(--gd-cream); }
+.nav-dropdown:hover .nav-dropdown-toggle::after,
+.nav-dropdown:focus-within .nav-dropdown-toggle::after { transform: rotate(180deg); }
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 18px;
+  background: transparent;
+}
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: rgba(12,8,0,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(224,112,32,0.25);
+  border-radius: 10px;
+  min-width: 220px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  padding: 10px 14px;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 6px;
+  color: var(--gd-grey-light);
+  text-align: left;
+  font-family: var(--gd-font-display);
+  font-weight: 600;
+  transition: color 200ms ease, background 200ms ease;
+}
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a.active {
+  background: rgba(224,112,32,0.12);
+  color: var(--gd-orange);
+}
+.nav-dropdown-menu a::after { display: none !important; }
+@media (max-width: 900px) {
+  .nav-dropdown { display: none; }
+}
+
 /* =============================================================
    02. HERO CLASSIC — Cinematic dark, photo BG, centered text + CTAs
    ============================================================= */
