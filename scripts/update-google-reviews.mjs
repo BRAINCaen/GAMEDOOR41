@@ -368,20 +368,116 @@ async function main() {
   }
   console.log(`Total replacements: ${totalChanges}`);
 
-  // Also write a JSON snapshot for downstream use / debugging
-  const snapshot = {
-    updatedAt: new Date().toISOString(),
+  // Persist a JSON snapshot + a growing review pool.
+  // Le pool fusionne :
+  //   - reviews fictives existantes (source: "fictive") — JAMAIS écrasées
+  //   - reviews Google fraîchement scrapées (source: "google") — dédupliquées
+  //     par (author + publishTime).
+  // Utilisé par scripts/rotate-reviews.mjs pour la rotation thématique.
+  await persistReviewPool({
     placeId: place.placeId,
     name: place.name,
     rating: place.rating,
-    reviewCount: place.count,
+    count: place.count,
+    rawReviews: place.reviews,
+  });
+}
+
+// --- Pool persistence ---------------------------------------------------
+
+// Detecte les themes mentionnes dans une review (regex simples, sans accents
+// pour matcher Google FR qui ecrit parfois "garde a vue" sans accents).
+const THEME_RULES = [
+  { theme: 'garde-a-vue', re: /\b(garde\s*a?\s*vue|policier|inspecteur|commissariat|cellule|enquete|enqu[êe]te|interrogatoire)\b/i },
+  { theme: 'psychiatric', re: /\b(psychiatric|psy\b|asile|h[oô]pital\s+psy|horreur|frisson|peur|effrayant|sinistre|oppressant|d[eé]rangeant)\b/i },
+  { theme: 'back-to-80s', re: /\b(80['’]?s?|annees\s*80|ann[eé]es\s*80|retro|r[eé]tro|jukebox|pac[\s-]?man|vinyle|nostalgi|famille|enfant)\b/i },
+  { theme: 'quiz', re: /\b(quiz|buzz|buzzer|pupitre|plateau\s*tv|emission|[eé]mission|candidat|blind\s*test)\b/i },
+  { theme: 'team-building', re: /\b(team[\s-]?building|seminaire|s[eé]minaire|entreprise|collegues|coll[eè]gues|csm|cse|boite)\b/i },
+  { theme: 'famille', re: /\b(famille|familial|enfant|gamin|fils|fille|parent|parents)\b/i },
+  { theme: 'evjf', re: /\b(evjf|enterrement.*jeune\s*fille|future\s*mariee|mari[eé]e)\b/i },
+  { theme: 'evg', re: /\b(evg|enterrement.*gar[cç]on|enterrement.*vie\s*gar[cç]on|futur\s*marie|mari[eé]\b)\b/i },
+  { theme: 'anniversaire', re: /\b(anniversaire|anniv\b|fete\s*d['e]anniv|ado)\b/i },
+];
+
+function detectThemes(text) {
+  const found = [];
+  for (const { theme, re } of THEME_RULES) {
+    if (re.test(text || '')) found.push(theme);
+  }
+  return found;
+}
+
+// "2026-03-14T10:00:00Z" -> "2026-03-14"
+function isoToDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.valueOf())) return '';
+  return d.toISOString().slice(0, 10);
+}
+
+async function persistReviewPool({ placeId, name, rating, count, rawReviews }) {
+  const POOL_PATH = path.join(ROOT, 'data', 'google-reviews.json');
+  let existing = null;
+  try {
+    existing = JSON.parse(await fs.readFile(POOL_PATH, 'utf8'));
+  } catch {
+    existing = { reviews: [] };
+  }
+  const existingReviews = Array.isArray(existing.reviews) ? existing.reviews : [];
+
+  // Normalise les avis Google bruts -> format pool
+  const googleNormalized = (rawReviews || []).map((r) => {
+    const text = (r?.text?.text || r?.originalText?.text || '').trim();
+    const author = anonymizeName(r?.authorAttribution?.displayName || 'Anonyme');
+    const publishDate = isoToDate(r?.publishTime);
+    return {
+      author,
+      rating: typeof r?.rating === 'number' ? r.rating : 5,
+      text: text.replace(/\s+/g, ' ').trim(),
+      date: publishDate,
+      source: 'google',
+      themes: detectThemes(text),
+      context: '',
+    };
+  }).filter((r) => r.text.length >= 30);
+
+  // Dedup key: source + author + date (Google n'expose pas d'id stable
+  // dans Places API New, on s'en remet a la combinaison auteur+date).
+  const keyOf = (r) => `${r.source}::${r.author}::${r.date}::${r.text.slice(0, 40)}`;
+  const seen = new Map();
+  for (const r of existingReviews) seen.set(keyOf(r), r);
+  let added = 0;
+  for (const r of googleNormalized) {
+    const k = keyOf(r);
+    if (!seen.has(k)) {
+      seen.set(k, r);
+      added++;
+    } else {
+      // Refresh themes si la regex a evolue mais on garde la review existante
+      const prev = seen.get(k);
+      if ((prev.themes || []).length < r.themes.length) {
+        prev.themes = r.themes;
+      }
+    }
+  }
+
+  const mergedReviews = Array.from(seen.values()).sort((a, b) => {
+    return (b.date || '').localeCompare(a.date || '');
+  });
+
+  const snapshot = {
+    updatedAt: new Date().toISOString(),
+    placeId,
+    name,
+    rating,
+    reviewCount: count,
     source: 'Google Places API (New) — Text Search',
+    poolSize: mergedReviews.length,
+    googleAdded: added,
+    reviews: mergedReviews,
   };
-  await fs.writeFile(
-    path.join(ROOT, 'data', 'google-reviews.json'),
-    JSON.stringify(snapshot, null, 2) + '\n',
-    'utf8',
-  );
+  await fs.writeFile(POOL_PATH, JSON.stringify(snapshot, null, 2) + '\n', 'utf8');
+  console.log(`Pool: ${mergedReviews.length} reviews total (+${added} new Google)`);
 }
 
 main().catch((err) => {
