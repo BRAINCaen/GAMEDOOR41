@@ -1412,6 +1412,7 @@
         // 2. EmailJS notif EN PREMIER (priorité : reception immédiate)
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
           to_email: 'contact+forms@gamedoor41.fr',
+          subject: 'Devis restauration séminaire',
           from_name: data.contact || 'Client',
           from_email: data.email || 'non-renseigné',
           email: data.email || '',
