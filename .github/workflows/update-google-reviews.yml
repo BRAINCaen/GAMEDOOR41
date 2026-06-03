@@ -26,6 +26,9 @@ jobs:
           GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
         run: node scripts/update-google-reviews.mjs
 
+      - name: Rotate themed reviews
+        run: node scripts/rotate-reviews.mjs
+
       - name: Commit and push if changed
         run: |
           if [[ -z "$(git status --porcelain)" ]]; then
