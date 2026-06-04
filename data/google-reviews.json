@@ -1,66 +1,24 @@
 {
-  "updatedAt": "2026-06-03T08:24:10.520Z",
+  "updatedAt": "2026-06-04T07:56:44.241Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2121,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 12,
-  "googleAdded": 0,
+  "poolSize": 17,
+  "googleAdded": 5,
   "reviews": [
     {
-      "author": "Marc L.",
+      "author": "Clara D.",
       "rating": 5,
-      "text": "On y est allés à 6 collègues pour un team building. Salle de fou. Le game master joue son rôle d'inspecteur du début à la fin, on y croit à 100%. On s'est évadés à la dernière seconde. Inoubliable.",
-      "date": "2026-03-14",
+      "text": "Buzz Your Brain en EVJF à 10 filles, c'était génial. La future mariée était sur le pupitre central, on a tout donné sur le blind test. L'ambiance est vraiment celle d'une émission TV, on s'y croirait. Les jokers diaboliques nous ont mis·es au sol. À faire absolument.",
+      "date": "2026-05-30",
       "source": "fictive",
-      "themes": ["garde-a-vue", "team-building"],
-      "context": "Team building Caen"
-    },
-    {
-      "author": "Sophie M.",
-      "rating": 5,
-      "text": "Mon fils de 11 ans a adoré. Niveau 1 parfait pour démarrer en famille. On a réussi avec 4 minutes restantes — gros sentiment de victoire. Les enfants en parlent encore une semaine après.",
-      "date": "2026-02-22",
-      "source": "fictive",
-      "themes": ["garde-a-vue", "famille"],
-      "context": "Famille avec enfants"
-    },
-    {
-      "author": "Thomas D.",
-      "rating": 5,
-      "text": "Fait à 12 en mode duel avec une autre équipe d'amis pour mon EVG : ambiance compétition au top. La salle a été décorée avec un vrai souci du détail, on se croit dans un vrai commissariat.",
-      "date": "2026-04-05",
-      "source": "fictive",
-      "themes": ["garde-a-vue", "evg"],
-      "context": "EVG 12 personnes"
-    },
-    {
-      "author": "Camille R.",
-      "rating": 5,
-      "text": "Psychiatric c'est vraiment l'expérience la plus intense qu'on a faite en escape game. L'ambiance est oppressante, le décor super réaliste, et le game master joue son rôle à fond sans jamais sortir du personnage. On est ressortis sur les rotules mais content·e·s.",
-      "date": "2026-05-12",
-      "source": "fictive",
-      "themes": ["psychiatric"],
-      "context": "Couple à 2"
-    },
-    {
-      "author": "Théo M.",
-      "rating": 5,
-      "text": "Venu avec 3 potes pour tester Psychiatric en Niveau 2. Frissons garantis sans tomber dans le gore. L'immersion est totale, on a vraiment l'impression d'être enfermés. Énigmes bien fichues et game master qui rentre dans le rôle. À refaire.",
-      "date": "2026-04-18",
-      "source": "fictive",
-      "themes": ["psychiatric"],
-      "context": "Groupe d'amis"
-    },
-    {
-      "author": "Léa B.",
-      "rating": 5,
-      "text": "On y est allés entre ados (16-17 ans) avec mes cousins pour un anniv. Ambiance hyper inquiétante mais jamais trop. On a hurlé plusieurs fois, on s'est marrés, et on a fini pile dans les temps. Top expérience.",
-      "date": "2026-03-02",
-      "source": "fictive",
-      "themes": ["psychiatric", "anniversaire"],
-      "context": "Anniversaire ados"
+      "themes": [
+        "quiz",
+        "evjf"
+      ],
+      "context": "EVJF 10 candidates"
     },
     {
       "author": "Julie P.",
@@ -68,26 +26,22 @@
       "text": "Back to the 80's avec mes deux enfants (8 et 10 ans) et mon mari. Une vraie machine à remonter le temps : jukebox, Pac-Man, vinyles, ils ont adoré tout fouiller. Ambiance fun et bienveillante, le game master super sympa. On reviendra tester une autre salle.",
       "date": "2026-05-20",
       "source": "fictive",
-      "themes": ["back-to-80s", "famille"],
+      "themes": [
+        "back-to-80s",
+        "famille"
+      ],
       "context": "Famille 4 personnes"
     },
     {
-      "author": "Antoine G.",
+      "author": "Camille R.",
       "rating": 5,
-      "text": "On a réservé Back to the 80's pour l'anniversaire de notre fils de 9 ans, avec 5 copains. Format parfait pour les enfants, ils ont kiffé chaque énigme. Beaucoup de manipulation d'objets, c'est très ludique. Le game master a su s'adapter à leur âge.",
-      "date": "2026-03-28",
+      "text": "Psychiatric c'est vraiment l'expérience la plus intense qu'on a faite en escape game. L'ambiance est oppressante, le décor super réaliste, et le game master joue son rôle à fond sans jamais sortir du personnage. On est ressortis sur les rotules mais content·e·s.",
+      "date": "2026-05-12",
       "source": "fictive",
-      "themes": ["back-to-80s", "anniversaire", "famille"],
-      "context": "Anniversaire enfant 9 ans"
-    },
-    {
-      "author": "Manon T.",
-      "rating": 5,
-      "text": "Fait Back to the 80's à 5 entre amis trentenaires, on est tombés en pleine nostalgie. La salle est bourrée de clins d'œil rétro, on s'est marrés tout le long. Énigmes accessibles même pour des débutants, on a fini en mode champions. Super soirée.",
-      "date": "2026-02-08",
-      "source": "fictive",
-      "themes": ["back-to-80s"],
-      "context": "Soirée entre amis"
+      "themes": [
+        "psychiatric"
+      ],
+      "context": "Couple à 2"
     },
     {
       "author": "Alexandre V.",
@@ -95,17 +49,137 @@
       "text": "On a fait Buzz Your Brain à 12 pour un EVG. Ambiance plateau TV à fond, buzzers qui claquent, classement live, on s'est pris au jeu à mort. Le chauffeur de salle lance l'émission et nous laisse jouer entre nous, parfait. Format hyper original à Caen.",
       "date": "2026-04-22",
       "source": "fictive",
-      "themes": ["quiz", "evg"],
+      "themes": [
+        "quiz",
+        "evg"
+      ],
       "context": "EVG 12 candidats"
     },
     {
-      "author": "Clara D.",
+      "author": "Théo M.",
       "rating": 5,
-      "text": "Buzz Your Brain en EVJF à 10 filles, c'était génial. La future mariée était sur le pupitre central, on a tout donné sur le blind test. L'ambiance est vraiment celle d'une émission TV, on s'y croirait. Les jokers diaboliques nous ont mis·es au sol. À faire absolument.",
-      "date": "2026-05-30",
+      "text": "Venu avec 3 potes pour tester Psychiatric en Niveau 2. Frissons garantis sans tomber dans le gore. L'immersion est totale, on a vraiment l'impression d'être enfermés. Énigmes bien fichues et game master qui rentre dans le rôle. À refaire.",
+      "date": "2026-04-18",
       "source": "fictive",
-      "themes": ["quiz", "evjf"],
-      "context": "EVJF 10 candidates"
+      "themes": [
+        "psychiatric"
+      ],
+      "context": "Groupe d'amis"
+    },
+    {
+      "author": "Thomas D.",
+      "rating": 5,
+      "text": "Fait à 12 en mode duel avec une autre équipe d'amis pour mon EVG : ambiance compétition au top. La salle a été décorée avec un vrai souci du détail, on se croit dans un vrai commissariat.",
+      "date": "2026-04-05",
+      "source": "fictive",
+      "themes": [
+        "garde-a-vue",
+        "evg"
+      ],
+      "context": "EVG 12 personnes"
+    },
+    {
+      "author": "Antoine G.",
+      "rating": 5,
+      "text": "On a réservé Back to the 80's pour l'anniversaire de notre fils de 9 ans, avec 5 copains. Format parfait pour les enfants, ils ont kiffé chaque énigme. Beaucoup de manipulation d'objets, c'est très ludique. Le game master a su s'adapter à leur âge.",
+      "date": "2026-03-28",
+      "source": "fictive",
+      "themes": [
+        "back-to-80s",
+        "anniversaire",
+        "famille"
+      ],
+      "context": "Anniversaire enfant 9 ans"
+    },
+    {
+      "author": "Marc L.",
+      "rating": 5,
+      "text": "On y est allés à 6 collègues pour un team building. Salle de fou. Le game master joue son rôle d'inspecteur du début à la fin, on y croit à 100%. On s'est évadés à la dernière seconde. Inoubliable.",
+      "date": "2026-03-14",
+      "source": "fictive",
+      "themes": [
+        "garde-a-vue",
+        "team-building"
+      ],
+      "context": "Team building Caen"
+    },
+    {
+      "author": "Léanïs",
+      "rating": 5,
+      "text": "Alors je viens d'y aller pour la session psychiatrie on étais 4 comment vous dire c'etais génial vraiment par contre si vous êtes une flipette comme moi préparer vos mouchoirs j'ai lâcher quelques larmes, et pour les accompagnateurs préparer des manches longues car avec mes ongles je leurs ai détruit les bras tellement je les serrer fort, en tout cas top ! Moi je dis foncez même si vous avez peur parce que vous en rigolerez après en vrai :)",
+      "date": "2026-03-07",
+      "source": "google",
+      "themes": [
+        "psychiatric"
+      ],
+      "context": ""
+    },
+    {
+      "author": "Léa B.",
+      "rating": 5,
+      "text": "On y est allés entre ados (16-17 ans) avec mes cousins pour un anniv. Ambiance hyper inquiétante mais jamais trop. On a hurlé plusieurs fois, on s'est marrés, et on a fini pile dans les temps. Top expérience.",
+      "date": "2026-03-02",
+      "source": "fictive",
+      "themes": [
+        "psychiatric",
+        "anniversaire"
+      ],
+      "context": "Anniversaire ados"
+    },
+    {
+      "author": "Gwladys L.",
+      "rating": 5,
+      "text": "On a passé un super moment dans cet escape game sur le thème horreur psychiatrie ! J’étais avec mon neveu, ma sœur et ma mère, et on a tous adoré. L’ambiance était vraiment immersive, un peu angoissante comme il faut 😅 On a eu pas mal de frayeurs, mais c’est ce qui rend l’expérience encore meilleure ! Je recommande vivement et j’espère revenir bientôt pour une nouvelle énigme MERCI !",
+      "date": "2026-02-27",
+      "source": "google",
+      "themes": [
+        "psychiatric"
+      ],
+      "context": ""
+    },
+    {
+      "author": "Sophie M.",
+      "rating": 5,
+      "text": "Mon fils de 11 ans a adoré. Niveau 1 parfait pour démarrer en famille. On a réussi avec 4 minutes restantes — gros sentiment de victoire. Les enfants en parlent encore une semaine après.",
+      "date": "2026-02-22",
+      "source": "fictive",
+      "themes": [
+        "garde-a-vue",
+        "famille"
+      ],
+      "context": "Famille avec enfants"
+    },
+    {
+      "author": "Lucie N.",
+      "rating": 5,
+      "text": "Nous étions un groupe de 6 venus pour la salle In Prison. Nous avons été mis dans l'ambiance dès l'accueil, ce que nous avons adoré ! Nous avons aussi beaucoup aimé la salle et les énigmes, originales et qui font bien réfléchir. Bref tout était super et ce n'est pas la première fois que nous ressortons ravis d'un escape game de Brain, merci encore !!",
+      "date": "2026-02-12",
+      "source": "google",
+      "themes": [],
+      "context": ""
+    },
+    {
+      "author": "Charlotte D.",
+      "rating": 5,
+      "text": "Une première pour moi en escape game et dans un contexte très particulier : date (1ere rencontre) autant dire que d'entrée de jeu, la personne qui nous a accueilli joue tellement bien que ça a permis de désamorcer à fond ahah ! J'ai beaucoup ri et nous nous sommes vraiment amusés dans cette pièce back to 80! Je recommande vivement et ça m'a donné envie d'en refaire entre amis ou en famille ... et de découvrir davantage les escape game. Merci beaucoup ! 💯",
+      "date": "2026-02-09",
+      "source": "google",
+      "themes": [
+        "back-to-80s",
+        "famille"
+      ],
+      "context": ""
+    },
+    {
+      "author": "Manon T.",
+      "rating": 5,
+      "text": "Fait Back to the 80's à 5 entre amis trentenaires, on est tombés en pleine nostalgie. La salle est bourrée de clins d'œil rétro, on s'est marrés tout le long. Énigmes accessibles même pour des débutants, on a fini en mode champions. Super soirée.",
+      "date": "2026-02-08",
+      "source": "fictive",
+      "themes": [
+        "back-to-80s"
+      ],
+      "context": "Soirée entre amis"
     },
     {
       "author": "Hugo F.",
@@ -113,8 +187,24 @@
       "text": "On a réservé le quiz pour mes 30 ans avec 8 potes. Format hyper fun, on a ri du début à la fin. Les buzzers, les multi écrans, le boitier ABCD, tout est sérieux niveau matériel. Le chauffeur de salle lance l'émission et on s'amuse en autonomie. Une vraie découverte.",
       "date": "2026-01-25",
       "source": "fictive",
-      "themes": ["quiz", "anniversaire"],
+      "themes": [
+        "quiz",
+        "anniversaire"
+      ],
       "context": "Anniversaire 30 ans"
+    },
+    {
+      "author": "Johanne R.",
+      "rating": 5,
+      "text": "C'était notre première expérience en escape game et c'était vraiment génial. Le retour dans les années 80 était réussi, les énigmes de tous types et accessibles à tous également. Mon fils de 7 ans a réussi à participer et à nous trouver quelques solutions, malgré sa peur de rester coincé dans la pièce à la fin du chrono 😆 🤣. On a passé un agréable moment en famille, je vous recommande sincèrement de tester. Merci encore aux organisateurs !",
+      "date": "2025-12-06",
+      "source": "google",
+      "themes": [
+        "psychiatric",
+        "back-to-80s",
+        "famille"
+      ],
+      "context": ""
     }
   ]
 }
