@@ -19,3 +19,11 @@ node_modules/
 .fonts/
 .claude/
 .netlify/
+
+# Documents et exports locaux (ne pas versionner)
+*.pdf
+qr-code.*
+gamedoor41.fr-Performance-on-Search-*/
+*.xlsx
+*.csv
+!data/*.csv
