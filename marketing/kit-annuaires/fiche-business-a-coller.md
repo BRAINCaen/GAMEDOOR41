@@ -15,7 +15,7 @@ Code postal : 14120
 Ville : Mondeville
 Région : Normandie
 Pays : France
-Téléphone fixe : 02 31 53 07 51
+Téléphone fixe : 02 55 99 19 37
 Téléphone WhatsApp/mobile : 06 31 46 93 22
 Email : contact@gamedoor41.fr
 Site web : https://gamedoor41.fr

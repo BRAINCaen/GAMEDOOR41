@@ -142,7 +142,7 @@ ${components}`;
     [/<span class="ph">\[NB_AVIS\]<\/span>/g, '2 085'],
     // Contact (from CHARTE-GRAPHIQUE / design system contact)
     [/<a href="tel:#"><span class="ph">\[TEL_PRINCIPAL\]<\/span><\/a>/g,
-      '<a href="tel:+33231530751">02 31 53 07 51</a>'],
+      '<a href="tel:+33255991937">02 55 99 19 37</a>'],
     [/<a href="mailto:#"><span class="ph">\[EMAIL_CONTACT\]<\/span><\/a>/g,
       '<a href="mailto:contact@gamedoor41.fr">contact@gamedoor41.fr</a>'],
     [/<a href="#"><span class="ph">\[WhatsApp\]<\/span><\/a>/g,
@@ -255,7 +255,7 @@ ${components}`;
     "url": "https://gamedoor41.fr/",
     "logo": "https://gamedoor41.fr/img/logo/logo-stacked.png",
     "image": "https://gamedoor41.fr/img/og/og-default.jpg",
-    "telephone": "+33231530751",
+    "telephone": "+33255991937",
     "email": "contact@gamedoor41.fr",
     "priceRange": "€€",
     "foundingDate": "2017",

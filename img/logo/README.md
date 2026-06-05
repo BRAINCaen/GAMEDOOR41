@@ -150,4 +150,4 @@ Exemples :
 
 - Marque déposée INPI : **GAMEDOOR 41** — N° 5247839
 - Exploitant : **SARL BOEHME** — 41 bis rue Pasteur, 14120 Mondeville
-- Contact : contact@gamedoor41.fr · 02 31 53 07 51
+- Contact : contact@gamedoor41.fr · 02 55 99 19 37

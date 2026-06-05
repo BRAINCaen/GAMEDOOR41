@@ -28,7 +28,7 @@ kit-annuaires/
    - Nom officiel : **GAMEDOOR·41**
    - Anciens noms : Brain Escape Game, Buzz Your Brain
    - Adresse : 41 bis rue Pasteur, 14120 Mondeville, France
-   - Téléphone : 02 31 53 07 51
+   - Téléphone : 02 55 99 19 37
    - WhatsApp : 06 31 46 93 22
    - Email : contact@gamedoor41.fr
    - Site web : https://gamedoor41.fr

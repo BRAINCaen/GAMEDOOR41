@@ -72,6 +72,6 @@ Quand la charte évolue (V2 → V3) :
 ## 📞 Contact
 
 Allan Boehme — gérant SARL La Boehme
-allan@gamedoor41.fr — 02 31 53 07 51
+allan@gamedoor41.fr — 02 55 99 19 37
 41 bis rue Pasteur, 14120 Mondeville (Caen)
 INPI n° 5247839

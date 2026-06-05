@@ -22,46 +22,46 @@ async function findHtml(dir, results = []) {
 const REPLACEMENTS = [
   // Pattern 1 : Hero/CTA outline phone button avec numéro affiché
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-outline"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> 02 31 53 07 51<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-outline"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> 02 55 99 19 37<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr" class="btn btn-outline">Nous écrire</a>'
   },
   // Pattern 2 : Hero/CTA outline phone button sans icône
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-outline">02 31 53 07 51<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-outline">02 55 99 19 37<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr" class="btn btn-outline">Nous écrire</a>'
   },
   // Pattern 3 : Sticky CTA "Appeler" avec icône
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-outline" style="border-color:var\(--grey\);"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> Appeler<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-outline" style="border-color:var\(--grey\);"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> Appeler<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr" class="btn btn-outline" style="border-color:var(--grey);">Nous écrire</a>'
   },
   // Pattern 4 : Sticky CTA "Appeler" sans icône
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-outline" style="border-color:var\(--grey\);">Appeler<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-outline" style="border-color:var\(--grey\);">Appeler<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr" class="btn btn-outline" style="border-color:var(--grey);">Nous écrire</a>'
   },
-  // Pattern 5 : Cadeau "Commander au 02 31 53 07 51" CTA primary
+  // Pattern 5 : Cadeau "Commander au 02 55 99 19 37" CTA primary
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-primary" data-track="cta-cadeau"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> Commander au 02 31 53 07 51<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-primary" data-track="cta-cadeau"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> Commander au 02 55 99 19 37<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr?subject=Commande%20carte%20cadeau%20GAMEDOOR%C2%B741" class="btn btn-primary" data-track="cta-cadeau">Commander par email</a>'
   },
   // Pattern 6 : Cadeau "Commander" buttons quiz/escape (tel:)
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-quiz" style="width:100%;" data-track="cta-cadeau-quiz">Commander<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-quiz" style="width:100%;" data-track="cta-cadeau-quiz">Commander<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr?subject=Commande%20carte%20cadeau%20Quiz" class="btn btn-quiz" style="width:100%;" data-track="cta-cadeau-quiz">Commander par email</a>'
   },
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-primary" style="width:100%;" data-track="cta-cadeau-escape">Commander<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-primary" style="width:100%;" data-track="cta-cadeau-escape">Commander<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr?subject=Commande%20carte%20cadeau%20Escape" class="btn btn-primary" style="width:100%;" data-track="cta-cadeau-escape">Commander par email</a>'
   },
-  // Pattern 7 : Cadeau "02 31 53 07 51" CTA primary fin de page
+  // Pattern 7 : Cadeau "02 55 99 19 37" CTA primary fin de page
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-primary" data-track="cta-cadeau"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> 02 31 53 07 51<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-primary" data-track="cta-cadeau"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> 02 55 99 19 37<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr?subject=Commande%20carte%20cadeau%20GAMEDOOR%C2%B741" class="btn btn-primary" data-track="cta-cadeau">Commander par email</a>'
   },
   // Pattern 8 : Contact page — bouton "Appeler" outline
   {
-    re: /<a href="tel:\+33231530751" class="btn btn-outline"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> Appeler<\/a>/g,
+    re: /<a href="tel:\+33255991937" class="btn btn-outline"><img src="\/img\/icons\/phone\.svg" class="gd-icon" alt="" aria-hidden="true"> Appeler<\/a>/g,
     to: '<a href="mailto:contact@gamedoor41.fr" class="btn btn-outline">Nous écrire</a>'
   },
 ];

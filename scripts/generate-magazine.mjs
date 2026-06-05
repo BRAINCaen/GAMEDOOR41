@@ -693,7 +693,7 @@ ${article.body.trim()}
         <a href="/magazine/">Magazine</a>
       </div>
     </div>
-    <p class="footer-legal">© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 02 31 53 07 51</p>
+    <p class="footer-legal">© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 02 55 99 19 37</p>
   </div>
 </footer>
 
@@ -786,7 +786,7 @@ ${cards}
 
 <footer class="footer">
   <div class="container container-wide">
-    <p class="footer-legal">© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 02 31 53 07 51</p>
+    <p class="footer-legal">© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 02 55 99 19 37</p>
   </div>
 </footer>
 
