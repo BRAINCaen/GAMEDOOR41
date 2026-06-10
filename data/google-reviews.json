@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-06-09T06:55:11.566Z",
+  "updatedAt": "2026-06-10T07:14:10.690Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2120,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 17,
-  "googleAdded": 0,
+  "poolSize": 19,
+  "googleAdded": 2,
   "reviews": [
     {
       "author": "Clara D.",
@@ -182,6 +182,18 @@
       "context": "Soirée entre amis"
     },
     {
+      "author": "Sandra L.",
+      "rating": 5,
+      "text": "Super moment passé entre amis/ famille. C’était une découverte du monde de l’escape game pour nous qui nous donne clairement envi de réitérer l’expérience. Immersif 100%. Top !! Petit bémol sur le prix. Un tarif pour des enfants de 6 et 8 ans aurait été apprécié.",
+      "date": "2026-02-01",
+      "source": "google",
+      "themes": [
+        "back-to-80s",
+        "famille"
+      ],
+      "context": ""
+    },
+    {
       "author": "Hugo F.",
       "rating": 5,
       "text": "On a réservé le quiz pour mes 30 ans avec 8 potes. Format hyper fun, on a ri du début à la fin. Les buzzers, les multi écrans, le boitier ABCD, tout est sérieux niveau matériel. Le chauffeur de salle lance l'émission et on s'amuse en autonomie. Une vraie découverte.",
@@ -192,6 +204,19 @@
         "anniversaire"
       ],
       "context": "Anniversaire 30 ans"
+    },
+    {
+      "author": "Celine P.",
+      "rating": 5,
+      "text": "Nous.avons choisi la salle psychiatrique et nous avons passé un très bon moment, très bon concept, nous étions 6, un vrai bon moment. 1 des personnes à eu trop peur, Le personnel lui a proposé de sortir et c est très bien occupé d'elle une fois en dehors de la salle. Je vous le conseille vraiment, nous étions en famille et c etait vraiment amusant. L'équipe est top. J'espère y retourner pour faire une autre salle.",
+      "date": "2025-12-29",
+      "source": "google",
+      "themes": [
+        "psychiatric",
+        "back-to-80s",
+        "famille"
+      ],
+      "context": ""
     },
     {
       "author": "Johanne R.",
