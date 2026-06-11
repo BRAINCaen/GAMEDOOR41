@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-06-10T07:14:10.690Z",
+  "updatedAt": "2026-06-11T08:10:10.647Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2120,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 19,
-  "googleAdded": 2,
+  "poolSize": 20,
+  "googleAdded": 1,
   "reviews": [
     {
       "author": "Clara D.",
@@ -19,6 +19,18 @@
         "evjf"
       ],
       "context": "EVJF 10 candidates"
+    },
+    {
+      "author": "Jeremy D.",
+      "rating": 5,
+      "text": "Au début, j'étais surpris de l'ambiance, mais dès l'accueil, on nous accueille dès le personnage, qui est excellent! Tout était génial! Escape game année 1980, trop bien! On as tout aimé, en famille! À conseiller gravement!",
+      "date": "2026-05-23",
+      "source": "google",
+      "themes": [
+        "back-to-80s",
+        "famille"
+      ],
+      "context": ""
     },
     {
       "author": "Julie P.",
