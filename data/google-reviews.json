@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-06-14T07:52:37.080Z",
+  "updatedAt": "2026-06-15T09:29:48.956Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2122,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 20,
-  "googleAdded": 0,
+  "poolSize": 21,
+  "googleAdded": 1,
   "reviews": [
     {
       "author": "Clara D.",
@@ -66,6 +66,15 @@
         "evg"
       ],
       "context": "EVG 12 candidats"
+    },
+    {
+      "author": "Louise B.",
+      "rating": 5,
+      "text": "Très bonne expérience pour notre premier escape game en couple ! Notre hôte était au top et me decor était parfaitement adapté au thème ! Nous avons hâte d'y retourner avec mon compagnon tester de nouveaux thèmes ! Encore merci pour tout ! 😊",
+      "date": "2026-04-19",
+      "source": "google",
+      "themes": [],
+      "context": ""
     },
     {
       "author": "Théo M.",
