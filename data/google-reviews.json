@@ -1,13 +1,24 @@
 {
-  "updatedAt": "2026-06-17T08:32:53.308Z",
+  "updatedAt": "2026-06-18T08:14:00.936Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2123,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 22,
-  "googleAdded": 1,
+  "poolSize": 24,
+  "googleAdded": 2,
   "reviews": [
+    {
+      "author": "Lilian E.",
+      "rating": 5,
+      "text": "Une expérience immersive comme jamais vu auparavant grâce à Red. Psychiatric nous a permis de nous pousser vers nos retranchements, se challenger, créant un souvenir à la fois magistral et terrifiant. Mille mercis à Red et toute l'équipe derrière cet escape game ! On reviendra, on se vengera.",
+      "date": "2026-06-12",
+      "source": "google",
+      "themes": [
+        "psychiatric"
+      ],
+      "context": ""
+    },
     {
       "author": "Clara D.",
       "rating": 5,
@@ -54,6 +65,15 @@
         "psychiatric"
       ],
       "context": "Couple à 2"
+    },
+    {
+      "author": "Mourade A.",
+      "rating": 5,
+      "text": "Une expérience de dingue je recommande à 10000%. Mention spéciale à Lucie qui nous a très bien accueilli une joie de vivre incroyable. Mon meilleur escape game à ce jour. Le thème est respecté à fond les énigmes complexes mais accessible. Le fun est omniprésent, franchement bien pensé bien réfléchi à faire et refaire. Foncez là bas les yeux fermés 🥰",
+      "date": "2026-05-11",
+      "source": "google",
+      "themes": [],
+      "context": ""
     },
     {
       "author": "Alexandre V.",
