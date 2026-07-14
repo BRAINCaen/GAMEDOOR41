@@ -27,3 +27,28 @@ gamedoor41.fr-Performance-on-Search-*/
 *.xlsx
 *.csv
 !data/*.csv
+
+# ============================================================
+# FICHIERS DE TRAVAIL — JAMAIS EN PROD (audit 2026-07-13)
+# publish = "." dans netlify.toml : tout fichier tracké est servi
+# sur gamedoor41.fr et indexable. Ces fichiers contiennent du
+# contenu interdit (ancien tel Brain, "payez sur place", m²,
+# tarifs fictifs) et des quasi-copies de la home (duplicate).
+# Ils restent sur le disque local, hors git.
+# ============================================================
+_archive/
+_wip/
+extracted-v33/
+marketing/
+gamedoor41-design-system/
+index.v33-working.html
+GAMEDOOR41 - Home V3.3 (standalone).html
+CHARTE-GRAPHIQUE-GAMEDOOR41*.html
+PHASE-*.html
+preview-bandeau-wix.html
+Architecture SEO V2-print.html
+MEDIA-HARDENING-REPORT.md
+sitemap-data.jsx
+Brain escape quiz accueil.mp4
+*.bak.html
+*.bak
