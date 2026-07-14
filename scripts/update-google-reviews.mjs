@@ -33,6 +33,7 @@ const HTML_FILES = [
   'team-building-caen/index.html',
   'evjf-caen/index.html',
   'evg-caen/index.html',
+  'mariage-caen/index.html',
   'anniversaire-caen/index.html',
   'cadeau/index.html',
   'tarifs/index.html',
