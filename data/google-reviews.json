@@ -1,13 +1,22 @@
 {
-  "updatedAt": "2026-07-13T06:25:39.225Z",
+  "updatedAt": "2026-07-14T05:36:55.947Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
-  "reviewCount": 2130,
+  "reviewCount": 2131,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 24,
-  "googleAdded": 0,
+  "poolSize": 25,
+  "googleAdded": 1,
   "reviews": [
+    {
+      "author": "carole P.",
+      "rating": 5,
+      "text": "Nous avons passé un très bon moment. La salle garde à vue est vraiment géniale. On était à Ça de s’échapper mais Red nous a rattrapé!!! Très fort ce personnage, merci pour ce bon moment chez la polisse!!!!!",
+      "date": "2026-07-04",
+      "source": "google",
+      "themes": [],
+      "context": ""
+    },
     {
       "author": "Lilian E.",
       "rating": 5,
