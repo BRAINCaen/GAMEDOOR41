@@ -1,13 +1,22 @@
 {
-  "updatedAt": "2026-07-18T05:32:39.580Z",
+  "updatedAt": "2026-07-19T06:04:04.903Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2137,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 25,
-  "googleAdded": 0,
+  "poolSize": 27,
+  "googleAdded": 2,
   "reviews": [
+    {
+      "author": "Anas Y.",
+      "rating": 5,
+      "text": "Très bonne expérience avec l'animateur au top. Je recommande fortement si vous souhaitez une vrai immersion ! Mal pas de choix pour venir en couple ou entre amis.",
+      "date": "2026-07-12",
+      "source": "google",
+      "themes": [],
+      "context": ""
+    },
     {
       "author": "carole P.",
       "rating": 5,
@@ -15,6 +24,18 @@
       "date": "2026-07-04",
       "source": "google",
       "themes": [],
+      "context": ""
+    },
+    {
+      "author": "Amaury",
+      "rating": 5,
+      "text": "Acteur incroyable !!! On est plongé dans l’univers dès notre arrivée une expérience à faire nous avons fait les année 80 + la garde vue les escape game sont incroyable vraiment je le recommande à 10000% les game master joue très bien leur rôle et du coup l’expérience est vraiment bonne merci à eux pour ces 2 sessions de folie",
+      "date": "2026-06-27",
+      "source": "google",
+      "themes": [
+        "garde-a-vue",
+        "back-to-80s"
+      ],
       "context": ""
     },
     {
