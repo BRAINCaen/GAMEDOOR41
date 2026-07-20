@@ -2,8 +2,13 @@ name: Update Google reviews
 
 on:
   schedule:
-    # 03:00 UTC = 04:00 ou 05:00 heure française selon DST — hors heures d'affluence
-    - cron: '0 3 * * *'
+    # ~00h20 heure de Paris toute l'annee (les crons GitHub sont en UTC) :
+    # 22:20 UTC = 00:20 Paris en ete · 23:20 UTC = 00:20 Paris en hiver.
+    # Les deux tournent chaque nuit (la 2e passe est sans effet si rien n'a change).
+    # Ce creneau permet au robot du dashboard Gamedoor-Objectives (00h33) de lire
+    # un compteur d'avis tout frais et de calculer les "avis du jour".
+    - cron: '20 22 * * *'
+    - cron: '20 23 * * *'
   workflow_dispatch:
 
 permissions:
