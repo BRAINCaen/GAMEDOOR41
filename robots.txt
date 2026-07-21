@@ -5,3 +5,9 @@ Sitemap: https://gamedoor41.fr/sitemap.xml
 
 # Bloquer les URLs techniques Netlify
 Disallow: /netlify/
+
+# Fichiers de travail de l'equipe (deja renvoyes en 404 par netlify.toml)
+Disallow: /README.md
+Disallow: /CLAUDE.md
+Disallow: /scripts/
+Disallow: /apps-script/

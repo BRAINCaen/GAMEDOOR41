@@ -17,8 +17,13 @@ Thumbs.db
 # Build tools (not deployed)
 node_modules/
 .fonts/
-.claude/
 .netlify/
+
+# Claude Code : la config d'equipe est versionnee (elle suit le projet sur
+# tous les postes), les fichiers personnels et locaux restent hors git.
+.claude/*
+!.claude/settings.json
+.claude/settings.local.json
 
 # Documents et exports locaux (ne pas versionner)
 *.pdf
