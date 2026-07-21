@@ -3,7 +3,10 @@
 Thumbs.db
 
 # Editors
-.vscode/
+# .vscode/extensions.json est versionne : il propose Live Server et Claude Code
+# a l'ouverture du dossier, sur n'importe quel poste.
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo

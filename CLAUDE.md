@@ -98,13 +98,21 @@ capacité : demande la valeur exacte plutôt que de supposer.
 Il n'y a pas de tests automatisés. Le minimum avant un `push` :
 
 ```bash
-git status              # rien d'inattendu dans la liste ?
-git diff                # les modifications sont bien celles voulues ?
-python -m http.server 8000   # aperçu local sur http://localhost:8000
+git status    # rien d'inattendu dans la liste ?
+git diff      # les modifications sont bien celles voulues ?
 ```
 
-Ouvrir `index.html` directement dans le navigateur ne suffit pas : les liens internes
-(`/tarifs/`) ne fonctionnent qu'avec un serveur local.
+Pour un aperçu, il faut un serveur local : ouvrir `index.html` en `file://` casse tous
+les liens internes (`/tarifs/`). **Ne suppose pas que `python` est disponible** — sur les
+postes Windows de l'équipe, `python` n'est souvent que le raccourci vide du Microsoft
+Store, qui échoue avec un message trompeur. L'extension VS Code **Live Server**
+(recommandée dans `.vscode/extensions.json`) est la méthode fiable. Vérifie l'outil avant
+de le proposer à quelqu'un.
+
+Filet de sécurité : si `netlify.toml` est syntaxiquement invalide, Netlify **refuse** le
+déploiement et le site reste sur la version précédente. Une erreur de configuration ne
+met donc jamais le site hors ligne — mais elle bloque les publications suivantes tant
+qu'elle n'est pas corrigée.
 
 ## Messages de commit
 

@@ -71,14 +71,13 @@ Google de l'ancien site. En supprimer une, c'est perdre des visiteurs.
 
 ## Voir le site avant de publier
 
-Dans le terminal de VS Code :
+**Ne double-clique pas sur `index.html`** : la page s'affichera, mais tous les liens
+internes (`/tarifs/`, `/contact/`…) seront cassés. Ce n'est pas représentatif.
 
-```bash
-python -m http.server 8000
-```
-
-Puis ouvrir http://localhost:8000. (Ouvrir `index.html` par double-clic ne marche pas
-correctement : les liens internes seront cassés.)
+La bonne méthode, une fois pour toutes : installer l'extension **Live Server** dans
+VS Code (elle est proposée automatiquement à l'ouverture du dossier — accepter). Ensuite,
+clic droit sur `index.html` → **Open with Live Server**. Le site s'ouvre dans le
+navigateur et se rafraîchit à chaque modification enregistrée.
 
 ---
 
