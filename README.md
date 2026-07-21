@@ -18,7 +18,7 @@ Ouvrir VS Code → menu **Terminal → Nouveau terminal**, puis copier-coller :
 
 ```bash
 cd ~/Projets
-git clone https://github.com/BRAINCaen/gamedoor41.git
+git clone https://github.com/BRAINCaen/GAMEDOOR41.git
 ```
 
 Une fenêtre GitHub s'ouvre pour se connecter : utiliser **le compte du taf**. Cette
