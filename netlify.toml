@@ -291,18 +291,6 @@
   force = true
 
 [[redirects]]
-  from = "/faq"
-  to = "/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/faq/"
-  to = "/"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/preparez-votre-experience"
   to = "/contact/"
   status = 301
