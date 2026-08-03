@@ -93,7 +93,7 @@ const REPLACEMENTS_TOTAL_46 = [
 // REGLE 3 — Téléphone CTA restant
 const REPLACEMENTS_TEL = [
   // Tarifs page CTA primary tel → mailto
-  ['<a href="tel:+33255991937" class="btn btn-primary"><img src="/img/icons/phone.svg" class="gd-icon" alt="" aria-hidden="true"> 02 55 99 19 37</a>',
+  ['<a href="tel:+33631469322" class="btn btn-primary"><img src="/img/icons/phone.svg" class="gd-icon" alt="" aria-hidden="true"> 06 31 46 93 22</a>',
    '<a href="mailto:contact@gamedoor41.fr" class="btn btn-primary">Nous écrire</a>'],
   // Footer index.html liste — c'est un footer, mais l'utilisateur a dit pas de tél partout, on garde un footer simple
   // (ne pas trop décharger le footer)
