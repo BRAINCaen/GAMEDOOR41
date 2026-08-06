@@ -388,13 +388,28 @@ async function main() {
 
 // Detecte les themes mentionnes dans une review (regex simples, sans accents
 // pour matcher Google FR qui ecrit parfois "garde a vue" sans accents).
+//
+// Les 4 premiers themes pilotent l'AFFICHAGE des temoignages sur les pages
+// salles (cf. scripts/rotate-reviews.mjs) : ils ne doivent matcher que sur un
+// identifiant sans ambiguite de la salle. Un faux positif = un avis affiche
+// sur la mauvaise page.
+//
+// Pieges corriges le 06/08/2026 :
+//  - "famille|enfant" etait dans la regle back-to-80s : tout avis parlant de
+//    famille atterrissait sur Back to the 80's, meme en decrivant une autre
+//    salle (Celine P., Johanne R., Sandra L.).
+//  - la regle psychiatric exigeait le mot exact "psychiatric" : "psychiatrique"
+//    et "psychiatrie", que les clients ecrivent en realite, ne matchaient pas.
+//  - "horreur|frisson|peur|effrayant" classaient en psychiatric des avis qui
+//    parlaient d'autre chose ("peur de rester coince", "peur du noir").
+//    L'emotion ne suffit pas a identifier une salle : seul le nom compte.
 const THEME_RULES = [
-  { theme: 'garde-a-vue', re: /\b(garde\s*a?\s*vue|policier|inspecteur|commissariat|cellule|enquete|enqu[êe]te|interrogatoire)\b/i },
-  { theme: 'psychiatric', re: /\b(psychiatric|psy\b|asile|h[oô]pital\s+psy|horreur|frisson|peur|effrayant|sinistre|oppressant|d[eé]rangeant)\b/i },
-  { theme: 'back-to-80s', re: /\b(80['’]?s?|annees\s*80|ann[eé]es\s*80|retro|r[eé]tro|jukebox|pac[\s-]?man|vinyle|nostalgi|famille|enfant)\b/i },
-  { theme: 'quiz', re: /\b(quiz|buzz|buzzer|pupitre|plateau\s*tv|emission|[eé]mission|candidat|blind\s*test)\b/i },
+  { theme: 'garde-a-vue', re: /(garde\s*[àa]?\s*vue|polici|polisse|inspecteur|commissariat|interrogatoire)/i },
+  { theme: 'psychiatric', re: /(psychiatri|asile|h[oô]pital\s+psy|\bpsy\b)/i },
+  { theme: 'back-to-80s', re: /(back\s*to\s*(the\s*)?80|ann[ée]es?\s*(19)?80|\b80['’]?s\b|r[ée]tro|jukebox|pac[\s-]?man|vinyle|nostalgi)/i },
+  { theme: 'quiz', re: /(buzz\s*your\s*brain|\bquiz\b|buzzer|blind\s*test|plateau\s*tv|pupitre)/i },
   { theme: 'team-building', re: /\b(team[\s-]?building|seminaire|s[eé]minaire|entreprise|collegues|coll[eè]gues|csm|cse|boite)\b/i },
-  { theme: 'famille', re: /\b(famille|familial|enfant|gamin|fils|fille|parent|parents)\b/i },
+  { theme: 'famille', re: /(en\s+famille|familial|mes?\s+enfants?|nos\s+enfants?|mon\s+fils|ma\s+fille|neveu|ni[èe]ce)/i },
   { theme: 'evjf', re: /\b(evjf|enterrement.*jeune\s*fille|future\s*mariee|mari[eé]e)\b/i },
   { theme: 'evg', re: /\b(evg|enterrement.*gar[cç]on|enterrement.*vie\s*gar[cç]on|futur\s*marie|mari[eé]\b)\b/i },
   { theme: 'anniversaire', re: /\b(anniversaire|anniv\b|fete\s*d['e]anniv|ado)\b/i },
@@ -454,9 +469,11 @@ async function persistReviewPool({ placeId, name, rating, count, rawReviews }) {
       seen.set(k, r);
       added++;
     } else {
-      // Refresh themes si la regex a evolue mais on garde la review existante
+      // Refresh themes si la regex a evolue mais on garde la review existante.
+      // Exception : themesManual=true = classement pose a la main apres lecture
+      // de l'avis. Il fait autorite, les regex ne le rebalayent jamais.
       const prev = seen.get(k);
-      if ((prev.themes || []).length < r.themes.length) {
+      if (!prev.themesManual && (prev.themes || []).length < r.themes.length) {
         prev.themes = r.themes;
       }
     }
