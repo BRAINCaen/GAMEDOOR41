@@ -41,7 +41,26 @@ const HTML_FILES = [
   'contact/index.html',
   'devis/index.html',
   'avis/index.html',
+  'brain-devient-gamedoor41/index.html',
 ];
+
+// Les articles du magazine citent eux aussi la note et le nombre d'avis, mais
+// n'etaient pas dans la liste : 5 d'entre eux affichaient encore "2 131 avis"
+// quand le site en annoncait 2 170 (constate le 06/08/2026). La liste est
+// desormais completee dynamiquement pour qu'un nouvel article soit couvert
+// sans intervention.
+async function tousLesFichiers() {
+  let articles = [];
+  try {
+    const dossiers = await fs.readdir(path.join(ROOT, 'post'), { withFileTypes: true });
+    articles = dossiers
+      .filter((d) => d.isDirectory())
+      .map((d) => `post/${d.name}/index.html`);
+  } catch {
+    // pas de dossier post/ : on continue avec la liste fixe
+  }
+  return [...HTML_FILES, ...articles];
+}
 
 async function fetchPlace() {
   const res = await fetch('https://places.googleapis.com/v1/places:searchText', {
@@ -352,7 +371,7 @@ async function main() {
   let totalChanges = 0;
   const report = [];
 
-  for (const file of HTML_FILES) {
+  for (const file of await tousLesFichiers()) {
     const r = await updateFile(file, rules);
     totalChanges += r.changes;
     report.push(r);
