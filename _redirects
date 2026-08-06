@@ -38,12 +38,21 @@ https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/quiz-game-caen/ 
 /plan-du-site                             /sitemap.xml                           301
 /blog                                     /magazine/                             301
 /blog/*                                   /magazine/                             301
-/emploi-escape-game-caen                  /alternance/                           301
-/alternance-brain-caen                    /alternance/                           301
-/alternances                              /alternance/                           301
-/alternance                               /alternance/                           301
-/alternance/merci                         /alternance/                           301
-/alternance/merci/                        /alternance/                           301
+# Cibles ABSOLUES obligatoires ici (corrige le 06/08/2026).
+# En relatif, la regle "/alternance -> /alternance/" se redirigeait vers
+# elle-meme : Netlify detecte la boucle et sert la page. Sur le domaine
+# herite, www.brain-escapegame-caen.fr/alternance/ repondait donc 200 au
+# lieu de 301 — la seule page de l'ancien domaine encore vivante, ce qui
+# suffisait a la maintenir dans l'index Google. En absolu, la meme regle
+# renvoie vers gamedoor41.fr en un seul saut, quel que soit le domaine
+# d'entree. Les regles host-level en bas de fichier ne suffisent pas :
+# les regles path-level ci-dessus matchent en premier et gagnent.
+/emploi-escape-game-caen                  https://gamedoor41.fr/alternance/      301
+/alternance-brain-caen                    https://gamedoor41.fr/alternance/      301
+/alternances                              https://gamedoor41.fr/alternance/      301
+/alternance                               https://gamedoor41.fr/alternance/      301
+/alternance/merci                         https://gamedoor41.fr/alternance/      301
+/alternance/merci/                        https://gamedoor41.fr/alternance/      301
 
 # ----- PAGES LÉGALES BRAIN → GAMEDOOR -----
 /politique-de-cookies                     /politique-cookies/                    301

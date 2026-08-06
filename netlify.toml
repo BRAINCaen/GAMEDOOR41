@@ -8,6 +8,15 @@
 # REDIRECTIONS 301 — Migration Wix → gamedoor41.fr
 # Mapping sémantique complet : chaque URL Wix redirige vers
 # la page la plus proche sur gamedoor41.fr
+#
+# ATTENTION — le fichier `_redirects` GAGNE sur ce fichier.
+# Vérifié en ligne le 06/08/2026 : 5 chemins sont définis dans les
+# deux fichiers avec des cibles différentes (/blog, /evjf-evg-mariage,
+# /termes-et-conditions, /emploi-escape-game-caen…) et c'est toujours
+# `_redirects` qui s'applique. Les règles concurrentes d'ici sont donc
+# du code mort. Avant de corriger une redirection, vérifier d'abord si
+# le chemin existe dans `_redirects` — sinon la correction n'aura
+# aucun effet en ligne.
 # ============================================================
 
 # --- Pages Escape Game (salles) ---
@@ -389,6 +398,83 @@
 [[redirects]]
   from = "/reserver/"
   to = "https://braincaen.4escape.io/booking"
+  status = 301
+  force = true
+
+# --- Anciennes URL Wix retrouvees en 404 (audit 06/08/2026) ---
+# Ces slugs etaient la navigation principale du site Wix et sortaient
+# encore dans le rapport "Pages non indexees" de Search Console.
+# /idee-cadeau-escape-game-caen portait une intention d'achat directe.
+
+[[redirects]]
+  from = "/idee-cadeau-escape-game-caen"
+  to = "/cadeau/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/idee-cadeau-escape-game-caen/"
+  to = "/cadeau/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/les-rooms"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/les-rooms/"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/le-concept"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/le-concept/"
+  to = "/escape-game-caen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/promoventesflash"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/promoventesflash/"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/category/all-products"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/category/all-products/"
+  to = "/tarifs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plan-de-site"
+  to = "/sitemap.xml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/plan-de-site/"
+  to = "/sitemap.xml"
   status = 301
   force = true
 
