@@ -3559,6 +3559,20 @@ img.gd-icon { filter: invert(55%) sepia(62%) saturate(2800%) hue-rotate(2deg) br
   border-top: 1px solid var(--hairline, rgba(255,255,255,.08));
   border-bottom: 1px solid var(--hairline, rgba(255,255,255,.08));
 }
+/* L'egalite du bandeau mene a /brain-devient-gamedoor41/ : c'est l'ancre
+   la plus riche en mots-cles pour les requetes "brain caen", presente sur
+   21 pages. Le lien reste discret pour ne pas alourdir le bandeau. */
+.heritage-eq a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(224, 112, 32, .45);
+  transition: color .2s ease, border-color .2s ease;
+}
+.heritage-eq a:hover,
+.heritage-eq a:focus-visible {
+  color: #E07020;
+  border-bottom-color: #E07020;
+}
 .heritage-band {
   position: relative;
   isolation: isolate;

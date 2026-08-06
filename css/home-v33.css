@@ -1031,6 +1031,20 @@ a.hero-tripadvisor:hover {
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
 }
+/* L'egalite du bandeau mene a /brain-devient-gamedoor41/ : c'est l'ancre
+   la plus riche en mots-cles pour les requetes "brain caen". Lien discret,
+   le bandeau doit rester lisible d'un coup d'oeil. */
+.heritage-eq a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(224, 112, 32, .45);
+  transition: color .2s ease, border-color .2s ease;
+}
+.heritage-eq a:hover,
+.heritage-eq a:focus-visible {
+  color: var(--gd-orange);
+  border-bottom-color: var(--gd-orange);
+}
 /* Heritage band — bordure animée style "star-border" (comètes orange
    qui font le tour de la box en boucle 2.5s, épaisseur visuelle 4px) */
 .heritage-band {
