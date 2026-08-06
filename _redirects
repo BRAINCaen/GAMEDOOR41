@@ -38,19 +38,14 @@ https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/quiz-game-caen/ 
 /plan-du-site                             /sitemap.xml                           301
 /blog                                     /magazine/                             301
 /blog/*                                   /magazine/                             301
-# Cibles ABSOLUES obligatoires ici (corrige le 06/08/2026).
-# En relatif, la regle "/alternance -> /alternance/" se redirigeait vers
-# elle-meme : Netlify detecte la boucle et sert la page. Sur le domaine
-# herite, www.brain-escapegame-caen.fr/alternance/ repondait donc 200 au
-# lieu de 301 — la seule page de l'ancien domaine encore vivante, ce qui
-# suffisait a la maintenir dans l'index Google. En absolu, la meme regle
-# renvoie vers gamedoor41.fr en un seul saut, quel que soit le domaine
-# d'entree. Les regles host-level en bas de fichier ne suffisent pas :
-# les regles path-level ci-dessus matchent en premier et gagnent.
+# Cibles ABSOLUES ici (06/08/2026) : depuis un domaine herite, une cible
+# relative ferait rester sur ce domaine et couterait un second saut.
+# La regle "/alternance" elle-meme est plus bas, apres le bloc host-level
+# (voir l'explication a la fin du fichier) : c'est la seule du site dont
+# le chemin correspond a un vrai fichier, et sa place ici cassait tout.
 /emploi-escape-game-caen                  https://gamedoor41.fr/alternance/      301
 /alternance-brain-caen                    https://gamedoor41.fr/alternance/      301
 /alternances                              https://gamedoor41.fr/alternance/      301
-/alternance                               https://gamedoor41.fr/alternance/      301
 /alternance/merci                         https://gamedoor41.fr/alternance/      301
 /alternance/merci/                        https://gamedoor41.fr/alternance/      301
 
@@ -145,3 +140,25 @@ https://www.gamedoor41.com/*              https://gamedoor41.fr/:splat   301!
 https://www.gamedoor41.fr/*               https://gamedoor41.fr/:splat   301!
 
 # NOTE : backroom-caen.fr volontairement non redirigé — futur projet séparé.
+
+# =============================================================
+# /alternance — DOIT rester APRÈS le bloc host-level ci-dessus
+# =============================================================
+# C'est la seule règle du site dont le chemin correspond à un vrai
+# fichier servi (`alternance/index.html`). Or une règle sans `!` est
+# ignorée quand le fichier existe — et Netlify s'arrête là : les règles
+# host-level en dessous n'étaient jamais atteintes. Résultat, tant que
+# cette ligne était placée en haut du fichier avec les autres slugs Wix,
+# brain-escapegame-caen.fr/alternance/, brain-quiz-caen.fr/alternance/ et
+# gamedoor41.com/alternance/ répondaient 200 : du contenu dupliqué qui
+# maintenait les anciens domaines dans l'index Google (constaté 06/08/2026).
+#
+# Placée ICI, les domaines hérités matchent d'abord leur règle host-level
+# (forcée) et partent en 301 vers gamedoor41.fr. Sur gamedoor41.fr, aucune
+# règle host ne matche : /alternance tombe sur la ligne ci-dessous, qui est
+# ignorée puisque le fichier existe, et Netlify ajoute son slash final —
+# le comportement attendu.
+#
+# NE PAS ajouter de `!` ici : la règle deviendrait une boucle infinie sur
+# gamedoor41.fr/alternance/, qui se redirigerait vers elle-même.
+/alternance                               https://gamedoor41.fr/alternance/      301
