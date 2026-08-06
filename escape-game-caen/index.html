@@ -29,11 +29,14 @@
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts V3.3 (Barlow Condensed pour le hero GAMEDOOR·ESCAPE) -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&display=swap"></noscript>
+  <!-- Fonts : UNE seule requete Google Fonts pour les 3 familles.
+       Barlow Condensed sert au hero GAMEDOOR·ESCAPE, Oswald et DM Sans au
+       reste de la page. Elles etaient chargees en deux requetes separees
+       (audit 06/08/2026) : deux allers-retours reseau au lieu d'un, sur une
+       page dont 87 % des visites viennent du telephone. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
     <link rel="preload" as="image" type="image/avif" imagesrcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.avif 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.avif 1672w" imagesizes="100vw">
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=ae805abf">
   <style>
     /* === Hero GAMEDOOR·ESCAPE — refonte compacte & audacieuse : eyebrow + wordmark + 3 cards d'orientation directes === */
     .gd-hero {
@@ -566,21 +569,21 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
           </span>
           <p class="exp-orient-q">Vous cherchez une aventure fun ?</p>
-          <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
+          <p class="exp-orient-room"><img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
         </a>
         <a href="#in-prison" class="exp-orient-card">
           <span class="exp-orient-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12,2 14,8 20,8 15,12 17,18 12,14 7,18 9,12 4,8 10,8"/><circle cx="12" cy="11" r="2" fill="currentColor"/></svg>
           </span>
           <p class="exp-orient-q">Vous voulez tester votre cohésion ?</p>
-          <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
+          <p class="exp-orient-room"><img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
         </a>
         <a href="#psychiatric" class="exp-orient-card">
           <span class="exp-orient-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.6" fill="currentColor"/><circle cx="15" cy="12" r="0.6" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></svg>
           </span>
           <p class="exp-orient-q">Vous aimez les sensations fortes ?</p>
-          <p class="exp-orient-room"><img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
+          <p class="exp-orient-room"><img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
         </a>
       </div>
 
@@ -713,7 +716,7 @@
           <picture>
             <source type="image/avif" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.avif 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.avif 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.avif 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.avif 1466w" sizes="(max-width: 900px) 100vw, 50vw">
             <source type="image/webp" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.webp 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.webp 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.webp 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.webp 1466w" sizes="(max-width: 900px) 100vw, 50vw">
-            <img src="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.jpg" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.jpg 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.jpg 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.jpg 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.jpg 1466w" sizes="(max-width: 900px) 100vw, 50vw" alt="Jukebox Wurlitzer et figurines vintage — escape game Back to the 80's GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+            <img width="1024" height="749" src="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.jpg" srcset="/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-480w.jpg 480w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-768w.jpg 768w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines-1024w.jpg 1024w, /img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.jpg 1466w" sizes="(max-width: 900px) 100vw, 50vw" alt="Jukebox Wurlitzer et figurines vintage — escape game Back to the 80's GAMEDOOR·41 Caen" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="salle-body">
@@ -726,10 +729,10 @@
           <h2 style="margin-bottom:12px;">Back to the 80's</h2>
           <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">« Retour vers le fun »</p>
           <div class="room-card-meta" style="margin-bottom:16px;">
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2-6 joueurs</span>
-            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 2 ou 3</span>
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 7 ans (avec adulte)</span>
+            <span><img width="24" height="24" src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2-6 joueurs</span>
+            <span><img width="24" height="24" src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+            <span><img width="24" height="24" src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 2 ou 3</span>
+            <span><img width="24" height="24" src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 7 ans (avec adulte)</span>
           </div>
           <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">▸ Remonter en 1989. Avant que Samuel ne devienne… Samuel.</p>
           <p style="color:var(--grey-light);margin-bottom:14px;">Samuel squatte l'appart, bouffe les pâtes, ne se lave jamais. <strong>La solution :</strong> un saut dans le temps. Vous y allez à ma place !</p>
@@ -773,7 +776,7 @@
           <picture>
             <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.avif 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.avif 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.avif 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.avif 1448w" sizes="(max-width: 900px) 100vw, 50vw">
             <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.webp 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.webp 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.webp 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.webp 1448w" sizes="(max-width: 900px) 100vw, 50vw">
-            <img src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.jpg 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="(max-width: 900px) 100vw, 50vw" alt="Cellule de garde à vue avec banc, mobilier et toilettes — escape game GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+            <img width="1024" height="768" src="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg" srcset="/img/escape/salle-garde-a-vue-cellule-banc-toilettes-480w.jpg 480w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-768w.jpg 768w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes-1024w.jpg 1024w, /img/escape/salle-garde-a-vue-cellule-banc-toilettes.jpg 1448w" sizes="(max-width: 900px) 100vw, 50vw" alt="Cellule de garde à vue avec banc, mobilier et toilettes — escape game GAMEDOOR·41 Caen" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="salle-body">
@@ -783,10 +786,10 @@
           <h2 style="margin-bottom:12px;">Garde à Vue</h2>
           <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'enquête dont vous êtes le suspect</p>
           <div class="room-card-meta" style="margin-bottom:16px;">
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par bureau · 2 bureaux</span>
-            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
-            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans</span>
+            <span><img width="24" height="24" src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par bureau · 2 bureaux</span>
+            <span><img width="24" height="24" src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+            <span><img width="24" height="24" src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
+            <span><img width="24" height="24" src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 10 ans</span>
           </div>
           <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« Convocation immédiate au commissariat. Refus = poursuites. »</p>
           <p style="color:var(--grey-light);margin-bottom:14px;">Sauf que <strong>Brian a disparu</strong>, Chantal attend sa retraite depuis 2017, et le distributeur de café est cassé depuis l'été. Bienvenue à la brigade la moins glorieuse du coin.</p>
@@ -830,7 +833,7 @@
           <picture>
             <source type="image/avif" srcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w, /img/escape/psychiatric-couloir-1024w.avif 1024w, /img/escape/psychiatric-couloir.avif 1086w" sizes="(max-width: 900px) 100vw, 50vw">
             <source type="image/webp" srcset="/img/escape/psychiatric-couloir-480w.webp 480w, /img/escape/psychiatric-couloir-768w.webp 768w, /img/escape/psychiatric-couloir-1024w.webp 1024w, /img/escape/psychiatric-couloir.webp 1086w" sizes="(max-width: 900px) 100vw, 50vw">
-            <img src="/img/escape/psychiatric-couloir-1024w.jpg" srcset="/img/escape/psychiatric-couloir-480w.jpg 480w, /img/escape/psychiatric-couloir-768w.jpg 768w, /img/escape/psychiatric-couloir-1024w.jpg 1024w, /img/escape/psychiatric-couloir.jpg 1086w" sizes="(max-width: 900px) 100vw, 50vw" alt="Couloir d'hôpital psychiatrique abandonné avec fauteuil roulant — escape game horreur GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+            <img width="1024" height="1365" src="/img/escape/psychiatric-couloir-1024w.jpg" srcset="/img/escape/psychiatric-couloir-480w.jpg 480w, /img/escape/psychiatric-couloir-768w.jpg 768w, /img/escape/psychiatric-couloir-1024w.jpg 1024w, /img/escape/psychiatric-couloir.jpg 1086w" sizes="(max-width: 900px) 100vw, 50vw" alt="Couloir d'hôpital psychiatrique abandonné avec fauteuil roulant — escape game horreur GAMEDOOR·41 Caen" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="salle-body">
@@ -840,10 +843,10 @@
           <h2 style="margin-bottom:12px;">Psychiatric</h2>
           <p style="color:var(--gd-escape-on-dark);font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">L'évasion mentale en mode survie</p>
           <div class="room-card-meta" style="margin-bottom:16px;">
-            <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par chambre · 2 chambres</span>
-            <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-            <span><img src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
-            <span><img src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 12 ans</span>
+            <span><img width="24" height="24" src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 2–6 par chambre · 2 chambres</span>
+            <span><img width="24" height="24" src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+            <span><img width="24" height="24" src="/img/icons/difficulty.svg" class="gd-icon" alt="" aria-hidden="true"> Niveau 1 ou 2 (ajustable)</span>
+            <span><img width="24" height="24" src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 12 ans</span>
           </div>
           <p style="color:var(--grey-light);margin-bottom:14px;font-style:italic;border-left:2px solid var(--gd-escape-on-dark);padding-left:14px;">« On va vous garder en observation. »</p>
           <p style="color:var(--grey-light);margin-bottom:14px;">Le voisin parle aux murs depuis 1998. Une voix chuchote votre nom à travers la cloison. <strong>Et personne ici n'a vraiment l'air d'être un soignant.</strong></p>
@@ -883,7 +886,7 @@
     <picture class="quiz-cross-sell-bg">
       <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
       <source type="image/webp" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.webp 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.webp 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.webp 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.webp 1400w" sizes="100vw">
-      <img src="/img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="100vw" alt="Plateau TV Quiz Game Buzz Your Brain — GAMEDOOR·41 Caen" loading="lazy" decoding="async">
+      <img width="1024" height="1360" src="/img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="100vw" alt="Plateau TV Quiz Game Buzz Your Brain — GAMEDOOR·41 Caen" loading="lazy" decoding="async">
     </picture>
     <div class="quiz-cross-sell-overlay" aria-hidden="true"></div>
     <div class="container">
@@ -892,10 +895,10 @@
         <h2 id="quiz-cross-sell-h" class="quiz-headline">Découvrez aussi notre <span class="quiz-accent">plateau TV Quiz Game</span></h2>
         <p class="quiz-pitch">Un présentateur qui fait chauffeur de salle avant de prendre l'antenne. Façon « Burger Quiz » mais <strong>en vrai</strong>. De 4 à 16 candidats répartis sur 8 pupitres (1 à 2 par pupitre), idéal pour anniversaires, EVJF, EVG, séminaires d'entreprise.</p>
         <div class="quiz-meta">
-          <span><img src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 4 à 16 candidats</span>
-          <span><img src="/img/icons/mic.svg" class="gd-icon" alt="" aria-hidden="true"> 8 pupitres · 1-2 par pupitre</span>
-          <span><img src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
-          <span><img src="/img/icons/euro.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 22€/pers.</span>
+          <span><img width="24" height="24" src="/img/icons/users.svg" class="gd-icon" alt="" aria-hidden="true"> 4 à 16 candidats</span>
+          <span><img width="24" height="24" src="/img/icons/mic.svg" class="gd-icon" alt="" aria-hidden="true"> 8 pupitres · 1-2 par pupitre</span>
+          <span><img width="24" height="24" src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
+          <span><img width="24" height="24" src="/img/icons/euro.svg" class="gd-icon" alt="" aria-hidden="true"> Dès 22€/pers.</span>
         </div>
         <div class="quiz-cta">
           <a href="/quiz-game-caen/" class="btn btn-quiz">Découvrir le Quiz Game</a>
@@ -933,7 +936,7 @@
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" style="width:100%;">Réserver</a>
         </div>
       </div>
-      <p style="text-align:center;color:var(--grey);margin-top:16px;font-size:1rem;"><a href="/tarifs/" style="color:var(--gd-escape-on-dark);">Voir tous les tarifs détaillés (réduits, étudiants) <img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a></p>
+      <p style="text-align:center;color:var(--grey);margin-top:16px;font-size:1rem;"><a href="/tarifs/" style="color:var(--gd-escape-on-dark);">Voir tous les tarifs détaillés (réduits, étudiants) <img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a></p>
     </div>
   </section>
 
@@ -973,19 +976,19 @@
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:0 auto;" class="fade-in">
         <a href="/team-building-caen/" style="padding:24px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:var(--transition);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img src="/img/icons/building.svg" class="gd-icon" alt="" aria-hidden="true"> Team building</h3>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img width="24" height="24" src="/img/icons/building.svg" class="gd-icon" alt="" aria-hidden="true"> Team building</h3>
           <p style="color:var(--grey-light);font-size:1rem;">5 salles escape en simultané (jusqu'à 30 joueurs, 6 par salle) <strong>+ 16 en quiz</strong> si besoin. Le challenge ultime entre collègues.</p>
         </a>
         <a href="/evjf-caen/" style="padding:24px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:var(--transition);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img src="/img/icons/rings.svg" class="gd-icon" alt="" aria-hidden="true"> EVJF / EVG</h3>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img width="24" height="24" src="/img/icons/rings.svg" class="gd-icon" alt="" aria-hidden="true"> EVJF / EVG</h3>
           <p style="color:var(--grey-light);font-size:1rem;">L'activité qui met tout le monde d'accord. Combinez escape + quiz pour une soirée complète.</p>
         </a>
         <a href="/anniversaire-caen/" style="padding:24px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:var(--transition);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img src="/img/icons/cake.svg" class="gd-icon" alt="" aria-hidden="true"> Anniversaire</h3>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img width="24" height="24" src="/img/icons/cake.svg" class="gd-icon" alt="" aria-hidden="true"> Anniversaire</h3>
           <p style="color:var(--grey-light);font-size:1rem;">Back to the 80's dès 7 ans (avec adulte). La salle parfaite pour fêter un anniversaire en famille.</p>
         </a>
         <a href="/tarifs/" style="padding:24px;background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);text-decoration:none;transition:var(--transition);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img src="/img/icons/euro.svg" class="gd-icon" alt="" aria-hidden="true"> Tarifs</h3>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);"><img width="24" height="24" src="/img/icons/euro.svg" class="gd-icon" alt="" aria-hidden="true"> Tarifs</h3>
           <p style="color:var(--grey-light);font-size:1rem;">Dès 24€/pers. Tarif dégressif selon la taille du groupe. <strong style="color:var(--orange);">Nombreuses réductions</strong> : étudiant, offre EVJF/mariage, cartes <strong>Trip Normand · Cezam · PAN · CSE</strong>… — <span style="text-decoration:underline;">détails sur la page tarifs</span>. Paiement en ligne sécurisé.</p>
         </a>
       </div>
@@ -1000,7 +1003,7 @@
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
           <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Combien coûte un escape game à Caen ?</h3>
-          <p style="color:var(--grey-light);">De 24€ à 37€ par personne selon la taille du groupe : 37€/pers. à 2 joueurs, 28€ à 3, 25€ à 4, 24€ à 5 et 24€ à 6 joueurs. Tarifs réduits / étudiants à partir de 21,60€/pers. sur justificatif (hors juillet/août pour étudiants). Même tarif pour les 3 salles. Paiement en ligne sécurisé. <a href="/tarifs/" style="color:var(--orange);">Voir tous les tarifs <img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a></p>
+          <p style="color:var(--grey-light);">De 24€ à 37€ par personne selon la taille du groupe : 37€/pers. à 2 joueurs, 28€ à 3, 25€ à 4, 24€ à 5 et 24€ à 6 joueurs. Tarifs réduits / étudiants à partir de 21,60€/pers. sur justificatif (hors juillet/août pour étudiants). Même tarif pour les 3 salles. Paiement en ligne sécurisé. <a href="/tarifs/" style="color:var(--orange);">Voir tous les tarifs <img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a></p>
         </div>
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
@@ -1020,7 +1023,7 @@
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
           <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Où se situe l'escape game à Caen ?</h3>
-          <p style="color:var(--grey-light);">GAMEDOOR·41, <strong>41 bis rue Pasteur, 14120 Mondeville</strong>, dans la ZAC Calix — à 5 minutes de Caen centre par le périphérique sortie 4. Code portail 5061. <strong>Parking privé obligatoire</strong> dans la zone GAMEDOOR·41 (place réservée à votre nom). <a href="/contact/" style="color:var(--orange);">Plan d'accès <img src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a></p>
+          <p style="color:var(--grey-light);">GAMEDOOR·41, <strong>41 bis rue Pasteur, 14120 Mondeville</strong>, dans la ZAC Calix — à 5 minutes de Caen centre par le périphérique sortie 4. Code portail 5061. <strong>Parking privé obligatoire</strong> dans la zone GAMEDOOR·41 (place réservée à votre nom). <a href="/contact/" style="color:var(--orange);">Plan d'accès <img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a></p>
         </div>
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
@@ -1097,17 +1100,17 @@
         <span class="heritage-eq"><a href="/brain-devient-gamedoor41/"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></a></span>
         <span class="heritage-sep" aria-hidden="true">·</span>
         <span class="heritage-tag">
-          <img src="/img/icons/users.svg" alt="" aria-hidden="true" class="heritage-ico">
+          <img width="24" height="24" src="/img/icons/users.svg" alt="" aria-hidden="true" class="heritage-ico">
           Même équipe
         </span>
         <span class="heritage-sep" aria-hidden="true">·</span>
         <span class="heritage-tag">
-          <img src="/img/icons/pin.svg" alt="" aria-hidden="true" class="heritage-ico">
+          <img width="24" height="24" src="/img/icons/pin.svg" alt="" aria-hidden="true" class="heritage-ico">
           Même adresse
         </span>
         <span class="heritage-sep" aria-hidden="true">·</span>
         <span class="heritage-tag">
-          <img src="/img/icons/gamepad.svg" alt="" aria-hidden="true" class="heritage-ico">
+          <img width="24" height="24" src="/img/icons/gamepad.svg" alt="" aria-hidden="true" class="heritage-ico">
           Plus de jeux
         </span>
       </div>
@@ -1160,7 +1163,7 @@
     </div>
   </div>
 
-  <script src="/js/main.js"></script>
+  <script defer src="/js/main.js?v=e4f2b2b5"></script>
 
   <style>
     @media (max-width: 768px) {

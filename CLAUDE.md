@@ -89,6 +89,16 @@ existant. Si une page change d'URL, ajouter une redirection de l'ancienne vers l
 **Modifications en masse** — pour une correction répétée sur les 47 pages, écris un script
 dans `scripts/` plutôt que d'éditer les fichiers un par un. C'est la convention du dépôt.
 
+**Après toute modification d'un fichier `css/` ou `js/`** — lancer
+`node scripts/perf-assets.mjs`. Netlify met ces fichiers en cache un an : sans cette étape,
+les visiteurs déjà venus continuent de recevoir l'ancienne version pendant des mois. Le
+script recalcule l'empreinte `?v=…` de chaque fichier dans les 53 pages. Il est sans effet
+si rien n'a changé, donc le lancer par précaution ne coûte rien.
+
+**Après avoir ajouté des images dans une page** — lancer
+`node scripts/perf-image-dimensions.mjs`, qui renseigne `width` et `height` d'après le
+fichier image. Sans ces attributs la page saute au chargement, ce que Google mesure.
+
 **Tarifs et informations pratiques** — la référence est la grille réelle 4escape
 (réservations : `braincaen.4escape.io`). Ne jamais inventer un prix, un horaire ou une
 capacité : demande la valeur exacte plutôt que de supposer.
