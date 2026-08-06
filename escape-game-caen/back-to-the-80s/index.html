@@ -77,7 +77,10 @@
     "name": "Back to the 80's — Escape Game Fun à Caen",
     "image": "https://gamedoor41.fr/img/escape/salle-back-to-80s-jukebox-wurlitzer-figurines.jpg",
     "description": "Escape game fun et nostalgique à Caen. Jukebox Wurlitzer, borne Pac-Man, vinyles. 60 min, 2-6 joueurs, dès 7 ans (avec adulte). Niveau 2-3, nommé Top 100 France.",
-    "brand": {"@type": "Brand", "name": "GAMEDOOR·41"},
+    "brand": {
+      "@type": "Brand",
+      "name": "GAMEDOOR·41"
+    },
     "offers": {
       "@type": "AggregateOffer",
       "url": "https://braincaen.4escape.io/booking",
@@ -87,7 +90,51 @@
       "offerCount": "5",
       "availability": "https://schema.org/InStock",
       "priceValidUntil": "2026-12-31"
-    }
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Johanne R."
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "C'était notre première expérience en escape game et c'était vraiment génial. Le retour dans les années 80 était réussi, les énigmes de tous types et accessibles à tous également. Mon fils de 7 ans a réussi à participer et à nous trouver quelques solutions, malgré sa peur de rester coincé dans la pièce à la fin du chrono 😆 🤣. On a passé un agréable moment en famille, je vous recommande sincèrement de tester. Merci encore aux organisateurs !",
+        "datePublished": "2025-12-06"
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Celine P."
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Nous.avons choisi la salle psychiatrique et nous avons passé un très bon moment, très bon concept, nous étions 6, un vrai bon moment. 1 des personnes à eu trop peur, Le personnel lui a proposé de sortir et c est très bien occupé d'elle une fois en dehors de la salle. Je vous le conseille vraiment, nous étions en famille et c etait vraiment amusant. L'équipe est top. J'espère y retourner pour faire une autre salle.",
+        "datePublished": "2025-12-29"
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Amaury"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Acteur incroyable !!! On est plongé dans l’univers dès notre arrivée une expérience à faire nous avons fait les année 80 + la garde vue les escape game sont incroyable vraiment je le recommande à 10000% les game master joue très bien leur rôle et du coup l’expérience est vraiment bonne merci à eux pour ces 2 sessions de folie",
+        "datePublished": "2026-06-27"
+      }
+    ]
   }
   </script>
   <script type="application/ld+json">
@@ -386,7 +433,9 @@
   </section>
 
   <!-- REVIEWS:START theme=back-to-80s n=3 -->
-  <!-- TEMOIGNAGES JOUEURS — Schema Review pour SEO rich results (rotation auto) -->
+  <!-- TEMOIGNAGES JOUEURS — cartes visibles, rotation auto. Le balisage
+       Schema.org de ces avis est dans la fiche Product JSON-LD du <head>,
+       pas ici : ne PAS rajouter d'itemscope/itemprop dans ce bloc. -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="05">
@@ -394,44 +443,20 @@
         <h2>Ce qu'ils ont vécu <span style="color:var(--gd-escape-on-dark);">en Back to the 80's</span></h2>
       </div>
       <div class="info-grid-magazine fade-in">
-        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="Back to the 80&#39;s — Escape Game Caen">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="5">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">★★★★★</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Acteur incroyable !!! On est plongé dans l’univers dès notre arrivée une expérience à faire nous avons fait les année 80 + la garde vue les escape game sont incroyable vraiment je le recommande à 10000% les game master joue très bien leur rôle et du coup l’expérience est vraiment bonne merci à eux pour ces 2 sessions de folie&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">Amaury</strong></span></p>
-          <meta itemprop="datePublished" content="2026-06-27">
+        <article class="info-card-mag">
+          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;C&#39;était notre première expérience en escape game et c&#39;était vraiment génial. Le retour dans les années 80 était réussi, les énigmes de tous types et accessibles à tous également. Mon fils de 7 ans a réussi à participer et à nous trouver quelques solutions, malgré sa peur de rester coincé dans la pièce à la fin du chrono 😆 🤣. On a passé un agréable moment en famille, je vous recommande sincèrement de tester. Merci encore aux organisateurs !&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">Johanne R.</strong></p>
         </article>
-        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="Back to the 80&#39;s — Escape Game Caen">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="5">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">★★★★★</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Une première pour moi en escape game et dans un contexte très particulier : date (1ere rencontre) autant dire que d&#39;entrée de jeu, la personne qui nous a accueilli joue tellement bien que ça a permis de désamorcer à fond ahah ! J&#39;ai beaucoup ri et nous nous sommes vraiment amusés dans cette pièce back to 80! Je recommande vivement et ça m&#39;a donné envie d&#39;en refaire entre amis ou en famille ... et de découvrir davantage les escape game. Merci beaucoup ! 💯&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">Charlotte D.</strong></span></p>
-          <meta itemprop="datePublished" content="2026-02-09">
+        <article class="info-card-mag">
+          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Nous.avons choisi la salle psychiatrique et nous avons passé un très bon moment, très bon concept, nous étions 6, un vrai bon moment. 1 des personnes à eu trop peur, Le personnel lui a proposé de sortir et c est très bien occupé d&#39;elle une fois en dehors de la salle. Je vous le conseille vraiment, nous étions en famille et c etait vraiment amusant. L&#39;équipe est top. J&#39;espère y retourner pour faire une autre salle.&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">Celine P.</strong></p>
         </article>
-        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="Back to the 80&#39;s — Escape Game Caen">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="5">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">★★★★★</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Fait Back to the 80&#39;s à 5 entre amis trentenaires, on est tombés en pleine nostalgie. La salle est bourrée de clins d&#39;œil rétro, on s&#39;est marrés tout le long. Énigmes accessibles même pour des débutants, on a fini en mode champions. Super soirée.&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">Manon T.</strong></span> &middot; Soirée entre amis</p>
-          <meta itemprop="datePublished" content="2026-02-08">
+        <article class="info-card-mag">
+          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Acteur incroyable !!! On est plongé dans l’univers dès notre arrivée une expérience à faire nous avons fait les année 80 + la garde vue les escape game sont incroyable vraiment je le recommande à 10000% les game master joue très bien leur rôle et du coup l’expérience est vraiment bonne merci à eux pour ces 2 sessions de folie&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">Amaury</strong></p>
         </article>
       </div>
       <p style="text-align:center;margin-top:32px;font-size:0.95rem;color:var(--grey-light);">

@@ -1,8 +1,20 @@
 #!/usr/bin/env node
 // Rotate-reviews — pick aleatoire de N reviews thematiques du pool
-// data/google-reviews.json, puis injection des blocs Schema.org Review
-// VALIDES (objets imbriques itemReviewed/reviewRating/author) entre des
-// marqueurs HTML commentes <!-- REVIEWS:START theme=... n=3 --> ... END.
+// data/google-reviews.json, puis injection entre les marqueurs HTML
+// commentes <!-- REVIEWS:START theme=... n=3 --> ... <!-- REVIEWS:END -->.
+//
+// Les avis sont declares UNE SEULE FOIS, en JSON-LD, dans la propriete
+// "review" de la fiche Product de la page (cf. injectProductReviews).
+// Les cartes visibles sont du HTML nu, sans microdata.
+//
+// Historique : jusqu'au 06/08/2026 chaque carte portait sa propre microdata
+// (itemscope Review + itemReviewed Product). Google y voyait donc, en plus de
+// la fiche Product de la page, 3 fiches Product supplementaires reduites a un
+// simple "name" — sans offers ni review ni aggregateRating. D'ou l'erreur
+// Search Console « Il faut indiquer "offers", "review", ou "aggregateRating" »
+// sur 12 elements (3 avis x 4 pages), ouverte le 25/06/2026.
+// Ne jamais reintroduire de microdata Schema.org dans les cartes : deux
+// formats pour la meme entite = deux entites pour Google.
 //
 // Usage :
 //   node scripts/rotate-reviews.mjs             # rotation + ecrit les fichiers
@@ -34,28 +46,24 @@ const PAGES = [
     path: 'escape-game-caen/garde-a-vue/index.html',
     theme: 'garde-a-vue',
     n: 3,
-    productName: 'Garde à Vue — Escape Game Caen',
     headingHtml: 'Ce qu\'ils ont vécu <span style="color:{accent};">en Garde à Vue</span>',
   },
   {
     path: 'escape-game-caen/psychiatric/index.html',
     theme: 'psychiatric',
     n: 3,
-    productName: 'Psychiatric — Escape Game Horreur Caen',
     headingHtml: 'Ce qu\'ils ont vécu <span style="color:{accent};">à Psychiatric</span>',
   },
   {
     path: 'escape-game-caen/back-to-the-80s/index.html',
     theme: 'back-to-80s',
     n: 3,
-    productName: "Back to the 80's — Escape Game Caen",
     headingHtml: 'Ce qu\'ils ont vécu <span style="color:{accent};">en Back to the 80\'s</span>',
   },
   {
     path: 'quiz-game-caen/index.html',
     theme: 'quiz',
     n: 3,
-    productName: 'Buzz Your Brain — Quiz Game Caen',
     headingHtml: 'Ce qu\'ils ont vécu <span style="color:{accent};">à Buzz Your Brain</span>',
   },
 ];
@@ -80,52 +88,128 @@ function shuffle(arr) {
   return a;
 }
 
+// Les vrais avis Google passent AVANT les temoignages source="fictive" :
+// eux seuls peuvent etre balises pour les moteurs (cf. buildReviewNodes), et
+// une page vitrine a tout interet a montrer d'abord de l'authentique. Les
+// fictifs ne servent que de complement quand le pool thematique est trop
+// maigre. La rotation reste aleatoire a l'interieur de chaque groupe.
 function pickReviews(pool, theme, n) {
   const eligible = pool.filter((r) => Array.isArray(r.themes) && r.themes.includes(theme));
   if (eligible.length < n) {
     console.warn(`  WARNING: theme="${theme}" only ${eligible.length} reviews available, asked ${n}`);
   }
-  return shuffle(eligible).slice(0, n);
+  const authentiques = shuffle(eligible.filter((r) => r.source === 'google'));
+  const complement = shuffle(eligible.filter((r) => r.source !== 'google'));
+  return [...authentiques, ...complement].slice(0, n);
 }
 
-// Build un bloc <article> Schema.org Review VALIDE (objets imbriques pour
-// itemReviewed/reviewRating/author — cf fix 9e9977b).
-function buildReviewArticle(review, productName, accentColor) {
+// Build la carte visible. HTML nu : aucune microdata Schema.org ici, le
+// balisage de ces avis vit dans la fiche Product JSON-LD de la page.
+function buildReviewArticle(review, accentColor) {
   const fullStars = Math.max(0, Math.min(5, Math.round(review.rating || 5)));
   const stars = '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
   const text = escapeHtml(review.text || '').replace(/\s+/g, ' ').trim();
   const author = escapeHtml(review.author || 'Anonyme');
   const context = escapeHtml(review.context || '');
-  const date = escapeHtml(review.date || '');
-  const product = escapeHtml(productName);
 
-  return `        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="${product}">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="${fullStars}">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:${accentColor};font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">${stars}</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;${text}&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">${author}</strong></span>${context ? ` &middot; ${context}` : ''}</p>
-          <meta itemprop="datePublished" content="${date}">
+  return `        <article class="info-card-mag">
+          <div style="color:${accentColor};font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="${fullStars} étoiles sur 5">${stars}</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;${text}&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">${author}</strong>${context ? ` &middot; ${context}` : ''}</p>
         </article>`;
+}
+
+// Les memes avis, en noeuds Schema.org Review destines a la fiche Product.
+// Texte brut (pas d'entites HTML) : c'est du JSON, pas du HTML.
+//
+// SEULS les avis source="google" sont balises. Le pool contient aussi des
+// temoignages source="fictive" : les declarer a Google comme de vrais avis
+// serait un faux avis au sens du code de la consommation et un motif de
+// penalite manuelle. Ils restent affiches, ils ne sont simplement pas
+// transmis aux moteurs. Une page peut donc n'avoir aucun "review" — elle
+// reste valide grace a "offers".
+function buildReviewNodes(reviews) {
+  return reviews.filter((r) => r.source === 'google').map((review) => {
+    const fullStars = Math.max(1, Math.min(5, Math.round(review.rating || 5)));
+    const node = {
+      '@type': 'Review',
+      author: { '@type': 'Person', name: review.author || 'Anonyme' },
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: String(fullStars),
+        bestRating: '5',
+      },
+      reviewBody: String(review.text || '').replace(/\s+/g, ' ').trim(),
+    };
+    if (review.date) node.datePublished = review.date;
+    return node;
+  });
+}
+
+// Reecrit la propriete "review" de la fiche Product JSON-LD de la page.
+// Chirurgical : ne touche que ce bloc, et rend le fichier inchange si aucune
+// fiche Product parsable n'est trouvee (mieux vaut ne rien faire que casser).
+function injectProductReviews(content, filePath, reviewNodes) {
+  const blocks = [...content.matchAll(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
+  )];
+
+  for (const match of blocks) {
+    let node;
+    try {
+      node = JSON.parse(match[1]);
+    } catch {
+      continue; // bloc non parsable : ce n'est pas a nous de le reparer
+    }
+    if (!node || node['@type'] !== 'Product') continue;
+
+    if (reviewNodes.length > 0) {
+      node.review = reviewNodes;
+    } else {
+      delete node.review; // aucun avis authentique a declarer sur cette page
+    }
+    const json = JSON.stringify(node, null, 2)
+      .split('\n')
+      .map((line) => '  ' + line)
+      .join('\n');
+    const rebuilt = `<script type="application/ld+json">\n${json}\n  </script>`;
+
+    return content.slice(0, match.index) + rebuilt
+      + content.slice(match.index + match[0].length);
+  }
+
+  console.warn(`  WARNING: aucune fiche Product JSON-LD dans ${filePath} — avis non balises`);
+  return content;
+}
+
+// Garde-fou : on n'ecrit jamais un fichier dont un bloc JSON-LD serait casse.
+function assertJsonLdValid(content, filePath) {
+  const blocks = [...content.matchAll(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
+  )];
+  blocks.forEach((match, i) => {
+    try {
+      JSON.parse(match[1]);
+    } catch (err) {
+      throw new Error(`${filePath} : bloc JSON-LD ${i} invalide apres reecriture — ${err.message}`);
+    }
+  });
 }
 
 // Build le bloc complet entre marqueurs (section + grid + articles).
 function buildReviewsSection(reviews, page, rating, reviewCount) {
   const accent = ACCENT_BY_THEME[page.theme] || 'var(--gd-escape-on-dark)';
   const articles = reviews
-    .map((r) => buildReviewArticle(r, page.productName, accent))
+    .map((r) => buildReviewArticle(r, accent))
     .join('\n');
   const countFmt = reviewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   const ratingFmt = Number(rating).toFixed(1);
   const heading = (page.headingHtml || 'Ce qu\'ils ont vécu <span style="color:{accent};">chez GAMEDOOR&middot;41</span>')
     .replace(/\{accent\}/g, accent);
   return `<!-- REVIEWS:START theme=${page.theme} n=${reviews.length} -->
-  <!-- TEMOIGNAGES JOUEURS — Schema Review pour SEO rich results (rotation auto) -->
+  <!-- TEMOIGNAGES JOUEURS — cartes visibles, rotation auto. Le balisage
+       Schema.org de ces avis est dans la fiche Product JSON-LD du <head>,
+       pas ici : ne PAS rajouter d'itemscope/itemprop dans ce bloc. -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="05">
@@ -190,7 +274,9 @@ async function main() {
     }
 
     const block = buildReviewsSection(picked, page, pool.rating || 4.9, pool.reviewCount || 2121);
-    const updated = insertOrReplace(content, block);
+    let updated = insertOrReplace(content, block);
+    updated = injectProductReviews(updated, page.path, buildReviewNodes(picked));
+    assertJsonLdValid(updated, page.path);
 
     if (updated === content) {
       console.log(`  unchanged: ${page.path}`);

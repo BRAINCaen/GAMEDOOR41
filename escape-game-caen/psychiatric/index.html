@@ -76,7 +76,10 @@
     "name": "Psychiatric — Escape Game Horreur à Caen",
     "image": "https://gamedoor41.fr/img/escape/psychiatric-couloir.jpg",
     "description": "Escape game horreur immersif à Caen. L'hôpital Psychiatric de Caen, patient Benjamin Nari évadé. 60 min, 2-6 joueurs par chambre (jusqu'à 12 en duel), dès 12 ans. Non gore, niveau ajustable.",
-    "brand": {"@type": "Brand", "name": "GAMEDOOR·41"},
+    "brand": {
+      "@type": "Brand",
+      "name": "GAMEDOOR·41"
+    },
     "offers": {
       "@type": "AggregateOffer",
       "url": "https://braincaen.4escape.io/booking",
@@ -86,7 +89,51 @@
       "offerCount": "5",
       "availability": "https://schema.org/InStock",
       "priceValidUntil": "2026-12-31"
-    }
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Lilian E."
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Une expérience immersive comme jamais vu auparavant grâce à Red. Psychiatric nous a permis de nous pousser vers nos retranchements, se challenger, créant un souvenir à la fois magistral et terrifiant. Mille mercis à Red et toute l'équipe derrière cet escape game ! On reviendra, on se vengera.",
+        "datePublished": "2026-06-12"
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Léanïs"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Alors je viens d'y aller pour la session psychiatrie on étais 4 comment vous dire c'etais génial vraiment par contre si vous êtes une flipette comme moi préparer vos mouchoirs j'ai lâcher quelques larmes, et pour les accompagnateurs préparer des manches longues car avec mes ongles je leurs ai détruit les bras tellement je les serrer fort, en tout cas top ! Moi je dis foncez même si vous avez peur parce que vous en rigolerez après en vrai :)",
+        "datePublished": "2026-03-07"
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Celine P."
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "reviewBody": "Nous.avons choisi la salle psychiatrique et nous avons passé un très bon moment, très bon concept, nous étions 6, un vrai bon moment. 1 des personnes à eu trop peur, Le personnel lui a proposé de sortir et c est très bien occupé d'elle une fois en dehors de la salle. Je vous le conseille vraiment, nous étions en famille et c etait vraiment amusant. L'équipe est top. J'espère y retourner pour faire une autre salle.",
+        "datePublished": "2025-12-29"
+      }
+    ]
   }
   </script>
   <script type="application/ld+json">
@@ -418,7 +465,9 @@
   </section>
 
   <!-- REVIEWS:START theme=psychiatric n=3 -->
-  <!-- TEMOIGNAGES JOUEURS — Schema Review pour SEO rich results (rotation auto) -->
+  <!-- TEMOIGNAGES JOUEURS — cartes visibles, rotation auto. Le balisage
+       Schema.org de ces avis est dans la fiche Product JSON-LD du <head>,
+       pas ici : ne PAS rajouter d'itemscope/itemprop dans ce bloc. -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="05">
@@ -426,44 +475,20 @@
         <h2>Ce qu'ils ont vécu <span style="color:var(--gd-escape-on-dark);">à Psychiatric</span></h2>
       </div>
       <div class="info-grid-magazine fade-in">
-        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="Psychiatric — Escape Game Horreur Caen">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="5">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">★★★★★</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Juste incroyable ! Nous sommes venu avec un groupe d’amis pour faire une activité qui change de l’ordinaire.. et sans aucun doute je vous la recommande ! L’équipe est d’une grande gentillesse, très investie dans leurs travails ! Merci pour tout 😁 (Même si Judith nous a bien fais crier de peur 😂)&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">Lisa P.</strong></span></p>
-          <meta itemprop="datePublished" content="2026-06-01">
+        <article class="info-card-mag">
+          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Une expérience immersive comme jamais vu auparavant grâce à Red. Psychiatric nous a permis de nous pousser vers nos retranchements, se challenger, créant un souvenir à la fois magistral et terrifiant. Mille mercis à Red et toute l&#39;équipe derrière cet escape game ! On reviendra, on se vengera.&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">Lilian E.</strong></p>
         </article>
-        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="Psychiatric — Escape Game Horreur Caen">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="5">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">★★★★★</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;On a passé un super moment dans cet escape game sur le thème horreur psychiatrie ! J’étais avec mon neveu, ma sœur et ma mère, et on a tous adoré. L’ambiance était vraiment immersive, un peu angoissante comme il faut 😅 On a eu pas mal de frayeurs, mais c’est ce qui rend l’expérience encore meilleure ! Je recommande vivement et j’espère revenir bientôt pour une nouvelle énigme MERCI !&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">Gwladys L.</strong></span></p>
-          <meta itemprop="datePublished" content="2026-02-27">
+        <article class="info-card-mag">
+          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Alors je viens d&#39;y aller pour la session psychiatrie on étais 4 comment vous dire c&#39;etais génial vraiment par contre si vous êtes une flipette comme moi préparer vos mouchoirs j&#39;ai lâcher quelques larmes, et pour les accompagnateurs préparer des manches longues car avec mes ongles je leurs ai détruit les bras tellement je les serrer fort, en tout cas top ! Moi je dis foncez même si vous avez peur parce que vous en rigolerez après en vrai :)&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">Léanïs</strong></p>
         </article>
-        <article class="info-card-mag" itemscope itemtype="https://schema.org/Review">
-          <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Product" style="display:none">
-            <meta itemprop="name" content="Psychiatric — Escape Game Horreur Caen">
-          </div>
-          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" style="display:none">
-            <meta itemprop="ratingValue" content="5">
-            <meta itemprop="bestRating" content="5">
-          </div>
-          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;">★★★★★</div>
-          <p itemprop="reviewBody" style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Psychiatric c&#39;est vraiment l&#39;expérience la plus intense qu&#39;on a faite en escape game. L&#39;ambiance est oppressante, le décor super réaliste, et le game master joue son rôle à fond sans jamais sortir du personnage. On est ressortis sur les rotules mais content·e·s.&nbsp;»</p>
-          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><span itemprop="author" itemscope itemtype="https://schema.org/Person"><strong itemprop="name" style="color:var(--white);">Camille R.</strong></span> &middot; Couple à 2</p>
-          <meta itemprop="datePublished" content="2026-05-12">
+        <article class="info-card-mag">
+          <div style="color:var(--gd-escape-on-dark);font-size:1.2rem;margin-bottom:10px;letter-spacing:2px;" aria-label="5 étoiles sur 5">★★★★★</div>
+          <p style="font-style:italic;color:var(--grey-light);line-height:1.6;">«&nbsp;Nous.avons choisi la salle psychiatrique et nous avons passé un très bon moment, très bon concept, nous étions 6, un vrai bon moment. 1 des personnes à eu trop peur, Le personnel lui a proposé de sortir et c est très bien occupé d&#39;elle une fois en dehors de la salle. Je vous le conseille vraiment, nous étions en famille et c etait vraiment amusant. L&#39;équipe est top. J&#39;espère y retourner pour faire une autre salle.&nbsp;»</p>
+          <p style="margin-top:12px;font-size:0.9rem;color:var(--grey);"><strong style="color:var(--white);">Celine P.</strong></p>
         </article>
       </div>
       <p style="text-align:center;margin-top:32px;font-size:0.95rem;color:var(--grey-light);">
