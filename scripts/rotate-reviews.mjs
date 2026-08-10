@@ -146,6 +146,30 @@ function buildReviewNodes(reviews) {
   });
 }
 
+// Google EXIGE une note agregee des qu'une fiche porte plusieurs avis :
+// « Avis multiples sans objet aggregateRating » est une erreur critique, elle
+// empeche la page d'apparaitre en resultat enrichi (alerte Search Console du
+// 06/08/2026, provoquee par la correction precedente qui avait retire toute
+// note agregee des fiches Product).
+//
+// ATTENTION a ne pas refaire l'erreur inverse : cette note n'est PAS celle de
+// l'etablissement (4.9 sur 2 170 avis). Elle resume UNIQUEMENT les avis
+// presents sur cette page. Recopier la note de l'etablissement sur une fiche
+// produit est un motif de penalite Google — c'est ce qui avait declenche
+// l'alerte initiale du 25/06/2026.
+function buildAggregateRating(reviewNodes) {
+  if (reviewNodes.length === 0) return null;
+  const notes = reviewNodes.map((r) => Number(r.reviewRating.ratingValue));
+  const moyenne = notes.reduce((a, b) => a + b, 0) / notes.length;
+  return {
+    '@type': 'AggregateRating',
+    ratingValue: String(Math.round(moyenne * 10) / 10),
+    reviewCount: String(reviewNodes.length),
+    bestRating: '5',
+    worstRating: '1',
+  };
+}
+
 // Reecrit la propriete "review" de la fiche Product JSON-LD de la page.
 // Chirurgical : ne touche que ce bloc, et rend le fichier inchange si aucune
 // fiche Product parsable n'est trouvee (mieux vaut ne rien faire que casser).
@@ -163,10 +187,17 @@ function injectProductReviews(content, filePath, reviewNodes) {
     }
     if (!node || node['@type'] !== 'Product') continue;
 
-    if (reviewNodes.length > 0) {
+    const note = buildAggregateRating(reviewNodes);
+    if (note) {
+      node.aggregateRating = note;
       node.review = reviewNodes;
     } else {
-      delete node.review; // aucun avis authentique a declarer sur cette page
+      // Aucun avis authentique a declarer sur cette page : on ne laisse ni
+      // avis ni note. Search Console signalera "champ review manquant" et
+      // "champ aggregateRating manquant", mais ce sont des suggestions non
+      // critiques — et mieux vaut un champ absent qu'une note inventee.
+      delete node.aggregateRating;
+      delete node.review;
     }
     const json = JSON.stringify(node, null, 2)
       .split('\n')

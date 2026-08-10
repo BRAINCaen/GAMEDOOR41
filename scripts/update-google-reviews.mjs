@@ -332,6 +332,26 @@ async function updateFile(relPath, replacements) {
 
   const original = content;
   const perRule = {};
+
+  // Les fiches Product portent leur PROPRE note agregee, calculee sur les
+  // seuls avis affiches sur la page (ex. 5 sur 3 avis) — pas celle de
+  // l'etablissement. Sans cette mise a l'ecart, les regles ci-dessous
+  // remplaceraient ce "reviewCount": "3" par "2170" et ce "ratingValue": "5"
+  // par "4.9", recreant exactement l'erreur Search Console du 25/06/2026
+  // (note de l'etablissement recopiee sur un produit).
+  //
+  // scripts/rotate-reviews.mjs, qui tourne juste apres, rearrangerait le tir —
+  // mais on ne veut pas dependre de l'ordre des etapes du workflow.
+  const fichesProduit = [];
+  content = content.replace(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
+    (bloc, json) => {
+      if (!/"@type":\s*"Product"/.test(json)) return bloc;
+      fichesProduit.push(bloc);
+      return `<!--FICHE_PRODUIT_${fichesProduit.length - 1}-->`;
+    },
+  );
+
   for (const rule of replacements) {
     // Count hits separately, then replace — pour les règles à `out` (string)
     // on garde le replace string (préserve $1/$2). Les règles `fn` utilisent
@@ -345,6 +365,9 @@ async function updateFile(relPath, replacements) {
       content = content.replace(rule.re, rule.out);
     }
   }
+
+  // On remet les fiches Product telles qu'elles etaient.
+  content = content.replace(/<!--FICHE_PRODUIT_(\d+)-->/g, (_, i) => fichesProduit[Number(i)]);
 
   if (content === original) {
     return { path: relPath, changes: 0, perRule };
