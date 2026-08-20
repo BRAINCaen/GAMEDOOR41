@@ -269,6 +269,13 @@
        le sitemap gaspille le budget crawl. Le RSS reste accessible via
        <link rel="alternate" type="application/rss+xml"> sur les pages du blog. -->
 
+  <!-- ===== RECRUTEMENT ===== -->
+  <url>
+    <loc>https://gamedoor41.fr/alternance/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- ===== PAGES LÉGALES ===== -->
   <url>
     <loc>https://gamedoor41.fr/mentions-legales/</loc>
