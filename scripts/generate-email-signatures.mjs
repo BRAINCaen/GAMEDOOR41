@@ -22,9 +22,9 @@
 //   en 404 par netlify.toml : les huit adresses email de l'equipe n'ont rien a
 //   faire sur une page publique, les robots a spam les ramassent).
 //
-// PHOTOS MANQUANTES
-//   Quatre visuels du dossier "Cadre photo / fini !" ne sont pas dans le depot
-//   (Lily-Rose, Quentin, Makalu, Jules). Leur signature utilise en attendant
+// PHOTO MANQUANTE
+//   Jules est arrive apres la seance photo : il n'a pas de visuel dans le
+//   dossier Drive "Cadre photo / fini". Sa signature utilise en attendant
 //   l'avatar carre GAMEDOOR-41. Pour mettre la vraie photo : deposer le JPG
 //   dans img/Team/, renseigner "photo" dans EQUIPE ci-dessous, relancer.
 //
@@ -48,33 +48,53 @@ const TEL_AFFICHE = '06 31 46 93 22';
 const TEL_LIEN = '+33631469322';
 const ADRESSE = '41 bis rue Pasteur, 14120 Mondeville';
 const MAPS = 'https://www.google.com/maps/place/?q=place_id:ChIJD_Yw80FoCkgRiwEBVG0aGK8';
-const BASELINE = 'Escape Game &amp; Quiz Game';
+const TAGLINE = 'ESCAPE <span style="color:#FF8228;">&#183;</span> QUIZ <span style="color:#FF8228;">&#183;</span> ACTION';
 
 // --- charte --------------------------------------------------------------
+// Signature sur fond sombre, comme le maquettage valide par l'equipe.
+// ORANGE sert au filet de la photo, ORANGE_VIF au texte (plus lisible sur
+// fond noir que le #E07020 de la charte print).
 
+const FOND = '#0C0800';
 const ORANGE = '#E07020';
-const NOIR = '#0C0800';
-const GRIS = '#6B6459';
-const FILET = '#E3DDD2';
+const ORANGE_VIF = '#FF8228';
+const CREME = '#F0EBE2';
+const GRIS_CLAIR = '#B9B0A2';
+
+// Barlow Condensed est la police de la marque, mais aucune messagerie ne la
+// telechargera : Arial Narrow prend le relais (presente sur Windows et Mac),
+// puis Arial. Le rendu reste condense et proche de la charte.
+const POLICE = "'Barlow Condensed','Arial Narrow',Arial,Helvetica,sans-serif";
 
 // --- l'equipe ------------------------------------------------------------
 // slug : sert au nom de fichier, au nom d'image ET a l'adresse email.
+//
+// cadrage : facultatif. Les visuels "Cadre photo" tires du Drive sont des
+// portraits en pied (1000x1385) : un recadrage automatique au centre couperait
+// la tete. On indique donc le carre a garder, en pixels du fichier source
+// (left/top = coin haut-gauche, side = cote du carre), choisi pour que le
+// visage tombe au bon endroit. Sans cadrage, le script prend le plus grand
+// carre centre — c'est ce qu'il faut pour les visuels deja presque carres.
 
 const EQUIPE = [
-  { slug: 'polar',     prenom: 'Polar',     role: 'Responsable de site',        photo: 'img/Team/Polar Caron Caen.jpg' },
-  { slug: 'red',       prenom: 'Red',       role: 'Chef de projet &amp; Event', photo: 'img/Team/Red Houlette Caen.jpg' },
-  { slug: 'lwiz',      prenom: 'Lwiz',      role: 'RH &amp; Community Manager', photo: 'img/Team/Lwiz Carré Caen.jpg' },
-  { slug: 'lily-rose', prenom: 'Lily-Rose', role: 'Ambassadrice GAMEDOOR&#183;41', photo: null },
-  { slug: 'quentin',   prenom: 'Quentin',   role: 'Graphiste &amp; Event',      photo: null },
-  { slug: 'makalu',    prenom: 'Makal&ugrave;', role: 'Communication &amp; Graphiste', photo: null },
-  { slug: 'jules',     prenom: 'Jules',     role: "Charg&eacute; d'affaires",   photo: null },
-  { slug: 'allan',     prenom: 'Allan',     role: 'Gestionnaire',               photo: 'img/Team/Allan-brain-caen-escape-game-quiz-game2025_.jpg' },
+  { slug: 'polar',     prenom: 'POLAR',     role: 'RESPONSABLE DE SITE',        photo: 'img/Team/Polar Caron Caen.jpg' },
+  { slug: 'red',       prenom: 'RED',       role: 'CHEF DE PROJET &amp; EVENT', photo: 'img/Team/Red Houlette Caen.jpg' },
+  { slug: 'lwiz',      prenom: 'LWIZ',      role: 'RH &amp; COMMUNITY MANAGER', photo: 'img/Team/Lwiz Carré Caen.jpg' },
+  { slug: 'lily-rose', prenom: 'LILY-ROSE', role: 'AMBASSADRICE GAMEDOOR&#183;41', photo: 'img/Team/Lily-Rose.jpg', cadrage: { left: 300, top: 65, side: 690 } },
+  { slug: 'quentin',   prenom: 'QUENTIN',   role: 'GRAPHISTE &amp; EVENT',      photo: 'img/Team/Quentin.jpg', cadrage: { left: 103, top: 266, side: 680 } },
+  { slug: 'makalu',    prenom: 'MAKAL&Ugrave;', role: 'COMMUNICATION &amp; GRAPHISTE', photo: 'img/Team/Makalu.jpg', cadrage: { left: 137, top: 190, side: 750 } },
+  { slug: 'jules',     prenom: 'JULES',     role: 'CHARG&Eacute; D&#x27;AFFAIRES', photo: null },
+  { slug: 'allan',     prenom: 'ALLAN',     role: 'GESTIONNAIRE',               photo: 'img/Team/Allan-brain-caen-escape-game-quiz-game2025_.jpg' },
 ];
 
-// L'avatar carre de la charte, utilise tant que la vraie photo manque.
-const AVATAR_DEFAUT = 'img/logo/logo-avatar-square.svg';
-// Logo pose sous la signature. Version "fond blanc" : Gmail compose sur blanc.
-const LOGO_SOURCE = 'img/logo/logo-horizontal-white-bg.svg';
+// L'icone "G·" de la charte, utilisee tant que la vraie photo manque : elle
+// tient le carre sans repeter le logo complet, deja present a droite.
+const AVATAR_DEFAUT = 'img/logo/logo-icon-g.svg';
+// Logo du bloc de droite. Version claire sur fond transparent : la signature
+// est posee sur le noir chaud de la marque.
+const LOGO_SOURCE = 'img/logo/logo-horizontal.svg';
+const LOGO_LARGEUR = 200;
+const LOGO_HAUTEUR = 30;
 
 const DOSSIER_IMG = 'img/signature';
 const DOSSIER_HTML = 'signatures';
@@ -82,28 +102,39 @@ const DOSSIER_HTML = 'signatures';
 // --- images --------------------------------------------------------------
 
 // 240x240 : deux fois la taille d'affichage (120 px), pour rester net sur les
-// ecrans retina. Les visuels "Cadre photo" font 386x376, quasi carres : on
-// recadre au centre, on ne deforme jamais.
-async function fabriquerPhoto(source, destination) {
+// ecrans retina. On recadre en carre, on ne deforme jamais.
+async function fabriquerPhoto(source, destination, cadrage) {
   const image = sharp(source, { density: 600 });
   const { width, height } = await image.metadata();
-  const cote = Math.min(width, height);
+  const cote = cadrage ? cadrage.side : Math.min(width, height);
+  const carre = cadrage
+    ? { left: cadrage.left, top: cadrage.top }
+    : { left: Math.round((width - cote) / 2), top: Math.round((height - cote) / 2) };
+
+  if (carre.left + cote > width || carre.top + cote > height) {
+    throw new Error(`cadrage hors de l'image pour ${source}`);
+  }
+
   return image
-    .extract({
-      left: Math.round((width - cote) / 2),
-      top: Math.round((height - cote) / 2),
-      width: cote,
-      height: cote,
-    })
+    .extract({ left: carre.left, top: carre.top, width: cote, height: cote })
     .resize(240, 240, { fit: 'cover' })
     .png({ compressionLevel: 9 })
     .toFile(destination);
 }
 
-// Logo 1000x180 -> 450x81, affiche en 150x27.
+// Logo rendu au double de sa taille d'affichage, marges transparentes du SVG
+// enlevees (trim) pour que les 200x30 annonces soient bien du logo et non du
+// vide. fit "contain" : jamais d'etirement, la charte l'interdit.
 async function fabriquerLogo(destination) {
-  return sharp(path.join(ROOT, LOGO_SOURCE), { density: 600 })
-    .resize(450, 81, { fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 0 } })
+  const rendu = await sharp(path.join(ROOT, LOGO_SOURCE), { density: 600 })
+    .png()
+    .toBuffer();
+  return sharp(rendu)
+    .trim()
+    .resize(LOGO_LARGEUR * 2, LOGO_HAUTEUR * 2, {
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
     .png({ compressionLevel: 9 })
     .toFile(destination);
 }
@@ -112,21 +143,23 @@ async function fabriquerLogo(destination) {
 //
 // Tout est en tableaux et en styles "inline" : c'est la seule mise en forme
 // qu'Outlook, Gmail et Apple Mail respectent tous les trois. Pas de CSS dans
-// l'en-tete (Gmail le supprime au collage), pas de flexbox, pas de police
-// exotique (Arial est la seule presente partout).
+// l'en-tete (Gmail le supprime au collage), pas de flexbox, pas de classe.
+//
+// Trois colonnes : la photo, l'identite et les contacts, le bloc de marque.
 
-function ligneContact(libelle, lien, texte) {
-  return `          <tr>
-            <td style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:bold;color:${ORANGE};letter-spacing:0.5px;padding:0 12px 5px 0;white-space:nowrap;vertical-align:top;">${libelle}</td>
-            <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;padding:0 0 5px 0;vertical-align:top;"><a href="${lien}" style="color:${NOIR};text-decoration:none;">${texte}</a></td>
-          </tr>`;
+function ligneContact(symbole, lien, texte, couleur) {
+  return `<a href="${lien}" style="color:${couleur};text-decoration:none;"><span style="color:${ORANGE_VIF};font-weight:900;">${symbole}</span>&nbsp; ${texte}</a>`;
 }
 
 function signature({ slug, prenom, role }) {
   const email = `${slug}@gamedoor41.fr`;
   // Le prenom sert de texte alternatif : si le destinataire bloque les images
   // (Outlook le fait par defaut), il lit le prenom a la place du cadre vide.
-  const prenomTexte = prenom.replace(/&#183;/g, '.').replace(/&ugrave;/g, 'u');
+  const prenomTexte = prenom
+    .replace(/&#183;/g, '.')
+    .replace(/&Ugrave;/g, 'U')
+    .replace(/&Eacute;/g, 'E')
+    .replace(/&#x27;/g, "'");
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -135,40 +168,41 @@ function signature({ slug, prenom, role }) {
 <meta name="robots" content="noindex, nofollow">
 <title>Signature email — ${prenomTexte} — GAMEDOOR·41</title>
 </head>
-<body style="margin:24px;background:#ffffff;">
+<body style="margin:0;padding:24px;background:#ffffff;">
 <!-- Tout selectionner (Ctrl+A), copier (Ctrl+C), coller dans Gmail :
      Parametres > Voir tous les parametres > General > Signature.
      Ne rien ajouter sur cette page : ce qui est ici est ce qui sera colle. -->
-<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:${NOIR};">
-  <tr>
-    <td style="vertical-align:top;padding:0 18px 0 0;">
-      <img src="${SITE}/${DOSSIER_IMG}/${slug}.png" alt="${prenomTexte}" width="120" height="120" style="display:block;width:120px;height:120px;border:0;border-radius:10px;">
-    </td>
-    <td style="vertical-align:top;padding:2px 0 0 18px;border-left:3px solid ${ORANGE};">
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:19px;font-weight:bold;line-height:23px;color:${NOIR};">${prenom}</div>
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;line-height:16px;color:${ORANGE};letter-spacing:0.6px;text-transform:uppercase;padding-top:3px;">${role}</div>
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:16px;color:${GRIS};padding-top:2px;">GAMEDOOR&#183;41 &mdash; ${BASELINE}</div>
-      <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;margin-top:12px;">
-${ligneContact('T&Eacute;L', `tel:${TEL_LIEN}`, TEL_AFFICHE)}
-${ligneContact('EMAIL', `mailto:${email}`, email)}
-${ligneContact('ADRESSE', MAPS, ADRESSE)}
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="padding:16px 0 0 0;">
-      <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="100%" style="border-collapse:collapse;">
-        <tr>
-          <td style="border-top:1px solid ${FILET};padding:12px 0 0 0;vertical-align:middle;">
-            <a href="${SITE}/" style="text-decoration:none;"><img src="${SITE}/${DOSSIER_IMG}/logo-gamedoor41.png" alt="GAMEDOOR·41" width="150" height="27" style="display:block;width:150px;height:27px;border:0;"></a>
-          </td>
-          <td align="right" style="border-top:1px solid ${FILET};padding:12px 0 0 0;vertical-align:middle;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;">
-            <a href="${SITE}/" style="color:${ORANGE};text-decoration:none;font-weight:bold;">gamedoor41.fr</a>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
+<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;background-color:${FOND};font-family:${POLICE};">
+<tr>
+  <!-- photo -->
+  <td width="132" valign="middle" style="padding:18px 0 18px 18px;">
+    <a href="${SITE}" style="text-decoration:none;">
+      <img src="${SITE}/${DOSSIER_IMG}/${slug}.png" width="120" height="120" alt="${prenomTexte}"
+           style="display:block;width:120px;height:120px;border:3px solid ${ORANGE};border-radius:16px;background-color:#1a130a;">
+    </a>
+  </td>
+
+  <!-- identite + contacts -->
+  <td valign="middle" style="padding:18px 26px 18px 20px;">
+    <div style="font-family:${POLICE};font-size:26px;font-weight:900;color:${CREME};letter-spacing:.5px;line-height:1.1;">${prenom}</div>
+    <div style="font-family:${POLICE};font-size:15px;font-weight:600;color:${ORANGE_VIF};letter-spacing:1.2px;line-height:1.3;padding-top:2px;">${role}</div>
+    <div style="height:10px;line-height:10px;font-size:0;">&nbsp;</div>
+    <div style="font-family:${POLICE};font-size:14px;line-height:1.75;color:${CREME};">
+      ${ligneContact('&#9742;', `tel:${TEL_LIEN}`, TEL_AFFICHE, CREME)}<br>
+      ${ligneContact('&#9993;', `mailto:${email}`, email, CREME)}<br>
+      ${ligneContact('&#8962;', MAPS, ADRESSE, GRIS_CLAIR)}
+    </div>
+  </td>
+
+  <!-- bloc marque -->
+  <td width="230" valign="middle" align="center" style="padding:18px 22px 18px 22px;border-left:2px solid rgba(224,112,32,.5);">
+    <a href="${SITE}" style="text-decoration:none;">
+      <img src="${SITE}/${DOSSIER_IMG}/logo-gamedoor41.png" width="${LOGO_LARGEUR}" height="${LOGO_HAUTEUR}" alt="GAMEDOOR 41" style="display:block;border:0;width:${LOGO_LARGEUR}px;height:${LOGO_HAUTEUR}px;">
+    </a>
+    <div style="font-family:${POLICE};font-size:12px;font-weight:600;letter-spacing:3px;color:${CREME};padding-top:10px;white-space:nowrap;">${TAGLINE}</div>
+    <div style="padding-top:8px;"><a href="${SITE}" style="font-family:${POLICE};font-size:15px;font-weight:600;color:${ORANGE_VIF};text-decoration:none;">gamedoor41.fr</a></div>
+  </td>
+</tr>
 </table>
 </body>
 </html>
@@ -198,7 +232,7 @@ for (const membre of EQUIPE) {
   if (!membre.photo) sansPhoto.push(membre.slug);
 
   const destination = path.join(dossierImg, `${membre.slug}.png`);
-  if (!dryRun) await fabriquerPhoto(source, destination);
+  if (!dryRun) await fabriquerPhoto(source, destination, membre.photo ? membre.cadrage : null);
   images++;
 
   const fichier = path.join(dossierHtml, `signature-${membre.slug}.html`);

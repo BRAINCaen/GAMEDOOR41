@@ -1,7 +1,8 @@
 # Signatures email GAMEDOOR·41 — mode d'emploi
 
-Huit signatures, une par personne. Elles sont **déjà fabriquées** : les images
-sont en ligne, il n'y a rien à uploader. Il ne reste qu'à les coller dans Gmail.
+Huit signatures, une par personne. Elles sont **déjà fabriquées** : les photos
+et le logo sont en ligne, il n'y a rien à uploader. Il ne reste qu'à les coller
+dans Gmail.
 
 ## Installer sa signature dans Gmail
 
@@ -28,10 +29,10 @@ Les fichiers disponibles :
 
 ## Ce qui est cliquable
 
-- le **téléphone** → `tel:+33631469322` (appel direct depuis un mobile)
+- le **téléphone** → appel direct depuis un mobile
 - l'**email** → ouvre un nouveau message
 - l'**adresse** → ouvre la fiche Google Maps de GAMEDOOR·41
-- le **logo** et **gamedoor41.fr** → ouvrent le site
+- la **photo**, le **logo** et **gamedoor41.fr** → ouvrent le site
 
 ## Coordonnées utilisées
 
@@ -40,15 +41,14 @@ Les fichiers disponibles :
   makalu (sans accent), jules, allan
 - Adresse : 41 bis rue Pasteur, 14120 Mondeville
 
-## ⚠️ Quatre photos manquent encore
+## Il manque encore la photo de Jules
 
-Lily-Rose, Quentin, Makalù et Jules ont pour l'instant **l'avatar noir et orange
-GAMEDOOR·41** à la place de leur portrait : leurs visuels du dossier
-*Cadre photo / fini !* ne sont pas dans le dépôt.
+Jules est arrivé après la séance photo : il n'a pas de visuel dans le dossier
+Drive *Cadre photo / fini*. Sa signature affiche pour l'instant l'icône **G·**
+de la marque à la place du portrait — c'est propre, mais moins personnel.
 
-Pour mettre la vraie photo, il suffit de la déposer et de le dire — c'est deux
-minutes de travail : le fichier image va dans `img/Team/`, on l'inscrit dans le
-script, et les huit signatures sont refaites d'un coup.
+Dès que son visuel existe, il suffit de le dire : deux minutes de travail, et
+lui seul aura à recoller sa signature.
 
 ## Refaire les signatures (si un numéro, un rôle ou une photo change)
 
