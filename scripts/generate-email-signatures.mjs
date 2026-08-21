@@ -22,9 +22,13 @@
 //   en 404 par netlify.toml : les huit adresses email de l'equipe n'ont rien a
 //   faire sur une page publique, les robots a spam les ramassent).
 //
+// D'OU VIENNENT LES PHOTOS
+//   Du Drive partage : TEAM GAMEDOOR-41 > Communication > Quentin et makalu >
+//   Cadre photo > fini. Ce sont les portraits serres prepares par la comm.
+//
 // PHOTO MANQUANTE
-//   Jules est arrive apres la seance photo : il n'a pas de visuel dans le
-//   dossier Drive "Cadre photo / fini". Sa signature utilise en attendant
+//   Jules est arrive apres la seance photo : il n'a pas de visuel dans ce
+//   dossier. Sa signature utilise en attendant
 //   l'avatar carre GAMEDOOR-41. Pour mettre la vraie photo : deposer le JPG
 //   dans img/Team/, renseigner "photo" dans EQUIPE ci-dessous, relancer.
 //
@@ -69,22 +73,23 @@ const POLICE = "'Barlow Condensed','Arial Narrow',Arial,Helvetica,sans-serif";
 // --- l'equipe ------------------------------------------------------------
 // slug : sert au nom de fichier, au nom d'image ET a l'adresse email.
 //
-// cadrage : facultatif. Les visuels "Cadre photo" tires du Drive sont des
-// portraits en pied (1000x1385) : un recadrage automatique au centre couperait
-// la tete. On indique donc le carre a garder, en pixels du fichier source
-// (left/top = coin haut-gauche, side = cote du carre), choisi pour que le
-// visage tombe au bon endroit. Sans cadrage, le script prend le plus grand
-// carre centre — c'est ce qu'il faut pour les visuels deja presque carres.
+// cadrage : facultatif, { left, top, side } en pixels du fichier source. Les
+// portraits de signature du Drive (dossier partage TEAM GAMEDOOR-41 > Communication
+// > Quentin et makalu > Cadre photo > fini) sont deja serres et quasi carres :
+// le recadrage automatique au centre suffit. Le champ reste la pour un visuel
+// en pied, ou un carre centre couperait la tete.
 
 const EQUIPE = [
-  { slug: 'polar',     prenom: 'POLAR',     role: 'RESPONSABLE DE SITE',        photo: 'img/Team/Polar Caron Caen.jpg' },
-  { slug: 'red',       prenom: 'RED',       role: 'CHEF DE PROJET &amp; EVENT', photo: 'img/Team/Red Houlette Caen.jpg' },
-  { slug: 'lwiz',      prenom: 'LWIZ',      role: 'RH &amp; COMMUNITY MANAGER', photo: 'img/Team/Lwiz Carré Caen.jpg' },
-  { slug: 'lily-rose', prenom: 'LILY-ROSE', role: 'AMBASSADRICE GAMEDOOR&#183;41', photo: 'img/Team/Lily-Rose.jpg', cadrage: { left: 300, top: 65, side: 690 } },
-  { slug: 'quentin',   prenom: 'QUENTIN',   role: 'GRAPHISTE &amp; EVENT',      photo: 'img/Team/Quentin.jpg', cadrage: { left: 103, top: 266, side: 680 } },
-  { slug: 'makalu',    prenom: 'MAKAL&Ugrave;', role: 'COMMUNICATION &amp; GRAPHISTE', photo: 'img/Team/Makalu.jpg', cadrage: { left: 137, top: 190, side: 750 } },
+  { slug: 'polar',     prenom: 'POLAR',     role: 'RESPONSABLE DE SITE',        photo: 'img/Team/Polar.jpg' },
+  { slug: 'red',       prenom: 'RED',       role: 'CHEF DE PROJET &amp; EVENT', photo: 'img/Team/Red.jpg' },
+  { slug: 'lwiz',      prenom: 'LWIZ',      role: 'RH &amp; COMMUNITY MANAGER', photo: 'img/Team/Lwiz.jpg' },
+  { slug: 'lily-rose', prenom: 'LILY-ROSE', role: 'AMBASSADRICE GAMEDOOR&#183;41', photo: 'img/Team/Lily-Rose.jpg' },
+  { slug: 'quentin',   prenom: 'QUENTIN',   role: 'GRAPHISTE &amp; EVENT',      photo: 'img/Team/Quentin.jpg' },
+  { slug: 'makalu',    prenom: 'MAKAL&Ugrave;', role: 'COMMUNICATION &amp; GRAPHISTE', photo: 'img/Team/Makalu.jpg' },
   { slug: 'jules',     prenom: 'JULES',     role: 'CHARG&Eacute; D&#x27;AFFAIRES', photo: null },
-  { slug: 'allan',     prenom: 'ALLAN',     role: 'GESTIONNAIRE',               photo: 'img/Team/Allan-brain-caen-escape-game-quiz-game2025_.jpg' },
+  // Allan n'a pas de portrait dans le dossier signature : on reprend son visuel
+  // d'equipe, recadre serre pour se rapprocher du cadrage des sept autres.
+  { slug: 'allan',     prenom: 'ALLAN',     role: 'GESTIONNAIRE',               photo: 'img/Team/Allan-brain-caen-escape-game-quiz-game2025_.jpg', cadrage: { left: 60, top: 5, side: 270 } },
 ];
 
 // L'icone "G·" de la charte, utilisee tant que la vraie photo manque : elle

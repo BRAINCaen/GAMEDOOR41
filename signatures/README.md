@@ -41,14 +41,20 @@ Les fichiers disponibles :
   makalu (sans accent), jules, allan
 - Adresse : 41 bis rue Pasteur, 14120 Mondeville
 
-## Il manque encore la photo de Jules
+## D'où viennent les photos
 
-Jules est arrivé après la séance photo : il n'a pas de visuel dans le dossier
-Drive *Cadre photo / fini*. Sa signature affiche pour l'instant l'icône **G·**
-de la marque à la place du portrait — c'est propre, mais moins personnel.
+Du Drive partagé : **TEAM GAMEDOOR·41 › 📢 Communication › Quentin et makalu ›
+Cadre photo › fini**. Ce sont les portraits serrés préparés par la comm.
 
-Dès que son visuel existe, il suffit de le dire : deux minutes de travail, et
-lui seul aura à recoller sa signature.
+Deux exceptions, à corriger dès que les visuels existent :
+
+- **Jules** est arrivé après la séance photo : il n'a pas de portrait dans ce
+  dossier. Sa signature affiche l'icône **G·** de la marque à la place.
+- **Allan** n'a pas non plus de portrait de la nouvelle série. On reprend son
+  visuel d'équipe, recadré serré pour se rapprocher du cadrage des autres.
+
+Dès qu'un visuel arrive, il suffit de le dire : deux minutes de travail, et
+seule la personne concernée aura à recoller sa signature.
 
 ## Refaire les signatures (si un numéro, un rôle ou une photo change)
 
