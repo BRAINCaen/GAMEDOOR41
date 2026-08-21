@@ -540,6 +540,17 @@
   status = 404
   force = true
 
+# Les signatures email de l'equipe : huit fichiers HTML contenant les huit
+# adresses prenom@gamedoor41.fr. Ils servent uniquement a etre ouverts depuis
+# le depot puis colles dans Gmail. Publies, ils offriraient la liste complete
+# des emails aux robots a spam. Les images, elles, restent publiques
+# (/img/signature/) : une signature email va les chercher par leur URL.
+[[redirects]]
+  from = "/signatures/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # ============================================================
 # HEADERS — Sécurité + Performance + noindex netlify.app
 # ============================================================

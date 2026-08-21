@@ -27,7 +27,7 @@ const dryRun = process.argv.includes('--dry-run');
 
 const pages = execSync('git ls-files "*.html"', { encoding: 'utf8' })
   .split('\n').filter(Boolean)
-  .filter((f) => !/^(_archive|_wip|extracted-v33|node_modules)\//.test(f));
+  .filter((f) => !/^(_archive|_wip|extracted-v33|node_modules|signatures)\//.test(f));
 
 // Un <img ...> en respectant les guillemets, pour ne pas couper sur un ">"
 // present dans un attribut.

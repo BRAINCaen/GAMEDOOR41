@@ -11,3 +11,4 @@ Disallow: /README.md
 Disallow: /CLAUDE.md
 Disallow: /scripts/
 Disallow: /apps-script/
+Disallow: /signatures/
