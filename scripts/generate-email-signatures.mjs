@@ -38,6 +38,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 
 const ROOT = process.cwd();
@@ -79,7 +80,7 @@ const POLICE = "'Barlow Condensed','Arial Narrow',Arial,Helvetica,sans-serif";
 // le recadrage automatique au centre suffit. Le champ reste la pour un visuel
 // en pied, ou un carre centre couperait la tete.
 
-const EQUIPE = [
+export const EQUIPE = [
   { slug: 'polar',     prenom: 'POLAR',     role: 'RESPONSABLE DE SITE',        photo: 'img/Team/Polar.jpg' },
   { slug: 'red',       prenom: 'RED',       role: 'CHEF DE PROJET &amp; EVENT', photo: 'img/Team/Red.jpg' },
   { slug: 'lwiz',      prenom: 'LWIZ',      role: 'RH &amp; COMMUNITY MANAGER', photo: 'img/Team/Lwiz.jpg' },
@@ -87,14 +88,13 @@ const EQUIPE = [
   { slug: 'quentin',   prenom: 'QUENTIN',   role: 'GRAPHISTE &amp; EVENT',      photo: 'img/Team/Quentin.jpg' },
   { slug: 'makalu',    prenom: 'MAKAL&Ugrave;', role: 'COMMUNICATION &amp; GRAPHISTE', photo: 'img/Team/Makalu.jpg' },
   { slug: 'jules',     prenom: 'JULES',     role: 'CHARG&Eacute; D&#x27;AFFAIRES', photo: null },
-  // Allan n'a pas de portrait dans le dossier signature : on reprend son visuel
-  // d'equipe, recadre serre pour se rapprocher du cadrage des sept autres.
-  { slug: 'allan',     prenom: 'ALLAN',     role: 'GESTIONNAIRE',               photo: 'img/Team/Allan-brain-caen-escape-game-quiz-game2025_.jpg', cadrage: { left: 60, top: 5, side: 270 } },
+  // Portrait en pied comme Lily-Rose, Quentin et Makalu : cadrage explicite.
+  { slug: 'allan',     prenom: 'ALLAN',     role: 'GESTIONNAIRE',               photo: 'img/Team/Allan.jpg', cadrage: { left: 235, top: 176, side: 560 } },
 ];
 
 // L'icone "G·" de la charte, utilisee tant que la vraie photo manque : elle
 // tient le carre sans repeter le logo complet, deja present a droite.
-const AVATAR_DEFAUT = 'img/logo/logo-icon-g.svg';
+export const AVATAR_DEFAUT = 'img/logo/logo-icon-g.svg';
 // Logo du bloc de droite. Version claire sur fond transparent : la signature
 // est posee sur le noir chaud de la marque.
 const LOGO_SOURCE = 'img/logo/logo-horizontal.svg';
@@ -215,6 +215,14 @@ function signature({ slug, prenom, role }) {
 }
 
 // --- execution -----------------------------------------------------------
+//
+// La liste EQUIPE est exportee : scripts/generate-equipe-photos.mjs la relit
+// pour fabriquer les portraits de la page /equipe/. On ne genere donc les
+// signatures que si ce fichier est lance directement, pas quand il est importe.
+
+if (import.meta.url !== pathToFileURL(process.argv[1]).href) {
+  // Importe par un autre script : on s'arrete la, seules les donnees servent.
+} else {
 
 const dossierImg = path.join(ROOT, DOSSIER_IMG);
 const dossierHtml = path.join(ROOT, DOSSIER_HTML);
@@ -251,4 +259,5 @@ if (!dryRun) await fabriquerLogo(path.join(dossierImg, 'logo-gamedoor41.png'));
 console.log(`\n${pages} signatures, ${images + 1} images${dryRun ? ' (simulation)' : ''}.`);
 if (sansPhoto.length) {
   console.log(`Photo a fournir pour : ${sansPhoto.join(', ')} — avatar GAMEDOOR-41 en attendant.`);
+}
 }
