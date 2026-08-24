@@ -60,3 +60,54 @@ sitemap-data.jsx
 Brain escape quiz accueil.mp4
 *.bak.html
 *.bak
+
+# ============================================================
+# ORIGINAUX D'IMAGES PLEINE TAILLE — HORS PROD (2026-08-24)
+# Les pages ne servent que les déclinaisons 480w/768w/1024w
+# générées par les scripts. Ces originaux (jusqu'à 28 Mo pour
+# l'affiche blind test) étaient servis en URL publique sans être
+# référencés par aucune page, et alourdissaient le dépôt de ~78 Mo.
+# Ils restent sur le disque local comme source de régénération.
+# Liste EXPLICITE fichier par fichier : un motif du type
+# univers-quiz-*.png engloberait aussi les déclinaisons -480w/-768w,
+# qui doivent rester versionnées.
+# ============================================================
+img/quiz/affiche-blindtest-100-violette.png
+img/quiz/affiche-blindtest-100-violette.webp
+img/quiz/affiche-blindtest-100-violette.avif
+img/quiz/univers-quiz-evjf-evg.png
+img/quiz/univers-quiz-evjf-evg.webp
+img/quiz/univers-quiz-evjf-evg.avif
+img/quiz/univers-quiz-kids.png
+img/quiz/univers-quiz-kids.webp
+img/quiz/univers-quiz-kids.avif
+img/quiz/univers-quiz-anglais.png
+img/quiz/univers-quiz-anglais.webp
+img/quiz/univers-quiz-anglais.avif
+img/quiz/univers-quiz-apero.png
+img/quiz/univers-quiz-apero.webp
+img/quiz/univers-quiz-apero.avif
+img/quiz/univers-quiz-blindtest-90s.png
+img/quiz/univers-quiz-blindtest-90s.webp
+img/quiz/univers-quiz-blindtest-90s.avif
+img/quiz/univers-quiz-blindtest-2000s.png
+img/quiz/univers-quiz-blindtest-2000s.webp
+img/quiz/univers-quiz-blindtest-2000s.avif
+img/quiz/univers-quiz-blindtest-80s.png
+img/quiz/univers-quiz-blindtest-80s.webp
+img/quiz/univers-quiz-blindtest-80s.avif
+img/quiz/univers-quiz-fa.png
+img/quiz/univers-quiz-fa.webp
+img/quiz/univers-quiz-fa.avif
+img/quiz/univers-quiz-ados.png
+img/quiz/univers-quiz-ados.webp
+img/quiz/univers-quiz-ados.avif
+img/quiz/univers-quiz-japon.png
+img/quiz/univers-quiz-japon.webp
+img/quiz/univers-quiz-japon.avif
+img/quiz/univers-quiz-cinema.png
+img/quiz/univers-quiz-cinema.webp
+img/quiz/univers-quiz-cinema.avif
+img/quiz/salle-quiz-perspective-rasante.jpg
+img/quiz/salle-quiz-perspective-rasante.webp
+img/quiz/salle-quiz-perspective-rasante.avif
