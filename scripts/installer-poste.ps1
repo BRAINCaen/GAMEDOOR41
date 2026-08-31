@@ -1,4 +1,4 @@
-<#
+﻿<#
   installer-poste.ps1 — Mettre un PC Windows vierge au niveau pour travailler sur gamedoor41.fr
 
   À LANCER une seule fois sur un poste neuf, dans PowerShell.
