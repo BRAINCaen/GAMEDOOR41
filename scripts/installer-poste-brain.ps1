@@ -29,7 +29,14 @@
 param(
   [switch]$WithPython,
   [switch]$Tout,
-  [string]$ProjectsDir = (Join-Path $env:USERPROFILE 'Projets')
+  # C:\Projets et pas %USERPROFILE%\Projets, pour deux raisons mesurees le 31/08/2026 :
+  #  1. Chemin COURT. Sous un chemin long, le build Next.js de SYNERGIA-COMPT echoue de
+  #     facon erratique avec des messages differents a chaque fois (fichiers introuvables
+  #     qui existent pourtant). Le meme commit compile 3 fois sur 3 depuis un chemin court.
+  #  2. Node remonte l'arborescence pour resoudre ses modules. Un node_modules ou un
+  #     package.json trainant dans le dossier personnel est alors capte par TOUS les projets
+  #     clones en dessous, qui compilent avec la mauvaise version de leurs outils.
+  [string]$ProjectsDir = 'C:\Projets'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -148,6 +155,22 @@ OK 'git authentifié via GitHub CLI'
 Section "Clone / mise à jour de tous les dépôts $Org"
 if (-not (Test-Path $ProjectsDir)) { New-Item -ItemType Directory -Path $ProjectsDir | Out-Null }
 Info "Dossier de travail : $ProjectsDir"
+
+# Un node_modules ou un package.json situé AU-DESSUS des dépôts est capté par Node lors de
+# la résolution des modules : les projets compilent alors avec les mauvaises versions et
+# renvoient des erreurs incompréhensibles, sans rapport avec le code. On prévient.
+$parent = Split-Path $ProjectsDir -Parent
+foreach ($dossier in @($ProjectsDir, $parent) | Select-Object -Unique) {
+  if (-not $dossier) { continue }
+  foreach ($parasite in @('node_modules', 'package.json')) {
+    $chemin = Join-Path $dossier $parasite
+    if (Test-Path $chemin) {
+      Warn "PARASITE : $chemin"
+      Warn "  Node le captera pour tous les dépôts clonés en dessous et leurs builds échoueront"
+      Warn "  avec des erreurs trompeuses. À déplacer ou supprimer s'il n'appartient à aucun projet."
+    }
+  }
+}
 
 $tous = gh repo list $Org --limit 200 --json name,sshUrl,url --jq '.[] | .name' 2>$null
 if ($LASTEXITCODE -ne 0 -or -not $tous) {
