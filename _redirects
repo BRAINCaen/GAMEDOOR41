@@ -13,6 +13,18 @@
 # enverraient certains slugs (ex: /quiz-game-plateau) ailleurs.
 # Le `301!` force la redirection même si un fichier existe.
 
+# Exception ciblée AVANT le catch-all : la page « JE RESERVE ! » du site
+# Buzz (encore indexée par Google sous ce titre) part directement au
+# booking 4escape — un clic réservation doit rester un clic réservation.
+# Même destination que /reserver plus bas ; placée ici car le catch-all
+# host-level Buzz ci-dessous capterait sinon le path en premier.
+https://buzz-your-brain-caen.fr/reserver      https://braincaen.4escape.io/booking  301!
+https://www.buzz-your-brain-caen.fr/reserver  https://braincaen.4escape.io/booking  301!
+https://buzzyourbrain-caen.fr/reserver        https://braincaen.4escape.io/booking  301!
+https://www.buzzyourbrain-caen.fr/reserver    https://braincaen.4escape.io/booking  301!
+https://buzzyourbraincaen.fr/reserver         https://braincaen.4escape.io/booking  301!
+https://www.buzzyourbraincaen.fr/reserver     https://braincaen.4escape.io/booking  301!
+
 https://buzz-your-brain-caen.fr/*         https://gamedoor41.fr/quiz-game-caen/   301!
 https://www.buzz-your-brain-caen.fr/*     https://gamedoor41.fr/quiz-game-caen/   301!
 https://buzzyourbrain-caen.fr/*           https://gamedoor41.fr/quiz-game-caen/   301!
@@ -26,6 +38,10 @@ https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/quiz-game-caen/ 
 /escape-back-to-80s                       /escape-game-caen/back-to-the-80s/     301
 /quiz-game-plateau                        /quiz-game-caen/                       301
 /quiz-game-nos-emissions                  /quiz-game-caen/                       301
+# /le-quiz-game : slug du site Buzz — utile quand il est tapé sur un
+# domaine Brain (le :splat host-level le transmettait en 404). Cible
+# absolue = un seul saut depuis un domaine hérité.
+/le-quiz-game                             https://gamedoor41.fr/quiz-game-caen/  301
 /quiz-evenements-saintvalentain-noel-halloween  /quiz-game-caen/                 301
 /teambuilding-cse                         /team-building-caen/                   301
 /billeterie-cse-entreprises               /team-building-caen/                   301
