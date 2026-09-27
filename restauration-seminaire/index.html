@@ -859,10 +859,10 @@
         <h2 id="lieu-titre">Où et comment se passe votre repas</h2>
         <ul class="lieu-list">
           <li><strong>Pas de salle de réunion.</strong> GAMEDOOR·41 n'a pas de salle de réunion, ni pour l'instant de salle de réception. Votre repas se prend dans notre <strong>salle d'accueil</strong>.</li>
-          <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), la privatisation de la salle d'accueil est obligatoire. Elle est ajoutée à votre devis.</li>
-          <li><strong>Plateaux-repas : repas assis.</strong> Nous réaménageons la salle d'accueil avec tables et chaises.</li>
+          <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), la privatisation de la salle d'accueil est obligatoire. Elle figurera sur votre devis.</li>
+          <li><strong>Déjeuner (plateaux-repas, box, wraps) : repas assis.</strong> Nous réaménageons la salle d'accueil avec tables et chaises.</li>
           <li><strong>Apéritif dînatoire : buffet debout.</strong> Chacun se sert ; quelques chaises sont à disposition, mais on reste debout.</li>
-          <li><strong>Tout est servi froid.</strong> Nous n'avons rien pour réchauffer sur place.</li>
+          <li><strong>Aucun plat chaud.</strong> Nous ne pouvons rien réchauffer sur place : tous les plats sont servis froids. Seuls le café et le thé sont chauds.</li>
         </ul>
       </div>
     </div>
@@ -886,7 +886,7 @@
       <div class="section-head">
         <p class="meta">Entre deux activités ou en clôture</p>
         <h2><span class="num">02</span>Le déjeuner</h2>
-        <p>Plateaux-repas et box <strong>froids</strong> de la carte Été 2026 de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Composition identique pour tous à partir de 4 plateaux. Plateau végétarien disponible.</p>
+        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
       </div>
       <div class="froid-notice" role="note">
         <span class="froid-notice-icon" aria-hidden="true">❄</span>
@@ -909,7 +909,7 @@
         <p class="meta">En clôture · buffet debout</p>
         <h2><span class="num">03</span>L'apéritif dînatoire</h2>
         <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment autour d'un <strong>buffet froid</strong>, dans notre salle d'accueil privatisée : chacun se sert, <strong>debout</strong> (quelques chaises à disposition).</p>
-        <p>Pour un apéritif qui remplace le repas, comptez environ 20 pièces par personne (repère du traiteur), soit 2 plateaux de 30 pièces pour 3 personnes.</p>
+        <p>Pour un apéritif qui remplace le repas, comptez environ 20 pièces par personne (c'est la base des formules cocktail du traiteur), soit 2 plateaux de 30 pièces pour 3 personnes.</p>
       </div>
       <div class="cards-grid" id="cards-apero"></div>
       <div class="plateaux-froids" id="plateaux-froids-grid"></div>
@@ -969,11 +969,11 @@
           <div class="form-row full">
             <div class="form-group">
               <label for="resto-message">Message libre (allergies, demandes spécifiques)</label>
-              <textarea id="resto-message" name="message" placeholder="Ex : 2 personnes végétariennes, 1 sans gluten, déjeuner vers 12h30..."></textarea>
+              <textarea id="resto-message" name="message" placeholder="Ex : allergie aux fruits à coque, déjeuner vers 12h30..."></textarea>
             </div>
           </div>
 
-          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : tout est livré et servi froid, dans notre salle d'accueil privatisée (privatisation obligatoire, ajoutée à votre devis). Nous n'avons pas de salle de réunion.</p>
+          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : tous les plats sont livrés et servis froids (seuls le café et le thé sont chauds), dans notre salle d'accueil privatisée (privatisation obligatoire, qui figurera sur votre devis). Nous n'avons pas de salle de réunion.</p>
 
           <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
 
@@ -997,7 +997,7 @@
       <div class="panier-total-row"><span>Total HT</span><span id="total-ht">0,00 €</span></div>
       <div class="panier-total-row"><span>TVA estimée</span><span id="total-tva">0,00 €</span></div>
       <div class="panier-total-row ttc"><span>Total TTC</span><span id="total-ttc">0,00 €</span></div>
-      <p class="panier-note">Hors privatisation de la salle d'accueil (obligatoire), ajoutée à votre devis.</p>
+      <p class="panier-note">Hors privatisation de la salle d'accueil (obligatoire) : elle figurera sur votre devis.</p>
     </div>
   </aside>
 
@@ -1069,7 +1069,7 @@
           subtitle: 'Wrap ou pasta box froide',
           includes: ['1 wrap (8 recettes) ou 1 pasta box froide (3 recettes)', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Remis en valisette isotherme'],
           info: {
-            details: '<p>Format léger, livré froid et prêt à consommer. Au choix : la formule wrap ou la pasta box froide de la carte Été 2026 de Grandsire Traiteur. Composition identique pour tous à partir de 4 formules.</p>',
+            details: '<p>Format léger, livré froid et prêt à consommer. Au choix : la formule wrap ou la pasta box froide de la carte de Grandsire Traiteur. Chaque composition se commande par 4 formules minimum.</p>',
             inclus: [
               '<strong>Wrap au choix</strong> : jambon fumé de la Manche, mimolette d\'Isigny, fromage frais et salade · poulet et crudités, oignons frits, tomates confites, fromage frais et ciboulette · saumon, guacamole épicé, concombre et salade · brie, crème de chorizo et salade · poulet croustillant (nuggets), salade et fromage frais sauce César · thon à la marmelade de yuzu · légumes tex-mex · wrap et son fish & chips, sauce tartare',
               '<strong>OU pasta box froide au choix</strong> : penne au salami et légumes, billes de mozzarella, olives noires et basilic · salade de tagliatelles fraîches, jambon fumé, emmental, parmesan et pesto · salade de fusilli au thon, poivrons, tomates et œuf, mayonnaise curry-citron vert',
@@ -1077,8 +1077,8 @@
               'Bouteille d\'eau 50 cl et serviette, en valisette isotherme (avec couverts en bois et boule de pain pour la formule wrap)'
             ],
             allergenes: 'Selon la recette choisie : gluten, lait, œufs, poisson possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 formules minimum',
-            fournisseur: 'Grandsire Traiteur · carte Été 2026'
+            min: '4 formules minimum par composition',
+            fournisseur: 'Grandsire Traiteur'
           }
         },
         {
@@ -1087,7 +1087,7 @@
           subtitle: 'Burger ou bagel froid',
           includes: ['1 burger froid (2 recettes) ou 1 bagel froid (3 recettes)', 'Chips ou salade italienne', '1 dessert au choix', "Bouteille d'eau 50 cl"],
           info: {
-            details: '<p>Box froide remise en valisette isotherme, prête à consommer. Carte Été 2026 de Grandsire Traiteur. Composition identique pour tous à partir de 4 box.</p>',
+            details: '<p>Box froide remise en valisette isotherme, prête à consommer. Carte de Grandsire Traiteur. Chaque composition se commande par 4 box minimum.</p>',
             inclus: [
               '<strong>Burger froid au choix</strong> : chicken burger (graine de courge, poulet croustillant, oignons rouges, tomme de Savoie, sauce crémeuse aux herbes) · burger façon asiatique (effiloché de bœuf, coriandre, petits légumes, houmous de patate douce)',
               '<strong>OU bagel froid au choix</strong> : norvégien (courgettes grillées, chèvre, noix, pomme) · nordique (saumon fumé, ricotta, pousses d\'épinard, crevettes, citron vert) · volaille (poulet, bacon, oignons frits, tomate, salade, sauce barbecue)',
@@ -1096,17 +1096,17 @@
               'Bouteille d\'eau 50 cl et serviette'
             ],
             allergenes: 'Selon la recette choisie : gluten, lait, œufs, poisson, crustacés possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 box minimum',
-            fournisseur: 'Grandsire Traiteur · carte Été 2026'
+            min: '4 box minimum par composition',
+            fournisseur: 'Grandsire Traiteur'
           }
         },
         {
           id: 'dej-cassis', name: 'Plateau Cassis', tag: 'Confort · Essentiel',
           price: 16.50, tva: 10, unit: '/ pers.',
           subtitle: '4 services · gamme essentielle',
-          includes: ['Entrée au choix (salade grecque, terrine de poisson…)', 'Plat froid au choix (poke bowl saumon, poulet curry…)', 'Fromage normand au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (salade grecque, terrine de poisson…)', 'Plat froid au choix (poke bowl saumon, poulet curry…)', 'Fromage au choix', 'Dessert au choix'],
           info: {
-            details: '<p>Le plateau-repas essentiel de la carte Été 2026 de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Composition identique pour tous à partir de 4 plateaux.</p>',
+            details: '<p>Le plateau-repas essentiel de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
               '<strong>Entrée au choix</strong> : salade grecque et feta · tomates mozzarella et pesto, croûtons à l\'ail · terrine de poisson et légumes grillés, sauce tartare · salade d\'abricots rôtis au chèvre et romarin · entrée du jour',
               '<strong>Plat froid au choix</strong> : filet de rouget rôti, penne aux tomates confites · poke bowl de saumon, riz et légumes · filet de poulet au curry, salade de riz aux petits légumes · émincé de bœuf sauce barbecue, salade mexicaine · plat du jour',
@@ -1115,18 +1115,18 @@
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
             allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum',
+            min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121 · carte Été 2026'
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
           id: 'dej-fraise', name: 'Plateau Fraise', tag: 'Confort · Premium',
           price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
           subtitle: '4 services · gamme premium',
-          includes: ['Entrée au choix (panacotta de chèvre, terrine de poulet…)', 'Plat froid au choix (pavé de saumon, rôti de bœuf…)', 'Fromage normand au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (panacotta de chèvre, terrine de poulet…)', 'Plat froid au choix (pavé de saumon, rôti de bœuf…)', 'Fromage au choix', 'Dessert au choix'],
           info: {
-            details: '<p>La gamme premium de la carte Été 2026 de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Composition identique pour tous à partir de 4 plateaux.</p>',
+            details: '<p>Le plateau premium de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
               '<strong>Entrée au choix</strong> : panacotta de chèvre et tomates confites, crumble pistache · terrine de poulet et petits légumes · penne au salami et légumes, billes de mozzarella · jambon rôti aux herbes et tapenade d\'olive · entrée du jour',
               '<strong>Plat froid au choix</strong> : pavé de saumon, quinoa de légumes, vinaigrette balsamique et fraises · poke bowl de lieu noir, gambas et légumes · poulet en croûte de grana padano, tagliatelles aux légumes provençaux · rôti de bœuf, salade de pommes de terre, béarnaise · plat du jour',
@@ -1135,18 +1135,18 @@
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
             allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum',
+            min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121 · carte Été 2026'
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
           id: 'dej-vege', name: 'Plateau Végétarien', tag: 'Confort · Végétarien',
           price: 19.00, tva: 10, unit: '/ pers.',
-          subtitle: '4 services · 100 % végétarien',
+          subtitle: '4 services · végétarien',
           includes: ['Entrée au choix (bruschetta, crudités…)', 'Plat froid au choix (steak végétal, falafels…)', 'Fromage ou salade au choix', 'Dessert au choix'],
           info: {
-            details: '<p>Le plateau-repas végétarien de la carte Été 2026 de Grandsire Traiteur : entrée, plat, fromage ou salade et dessert, livré froid et prêt à consommer. Composition identique pour tous à partir de 4 plateaux.</p>',
+            details: '<p>Le plateau-repas végétarien de la carte de Grandsire Traiteur : entrée, plat, fromage ou salade et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
               '<strong>Entrée au choix</strong> : bruschetta de tapenade, tomates confites, roquette et parmesan · assiette de crudités · salade de pâtes, poivrons grillés et artichaut · terrine de chèvre et tomates confites, coulis de poivrons jaunes · entrée du jour',
               '<strong>Plat froid au choix</strong> : steak végétal, salade de riz aux petits légumes · wrap aux légumes tex-mex · salade de riz au curry, falafels et sauce pita · trompe-l\'œil de Saint-Jacques (champignons) sur lit de légumes · plat du jour',
@@ -1155,18 +1155,18 @@
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
             allergenes: 'Selon les recettes choisies : gluten, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum',
+            min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121 · carte Été 2026'
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
           id: 'dej-peche', name: 'Plateau Pêche', tag: 'Premium · Gastronomique',
           price: 24.80, tva: 10, unit: '/ pers.',
           subtitle: '4 services · gastronomique',
-          includes: ['Entrée au choix (tataki de thon, foie gras…)', 'Plat froid au choix (filet de bar, cabillaud…)', 'Fromage normand au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (tataki de thon, foie gras…)', 'Plat froid au choix (filet de bar, cabillaud…)', 'Fromage au choix', 'Dessert au choix'],
           info: {
-            details: '<p>La gamme gastronomique de la carte Été 2026 de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Composition identique pour tous à partir de 4 plateaux.</p>',
+            details: '<p>Le plateau gastronomique de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
               '<strong>Entrée au choix</strong> : tataki de thon rouge, légumes croquants, sauce teriyaki · makis de saumon et gambas, sauce soja · foie gras à la vanille, chutney d\'ananas et mangue · terrine de volaille et légumes confits · entrée du jour',
               '<strong>Plat froid au choix</strong> : filet de bar aux légumes provençaux, sauce vierge · piccata de veau, tagliatelles fraîches, crémeux de mozzarella di buffala · dos de cabillaud rôti au miel, riz aux légumes confits · filet mignon de veau basse température, légumes grillés, aïoli doux · plat du jour',
@@ -1175,9 +1175,9 @@
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
             allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, mollusques, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum',
+            min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121 · carte Été 2026'
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         }
       ],
@@ -1216,7 +1216,7 @@
           { id: 'pc-fraicheur', name: 'Plateau de 30 pièces fraîcheur', vol: '30 pièces', price: 36.36, tva: 10,
             desc: 'Macaron de magret à l\'orange · cheesecake aux petits pois · navette de jambon de volaille · brochette crevettes-ananas · chaud-froid de volaille (recette froide) · wrap fish & chips' },
           { id: 'pc-boulangeres', name: 'Plateau de 30 boulangères et mini-clubs', vol: '30 pièces', price: 36.36, tva: 10,
-            desc: 'Navette de volaille miel-épices · briochin Neufchâtel et pomme · mini-clubs saumon fumé, bœuf tartare, crudités · bruschetta légumes-anchois' },
+            desc: 'Navette de volaille miel-épices · briochin Neufchâtel et pomme · mini-clubs saumon fumé, bœuf sauce tartare, crudités · bruschetta légumes-anchois' },
           { id: 'pc-pain-surprise', name: 'Pain surprise', vol: '50 pièces', price: 40.00, tva: 10,
             desc: 'Au choix : charcuterie, poisson, ou mixte charcuterie-poisson-crudités' },
           { id: 'pc-fours-finesse', name: 'Plateau de 30 fours frais « Finesse »', vol: '30 pièces · sucré', price: 36.36, tva: 10,
@@ -1460,6 +1460,8 @@
         btn.textContent = '✓ Sélectionné';
         btn.classList.add('selected');
         qtyControls.style.display = 'flex';
+        const qtyVal = card.querySelector('[data-qty-val]');
+        if (qtyVal) qtyVal.textContent = state.nbPersonnes;
       }
       updatePanier();
     }
@@ -1617,7 +1619,7 @@
           if (sel.tva === 10) tva10 += lineTVA;
           else if (sel.tva === 20) tva20 += lineTVA;
           return `• ${sel.name} — ${sel.qty} ${sel.unit} × ${sel.price.toFixed(2)}€ HT = ${lineHT.toFixed(2)}€ HT`;
-        }).join('\n');
+        }).join('\n') + '\n⚠ Privatisation de la salle d\'accueil obligatoire : à ajouter au devis';
         const totalTTC = totalHT + tva10 + tva20;
         const nbPers = parseInt(data.nb_personnes, 10) || 0;
         const perPersonHT  = nbPers > 0 ? totalHT  / nbPers : 0;
@@ -1671,7 +1673,7 @@
 
         feedback.className = 'feedback-msg success';
         feedback.style.display = 'block';
-        feedback.innerHTML = `✅ Demande envoyée. On revient vers <strong>${data.email}</strong> sous 48&nbsp;h ouvrées avec un devis personnalisé. Pour rappel, votre repas est servi froid dans notre salle d'accueil, privatisée pour l'occasion.`;
+        feedback.innerHTML = `✅ Demande envoyée. On revient vers <strong>${data.email}</strong> sous 48&nbsp;h ouvrées avec un devis personnalisé. Pour rappel, votre repas est servi dans notre salle d'accueil, privatisée pour l'occasion, et tous les plats sont froids.`;
         btn.textContent = '✅ Demande envoyée';
         btn.style.background = 'var(--green)';
         btn.style.color = 'var(--creme)';
