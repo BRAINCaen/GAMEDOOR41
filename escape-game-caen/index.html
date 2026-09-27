@@ -77,83 +77,130 @@
       color:#A8A095; margin:0 0 22px;
     }
 
-    /* Grille d'orientation directement dans le hero */
+    /* Grille d'orientation directement dans le hero (marge haute : les têtes des personnages dépassent des cartes) */
     .gd-hero-orient-grid {
       display:grid; grid-template-columns:repeat(3, 1fr);
-      gap:14px; max-width:980px; margin:0 auto;
+      gap:18px; max-width:1000px; margin:clamp(40px, 5vw, 64px) auto 0;
     }
     @media (max-width: 760px) {
-      .gd-hero-orient-grid { grid-template-columns:1fr; gap:10px; max-width:480px; }
+      .gd-hero-orient-grid { grid-template-columns:1fr; gap:34px; max-width:480px; margin-top:40px; }
     }
 
-    /* Liens secondaires sous les cards */
+    /* Boutons sous les cards : « Réserver » plein, les deux autres en contour */
     .gd-hero-secondary {
-      display:flex; gap:clamp(12px, 2vw, 24px);
+      display:flex; gap:12px;
       justify-content:center; flex-wrap:wrap;
-      margin-top:22px;
+      margin-top:30px;
     }
     .gd-hero-secondary a {
-      color:#C8C2B8; text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:12px 22px; border-radius:999px;
+      color:#F0EBE2; text-decoration:none;
+      background:rgba(12,8,0,0.5);
+      border:1px solid rgba(240,235,226,0.22);
+      -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
       font-family:'Barlow Condensed','Oswald',sans-serif;
-      font-size:16px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
-      padding:8px 0;
-      border-bottom:1px solid rgba(200,194,184,0.18);
-      transition:color .2s, border-color .2s;
+      font-size:16px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+      transition:color .2s, border-color .2s, background .2s, transform .2s, box-shadow .2s;
     }
-    .gd-hero-secondary a:hover { color:#E07020; border-bottom-color:#E07020; }
-    .gd-hero-secondary .arrow { display:inline-block; margin-left:6px; transition:transform .2s; }
+    .gd-hero-secondary a:hover { border-color:#E07020; background:rgba(224,112,32,0.14); transform:translateY(-2px); }
+    .gd-hero-secondary a.is-primary {
+      background:#E07020; border-color:#E07020; color:#fff;
+      box-shadow:0 8px 24px rgba(224,112,32,0.35);
+    }
+    .gd-hero-secondary a.is-primary:hover { background:#F0802F; box-shadow:0 12px 30px rgba(224,112,32,0.5); }
+    .gd-hero-secondary .arrow { display:inline-block; transition:transform .2s; }
     .gd-hero-secondary a:hover .arrow { transform:translateX(3px); }
+    @media (max-width: 760px) {
+      .gd-hero-secondary { flex-direction:column; align-items:stretch; max-width:480px; margin:26px auto 0; gap:10px; }
+    }
 
     /* === Pattern DS « Brand · Decorative section number » + kicker numéroté magazine ===
        Appliqué sur les sections salles pour rendu éditorial premium-immersif. */
     /* ============================================================
        BLOC ORIENTATION — « Quelle expérience est faite pour vous ? »
        ============================================================ */
+    /* Chaque carte porte le personnage de sa salle : il dépasse du haut de la carte (clip-path ouvert vers le haut)
+       et bouge au défilement (variables --tx/--ty/--rot/--sc/--op posées par le script en bas de page). */
     .exp-orient-card {
-      position:relative; display:flex; flex-direction:column;
-      gap:10px; padding:22px 22px 20px;
-      background:linear-gradient(155deg, rgba(61,93,192,0.06) 0%, rgba(20,18,16,0.55) 65%);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:14px;
-      text-decoration:none;
-      transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
-      overflow:hidden; isolation:isolate;
+      --room:#3D5DC0; --room-bg:#3D5DC0; --room-glow:rgba(61,93,192,0.38);
+      position:relative; display:flex; flex-direction:column; justify-content:flex-end;
+      min-height:300px; padding:22px 20px 20px;
+      text-align:left; text-decoration:none;
+      background:
+        radial-gradient(110% 85% at 88% 100%, var(--room-glow) 0%, transparent 62%),
+        linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(12,8,0,0.92) 72%);
+      border:1px solid rgba(255,255,255,0.09);
+      border-radius:18px;
+      isolation:isolate;
+      transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
     }
-    .exp-orient-card::before {
-      content:''; position:absolute; inset:0; pointer-events:none;
-      background:radial-gradient(circle at top right, rgba(61,93,192,0.18) 0%, transparent 55%);
-      opacity:.65; transition:opacity .25s ease;
-      z-index:-1;
+    .exp-orient-card.exp-room--80s { --room:#FF3EA5; --room-bg:linear-gradient(90deg, #D6197A 0%, #7C3AED 100%); --room-glow:rgba(255,62,165,0.34); }
+    .exp-orient-card.exp-room--gav { --room:#3D5DC0; --room-bg:linear-gradient(90deg, #3D5DC0 0%, #2A3F8F 100%); --room-glow:rgba(61,93,192,0.42); }
+    .exp-orient-card.exp-room--psy { --room:#E0243C; --room-bg:linear-gradient(90deg, #B3122B 0%, #6E0A1A 100%); --room-glow:rgba(224,36,60,0.36); }
+    .exp-orient-card:hover, .exp-orient-card:focus-visible {
+      transform:translateY(-4px);
+      border-color:var(--room);
+      box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 34px var(--room-glow);
     }
-    .exp-orient-card:hover {
-      transform:translateY(-3px);
-      border-color:rgba(61,93,192,0.45);
-      box-shadow:0 14px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(61,93,192,0.15);
+    .exp-orient-card:focus-visible { outline:2px solid var(--room); outline-offset:3px; }
+    /* Voile à gauche pour garder le texte lisible devant le personnage */
+    .exp-orient-card::after {
+      content:''; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
+      background:linear-gradient(90deg, rgba(12,8,0,0.82) 0%, rgba(12,8,0,0.45) 48%, transparent 78%),
+                 linear-gradient(0deg, rgba(12,8,0,0.7) 0%, transparent 45%);
     }
-    .exp-orient-card:hover::before { opacity:1; }
-    .exp-orient-ico {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:48px; height:48px;
-      background:linear-gradient(135deg, rgba(61,93,192,0.22), rgba(61,93,192,0.08));
-      border:1px solid rgba(61,93,192,0.35);
-      color:#3D5DC0;
-      border-radius:12px;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 12px rgba(61,93,192,0.18);
-      transition:color .25s ease, border-color .25s ease, transform .25s ease;
+    .exp-orient-perso {
+      position:absolute; inset:0; z-index:0; pointer-events:none;
+      clip-path:inset(-60% 0 0 0 round 0 0 18px 18px);
     }
-    .exp-orient-card:hover .exp-orient-ico {
-      color:#5B7BD8;
-      border-color:rgba(91,123,216,0.6);
-      transform:scale(1.04);
+    .exp-orient-perso picture {
+      position:absolute; right:-5%; bottom:0; height:122%;
+      display:block; transform-origin:60% 100%;
+      transition:transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .exp-orient-perso img {
+      display:block; height:100%; width:auto; max-width:none;
+      transform-origin:50% 100%;
+      transform:translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(var(--rot, 0deg)) scale(var(--sc, 1));
+      opacity:var(--op, 1);
+      filter:drop-shadow(0 14px 22px rgba(0,0,0,0.6));
+      will-change:transform;
+    }
+    .exp-orient-card:hover .exp-orient-perso picture { transform:translateY(-8px) scale(1.04); }
+    .exp-orient-text {
+      position:relative; z-index:2;
+      display:flex; flex-direction:column; align-items:flex-start; gap:14px;
+      max-width:64%;
     }
     .exp-orient-q {
-      font-family:var(--font-display); color:#F0EBE2;
-      font-weight:600; font-size:1rem; margin:0; line-height:1.35;
+      font-family:'Barlow Condensed','Oswald',sans-serif; color:#F0EBE2;
+      font-weight:700; font-size:1.35rem; margin:0; line-height:1.1;
+      text-shadow:0 2px 12px rgba(0,0,0,0.6);
     }
-    .exp-orient-room {
-      display:flex; align-items:center; gap:6px;
-      color:#3D5DC0; font-size:1rem; font-weight:600; margin:0;
-      font-family:var(--font-display); letter-spacing:.02em;
+    .exp-orient-cta {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 16px; border-radius:999px;
+      background:var(--room-bg); color:#fff;
+      font-family:'Barlow Condensed','Oswald',sans-serif;
+      font-size:16px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap;
+      box-shadow:0 6px 20px var(--room-glow), inset 0 0 0 1px rgba(255,255,255,0.18);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .exp-orient-cta .arrow { display:inline-block; transition:transform .25s ease; }
+    .exp-orient-card:hover .exp-orient-cta { box-shadow:0 10px 28px var(--room-glow), inset 0 0 0 1px rgba(255,255,255,0.3); }
+    .exp-orient-card:hover .exp-orient-cta .arrow { transform:translateX(4px); }
+    @media (max-width: 760px) {
+      .exp-orient-card { min-height:188px; padding:16px 16px 16px; border-radius:16px; }
+      .exp-orient-perso { clip-path:inset(-60% 0 0 0 round 0 0 16px 16px); }
+      .exp-orient-perso picture { height:132%; right:-3%; }
+      .exp-orient-text { max-width:58%; gap:12px; }
+      .exp-orient-q { font-size:1.2rem; }
+      .exp-orient-cta { font-size:15px; padding:9px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .exp-orient-card, .exp-orient-perso picture, .exp-orient-cta, .exp-orient-cta .arrow { transition:none; }
+      .exp-orient-card:hover, .exp-orient-card:hover .exp-orient-perso picture { transform:none; }
     }
 
     /* Scroll naturel : la section démarre dès le haut du viewport, le menu fixe
@@ -398,27 +445,7 @@
         max-height:280px;
       }
       .salle-grid { display:flex !important; flex-direction:column; }
-
-      /* Cards d'orientation : plus compactes et plus lisibles */
-      .exp-orient-card {
-        padding:14px 16px !important;
-        gap:6px !important;
-        background:linear-gradient(155deg, rgba(61,93,192,0.12) 0%, rgba(20,18,16,0.85) 65%) !important;
-      }
-      .exp-orient-ico {
-        width:36px !important; height:36px !important;
-        border-radius:9px !important;
-      }
-      .exp-orient-ico svg,
-      .exp-orient-ico img {
-        width:18px !important; height:18px !important;
-      }
-      .exp-orient-q {
-        font-size:0.95rem !important;
-      }
-      .exp-orient-room {
-        font-size:0.95rem !important;
-      }
+      /* Cards d'orientation : réglages mobiles dans le bloc « personnages » plus haut */
     }
   </style>
   
@@ -564,31 +591,49 @@
       <p class="gd-hero-microcopy">Choisissez votre expérience</p>
 
       <div class="gd-hero-orient-grid">
-        <a href="#back-80s" class="exp-orient-card">
-          <span class="exp-orient-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+        <a href="#back-80s" class="exp-orient-card exp-room--80s" data-perso="80s">
+          <span class="exp-orient-perso" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/personnage-back-to-the-80s-400w.avif 400w, /img/escape/personnage-back-to-the-80s-720w.avif 720w" sizes="(max-width: 760px) 190px, 270px">
+              <source type="image/webp" srcset="/img/escape/personnage-back-to-the-80s-400w.webp 400w, /img/escape/personnage-back-to-the-80s-720w.webp 720w" sizes="(max-width: 760px) 190px, 270px">
+              <img src="/img/escape/personnage-back-to-the-80s-720w.png" alt="" width="720" height="926" loading="lazy" decoding="async">
+            </picture>
           </span>
-          <p class="exp-orient-q">Vous cherchez une aventure fun ?</p>
-          <p class="exp-orient-room"><img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Back to the 80's</p>
+          <span class="exp-orient-text">
+            <span class="exp-orient-q">Vous cherchez une aventure fun ?</span>
+            <span class="exp-orient-cta">Back to the 80's <span class="arrow" aria-hidden="true">→</span></span>
+          </span>
         </a>
-        <a href="#in-prison" class="exp-orient-card">
-          <span class="exp-orient-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12,2 14,8 20,8 15,12 17,18 12,14 7,18 9,12 4,8 10,8"/><circle cx="12" cy="11" r="2" fill="currentColor"/></svg>
+        <a href="#in-prison" class="exp-orient-card exp-room--gav" data-perso="gav">
+          <span class="exp-orient-perso" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/personnage-garde-a-vue-400w.avif 400w, /img/escape/personnage-garde-a-vue-720w.avif 720w" sizes="(max-width: 760px) 190px, 270px">
+              <source type="image/webp" srcset="/img/escape/personnage-garde-a-vue-400w.webp 400w, /img/escape/personnage-garde-a-vue-720w.webp 720w" sizes="(max-width: 760px) 190px, 270px">
+              <img src="/img/escape/personnage-garde-a-vue-720w.png" alt="" width="720" height="1013" loading="lazy" decoding="async">
+            </picture>
           </span>
-          <p class="exp-orient-q">Vous voulez tester votre cohésion ?</p>
-          <p class="exp-orient-room"><img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Garde à Vue</p>
+          <span class="exp-orient-text">
+            <span class="exp-orient-q">Vous voulez tester votre cohésion ?</span>
+            <span class="exp-orient-cta">Garde à Vue <span class="arrow" aria-hidden="true">→</span></span>
+          </span>
         </a>
-        <a href="#psychiatric" class="exp-orient-card">
-          <span class="exp-orient-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.6" fill="currentColor"/><circle cx="15" cy="12" r="0.6" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></svg>
+        <a href="#psychiatric" class="exp-orient-card exp-room--psy" data-perso="psy">
+          <span class="exp-orient-perso" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-400w.avif 400w, /img/escape/personnage-psychiatric-720w.avif 720w" sizes="(max-width: 760px) 190px, 270px">
+              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-400w.webp 400w, /img/escape/personnage-psychiatric-720w.webp 720w" sizes="(max-width: 760px) 190px, 270px">
+              <img src="/img/escape/personnage-psychiatric-720w.png" alt="" width="720" height="999" loading="lazy" decoding="async">
+            </picture>
           </span>
-          <p class="exp-orient-q">Vous aimez les sensations fortes ?</p>
-          <p class="exp-orient-room"><img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"> Psychiatric</p>
+          <span class="exp-orient-text">
+            <span class="exp-orient-q">Vous aimez les sensations fortes ?</span>
+            <span class="exp-orient-cta">Psychiatric <span class="arrow" aria-hidden="true">→</span></span>
+          </span>
         </a>
       </div>
 
       <div class="gd-hero-secondary">
-        <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener">Réserver maintenant <span class="arrow">↗</span></a>
+        <a class="is-primary" href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener">Réserver maintenant <span class="arrow">↗</span></a>
         <a href="#comparateur">Comparer les 3 salles <span class="arrow">→</span></a>
         <a href="/tarifs/">Voir les tarifs <span class="arrow">→</span></a>
       </div>
@@ -1192,5 +1237,39 @@
 @media (prefers-reduced-motion:reduce){.wa-float::before{animation:none;}}
 </style>
 
+<script>
+/* Personnages des cartes d'orientation : ils entrent et bougent au défilement (surtout visible sur téléphone).
+   e = entrée de la carte dans l'écran (0 → 1), p = progression de la carte dans l'écran (0 → 1). */
+(function () {
+  var cards = [].slice.call(document.querySelectorAll(".exp-orient-card[data-perso]"));
+  if (!cards.length) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var ticking = false;
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i], r = c.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) continue;
+      var e = clamp((vh - r.top) / (r.height * 0.85)); e = 1 - Math.pow(1 - e, 3);
+      var p = clamp((vh - r.top) / (vh + r.height));
+      var tx = 0, ty = 0, rot = 0, sc = 1, op = 1, k = c.getAttribute("data-perso");
+      if (k === "80s") { ty = (1 - e) * 55; rot = (p - 0.5) * 16 - (1 - e) * 10; sc = 0.9 + 0.1 * e; }          /* il se balance */
+      else if (k === "gav") { tx = (1 - e) * 90; ty = (p - 0.5) * -10; rot = (1 - e) * 6; sc = 0.94 + 0.06 * e; } /* il entre par la droite */
+      else if (k === "psy") { ty = (1 - e) * 80 + (p - 0.5) * -6; rot = (p - 0.5) * -5; sc = 0.95 + 0.05 * e; op = 0.35 + 0.65 * e; } /* elle monte lentement */
+      c.style.setProperty("--tx", tx.toFixed(1) + "px");
+      c.style.setProperty("--ty", ty.toFixed(1) + "px");
+      c.style.setProperty("--rot", rot.toFixed(2) + "deg");
+      c.style.setProperty("--sc", sc.toFixed(3));
+      c.style.setProperty("--op", op.toFixed(2));
+    }
+  }
+  function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(update); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  update();
+})();
+</script>
 </body>
 </html>
