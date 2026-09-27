@@ -365,9 +365,8 @@
   ];
 
   const PRIVATISATION = {
-    horaire:    { name: 'Privatisation 1 heure',        priceTTC: 220,  priceHT: 200.00 },
-    demiJournee:{ name: 'Privatisation Demi-journée',   priceTTC: 550,  priceHT: 500.00 },
-    journee:    { name: 'Privatisation Journée complète', priceTTC: 1800, priceHT: 1636.36 }
+    horaire:    { name: 'Privatisation 1 heure',        priceTTC: 240,  priceHT: 200.00 },
+    demiJournee:{ name: 'Privatisation Demi-journée',   priceTTC: 600,  priceHT: 500.00 }   // TVA 20 % ; pas de journée complète (jamais demandée)
   };
 
   const RESTAURATION = {
@@ -401,18 +400,25 @@
       { id: 'mignardises16', name: 'Mignardises (16 pièces)',          priceTTC: 11.00, priceHT: 10.00, tva: 10 },
       { id: 'petitsFours16', name: 'Assortiment 16 petits fours sucrés', priceTTC: 12.10, priceHT: 11.00, tva: 10 }
     ],
+    // Boissons : carte Grandsire (prix Grandsire, à la bouteille ouverte)
     boissons: [
-      { id: 'sansAlcool',  name: 'Sans alcool',                       priceTTC: 1.00,  priceHT: 0.91,  perPerson: true, tva: 10 },
-      { id: 'biere',       name: 'Bière',                             priceTTC: 2.28,  priceHT: 1.90,  perPerson: true, tva: 20, isAlcool: true },
-      { id: 'cidre',       name: 'Bouteille de cidre (75 cl)',        priceTTC: 7.50,  priceHT: 6.25,  tva: 20, isAlcool: true },
-      { id: 'methode',     name: 'Méthode traditionnelle (75 cl)',    priceTTC: 9.50,  priceHT: 7.92,  tva: 20, isAlcool: true },
-      { id: 'sauvignon',   name: 'Sauvignon de Touraine 75 cl',       priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
-      { id: 'rose',        name: 'Rosé de Provence',                  priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
-      { id: 'bordeaux',    name: 'Bordeaux rouge',                    priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
-      { id: 'vouvray',     name: 'Vouvray (75 cl)',                   priceTTC: 13.00, priceHT: 10.83, tva: 20, isAlcool: true },
-      { id: 'cassis',      name: 'Crème de cassis (100 cl)',          priceTTC: 15.00, priceHT: 12.50, tva: 20, isAlcool: true },
-      { id: 'saintEmilion',name: 'Saint-Émilion',                     priceTTC: 17.00, priceHT: 14.17, tva: 20, isAlcool: true },
-      { id: 'champagne',   name: 'Champagne (75 cl)',                 priceTTC: 23.00, priceHT: 19.17, tva: 20, isAlcool: true }
+      { id: 'eau50', name: 'Eau plate Cristaline (50 cl)', priceTTC: 0.99, priceHT: 0.90, tva: 10 },
+      { id: 'eau150', name: 'Eau plate Cristaline (1,5 L)', priceTTC: 1.65, priceHT: 1.50, tva: 10 },
+      { id: 'badoit', name: 'Eau gazeuse Badoit (1 L)', priceTTC: 1.65, priceHT: 1.50, tva: 10 },
+      { id: 'coca', name: 'Coca-Cola (1,25 L)', priceTTC: 3.30, priceHT: 3.00, tva: 10 },
+      { id: 'jusOrange', name: "Jus d'orange (1 L)", priceTTC: 3.30, priceHT: 3.00, tva: 10 },
+      { id: 'jusPomme', name: 'Jus de pomme artisanal (1 L)', priceTTC: 3.85, priceHT: 3.50, tva: 10 },
+      { id: 'thermosCafe', name: 'Thermos de café (1 L)', priceTTC: 16.50, priceHT: 15.00, tva: 10 },
+      { id: 'cidre', name: 'Cidre normand (75 cl)', priceTTC: 6.00, priceHT: 5.00, tva: 20, isAlcool: true },
+      { id: 'biere', name: 'Bière (25 cl)', priceTTC: 1.50, priceHT: 1.25, tva: 20, isAlcool: true },
+      { id: 'sauvignon', name: 'Sauvignon de Touraine (75 cl)', priceTTC: 9.60, priceHT: 8.00, tva: 20, isAlcool: true },
+      { id: 'rose', name: 'Rosé de Provence (75 cl)', priceTTC: 9.60, priceHT: 8.00, tva: 20, isAlcool: true },
+      { id: 'bordeaux', name: 'Bordeaux rouge (75 cl)', priceTTC: 9.60, priceHT: 8.00, tva: 20, isAlcool: true },
+      { id: 'saintEmilion', name: 'Saint-Émilion (75 cl)', priceTTC: 16.80, priceHT: 14.00, tva: 20, isAlcool: true },
+      { id: 'cremant', name: 'Crémant de Loire (75 cl)', priceTTC: 12.00, priceHT: 10.00, tva: 20, isAlcool: true },
+      { id: 'methode', name: 'Méthode traditionnelle (75 cl)', priceTTC: 8.40, priceHT: 7.00, tva: 20, isAlcool: true },
+      { id: 'champagne', name: 'Champagne (75 cl)', priceTTC: 21.60, priceHT: 18.00, tva: 20, isAlcool: true },
+      { id: 'cassis', name: 'Crème de cassis (1 L)', priceTTC: 13.20, priceHT: 11.00, tva: 20, isAlcool: true }
     ]
   };
 
