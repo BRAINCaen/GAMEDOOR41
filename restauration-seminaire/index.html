@@ -9,7 +9,7 @@
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <title>Restauration séminaire — Devis express · GAMEDOOR·41</title>
-  <meta name="description" content="Configurez votre restauration séminaire chez GAMEDOOR·41 en 2 minutes. Accueil café, déjeuner, apéritif. Demande de devis sous 48h.">
+  <meta name="description" content="Commandez les repas de votre groupe chez GAMEDOOR·41 : accueil café, plateaux-repas et apéritif dînatoire, servis froids dans notre salle d&#39;accueil privatisée. Devis sous 48 h.">
   <!-- Page semi-privée : accessible par lien direct uniquement, pas dans le menu, pas dans le sitemap, pas indexée -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
@@ -29,6 +29,7 @@
       --green: #2D8C4E;
       --red: #c0392b;
       --gold: #FFD740;
+      --froid: #7FC8E8;
     }
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -333,7 +334,7 @@
       margin-top: 0;
     }
     .accordion-row.is-active .row-collapse {
-      max-height: 180px;
+      max-height: 240px;
       opacity: 1;
       margin-top: 12px;
     }
@@ -465,6 +466,115 @@
       font-size: 11px; letter-spacing: 2px;
       color: var(--grey-medium); opacity: 0.45;
       padding-top: 10px;
+    }
+
+    /* ============ REPAS SERVIS FROIDS ============ */
+    .froid-notice {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: rgba(127,200,232,0.08);
+      border: 1px solid rgba(127,200,232,0.45);
+      border-left: 4px solid var(--froid);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      max-width: 820px;
+    }
+    .froid-notice-icon {
+      font-size: 26px; line-height: 1;
+      color: var(--froid);
+      flex-shrink: 0;
+    }
+    .froid-notice-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--froid);
+      margin-bottom: 6px;
+    }
+    .froid-notice p:not(.froid-notice-title) {
+      font-size: 14px; color: var(--grey-light);
+    }
+    .froid-badge {
+      display: inline-block;
+      border: 1px solid rgba(127,200,232,0.55);
+      color: var(--froid);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 2px; font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px;
+      white-space: nowrap;
+    }
+    .preview-froid {
+      font-size: 13px; color: var(--froid);
+      margin: -6px 0 14px;
+    }
+    .form-froid-rappel {
+      font-size: 14px; color: var(--froid);
+      margin: 4px 0 16px;
+    }
+
+    /* ============ LIEU DU REPAS ============ */
+    .lieu-section { padding: 36px 0 6px; }
+    .lieu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--orange);
+      border-radius: 8px;
+      padding: 20px 24px;
+      max-width: 820px;
+    }
+    .lieu-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; letter-spacing: 3px; font-weight: 700;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 6px;
+    }
+    .lieu-card h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.3px;
+      line-height: 1.1; margin-bottom: 12px;
+    }
+    .lieu-list { list-style: none; padding: 0; margin: 0; }
+    .lieu-list li {
+      font-size: 14px; color: var(--grey-light);
+      padding: 7px 0 7px 18px; position: relative;
+      border-bottom: 1px dotted var(--border);
+    }
+    .lieu-list li:last-child { border-bottom: none; }
+    .lieu-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--orange); font-weight: 700;
+    }
+    .lieu-list strong { color: var(--creme); }
+
+    /* Plateaux cocktail froids (compteur au plateau) */
+    .plateaux-froids { margin-top: 28px; max-width: 820px; }
+    .boisson-desc {
+      display: block; margin-top: 3px;
+      font-size: 12px; color: var(--grey-medium); line-height: 1.45;
+    }
+    .boisson-price small {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      color: var(--grey-medium); letter-spacing: 0;
+    }
+    .panier-note {
+      font-size: 11px; color: var(--grey-medium);
+      margin-top: 8px; line-height: 1.4;
+    }
+    .hero-capacite {
+      margin-top: 10px;
+      font-size: 13px; color: var(--grey-medium);
+    }
+    .panier-alerte {
+      font-size: 12px; font-weight: 700; color: #ff9966;
+      margin-bottom: 8px; line-height: 1.4;
+    }
+    /* Sur grand écran, le récap fixe (320 px en bas à droite) ne doit pas recouvrir les compteurs des boissons */
+    @media (min-width: 1024px) {
+      .boissons-grid { margin-right: 300px; }
     }
 
     @media (max-width: 900px) {
@@ -748,7 +858,26 @@
       <p>Sélectionnez vos formules en quelques clics. On vous envoie un devis personnalisé sous 48 h ouvrées.</p>
       <div class="hero-input-wrap">
         <label for="nbPersonnes">Nombre de personnes</label>
-        <input type="number" id="nbPersonnes" min="1" max="100" value="10">
+        <input type="number" id="nbPersonnes" min="1" max="40" value="10">
+      </div>
+      <p class="hero-capacite">40 personnes maximum debout · 20 personnes maximum assises pour le déjeuner</p>
+    </div>
+  </section>
+
+  <!-- ========== OÙ ET COMMENT SE PASSE LE REPAS ========== -->
+  <section class="lieu-section" aria-labelledby="lieu-titre">
+    <div class="container">
+      <div class="lieu-card" role="note">
+        <p class="lieu-kicker">À lire avant de commander</p>
+        <h2 id="lieu-titre">Où et comment se passe votre repas</h2>
+        <ul class="lieu-list">
+          <li><strong>Pas de salle de réunion.</strong> GAMEDOOR·41 n'a pas de salle de réunion, ni pour l'instant de salle de réception. Votre repas se prend dans notre <strong>salle d'accueil</strong>.</li>
+          <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), la privatisation est obligatoire : tout le site vous est réservé, salle d'accueil comprise. Tarif : 200 € HT l'heure, 500 € HT la demi-journée. Elle figurera sur votre devis.</li>
+          <li><strong>Accueil café : debout</strong>, en libre-service.</li>
+          <li><strong>Déjeuner (plateaux-repas, box, wraps) : repas assis, 20 personnes maximum.</strong> Nous réaménageons la salle d'accueil avec tables et chaises.</li>
+          <li><strong>Apéritif dînatoire : buffet debout, 40 personnes maximum.</strong> Chacun se sert ; quelques chaises sont à disposition, mais on reste debout.</li>
+          <li><strong>Aucun plat chaud.</strong> Nous ne pouvons rien réchauffer sur place : tous les plats sont servis froids. Seuls le café et le thé sont chauds.</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -757,9 +886,9 @@
   <section class="resto-section">
     <div class="container">
       <div class="section-head">
-        <p class="meta">Au démarrage du séminaire</p>
+        <p class="meta">À votre arrivée</p>
         <h2><span class="num">01</span>L'accueil café</h2>
-        <p>Vos équipes arrivent. Café Senseo en libre service, bouilloire thé, viennoiseries fraîches, jus en carafe. Pas d'attente.</p>
+        <p>Vos équipes arrivent : café Senseo et thé en libre-service, viennoiseries fraîches, jus en carafe. Servi <strong>debout</strong>, en libre-service, dans notre salle d'accueil privatisée.</p>
       </div>
       <div class="cards-grid" id="cards-accueil"></div>
     </div>
@@ -771,7 +900,14 @@
       <div class="section-head">
         <p class="meta">Entre deux activités ou en clôture</p>
         <h2><span class="num">02</span>Le déjeuner</h2>
-        <p>Plateaux-repas frais livrés par <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand). Composition identique à partir de 4 plateaux. Option végétarienne incluse.</p>
+        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis, 20 personnes maximum</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
+      </div>
+      <div class="froid-notice" role="note">
+        <span class="froid-notice-icon" aria-hidden="true">❄</span>
+        <div>
+          <p class="froid-notice-title">Tous les plateaux-repas sont servis froids</p>
+          <p>Le traiteur livre des plateaux-repas froids, prêts à ouvrir et à déguster tels quels. Nous n'avons rien pour réchauffer sur place : nous ne proposons donc que les recettes froides de la carte Grandsire. La volaille, le poisson ou la viande se mangent froids, eux aussi. Les plats chauds ou « à réchauffer » de la carte du traiteur ne sont pas disponibles chez nous.</p>
+        </div>
       </div>
       <div class="accordion-wrap" id="dejeuner-accordion">
         <div class="accordion-list" id="dejeuner-list"></div>
@@ -784,11 +920,13 @@
   <section class="resto-section">
     <div class="container">
       <div class="section-head">
-        <p class="meta">Pour célébrer la victoire</p>
-        <h2><span class="num">03</span>L'apéritif de clôture</h2>
-        <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment.</p>
+        <p class="meta">En clôture · buffet debout</p>
+        <h2><span class="num">03</span>L'apéritif dînatoire</h2>
+        <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment autour d'un <strong>buffet froid</strong>, dans notre salle d'accueil privatisée : chacun se sert, <strong>debout</strong> (quelques chaises à disposition), 40 personnes maximum.</p>
+        <p>Pour un apéritif qui remplace le repas, comptez environ 20 pièces par personne (c'est la base des formules cocktail du traiteur), soit 2 plateaux de 30 pièces pour 3 personnes.</p>
       </div>
       <div class="cards-grid" id="cards-apero"></div>
+      <div class="plateaux-froids" id="plateaux-froids-grid"></div>
     </div>
   </section>
 
@@ -845,9 +983,11 @@
           <div class="form-row full">
             <div class="form-group">
               <label for="resto-message">Message libre (allergies, demandes spécifiques)</label>
-              <textarea id="resto-message" name="message" placeholder="Ex : 2 personnes végétariennes, 1 sans gluten, événement à clôturer vers 22h..."></textarea>
+              <textarea id="resto-message" name="message" placeholder="Ex : allergie aux fruits à coque, déjeuner vers 12h30..."></textarea>
             </div>
           </div>
+
+          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : tous les plats sont livrés et servis froids (seuls le café et le thé sont chauds), dans notre salle d'accueil (privatisation obligatoire du site, 200 € HT l'heure, 500 € HT la demi-journée, qui figurera sur votre devis). Nous n'avons pas de salle de réunion.</p>
 
           <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
 
@@ -868,9 +1008,11 @@
       <div class="panier-empty">Aucune formule sélectionnée. Cochez les options qui vous intéressent.</div>
     </div>
     <div class="panier-totals" id="panier-totals" style="display:none;">
+      <p class="panier-alerte" id="panier-alerte" style="display:none;"></p>
       <div class="panier-total-row"><span>Total HT</span><span id="total-ht">0,00 €</span></div>
       <div class="panier-total-row"><span>TVA estimée</span><span id="total-tva">0,00 €</span></div>
       <div class="panier-total-row ttc"><span>Total TTC</span><span id="total-ttc">0,00 €</span></div>
+      <p class="panier-note">Hors privatisation obligatoire du site (200 € HT l'heure, 500 € HT la demi-journée) : elle figurera sur votre devis.</p>
     </div>
   </aside>
 
@@ -913,7 +1055,7 @@
           subtitle: 'Le minimum efficace',
           includes: ['1 viennoiserie par personne', 'Café Senseo libre service', 'Bouilloire + thés', 'Eau plate'],
           info: {
-            details: '<p>Format compact pour démarrer un séminaire rapidement. Viennoiseries fraîches du jour livrées avec le café Senseo (capsules + bouilloire pour les thés).</p>',
+            details: '<p>Format compact pour bien démarrer la journée. Viennoiseries fraîches du jour livrées avec le café Senseo (capsules + bouilloire pour les thés).</p>',
             inclus: ['1 mini-croissant <strong>OU</strong> mini-pain au chocolat <strong>OU</strong> mini-pain aux raisins (au choix selon dispo)', 'Café Senseo capsules en libre service', 'Bouilloire électrique + sélection de thés (Earl Grey, vert, infusion)', 'Eau plate 50 cl'],
             allergenes: 'Viennoiseries : gluten, œufs, lait. Sur demande : version sans gluten possible.',
             min: '8 personnes minimum'
@@ -922,103 +1064,146 @@
         {
           id: 'accueil-complete', name: 'Complète', tag: 'Accueil café · Signature',
           price: 7.50, tva: 10, unit: '/ pers.', recommended: true,
-          subtitle: 'Format signature séminaire',
+          subtitle: 'Notre format signature',
           includes: ['2 viennoiseries variées', 'Café Senseo + bouilloire thé', 'Jus de fruits en carafe', 'Eau plate'],
           info: {
-            details: '<p>Format premium pour démarrer le séminaire confortablement. Deux viennoiseries variées par personne et jus de fruits en carafe au choix.</p>',
+            details: '<p>Format complet pour démarrer la journée confortablement. Deux viennoiseries variées par personne et jus de fruits en carafe au choix.</p>',
             inclus: ['2 viennoiseries variées par personne (mini-croissant, mini-pain chocolat, mini-pain aux raisins, brioche)', 'Café Senseo capsules en libre service', 'Bouilloire électrique + sélection de thés', 'Jus de fruits en carafe au choix : pomme, orange ou multivitaminé', 'Eau plate'],
             allergenes: 'Viennoiseries : gluten, œufs, lait. Sur demande : alternatives sans gluten.',
             min: '8 personnes minimum'
           }
         }
       ],
+      // Carte Été 2026 de Grandsire Traiteur (brochure « Menu-ete-2026-1.pdf », prix HT inchangés).
+      // Uniquement les recettes FROIDES : pas de pasta box « à réchauffer », pas de formule cocktail avec pièces chaudes,
+      // pas de supplément « plat chaud » (rien ne peut être réchauffé sur place).
       dejeuner: [
         {
           id: 'dej-pouce', name: 'Sur le pouce', tag: 'Essentiel',
           price: 13.00, tva: 10, unit: '/ pers.',
-          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
-          subtitle: 'Wrap ou pasta box',
-          includes: ['1 wrap (8 variétés) OU 1 pasta box', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Couverts bois + pain + serviette'],
+          subtitle: 'Wrap ou pasta box froide',
+          includes: ['1 wrap (8 recettes) ou 1 pasta box froide (3 recettes)', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Remis en valisette isotherme'],
           info: {
-            details: '<p>Format léger pour séminaires courts ou groupes au budget contenu. Composition identique pour tous à partir de 4 plateaux. Livré frais le matin.</p>',
-            inclus: ['1 wrap au choix (8 variétés : poulet curry, thon crudités, saumon, végétarien…) ou 1 pasta box (4 sauces au choix)', '1 dessert au choix : moelleux chocolat, salade de fruits, panna cotta', "Bouteille d'eau plate 50 cl", 'Couverts en bois + pain + serviette papier'],
-            allergenes: 'Selon la formule choisie : gluten (wrap, pâtes, pain), lactose (sauce, dessert), poisson (thon, saumon), œufs. Allergies à signaler à la commande.',
-            min: '4 plateaux minimum',
+            details: '<p>Format léger, livré froid et prêt à consommer. Au choix : la formule wrap ou la pasta box froide de la carte de Grandsire Traiteur. Chaque composition se commande par 4 formules minimum.</p>',
+            inclus: [
+              '<strong>Wrap au choix</strong> : jambon fumé de la Manche, mimolette d\'Isigny, fromage frais et salade · poulet et crudités, oignons frits, tomates confites, fromage frais et ciboulette · saumon, guacamole épicé, concombre et salade · brie, crème de chorizo et salade · poulet croustillant (nuggets), salade et fromage frais sauce César · thon à la marmelade de yuzu · légumes tex-mex · wrap et son fish & chips, sauce tartare',
+              '<strong>OU pasta box froide au choix</strong> : penne au salami et légumes, billes de mozzarella, olives noires et basilic · salade de tagliatelles fraîches, jambon fumé, emmental, parmesan et pesto · salade de fusilli au thon, poivrons, tomates et œuf, mayonnaise curry-citron vert',
+              '<strong>Dessert au choix</strong> : grande brochette de fruits frais, tartelette citron, muffin chocolat noisette ou brownie',
+              'Bouteille d\'eau 50 cl et serviette, en valisette isotherme (avec couverts en bois et boule de pain pour la formule wrap)'
+            ],
+            allergenes: 'Selon la recette choisie : gluten, lait, œufs, poisson possibles. Signalez allergies et régimes dans votre demande.',
+            min: '4 formules minimum par composition',
             fournisseur: 'Grandsire Traiteur'
           }
         },
         {
-          id: 'dej-kiwi', name: 'Plateau Kiwi', tag: 'Confort · Essentiel',
+          id: 'dej-box', name: 'Box burger ou bagel', tag: 'Box isotherme',
+          price: 15.00, tva: 10, unit: '/ pers.',
+          subtitle: 'Burger ou bagel froid',
+          includes: ['1 burger froid (2 recettes) ou 1 bagel froid (3 recettes)', 'Chips ou salade italienne', '1 dessert au choix', "Bouteille d'eau 50 cl"],
+          info: {
+            details: '<p>Box froide remise en valisette isotherme, prête à consommer. Carte de Grandsire Traiteur. Chaque composition se commande par 4 box minimum.</p>',
+            inclus: [
+              '<strong>Burger froid au choix</strong> : chicken burger (graine de courge, poulet croustillant, oignons rouges, tomme de Savoie, sauce crémeuse aux herbes) · burger façon asiatique (effiloché de bœuf, coriandre, petits légumes, houmous de patate douce)',
+              '<strong>OU bagel froid au choix</strong> : norvégien (courgettes grillées, chèvre, noix, pomme) · nordique (saumon fumé, ricotta, pousses d\'épinard, crevettes, citron vert) · volaille (poulet, bacon, oignons frits, tomate, salade, sauce barbecue)',
+              '<strong>Accompagnement au choix</strong> : paquet de chips ou salade italienne',
+              '<strong>Dessert au choix</strong> : grande brochette de fruits frais, tartelette citron, muffin chocolat noisette ou brownie',
+              'Bouteille d\'eau 50 cl et serviette'
+            ],
+            allergenes: 'Selon la recette choisie : gluten, lait, œufs, poisson, crustacés possibles. Signalez allergies et régimes dans votre demande.',
+            min: '4 box minimum par composition',
+            fournisseur: 'Grandsire Traiteur'
+          }
+        },
+        {
+          id: 'dej-cassis', name: 'Plateau Cassis', tag: 'Confort · Essentiel',
           price: 16.50, tva: 10, unit: '/ pers.',
-          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: '4 services · gamme essentielle',
-          includes: ['Entrée raffinée au choix', 'Plat au choix', 'Fromage normand', 'Dessert pâtissier'],
+          includes: ['Entrée au choix (salade grecque, terrine de poisson…)', 'Plat froid au choix (poke bowl saumon, poulet curry…)', 'Fromage au choix', 'Dessert au choix'],
           info: {
-            details: '<p>Le plateau séminaire entreprise standard. 4 services au choix dans la gamme Kiwi (16,50 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
-            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat</strong> au choix dans la gamme Kiwi', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
-            allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
-            min: '4 plateaux minimum',
-            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau',
+            details: '<p>Le plateau-repas essentiel de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            inclus: [
+              '<strong>Entrée au choix</strong> : salade grecque et feta · tomates mozzarella et pesto, croûtons à l\'ail · terrine de poisson et légumes grillés, sauce tartare · salade d\'abricots rôtis au chèvre et romarin · entrée du jour',
+              '<strong>Plat froid au choix</strong> : filet de rouget rôti, penne aux tomates confites · poke bowl de saumon, riz et légumes · filet de poulet au curry, salade de riz aux petits légumes · émincé de bœuf sauce barbecue, salade mexicaine · plat du jour',
+              '<strong>Fromage au choix</strong> : camembert, pont-l\'évêque, livarot, emmental ou chèvre',
+              '<strong>Dessert au choix</strong> : tartelette fruit de saison et ganache chocolat blanc · feuilleté crumble abricot amande · brownie chocolat noix · panacotta au lait de soja et coulis · dessert du jour',
+              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
+            ],
+            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            min: '4 plateaux minimum par composition',
+            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
-          id: 'dej-orange', name: 'Plateau Orange', tag: 'Confort · Premium',
+          id: 'dej-fraise', name: 'Plateau Fraise', tag: 'Confort · Premium',
           price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
-          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: '4 services · gamme premium',
-          includes: ['Entrée raffinée au choix', 'Plat chaud ou froid au choix', 'Fromage normand affiné', 'Dessert pâtissier'],
+          includes: ['Entrée au choix (panacotta de chèvre, terrine de poulet…)', 'Plat froid au choix (pavé de saumon, rôti de bœuf…)', 'Fromage au choix', 'Dessert au choix'],
           info: {
-            details: '<p>La gamme premium du séminaire entreprise. 4 services au choix dans la gamme Orange (19 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
-            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat chaud ou froid</strong> au choix dans la gamme Orange : suprême de volaille, filet de cabillaud, pavé de saumon, magret de canard, tagliatelles légumes (option végétarienne)…', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
-            allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
-            min: '4 plateaux minimum',
-            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau · Option végétarienne incluse',
+            details: '<p>Le plateau premium de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            inclus: [
+              '<strong>Entrée au choix</strong> : panacotta de chèvre et tomates confites, crumble pistache · terrine de poulet et petits légumes · penne au salami et légumes, billes de mozzarella · jambon rôti aux herbes et tapenade d\'olive · entrée du jour',
+              '<strong>Plat froid au choix</strong> : pavé de saumon, quinoa de légumes, vinaigrette balsamique et fraises · poke bowl de lieu noir, gambas et légumes · poulet en croûte de grana padano, tagliatelles aux légumes provençaux · rôti de bœuf, salade de pommes de terre, béarnaise · plat du jour',
+              '<strong>Fromage au choix</strong> : camembert, pont-l\'évêque, livarot, emmental ou chèvre',
+              '<strong>Dessert au choix</strong> : clafoutis fraise · tiramisu aux fruits rouges · passion chocolat · tartelette chocolat cerise · dessert du jour',
+              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
+            ],
+            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            min: '4 plateaux minimum par composition',
+            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
-          id: 'dej-premium', name: 'Plateau Pomme', tag: 'Premium · Events',
-          price: 24.80, tva: 10, unit: '/ pers.',
-          infoUrl: 'https://grandsire.com/plateaux-en-livraison',
-          subtitle: 'Gastronomique',
-          includes: ['Entrée gastronomique (rouget, burrata…)', 'Plat signature (filet de bœuf, gambas…)', 'Salade + fromage affiné', 'Dessert pâtisserie'],
+          id: 'dej-vege', name: 'Plateau Végétarien', tag: 'Confort · Végétarien',
+          price: 19.00, tva: 10, unit: '/ pers.',
+          subtitle: '4 services · végétarien',
+          includes: ['Entrée au choix (bruschetta, crudités…)', 'Plat froid au choix (steak végétal, falafels…)', 'Fromage ou salade au choix', 'Dessert au choix'],
           info: {
-            details: '<p>Pour vos comités de direction, clients stratégiques, occasions spéciales. Composition élaborée par le chef Grandsire. Composition identique à partir de 4 plateaux.</p>',
-            inclus: ['<strong>Entrée gastronomique</strong> : rouget barbet en escabèche, burrata des Pouilles, foie gras maison, tartare de Saint-Jacques…', '<strong>Plat signature</strong> : filet de bœuf sauce poivre, gambas grillées risotto, suprême de pigeon, magret rôti aux figues…', '<strong>Salade composée</strong> + <strong>fromage affiné</strong> Conquérant', '<strong>Dessert pâtisserie</strong> finition chef : entremet, tartelette saison, sphère chocolat…', 'Pain frais + vaisselle premium (verre ou inox sur demande)'],
-            allergenes: 'Selon plats choisis : gluten, poissons, crustacés, mollusques, lait, œufs, fruits à coque possibles. Demandes spécifiques à signaler.',
-            min: '4 plateaux minimum',
-            options: 'Bocaux verre (look déjeuner d\'affaires) : 22 € HT/plateau · Service à table possible sur devis',
-            fournisseur: 'Grandsire Traiteur · cuisine du chef'
+            details: '<p>Le plateau-repas végétarien de la carte de Grandsire Traiteur : entrée, plat, fromage ou salade et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            inclus: [
+              '<strong>Entrée au choix</strong> : bruschetta de tapenade, tomates confites, roquette et parmesan · assiette de crudités · salade de pâtes, poivrons grillés et artichaut · terrine de chèvre et tomates confites, coulis de poivrons jaunes · entrée du jour',
+              '<strong>Plat froid au choix</strong> : steak végétal, salade de riz aux petits légumes · wrap aux légumes tex-mex · salade de riz au curry, falafels et sauce pita · trompe-l\'œil de Saint-Jacques (champignons) sur lit de légumes · plat du jour',
+              '<strong>Fromage ou salade au choix</strong> : fromage normand sur salade croquante · salade de saison aux noix, fines herbes et chèvre · bouquet du jardinier aux copeaux de parmesan',
+              '<strong>Dessert au choix</strong> : panacotta au lait de soja et coulis · clafoutis fraise · salade de fruits de saison · dessert du jour',
+              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
+            ],
+            allergenes: 'Selon les recettes choisies : gluten, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            min: '4 plateaux minimum par composition',
+            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          }
+        },
+        {
+          id: 'dej-peche', name: 'Plateau Pêche', tag: 'Premium · Gastronomique',
+          price: 24.80, tva: 10, unit: '/ pers.',
+          subtitle: '4 services · gastronomique',
+          includes: ['Entrée au choix (tataki de thon, foie gras…)', 'Plat froid au choix (filet de bar, cabillaud…)', 'Fromage au choix', 'Dessert au choix'],
+          info: {
+            details: '<p>Le plateau gastronomique de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            inclus: [
+              '<strong>Entrée au choix</strong> : tataki de thon rouge, légumes croquants, sauce teriyaki · makis de saumon et gambas, sauce soja · foie gras à la vanille, chutney d\'ananas et mangue · terrine de volaille et légumes confits · entrée du jour',
+              '<strong>Plat froid au choix</strong> : filet de bar aux légumes provençaux, sauce vierge · piccata de veau, tagliatelles fraîches, crémeux de mozzarella di buffala · dos de cabillaud rôti au miel, riz aux légumes confits · filet mignon de veau basse température, légumes grillés, aïoli doux · plat du jour',
+              '<strong>Fromage au choix</strong> : camembert, pont-l\'évêque, livarot, emmental ou chèvre',
+              '<strong>Dessert au choix</strong> : salade de fruits de saison · cookie fruits rouges · carpaccio ananas coco · tartelette chocolat myrtille · dessert du jour',
+              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
+            ],
+            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, mollusques, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            min: '4 plateaux minimum par composition',
+            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
+            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         }
       ],
       apero: [
         {
-          id: 'apero-cocktail', name: 'Formule 20 pièces', tag: 'Cocktail dînatoire',
-          price: 26.36, tva: 10, unit: '/ pers.',
-          subtitle: 'Remplace le déjeuner',
-          includes: ['10 pièces salées froides', '5 pièces salées chaudes', '5 pièces sucrées', 'Service en buffet'],
-          info: {
-            details: '<p>Format buffet 20 pièces par personne, idéal pour un cocktail-déjeuner ou un cocktail de fin d\'événement (remplace le déjeuner). Présentation soignée sur plateaux. Service en libre service.</p>',
-            inclus: [
-              '<strong>10 pièces salées froides</strong> (au choix) : rillettes de thon, brochettes de volaille marinées, wrap fish & chips, mini-club sandwich, tartines saumon fumé, tomate-mozza, tartelettes chèvre-miel…',
-              '<strong>5 pièces salées chaudes</strong> : mini hot-dog, croque-monsieur truite fumée, mini-bagels chauds, samosas, accras de morue…',
-              '<strong>5 pièces sucrées</strong> : tartelette banoffee, croquant citron, mini-financier, bouchée chocolat, panna cotta verrine…',
-              'Plateaux de présentation + serviettes cocktail + pics bois'
-            ],
-            allergenes: 'Cocktail varié : gluten, poissons, crustacés, lait, œufs, fruits à coque omniprésents. Régimes spécifiques sur demande (options végé, sans gluten possibles).',
-            min: '20 personnes minimum',
-            fournisseur: 'Grandsire Traiteur'
-          }
-        },
-        {
           id: 'apero-conquerant', name: 'Les Conquérants', tag: 'Apéro terroir normand',
           price: 9.00, tva: 10, unit: '/ pers.',
           subtitle: 'Notre signature locale',
-          includes: ['Plateau fromages affinés au lait cru', 'Charcuterie fine 200 g/pers', "Sélection saisonnière", 'À compléter avec cidre ou crémant'],
+          includes: ['Plateau fromages affinés au lait cru', 'Charcuterie fine 200 g/pers', "Sélection saisonnière", 'À compléter avec cidre ou crémant', 'Servi froid, en buffet debout'],
           info: {
-            details: '<p>Notre signature locale. Plateau gourmand mixte (fromages affinés + charcuterie fine) sélectionné par la <strong>Fromagerie Conquérant</strong> à Caen. Sélection saisonnière au lait cru. 200 g de produits par personne.</p>',
+            details: '<p>Notre signature locale. Plateau gourmand mixte (fromages affinés + charcuterie fine) sélectionné par la <strong>Fromagerie Conquérant</strong> à Caen. Sélection saisonnière au lait cru. 200 g de produits par personne. Servi froid, en buffet.</p>',
             inclus: [
               '<strong>Plateau Gourmand Mixte Fromagerie Conquérant</strong>',
               'Sélection de fromages affinés au lait cru (5-6 variétés selon saison) : camembert au lait cru, livarot, pont-l\'évêque, neufchâtel, brie de Meaux, comté affiné…',
@@ -1034,6 +1219,27 @@
           }
         }
       ],
+      // Plateaux cocktail FROIDS de la carte Été 2026 (commandés au plateau, pas à la personne).
+      // Écartés : « 30 savouris chauds » et formules cocktail 20/22 pièces (pièces chaudes).
+      plateauxFroids: {
+        title: 'Plateaux cocktail froids · Grandsire Traiteur',
+        items: [
+          { id: 'pc-wraps', name: 'Plateau de 30 wraps', vol: '30 pièces', price: 36.36, tva: 10,
+            desc: 'Jambon fumé et mimolette · poulet crudités · saumon guacamole · fish & chips sauce tartare · thon au yuzu' },
+          { id: 'pc-savouris', name: 'Plateau de 30 savouris froids', vol: '30 pièces', price: 36.36, tva: 10,
+            desc: 'Dôme de volaille teriyaki · sablé de hareng fumé · briochin rillette de thon · rouleau de printemps · wrap saumon guacamole · brochette melon et jambon fumé' },
+          { id: 'pc-fraicheur', name: 'Plateau de 30 pièces fraîcheur', vol: '30 pièces', price: 36.36, tva: 10,
+            desc: 'Macaron de magret à l\'orange · cheesecake aux petits pois · navette de jambon de volaille · brochette crevettes-ananas · chaud-froid de volaille (recette froide) · wrap fish & chips' },
+          { id: 'pc-boulangeres', name: 'Plateau de 30 boulangères et mini-clubs', vol: '30 pièces', price: 36.36, tva: 10,
+            desc: 'Navette de volaille miel-épices · briochin Neufchâtel et pomme · mini-clubs saumon fumé, bœuf sauce tartare, crudités · bruschetta légumes-anchois' },
+          { id: 'pc-pain-surprise', name: 'Pain surprise', vol: '50 pièces', price: 40.00, tva: 10,
+            desc: 'Au choix : charcuterie, poisson, ou mixte charcuterie-poisson-crudités' },
+          { id: 'pc-fours-finesse', name: 'Plateau de 30 fours frais « Finesse »', vol: '30 pièces · sucré', price: 36.36, tva: 10,
+            desc: 'Choux banane · brownie crémeux · coque coco-passion · tartelette fruits de saison · sablé cappuccino · carré de pain d\'épices' },
+          { id: 'pc-fours-saveurs', name: 'Plateau de 30 fours frais « Saveurs »', vol: '30 pièces · sucré', price: 36.36, tva: 10,
+            desc: 'Sablé ananas · macarons · sablé exotique · cup pécan-chocolat-cannelle · petite tartelette tatin · cube coco-chocolat' }
+        ]
+      },
       boissons: {
         soft: {
           title: 'Soft & cafés (TVA 10 %)',
@@ -1113,9 +1319,11 @@
     // ========== ACCORDION DÉJEUNER ==========
     const DEJEUNER_ICONS = {
       'dej-pouce': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18l-2 8H5z"/><path d="M5 11V7a4 4 0 0 1 8 0v4"/><path d="M11 11V8a4 4 0 0 1 8 0v3"/></svg>',
-      'dej-kiwi': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>',
-      'dej-orange': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>',
-      'dej-premium': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 6a5 5 0 0 1-10 0z"/><path d="M12 14v6"/><path d="M8 20h8"/></svg>'
+      'dej-box': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M4 12h16"/></svg>',
+      'dej-cassis': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>',
+      'dej-fraise': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>',
+      'dej-vege': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/></svg>',
+      'dej-peche': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 6a5 5 0 0 1-10 0z"/><path d="M12 14v6"/><path d="M8 20h8"/></svg>'
     };
 
     function renderDejeunerAccordion() {
@@ -1134,6 +1342,7 @@
           <div class="row-collapse">
             <div class="row-meta-line">
               <p class="row-sub">${item.subtitle}</p>
+              <span class="froid-badge"><span aria-hidden="true">❄</span> Servi froid</span>
               <span class="row-price-inline">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
             </div>
             <div class="row-actions">
@@ -1169,6 +1378,7 @@
             </div>
           </div>
           <p class="preview-subtitle">${item.subtitle}</p>
+          <p class="preview-froid"><span aria-hidden="true">❄</span> Livré froid · prêt à consommer · aucun réchauffage · repas assis</p>
           <div class="preview-price-block">
             <span class="preview-price-ht">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
             <span class="preview-price-ttc">${(item.price * (1 + item.tva/100)).toFixed(2).replace('.', ',')} € TTC ${item.unit}</span>
@@ -1213,6 +1423,42 @@
       }).join('');
     }
 
+    // Plateaux cocktail froids : même compteur que les boissons (commande au plateau)
+    function renderPlateauxFroids() {
+      const container = document.getElementById('plateaux-froids-grid');
+      if (!container) return;
+      const block = CATALOG.plateauxFroids;
+      container.innerHTML = `
+        <div class="boissons-col plateaux-col">
+          <h3>${block.title}</h3>
+          ${block.items.map(item => `
+            <div class="boisson-row">
+              <span class="boisson-name">${item.name} <span class="vol">${item.vol}</span>
+                <span class="boisson-desc">${item.desc}</span>
+              </span>
+              <span class="boisson-price">${item.price.toFixed(2).replace('.', ',')} € HT<small>le plateau</small></span>
+              <span class="boisson-qty">
+                <button data-bminus="${item.id}">−</button>
+                <input type="number" min="0" value="0" data-bqty="${item.id}" aria-label="Nombre de plateaux : ${item.name}">
+                <button data-bplus="${item.id}">+</button>
+              </span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Capacité de la salle d'accueil : 20 personnes assises (déjeuner), 40 debout (accueil café, apéritif)
+    const CAPACITE = { assis: 20, debout: 40 };
+    function capFor(itemId) {
+      return CATALOG.dejeuner.some(i => i.id === itemId) ? CAPACITE.assis : CAPACITE.debout;
+    }
+    function totalDejeuner() {
+      return Object.entries(state.selection)
+        .filter(([id]) => CATALOG.dejeuner.some(i => i.id === id))
+        .reduce((n, [, sel]) => n + sel.qty, 0);
+    }
+
     // ========== GESTION SÉLECTION ==========
     function toggleCard(itemId) {
       const item = [...CATALOG.accueil, ...CATALOG.dejeuner, ...CATALOG.apero].find(i => i.id === itemId);
@@ -1229,7 +1475,7 @@
         qtyControls.style.display = 'none';
       } else {
         state.selection[itemId] = {
-          qty: state.nbPersonnes,
+          qty: Math.min(state.nbPersonnes, capFor(itemId)),
           unit: item.unit,
           price: item.price,
           tva: item.tva,
@@ -1240,13 +1486,15 @@
         btn.textContent = '✓ Sélectionné';
         btn.classList.add('selected');
         qtyControls.style.display = 'flex';
+        const qtyVal = card.querySelector('[data-qty-val]');
+        if (qtyVal) qtyVal.textContent = state.selection[itemId].qty;
       }
       updatePanier();
     }
 
     function adjustQty(itemId, delta) {
       if (!state.selection[itemId]) return;
-      const newQty = Math.max(1, state.selection[itemId].qty + delta);
+      const newQty = Math.min(capFor(itemId), Math.max(1, state.selection[itemId].qty + delta));
       state.selection[itemId].qty = newQty;
       const qtyValEl = document.querySelector(`[data-qty-val="${itemId}"]`);
       if (qtyValEl) qtyValEl.textContent = newQty;
@@ -1256,22 +1504,24 @@
     function setBoissonQty(itemId, qty) {
       qty = Math.max(0, parseInt(qty) || 0);
       const allBoissons = Object.values(CATALOG.boissons).flatMap(b => b.items);
-      const item = allBoissons.find(i => i.id === itemId);
+      const plateau = CATALOG.plateauxFroids.items.find(i => i.id === itemId);
+      const item = plateau || allBoissons.find(i => i.id === itemId);
       if (!item) return;
       if (qty === 0) {
         delete state.selection[itemId];
       } else {
         state.selection[itemId] = {
           qty,
-          unit: ' x ' + item.vol,
+          unit: plateau ? 'plateau(x)' : ' x ' + item.vol,
           price: item.price,
           tva: item.tva,
-          name: item.name + ' (' + item.vol + ')',
-          tag: 'Boisson'
+          name: plateau ? item.name + ' (' + item.vol + ', servi froid)' : item.name + ' (' + item.vol + ')',
+          tag: plateau ? 'Apéritif dînatoire' : 'Boisson'
         };
       }
       const input = document.querySelector(`[data-bqty="${itemId}"]`);
-      if (input) input.value = qty;
+      // Pendant la frappe, on ne réécrit pas le champ (sinon « -3 » ou « 2.7 » donnent 3 ou 7) : il est normalisé à la sortie
+      if (input && input !== document.activeElement) input.value = qty;
       updatePanier();
     }
 
@@ -1306,6 +1556,12 @@
       document.getElementById('total-tva').textContent = totalTVA.toFixed(2).replace('.', ',') + ' €';
       document.getElementById('total-ttc').textContent = (totalHT + totalTVA).toFixed(2).replace('.', ',') + ' €';
       totalsEl.style.display = 'block';
+      const assis = totalDejeuner();
+      const alerte = document.getElementById('panier-alerte');
+      if (alerte) {
+        alerte.style.display = assis > CAPACITE.assis ? 'block' : 'none';
+        alerte.textContent = `⚠ Déjeuner assis : ${CAPACITE.assis} personnes maximum (${assis} sélectionnées).`;
+      }
     }
 
     // ========== MODAL INFO ==========
@@ -1333,7 +1589,8 @@
       if (items.length === 0) return '(aucune sélection)';
 
       let text = '═══════════════════════════════════\nDÉTAIL DE LA DEMANDE\n═══════════════════════════════════\n\n';
-      text += `Nombre de personnes : ${state.nbPersonnes}\n\n`;
+      text += `Nombre de personnes : ${state.nbPersonnes}\n`;
+      text += `⚠ Privatisation obligatoire (tout le site, salle d'accueil comprise) : à ajouter au devis\n\n`;
 
       let totalHT = 0, totalTVA = 0;
       items.forEach(([id, sel]) => {
@@ -1362,6 +1619,12 @@
         feedback.className = 'feedback-msg error';
         feedback.style.display = 'block';
         feedback.textContent = "❌ Sélectionnez au moins une formule avant d'envoyer la demande.";
+        return;
+      }
+      if (totalDejeuner() > CAPACITE.assis) {
+        feedback.className = 'feedback-msg error';
+        feedback.style.display = 'block';
+        feedback.textContent = `❌ Le déjeuner assis est limité à ${CAPACITE.assis} personnes : réduisez le nombre de plateaux-repas.`;
         return;
       }
 
@@ -1395,7 +1658,7 @@
           if (sel.tva === 10) tva10 += lineTVA;
           else if (sel.tva === 20) tva20 += lineTVA;
           return `• ${sel.name} — ${sel.qty} ${sel.unit} × ${sel.price.toFixed(2)}€ HT = ${lineHT.toFixed(2)}€ HT`;
-        }).join('\n');
+        }).join('\n') + '\n⚠ Privatisation obligatoire (tout le site, salle d\'accueil comprise) : à ajouter au devis';
         const totalTTC = totalHT + tva10 + tva20;
         const nbPers = parseInt(data.nb_personnes, 10) || 0;
         const perPersonHT  = nbPers > 0 ? totalHT  / nbPers : 0;
@@ -1449,7 +1712,7 @@
 
         feedback.className = 'feedback-msg success';
         feedback.style.display = 'block';
-        feedback.innerHTML = `✅ Demande envoyée. On revient vers <strong>${data.email}</strong> sous 48&nbsp;h ouvrées avec un devis personnalisé.`;
+        feedback.innerHTML = `✅ Demande envoyée. On revient vers <strong>${data.email}</strong> sous 48&nbsp;h ouvrées avec un devis personnalisé. Pour rappel, votre repas est servi dans notre salle d'accueil, privatisée pour l'occasion, et tous les plats sont froids.`;
         btn.textContent = '✅ Demande envoyée';
         btn.style.background = 'var(--green)';
         btn.style.color = 'var(--creme)';
@@ -1469,6 +1732,7 @@
       renderCards('accueil', 'cards-accueil');
       renderDejeunerAccordion();
       renderCards('apero', 'cards-apero');
+      renderPlateauxFroids();
       renderBoissons();
 
       // Accordion déjeuner : activation au survol (desktop) + clic (mobile / explicite)
@@ -1510,11 +1774,20 @@
 
       document.body.addEventListener('input', (e) => {
         if (e.target.id === 'nbPersonnes') {
-          state.nbPersonnes = Math.max(1, parseInt(e.target.value) || 1);
+          state.nbPersonnes = Math.min(CAPACITE.debout, Math.max(1, parseInt(e.target.value) || 1));
           // Mise à jour de la qty par défaut pour les nouveaux ajouts uniquement
           // Les sélections existantes gardent leur qty actuelle (l'utilisateur a peut-être ajusté)
         } else if (e.target.matches('[data-bqty]')) {
           setBoissonQty(e.target.getAttribute('data-bqty'), e.target.value);
+        }
+      });
+
+      // À la sortie du champ, on affiche la quantité réellement retenue
+      document.body.addEventListener('change', (e) => {
+        if (e.target.matches('[data-bqty]')) {
+          e.target.value = state.selection[e.target.getAttribute('data-bqty')]?.qty || 0;
+        } else if (e.target.id === 'nbPersonnes') {
+          e.target.value = state.nbPersonnes;
         }
       });
 
