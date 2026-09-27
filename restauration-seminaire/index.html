@@ -564,6 +564,10 @@
       font-size: 11px; color: var(--grey-medium);
       margin-top: 8px; line-height: 1.4;
     }
+    /* Sur grand écran, le récap fixe (320 px en bas à droite) ne doit pas recouvrir les compteurs des boissons */
+    @media (min-width: 1024px) {
+      .boissons-grid { margin-right: 300px; }
+    }
 
     @media (max-width: 900px) {
       .accordion-wrap { grid-template-columns: 1fr; gap: 0; }
