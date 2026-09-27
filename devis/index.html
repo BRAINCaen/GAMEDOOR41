@@ -187,7 +187,7 @@
           </div>
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Restauration</h3>
-            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> : tout le site vous est réservé, salle d'accueil comprise, et c'est là que tout est servi (nous n'avons pas de salle de réunion ni de salle de réception). Cocktails, plateaux à partager, viennoiseries et desserts : servis froids, en buffet debout, 40 personnes maximum, avec quelques chaises. Déjeuner assis en plateaux-repas : sur demande, 20 personnes maximum.</p>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> : tout le site vous est réservé, salle d'accueil comprise, et c'est là que tout est servi (nous n'avons pas de salle de réunion ni de salle de réception). Plateaux cocktail, plateaux à partager, viennoiseries et desserts : servis froids, en buffet debout, 40 personnes maximum, avec quelques chaises (petit déjeuner assis sur demande, 20 personnes maximum). Déjeuner assis en plateaux-repas : sur demande, 20 personnes maximum.</p>
           </div>
         </div>
       </div>
@@ -369,9 +369,15 @@
   };
 
   const RESTAURATION = {
+    // Plateaux cocktail FROIDS de la carte Grandsire (prix Grandsire, au plateau). Rien de chaud : rien ne peut être réchauffé sur place.
     cocktails: [
-      { id: 'cocktail8',  name: 'Cocktail découverte 8 pièces — salé',         priceTTC: 13, priceHT: 11.82, perPerson: true,  tva: 10 },
-      { id: 'cocktail10', name: 'Cocktail découverte 10 pièces — salé',        priceTTC: 15, priceHT: 13.64, perPerson: true,  tva: 10 },
+      { id: 'pcWraps',        name: 'Plateau de 30 wraps',                       priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcSavouris',     name: 'Plateau de 30 savouris froids',             priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcFraicheur',    name: 'Plateau de 30 pièces fraîcheur',            priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcBoulangeres',  name: 'Plateau de 30 boulangères et mini-clubs',   priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcPainSurprise', name: 'Pain surprise (50 pièces)',                 priceTTC: 44.00, priceHT: 40.00, tva: 10 },
+      { id: 'pcFoursFinesse', name: 'Plateau de 30 fours frais « Finesse » (sucré)', priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcFoursSaveurs', name: 'Plateau de 30 fours frais « Saveurs » (sucré)', priceTTC: 40.00, priceHT: 36.36, tva: 10 }
     ],
     plateaux: [
       { id: 'plateau10', name: 'Plateau fromage & charcuterie 10 pers.', priceTTC: 110, priceHT: 100.00, tva: 10 },
@@ -1134,11 +1140,12 @@
       </div>
     );
 
-    const RestaSection = ({ title, items, colorHex, perPerson = false, showFor20Plus = false }) => {
+    const RestaSection = ({ title, items, colorHex, perPerson = false, showFor20Plus = false, note = null }) => {
       if (showFor20Plus && nbPersons < 20) return null;
       return (
         <div className="bg-gd-card border border-gd-border rounded-lg p-3">
           <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: colorHex }}>{title}</h3>
+          {note && <p className="text-gd-cream/60 text-[11px] mb-2">{note}</p>}
           {items.map(item => (
             <label key={item.id} className="flex items-center gap-2 p-1.5 hover:bg-gd-card-soft rounded cursor-pointer">
               <input type="checkbox" checked={(selectedRestauration[item.id] || 0) > 0}
@@ -1147,6 +1154,13 @@
                   : { ...prev, [item.id]: 0 })}
                 className="accent-gd-orange w-4 h-4" />
               <span className="flex-1 text-gd-cream text-sm">{item.name}</span>
+              {!item.perPerson && (selectedRestauration[item.id] || 0) > 0 && (
+                <input type="number" min="1" max="20" value={selectedRestauration[item.id]}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => { const q = Math.min(20, Math.max(1, parseInt(e.target.value, 10) || 1)); setSelectedRestauration(prev => ({ ...prev, [item.id]: q })); }}
+                  aria-label={'Quantité : ' + item.name}
+                  className="w-12 bg-gd-dark border border-gd-border rounded px-1 text-gd-cream text-sm text-center" />
+              )}
               <span className="text-emerald-400 text-xs sim-display tracking-wide">
                 {isPro ? item.priceHT.toFixed(2) + '€ HT' : item.priceTTC.toFixed(2) + '€'}
                 {item.perPerson && <span className="opacity-70">/p</span>}
@@ -1174,7 +1188,7 @@
             </label>
           ))}
         </div>
-        <RestaSection title="🥂 Cocktails traiteur (dès 20 pers.)" items={RESTAURATION.cocktails} colorHex="#E07020" showFor20Plus />
+        <RestaSection title="🥂 Plateaux cocktail froids · Grandsire Traiteur" items={RESTAURATION.cocktails} colorHex="#E07020" note="Prix au plateau. Repère : environ 20 pièces par personne pour un apéritif qui remplace le repas (2 plateaux de 30 pièces pour 3 personnes)." />
         <RestaSection title="🧀 Plateaux"        items={RESTAURATION.plateaux}      colorHex="#E07020" />
         <RestaSection title="🥐 Viennoiseries"   items={RESTAURATION.viennoiseries} colorHex="#E07020" />
         <RestaSection title="🍰 Desserts"        items={RESTAURATION.desserts}      colorHex="#E07020" />
