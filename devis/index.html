@@ -187,7 +187,7 @@
           </div>
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Restauration</h3>
-            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> de l'espace. Cocktails, plateaux, viennoiseries, boissons.</p>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation de notre salle d'accueil</strong>, où le repas est servi (nous n'avons pas de salle de réunion ni de salle de réception). Plateaux-repas : assis. Cocktails et plateaux à partager : buffet debout. Tout est servi froid.</p>
           </div>
         </div>
       </div>
@@ -249,7 +249,7 @@
       <p style="line-height:1.7; margin:0 0 14px;">Devis simulé en ligne : tarif immédiat, valable 30 jours. Devis personnalisé envoyé par email : sous 48 heures ouvrées. Confirmation de réservation : à validation du devis et du paiement en ligne (acompte ou règlement total selon le délai). Aucun paiement sur place pour la réservation initiale — exclusivement en ligne via notre plateforme sécurisée 4escape.io. Les compléments éventuels (justificatif manquant, supplément le jour J) se règlent sur place avant le jeu.</p>
 
       <h3 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; text-transform:uppercase; font-size:22px; letter-spacing:.08em; margin:32px 0 12px; color:#E07020;">Une question avant de simuler&nbsp;?</h3>
-      <p style="line-height:1.7; margin:0 0 14px;">Pour toute demande spécifique (groupe atypique, configuration mixte escape + quiz sur la même soirée, formule séminaire d'entreprise complète, privatisation week-end), contactez-nous par email à <a href="mailto:contact@gamedoor41.fr" style="color:#E07020;">contact@gamedoor41.fr</a>. Nous répondons en moyenne sous 4 heures ouvrées et proposons toujours plusieurs configurations selon votre budget et vos contraintes de date.</p>
+      <p style="line-height:1.7; margin:0 0 14px;">Pour toute demande spécifique (groupe atypique, configuration mixte escape + quiz sur la même soirée, journée d'activités pour votre séminaire d'entreprise (nous n'avons pas de salle de réunion), privatisation week-end), contactez-nous par email à <a href="mailto:contact@gamedoor41.fr" style="color:#E07020;">contact@gamedoor41.fr</a>. Nous répondons en moyenne sous 4 heures ouvrées et proposons toujours plusieurs configurations selon votre budget et vos contraintes de date.</p>
       <p style="line-height:1.7; margin:0 0 14px;">Notre équipe a accueilli plus de 750 entreprises et 69 000 joueur·euse·s depuis 2017 (continuité Brain Escape Game et Buzz Your Brain) : on a vu passer beaucoup de configurations, et il y en a très probablement une qui colle à la vôtre.</p>
     </div>
   </section>
@@ -372,9 +372,6 @@
     cocktails: [
       { id: 'cocktail8',  name: 'Cocktail découverte 8 pièces — salé',         priceTTC: 13, priceHT: 11.82, perPerson: true,  tva: 10 },
       { id: 'cocktail10', name: 'Cocktail découverte 10 pièces — salé',        priceTTC: 15, priceHT: 13.64, perPerson: true,  tva: 10 },
-      { id: 'cocktail18', name: 'Cocktail finesse 18 pièces — sucré/salé',     priceTTC: 25, priceHT: 22.73, perPerson: true,  tva: 10 },
-      { id: 'cocktail20', name: 'Cocktail saveur 20 pièces — sucré/salé',      priceTTC: 30, priceHT: 27.27, perPerson: true,  tva: 10 },
-      { id: 'cocktail22', name: 'Cocktail saveur 22 pièces — sucré/salé',      priceTTC: 33, priceHT: 30.00, perPerson: true,  tva: 10 }
     ],
     plateaux: [
       { id: 'plateau10', name: 'Plateau fromage & charcuterie 10 pers.', priceTTC: 110, priceHT: 100.00, tva: 10 },
@@ -1119,7 +1116,7 @@
     const renderRestaurationQuestion = () => (
       <div className="space-y-4">
         <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Souhaitez-vous de la restauration ?</h2>
-        <p className="text-center text-gd-orange text-sm sim-display tracking-wider uppercase font-bold">⚠ La privatisation est obligatoire pour la restauration sur place</p>
+        <p className="text-center text-gd-orange text-sm sim-display tracking-wider uppercase font-bold">⚠ La privatisation de la salle d'accueil est obligatoire pour la restauration sur place</p>
         <div className="grid grid-cols-2 gap-4">
           <button onClick={() => setWantsRestauration(true)}
             className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
@@ -1165,10 +1162,10 @@
       <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
         <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Menu Restauration</h2>
         <div className="p-3 bg-gd-orange/10 border border-gd-orange/40 rounded-lg">
-          <p className="text-gd-orange text-sm text-center sim-display tracking-wider uppercase font-bold">⚠ Privatisation obligatoire pour consommer sur place</p>
+          <p className="text-gd-orange text-sm text-center sim-display tracking-wider uppercase font-bold">⚠ Privatisation de la salle d'accueil obligatoire pour consommer sur place</p>
         </div>
         <div className="bg-gd-card border border-gd-border rounded-lg p-3">
-          <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: '#E07020' }}>🏢 Privatisation <span className="text-gd-orange">(obligatoire)</span></h3>
+          <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: '#E07020' }}>🏢 Privatisation de la salle d'accueil <span className="text-gd-orange">(obligatoire)</span></h3>
           {Object.entries(PRIVATISATION).map(([key, priv]) => (
             <label key={key} className="flex items-center gap-2 p-1.5 hover:bg-gd-card-soft rounded cursor-pointer">
               <input type="radio" name="privatisation" checked={privatisation === key} onChange={() => setPrivatisation(key)} className="accent-gd-orange w-4 h-4" />
