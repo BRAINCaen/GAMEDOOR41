@@ -29,6 +29,7 @@
       --green: #2D8C4E;
       --red: #c0392b;
       --gold: #FFD740;
+      --froid: #7FC8E8;
     }
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -333,7 +334,7 @@
       margin-top: 0;
     }
     .accordion-row.is-active .row-collapse {
-      max-height: 180px;
+      max-height: 240px;
       opacity: 1;
       margin-top: 12px;
     }
@@ -465,6 +466,51 @@
       font-size: 11px; letter-spacing: 2px;
       color: var(--grey-medium); opacity: 0.45;
       padding-top: 10px;
+    }
+
+    /* ============ REPAS SERVIS FROIDS ============ */
+    .froid-notice {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: rgba(127,200,232,0.08);
+      border: 1px solid rgba(127,200,232,0.45);
+      border-left: 4px solid var(--froid);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      max-width: 820px;
+    }
+    .froid-notice-icon {
+      font-size: 26px; line-height: 1;
+      color: var(--froid);
+      flex-shrink: 0;
+    }
+    .froid-notice-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--froid);
+      margin-bottom: 6px;
+    }
+    .froid-notice p:not(.froid-notice-title) {
+      font-size: 14px; color: var(--grey-light);
+    }
+    .froid-badge {
+      display: inline-block;
+      border: 1px solid rgba(127,200,232,0.55);
+      color: var(--froid);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 2px; font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px;
+      white-space: nowrap;
+    }
+    .preview-froid {
+      font-size: 13px; color: var(--froid);
+      margin: -6px 0 14px;
+    }
+    .form-froid-rappel {
+      font-size: 14px; color: var(--froid);
+      margin: 4px 0 16px;
     }
 
     @media (max-width: 900px) {
@@ -771,7 +817,14 @@
       <div class="section-head">
         <p class="meta">Entre deux activités ou en clôture</p>
         <h2><span class="num">02</span>Le déjeuner</h2>
-        <p>Plateaux-repas frais livrés par <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand). Composition identique à partir de 4 plateaux. Option végétarienne incluse.</p>
+        <p>Plateaux-repas <strong>froids</strong> livrés par <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), prêts à consommer. Composition identique à partir de 4 plateaux. Option végétarienne incluse.</p>
+      </div>
+      <div class="froid-notice" role="note">
+        <span class="froid-notice-icon" aria-hidden="true">❄</span>
+        <div>
+          <p class="froid-notice-title">Tous les plateaux-repas sont servis froids</p>
+          <p>Le traiteur livre des plateaux-repas froids, prêts à ouvrir et à déguster tels quels. Rien n'est réchauffé sur place : la volaille, le poisson ou la viande se mangent froids, eux aussi. Gardez-le en tête en parcourant les menus détaillés sur le site de Grandsire : certains intitulés évoquent un plat chaud, mais tout arrive et se déguste froid.</p>
+        </div>
       </div>
       <div class="accordion-wrap" id="dejeuner-accordion">
         <div class="accordion-list" id="dejeuner-list"></div>
@@ -848,6 +901,8 @@
               <textarea id="resto-message" name="message" placeholder="Ex : 2 personnes végétariennes, 1 sans gluten, événement à clôturer vers 22h..."></textarea>
             </div>
           </div>
+
+          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : les plateaux-repas sont livrés et servis froids, prêts à consommer.</p>
 
           <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
 
@@ -940,7 +995,7 @@
           subtitle: 'Wrap ou pasta box',
           includes: ['1 wrap (8 variétés) OU 1 pasta box', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Couverts bois + pain + serviette'],
           info: {
-            details: '<p>Format léger pour séminaires courts ou groupes au budget contenu. Composition identique pour tous à partir de 4 plateaux. Livré frais le matin.</p>',
+            details: '<p>Format léger pour séminaires courts ou groupes au budget contenu. Composition identique pour tous à partir de 4 plateaux. Livré frais le matin, servi froid, prêt à consommer.</p>',
             inclus: ['1 wrap au choix (8 variétés : poulet curry, thon crudités, saumon, végétarien…) ou 1 pasta box (4 sauces au choix)', '1 dessert au choix : moelleux chocolat, salade de fruits, panna cotta', "Bouteille d'eau plate 50 cl", 'Couverts en bois + pain + serviette papier'],
             allergenes: 'Selon la formule choisie : gluten (wrap, pâtes, pain), lactose (sauce, dessert), poisson (thon, saumon), œufs. Allergies à signaler à la commande.',
             min: '4 plateaux minimum',
@@ -952,13 +1007,13 @@
           price: 16.50, tva: 10, unit: '/ pers.',
           infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: '4 services · gamme essentielle',
-          includes: ['Entrée raffinée au choix', 'Plat au choix', 'Fromage normand', 'Dessert pâtissier'],
+          includes: ['Entrée raffinée au choix', 'Plat froid au choix', 'Fromage normand', 'Dessert pâtissier'],
           info: {
-            details: '<p>Le plateau séminaire entreprise standard. 4 services au choix dans la gamme Kiwi (16,50 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
-            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat</strong> au choix dans la gamme Kiwi', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
+            details: '<p>Le plateau séminaire entreprise standard. 4 services au choix dans la gamme Kiwi (16,50 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais et servi froid, prêt à consommer.</p>',
+            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat froid</strong> au choix dans la gamme Kiwi', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
             allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
             min: '4 plateaux minimum',
-            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau',
+            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
@@ -967,13 +1022,13 @@
           price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
           infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: '4 services · gamme premium',
-          includes: ['Entrée raffinée au choix', 'Plat chaud ou froid au choix', 'Fromage normand affiné', 'Dessert pâtissier'],
+          includes: ['Entrée raffinée au choix', 'Plat froid au choix', 'Fromage normand affiné', 'Dessert pâtissier'],
           info: {
-            details: '<p>La gamme premium du séminaire entreprise. 4 services au choix dans la gamme Orange (19 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais.</p>',
-            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat chaud ou froid</strong> au choix dans la gamme Orange : suprême de volaille, filet de cabillaud, pavé de saumon, magret de canard, tagliatelles légumes (option végétarienne)…', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
+            details: '<p>La gamme premium du séminaire entreprise. 4 services au choix dans la gamme Orange (19 € HT). Composition identique pour tous à partir de 4 plateaux. Livré frais et servi froid, prêt à consommer.</p>',
+            inclus: ['<strong>Entrée raffinée</strong> au choix : tatin de Saint-Jacques, gravlax de saumon, carpaccio de bœuf, salade composée…', '<strong>Plat froid</strong> au choix dans la gamme Orange : suprême de volaille, filet de cabillaud, pavé de saumon, magret de canard, tagliatelles légumes (option végétarienne)…', '<strong>Fromage normand affiné</strong> : camembert, livarot, pont-l\'évêque, neufchâtel', '<strong>Dessert pâtissier</strong> : tarte du jour, opéra, fraisier, paris-brest…', 'Pain frais + vaisselle compostable + serviette'],
             allergenes: 'Selon plats choisis : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Option sans gluten / sans porc / végétarien à signaler.',
             min: '4 plateaux minimum',
-            options: 'Plat chaud (réchauffage cuisine) : + 1,50 € HT / plateau · Couverts inox au lieu du bois : + 1,00 € HT / plateau · Option végétarienne incluse',
+            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau · Option végétarienne incluse',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
@@ -982,10 +1037,10 @@
           price: 24.80, tva: 10, unit: '/ pers.',
           infoUrl: 'https://grandsire.com/plateaux-en-livraison',
           subtitle: 'Gastronomique',
-          includes: ['Entrée gastronomique (rouget, burrata…)', 'Plat signature (filet de bœuf, gambas…)', 'Salade + fromage affiné', 'Dessert pâtisserie'],
+          includes: ['Entrée gastronomique (rouget, burrata…)', 'Plat signature froid (filet de bœuf, gambas…)', 'Salade + fromage affiné', 'Dessert pâtisserie'],
           info: {
-            details: '<p>Pour vos comités de direction, clients stratégiques, occasions spéciales. Composition élaborée par le chef Grandsire. Composition identique à partir de 4 plateaux.</p>',
-            inclus: ['<strong>Entrée gastronomique</strong> : rouget barbet en escabèche, burrata des Pouilles, foie gras maison, tartare de Saint-Jacques…', '<strong>Plat signature</strong> : filet de bœuf sauce poivre, gambas grillées risotto, suprême de pigeon, magret rôti aux figues…', '<strong>Salade composée</strong> + <strong>fromage affiné</strong> Conquérant', '<strong>Dessert pâtisserie</strong> finition chef : entremet, tartelette saison, sphère chocolat…', 'Pain frais + vaisselle premium (verre ou inox sur demande)'],
+            details: '<p>Pour vos comités de direction, clients stratégiques, occasions spéciales. Composition élaborée par le chef Grandsire. Composition identique à partir de 4 plateaux. Livré et servi froid, prêt à consommer.</p>',
+            inclus: ['<strong>Entrée gastronomique</strong> : rouget barbet en escabèche, burrata des Pouilles, foie gras maison, tartare de Saint-Jacques…', '<strong>Plat signature servi froid</strong> : filet de bœuf sauce poivre, gambas grillées risotto, suprême de pigeon, magret rôti aux figues…', '<strong>Salade composée</strong> + <strong>fromage affiné</strong> Conquérant', '<strong>Dessert pâtisserie</strong> finition chef : entremet, tartelette saison, sphère chocolat…', 'Pain frais + vaisselle premium (verre ou inox sur demande)'],
             allergenes: 'Selon plats choisis : gluten, poissons, crustacés, mollusques, lait, œufs, fruits à coque possibles. Demandes spécifiques à signaler.',
             min: '4 plateaux minimum',
             options: 'Bocaux verre (look déjeuner d\'affaires) : 22 € HT/plateau · Service à table possible sur devis',
@@ -1134,6 +1189,7 @@
           <div class="row-collapse">
             <div class="row-meta-line">
               <p class="row-sub">${item.subtitle}</p>
+              <span class="froid-badge"><span aria-hidden="true">❄</span> Servi froid</span>
               <span class="row-price-inline">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
             </div>
             <div class="row-actions">
@@ -1169,6 +1225,7 @@
             </div>
           </div>
           <p class="preview-subtitle">${item.subtitle}</p>
+          <p class="preview-froid"><span aria-hidden="true">❄</span> Livré froid · prêt à ouvrir et à consommer · aucun réchauffage</p>
           <div class="preview-price-block">
             <span class="preview-price-ht">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
             <span class="preview-price-ttc">${(item.price * (1 + item.tva/100)).toFixed(2).replace('.', ',')} € TTC ${item.unit}</span>
