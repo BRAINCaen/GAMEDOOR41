@@ -187,7 +187,7 @@
           </div>
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Restauration</h3>
-            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> : tout le site vous est réservé, salle d'accueil comprise, et c'est là que tout est servi (nous n'avons pas de salle de réunion ni de salle de réception). Cocktails, plateaux à partager, viennoiseries et desserts : servis froids, en buffet debout, 40 personnes maximum, avec quelques chaises. Déjeuner assis en plateaux-repas : sur demande, 20 personnes maximum.</p>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> : tout le site vous est réservé, salle d'accueil comprise, et c'est là que tout est servi (nous n'avons pas de salle de réunion ni de salle de réception). Plateaux cocktail, plateaux à partager, viennoiseries et desserts : servis froids, en buffet debout, 40 personnes maximum, avec quelques chaises (accueil café en libre-service au comptoir, assis sur demande : 20 personnes maximum). Déjeuner assis en plateaux-repas : sur demande, 20 personnes maximum.</p>
           </div>
         </div>
       </div>
@@ -295,6 +295,8 @@
   const MAX_ESCAPE = 30;
   const MAX_QUIZ = 16;
   const MAX_TOTAL = 46;
+  const MAX_RESTO_DEBOUT = 40; // repas debout (buffet, accueil café)
+  const MAX_RESTO_ASSIS = 20;  // repas assis (plateaux-repas, accueil café assis sur demande)
 
   // 5 salles physiques (3 univers thématiques)
   const ESCAPE_ROOMS = [
@@ -363,15 +365,20 @@
   ];
 
   const PRIVATISATION = {
-    horaire:    { name: 'Privatisation 1 heure',        priceTTC: 220,  priceHT: 200.00 },
-    demiJournee:{ name: 'Privatisation Demi-journée',   priceTTC: 550,  priceHT: 500.00 },
-    journee:    { name: 'Privatisation Journée complète', priceTTC: 1800, priceHT: 1636.36 }
+    horaire:    { name: 'Privatisation 1 heure',        priceTTC: 240,  priceHT: 200.00 },
+    demiJournee:{ name: 'Privatisation Demi-journée',   priceTTC: 600,  priceHT: 500.00 }   // TVA 20 % ; pas de journée complète (jamais demandée)
   };
 
   const RESTAURATION = {
+    // Plateaux cocktail FROIDS de la carte Grandsire (prix Grandsire, au plateau). Rien de chaud : rien ne peut être réchauffé sur place.
     cocktails: [
-      { id: 'cocktail8',  name: 'Cocktail découverte 8 pièces — salé',         priceTTC: 13, priceHT: 11.82, perPerson: true,  tva: 10 },
-      { id: 'cocktail10', name: 'Cocktail découverte 10 pièces — salé',        priceTTC: 15, priceHT: 13.64, perPerson: true,  tva: 10 },
+      { id: 'pcWraps',        name: 'Plateau de 30 wraps',                       priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcSavouris',     name: 'Plateau de 30 savouris froids',             priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcFraicheur',    name: 'Plateau de 30 pièces fraîcheurs',            priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcBoulangeres',  name: 'Plateau de 30 boulangères et mini-clubs',   priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcPainSurprise', name: 'Pain surprise (50 pièces)',                 priceTTC: 44.00, priceHT: 40.00, tva: 10 },
+      { id: 'pcFoursFinesse', name: 'Plateau 30 fours frais Finesse (sucré)', priceTTC: 40.00, priceHT: 36.36, tva: 10 },
+      { id: 'pcFoursSaveurs', name: 'Plateau 30 fours frais Saveurs (sucré)', priceTTC: 40.00, priceHT: 36.36, tva: 10 }
     ],
     plateaux: [
       { id: 'plateau10', name: 'Plateau fromage & charcuterie 10 pers.', priceTTC: 110, priceHT: 100.00, tva: 10 },
@@ -393,23 +400,42 @@
       { id: 'mignardises16', name: 'Mignardises (16 pièces)',          priceTTC: 11.00, priceHT: 10.00, tva: 10 },
       { id: 'petitsFours16', name: 'Assortiment 16 petits fours sucrés', priceTTC: 12.10, priceHT: 11.00, tva: 10 }
     ],
+    // Boissons : carte Grandsire (prix Grandsire, à la bouteille ouverte)
     boissons: [
-      { id: 'sansAlcool',  name: 'Sans alcool',                       priceTTC: 1.00,  priceHT: 0.91,  perPerson: true, tva: 10 },
-      { id: 'biere',       name: 'Bière',                             priceTTC: 2.28,  priceHT: 1.90,  perPerson: true, tva: 20, isAlcool: true },
-      { id: 'cidre',       name: 'Bouteille de cidre (75 cl)',        priceTTC: 7.50,  priceHT: 6.25,  tva: 20, isAlcool: true },
-      { id: 'methode',     name: 'Méthode traditionnelle (75 cl)',    priceTTC: 9.50,  priceHT: 7.92,  tva: 20, isAlcool: true },
-      { id: 'sauvignon',   name: 'Sauvignon de Touraine 75 cl',       priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
-      { id: 'rose',        name: 'Rosé de Provence',                  priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
-      { id: 'bordeaux',    name: 'Bordeaux rouge',                    priceTTC: 10.00, priceHT: 8.33,  tva: 20, isAlcool: true },
-      { id: 'vouvray',     name: 'Vouvray (75 cl)',                   priceTTC: 13.00, priceHT: 10.83, tva: 20, isAlcool: true },
-      { id: 'cassis',      name: 'Crème de cassis (100 cl)',          priceTTC: 15.00, priceHT: 12.50, tva: 20, isAlcool: true },
-      { id: 'saintEmilion',name: 'Saint-Émilion',                     priceTTC: 17.00, priceHT: 14.17, tva: 20, isAlcool: true },
-      { id: 'champagne',   name: 'Champagne (75 cl)',                 priceTTC: 23.00, priceHT: 19.17, tva: 20, isAlcool: true }
+      { id: 'eau50', name: 'Eau plate Cristaline (50 cl)', priceTTC: 0.99, priceHT: 0.90, tva: 10 },
+      { id: 'eau150', name: 'Eau plate Cristaline (1,5 L)', priceTTC: 1.65, priceHT: 1.50, tva: 10 },
+      { id: 'badoit', name: 'Eau gazeuse Badoit (1 L)', priceTTC: 1.65, priceHT: 1.50, tva: 10 },
+      { id: 'coca', name: 'Coca-Cola (1,25 L)', priceTTC: 3.30, priceHT: 3.00, tva: 10 },
+      { id: 'jusOrange', name: "Jus d'orange (1 L)", priceTTC: 3.30, priceHT: 3.00, tva: 10 },
+      { id: 'jusPomme', name: 'Jus de pomme artisanal (1 L)', priceTTC: 3.85, priceHT: 3.50, tva: 10 },
+      { id: 'thermosCafe', name: 'Thermos de café (1 L)', priceTTC: 16.50, priceHT: 15.00, tva: 10 },
+      { id: 'cidre', name: 'Cidre normand (75 cl)', priceTTC: 6.00, priceHT: 5.00, tva: 20, isAlcool: true },
+      { id: 'biere', name: 'Bière (25 cl)', priceTTC: 1.50, priceHT: 1.25, tva: 20, isAlcool: true },
+      { id: 'sauvignon', name: 'Sauvignon de Touraine (75 cl)', priceTTC: 9.60, priceHT: 8.00, tva: 20, isAlcool: true },
+      { id: 'rose', name: 'Rosé de Provence (75 cl)', priceTTC: 9.60, priceHT: 8.00, tva: 20, isAlcool: true },
+      { id: 'bordeaux', name: 'Bordeaux rouge (75 cl)', priceTTC: 9.60, priceHT: 8.00, tva: 20, isAlcool: true },
+      { id: 'saintEmilion', name: 'Saint-Émilion (75 cl)', priceTTC: 16.80, priceHT: 14.00, tva: 20, isAlcool: true },
+      { id: 'cremant', name: 'Crémant de Loire (75 cl)', priceTTC: 12.00, priceHT: 10.00, tva: 20, isAlcool: true },
+      { id: 'methode', name: 'Méthode traditionnelle (75 cl)', priceTTC: 8.40, priceHT: 7.00, tva: 20, isAlcool: true },
+      { id: 'champagne', name: 'Champagne (75 cl)', priceTTC: 21.60, priceHT: 18.00, tva: 20, isAlcool: true },
+      { id: 'cassis', name: 'Crème de cassis (1 L)', priceTTC: 13.20, priceHT: 11.00, tva: 20, isAlcool: true }
     ]
   };
 
   // ===== HELPERS UI =====
   const cls = (...arr) => arr.filter(Boolean).join(' ');
+
+  // Quantité au plateau : valeur texte locale (on peut vider le champ), bornée à la sortie du champ
+  function QtyInput({ value, onCommit, label }) {
+    const [draft, setDraft] = useState(String(value));
+    useEffect(() => { setDraft(String(value)); }, [value]);
+    return (
+      <input type="number" inputMode="numeric" min="1" value={draft} aria-label={label}
+        onChange={(e) => { const v = e.target.value; setDraft(v); const q = parseInt(v, 10); if (q >= 1) onCommit(q); }}
+        onBlur={() => { const q = Math.max(1, parseInt(draft, 10) || 1); setDraft(String(q)); onCommit(q); }}
+        className="w-12 bg-gd-dark border border-gd-border rounded px-1 text-gd-cream text-sm text-center" />
+    );
+  }
 
   function SimulateurGamedoor() {
     const [step, setStep] = useState(1);
@@ -465,6 +491,10 @@
 
     const getEscapeCapacity = () => Object.values(selectedRooms).reduce((acc, n) => acc + (n || 0), 0);
     const nbPersons = selectedActivity === 'both' ? getEscapeCapacity() + quizParticipants : participants;
+    const hasFood = Object.values(selectedRestauration).some(q => q > 0);
+    const restoSansPrivat = hasFood && !privatisation;
+    const restoTropNombreux = hasFood && nbPersons > MAX_RESTO_DEBOUT;
+    const restaBloquee = restoSansPrivat || restoTropNombreux;
 
     const updateRestaQty = (itemId, delta) => {
       setSelectedRestauration(prev => {
@@ -637,6 +667,11 @@
         else t += '* ' + d.name + ' : ' + (d.subtotalHT || d.priceHT).toFixed(2) + '€ HT\n';
       });
 
+      if (hasFood) {
+        t += '\n--- CONDITIONS RESTAURATION ---\n';
+        t += "Privatisation obligatoire (tout le site, salle d'accueil comprise).\n";
+        t += 'Tous les plats sont servis froids. Buffet debout : ' + MAX_RESTO_DEBOUT + ' personnes maximum ; assis : ' + MAX_RESTO_ASSIS + ' personnes maximum.\n';
+      }
       t += '\n--- TOTAUX ---\n';
       t += 'Total HT : ' + r.totalHT.toFixed(2) + '€\n';
       if (r.tva10 > 0) t += 'TVA 10% : ' + r.tva10.toFixed(2) + '€\n';
@@ -1117,14 +1152,16 @@
       <div className="space-y-4">
         <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Souhaitez-vous de la restauration ?</h2>
         <p className="text-center text-gd-orange text-sm sim-display tracking-wider uppercase font-bold">⚠ La privatisation (tout le site, salle d'accueil comprise) est obligatoire pour la restauration sur place</p>
+        <p className="text-center text-gd-cream/70 text-sm">Servie dans notre salle d'accueil (nous n'avons pas de salle de réunion) : tous les plats sont froids ; buffet debout, {MAX_RESTO_DEBOUT} personnes maximum ; assis, {MAX_RESTO_ASSIS} personnes maximum.</p>
+        {nbPersons > MAX_RESTO_DEBOUT && <p className="text-center text-red-400 text-sm">⚠ Vous êtes {nbPersons} : la restauration sur place est limitée à {MAX_RESTO_DEBOUT} personnes.</p>}
         <div className="grid grid-cols-2 gap-4">
-          <button onClick={() => setWantsRestauration(true)}
+          <button onClick={() => setWantsRestauration(true)} disabled={nbPersons > MAX_RESTO_DEBOUT}
             className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
-              wantsRestauration === true ? 'border-emerald-500 bg-emerald-500/15' : 'border-gd-border hover:border-emerald-500/60')}>
+              wantsRestauration === true ? 'border-emerald-500 bg-emerald-500/15' : 'border-gd-border hover:border-emerald-500/60', 'disabled:opacity-40 disabled:cursor-not-allowed')}>
             <span className="text-3xl">✓</span>
             <span className="text-gd-cream font-bold sim-display">Oui</span>
           </button>
-          <button onClick={() => setWantsRestauration(false)}
+          <button onClick={() => { setWantsRestauration(false); setSelectedRestauration({}); setPrivatisation(null); }}
             className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
               wantsRestauration === false ? 'border-red-500 bg-red-500/15' : 'border-gd-border hover:border-red-500/60')}>
             <span className="text-3xl">✕</span>
@@ -1134,11 +1171,12 @@
       </div>
     );
 
-    const RestaSection = ({ title, items, colorHex, perPerson = false, showFor20Plus = false }) => {
+    const RestaSection = ({ title, items, colorHex, perPerson = false, showFor20Plus = false, note = null }) => {
       if (showFor20Plus && nbPersons < 20) return null;
       return (
         <div className="bg-gd-card border border-gd-border rounded-lg p-3">
           <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: colorHex }}>{title}</h3>
+          {note && <p className="text-gd-cream/60 text-[11px] mb-2">{note}</p>}
           {items.map(item => (
             <label key={item.id} className="flex items-center gap-2 p-1.5 hover:bg-gd-card-soft rounded cursor-pointer">
               <input type="checkbox" checked={(selectedRestauration[item.id] || 0) > 0}
@@ -1147,6 +1185,10 @@
                   : { ...prev, [item.id]: 0 })}
                 className="accent-gd-orange w-4 h-4" />
               <span className="flex-1 text-gd-cream text-sm">{item.name}</span>
+              {!item.perPerson && (selectedRestauration[item.id] || 0) > 0 && (
+                <QtyInput value={selectedRestauration[item.id]} label={'Quantité : ' + item.name}
+                  onCommit={(q) => setSelectedRestauration(prev => ({ ...prev, [item.id]: q }))} />
+              )}
               <span className="text-emerald-400 text-xs sim-display tracking-wide">
                 {isPro ? item.priceHT.toFixed(2) + '€ HT' : item.priceTTC.toFixed(2) + '€'}
                 {item.perPerson && <span className="opacity-70">/p</span>}
@@ -1173,12 +1215,14 @@
               <span className="text-emerald-400 text-xs sim-display tracking-wide">{isPro ? priv.priceHT.toFixed(0) + '€ HT' : priv.priceTTC + '€'}</span>
             </label>
           ))}
+          {restoSansPrivat && <p className="text-red-400 text-xs text-center mt-2">Choisissez une durée de privatisation pour continuer : elle est obligatoire dès que vous consommez sur place.</p>}
+          {restoTropNombreux && <p className="text-red-400 text-xs text-center mt-1">⚠ Vous êtes {nbPersons} : la restauration sur place est limitée à {MAX_RESTO_DEBOUT} personnes debout ({MAX_RESTO_ASSIS} assises).</p>}
         </div>
-        <RestaSection title="🥂 Cocktails traiteur (dès 20 pers.)" items={RESTAURATION.cocktails} colorHex="#E07020" showFor20Plus />
-        <RestaSection title="🧀 Plateaux"        items={RESTAURATION.plateaux}      colorHex="#E07020" />
-        <RestaSection title="🥐 Viennoiseries"   items={RESTAURATION.viennoiseries} colorHex="#E07020" />
-        <RestaSection title="🍰 Desserts"        items={RESTAURATION.desserts}      colorHex="#E07020" />
-        <RestaSection title="🍷 Boissons"        items={RESTAURATION.boissons}      colorHex="#E07020" />
+        {RestaSection({ title: "🥂 Plateaux cocktail froids · Grandsire Traiteur", items: RESTAURATION.cocktails, colorHex: "#E07020", note: "Prix au plateau. Repère : environ 20 pièces par personne pour un apéritif qui remplace le repas (2 plateaux de 30 pièces pour 3 personnes). Pain surprise : garniture charcuterie, poisson ou mixte, à préciser dans votre demande." })}
+        {RestaSection({ title: "🧀 Plateaux", items: RESTAURATION.plateaux, colorHex: "#E07020" })}
+        {RestaSection({ title: "🥐 Viennoiseries", items: RESTAURATION.viennoiseries, colorHex: "#E07020" })}
+        {RestaSection({ title: "🍰 Desserts", items: RESTAURATION.desserts, colorHex: "#E07020" })}
+        {RestaSection({ title: "🍷 Boissons", items: RESTAURATION.boissons, colorHex: "#E07020" })}
       </div>
     );
 
@@ -1410,7 +1454,7 @@
         case 5:
           if (clientType === 'particulier' && selectedActivity === 'escape') return getEscapeCapacity() >= participants;
           return true;
-        default: return true;
+        default: return !restaBloquee;
       }
     };
 
