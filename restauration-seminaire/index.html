@@ -1498,7 +1498,8 @@
         };
       }
       const input = document.querySelector(`[data-bqty="${itemId}"]`);
-      if (input) input.value = qty;
+      // Pendant la frappe, on ne réécrit pas le champ (sinon « -3 » ou « 2.7 » donnent 3 ou 7) : il est normalisé à la sortie
+      if (input && input !== document.activeElement) input.value = qty;
       updatePanier();
     }
 
@@ -1744,6 +1745,13 @@
           // Les sélections existantes gardent leur qty actuelle (l'utilisateur a peut-être ajusté)
         } else if (e.target.matches('[data-bqty]')) {
           setBoissonQty(e.target.getAttribute('data-bqty'), e.target.value);
+        }
+      });
+
+      // À la sortie du champ, on affiche la quantité réellement retenue
+      document.body.addEventListener('change', (e) => {
+        if (e.target.matches('[data-bqty]')) {
+          e.target.value = state.selection[e.target.getAttribute('data-bqty')]?.qty || 0;
         }
       });
 
