@@ -564,6 +564,14 @@
       font-size: 11px; color: var(--grey-medium);
       margin-top: 8px; line-height: 1.4;
     }
+    .hero-capacite {
+      margin-top: 10px;
+      font-size: 13px; color: var(--grey-medium);
+    }
+    .panier-alerte {
+      font-size: 12px; font-weight: 700; color: #ff9966;
+      margin-bottom: 8px; line-height: 1.4;
+    }
     /* Sur grand écran, le récap fixe (320 px en bas à droite) ne doit pas recouvrir les compteurs des boissons */
     @media (min-width: 1024px) {
       .boissons-grid { margin-right: 300px; }
@@ -850,8 +858,9 @@
       <p>Sélectionnez vos formules en quelques clics. On vous envoie un devis personnalisé sous 48 h ouvrées.</p>
       <div class="hero-input-wrap">
         <label for="nbPersonnes">Nombre de personnes</label>
-        <input type="number" id="nbPersonnes" min="1" max="100" value="10">
+        <input type="number" id="nbPersonnes" min="1" max="40" value="10">
       </div>
+      <p class="hero-capacite">40 personnes maximum debout · 20 personnes maximum assises pour le déjeuner</p>
     </div>
   </section>
 
@@ -863,9 +872,10 @@
         <h2 id="lieu-titre">Où et comment se passe votre repas</h2>
         <ul class="lieu-list">
           <li><strong>Pas de salle de réunion.</strong> GAMEDOOR·41 n'a pas de salle de réunion, ni pour l'instant de salle de réception. Votre repas se prend dans notre <strong>salle d'accueil</strong>.</li>
-          <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), la privatisation de la salle d'accueil est obligatoire. Elle figurera sur votre devis.</li>
-          <li><strong>Déjeuner (plateaux-repas, box, wraps) : repas assis.</strong> Nous réaménageons la salle d'accueil avec tables et chaises.</li>
-          <li><strong>Apéritif dînatoire : buffet debout.</strong> Chacun se sert ; quelques chaises sont à disposition, mais on reste debout.</li>
+          <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), la privatisation est obligatoire : tout le site vous est réservé, salle d'accueil comprise. Tarif : 200 € HT l'heure, 500 € HT la demi-journée. Elle figurera sur votre devis.</li>
+          <li><strong>Accueil café : debout</strong>, en libre-service.</li>
+          <li><strong>Déjeuner (plateaux-repas, box, wraps) : repas assis, 20 personnes maximum.</strong> Nous réaménageons la salle d'accueil avec tables et chaises.</li>
+          <li><strong>Apéritif dînatoire : buffet debout, 40 personnes maximum.</strong> Chacun se sert ; quelques chaises sont à disposition, mais on reste debout.</li>
           <li><strong>Aucun plat chaud.</strong> Nous ne pouvons rien réchauffer sur place : tous les plats sont servis froids. Seuls le café et le thé sont chauds.</li>
         </ul>
       </div>
@@ -878,7 +888,7 @@
       <div class="section-head">
         <p class="meta">À votre arrivée</p>
         <h2><span class="num">01</span>L'accueil café</h2>
-        <p>Vos équipes arrivent : café Senseo et thé en libre-service, viennoiseries fraîches, jus en carafe. Servi dans notre salle d'accueil privatisée.</p>
+        <p>Vos équipes arrivent : café Senseo et thé en libre-service, viennoiseries fraîches, jus en carafe. Servi <strong>debout</strong>, en libre-service, dans notre salle d'accueil privatisée.</p>
       </div>
       <div class="cards-grid" id="cards-accueil"></div>
     </div>
@@ -890,7 +900,7 @@
       <div class="section-head">
         <p class="meta">Entre deux activités ou en clôture</p>
         <h2><span class="num">02</span>Le déjeuner</h2>
-        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
+        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis, 20 personnes maximum</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
       </div>
       <div class="froid-notice" role="note">
         <span class="froid-notice-icon" aria-hidden="true">❄</span>
@@ -912,7 +922,7 @@
       <div class="section-head">
         <p class="meta">En clôture · buffet debout</p>
         <h2><span class="num">03</span>L'apéritif dînatoire</h2>
-        <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment autour d'un <strong>buffet froid</strong>, dans notre salle d'accueil privatisée : chacun se sert, <strong>debout</strong> (quelques chaises à disposition).</p>
+        <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment autour d'un <strong>buffet froid</strong>, dans notre salle d'accueil privatisée : chacun se sert, <strong>debout</strong> (quelques chaises à disposition), 40 personnes maximum.</p>
         <p>Pour un apéritif qui remplace le repas, comptez environ 20 pièces par personne (c'est la base des formules cocktail du traiteur), soit 2 plateaux de 30 pièces pour 3 personnes.</p>
       </div>
       <div class="cards-grid" id="cards-apero"></div>
@@ -977,7 +987,7 @@
             </div>
           </div>
 
-          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : tous les plats sont livrés et servis froids (seuls le café et le thé sont chauds), dans notre salle d'accueil privatisée (privatisation obligatoire, qui figurera sur votre devis). Nous n'avons pas de salle de réunion.</p>
+          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : tous les plats sont livrés et servis froids (seuls le café et le thé sont chauds), dans notre salle d'accueil (privatisation obligatoire du site, 200 € HT l'heure, 500 € HT la demi-journée, qui figurera sur votre devis). Nous n'avons pas de salle de réunion.</p>
 
           <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
 
@@ -998,10 +1008,11 @@
       <div class="panier-empty">Aucune formule sélectionnée. Cochez les options qui vous intéressent.</div>
     </div>
     <div class="panier-totals" id="panier-totals" style="display:none;">
+      <p class="panier-alerte" id="panier-alerte" style="display:none;"></p>
       <div class="panier-total-row"><span>Total HT</span><span id="total-ht">0,00 €</span></div>
       <div class="panier-total-row"><span>TVA estimée</span><span id="total-tva">0,00 €</span></div>
       <div class="panier-total-row ttc"><span>Total TTC</span><span id="total-ttc">0,00 €</span></div>
-      <p class="panier-note">Hors privatisation de la salle d'accueil (obligatoire) : elle figurera sur votre devis.</p>
+      <p class="panier-note">Hors privatisation obligatoire du site (200 € HT l'heure, 500 € HT la demi-journée) : elle figurera sur votre devis.</p>
     </div>
   </aside>
 
@@ -1437,6 +1448,17 @@
       `;
     }
 
+    // Capacité de la salle d'accueil : 20 personnes assises (déjeuner), 40 debout (accueil café, apéritif)
+    const CAPACITE = { assis: 20, debout: 40 };
+    function capFor(itemId) {
+      return CATALOG.dejeuner.some(i => i.id === itemId) ? CAPACITE.assis : CAPACITE.debout;
+    }
+    function totalDejeuner() {
+      return Object.entries(state.selection)
+        .filter(([id]) => CATALOG.dejeuner.some(i => i.id === id))
+        .reduce((n, [, sel]) => n + sel.qty, 0);
+    }
+
     // ========== GESTION SÉLECTION ==========
     function toggleCard(itemId) {
       const item = [...CATALOG.accueil, ...CATALOG.dejeuner, ...CATALOG.apero].find(i => i.id === itemId);
@@ -1453,7 +1475,7 @@
         qtyControls.style.display = 'none';
       } else {
         state.selection[itemId] = {
-          qty: state.nbPersonnes,
+          qty: Math.min(state.nbPersonnes, capFor(itemId)),
           unit: item.unit,
           price: item.price,
           tva: item.tva,
@@ -1465,14 +1487,14 @@
         btn.classList.add('selected');
         qtyControls.style.display = 'flex';
         const qtyVal = card.querySelector('[data-qty-val]');
-        if (qtyVal) qtyVal.textContent = state.nbPersonnes;
+        if (qtyVal) qtyVal.textContent = state.selection[itemId].qty;
       }
       updatePanier();
     }
 
     function adjustQty(itemId, delta) {
       if (!state.selection[itemId]) return;
-      const newQty = Math.max(1, state.selection[itemId].qty + delta);
+      const newQty = Math.min(capFor(itemId), Math.max(1, state.selection[itemId].qty + delta));
       state.selection[itemId].qty = newQty;
       const qtyValEl = document.querySelector(`[data-qty-val="${itemId}"]`);
       if (qtyValEl) qtyValEl.textContent = newQty;
@@ -1534,6 +1556,12 @@
       document.getElementById('total-tva').textContent = totalTVA.toFixed(2).replace('.', ',') + ' €';
       document.getElementById('total-ttc').textContent = (totalHT + totalTVA).toFixed(2).replace('.', ',') + ' €';
       totalsEl.style.display = 'block';
+      const assis = totalDejeuner();
+      const alerte = document.getElementById('panier-alerte');
+      if (alerte) {
+        alerte.style.display = assis > CAPACITE.assis ? 'block' : 'none';
+        alerte.textContent = `⚠ Déjeuner assis : ${CAPACITE.assis} personnes maximum (${assis} sélectionnées).`;
+      }
     }
 
     // ========== MODAL INFO ==========
@@ -1562,7 +1590,7 @@
 
       let text = '═══════════════════════════════════\nDÉTAIL DE LA DEMANDE\n═══════════════════════════════════\n\n';
       text += `Nombre de personnes : ${state.nbPersonnes}\n`;
-      text += `⚠ Privatisation de la salle d'accueil obligatoire : à ajouter au devis\n\n`;
+      text += `⚠ Privatisation obligatoire (tout le site, salle d'accueil comprise) : à ajouter au devis\n\n`;
 
       let totalHT = 0, totalTVA = 0;
       items.forEach(([id, sel]) => {
@@ -1591,6 +1619,12 @@
         feedback.className = 'feedback-msg error';
         feedback.style.display = 'block';
         feedback.textContent = "❌ Sélectionnez au moins une formule avant d'envoyer la demande.";
+        return;
+      }
+      if (totalDejeuner() > CAPACITE.assis) {
+        feedback.className = 'feedback-msg error';
+        feedback.style.display = 'block';
+        feedback.textContent = `❌ Le déjeuner assis est limité à ${CAPACITE.assis} personnes : réduisez le nombre de plateaux-repas.`;
         return;
       }
 
@@ -1624,7 +1658,7 @@
           if (sel.tva === 10) tva10 += lineTVA;
           else if (sel.tva === 20) tva20 += lineTVA;
           return `• ${sel.name} — ${sel.qty} ${sel.unit} × ${sel.price.toFixed(2)}€ HT = ${lineHT.toFixed(2)}€ HT`;
-        }).join('\n') + '\n⚠ Privatisation de la salle d\'accueil obligatoire : à ajouter au devis';
+        }).join('\n') + '\n⚠ Privatisation obligatoire (tout le site, salle d\'accueil comprise) : à ajouter au devis';
         const totalTTC = totalHT + tva10 + tva20;
         const nbPers = parseInt(data.nb_personnes, 10) || 0;
         const perPersonHT  = nbPers > 0 ? totalHT  / nbPers : 0;
@@ -1740,7 +1774,7 @@
 
       document.body.addEventListener('input', (e) => {
         if (e.target.id === 'nbPersonnes') {
-          state.nbPersonnes = Math.max(1, parseInt(e.target.value) || 1);
+          state.nbPersonnes = Math.min(CAPACITE.debout, Math.max(1, parseInt(e.target.value) || 1));
           // Mise à jour de la qty par défaut pour les nouveaux ajouts uniquement
           // Les sélections existantes gardent leur qty actuelle (l'utilisateur a peut-être ajusté)
         } else if (e.target.matches('[data-bqty]')) {
@@ -1752,6 +1786,8 @@
       document.body.addEventListener('change', (e) => {
         if (e.target.matches('[data-bqty]')) {
           e.target.value = state.selection[e.target.getAttribute('data-bqty')]?.qty || 0;
+        } else if (e.target.id === 'nbPersonnes') {
+          e.target.value = state.nbPersonnes;
         }
       });
 

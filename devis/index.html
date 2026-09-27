@@ -187,7 +187,7 @@
           </div>
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Restauration</h3>
-            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation de notre salle d'accueil</strong>, où tout est servi (nous n'avons pas de salle de réunion ni de salle de réception). Cocktails, plateaux à partager, viennoiseries et desserts : servis froids, en buffet debout, avec quelques chaises à disposition. Déjeuner assis en plateaux-repas : sur demande.</p>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Disponible <strong>uniquement avec privatisation</strong> : tout le site vous est réservé, salle d'accueil comprise, et c'est là que tout est servi (nous n'avons pas de salle de réunion ni de salle de réception). Cocktails, plateaux à partager, viennoiseries et desserts : servis froids, en buffet debout, 40 personnes maximum, avec quelques chaises. Déjeuner assis en plateaux-repas : sur demande, 20 personnes maximum.</p>
           </div>
         </div>
       </div>
@@ -1116,7 +1116,7 @@
     const renderRestaurationQuestion = () => (
       <div className="space-y-4">
         <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Souhaitez-vous de la restauration ?</h2>
-        <p className="text-center text-gd-orange text-sm sim-display tracking-wider uppercase font-bold">⚠ La privatisation de la salle d'accueil est obligatoire pour la restauration sur place</p>
+        <p className="text-center text-gd-orange text-sm sim-display tracking-wider uppercase font-bold">⚠ La privatisation (tout le site, salle d'accueil comprise) est obligatoire pour la restauration sur place</p>
         <div className="grid grid-cols-2 gap-4">
           <button onClick={() => setWantsRestauration(true)}
             className={cls('p-6 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
@@ -1162,10 +1162,10 @@
       <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
         <h2 className="sim-display text-2xl font-black text-gd-cream text-center">🍽 Menu Restauration</h2>
         <div className="p-3 bg-gd-orange/10 border border-gd-orange/40 rounded-lg">
-          <p className="text-gd-orange text-sm text-center sim-display tracking-wider uppercase font-bold">⚠ Privatisation de la salle d'accueil obligatoire pour consommer sur place</p>
+          <p className="text-gd-orange text-sm text-center sim-display tracking-wider uppercase font-bold">⚠ Privatisation (tout le site, salle d'accueil comprise) obligatoire pour consommer sur place</p>
         </div>
         <div className="bg-gd-card border border-gd-border rounded-lg p-3">
-          <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: '#E07020' }}>🏢 Privatisation <span className="text-gd-orange">(obligatoire)</span></h3>
+          <h3 className="sim-display tracking-wider uppercase text-xs font-bold mb-2" style={{ color: '#E07020' }}>🏢 Privatisation du site, salle d'accueil comprise <span className="text-gd-orange">(obligatoire)</span></h3>
           {Object.entries(PRIVATISATION).map(([key, priv]) => (
             <label key={key} className="flex items-center gap-2 p-1.5 hover:bg-gd-card-soft rounded cursor-pointer">
               <input type="radio" name="privatisation" checked={privatisation === key} onChange={() => setPrivatisation(key)} className="accent-gd-orange w-4 h-4" />
