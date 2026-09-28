@@ -83,7 +83,8 @@
       gap:18px; max-width:1000px; margin:clamp(40px, 5vw, 64px) auto 0;
     }
     @media (max-width: 760px) {
-      .gd-hero-orient-grid { grid-template-columns:1fr; gap:34px; max-width:480px; margin-top:40px; }
+      /* Espaces assez grands pour que la tête de chaque personnage ne morde ni sur le titre ni sur la carte du dessus */
+      .gd-hero-orient-grid { grid-template-columns:1fr; gap:72px; max-width:480px; margin-top:76px; }
     }
 
     /* Boutons sous les cards : « Réserver » plein, les deux autres en contour */
@@ -120,8 +121,7 @@
     /* ============================================================
        BLOC ORIENTATION — « Quelle expérience est faite pour vous ? »
        ============================================================ */
-    /* Chaque carte porte le personnage de sa salle : il dépasse du haut de la carte (clip-path ouvert vers le haut)
-       et bouge au défilement (variables --tx/--ty/--rot/--sc/--op posées par le script en bas de page). */
+    /* Chaque carte porte le personnage de sa salle : il dépasse du haut de la carte (clip-path ouvert vers le haut). */
     .exp-orient-card {
       --room:#3D5DC0; --room-bg:#3D5DC0; --room-glow:rgba(61,93,192,0.38);
       position:relative; display:flex; flex-direction:column; justify-content:flex-end;
@@ -163,11 +163,7 @@
     }
     .exp-orient-perso img {
       display:block; height:100%; width:auto; max-width:none;
-      transform-origin:50% 100%;
-      transform:translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(var(--rot, 0deg)) scale(var(--sc, 1));
-      opacity:var(--op, 1);
       filter:drop-shadow(0 14px 22px rgba(0,0,0,0.6));
-      will-change:transform;
     }
     /* Policier décalé à gauche : la main qui tient les menottes reste dans la carte.
        Sa main gauche et son coude touchent les bords de la photo : fondu plutôt qu'une coupure nette. */
@@ -211,7 +207,8 @@
       .exp-orient-perso { clip-path:inset(-60% 0 0 0 round 0 0 16px 16px); }
       .exp-orient-perso picture { height:132%; right:-3%; }
       .exp-room--gav .exp-orient-perso picture { right:4%; }
-      .exp-room--psy .exp-orient-perso picture { height:145%; bottom:-15%; left:86px; }
+      /* Sur téléphone, la patiente reste à droite comme les autres (le bouton est trop loin pour ses cheveux) */
+      .exp-room--psy .exp-orient-perso picture { left:auto; right:-3%; }
       .exp-orient-text { max-width:58%; gap:12px; }
       .exp-orient-q { font-size:1.2rem; }
       .exp-orient-cta { font-size:15px; padding:9px 14px; }
@@ -1261,40 +1258,5 @@
 @media (max-width:768px){.wa-float{width:56px;height:56px;bottom:16px;right:16px;}.wa-float svg{width:28px;height:28px;}}
 @media (prefers-reduced-motion:reduce){.wa-float::before{animation:none;}}
 </style>
-
-<script>
-/* Personnages des cartes d'orientation : ils entrent et bougent au défilement (surtout visible sur téléphone).
-   e = entrée de la carte dans l'écran (0 → 1), p = progression de la carte dans l'écran (0 → 1). */
-(function () {
-  var cards = [].slice.call(document.querySelectorAll(".exp-orient-card[data-perso]"));
-  if (!cards.length) return;
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var ticking = false;
-  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
-  function update() {
-    ticking = false;
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    for (var i = 0; i < cards.length; i++) {
-      var c = cards[i], r = c.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > vh + 200) continue;
-      var e = clamp((vh - r.top) / (r.height * 0.85)); e = 1 - Math.pow(1 - e, 3);
-      var p = clamp((vh - r.top) / (vh + r.height));
-      var tx = 0, ty = 0, rot = 0, sc = 1, op = 1, k = c.getAttribute("data-perso");
-      if (k === "80s") { ty = (1 - e) * 55; rot = (p - 0.5) * 16 - (1 - e) * 10; sc = 0.9 + 0.1 * e; }          /* il se balance */
-      else if (k === "gav") { tx = (1 - e) * 90; ty = (p - 0.5) * -10; rot = (1 - e) * 6; sc = 0.94 + 0.06 * e; } /* il entre par la droite */
-      else if (k === "psy") { ty = (1 - e) * 80 + (p - 0.5) * -6; rot = (p - 0.5) * -5; sc = 0.95 + 0.05 * e; op = 0.35 + 0.65 * e; } /* elle monte lentement */
-      c.style.setProperty("--tx", tx.toFixed(1) + "px");
-      c.style.setProperty("--ty", ty.toFixed(1) + "px");
-      c.style.setProperty("--rot", rot.toFixed(2) + "deg");
-      c.style.setProperty("--sc", sc.toFixed(3));
-      c.style.setProperty("--op", op.toFixed(2));
-    }
-  }
-  function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(update); } }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
-  update();
-})();
-</script>
 </body>
 </html>
