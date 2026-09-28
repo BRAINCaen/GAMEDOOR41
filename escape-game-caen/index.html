@@ -130,8 +130,10 @@
       background:
         radial-gradient(110% 85% at 88% 100%, var(--room-glow) 0%, transparent 62%),
         linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(12,8,0,0.92) 72%);
-      border:1px solid rgba(255,255,255,0.09);
+      /* Contour et halo à la couleur de la salle affichés en permanence (sur téléphone, il n'y a pas de survol) */
+      border:1px solid var(--room);
       border-radius:18px;
+      box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 34px var(--room-glow);
       isolation:isolate;
       transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
     }
@@ -140,8 +142,7 @@
     .exp-orient-card.exp-room--psy { --room:#E0243C; --room-bg:linear-gradient(90deg, #B3122B 0%, #6E0A1A 100%); --room-glow:rgba(224,36,60,0.36); }
     .exp-orient-card:hover, .exp-orient-card:focus-visible {
       transform:translateY(-4px);
-      border-color:var(--room);
-      box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 34px var(--room-glow);
+      box-shadow:0 22px 46px rgba(0,0,0,0.5), 0 0 46px var(--room-glow);
     }
     .exp-orient-card:focus-visible { outline:2px solid var(--room); outline-offset:3px; }
     /* Voile sombre derrière le texte (en bas à gauche) pour le garder lisible devant le personnage.
@@ -206,12 +207,19 @@
       .exp-orient-card { min-height:188px; padding:16px 16px 16px; border-radius:16px; }
       .exp-orient-perso { clip-path:inset(-60% 0 0 0 round 0 0 16px 16px); }
       .exp-orient-perso picture { height:132%; right:-3%; }
-      .exp-room--gav .exp-orient-perso picture { right:4%; }
-      /* Sur téléphone, la patiente reste à droite comme les autres (le bouton est trop loin pour ses cheveux) */
-      .exp-room--psy .exp-orient-perso picture { left:auto; right:-3%; }
+      /* Policier et patiente plus grands et descendus : plus visibles sur téléphone. Chez le policier, le bas de
+         l'avant-bras gauche (coupé par la photo) passe sous la carte au lieu d'apparaître tronqué. */
+      .exp-room--gav .exp-orient-perso picture { height:175%; bottom:-50%; right:2%; }
+      /* La patiente reste à droite comme les autres (le bouton est trop loin pour ses cheveux) */
+      .exp-room--psy .exp-orient-perso picture { height:165%; bottom:-41%; left:auto; right:-3%; }
       .exp-orient-text { max-width:58%; gap:12px; }
       .exp-orient-q { font-size:1.2rem; }
       .exp-orient-cta { font-size:15px; padding:9px 14px; }
+    }
+    /* Petits téléphones : la question du policier passe à la ligne plus tôt pour ne pas buter sur l'écusson POLICE */
+    @media (max-width: 380px) {
+      .exp-room--gav .exp-orient-perso picture { right:-4%; }
+      .exp-room--gav .exp-orient-text { max-width:50%; }
     }
     @media (prefers-reduced-motion: reduce) {
       .exp-orient-card, .exp-orient-perso picture, .exp-orient-cta, .exp-orient-cta .arrow { transition:none; }
@@ -622,8 +630,8 @@
         <a href="#in-prison" class="exp-orient-card exp-room--gav" data-perso="gav">
           <span class="exp-orient-perso" aria-hidden="true">
             <picture>
-              <source type="image/avif" srcset="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-400w.avif 400w, /img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.avif 720w" sizes="(max-width: 760px) 190px, 270px">
-              <source type="image/webp" srcset="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-400w.webp 400w, /img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.webp 720w" sizes="(max-width: 760px) 190px, 270px">
+              <source type="image/avif" srcset="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-400w.avif 400w, /img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.avif 720w" sizes="(max-width: 760px) 220px, 270px">
+              <source type="image/webp" srcset="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-400w.webp 400w, /img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.webp 720w" sizes="(max-width: 760px) 220px, 270px">
               <img src="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.png" alt="" width="720" height="1091" loading="lazy" decoding="async">
             </picture>
           </span>
@@ -635,15 +643,15 @@
         <a href="#psychiatric" class="exp-orient-card exp-room--psy" data-perso="psy">
           <span class="exp-orient-perso" aria-hidden="true">
             <picture>
-              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.avif 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.avif 720w" sizes="(max-width: 760px) 170px, 230px">
-              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.webp 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.webp 720w" sizes="(max-width: 760px) 170px, 230px">
+              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.avif 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.avif 720w" sizes="(max-width: 760px) 195px, 230px">
+              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.webp 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.webp 720w" sizes="(max-width: 760px) 195px, 230px">
               <img src="/img/escape/personnage-psychiatric-patiente-camisole-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
             </picture>
           </span>
           <span class="exp-orient-perso exp-orient-perso--avant" aria-hidden="true">
             <picture>
-              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.avif 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.avif 720w" sizes="(max-width: 760px) 170px, 230px">
-              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.webp 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.webp 720w" sizes="(max-width: 760px) 170px, 230px">
+              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.avif 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.avif 720w" sizes="(max-width: 760px) 195px, 230px">
+              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.webp 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.webp 720w" sizes="(max-width: 760px) 195px, 230px">
               <img src="/img/escape/personnage-psychiatric-cheveux-premier-plan-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
             </picture>
           </span>
