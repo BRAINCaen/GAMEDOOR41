@@ -144,11 +144,13 @@
       box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 34px var(--room-glow);
     }
     .exp-orient-card:focus-visible { outline:2px solid var(--room); outline-offset:3px; }
-    /* Voile à gauche pour garder le texte lisible devant le personnage */
+    /* Voile sombre derrière le texte (en bas à gauche) pour le garder lisible devant le personnage.
+       Transparent en haut de la carte : sinon il assombrit le personnage jusqu'au bord et la partie
+       qui dépasse au-dessus reste claire, avec une démarcation nette. */
     .exp-orient-card::after {
       content:''; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
-      background:linear-gradient(90deg, rgba(12,8,0,0.82) 0%, rgba(12,8,0,0.45) 48%, transparent 78%),
-                 linear-gradient(0deg, rgba(12,8,0,0.7) 0%, transparent 45%);
+      background:radial-gradient(140% 110% at 0% 100%, rgba(12,8,0,0.85) 0%, rgba(12,8,0,0.55) 38%, transparent 68%),
+                 linear-gradient(0deg, rgba(12,8,0,0.55) 0%, transparent 35%);
     }
     .exp-orient-perso {
       position:absolute; inset:0; z-index:0; pointer-events:none;
@@ -174,6 +176,13 @@
       -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 9%, #000 97%, transparent 100%);
       mask-image:linear-gradient(90deg, transparent 0, #000 9%, #000 97%, transparent 100%);
     }
+    /* Patiente : ses cheveux (2e calque --avant, calé sur le personnage) passent devant le bouton, la question
+       reste devant eux. Placée à distance fixe du bord gauche : les cheveux tombent sur la flèche quelle que soit la largeur. */
+    .exp-room--psy .exp-orient-perso picture { right:auto; left:70px; }
+    .exp-orient-perso--avant { z-index:5; }
+    .exp-room--psy .exp-orient-text { z-index:auto; }
+    .exp-room--psy .exp-orient-q { position:relative; z-index:6; }
+    .exp-room--psy .exp-orient-cta { position:relative; z-index:2; }
     .exp-orient-card:hover .exp-orient-perso picture { transform:translateY(-8px) scale(1.04); }
     .exp-orient-text {
       position:relative; z-index:2;
@@ -202,6 +211,7 @@
       .exp-orient-perso { clip-path:inset(-60% 0 0 0 round 0 0 16px 16px); }
       .exp-orient-perso picture { height:132%; right:-3%; }
       .exp-room--gav .exp-orient-perso picture { right:4%; }
+      .exp-room--psy .exp-orient-perso picture { height:145%; bottom:-15%; left:86px; }
       .exp-orient-text { max-width:58%; gap:12px; }
       .exp-orient-q { font-size:1.2rem; }
       .exp-orient-cta { font-size:15px; padding:9px 14px; }
@@ -628,9 +638,16 @@
         <a href="#psychiatric" class="exp-orient-card exp-room--psy" data-perso="psy">
           <span class="exp-orient-perso" aria-hidden="true">
             <picture>
-              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-400w.avif 400w, /img/escape/personnage-psychiatric-720w.avif 720w" sizes="(max-width: 760px) 190px, 270px">
-              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-400w.webp 400w, /img/escape/personnage-psychiatric-720w.webp 720w" sizes="(max-width: 760px) 190px, 270px">
-              <img src="/img/escape/personnage-psychiatric-720w.png" alt="" width="720" height="999" loading="lazy" decoding="async">
+              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.avif 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.avif 720w" sizes="(max-width: 760px) 170px, 230px">
+              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.webp 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.webp 720w" sizes="(max-width: 760px) 170px, 230px">
+              <img src="/img/escape/personnage-psychiatric-patiente-camisole-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
+            </picture>
+          </span>
+          <span class="exp-orient-perso exp-orient-perso--avant" aria-hidden="true">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.avif 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.avif 720w" sizes="(max-width: 760px) 170px, 230px">
+              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.webp 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.webp 720w" sizes="(max-width: 760px) 170px, 230px">
+              <img src="/img/escape/personnage-psychiatric-cheveux-premier-plan-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
             </picture>
           </span>
           <span class="exp-orient-text">
