@@ -900,7 +900,7 @@
       <div class="section-head">
         <p class="meta">Entre deux activités ou en clôture</p>
         <h2><span class="num">02</span>Le déjeuner</h2>
-        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis, 20 personnes maximum</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
+        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis, 20 personnes maximum</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
       </div>
       <div class="froid-notice" role="note">
         <span class="froid-notice-icon" aria-hidden="true">❄</span>
@@ -1074,7 +1074,8 @@
           }
         }
       ],
-      // Carte Été 2026 de Grandsire Traiteur (brochure « Menu-ete-2026-1.pdf », prix HT inchangés).
+      // Carte de Grandsire Traiteur : plateaux-repas AUTOMNE 2026 (mail de Franck du 29/09/2026) ; wraps, pasta box, box et
+      // plateaux cocktail : brochure Été 2026 (« Menu-ete-2026-1.pdf ») en attendant la brochure d'automne. Prix HT Grandsire.
       // Uniquement les recettes FROIDES : pas de pasta box « à réchauffer », pas de formule cocktail avec pièces chaudes,
       // pas de supplément « plat chaud » (rien ne peut être réchauffé sur place).
       dejeuner: [
@@ -1115,41 +1116,43 @@
             fournisseur: 'Grandsire Traiteur'
           }
         },
+        // Plateaux-repas AUTOMNE 2026 : composition envoyée par Franck (Grandsire) le 29/09/2026, en attendant la brochure.
+        // Prix : Franck n'en a pas donné ; on garde les tarifs 2026 de chaque gamme (identiques au printemps et à l'été).
         {
-          id: 'dej-cassis', name: 'Plateau Cassis', tag: 'Confort · Essentiel',
+          id: 'dej-figue', name: 'Plateau Figue', tag: 'Confort · Essentiel',
           price: 16.50, tva: 10, unit: '/ pers.',
           subtitle: '4 services · gamme essentielle',
-          includes: ['Entrée au choix (salade grecque, terrine de poisson…)', 'Plat froid au choix (poke bowl saumon, poulet curry…)', 'Fromage au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (terrine de poissons, quiche au butternut…)', 'Plat froid au choix (poulet croustillant, saumon au citron vert…)', 'Fromage', 'Dessert au choix'],
           info: {
-            details: '<p>Le plateau-repas essentiel de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            details: '<p>Le plateau-repas essentiel de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
-              '<strong>Entrée au choix</strong> : salade grecque et feta · tomates mozzarella et pesto, croûtons à l\'ail · terrine de poisson et légumes grillés, sauce tartare · salade d\'abricots rôtis au chèvre et romarin · entrée du jour',
-              '<strong>Plat froid au choix</strong> : filet de rouget rôti, penne aux tomates confites · poke bowl de saumon, riz et légumes · filet de poulet au curry, salade de riz aux petits légumes · émincé de bœuf sauce barbecue, salade mexicaine · plat du jour',
-              '<strong>Fromage au choix</strong> : camembert, pont-l\'évêque, livarot, emmental ou chèvre',
-              '<strong>Dessert au choix</strong> : tartelette fruit de saison et ganache chocolat blanc · feuilleté crumble abricot amande · brownie chocolat noix · panacotta au lait de soja et coulis · dessert du jour',
+              '<strong>Entrée au choix</strong> : terrine de poissons aux légumes d\'automne, coulis balsamique · terrine de campagne, chutney de tomates et échalotes · quiche au butternut rôti, guacamole et crème de parmesan · quiche à la sardine, poireaux et tomme de Normandie · entrée du jour',
+              '<strong>Plat froid au choix</strong> : filet de poulet croustillant (cacahuètes, sarrasin), penne et potimarron rôti · filet de maquereau, salade de riz aux légumes de saison · émincé de bœuf laqué au soja et citronnelle, nouilles chinoises et légumes · saumon au citron vert et quinoa au curry, petits légumes · plat du jour',
+              '<strong>Fromage</strong>',
+              '<strong>Dessert au choix</strong> : clafoutis banane · tarte fine cannelle, caramel · riz au lait, coulis du moment · sablé myrtille, tonka (végan) · dessert du jour',
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
-            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            allergenes: 'Selon les recettes choisies : gluten, arachide (poulet aux cacahuètes), poissons, soja, lait, œufs, sulfites (coulis balsamique) possibles. Signalez allergies et régimes dans votre demande.',
             min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
-          id: 'dej-fraise', name: 'Plateau Fraise', tag: 'Confort · Premium',
+          id: 'dej-marron', name: 'Plateau Marron', tag: 'Confort · Premium',
           price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
           subtitle: '4 services · gamme premium',
-          includes: ['Entrée au choix (panacotta de chèvre, terrine de poulet…)', 'Plat froid au choix (pavé de saumon, rôti de bœuf…)', 'Fromage au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (burrata, saumon fumé…)', 'Plat froid au choix (volaille rôtie au miel, dorade royale…)', 'Fromage', 'Dessert au choix'],
           info: {
-            details: '<p>Le plateau premium de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            details: '<p>Le plateau premium de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
-              '<strong>Entrée au choix</strong> : panacotta de chèvre et tomates confites, crumble pistache · terrine de poulet et petits légumes · penne au salami et légumes, billes de mozzarella · jambon rôti aux herbes et tapenade d\'olive · entrée du jour',
-              '<strong>Plat froid au choix</strong> : pavé de saumon, quinoa de légumes, vinaigrette balsamique et fraises · poke bowl de lieu noir, gambas et légumes · poulet en croûte de grana padano, tagliatelles aux légumes provençaux · rôti de bœuf, salade de pommes de terre, béarnaise · plat du jour',
-              '<strong>Fromage au choix</strong> : camembert, pont-l\'évêque, livarot, emmental ou chèvre',
-              '<strong>Dessert au choix</strong> : clafoutis fraise · tiramisu aux fruits rouges · passion chocolat · tartelette chocolat cerise · dessert du jour',
+              '<strong>Entrée au choix</strong> : quiche au potiron et fourme d\'Ambert · terrine de lentilles et légumes, coulis balsamique · burrata, crémeux de butternut au parmesan et croûtons à l\'ail · saumon fumé et houmous de butternut au sésame · entrée du jour',
+              '<strong>Plat froid au choix</strong> : filet de volaille rôti au miel, salade de penne au potiron et poire · lieu noir rôti au beurre noisette, légumes d\'automne et crémeux de patate douce · émincé de veau, salade d\'épeautre aux légumes et coulis de mâche · dorade royale aux noix, blé et crème de potiron · plat du jour',
+              '<strong>Fromage</strong>',
+              '<strong>Dessert au choix</strong> : feuilleté amandes, banane, chocolat · crumble pommes · cookie garni chocolat, pécan, praliné · riz au lait vanille, coulis mangue (végan) · dessert du jour',
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
-            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            allergenes: 'Selon les recettes choisies : gluten, poissons, sésame, lait, œufs, fruits à coque (noix, amandes, noisettes, pécan), sulfites (coulis balsamique) possibles. Signalez allergies et régimes dans votre demande.',
             min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
@@ -1159,37 +1162,37 @@
           id: 'dej-vege', name: 'Plateau Végétarien', tag: 'Confort · Végétarien',
           price: 19.00, tva: 10, unit: '/ pers.',
           subtitle: '4 services · végétarien',
-          includes: ['Entrée au choix (bruschetta, crudités…)', 'Plat froid au choix (steak végétal, falafels…)', 'Fromage ou salade au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (houmous, taboulé…)', 'Plat froid au choix (lentilles corail, focaccia…)', 'Fromage', 'Dessert au choix (dont 3 végans)'],
           info: {
-            details: '<p>Le plateau-repas végétarien de la carte de Grandsire Traiteur : entrée, plat, fromage ou salade et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            details: '<p>Le plateau-repas végétarien de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
-              '<strong>Entrée au choix</strong> : bruschetta de tapenade, tomates confites, roquette et parmesan · assiette de crudités · salade de pâtes, poivrons grillés et artichaut · terrine de chèvre et tomates confites, coulis de poivrons jaunes · entrée du jour',
-              '<strong>Plat froid au choix</strong> : steak végétal, salade de riz aux petits légumes · wrap aux légumes tex-mex · salade de riz au curry, falafels et sauce pita · trompe-l\'œil de Saint-Jacques (champignons) sur lit de légumes · plat du jour',
-              '<strong>Fromage ou salade au choix</strong> : fromage normand sur salade croquante · salade de saison aux noix, fines herbes et chèvre · bouquet du jardinier aux copeaux de parmesan',
-              '<strong>Dessert au choix</strong> : panacotta au lait de soja et coulis · clafoutis fraise · salade de fruits de saison · dessert du jour',
+              '<strong>Entrée au choix</strong> : tartine de houmous, citron confit et cumin, mini pita toastée · taboulé de boulgour, tomates, concombres et feta · wrap d\'épeautre, potimarron grillé, oignons rouges en pickles · entrée du jour',
+              '<strong>Plat froid au choix</strong> : salade de lentilles corail, carottes rôties au miel, noisette et vinaigrette · focaccia au caviar d\'aubergine, tzatziki · plat du jour',
+              '<strong>Fromage</strong>',
+              '<strong>Dessert au choix</strong> : riz au lait vanille, coulis mangue (végan) · tiramisu coco, passion (végan) · sablé myrtille, tonka (végan) · dessert du jour',
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
-            allergenes: 'Selon les recettes choisies : gluten, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            allergenes: 'Selon les recettes choisies : gluten, sésame, lait, fruits à coque (noisette) possibles. Signalez allergies et régimes dans votre demande.',
             min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
           }
         },
         {
-          id: 'dej-peche', name: 'Plateau Pêche', tag: 'Premium · Gastronomique',
+          id: 'dej-pomme', name: 'Plateau Pomme', tag: 'Premium · Gastronomique',
           price: 24.80, tva: 10, unit: '/ pers.',
           subtitle: '4 services · gastronomique',
-          includes: ['Entrée au choix (tataki de thon, foie gras…)', 'Plat froid au choix (filet de bar, cabillaud…)', 'Fromage au choix', 'Dessert au choix'],
+          includes: ['Entrée au choix (foie gras, trio de Saint-Jacques…)', 'Plat froid au choix (filet de bœuf aux 5 baies, filet de bar…)', 'Fromage', 'Dessert au choix'],
           info: {
-            details: '<p>Le plateau gastronomique de la carte de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat, fromage et dessert) se commande par 4 plateaux minimum.</p>',
+            details: '<p>Le plateau gastronomique de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
             inclus: [
-              '<strong>Entrée au choix</strong> : tataki de thon rouge, légumes croquants, sauce teriyaki · makis de saumon et gambas, sauce soja · foie gras à la vanille, chutney d\'ananas et mangue · terrine de volaille et légumes confits · entrée du jour',
-              '<strong>Plat froid au choix</strong> : filet de bar aux légumes provençaux, sauce vierge · piccata de veau, tagliatelles fraîches, crémeux de mozzarella di buffala · dos de cabillaud rôti au miel, riz aux légumes confits · filet mignon de veau basse température, légumes grillés, aïoli doux · plat du jour',
-              '<strong>Fromage au choix</strong> : camembert, pont-l\'évêque, livarot, emmental ou chèvre',
-              '<strong>Dessert au choix</strong> : salade de fruits de saison · cookie fruits rouges · carpaccio ananas coco · tartelette chocolat myrtille · dessert du jour',
+              '<strong>Entrée au choix</strong> : foie gras de canard et confit d\'échalotes au porto rouge · trio de Saint-Jacques et crémeux de patate douce à l\'orange · tartare de saumon et gambas aux agrumes · entrée du jour',
+              '<strong>Plat froid au choix</strong> : filet de bœuf aux 5 baies, tagliatelles fraîches aux morilles et crème de beaufort · filet de bar rôti, panais et topinambour, sauce vierge · brochette de Saint-Jacques et gambas, risotto aux légumes, noix et copeaux de mimolette · filet de canette, boulgour à la figue et potiron, sauce miel et moutarde · plat du jour',
+              '<strong>Fromage</strong>',
+              '<strong>Dessert au choix</strong> : chocolat citron · moelleux chocolat, cœur Nutella · tiramisu coco, passion (végan) · tartelette croustillante fruit de saison · dessert du jour',
               'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
             ],
-            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, mollusques, lait, œufs, fruits à coque possibles. Signalez allergies et régimes dans votre demande.',
+            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, mollusques, lait, œufs, soja (moelleux cœur Nutella), fruits à coque, moutarde possibles. Signalez allergies et régimes dans votre demande.',
             min: '4 plateaux minimum par composition',
             options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
             fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
@@ -1219,7 +1222,7 @@
           }
         }
       ],
-      // Plateaux cocktail FROIDS de la carte Été 2026 (commandés au plateau, pas à la personne).
+      // Plateaux cocktail FROIDS de la brochure Été 2026, toujours en vigueur (commandés au plateau, pas à la personne).
       // Écartés : « 30 savouris chauds » et formules cocktail 20/22 pièces (pièces chaudes).
       plateauxFroids: {
         title: 'Plateaux cocktail froids · Grandsire Traiteur',
@@ -1320,10 +1323,10 @@
     const DEJEUNER_ICONS = {
       'dej-pouce': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18l-2 8H5z"/><path d="M5 11V7a4 4 0 0 1 8 0v4"/><path d="M11 11V8a4 4 0 0 1 8 0v3"/></svg>',
       'dej-box': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M4 12h16"/></svg>',
-      'dej-cassis': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>',
-      'dej-fraise': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>',
+      'dej-figue': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>',
+      'dej-marron': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>',
       'dej-vege': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/></svg>',
-      'dej-peche': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 6a5 5 0 0 1-10 0z"/><path d="M12 14v6"/><path d="M8 20h8"/></svg>'
+      'dej-pomme': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 6a5 5 0 0 1-10 0z"/><path d="M12 14v6"/><path d="M8 20h8"/></svg>'
     };
 
     function renderDejeunerAccordion() {
