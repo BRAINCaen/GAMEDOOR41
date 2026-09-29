@@ -68,6 +68,11 @@
       -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
     }
     .xp-facts .xp-ico { color:var(--xp-txt); }
+    /* Étiquette de catégorie de chaque carte (Escape Game, Quiz, Death Zone, Events) : en grand, lisible de loin */
+    .xp-bento .brand-badge.escape, .xp-bento .brand-badge.quiz, .xp-bento .brand-badge.action, .xp-bento .brand-badge.events {
+      font-size:clamp(22px, 2vw, 30px); line-height:1; letter-spacing:2px; padding:12px 20px;
+      box-shadow:0 8px 24px rgba(0,0,0,.4);
+    }
 
     /* Escape : texte en haut, les 3 personnages en bas, prix par-dessus leurs jambes */
     .xp-bento .card-escape { justify-content:flex-start; }
@@ -142,6 +147,7 @@
       .xp-events li { flex-direction:row; align-items:center; padding:10px; font-size:15px; }
       .xp-events-ico { width:36px; height:36px; flex-shrink:0; }
       .xp-nouveau { font-size:52px; }
+      .xp-bento .brand-badge.escape, .xp-bento .brand-badge.quiz, .xp-bento .brand-badge.action, .xp-bento .brand-badge.events { font-size:22px; letter-spacing:1.5px; padding:10px 16px; }
     }
   </style>
 
