@@ -45,6 +45,105 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/css/home-v33.css?v=8b0e1533">
+  <style>
+    /* ============================================================
+       « CHOISISSEZ VOTRE EXPÉRIENCE » — chaque carte se comprend en un coup d'œil :
+       les personnages de l'escape, le buzzer du quiz, « Nouveau » pour Death Zone, des pictos pour les événements.
+       ============================================================ */
+    .xp-bento { grid-template-rows:clamp(300px, 38vh, 380px) minmax(250px, auto); }
+    .xp-ico { width:18px; height:18px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+    .card-escape { --xp-txt:#8FA6F2; }
+    .card-quiz   { --xp-txt:#C98BF5; }
+    .card-action { --xp-txt:#FF5A5A; }
+    .card-events { --xp-txt:var(--gd-events); }
+    .xp-kicker {
+      margin:0 0 6px; font-family:var(--gd-font-display); font-size:16px; font-weight:700;
+      letter-spacing:2px; text-transform:uppercase; color:var(--xp-txt); text-shadow:0 1px 8px rgba(0,0,0,.85);
+    }
+    .xp-facts { list-style:none; margin:12px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+    .xp-facts li {
+      display:inline-flex; align-items:center; gap:7px; padding:6px 12px; border-radius:999px;
+      background:rgba(12,8,0,.62); border:1px solid rgba(240,235,226,.18); color:var(--gd-cream);
+      font-size:15px; font-weight:600; line-height:1.2;
+      -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    }
+    .xp-facts .xp-ico { color:var(--xp-txt); }
+
+    /* Escape : texte en haut, les 3 personnages en bas, prix par-dessus leurs jambes */
+    .xp-bento .card-escape { justify-content:flex-start; }
+    .xp-bento .card-escape .visual img { filter:brightness(.4) saturate(1.1) !important; }
+    .xp-head { position:relative; z-index:2; margin-top:14px; }
+    .xp-rooms { list-style:none; margin:12px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:6px; }
+    .xp-rooms li {
+      padding:5px 11px; border-radius:6px; color:#fff;
+      font-family:var(--gd-font-display); font-size:15px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      box-shadow:0 4px 14px rgba(0,0,0,.4);
+    }
+    .xp-room--80s { background:linear-gradient(90deg, #D6197A, #7C3AED); }
+    .xp-room--gav { background:linear-gradient(90deg, #3D5DC0, #2A3F8F); }
+    .xp-room--psy { background:linear-gradient(90deg, #B3122B, #6E0A1A); }
+    .xp-persos {
+      position:absolute; left:0; right:0; bottom:0; height:60%; z-index:1; pointer-events:none;
+      display:flex; justify-content:center; align-items:flex-end;
+    }
+    .xp-persos::after {
+      content:""; position:absolute; left:0; right:0; bottom:0; height:38%; z-index:3;
+      background:linear-gradient(180deg, rgba(12,8,0,0) 0%, rgba(12,8,0,.94) 100%);
+    }
+    .xp-perso { display:block; flex:none; margin:0 -9%; }
+    .xp-perso img { display:block; height:100%; width:auto; max-width:none; filter:drop-shadow(0 10px 18px rgba(0,0,0,.6)); }
+    .xp-perso--80s { height:90%; }
+    .xp-perso--gav { height:100%; position:relative; z-index:2; }
+    .xp-perso--psy { height:94%; }
+    .xp-bottom { position:relative; z-index:3; margin-top:auto; }
+    .xp-bento .card-cta { white-space:nowrap; }
+
+    /* Quiz : la photo du buzzer, assombrie pour le texte */
+    .xp-bento .card-quiz .visual img { filter:brightness(.78) saturate(1.2) !important; }
+
+    /* Death Zone : « Nouveau » en grand */
+    .xp-nouveau {
+      margin:0 0 4px; font-family:var(--gd-font-display); font-weight:900; text-transform:uppercase;
+      font-size:clamp(44px, 4.2vw, 62px); line-height:.9; letter-spacing:-1px;
+      color:#FF3B3B; text-shadow:0 0 28px rgba(190,27,27,.65);
+    }
+    .xp-bento .card-action .card-title { font-size:clamp(24px, 2vw, 30px); }
+    .xp-bento .card-action .viz-action .target { width:72%; }
+
+    /* Séminaires & événements : 4 pictos */
+    .xp-bento .card-events .card-title { max-width:none; }
+    .xp-events { list-style:none; margin:14px 0 0; padding:0; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:10px; }
+    .xp-events li {
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:12px; border-radius:12px;
+      background:rgba(255,215,64,.07); border:1px solid rgba(255,215,64,.24); color:var(--gd-cream);
+      font-family:var(--gd-font-display); font-size:16px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; line-height:1.1;
+    }
+    .xp-events-ico {
+      display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:50%;
+      background:var(--gd-events); color:var(--gd-black); box-shadow:0 0 18px rgba(255,215,64,.35);
+    }
+    .xp-events .xp-ico { width:22px; height:22px; }
+
+    @media (max-width: 980px) {
+      .xp-bento { grid-template-rows:auto; }
+      .xp-bento .card-escape { min-height:500px; }
+      .xp-bento .card-quiz, .xp-bento .card-action { min-height:300px; }
+    }
+    /* Téléphone : une carte par ligne, dans l'ordre escape → quiz → nouveau → événements */
+    @media (max-width: 720px) {
+      .xp-bento { grid-template-columns:1fr; }
+      .xp-bento .card-escape, .xp-bento .card-quiz, .xp-bento .card-action, .xp-bento .card-events { grid-column:1; grid-row:auto; }
+      .xp-bento .card-escape { min-height:600px; }
+      .xp-persos { height:50%; }
+      .xp-perso { margin:0 -10%; }
+      .xp-bento .card-quiz { min-height:320px; }
+      .xp-bento .card-action { min-height:240px; }
+      .xp-events { grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px; }
+      .xp-events li { flex-direction:row; align-items:center; padding:10px; font-size:15px; }
+      .xp-events-ico { width:36px; height:36px; flex-shrink:0; }
+      .xp-nouveau { font-size:52px; }
+    }
+  </style>
 
   <!-- Schema.org — LocalBusiness / EntertainmentBusiness -->
   <script type="application/ld+json">
@@ -302,10 +401,21 @@
       </div>
     </div>
 
-    <!-- Bento -->
-    <div class="bento" id="bento">
+    <!-- Icônes des cartes : mêmes tracés que /img/icons/, en ligne pour prendre la couleur de chaque univers -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <symbol id="xp-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+      <symbol id="xp-i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M17 3.13a4 4 0 0 1 0 7.75"/></symbol>
+      <symbol id="xp-i-mic" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></symbol>
+      <symbol id="xp-i-building" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></symbol>
+      <symbol id="xp-i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+      <symbol id="xp-i-rings" viewBox="0 0 24 24"><circle cx="9" cy="14" r="5"/><circle cx="15" cy="14" r="5"/></symbol>
+      <symbol id="xp-i-cake" viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s1-2 4-2 5 2 8 2 4-2 4-2"/><path d="M2 21h20"/><line x1="12" y1="4" x2="12" y2="10"/><polygon points="12,2 13,4 12,6 11,4"/></symbol>
+    </svg>
 
-      <!-- Card Escape — Psychiatric (photo iconique) -->
+    <!-- Bento : chaque carte se comprend en un coup d'œil (un visuel fort + un mot + 2-3 infos) -->
+    <div class="bento xp-bento" id="bento">
+
+      <!-- Card Escape — les personnages des 3 salles -->
       <article class="card card-escape" data-card="escape" id="escape">
         <a href="/escape-game-caen/" class="card-link" aria-label="Découvrir nos 3 salles d'escape game"></a>
         <div class="visual" aria-hidden="true" style="background: #0c0800;">
@@ -315,34 +425,60 @@
           <img width="1024" height="1360" src="/img/escape/garde-a-vue-porte-1024w.jpg" srcset="/img/escape/garde-a-vue-porte-480w.jpg 480w, /img/escape/garde-a-vue-porte-768w.jpg 768w, /img/escape/garde-a-vue-porte-1024w.jpg 1024w, /img/escape/garde-a-vue-porte.jpg 1500w" sizes="(max-width: 980px) 100vw, 60vw" alt="Porte de la salle Garde à Vue — escape game policier à Caen" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.7) saturate(1.05) contrast(1.05);">
         </picture>
         </div>
+        <div class="xp-persos" aria-hidden="true">
+          <picture class="xp-perso xp-perso--80s">
+            <source type="image/avif" srcset="/img/escape/personnage-back-to-the-80s-400w.avif 400w, /img/escape/personnage-back-to-the-80s-720w.avif 720w" sizes="(max-width: 720px) 190px, 300px">
+            <source type="image/webp" srcset="/img/escape/personnage-back-to-the-80s-400w.webp 400w, /img/escape/personnage-back-to-the-80s-720w.webp 720w" sizes="(max-width: 720px) 190px, 300px">
+            <img src="/img/escape/personnage-back-to-the-80s-720w.png" alt="" width="720" height="926" loading="lazy" decoding="async">
+          </picture>
+          <picture class="xp-perso xp-perso--gav">
+            <source type="image/avif" srcset="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-400w.avif 400w, /img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.avif 720w" sizes="(max-width: 720px) 190px, 300px">
+            <source type="image/webp" srcset="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-400w.webp 400w, /img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.webp 720w" sizes="(max-width: 720px) 190px, 300px">
+            <img src="/img/escape/personnage-garde-a-vue-policier-menottes-tendues-720w.png" alt="" width="720" height="1091" loading="lazy" decoding="async">
+          </picture>
+          <picture class="xp-perso xp-perso--psy">
+            <source type="image/avif" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.avif 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.avif 720w" sizes="(max-width: 720px) 190px, 300px">
+            <source type="image/webp" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.webp 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.webp 720w" sizes="(max-width: 720px) 190px, 300px">
+            <img src="/img/escape/personnage-psychiatric-patiente-camisole-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
+          </picture>
+        </div>
         <div class="num">01</div>
 
         <div class="meta">
           <span class="brand-badge escape">Escape Game</span>
           <span class="brand-badge actor">Game master acteur</span>
         </div>
-        <div class="body" style="margin-top:auto;">
-          <h2 class="card-title">Psychiatric<br>Garde à Vue<br>Back to the 80's</h2>
-          <p class="card-sub">Trois salles immersives, game masters acteurs. 60 minutes pour sortir.</p>
-          <div class="card-bottom">
-            <div class="card-price">
-              dès 24€
-              <small>par joueur · de 2 à 6</small>
-            </div>
-            <span class="card-cta">Réserver</span>
+        <div class="body xp-head">
+          <p class="xp-kicker">3 salles · 3 univers</p>
+          <h2 class="card-title">Escape game</h2>
+          <ul class="xp-rooms" aria-label="Nos 3 salles">
+            <li class="xp-room--80s">Back to the 80's</li>
+            <li class="xp-room--gav">Garde à Vue</li>
+            <li class="xp-room--psy">Psychiatric</li>
+          </ul>
+          <ul class="xp-facts">
+            <li><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-clock"/></svg>60 min</li>
+            <li><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-users"/></svg>2 à 6 joueurs</li>
+          </ul>
+        </div>
+        <div class="card-bottom xp-bottom">
+          <div class="card-price">
+            dès 24€
+            <small>par joueur</small>
           </div>
+          <span class="card-cta">Réserver</span>
         </div>
       </article>
 
-      <!-- Card Quiz — Buzzers premier plan -->
+      <!-- Card Quiz — main sur le buzzer -->
       <article class="card card-quiz" data-card="quiz" id="quiz">
         <a href="/quiz-game-caen/" class="card-link" aria-label="Découvrir le quiz Buzz Your Brain"></a>
         <div class="visual" aria-hidden="true" style="background: #0c0800;">
           <picture>
-          <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="(max-width: 980px) 100vw, 30vw">
-          <source type="image/webp" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.webp 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.webp 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.webp 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.webp 1400w" sizes="(max-width: 980px) 100vw, 30vw">
-          <img width="1024" height="1360" src="/img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="(max-width: 980px) 100vw, 30vw" alt="Plateau du quiz Buzz Your Brain — salle quiz GAMEDOOR·41 Caen" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.85) saturate(1.1);">
-        </picture>
+            <source type="image/avif" srcset="/img/quiz/buzzer-action-480w.avif 480w, /img/quiz/buzzer-action-768w.avif 768w, /img/quiz/buzzer-action-1024w.avif 1024w" sizes="(max-width: 720px) 100vw, (max-width: 980px) 50vw, 30vw">
+            <source type="image/webp" srcset="/img/quiz/buzzer-action-480w.webp 480w, /img/quiz/buzzer-action-768w.webp 768w, /img/quiz/buzzer-action-1024w.webp 1024w" sizes="(max-width: 720px) 100vw, (max-width: 980px) 50vw, 30vw">
+            <img width="1024" height="772" src="/img/quiz/buzzer-action-1024w.jpg" srcset="/img/quiz/buzzer-action-480w.jpg 480w, /img/quiz/buzzer-action-768w.jpg 768w, /img/quiz/buzzer-action-1024w.jpg 1024w" sizes="(max-width: 720px) 100vw, (max-width: 980px) 50vw, 30vw" alt="Main qui frappe un buzzer lumineux sur le plateau du quiz Buzz Your Brain" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:35% 55%;">
+          </picture>
         </div>
         <div class="num">02</div>
 
@@ -350,7 +486,12 @@
           <span class="brand-badge quiz">Quiz</span>
         </div>
         <div class="body" style="margin-top:auto;">
+          <p class="xp-kicker">Jeu télé grandeur nature</p>
           <h2 class="card-title">Buzz<br>Your Brain</h2>
+          <ul class="xp-facts">
+            <li><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-mic"/></svg>4 à 16 candidats</li>
+            <li><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-clock"/></svg>60 min</li>
+          </ul>
           <div class="card-bottom">
             <div class="card-price">
               dès 15€
@@ -374,15 +515,15 @@
           <span class="soon-badge">Bientôt</span>
         </div>
         <div class="body" style="margin-top:auto;">
-          <h2 class="card-title">Death<br>Zone</h2>
-          <p class="card-sub">Nouvelles activités à venir.</p>
-          <span class="card-cta" style="margin-top:14px;display:inline-block;">En savoir plus</span>
+          <p class="xp-nouveau">Nouveau</p>
+          <h2 class="card-title">Death Zone</h2>
+          <p class="card-sub">Notre prochain action game, bientôt sous le même toit.</p>
         </div>
       </article>
 
-      <!-- Card Events -->
+      <!-- Card Séminaires & événements -->
       <article class="card card-events" data-card="events" id="events">
-        <a href="/team-building-caen/" class="card-link" aria-label="Organiser votre événement chez GAMEDOOR·41"></a>
+        <a href="/team-building-caen/" class="card-link" aria-label="Organiser votre séminaire ou votre événement chez GAMEDOOR·41"></a>
         <div class="visual viz viz-events" aria-hidden="true">
           <div class="ring"></div>
         </div>
@@ -392,18 +533,24 @@
           <span class="brand-badge events">Events</span>
         </div>
         <div class="body" style="margin-top:auto;">
-          <h2 class="card-title" style="max-width:18ch;">Tous vos événements.</h2>
-          <p class="card-sub">Séminaires · EVJF · EVG · Anniversaires · Team buildings.</p>
+          <h2 class="card-title">Séminaires &amp; événements</h2>
+          <ul class="xp-events">
+            <li><span class="xp-events-ico"><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-building"/></svg></span>Séminaires</li>
+            <li><span class="xp-events-ico"><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-trophy"/></svg></span>Team building</li>
+            <li><span class="xp-events-ico"><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-rings"/></svg></span>EVJF · EVG</li>
+            <li><span class="xp-events-ico"><svg class="xp-ico" aria-hidden="true"><use href="#xp-i-cake"/></svg></span>Anniversaires</li>
+          </ul>
           <div class="card-bottom">
-            <div class="card-price" style="font-size:16px;">
+            <div class="card-price" style="font-size:18px;">
               Sur devis
               <small>jusqu'à 46 personnes</small>
             </div>
-            <span class="card-cta">Demander</span>
+            <span class="card-cta">Demander un devis</span>
           </div>
         </div>
       </article>
 
+    </div>
     </div>
   </div>
 </section>
