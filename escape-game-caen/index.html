@@ -226,6 +226,131 @@
       .exp-orient-card:hover, .exp-orient-card:hover .exp-orient-perso picture { transform:none; }
     }
 
+    /* ============================================================
+       COMPARATIF DES 3 SALLES — bandeau « commun aux 3 » + une carte par salle.
+       Ordinateur : 3 cartes côte à côte, lignes alignées d'une carte à l'autre (subgrid).
+       Téléphone : cartes qui défilent au doigt, une par une, avec le bord de la suivante visible.
+       ============================================================ */
+    .cmp-ico { width:18px; height:18px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    .cmp-atouts {
+      list-style:none; margin:0 0 26px; padding:0;
+      display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:12px;
+    }
+    .cmp-atouts li {
+      display:flex; align-items:center; gap:12px;
+      padding:14px 16px; border-radius:14px;
+      background:linear-gradient(135deg, rgba(255,107,0,0.12), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,107,0,0.28);
+      color:var(--grey-light); font-size:0.95rem; line-height:1.25;
+    }
+    .cmp-atouts .cmp-ico { width:26px; height:26px; color:var(--orange); }
+    .cmp-atouts strong { color:var(--white); font-weight:700; }
+    .cmp-hint { display:none; }
+
+    .cmp-grid {
+      display:grid; grid-template-columns:repeat(3, minmax(0, 1fr));
+      grid-template-rows:auto repeat(5, auto) auto; column-gap:18px; row-gap:0;
+    }
+    .cmp-card {
+      --c:#3D5DC0; --c-txt:#8FA6F2; --c-glow:rgba(61,93,192,0.35); --c-bg:linear-gradient(90deg, #3D5DC0 0%, #2A3F8F 100%);
+      grid-row:span 7; display:grid; grid-template-rows:subgrid;
+      position:relative; overflow:hidden; border-radius:18px;
+      background:linear-gradient(180deg, #171717 0%, #0f0d0a 100%);
+      border:1px solid color-mix(in srgb, var(--c) 60%, transparent);
+      box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 30px var(--c-glow);
+    }
+    .cmp-card.cmp--80s { --c:#FF3EA5; --c-txt:#FF6CBC; --c-glow:rgba(255,62,165,0.28); --c-bg:linear-gradient(90deg, #D6197A 0%, #7C3AED 100%); }
+    .cmp-card.cmp--psy { --c:#E0243C; --c-txt:#FF5A6B; --c-glow:rgba(224,36,60,0.3); --c-bg:linear-gradient(90deg, #B3122B 0%, #6E0A1A 100%); }
+
+    .cmp-head { position:relative; min-height:190px; display:flex; flex-direction:column; justify-content:flex-end; padding:18px 20px 16px; isolation:isolate; }
+    .cmp-head picture, .cmp-head img { position:absolute; inset:0; width:100%; height:100%; z-index:-2; }
+    .cmp-head img { object-fit:cover; object-position:center 40%; }
+    .cmp-head::after {
+      content:''; position:absolute; inset:0; z-index:-1;
+      background:linear-gradient(180deg, rgba(12,8,0,0.05) 0%, rgba(12,8,0,0.55) 55%, #151412 100%),
+                 linear-gradient(135deg, color-mix(in srgb, var(--c) 45%, transparent) 0%, transparent 60%);
+    }
+    .cmp-num { margin:0 0 2px; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:13px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--c-txt); text-shadow:0 1px 8px rgba(0,0,0,0.8); }
+    .cmp-title h3 { margin:0; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:1.9rem; font-weight:700; line-height:1; text-transform:uppercase; letter-spacing:.02em; }
+    .cmp-title h3 a { color:#fff; text-decoration:none; text-shadow:0 2px 14px rgba(0,0,0,0.85); }
+    .cmp-univers { margin:6px 0 0; color:var(--gd-cream); font-size:0.95rem; text-shadow:0 1px 8px rgba(0,0,0,0.9); }
+    .cmp-badge {
+      position:absolute; top:14px; right:14px; z-index:1;
+      display:inline-flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px;
+      background:var(--orange); color:#fff; box-shadow:0 6px 18px rgba(255,107,0,0.45);
+      font-family:'Barlow Condensed','Oswald',sans-serif; font-size:14px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    }
+    .cmp-badge .cmp-ico { width:16px; height:16px; }
+
+    .cmp-list { grid-row:span 5; display:grid; grid-template-rows:subgrid; margin:0; }
+    .cmp-row { padding:13px 20px; border-top:1px solid rgba(255,255,255,0.07); }
+    .cmp-row dt {
+      display:flex; align-items:center; gap:8px; margin:0 0 5px;
+      font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--grey);
+    }
+    .cmp-row dt .cmp-ico { color:var(--c-txt); }
+    .cmp-row dd { margin:0; color:var(--grey-light); line-height:1.4; }
+    .cmp-big { font-family:'Barlow Condensed','Oswald',sans-serif; font-size:1.75rem; font-weight:700; line-height:1; color:var(--c-txt); margin-right:4px; }
+    .cmp-chip {
+      display:inline-flex; align-items:center; justify-content:center; min-width:30px; height:30px; padding:0 8px; margin:0 2px;
+      border-radius:8px; background:color-mix(in srgb, var(--c) 22%, transparent); border:1px solid color-mix(in srgb, var(--c) 55%, transparent);
+      color:#fff; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:1.15rem; font-weight:700;
+    }
+    .cmp-duel { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:0.9rem; color:var(--grey-light); }
+    .cmp-vs {
+      display:inline-flex; align-items:center; justify-content:center; padding:2px 7px; border-radius:6px;
+      background:var(--c-bg); color:#fff; font-family:'Barlow Condensed','Oswald',sans-serif; font-size:13px; font-weight:700; letter-spacing:.08em;
+    }
+    .cmp-ideale dd {
+      padding:10px 12px; border-radius:10px; border-left:3px solid var(--c);
+      background:color-mix(in srgb, var(--c) 12%, transparent); color:var(--white); font-size:0.95rem;
+    }
+    .cmp-cta {
+      align-self:end; justify-self:start; margin:4px 20px 20px;
+      display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px;
+      background:var(--c-bg); color:#fff; text-decoration:none;
+      font-family:'Barlow Condensed','Oswald',sans-serif; font-size:16px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap;
+      box-shadow:0 6px 20px var(--c-glow), inset 0 0 0 1px rgba(255,255,255,0.18);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .cmp-cta:hover { transform:translateY(-2px); box-shadow:0 10px 26px var(--c-glow), inset 0 0 0 1px rgba(255,255,255,0.3); }
+
+    @media (max-width: 960px) {
+      .cmp-atouts { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+      /* Tablette : cartes étroites, on resserre pour que le bouton tienne sur une ligne */
+      .cmp-row { padding:12px 16px; }
+      .cmp-head { padding:16px; }
+      .cmp-cta { margin:4px 16px 18px; padding:9px 14px; font-size:14px; letter-spacing:.05em; }
+    }
+    @media (max-width: 760px) {
+      .cmp-atouts { gap:10px; margin-bottom:18px; }
+      .cmp-atouts li { flex-direction:column; align-items:flex-start; gap:8px; padding:12px 14px; font-size:0.9rem; }
+      .cmp-hint {
+        display:flex; justify-content:flex-end; gap:6px; margin:0 0 10px;
+        font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--grey);
+      }
+      .cmp-hint span { color:var(--orange); }
+      /* Cartes en carrousel : 84 % de largeur, on voit le bord de la suivante */
+      .cmp-grid {
+        grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:84%; column-gap:14px;
+        overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain;
+        margin:0 -24px; padding:4px 24px 18px; scroll-padding-inline:24px;
+        -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      }
+      .cmp-grid::-webkit-scrollbar { display:none; }
+      /* Une carte à la fois : pas besoin d'aligner les lignes entre cartes (évite les blancs), bouton calé en bas */
+      .cmp-grid { grid-template-rows:none; }
+      .cmp-card { scroll-snap-align:start; grid-row:auto; display:flex; flex-direction:column; }
+      .cmp-list { display:block; }
+      .cmp-cta { margin:auto 20px 20px; align-self:flex-start; font-size:15px; }
+      .cmp-head { min-height:170px; }
+      .cmp-title h3 { font-size:1.7rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cmp-cta { transition:none; }
+      .cmp-cta:hover { transform:none; }
+    }
+
     /* Scroll naturel : la section démarre dès le haut du viewport, le menu fixe
        overlaie le bg image (effet full-bleed cinéma). Le panel a un margin-top qui
        clear le menu pour que son contenu commence juste sous lui. */
@@ -689,74 +814,99 @@
         <strong style="color:var(--white);">l'ambiance que vous cherchez et l'âge du groupe</strong>.
       </p>
 
-      <div class="fade-in" style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;min-width:720px;">
-          <caption style="text-align:left;color:var(--grey);padding-bottom:12px;">Comparatif des 3 salles d'escape game de GAMEDOOR·41 à Caen-Mondeville</caption>
-          <thead>
-            <tr style="border-bottom:2px solid var(--dark-border);">
-              <th scope="col" style="text-align:left;padding:14px 12px;color:var(--grey);font-weight:600;">&nbsp;</th>
-              <th scope="col" style="text-align:left;padding:14px 12px;"><a href="/escape-game-caen/back-to-the-80s/" style="color:#3D5DC0;font-weight:700;">Back to the 80's</a></th>
-              <th scope="col" style="text-align:left;padding:14px 12px;"><a href="/escape-game-caen/garde-a-vue/" style="color:#3D5DC0;font-weight:700;">Garde à Vue</a></th>
-              <th scope="col" style="text-align:left;padding:14px 12px;"><a href="/escape-game-caen/psychiatric/" style="color:#3D5DC0;font-weight:700;">Psychiatric</a></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Univers</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">Fun &amp; rétro années 80</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">Policier, humour absurde</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">Horreur immersive, non gore</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Âge minimum</th>
-              <td style="padding:14px 12px;color:var(--grey-light);"><strong style="color:var(--white);">Dès 7 ans</strong> (avec un adulte)</td>
-              <td style="padding:14px 12px;color:var(--grey-light);"><strong style="color:var(--white);">Dès 10 ans</strong></td>
-              <td style="padding:14px 12px;color:var(--grey-light);"><strong style="color:var(--white);">Dès 12 ans</strong></td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Nombre de joueurs</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">2 à 6</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">2 à 6 par bureau · 2 bureaux, soit 12 en duel</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">2 à 6 par chambre · 2 chambres, soit 12 en duel</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Durée</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">60 min</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">60 min</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">60 min</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Niveau</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">2 ou 3</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">1 ou 2 (ajustable)</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">1 ou 2 (ajustable)</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Prix</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">Dès 24 €/pers.</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">Dès 24 €/pers.</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">Dès 24 €/pers.</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Ouverte depuis</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">2021 · 12 000+ joueurs</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">2018 · 18 000+ joueurs</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">2017 · 26 000+ joueurs</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--dark-border);">
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Distinction</th>
-              <td style="padding:14px 12px;color:var(--grey-light);"><strong style="color:var(--orange);">Top 100 France</strong></td>
-              <td style="padding:14px 12px;color:var(--grey);">—</td>
-              <td style="padding:14px 12px;color:var(--grey);">—</td>
-            </tr>
-            <tr>
-              <th scope="row" style="text-align:left;padding:14px 12px;color:var(--white);font-weight:600;">Idéale si…</th>
-              <td style="padding:14px 12px;color:var(--grey-light);">vous venez en famille avec des enfants, ou que c'est votre premier escape game.</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">vous êtes un grand groupe et voulez jouer deux équipes l'une contre l'autre.</td>
-              <td style="padding:14px 12px;color:var(--grey-light);">vous cherchez la salle la plus intense, et vous n'avez pas peur du noir.</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Icônes du comparatif : mêmes tracés que /img/icons/, mais en ligne pour prendre la couleur de chaque salle -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <symbol id="cmp-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+        <symbol id="cmp-i-theater" viewBox="0 0 24 24"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.5" fill="currentColor"/><circle cx="15" cy="12" r="0.5" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></symbol>
+        <symbol id="cmp-i-euro" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M17 8.5c-1-1-2.5-1.5-4-1.5-3 0-5 2-5 5s2 5 5 5c1.5 0 3-0.5 4-1.5"/><line x1="6" y1="11" x2="14" y2="11"/><line x1="6" y1="13.5" x2="14" y2="13.5"/></symbol>
+        <symbol id="cmp-i-star" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor"/></symbol>
+        <symbol id="cmp-i-kids" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/><circle cx="10" cy="7" r="0.5" fill="currentColor"/><circle cx="14" cy="7" r="0.5" fill="currentColor"/><path d="M10.5 9c0.5 0.5 1 0.5 1.5 0.5s1 0 1.5-0.5"/></symbol>
+        <symbol id="cmp-i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M17 3.13a4 4 0 0 1 0 7.75"/></symbol>
+        <symbol id="cmp-i-difficulty" viewBox="0 0 24 24"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="6"/></symbol>
+        <symbol id="cmp-i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+        <symbol id="cmp-i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+        <symbol id="cmp-i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></symbol>
+      </svg>
+
+      <!-- Ce qui est identique dans les 3 salles : sorti des cartes pour qu'elles ne montrent que ce qui les distingue -->
+      <ul class="cmp-atouts fade-in" aria-label="Commun aux 3 salles">
+        <li><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-clock"/></svg><span><strong>60 min</strong> de jeu</span></li>
+        <li><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-theater"/></svg><span><strong>Game master</strong> acteur</span></li>
+        <li><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-euro"/></svg><span>Dès <strong>24 €</strong>/pers.</span></li>
+        <li><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-star"/></svg><span><strong>4.9/5</strong> · 2 219 avis Google</span></li>
+      </ul>
+
+      <p class="cmp-hint" aria-hidden="true">Faites glisser pour comparer <span>→</span></p>
+      <div class="cmp-grid fade-in" role="region" aria-label="Comparatif des 3 salles d'escape game de GAMEDOOR·41 à Caen-Mondeville" tabindex="0">
+        <article class="cmp-card cmp--80s">
+          <div class="cmp-head">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/salle-back-to-80s-borne-arcade-pacman-480w.avif 480w, /img/escape/salle-back-to-80s-borne-arcade-pacman-768w.avif 768w" sizes="(max-width: 760px) 84vw, 330px">
+              <source type="image/webp" srcset="/img/escape/salle-back-to-80s-borne-arcade-pacman-480w.webp 480w, /img/escape/salle-back-to-80s-borne-arcade-pacman-768w.webp 768w" sizes="(max-width: 760px) 84vw, 330px">
+              <img src="/img/escape/salle-back-to-80s-borne-arcade-pacman-480w.jpg" alt="Borne d'arcade Pac-Man dans la salle Back to the 80's" width="480" height="632" loading="lazy" decoding="async">
+            </picture>
+            <span class="cmp-badge"><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-trophy"/></svg>Top 100 France</span>
+            <div class="cmp-title">
+              <p class="cmp-num">Salle 01</p>
+              <h3><a href="/escape-game-caen/back-to-the-80s/">Back to the 80's</a></h3>
+              <p class="cmp-univers">Fun &amp; rétro années 80</p>
+            </div>
+          </div>
+          <dl class="cmp-list">
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-kids"/></svg>Âge minimum</dt><dd><span class="cmp-big">7+</span> ans, avec un adulte</dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-users"/></svg>Joueurs</dt><dd><span class="cmp-big">2 à 6</span></dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-difficulty"/></svg>Niveau</dt><dd><span class="cmp-chip">2</span> ou <span class="cmp-chip">3</span></dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-calendar"/></svg>Ouverte depuis</dt><dd><span class="cmp-big">2021</span> 12 000+ joueurs</dd></div>
+            <div class="cmp-row cmp-ideale"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-target"/></svg>Idéale si…</dt><dd>vous venez en famille avec des enfants, ou que c'est votre premier escape game.</dd></div>
+          </dl>
+          <a class="cmp-cta" href="/escape-game-caen/back-to-the-80s/">Découvrir la salle <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="cmp-card cmp--gav">
+          <div class="cmp-head">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/garde-a-vue-porte-480w.avif 480w, /img/escape/garde-a-vue-porte-768w.avif 768w" sizes="(max-width: 760px) 84vw, 330px">
+              <source type="image/webp" srcset="/img/escape/garde-a-vue-porte-480w.webp 480w, /img/escape/garde-a-vue-porte-768w.webp 768w" sizes="(max-width: 760px) 84vw, 330px">
+              <img src="/img/escape/garde-a-vue-porte-480w.jpg" alt="Porte barrée de rubalise de la salle Garde à Vue" width="480" height="638" loading="lazy" decoding="async">
+            </picture>
+            <div class="cmp-title">
+              <p class="cmp-num">Salle 02</p>
+              <h3><a href="/escape-game-caen/garde-a-vue/">Garde à Vue</a></h3>
+              <p class="cmp-univers">Policier, humour absurde</p>
+            </div>
+          </div>
+          <dl class="cmp-list">
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-kids"/></svg>Âge minimum</dt><dd><span class="cmp-big">10+</span> ans</dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-users"/></svg>Joueurs</dt><dd><span class="cmp-big">2 à 6</span> par bureau<span class="cmp-duel"><span class="cmp-vs">VS</span>2 bureaux : jusqu'à 12 en duel</span></dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-difficulty"/></svg>Niveau</dt><dd><span class="cmp-chip">1</span> ou <span class="cmp-chip">2</span> ajustable</dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-calendar"/></svg>Ouverte depuis</dt><dd><span class="cmp-big">2018</span> 18 000+ joueurs</dd></div>
+            <div class="cmp-row cmp-ideale"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-target"/></svg>Idéale si…</dt><dd>vous êtes un grand groupe et voulez jouer deux équipes l'une contre l'autre.</dd></div>
+          </dl>
+          <a class="cmp-cta" href="/escape-game-caen/garde-a-vue/">Découvrir la salle <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="cmp-card cmp--psy">
+          <div class="cmp-head">
+            <picture>
+              <source type="image/avif" srcset="/img/escape/psychiatric-couloir-480w.avif 480w, /img/escape/psychiatric-couloir-768w.avif 768w" sizes="(max-width: 760px) 84vw, 330px">
+              <source type="image/webp" srcset="/img/escape/psychiatric-couloir-480w.webp 480w, /img/escape/psychiatric-couloir-768w.webp 768w" sizes="(max-width: 760px) 84vw, 330px">
+              <img src="/img/escape/psychiatric-couloir-480w.jpg" alt="Couloir sombre et fauteuil roulant de la salle Psychiatric" width="480" height="640" loading="lazy" decoding="async">
+            </picture>
+            <div class="cmp-title">
+              <p class="cmp-num">Salle 03</p>
+              <h3><a href="/escape-game-caen/psychiatric/">Psychiatric</a></h3>
+              <p class="cmp-univers">Horreur immersive, non gore</p>
+            </div>
+          </div>
+          <dl class="cmp-list">
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-kids"/></svg>Âge minimum</dt><dd><span class="cmp-big">12+</span> ans</dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-users"/></svg>Joueurs</dt><dd><span class="cmp-big">2 à 6</span> par chambre<span class="cmp-duel"><span class="cmp-vs">VS</span>2 chambres : jusqu'à 12 en duel</span></dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-difficulty"/></svg>Niveau</dt><dd><span class="cmp-chip">1</span> ou <span class="cmp-chip">2</span> ajustable</dd></div>
+            <div class="cmp-row"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-calendar"/></svg>Ouverte depuis</dt><dd><span class="cmp-big">2017</span> 26 000+ joueurs</dd></div>
+            <div class="cmp-row cmp-ideale"><dt><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-target"/></svg>Idéale si…</dt><dd>vous cherchez la salle la plus intense, et vous n'avez pas peur du noir.</dd></div>
+          </dl>
+          <a class="cmp-cta" href="/escape-game-caen/psychiatric/">Découvrir la salle <span aria-hidden="true">→</span></a>
+        </article>
       </div>
 
       <p class="fade-in" style="margin-top:22px;color:var(--grey-light);max-width:820px;line-height:1.7;">
