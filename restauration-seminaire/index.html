@@ -949,7 +949,7 @@
         <h2>Vos coordonnées</h2>
         <p class="form-intro">Plus que quelques infos et on vous prépare un devis détaillé sous 48 h ouvrées.</p>
 
-        <form id="form-devis-resto">
+        <form id="form-devis-resto" method="post">
           <div class="form-row">
             <div class="form-group">
               <label for="resto-societe">Société / Organisation *</label>
@@ -993,6 +993,17 @@
 
           <div id="feedback-msg" class="feedback-msg"></div>
         </form>
+        <script>
+          /* Si le script principal n'a pas pu se charger, on n'envoie rien et on affiche l'adresse mail */
+          document.getElementById('form-devis-resto').addEventListener('submit', function (e) {
+            if (window.devisRestoPret) return;
+            e.preventDefault();
+            var f = document.getElementById('feedback-msg');
+            f.className = 'feedback-msg error';
+            f.style.display = 'block';
+            f.innerHTML = '❌ Le formulaire n\u2019a pas pu se charger. Rechargez la page ou écrivez-nous à <a href="mailto:contact@gamedoor41.fr" style="color:#ff9966;">contact@gamedoor41.fr</a>.';
+          });
+        </script>
       </div>
     </div>
   </section>
@@ -1027,8 +1038,6 @@
   <!-- ========== SCRIPTS ========== -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCdfa9-4uXH213PJ-W7Kn89fkobThNybCw",
@@ -1038,8 +1047,19 @@
       messagingSenderId: "253707893283",
       appId: "1:253707893283:web:5aa8900b874f7e72b34f96"
     };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    // Firebase n'est chargé qu'à l'envoi (archivage best-effort) : si gstatic est lent ou bloqué,
+    // le catalogue s'affiche quand même et le mail part quand même.
+    let firestorePromise = null;
+    function chargerFirestore() {
+      if (!firestorePromise) {
+        firestorePromise = (async () => {
+          const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js");
+          const fsMod = await import("https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js");
+          return { ...fsMod, db: fsMod.getFirestore(initializeApp(firebaseConfig)) };
+        })().catch(e => { firestorePromise = null; throw e; });
+      }
+      return firestorePromise;
+    }
 
     // EmailJS config — template_rv60k0d = template "Nouveau devis" (partagé avec /devis/)
     const EMAILJS_SERVICE_ID  = "service_4o68wv7";
@@ -1646,8 +1666,7 @@
         message: formData.get('message') || '(aucun)',
         nb_personnes: state.nbPersonnes,
         selection: state.selection,
-        devis_text: generateDevisText(),
-        createdAt: serverTimestamp()
+        devis_text: generateDevisText()
       };
 
       try {
@@ -1708,7 +1727,12 @@
 
         // 2. Sauvegarde Firestore (best-effort, ne bloque pas si rules pas ajustées)
         try {
-          await addDoc(collection(db, 'devis-restauration'), data);
+          const { db, collection, addDoc, serverTimestamp } = await chargerFirestore();
+          // Au plus 5 s : le mail est déjà parti, le client ne doit pas attendre l'archivage
+          await Promise.race([
+            addDoc(collection(db, 'devis-restauration'), { ...data, createdAt: serverTimestamp() }),
+            new Promise((_, rej) => setTimeout(() => rej(new Error('Firestore : délai dépassé')), 5000))
+          ]);
         } catch (firestoreErr) {
           console.warn('[devis-resto] Firestore non sauvé (rules à ajuster) :', firestoreErr);
         }
@@ -1795,6 +1819,7 @@
       });
 
       document.getElementById('form-devis-resto').addEventListener('submit', submitDevis);
+      window.devisRestoPret = true;
     });
   </script>
 
