@@ -87,6 +87,92 @@
     ]
   }
   </script>
+  <style>
+    /* ============================================================
+       HERO TEAM BUILDING — même esprit que la page quiz : peu de texte, les 2 activités en photo, le devis.
+       ============================================================ */
+    .tbh { position:relative; overflow:hidden; padding:clamp(28px, 4vw, 60px) 0 clamp(44px, 5vw, 76px); background:#0d0a07; }
+    .tbh-bg {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 70% at 74% 50%, rgba(224,112,32,0.30) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 55% at 92% 20%, rgba(157,78,221,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 60% at 60% 90%, rgba(61,93,192,0.22) 0%, transparent 70%);
+    }
+    .tbh-inner { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:clamp(24px, 4vw, 64px); align-items:center; }
+    .tbh-kicker { margin:0 0 14px; font-family:var(--font-display); font-size:15px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--orange); }
+    .tbh-h1 { margin:0; font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:clamp(2.4rem, 4.2vw, 4.2rem); line-height:1.04; color:#fff; }
+    .tbh-h1 span { display:block; color:var(--orange); text-shadow:0 0 30px rgba(255,107,0,0.45); }
+    .tbh-pitch { margin:20px 0 0; max-width:31em; font-size:1.12rem; line-height:1.6; color:#E8E2D6; }
+    .tbh-cta { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+    .tbh-pro { list-style:none; margin:22px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px 18px; }
+    .tbh-pro li { display:inline-flex; align-items:center; gap:7px; color:var(--grey-light); font-size:0.95rem; }
+    .tbh-ico { width:17px; height:17px; fill:none; stroke:var(--orange); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+
+    .tbh-visual { position:relative; aspect-ratio:10 / 9; }
+    .tbh-photo { position:absolute; margin:0; width:66%; border-radius:16px; overflow:hidden; background:#000; box-shadow:0 26px 56px rgba(0,0,0,0.6); }
+    .tbh-photo picture, .tbh-photo img { display:block; width:100%; height:100%; }
+    .tbh-photo img { object-fit:cover; }
+    .tbh-photo figcaption {
+      position:absolute; left:0; right:0; bottom:0; padding:28px 16px 13px;
+      background:linear-gradient(180deg, transparent 0%, rgba(8,6,4,0.92) 70%);
+      color:var(--grey-light); font-size:0.92rem; line-height:1.25;
+    }
+    .tbh-photo figcaption strong { display:block; font-family:var(--font-display); font-size:1.35rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#fff; }
+    .tbh-photo--escape { top:0; left:0; aspect-ratio:16 / 10; transform:rotate(-3deg); border:3px solid #3D5DC0; box-shadow:0 0 34px rgba(61,93,192,0.5), 0 26px 56px rgba(0,0,0,0.6); }
+    .tbh-photo--quiz { bottom:0; right:0; aspect-ratio:4 / 3; transform:rotate(3deg); border:3px solid #9D4EDD; box-shadow:0 0 34px rgba(157,78,221,0.5), 0 26px 56px rgba(0,0,0,0.6); }
+    .tbh-photo--quiz img { object-position:35% 55%; }
+    .tbh-badge {
+      position:absolute; left:6%; bottom:8%; z-index:2; width:128px; height:128px; border-radius:50%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+      background:var(--orange); color:#fff; box-shadow:0 0 0 6px rgba(255,107,0,0.22), 0 16px 34px rgba(0,0,0,0.5);
+      transform:rotate(-8deg);
+    }
+    .tbh-badge-num { font-family:var(--font-display); font-size:2.9rem; font-weight:700; line-height:.9; }
+    .tbh-badge-txt { font-family:var(--font-display); font-size:0.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; line-height:1.15; margin-top:4px; }
+
+    @media (max-width: 860px) {
+      .tbh-inner { grid-template-columns:1fr; gap:0; }
+      .tbh-text { display:contents; }
+      .tbh-kicker { order:1; } .tbh-h1 { order:2; } .tbh-visual { order:3; } .tbh-pitch { order:4; } .tbh-cta { order:5; } .tbh-pro { order:6; }
+      .tbh-visual { width:100%; max-width:520px; margin:22px auto 4px; }
+    }
+    @media (max-width: 600px) {
+      .tbh { padding:22px 0 34px; }
+      .tbh-h1 { font-size:2.5rem; }
+      .tbh-pitch { font-size:1rem; margin-top:14px; }
+      .tbh-cta { margin-top:20px; }
+      .tbh-cta .btn { flex:1 1 auto; justify-content:center; padding-left:16px; padding-right:16px; }
+      .tbh-visual { aspect-ratio:1 / 1.04; }
+      .tbh-photo { width:72%; }
+      .tbh-photo figcaption { padding:22px 11px 9px; font-size:0.8rem; }
+      .tbh-photo figcaption strong { font-size:1.05rem; }
+      .tbh-badge { width:92px; height:92px; left:auto; right:1%; bottom:auto; top:0; }
+      .tbh-badge-num { font-size:2.1rem; }
+      .tbh-badge-txt { font-size:0.62rem; }
+    }
+
+    /* Tarifs pro : les 4 formules sur une ligne (2 x 2 sur tablette) plutôt que 3 + 1 */
+    .tb-tarifs { grid-template-columns:repeat(4, minmax(0, 1fr)); gap:14px; }
+    @media (max-width: 1100px) { .tb-tarifs { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { .tb-tarifs { grid-template-columns:1fr; } }
+
+    /* FAQ repliables : la page reste lisible, les réponses s'ouvrent au clic */
+    .tb-faq-item { border-bottom:1px solid var(--dark-border); }
+    .tb-faq-item summary {
+      list-style:none; cursor:pointer; position:relative; padding:16px 44px 16px 0;
+      font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--white);
+    }
+    .tb-faq-item summary::-webkit-details-marker { display:none; }
+    .tb-faq-item summary::after {
+      content:"+"; position:absolute; right:6px; top:50%; transform:translateY(-50%);
+      width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      background:rgba(255,107,0,0.14); color:var(--orange); font-size:1.3rem; font-weight:700; line-height:1;
+    }
+    .tb-faq-item[open] summary::after { content:"−"; }
+    .tb-faq-item summary:hover { color:var(--orange); }
+    .tb-faq-item p { margin:0 0 18px; color:var(--grey-light); line-height:1.6; }
+  </style>
 </head>
 <body class="team-building-page">
 
@@ -134,23 +220,43 @@
     </div>
   </div>
 
-  <!-- HERO ====================================================== -->
-  <section class="page-hero">
-    <picture>
-      <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
-      <source type="image/webp" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.webp 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.webp 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.webp 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.webp 1400w" sizes="100vw">
-      <img src="/img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="100vw" alt="Plateau team building GAMEDOOR·41 Caen — buzzers, multi écrans, ambiance show TV" width="1400" height="788" loading="eager" decoding="async" fetchpriority="high">
-    </picture>
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-      <p class="kicker" style="color:var(--orange);">TEAM BUILDING · ENTREPRISES · CSE · SÉMINAIRES</p>
-      <h1>Team building à Caen&nbsp;:<br>soudez votre équipe. <span class="accent">Pour de vrai.</span></h1>
-      <p class="subtitle">Escape game immersif &amp; quiz plateau TV à Caen · 2 à 46 collaborateurs · 750 entreprises depuis 2017</p>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;align-items:center;">
-        <a href="/devis/" class="btn btn-primary btn-arrow" data-track="cta-devis-team-building">Demander un devis 48h</a>
-        <a href="mailto:contact@gamedoor41.fr" class="btn btn-outline">Nous écrire</a>
+  <!-- HERO — en un coup d'œil : les 2 activités en photo, une promesse courte, le devis -->
+  <section class="tbh" aria-labelledby="tbh-titre">
+    <div class="tbh-bg" aria-hidden="true"></div>
+    <div class="container tbh-inner">
+      <div class="tbh-text">
+        <p class="tbh-kicker">Team building · Entreprises &amp; CSE · Caen</p>
+        <h1 id="tbh-titre" class="tbh-h1">Soudez vos équipes. <span>Pour de vrai.</span></h1>
+        <p class="tbh-pitch">Escape game ou quiz plateau TV&nbsp;: 60 minutes où vos collaborateurs jouent ensemble, rient et se découvrent autrement. On s'occupe de tout.</p>
+        <div class="tbh-cta">
+          <a href="/devis/" class="btn btn-primary btn-arrow" data-track="cta-devis-team-building">Demander un devis 48h</a>
+          <a href="#formats" class="btn btn-outline">Voir les formules</a>
+        </div>
+        <ul class="tbh-pro">
+          <li><svg class="tbh-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Facture entreprise</li>
+          <li><svg class="tbh-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Bon de commande</li>
+          <li><svg class="tbh-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>ANCV &amp; CSE</li>
+        </ul>
       </div>
-      <p style="margin-top:16px;color:var(--grey-light);font-size:0.95rem;">▸ Devis sous 48h · Facture entreprise · Bon de commande · TVA déductible · ANCV/CSE acceptés</p>
+      <div class="tbh-visual" aria-hidden="true">
+        <figure class="tbh-photo tbh-photo--escape">
+          <picture>
+            <source type="image/avif" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w" sizes="(max-width: 860px) 70vw, 30vw">
+            <source type="image/webp" srcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.webp 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.webp 768w" sizes="(max-width: 860px) 70vw, 30vw">
+            <img src="/img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.jpg" alt="" width="768" height="432" fetchpriority="high" decoding="async">
+          </picture>
+          <figcaption><strong>Escape game</strong>jusqu'à 30 en simultané</figcaption>
+        </figure>
+        <figure class="tbh-photo tbh-photo--quiz">
+          <picture>
+            <source type="image/avif" srcset="/img/quiz/buzzer-action-480w.avif 480w, /img/quiz/buzzer-action-768w.avif 768w" sizes="(max-width: 860px) 70vw, 30vw">
+            <source type="image/webp" srcset="/img/quiz/buzzer-action-480w.webp 480w, /img/quiz/buzzer-action-768w.webp 768w" sizes="(max-width: 860px) 70vw, 30vw">
+            <img src="/img/quiz/buzzer-action-768w.jpg" alt="" width="768" height="579" decoding="async">
+          </picture>
+          <figcaption><strong>Quiz plateau TV</strong>jusqu'à 16 candidats</figcaption>
+        </figure>
+        <div class="tbh-badge"><span class="tbh-badge-num">46</span><span class="tbh-badge-txt">collaborateurs<br>en même temps</span></div>
+      </div>
     </div>
   </section>
 
@@ -176,24 +282,10 @@
     </div>
   </div>
 
-  <!-- L'IDÉE → fédérateur ======================================== -->
-  <section class="section" style="padding:64px 0 32px;">
+  <!-- 2 FORMATS PRO ============================================== -->
+  <section class="section" id="formats" style="background:var(--dark);padding:64px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="01">
-        <p class="kicker">L'idée</p>
-        <h2>Et si votre prochain temps fort<br><span style="color:var(--orange);">rassemblait vraiment</span> vos équipes ?</h2>
-      </div>
-      <div class="fade-in" style="max-width:780px;margin-top:24px;">
-        <p style="color:var(--grey-light);margin-bottom:14px;">Vos collaborateurs mangent ensemble, se croisent en réunion, échangent par mail. Mais combien de fois <strong>vivent-ils vraiment quelque chose ensemble</strong> ? Un moment où chacun découvre l'autre autrement, où les équipes se reconnaissent par l'expérience partagée plutôt que par l'organigramme.</p>
-        <p style="color:var(--grey-light);"><strong>Chez GAMEDOOR·41, on les met dans une cellule à fouiller, ou derrière des buzzers sur un plateau TV.</strong> Les rôles se redistribuent, on se découvre autrement, on collabore, on rit. <strong style="color:var(--orange);">Et trois mois plus tard, ils en parlent encore à la machine à café.</strong></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2 FORMATS PRO ============================================== -->
-  <section class="section" style="background:var(--dark);padding:64px 0;">
-    <div class="container">
-      <div class="section-header-editorial fade-in" data-num="02">
         <p class="kicker">Les formats</p>
         <h2>2 activités calibrées pour <span style="color:var(--orange);">vos objectifs</span></h2>
       </div>
@@ -217,8 +309,7 @@
               <span><img width="24" height="24" src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min + brief/debrief</span>
               <span><img width="24" height="24" src="/img/icons/theater.svg" class="gd-icon" alt="" aria-hidden="true"> Game master acteur</span>
             </div>
-            <p>Vos équipes en mode enquête, sous pression, dans une scénographie immersive. <strong>3 univers thématiques sur 5 salles</strong> jouables en simultané. Idéal pour révéler les leaders naturels et observer la dynamique de communication sous contrainte.</p>
-            <p style="color:var(--grey-light);font-size:0.92rem;margin-top:10px;"><strong>Objectifs RH :</strong> cohésion, prise de décision collective, gestion du stress, répartition des rôles.</p>
+            <p>Vos équipes enquêtent sous pression dans <strong>3 univers immersifs</strong>, sur 5 salles en simultané.</p>
             <div class="room-card-footer">
               <div class="room-price">17,50€ TTC <small style="display:block;font-size:0.7em;color:var(--grey-light);font-weight:600;letter-spacing:0;">15,91€ HT · /pers.</small></div>
               <a href="/escape-game-caen/" class="btn btn-red" style="padding:10px 20px;font-size:0.9rem;">Voir les 5 salles</a>
@@ -243,8 +334,7 @@
               <span><img width="24" height="24" src="/img/icons/clock.svg" class="gd-icon" alt="" aria-hidden="true"> 60 min</span>
               <span><img width="24" height="24" src="/img/icons/mic.svg" class="gd-icon" alt="" aria-hidden="true"> Chauffeur de salle live</span>
             </div>
-            <p>Plateau TV, 8 pupitres avec buzzers, multi écrans, joystick et boutons ABCD. <strong>3 manches de folie + jokers diaboliques.</strong> Chauffeur de salle. Format show TV, ambiance survoltée, fous rires garantis.</p>
-            <p style="color:var(--grey-light);font-size:0.92rem;margin-top:10px;"><strong>Objectifs RH :</strong> ambiance, décompression, cohésion par le rire, animation de fin de séminaire.</p>
+            <p>Plateau TV, buzzers et jokers&nbsp;: <strong>ambiance survoltée</strong>, fous rires garantis.</p>
             <div class="access-notice compact" role="note" aria-label="Information accessibilité">
               <img width="24" height="24" src="/img/icons/info.svg" class="access-notice-icon" alt="" aria-hidden="true">
               <div><strong>Accessibilité</strong>Quiz à dominante audio — non adapté aux personnes sourdes ou malentendantes. Privilégier l'escape game.</div>
@@ -262,7 +352,7 @@
       <div class="fade-in" style="margin-top:32px;padding:24px 28px;border:2px solid var(--orange);border-radius:var(--radius);background:linear-gradient(135deg,rgba(224,112,32,0.08) 0%,rgba(224,112,32,0.02) 100%);max-width:880px;margin-left:auto;margin-right:auto;">
         <p class="kicker" style="color:var(--orange);margin-bottom:6px;">▸ Format star séminaire</p>
         <h3 style="font-size:1.25rem;margin-bottom:8px;">Le combo escape + quiz sur une demi-journée</h3>
-        <p style="color:var(--grey-light);">Escape game en petits groupes <strong>(jusqu'à 30 collaborateurs en simultané sur 5 salles)</strong> puis quiz tous ensemble pour la décompression. <strong>3 à 4h en tout</strong> — le format le plus demandé pour les kickoff, séminaires annuels et journées de cohésion.</p>
+        <p style="color:var(--grey-light);">Escape en petits groupes, puis quiz tous ensemble&nbsp;: <strong>3 à 4h, jusqu'à 46 collaborateurs</strong>.</p>
       </div>
 
     </div>
@@ -271,7 +361,7 @@
   <!-- POURQUOI ÇA MARCHE — 4 piliers ============================ -->
   <section class="section" style="padding:64px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="03">
+      <div class="section-header-editorial fade-in" data-num="02">
         <p class="kicker">Ce que ça apporte</p>
         <h2>Un team building qui <span style="color:var(--orange);">laisse une trace</span></h2>
       </div>
@@ -283,7 +373,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
           </div>
           <h3 style="font-family:'Barlow Condensed','Oswald',sans-serif;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:0.02em;color:#F0EBE2;margin:0 0 12px;">Cohésion réelle</h3>
-          <p style="color:#C8C2B8;line-height:1.65;font-size:1rem;margin:0;">Quand l'équipe a 60 minutes pour s'évader d'une cellule, les hiérarchies s'aplatissent et les vraies dynamiques apparaissent. <strong style="color:#F0EBE2;">Pas un icebreaker, une vraie épreuve commune.</strong></p>
+          <p style="color:#C8C2B8;line-height:1.5;font-size:1rem;margin:0;">Les hiérarchies s'aplatissent, les vraies dynamiques apparaissent.</p>
         </article>
 
         <article style="background:rgba(255,255,255,0.03);border:1px solid rgba(224,112,32,0.20);border-radius:12px;padding:28px 24px;transition:all .25s ease;position:relative;overflow:hidden;">
@@ -291,7 +381,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
           <h3 style="font-family:'Barlow Condensed','Oswald',sans-serif;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:0.02em;color:#F0EBE2;margin:0 0 12px;">Communication sous pression</h3>
-          <p style="color:#C8C2B8;line-height:1.65;font-size:1rem;margin:0;">Collaborer ou échouer. Exprimer une idée vite, écouter celle des autres, déléguer. <strong style="color:#F0EBE2;">Les soft-skills se voient en condition réelle</strong>, pas en atelier théorique.</p>
+          <p style="color:#C8C2B8;line-height:1.5;font-size:1rem;margin:0;">Parler vite, écouter, déléguer&nbsp;: les soft skills en conditions réelles.</p>
         </article>
 
         <article style="background:rgba(255,255,255,0.03);border:1px solid rgba(224,112,32,0.20);border-radius:12px;padding:28px 24px;transition:all .25s ease;position:relative;overflow:hidden;">
@@ -299,7 +389,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
           </div>
           <h3 style="font-family:'Barlow Condensed','Oswald',sans-serif;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:0.02em;color:#F0EBE2;margin:0 0 12px;">Leadership révélé</h3>
-          <p style="color:#C8C2B8;line-height:1.65;font-size:1rem;margin:0;">On voit qui prend la main, qui structure, qui rassure, qui ose. Idéal pour <strong style="color:#F0EBE2;">identifier les profils émergents</strong> ou cadrer un atelier manager.</p>
+          <p style="color:#C8C2B8;line-height:1.5;font-size:1rem;margin:0;">On voit qui prend la main, qui structure, qui ose.</p>
         </article>
 
         <article style="background:rgba(255,255,255,0.03);border:1px solid rgba(224,112,32,0.20);border-radius:12px;padding:28px 24px;transition:all .25s ease;position:relative;overflow:hidden;">
@@ -307,7 +397,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           </div>
           <h3 style="font-family:'Barlow Condensed','Oswald',sans-serif;font-weight:800;text-transform:uppercase;font-size:1.35rem;letter-spacing:0.02em;color:#F0EBE2;margin:0 0 12px;">Souvenir marquant</h3>
-          <p style="color:#C8C2B8;line-height:1.65;font-size:1rem;margin:0;">Vos collaborateurs se souviendront du jour où Marc s'est fait menotter dans Garde à Vue. <strong style="color:#F0EBE2;">Pas du PowerPoint du matin.</strong> C'est ce qu'on appelle un événement qui crée du récit interne.</p>
+          <p style="color:#C8C2B8;line-height:1.5;font-size:1rem;margin:0;">Ils se souviendront du jour où Marc s'est fait menotter. <strong style="color:#F0EBE2;">Pas du PowerPoint.</strong></p>
         </article>
 
       </div>
@@ -325,7 +415,7 @@
   <!-- CAS D'USAGE ================================================ -->
   <section class="section" style="background:var(--dark);padding:64px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="04">
+      <div class="section-header-editorial fade-in" data-num="03">
         <p class="kicker">Pour quelle occasion</p>
         <h2>Toutes les occasions <span style="color:var(--orange);">qui comptent</span></h2>
       </div>
@@ -338,7 +428,7 @@
             <span class="tb-occasion-tag">Stratégie</span>
           </div>
           <h3>Séminaire annuel · Kickoff</h3>
-          <p>Lancement de plan, kickoff trimestriel, retraite stratégique. Le combo escape + quiz s'intercale parfaitement entre deux sessions de travail, organisées dans vos locaux ou dans une autre salle (nous n'avons pas de salle de réunion).</p>
+          <p>Le combo escape + quiz entre deux sessions de travail.</p>
         </article>
 
         <article class="tb-occasion-card" data-cat="rh">
@@ -347,7 +437,7 @@
             <span class="tb-occasion-tag">RH · Onboarding</span>
           </div>
           <h3>Intégration nouveaux arrivants</h3>
-          <p>Un onboarding qui crée du lien dès la première semaine. Les nouveaux découvrent leurs collègues hors contexte hiérarchique.</p>
+          <p>Créer du lien dès la première semaine.</p>
         </article>
 
         <article class="tb-occasion-card" data-cat="cohesion">
@@ -356,7 +446,7 @@
             <span class="tb-occasion-tag">Cohésion</span>
           </div>
           <h3>Team building équipe · Service</h3>
-          <p>Renforcer une équipe projet, recoller un service après une réorga, ressouder après une période tendue.</p>
+          <p>Ressouder une équipe après une réorga ou une période tendue.</p>
         </article>
 
         <article class="tb-occasion-card" data-cat="reconnaissance">
@@ -365,7 +455,7 @@
             <span class="tb-occasion-tag">Reconnaissance</span>
           </div>
           <h3>Cadeau d'équipe · Fin d'année</h3>
-          <p>Alternative au repas de fin d'année qui finit en conférence. Une vraie expérience à offrir à vos collaborateurs.</p>
+          <p>Une vraie expérience à offrir, plutôt qu'un repas de plus.</p>
         </article>
 
         <article class="tb-occasion-card" data-cat="cse">
@@ -374,7 +464,7 @@
             <span class="tb-occasion-tag">CSE · Œuvres sociales</span>
           </div>
           <h3>Loisirs collaborateurs · Sortie famille</h3>
-          <p>Activité loisirs collaborateurs, sortie famille (dès 14 ans avec adulte), tarif négocié. Conventionné CSE et chèques cadeau acceptés.</p>
+          <p>Sortie famille dès 14 ans avec un adulte, conventionné CSE.</p>
         </article>
 
         <article class="tb-occasion-card" data-cat="evenement">
@@ -383,7 +473,7 @@
             <span class="tb-occasion-tag">Événement</span>
           </div>
           <h3>Lancement produit · Soirée client</h3>
-          <p>Privatisation totale de nos espaces de jeu, format animé, ambiance show. Vos clients ou partenaires repartent avec une expérience, pas un goodie.</p>
+          <p>Vos clients repartent avec un souvenir, pas un goodie.</p>
         </article>
 
       </div>
@@ -393,7 +483,7 @@
   <!-- TARIFS PRO ================================================= -->
   <section class="section" style="padding:64px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="05">
+      <div class="section-header-editorial fade-in" data-num="04">
         <p class="kicker">Tarification entreprise</p>
         <h2>Tarifs <span style="color:var(--orange);">transparents</span> · facture entreprise</h2>
       </div>
@@ -499,7 +589,7 @@
   <!-- COMMENT ÇA SE PASSE — 4 étapes pro ======================= -->
   <section class="section" style="background:var(--dark);padding:64px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="06">
+      <div class="section-header-editorial fade-in" data-num="05">
         <p class="kicker">Logistique simple</p>
         <h2>De la première prise de contact au <span style="color:var(--orange);">jour J</span></h2>
       </div>
@@ -508,22 +598,22 @@
         <div class="info-item">
           <div class="icon"><span class="step-number">1</span></div>
           <h4>Prise de contact</h4>
-          <p>Tél, email ou formulaire. On échange pour cadrer effectif, objectif RH, date pressentie et budget.</p>
+          <p>Effectif, date, objectif, budget&nbsp;: on cadre ensemble.</p>
         </div>
         <div class="info-item">
           <div class="icon"><span class="step-number">2</span></div>
           <h4>Devis sous 48h</h4>
-          <p>Devis nominatif entreprise par email. Détail des prestations, options, conditions de report. Validation par signature.</p>
+          <p>Devis nominatif entreprise, validé par signature.</p>
         </div>
         <div class="info-item">
           <div class="icon"><span class="step-number">3</span></div>
           <h4>Réservation &amp; facture</h4>
-          <p>Devis signé renvoyé. Acompte uniquement sur la restauration si commandée. Créneaux bloqués. Si vous commandez un repas, la privatisation du site (salle d'accueil comprise) est obligatoire.</p>
+          <p>Créneaux bloqués, facture entreprise. Repas commandé = privatisation du site.</p>
         </div>
         <div class="info-item">
           <div class="icon"><span class="step-number">4</span></div>
           <h4>Jour J · on s'occupe de tout</h4>
-          <p>Accueil, briefing, animation par le game master ou le chauffeur de salle, debrief si demandé. Vous, vous profitez.</p>
+          <p>Accueil, animation, débrief. Vous, vous profitez.</p>
         </div>
       </div>
     </div>
@@ -532,7 +622,7 @@
   <!-- AVANTAGES B2B / ADMIN ==================================== -->
   <section class="section" style="padding:64px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="07">
+      <div class="section-header-editorial fade-in" data-num="06">
         <p class="kicker">Ce qui plaît à votre direction (et à votre compta)</p>
         <h2>Côté <span style="color:var(--orange);">opérationnel</span></h2>
       </div>
@@ -542,51 +632,51 @@
         <a href="/devis/?type=entreprise&amp;occasion=teambuilding" class="tb-ops-card tb-ops-card-link" data-cat="primary">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/calendar.svg" alt=""></span>
           <h3>Devis sous 48h</h3>
-          <p>Réponse rapide pour caler dans vos process internes (validation N+1, comité achat, etc.).</p>
+          <p>Pour caler vos validations internes.</p>
           <span class="tb-ops-link">Demander un devis</span>
         </a>
 
         <div class="tb-ops-card">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/check.svg" alt=""></span>
           <h3>Facture entreprise</h3>
-          <p>Facture nominative au nom de votre société, TVA 10% détaillée, déductible. Envoyée selon votre process compta.</p>
+          <p>Nominative, TVA 10&nbsp;% déductible.</p>
         </div>
 
         <div class="tb-ops-card">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/euro.svg" alt=""></span>
           <h3>Paiement entreprise</h3>
-          <p>CB via lien sécurisé envoyé par mail, ou CB sur place le jour J en un seul règlement total. Services publics : Chorus Pro avec bon de commande.</p>
+          <p>CB par lien sécurisé ou sur place · Chorus Pro pour le public.</p>
         </div>
 
         <div class="tb-ops-card">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/heart.svg" alt=""></span>
           <h3>ANCV &amp; CSE</h3>
-          <p>Chèques ANCV et chèques cadeau CSE acceptés. Conventionné CSE de plusieurs groupes locaux.</p>
+          <p>Chèques ANCV et chèques cadeau CSE acceptés.</p>
         </div>
 
         <a href="/devis/?type=entreprise&amp;occasion=teambuilding" class="tb-ops-card tb-ops-card-link">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/building.svg" alt=""></span>
           <h3>Privatisation totale</h3>
-          <p>Espace entièrement réservé pour votre groupe : 5 salles d'escape + plateau quiz + salle d'accueil à votre dispo.</p>
+          <p>5 salles d'escape, plateau quiz et salle d'accueil pour vous seuls.</p>
           <span class="tb-ops-link">Demander un devis</span>
         </a>
 
         <div class="tb-ops-card">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/star.svg" alt=""></span>
           <h3>Report flexible</h3>
-          <p>Plus de 15 jours avant l'événement : report <strong>gratuit</strong> selon dispos. Entre 7 et 15 jours : report avec frais 20%. Moins de 7 jours : non reportable. Détails : <a href="/termes-conditions/#" style="color:var(--orange);">CGV B2B</a>.</p>
+          <p>Gratuit à plus de 15 jours, 20&nbsp;% entre 7 et 15 jours. <a href="/termes-conditions/#" style="color:var(--orange);">CGV B2B</a></p>
         </div>
 
         <div class="tb-ops-card">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/pin.svg" alt=""></span>
           <h3>5 min de Caen centre</h3>
-          <p>41 bis rue Pasteur, 14120 Mondeville. <strong>Sortie périphérique Mondeville</strong>, parking privé (code portail 5061).</p>
+          <p>Mondeville, sortie périphérique, parking privé.</p>
         </div>
 
         <div class="tb-ops-card">
           <span class="tb-ops-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/trophy.svg" alt=""></span>
           <h3>2 219 avis · 4.9/5</h3>
-          <p>Des PME, grands groupes, banques régionales, collectivités, CSE — tous nous recommandent.</p>
+          <p>PME, grands groupes, collectivités, CSE.</p>
         </div>
 
       </div>
@@ -625,40 +715,19 @@
         <p class="kicker" style="color:var(--orange);margin-bottom:8px;">FAQ entreprise</p>
         <h2 style="font-size:1.6rem;margin-bottom:28px;">Questions fréquentes — Team Building</h2>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Combien de collaborateurs peuvent participer ?</h3>
-          <p style="color:var(--grey-light);"><strong>Jusqu'à 46 collaborateurs</strong> en simultané sur une même session : <strong>30 max</strong> sur les <strong>5 salles d'escape</strong> (3 univers thématiques, 2 à 6 par salle) + <strong>16 max</strong> sur le <strong>plateau Quiz Buzz Your Brain</strong> (8 pupitres avec chauffeur de salle (lance l'émission, format sur écran)). Au-delà, on cale plusieurs créneaux dans la journée ou on absorbe les effectifs avec un combo escape + quiz.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Combien de collaborateurs peuvent participer ?</summary><p><strong>Jusqu'à 46 collaborateurs</strong> en simultané sur une même session : <strong>30 max</strong> sur les <strong>5 salles d'escape</strong> (3 univers thématiques, 2 à 6 par salle) + <strong>16 max</strong> sur le <strong>plateau Quiz Buzz Your Brain</strong> (8 pupitres avec chauffeur de salle (lance l'émission, format sur écran)). Au-delà, on cale plusieurs créneaux dans la journée ou on absorbe les effectifs avec un combo escape + quiz.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quel format choisir pour notre team building ?</h3>
-          <p style="color:var(--grey-light);"><strong>Escape game</strong> si l'objectif est la <strong>cohésion sous pression</strong>, la communication et la résolution de problèmes en petits groupes (2-6). <strong>Quiz game</strong> si vous avez un <strong>grand groupe à animer</strong> ou si vous voulez un format show TV (émission diffusée sur écran après lancement par le chauffeur de salle). Le <strong>combo escape + quiz</strong> sur une demi-journée est notre format le plus demandé pour les séminaires.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Quel format choisir pour notre team building ?</summary><p><strong>Escape game</strong> si l'objectif est la <strong>cohésion sous pression</strong>, la communication et la résolution de problèmes en petits groupes (2-6). <strong>Quiz game</strong> si vous avez un <strong>grand groupe à animer</strong> ou si vous voulez un format show TV (émission diffusée sur écran après lancement par le chauffeur de salle). Le <strong>combo escape + quiz</strong> sur une demi-journée est notre format le plus demandé pour les séminaires.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quel est le tarif entreprise ?</h3>
-          <p style="color:var(--grey-light);"><strong>Tarifs réservés aux professionnels</strong> (sur justificatif Kbis / SIRET / bon de commande) : escape game <strong>17,50€ TTC/pers. (15,91€ HT)</strong>, quiz game <strong>15€ TTC/pers. (13,64€ HT)</strong>. TVA 10%. Devis sur-mesure au-delà de 16 collaborateurs avec activités escape game. Facture entreprise (TVA déductible). Paiement par bon de commande, virement ou CB.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Quel est le tarif entreprise ?</summary><p><strong>Tarifs réservés aux professionnels</strong> (sur justificatif Kbis / SIRET / bon de commande) : escape game <strong>17,50€ TTC/pers. (15,91€ HT)</strong>, quiz game <strong>15€ TTC/pers. (13,64€ HT)</strong>. TVA 10%. Devis sur-mesure au-delà de 16 collaborateurs avec activités escape game. Facture entreprise (TVA déductible). Paiement par bon de commande, virement ou CB.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Combien de temps dure un team building ?</h3>
-          <p style="color:var(--grey-light);">Compter <strong>1h30 par activité</strong> : <strong>15 min d'accueil &amp; briefing</strong> + <strong>60 min de jeu / d'émission</strong> + <strong>15 min de débrief &amp; photo</strong>. Escape game : 60 min encadrés par le <em>game master acteur</em>. Quiz game : 60 min d'émission sur le plateau TV avec le <em>chauffeur de salle</em>. Le combo escape + quiz tient sur une <strong>demi-journée</strong> (3 à 4h en tout) — format le plus demandé pour les séminaires.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Combien de temps dure un team building ?</summary><p>Compter <strong>1h30 par activité</strong> : <strong>15 min d'accueil &amp; briefing</strong> + <strong>60 min de jeu / d'émission</strong> + <strong>15 min de débrief &amp; photo</strong>. Escape game : 60 min encadrés par le <em>game master acteur</em>. Quiz game : 60 min d'émission sur le plateau TV avec le <em>chauffeur de salle</em>. Le combo escape + quiz tient sur une <strong>demi-journée</strong> (3 à 4h en tout) — format le plus demandé pour les séminaires.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Acceptez-vous les paiements par bon de commande, ANCV ou CSE ?</h3>
-          <p style="color:var(--grey-light);">Oui. <strong>Bon de commande entreprise, virement bancaire, carte bancaire, chèques ANCV et chèques cadeau CSE acceptés.</strong> Facture nominative entreprise envoyée avant ou après l'événement selon votre process compta. Conventionné CSE de plusieurs grands groupes locaux.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Acceptez-vous les paiements par bon de commande, ANCV ou CSE ?</summary><p>Oui. <strong>Bon de commande entreprise, virement bancaire, carte bancaire, chèques ANCV et chèques cadeau CSE acceptés.</strong> Facture nominative entreprise envoyée avant ou après l'événement selon votre process compta. Conventionné CSE de plusieurs grands groupes locaux.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Peut-on privatiser GAMEDOOR·41 ?</h3>
-          <p style="color:var(--grey-light);">Oui, <strong>privatisation totale</strong> de l'espace possible (5 salles d'escape + plateau quiz + salle d'accueil). Idéal pour kickoff, séminaire, soirée de service, lancement produit ou événement client. Devis sur-mesure selon le format souhaité. Nous n'avons pas de salle de réunion ; pour un repas sur place, la privatisation est obligatoire (20 personnes maximum assises, 40 debout).</p>
-        </div>
+        <details class="tb-faq-item"><summary>Peut-on privatiser GAMEDOOR·41 ?</summary><p>Oui, <strong>privatisation totale</strong> de l'espace possible (5 salles d'escape + plateau quiz + salle d'accueil). Idéal pour kickoff, séminaire, soirée de service, lancement produit ou événement client. Devis sur-mesure selon le format souhaité. Nous n'avons pas de salle de réunion ; pour un repas sur place, la privatisation est obligatoire (20 personnes maximum assises, 40 debout).</p></details>
 
-        <div>
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Le team building est-il accessible aux collaborateurs sourds ou malentendants ?</h3>
-          <p style="color:var(--grey-light);">Le quiz game Buzz Your Brain repose sur des contenus essentiellement audio (questions à l'oral, blind test) et n'est <strong>pas adapté aux personnes sourdes ou malentendantes</strong>. Nos <a href="/escape-game-caen/" style="color:var(--orange);">escape games</a>, basés sur l'observation, la manipulation d'objets et la coopération visuelle, sont mieux adaptés. <a href="/contact/" style="color:var(--orange);">Contactez-nous</a> pour adapter le format à votre équipe.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Le team building est-il accessible aux collaborateurs sourds ou malentendants ?</summary><p>Le quiz game Buzz Your Brain repose sur des contenus essentiellement audio (questions à l'oral, blind test) et n'est <strong>pas adapté aux personnes sourdes ou malentendantes</strong>. Nos <a href="/escape-game-caen/" style="color:var(--orange);">escape games</a>, basés sur l'observation, la manipulation d'objets et la coopération visuelle, sont mieux adaptés. <a href="/contact/" style="color:var(--orange);">Contactez-nous</a> pour adapter le format à votre équipe.</p></details>
       </div>
     </div>
   </section>
@@ -727,45 +796,21 @@
       <div class="fade-in" style="max-width:800px;margin:0 auto;">
         <h2 style="font-size:1.4rem;margin-bottom:24px;text-align:center;">Questions fréquentes — Team Building à Caen</h2>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Combien coûte un team building à Caen ?</h3>
-          <p style="color:var(--grey-light);">Tarif professionnel <strong>17,50&nbsp;€ TTC/personne</strong> (15,91&nbsp;€ HT) pour l'escape game et <strong>15&nbsp;€ TTC/personne</strong> (13,64&nbsp;€ HT) pour le quiz Buzz Your Brain. Tarif unique quel que soit la taille du groupe (2 à 46 collaborateurs). Devis personnalisé sous 48h pour les configurations sur mesure (combinaison escape + quiz, journée d'activités pour votre séminaire, restauration). <a href="/devis/" style="color:var(--orange);">Simuler un devis</a>.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Combien coûte un team building à Caen ?</summary><p>Tarif professionnel <strong>17,50&nbsp;€ TTC/personne</strong> (15,91&nbsp;€ HT) pour l'escape game et <strong>15&nbsp;€ TTC/personne</strong> (13,64&nbsp;€ HT) pour le quiz Buzz Your Brain. Tarif unique quel que soit la taille du groupe (2 à 46 collaborateurs). Devis personnalisé sous 48h pour les configurations sur mesure (combinaison escape + quiz, journée d'activités pour votre séminaire, restauration). <a href="/devis/" style="color:var(--orange);">Simuler un devis</a>.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Combien de collaborateurs peut-on accueillir en team building à Caen ?</h3>
-          <p style="color:var(--grey-light);">De <strong>2 à 46 collaborateurs</strong> en simultané : 30 sur les 5 salles d'escape game (Garde à Vue × 2, Psychiatric × 2, Back to the 80's × 1) + 16 candidat·e·s sur le plateau Quiz Buzz Your Brain. Au-delà de 46, on organise par vagues sur la même demi-journée ou journée. 750 entreprises accueillies depuis 2017 chez GAMEDOOR·41 (anciennement Brain Escape Game).</p>
-        </div>
+        <details class="tb-faq-item"><summary>Combien de collaborateurs peut-on accueillir en team building à Caen ?</summary><p>De <strong>2 à 46 collaborateurs</strong> en simultané : 30 sur les 5 salles d'escape game (Garde à Vue × 2, Psychiatric × 2, Back to the 80's × 1) + 16 candidat·e·s sur le plateau Quiz Buzz Your Brain. Au-delà de 46, on organise par vagues sur la même demi-journée ou journée. 750 entreprises accueillies depuis 2017 chez GAMEDOOR·41 (anciennement Brain Escape Game).</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Combien de temps prévoir pour un team building à Caen ?</h3>
-          <p style="color:var(--grey-light);"><strong>Demi-journée (2h) ou journée complète (4-5h)</strong> selon la formule. Demi-journée : escape game OU quiz Buzz Your Brain + débrief photo. Journée : combinaison escape + quiz, avec en option un accueil café et un déjeuner en plateaux-repas froids, servis dans notre salle d'accueil privatisée. Nous n'avons pas de salle de réunion : vos temps de travail (présentations, ateliers) se tiennent dans vos locaux ou dans une autre salle.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Combien de temps prévoir pour un team building à Caen ?</summary><p><strong>Demi-journée (2h) ou journée complète (4-5h)</strong> selon la formule. Demi-journée : escape game OU quiz Buzz Your Brain + débrief photo. Journée : combinaison escape + quiz, avec en option un accueil café et un déjeuner en plateaux-repas froids, servis dans notre salle d'accueil privatisée. Nous n'avons pas de salle de réunion : vos temps de travail (présentations, ateliers) se tiennent dans vos locaux ou dans une autre salle.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Comment réserver un team building à Caen ?</h3>
-          <p style="color:var(--grey-light);">Trois étapes : (1) <a href="/devis/" style="color:var(--orange);">simuler un devis</a> en ligne en 2 minutes ou nous contacter à <a href="mailto:contact@gamedoor41.fr">contact@gamedoor41.fr</a> avec votre date, effectif et budget ; (2) recevoir un devis personnalisé sous 48 heures ouvrées ; (3) valider et payer en ligne (acompte ou règlement total selon délai). Facture entreprise au format SARL BOEHME (RCS Caen 823&nbsp;227&nbsp;111).</p>
-        </div>
+        <details class="tb-faq-item"><summary>Comment réserver un team building à Caen ?</summary><p>Trois étapes : (1) <a href="/devis/" style="color:var(--orange);">simuler un devis</a> en ligne en 2 minutes ou nous contacter à <a href="mailto:contact@gamedoor41.fr">contact@gamedoor41.fr</a> avec votre date, effectif et budget ; (2) recevoir un devis personnalisé sous 48 heures ouvrées ; (3) valider et payer en ligne (acompte ou règlement total selon délai). Facture entreprise au format SARL BOEHME (RCS Caen 823&nbsp;227&nbsp;111).</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Peut-on privatiser GAMEDOOR·41 pour son team building ?</h3>
-          <p style="color:var(--grey-light);">Oui, privatisation totale du site possible pour les groupes de 30 à 46 collaborateurs sur demande. Le site entier (5 salles escape + plateau quiz + accueil) vous est réservé pendant la durée de l'événement. Idéal séminaire annuel, kickoff commercial, intégration de cohorte, soirée client. Nous n'avons pas de salle de réunion : prévoyez un autre lieu pour vos temps de travail.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Peut-on privatiser GAMEDOOR·41 pour son team building ?</summary><p>Oui, privatisation totale du site possible pour les groupes de 30 à 46 collaborateurs sur demande. Le site entier (5 salles escape + plateau quiz + accueil) vous est réservé pendant la durée de l'événement. Idéal séminaire annuel, kickoff commercial, intégration de cohorte, soirée client. Nous n'avons pas de salle de réunion : prévoyez un autre lieu pour vos temps de travail.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quels jours pour un team building à Caen ?</h3>
-          <p style="color:var(--grey-light);"><strong>7 jours sur 7</strong>, du lundi au dimanche. Les créneaux en semaine (mardi, mercredi, jeudi en journée) sont les plus disponibles pour les entreprises. Les week-ends (vendredi soir, samedi) sont plus demandés et nécessitent une réservation 2-3 semaines à l'avance, surtout pendant les périodes de séminaires (octobre-novembre, mars-mai).</p>
-        </div>
+        <details class="tb-faq-item"><summary>Quels jours pour un team building à Caen ?</summary><p><strong>7 jours sur 7</strong>, du lundi au dimanche. Les créneaux en semaine (mardi, mercredi, jeudi en journée) sont les plus disponibles pour les entreprises. Les week-ends (vendredi soir, samedi) sont plus demandés et nécessitent une réservation 2-3 semaines à l'avance, surtout pendant les périodes de séminaires (octobre-novembre, mars-mai).</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Le team building chez GAMEDOOR·41 est-il éligible OPCO / formation ?</h3>
-          <p style="color:var(--grey-light);">Le team building en lui-même n'est pas éligible OPCO (ce n'est pas une formation au sens DPC). En revanche, les formules <strong>séminaire avec module formation</strong> (cohésion d'équipe + atelier sur la communication, leadership, etc.) peuvent l'être sous certaines conditions — nous travaillons avec des intervenants partenaires. Nous n'avons pas de salle de réunion : la partie atelier se tient dans vos locaux ou dans une autre salle. Devis sur mesure.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Le team building chez GAMEDOOR·41 est-il éligible OPCO / formation ?</summary><p>Le team building en lui-même n'est pas éligible OPCO (ce n'est pas une formation au sens DPC). En revanche, les formules <strong>séminaire avec module formation</strong> (cohésion d'équipe + atelier sur la communication, leadership, etc.) peuvent l'être sous certaines conditions — nous travaillons avec des intervenants partenaires. Nous n'avons pas de salle de réunion : la partie atelier se tient dans vos locaux ou dans une autre salle. Devis sur mesure.</p></details>
 
-        <div>
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Y a-t-il de la restauration sur place pendant le team building ?</h3>
-          <p style="color:var(--grey-light);">Nous n'avons ni cuisine, ni salle de réunion, ni pour l'instant de salle de réception. En option, nous proposons un <strong>accueil café</strong> à l'arrivée, un <strong>déjeuner en plateaux-repas froids</strong> et un <strong>apéritif dînatoire froid</strong>, avec Grandsire Traiteur (Démouville) et la Fromagerie Le Conquérant (Caen). Dès qu'un repas est commandé, la <strong>privatisation est obligatoire</strong> (tout le site vous est réservé, salle d'accueil comprise) : c'est dans la salle d'accueil que le repas est servi. Plateaux-repas : repas assis, 20 personnes maximum, la salle est réaménagée avec tables et chaises. Accueil café (en libre-service au comptoir) et apéritif dînatoire : debout, en buffet, 40 personnes maximum, avec quelques chaises à disposition ; accueil café assis sur demande (20 personnes maximum). Tous les plats sont servis froids. Devis sur demande lors de la réservation.</p>
-        </div>
+        <details class="tb-faq-item"><summary>Y a-t-il de la restauration sur place pendant le team building ?</summary><p>Nous n'avons ni cuisine, ni salle de réunion, ni pour l'instant de salle de réception. En option, nous proposons un <strong>accueil café</strong> à l'arrivée, un <strong>déjeuner en plateaux-repas froids</strong> et un <strong>apéritif dînatoire froid</strong>, avec Grandsire Traiteur (Démouville) et la Fromagerie Le Conquérant (Caen). Dès qu'un repas est commandé, la <strong>privatisation est obligatoire</strong> (tout le site vous est réservé, salle d'accueil comprise) : c'est dans la salle d'accueil que le repas est servi. Plateaux-repas : repas assis, 20 personnes maximum, la salle est réaménagée avec tables et chaises. Accueil café (en libre-service au comptoir) et apéritif dînatoire : debout, en buffet, 40 personnes maximum, avec quelques chaises à disposition ; accueil café assis sur demande (20 personnes maximum). Tous les plats sont servis froids. Devis sur demande lors de la réservation.</p></details>
       </div>
     </div>
   </section>
