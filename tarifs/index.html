@@ -86,6 +86,135 @@
     }
   }
   </script>
+  <style>
+    /* ============================================================
+       PAGE TARIFS — la réponse tout de suite : « Combien ça coûte ? » + calcul selon le nombre de joueurs.
+       ============================================================ */
+    .tfh { position:relative; overflow:hidden; padding:clamp(28px, 4vw, 56px) 0 clamp(40px, 5vw, 70px); background:#0d0a07; }
+    .tfh-bg {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 70% at 78% 50%, rgba(255,107,0,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 60% at 10% 100%, rgba(61,93,192,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 50% at 40% 0%, rgba(157,78,221,0.18) 0%, transparent 70%);
+    }
+    .tfh-inner { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:clamp(24px, 4vw, 60px); align-items:center; }
+    .tfh-kicker { margin:0 0 14px; font-family:var(--font-display); font-size:15px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--orange); }
+    .tfh-h1 { margin:0; font-family:var(--font-display); font-weight:700; text-transform:uppercase; font-size:clamp(2.6rem, 4.6vw, 4.6rem); line-height:1.02; color:#fff; }
+    .tfh-h1 span { display:block; color:var(--orange); text-shadow:0 0 30px rgba(255,107,0,0.45); }
+    .tfh-pitch { margin:18px 0 0; max-width:30em; font-size:1.12rem; line-height:1.6; color:#E8E2D6; }
+    .tfh-des { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:26px; max-width:520px; }
+    .tfh-des-item {
+      display:flex; flex-direction:column; gap:4px; padding:16px 18px; border-radius:14px; text-decoration:none;
+      background:rgba(255,255,255,0.03); border:1px solid var(--c); box-shadow:0 0 26px var(--g);
+      transition:transform .2s ease, background .2s ease;
+    }
+    .tfh-des-item:hover { transform:translateY(-2px); background:rgba(255,255,255,0.06); }
+    .tfh-des--escape { --c:#3D5DC0; --g:rgba(61,93,192,0.28); --t:#8FA6F2; }
+    .tfh-des--quiz { --c:#9D4EDD; --g:rgba(157,78,221,0.28); --t:#C98BF5; }
+    .tfh-des-label { font-family:var(--font-display); font-size:15px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--t); }
+    .tfh-des-prix { font-family:var(--font-display); font-size:2.6rem; font-weight:700; line-height:1; color:#fff; }
+    .tfh-des-prix small { font-size:1rem; font-weight:500; color:var(--grey-light); text-transform:uppercase; letter-spacing:.08em; }
+    .tfh-des-unit { font-size:0.9rem; color:var(--grey-light); }
+
+    /* Calcul */
+    .tfc {
+      padding:clamp(20px, 2.4vw, 30px); border-radius:20px;
+      background:linear-gradient(180deg, #1a1510 0%, #110d09 100%);
+      border:1px solid rgba(255,107,0,0.45); box-shadow:0 0 0 6px rgba(255,107,0,0.07), 0 28px 60px rgba(0,0,0,0.55);
+    }
+    .tfc-titre { margin:0 0 14px; font-family:var(--font-display); font-size:1.6rem; font-weight:700; text-transform:uppercase; color:#fff; letter-spacing:.02em; }
+    .tfc-nb { display:grid; grid-template-columns:repeat(8, minmax(0, 1fr)); gap:6px; }
+    .tfc-nb button {
+      height:42px; border-radius:10px; cursor:pointer; border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04); color:var(--gd-cream);
+      font-family:var(--font-display); font-size:1.15rem; font-weight:700;
+      transition:background .15s ease, border-color .15s ease, transform .15s ease;
+    }
+    .tfc-nb button:hover { border-color:var(--orange); }
+    .tfc-nb button[aria-pressed="true"] { background:var(--orange); border-color:var(--orange); color:#fff; transform:translateY(-1px); box-shadow:0 6px 16px rgba(255,107,0,0.4); }
+    .tfc-nb button:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+    .tfc-res { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }
+    .tfc-card { padding:16px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid var(--c); min-height:128px; }
+    .tfc--escape { --c:rgba(61,93,192,0.7); --t:#8FA6F2; }
+    .tfc--quiz { --c:rgba(157,78,221,0.7); --t:#C98BF5; }
+    .tfc-card-label { margin:0 0 6px; font-family:var(--font-display); font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--t); }
+    .tfc-prix { margin:0; color:var(--grey-light); font-size:1rem; }
+    .tfc-prix strong { font-family:var(--font-display); font-size:2.4rem; font-weight:700; line-height:1.05; color:#fff; }
+    .tfc-prix strong.tfc-txt { display:block; font-size:1.45rem; line-height:1.1; }
+    .tfc-total { margin:6px 0 0; color:var(--grey-light); font-size:0.95rem; line-height:1.4; }
+    .tfc-cta { width:100%; justify-content:center; margin-top:18px; }
+    .tfc-note { margin:10px 0 0; text-align:center; color:var(--grey); font-size:0.85rem; }
+
+    /* Grilles détaillées : une ligne chacune, le « compris dans le prix » une seule fois au-dessus */
+    .tf-inclus { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 10px; margin:18px auto 0; padding:0; list-style:none; }
+    .tf-inclus li {
+      display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:999px;
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); color:var(--gd-cream); font-size:0.95rem;
+    }
+    .tf-inclus li::before { content:"✓"; color:var(--orange); font-weight:700; }
+    .tarifs-grid-escape { grid-template-columns:repeat(5, minmax(0, 1fr)); }
+    .tarifs-grid-quiz { grid-template-columns:repeat(3, minmax(0, 1fr)); margin-left:auto; margin-right:auto; }
+    .tarifs-card .btn { justify-content:center; }
+
+    /* Réductions : 4 tuiles courtes */
+    .tf-bonsplans { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:14px; margin-top:28px; }
+    .tf-bp { padding:20px 18px; border-radius:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,107,0,0.25); }
+    .tf-bp-val { display:block; font-family:var(--font-display); font-size:2.2rem; font-weight:700; line-height:1; color:var(--orange); }
+    .tf-bp h3 { margin:10px 0 6px; font-family:var(--font-display); font-size:1.15rem; text-transform:uppercase; color:#fff; letter-spacing:.02em; }
+    .tf-bp p { margin:0; color:var(--grey-light); font-size:0.95rem; line-height:1.5; }
+    .tf-bp--mariage { border-color:rgba(157,78,221,0.45); }
+    .tf-bp--mariage .tf-bp-val { color:#C98BF5; }
+    .tf-justif { max-width:820px; margin:18px auto 0; text-align:center; color:var(--grey-light); font-size:0.95rem; }
+
+    /* FAQ repliables */
+    .tf-faq-item { border-bottom:1px solid var(--dark-border); }
+    .tf-faq-item summary {
+      list-style:none; cursor:pointer; position:relative; padding:16px 44px 16px 0;
+      font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--white);
+    }
+    .tf-faq-item summary::-webkit-details-marker { display:none; }
+    .tf-faq-item summary::after {
+      content:"+"; position:absolute; right:6px; top:50%; transform:translateY(-50%);
+      width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      background:rgba(255,107,0,0.14); color:var(--orange); font-size:1.3rem; font-weight:700; line-height:1;
+    }
+    .tf-faq-item[open] summary::after { content:"−"; }
+    .tf-faq-item summary:hover { color:var(--orange); }
+    .tf-faq-item p { margin:0 0 18px; color:var(--grey-light); line-height:1.6; }
+
+    @media (max-width: 1100px) {
+      .tf-bonsplans { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 900px) {
+      .tfh-inner { grid-template-columns:1fr; }
+      .tfh-des, .tfc { max-width:600px; }
+      .tfc { width:100%; margin:0 auto; }
+    }
+    @media (max-width: 760px) {
+      .tarifs-grid-escape { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      .tfh { padding:22px 0 34px; }
+      .tfh-h1 { font-size:2.7rem; }
+      .tfh-pitch { font-size:1rem; margin-top:12px; }
+      .tfh-des { margin-top:18px; gap:10px; }
+      .tfh-des-item { padding:12px 14px; }
+      .tfh-des-prix { font-size:2.1rem; }
+      .tfh-des-unit { font-size:0.8rem; }
+      .tfc-titre { font-size:1.35rem; }
+      .tfc-nb button { height:40px; font-size:1.05rem; }
+      .tfc-prix strong { font-size:2rem; }
+      .tfc-card { padding:13px; min-height:118px; }
+      /* grilles détaillées : une formule par ligne, prix et bouton côte à côte */
+      .tarifs-grid-escape, .tarifs-grid-quiz { grid-template-columns:1fr; }
+      .tarifs-grid .tarifs-card { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:12px; text-align:left; }
+      .tarifs-grid .tarifs-card > * { grid-column:1; }
+      .tarifs-grid .tarifs-card > .btn { grid-column:2; grid-row:1 / span 3; width:auto !important; }
+      .tarifs-grid .tarifs-card > .tarifs-card-flag { grid-column:1 / -1; }
+      .tf-bonsplans { grid-template-columns:1fr; gap:10px; }
+    }
+  </style>
 </head>
 <body class="tarifs-page">
 
@@ -133,20 +262,74 @@
     </div>
   </div>
 
-  <!-- HERO COMPACT -->
-  <section class="page-hero" style="min-height:38vh;">
-    <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0d0a06 0%,#1a1008 60%,#0c0610 100%);"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content container" style="text-align:center;">
-      <p class="kicker" style="color:var(--orange);">PRIX &amp; TARIFS GAMEDOOR·41</p>
-      <h1 style="margin-bottom:12px;">Tarifs escape game &amp; quiz à Caen<br><span class="accent">clairs &amp; transparents</span></h1>
-      <p class="subtitle" style="max-width:720px;margin:0 auto;">Escape dès <strong style="color:#3D5DC0;">24€/pers.</strong> · Quiz Buzz Your Brain dès <strong style="color:var(--gd-quiz);">15€/pers.</strong> · Réductions étudiant ADULTE &amp; cartes · Place mariée·marié <strong style="color:var(--orange);">offerte avec MARIAGE</strong></p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
-        <a href="https://braincaen.4escape.io/booking" class="btn btn-primary btn-arrow" target="_blank" rel="noopener" data-track="cta-reserver-tarifs-hero">Réserver en ligne</a>
-        <a href="#tarifs-escape" class="btn btn-outline">Voir les tarifs</a>
+  <!-- HERO — « Combien ça coûte ? » : la réponse tout de suite, avec le calcul selon le nombre de joueurs -->
+  <section class="tfh" aria-labelledby="tfh-titre">
+    <div class="tfh-bg" aria-hidden="true"></div>
+    <div class="container tfh-inner">
+      <div class="tfh-text">
+        <p class="tfh-kicker">Prix &amp; tarifs · GAMEDOOR·41 Caen</p>
+        <h1 id="tfh-titre" class="tfh-h1">Combien <span>ça coûte&nbsp;?</span></h1>
+        <p class="tfh-pitch">Le prix dépend du nombre de joueurs&nbsp;: plus vous êtes nombreux, moins c'est cher. Tout est inclus, sans supplément.</p>
+        <div class="tfh-des">
+          <a href="#tarifs-escape" class="tfh-des-item tfh-des--escape"><span class="tfh-des-label">Escape game</span><span class="tfh-des-prix"><small>dès</small> 24€</span><span class="tfh-des-unit">par personne · 2 à 6 joueurs</span></a>
+          <a href="#tarifs-quiz" class="tfh-des-item tfh-des--quiz"><span class="tfh-des-label">Quiz game</span><span class="tfh-des-prix"><small>dès</small> 15€</span><span class="tfh-des-unit">par personne · 4 à 16 candidats</span></a>
+        </div>
+      </div>
+
+      <!-- Calcul du prix : fonctionne sans JavaScript en affichant le cas « 4 joueurs », les grilles complètes sont plus bas -->
+      <div class="tfc" id="calcul" aria-labelledby="tfc-titre">
+        <p id="tfc-titre" class="tfc-titre">Vous êtes combien&nbsp;?</p>
+        <div class="tfc-nb" role="group" aria-label="Nombre de joueurs">
+          <button type="button" data-n="2">2</button><button type="button" data-n="3">3</button><button type="button" data-n="4" aria-pressed="true">4</button><button type="button" data-n="5">5</button><button type="button" data-n="6">6</button><button type="button" data-n="7">7</button><button type="button" data-n="8">8</button><button type="button" data-n="9">9</button><button type="button" data-n="10">10</button><button type="button" data-n="11">11</button><button type="button" data-n="12">12</button><button type="button" data-n="13">13</button><button type="button" data-n="14">14</button><button type="button" data-n="15">15</button><button type="button" data-n="16">16</button>
+        </div>
+        <div class="tfc-res" aria-live="polite">
+          <div class="tfc-card tfc--escape">
+            <p class="tfc-card-label">Escape game</p>
+            <p class="tfc-prix" data-out="escape-pers"><strong>25€</strong> /pers.</p>
+            <p class="tfc-total" data-out="escape-total">100€ pour l'équipe</p>
+          </div>
+          <div class="tfc-card tfc--quiz">
+            <p class="tfc-card-label">Quiz game</p>
+            <p class="tfc-prix" data-out="quiz-pers"><strong>21€</strong> /pers.</p>
+            <p class="tfc-total" data-out="quiz-total">84€ pour le groupe</p>
+          </div>
+        </div>
+        <a href="https://braincaen.4escape.io/booking" class="btn btn-primary btn-arrow tfc-cta" target="_blank" rel="noopener" data-track="cta-reserver-tarifs-calcul">Réserver en ligne</a>
+        <p class="tfc-note">Prix particuliers TTC. Réductions et tarifs entreprise plus bas.</p>
       </div>
     </div>
   </section>
+
+  <script>
+  /* Calcul du prix selon le nombre de joueurs — mêmes montants que les grilles ci-dessous */
+  (function () {
+    var box = document.getElementById('calcul');
+    if (!box) return;
+    var ESCAPE = { 2: 37, 3: 28, 4: 25, 5: 24, 6: 24 };
+    function quiz(n) { return n <= 6 ? 21 : n === 7 ? 19 : n === 8 ? 18 : n <= 10 ? 17 : n <= 12 ? 16 : 15; }
+    function out(k, html) { box.querySelector('[data-out="' + k + '"]').innerHTML = html; }
+    function show(n) {
+      box.querySelectorAll('.tfc-nb button').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-n') === n)); });
+      if (ESCAPE[n]) {
+        out('escape-pers', '<strong>' + ESCAPE[n] + '€</strong> /pers.');
+        out('escape-total', ESCAPE[n] * n + "€ pour l'équipe");
+      } else {
+        out('escape-pers', '<strong class="tfc-txt">Plusieurs salles</strong>');
+        out('escape-total', 'Au-delà de 6, vous jouez dans plusieurs salles en même temps, jusqu\'à 30.');
+      }
+      if (n >= 4) {
+        out('quiz-pers', '<strong>' + quiz(n) + '€</strong> /pers.');
+        out('quiz-total', quiz(n) * n + '€ pour le groupe');
+      } else {
+        out('quiz-pers', '<strong class="tfc-txt">Dès 4 candidats</strong>');
+        out('quiz-total', 'Le quiz se joue à partir de 4.');
+      }
+    }
+    box.querySelectorAll('.tfc-nb button').forEach(function (b) {
+      b.addEventListener('click', function () { show(+b.getAttribute('data-n')); });
+    });
+  })();
+  </script>
 
   <!-- STATS BAND -->
   <div class="stats-band">
@@ -170,41 +353,14 @@
     </div>
   </div>
 
-  <!-- TL;DR — 3 INFO CARDS -->
-  <section class="section" style="padding:48px 0 24px;">
-    <div class="container">
-      <div class="section-header-editorial fade-in" data-num="01">
-        <p class="kicker" style="color:var(--orange);">Avant de réserver</p>
-        <h2>Ce qu'il faut <span style="color:var(--orange);">savoir</span></h2>
-      </div>
-      <div class="tarifs-tldr fade-in">
-        <div class="tarifs-tldr-card">
-          <span class="tarifs-tldr-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/users.svg" alt=""></span>
-          <h3>Tarifs dégressifs</h3>
-          <p>Plus le groupe est grand, moins le prix par personne est élevé. Idem sur les <a href="#tarifs-escape">5 salles d'escape</a> et le <a href="#tarifs-quiz">plateau Quiz Buzz Your Brain</a>.</p>
-        </div>
-        <div class="tarifs-tldr-card">
-          <span class="tarifs-tldr-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/check.svg" alt=""></span>
-          <h3>Réductions sur justificatif</h3>
-          <p>−10 % sur présentation d'une carte (étudiant ADULTE 18+, CEZAM, Trip Normand, PAN, City Pass, RDN, CSE). <a href="#reductions"><strong>Voir conditions →</strong></a></p>
-        </div>
-        <div class="tarifs-tldr-card">
-          <span class="tarifs-tldr-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/rings.svg" alt=""></span>
-          <h3>Place mariée·marié offerte</h3>
-          <p>Avec le code <strong style="color:var(--orange);">MARIAGE</strong>, la place mariée·marié est offerte (quiz <strong>ET</strong> escape). Accessoire reine/roi du jour suffit. <a href="/mariage-caen/"><strong>Voir Mariage →</strong></a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- TARIFS ESCAPE GAME -->
   <section id="tarifs-escape" class="section" style="padding:48px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="02">
+      <div class="section-header-editorial fade-in" data-num="01">
         <p class="kicker" style="color:#3D5DC0;">Brain Escape Game</p>
         <h2>Tarifs <span style="color:#3D5DC0;">Escape Game</span></h2>
       </div>
-      <p class="fade-in" style="text-align:center;color:var(--grey-light);max-width:720px;margin:14px auto 0;font-size:1rem;">5 salles physiques · 3 univers thématiques (Garde à Vue, Psychiatric, Back to the 80's) · 60 min de jeu encadrés par un game master acteur dédié · brief + débrief + photo souvenir inclus.</p>
+      <ul class="tf-inclus fade-in" aria-label="Compris dans le prix"><li>60 min de jeu</li><li>Game master acteur</li><li>Brief, débrief et photo</li><li>Même prix dans les 5 salles</li></ul>
 
       <div class="tarifs-grid tarifs-grid-escape fade-in">
 
@@ -217,11 +373,6 @@
             <span class="tarifs-card-unit">par personne</span>
           </div>
           <p class="tarifs-card-team">74€ par équipe</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min de jeu</li>
-            <li>Game master acteur</li>
-            <li>Brief + débrief + photo</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-resa-escape-2j">Réserver</a>
         </article>
 
@@ -234,11 +385,6 @@
             <span class="tarifs-card-unit">par personne</span>
           </div>
           <p class="tarifs-card-team">84€ par équipe</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min de jeu</li>
-            <li>Game master acteur</li>
-            <li>Brief + débrief + photo</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-resa-escape-3j">Réserver</a>
         </article>
 
@@ -252,11 +398,6 @@
             <span class="tarifs-card-unit">par personne</span>
           </div>
           <p class="tarifs-card-team">100€ par équipe</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min de jeu</li>
-            <li>Game master acteur</li>
-            <li>Brief + débrief + photo</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-resa-escape-4j">Réserver</a>
         </article>
 
@@ -269,11 +410,6 @@
             <span class="tarifs-card-unit">par personne</span>
           </div>
           <p class="tarifs-card-team">120€ par équipe</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min de jeu</li>
-            <li>Game master acteur</li>
-            <li>Brief + débrief + photo</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-resa-escape-5j">Réserver</a>
         </article>
 
@@ -286,11 +422,6 @@
             <span class="tarifs-card-unit">par personne</span>
           </div>
           <p class="tarifs-card-team">144€ par équipe</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min de jeu</li>
-            <li>Game master acteur</li>
-            <li>Brief + débrief + photo</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" data-track="cta-resa-escape-6j">Réserver</a>
         </article>
 
@@ -303,11 +434,11 @@
   <!-- TARIFS QUIZ BUZZ YOUR BRAIN -->
   <section id="tarifs-quiz" class="section" style="background:var(--dark);padding:48px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="03">
+      <div class="section-header-editorial fade-in" data-num="02">
         <p class="kicker" style="color:var(--gd-quiz);">Buzz Your Brain</p>
         <h2>Tarifs <span style="color:var(--gd-quiz);">Quiz Game</span></h2>
       </div>
-      <p class="fade-in" style="text-align:center;color:var(--grey-light);max-width:720px;margin:14px auto 0;font-size:1rem;">Plateau TV avec 8 pupitres équipés de buzzers, multi écrans, joystick et boutons ABCD · 60 min d'émission sur écran (le chauffeur de salle lance l'émission, puis tout se déroule sur écran) · 4 à 16 candidats par session.</p>
+      <ul class="tf-inclus fade-in" aria-label="Compris dans le prix"><li>60 min d'émission</li><li>8 pupitres avec buzzers</li><li>Chauffeur de salle</li><li>Multi écrans · joystick</li></ul>
 
       <div class="tarifs-grid tarifs-grid-quiz fade-in">
 
@@ -320,11 +451,6 @@
             <span class="tarifs-card-unit">par personne</span>
           </div>
           <p class="tarifs-card-team">Dès 84€ par session</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min d'émission</li>
-            <li>8 pupitres avec buzzers</li>
-            <li>Multi écrans · joystick · ABCD</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-resa-quiz-4-6">Réserver</a>
         </article>
 
@@ -338,11 +464,6 @@
             <span class="tarifs-card-unit">par personne · dégressif</span>
           </div>
           <p class="tarifs-card-team">Dès 133€ par session</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min d'émission</li>
-            <li>8 pupitres avec buzzers</li>
-            <li>Idéal anniversaire / amis</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-resa-quiz-7-10">Réserver</a>
         </article>
 
@@ -355,11 +476,6 @@
             <span class="tarifs-card-unit">par personne · dégressif</span>
           </div>
           <p class="tarifs-card-team">Dès 176€ par session (max 240€)</p>
-          <ul class="tarifs-card-includes">
-            <li>60 min d'émission</li>
-            <li>8 pupitres · binôme par pupitre</li>
-            <li>Idéal EVJF / EVG / soirée</li>
-          </ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-resa-quiz-11-16">Réserver</a>
         </article>
 
@@ -378,87 +494,34 @@
   <!-- RÉDUCTIONS & CODES PROMO -->
   <section id="reductions" class="section" style="padding:64px 0;">
     <div class="container">
-      <div class="section-header-editorial fade-in" data-num="04">
+      <div class="section-header-editorial fade-in" data-num="03">
         <p class="kicker" style="color:var(--orange);">Réductions &amp; codes promo</p>
         <h2>−10 % sur <span style="color:var(--orange);">justificatif</span></h2>
       </div>
 
-      <div class="reductions-grid fade-in">
-
-        <!-- ÉTUDIANT ADULTE -->
-        <div class="reduction-card reduction-card-feature" data-cat="etudiant">
-          <div class="reduction-card-head">
-            <span class="reduction-card-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/users.svg" alt=""></span>
-            <div>
-              <span class="reduction-card-tag">Étudiant ADULTE</span>
-              <h3>−10 % · 18 ans et +</h3>
-            </div>
-            <span class="reduction-card-discount">−10%</span>
-          </div>
-          <p class="reduction-card-desc">Sur présentation d'une <strong>carte étudiante en cours de validité</strong> (université, école sup, alternance, master, doctorat). Réservé aux <strong>ADULTES de 18 ans et +</strong> — les lycéens / collégiens ne sont pas éligibles à cette réduction.</p>
-          <p class="reduction-card-note"><strong>⚠ Hors juillet et août</strong> (pas de tarif étudiant pendant les vacances estivales).</p>
+      <div class="tf-bonsplans fade-in">
+        <div class="tf-bp">
+          <span class="tf-bp-val">−10&nbsp;%</span>
+          <h3>Étudiant adulte</h3>
+          <p>18 ans et +, carte étudiante en cours de validité. Hors juillet et août.</p>
         </div>
-
-        <!-- CARTES PARTENAIRES -->
-        <div class="reduction-card" data-cat="cartes">
-          <div class="reduction-card-head">
-            <span class="reduction-card-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/check.svg" alt=""></span>
-            <div>
-              <span class="reduction-card-tag">Cartes &amp; pass</span>
-              <h3>−10 % · cartes partenaires</h3>
-            </div>
-            <span class="reduction-card-discount">−10%</span>
-          </div>
-          <ul class="reduction-card-list">
-            <li><strong>CEZAM</strong> · carte loisirs nationale</li>
-            <li><strong>Trip Normand</strong> · pass loisirs Normandie</li>
-            <li><strong>PAN</strong> · Pass Avantages Normandie</li>
-            <li><strong>City Pass Caen</strong></li>
-            <li><strong>Réduc de Normandie (RDN)</strong></li>
-            <li><strong>CSE partenaires</strong> (sur convention)</li>
-          </ul>
-          <p class="reduction-card-note">Carte / pass / attestation à présenter à l'arrivée.</p>
+        <div class="tf-bp">
+          <span class="tf-bp-val">−10&nbsp;%</span>
+          <h3>Cartes partenaires</h3>
+          <p>CEZAM, Trip Normand, PAN, City Pass Caen, Réduc de Normandie, CSE partenaires.</p>
         </div>
-
-        <!-- ANCV -->
-        <div class="reduction-card" data-cat="ancv">
-          <div class="reduction-card-head">
-            <span class="reduction-card-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/euro.svg" alt=""></span>
-            <div>
-              <span class="reduction-card-tag">Paiement</span>
-              <h3>Chèques ANCV acceptés</h3>
-            </div>
-            <span class="reduction-card-discount" style="background:rgba(99,131,214,0.15);color:#6383d6;border-color:rgba(99,131,214,0.4);">ANCV</span>
-          </div>
-          <p class="reduction-card-desc">Chèques Vacances ANCV acceptés en moyen de paiement (pas une réduction, mais une facilité de paiement). Chèques cadeau CSE également acceptés selon les conventions partenaires.</p>
+        <div class="tf-bp">
+          <span class="tf-bp-val">ANCV</span>
+          <h3>Chèques vacances</h3>
+          <p>Acceptés en paiement, comme les chèques cadeau CSE partenaires.</p>
         </div>
-
-        <!-- MARIAGE -->
-        <div class="reduction-card reduction-card-mariage" data-cat="mariage">
-          <div class="reduction-card-head">
-            <span class="reduction-card-icon" aria-hidden="true"><img width="24" height="24" src="/img/icons/rings.svg" alt=""></span>
-            <div>
-              <span class="reduction-card-tag">Code MARIAGE</span>
-              <h3>Place mariée·marié <strong>OFFERTE</strong></h3>
-            </div>
-            <span class="reduction-card-discount" style="background:rgba(157,78,221,0.18);color:var(--gd-quiz);border-color:rgba(157,78,221,0.5);">100% offert</span>
-          </div>
-          <p class="reduction-card-desc">Avec le code <strong style="color:var(--gd-quiz);">MARIAGE</strong> à la réservation, la place du futur·e marié·e est <strong>offerte sur le quiz ET sur l'escape game</strong>. Valable en EVJF, EVG, jour J ou pré-mariage.</p>
-          <p class="reduction-card-note">Condition : arriver avec un <strong>accessoire « reine du jour » ou « roi du jour »</strong> (voile, nœud papillon, couronne, écharpe… au choix). Pas besoin de déguisement complet — un seul accessoire suffit.</p>
-          <p style="margin-top:10px;"><a href="/mariage-caen/" style="color:var(--gd-quiz);font-weight:600;">Voir la page Mariage →</a></p>
-        </div>
-
-      </div>
-
-      <!-- WARNING JUSTIFICATIF -->
-      <div class="fade-in tarifs-warning">
-        <span class="tarifs-warning-icon" aria-hidden="true">⚠</span>
-        <div>
-          <h3>Justificatif obligatoire à l'arrivée</h3>
-          <p>Toute réduction utilisée à la réservation doit être <strong>justifiée à l'arrivée</strong> par un document valide (carte étudiante en cours, carte CEZAM, Trip Normand, PAN, City Pass, RDN, attestation CSE, etc.). <strong>Sans justificatif valable le jour J, le complément (différence avec le tarif standard) est dû et payable sur place avant le démarrage de la session.</strong></p>
-          <p style="margin-top:8px;font-size:0.9rem;color:var(--grey);">Pour le code MARIAGE : sans accessoire reine/roi du jour à l'arrivée, la place offerte n'est pas validée.</p>
+        <div class="tf-bp tf-bp--mariage">
+          <span class="tf-bp-val">Offerte</span>
+          <h3>Place mariée · marié</h3>
+          <p>Code <strong>MARIAGE</strong> + un accessoire « reine » ou « roi du jour ». Quiz et escape. <a href="/mariage-caen/" style="color:#C98BF5;">Voir la page Mariage</a></p>
         </div>
       </div>
+      <p class="tf-justif fade-in">⚠ <strong>Justificatif à présenter à l'arrivée.</strong> Sans lui, la différence avec le tarif normal est à régler sur place avant la session.</p>
     </div>
   </section>
 
@@ -486,40 +549,19 @@
         <p class="kicker" style="color:var(--orange);margin-bottom:8px;">FAQ Tarifs</p>
         <h2 style="font-size:1.6rem;margin-bottom:28px;">Questions fréquentes — Prix &amp; tarifs</h2>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quel est le prix d'un escape game à Caen ?</h3>
-          <p style="color:var(--grey-light);">Tarif particulier dégressif selon la taille du groupe : <strong>37€/pers (2 joueurs · 74€ équipe)</strong>, 28€/pers (3 · 84€), 25€/pers (4 · 100€), 24€/pers (5 · 120€), <strong>24€/pers (6 · 144€)</strong>. 60 min de jeu + brief + débrief inclus, game master acteur dédié, photo souvenir. Même tarif sur les 5 salles physiques (<a href="/escape-game-caen/garde-a-vue/" style="color:#3D5DC0;">Garde à Vue</a>, <a href="/escape-game-caen/psychiatric/" style="color:#3D5DC0;">Psychiatric</a>, <a href="/escape-game-caen/back-to-the-80s/" style="color:#3D5DC0;">Back to the 80's</a>).</p>
-        </div>
+        <details class="tf-faq-item"><summary>Quel est le prix d'un escape game à Caen ?</summary><p>Tarif particulier dégressif selon la taille du groupe : <strong>37€/pers (2 joueurs · 74€ équipe)</strong>, 28€/pers (3 · 84€), 25€/pers (4 · 100€), 24€/pers (5 · 120€), <strong>24€/pers (6 · 144€)</strong>. 60 min de jeu + brief + débrief inclus, game master acteur dédié, photo souvenir. Même tarif sur les 5 salles physiques (<a href="/escape-game-caen/garde-a-vue/" style="color:#3D5DC0;">Garde à Vue</a>, <a href="/escape-game-caen/psychiatric/" style="color:#3D5DC0;">Psychiatric</a>, <a href="/escape-game-caen/back-to-the-80s/" style="color:#3D5DC0;">Back to the 80's</a>).</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quel est le prix du quiz Buzz Your Brain ?</h3>
-          <p style="color:var(--grey-light);">Tarif particulier dégressif : <strong>21€/pers à 4-6 candidats</strong>, 19€ à 7, 18€ à 8, 17€ à 9-10, 16€ à 11-12, <strong>15€/pers à 13-16 candidats</strong>. 60 min d'émission sur écran avec 8 pupitres équipés de buzzers, multi écrans, joystick et boutons ABCD. <a href="/quiz-game-caen/" style="color:var(--gd-quiz);">En savoir plus sur Buzz Your Brain →</a></p>
-        </div>
+        <details class="tf-faq-item"><summary>Quel est le prix du quiz Buzz Your Brain ?</summary><p>Tarif particulier dégressif : <strong>21€/pers à 4-6 candidats</strong>, 19€ à 7, 18€ à 8, 17€ à 9-10, 16€ à 11-12, <strong>15€/pers à 13-16 candidats</strong>. 60 min d'émission sur écran avec 8 pupitres équipés de buzzers, multi écrans, joystick et boutons ABCD. <a href="/quiz-game-caen/" style="color:var(--gd-quiz);">En savoir plus sur Buzz Your Brain →</a></p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Y a-t-il un tarif étudiant ?</h3>
-          <p style="color:var(--grey-light);">Oui, <strong>−10 % pour les ADULTES étudiant·e·s (18 ans et +)</strong> sur présentation d'une <strong>carte étudiante en cours de validité</strong> (université, école sup, alternance, master, doctorat). Tarif valable <strong>hors juillet et août</strong>. Justificatif obligatoire à l'arrivée — sinon complément à régler sur place avant le jeu. <strong>La réduction étudiant ne s'applique pas aux lycéens / collégiens.</strong></p>
-        </div>
+        <details class="tf-faq-item"><summary>Y a-t-il un tarif étudiant ?</summary><p>Oui, <strong>−10 % pour les ADULTES étudiant·e·s (18 ans et +)</strong> sur présentation d'une <strong>carte étudiante en cours de validité</strong> (université, école sup, alternance, master, doctorat). Tarif valable <strong>hors juillet et août</strong>. Justificatif obligatoire à l'arrivée — sinon complément à régler sur place avant le jeu. <strong>La réduction étudiant ne s'applique pas aux lycéens / collégiens.</strong></p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quelles cartes de réduction sont acceptées ?</h3>
-          <p style="color:var(--grey-light);"><strong>−10 %</strong> sur présentation des cartes / pass : <strong>CEZAM, Trip Normand, PAN (Pass Avantages Normandie), City Pass Caen, Réduc de Normandie, CSE partenaires</strong> (sur convention). Les <strong>chèques ANCV</strong> sont acceptés en moyen de paiement. Justificatif obligatoire à l'arrivée — sans justificatif valable, le complément (différence avec le tarif standard) est à régler sur place avant le jeu.</p>
-        </div>
+        <details class="tf-faq-item"><summary>Quelles cartes de réduction sont acceptées ?</summary><p><strong>−10 %</strong> sur présentation des cartes / pass : <strong>CEZAM, Trip Normand, PAN (Pass Avantages Normandie), City Pass Caen, Réduc de Normandie, CSE partenaires</strong> (sur convention). Les <strong>chèques ANCV</strong> sont acceptés en moyen de paiement. Justificatif obligatoire à l'arrivée — sans justificatif valable, le complément (différence avec le tarif standard) est à régler sur place avant le jeu.</p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Comment fonctionne la place offerte mariée·marié avec le code MARIAGE ?</h3>
-          <p style="color:var(--grey-light);">Avec le code <strong style="color:var(--gd-quiz);">MARIAGE</strong> à la réservation, la place du futur·e marié·e est <strong>offerte sur le quiz Buzz Your Brain ET sur l'escape game</strong>. Condition : arriver avec un <strong>accessoire « reine du jour » ou « roi du jour »</strong> (voile, nœud papillon, couronne, écharpe — au choix, on n'impose pas le déguisement complet). Sans accessoire à l'arrivée, la place offerte n'est pas validée. <a href="/mariage-caen/" style="color:var(--gd-quiz);">Voir la page Mariage →</a></p>
-        </div>
+        <details class="tf-faq-item"><summary>Comment fonctionne la place offerte mariée·marié avec le code MARIAGE ?</summary><p>Avec le code <strong style="color:var(--gd-quiz);">MARIAGE</strong> à la réservation, la place du futur·e marié·e est <strong>offerte sur le quiz Buzz Your Brain ET sur l'escape game</strong>. Condition : arriver avec un <strong>accessoire « reine du jour » ou « roi du jour »</strong> (voile, nœud papillon, couronne, écharpe — au choix, on n'impose pas le déguisement complet). Sans accessoire à l'arrivée, la place offerte n'est pas validée. <a href="/mariage-caen/" style="color:var(--gd-quiz);">Voir la page Mariage →</a></p></details>
 
-        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Y a-t-il des tarifs pour les entreprises et CSE ?</h3>
-          <p style="color:var(--grey-light);">Oui, tarifs réservés aux professionnels : <strong>escape 17,50€ TTC/pers (15,91€ HT)</strong>, <strong>quiz 15€ TTC/pers (13,64€ HT)</strong> sur présentation d'un justificatif Kbis/SIRET ou bon de commande au nom de la société. Facture entreprise (TVA 10% déductible). Paiement par bon de commande, virement, CB. <a href="/team-building-caen/" style="color:var(--orange);">Voir la page Team Building →</a></p>
-        </div>
+        <details class="tf-faq-item"><summary>Y a-t-il des tarifs pour les entreprises et CSE ?</summary><p>Oui, tarifs réservés aux professionnels : <strong>escape 17,50€ TTC/pers (15,91€ HT)</strong>, <strong>quiz 15€ TTC/pers (13,64€ HT)</strong> sur présentation d'un justificatif Kbis/SIRET ou bon de commande au nom de la société. Facture entreprise (TVA 10% déductible). Paiement par bon de commande, virement, CB. <a href="/team-building-caen/" style="color:var(--orange);">Voir la page Team Building →</a></p></details>
 
-        <div>
-          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Quels sont les moyens de paiement ?</h3>
-          <p style="color:var(--grey-light);"><strong>Réservation et paiement en ligne sécurisé exclusivement</strong> (CB, ANCV, chèques cadeau CSE acceptés). Pas de réservation par téléphone, pas de paiement en espèces. Pour les entreprises : bon de commande, virement, CB et facture entreprise. <strong>Exception</strong> : pour les compléments justificatifs (réduction non justifiée le jour J), le complément est payable sur place avant le jeu.</p>
-        </div>
+        <details class="tf-faq-item"><summary>Quels sont les moyens de paiement ?</summary><p><strong>Réservation et paiement en ligne sécurisé exclusivement</strong> (CB, ANCV, chèques cadeau CSE acceptés). Pas de réservation par téléphone, pas de paiement en espèces. Pour les entreprises : bon de commande, virement, CB et facture entreprise. <strong>Exception</strong> : pour les compléments justificatifs (réduction non justifiée le jour J), le complément est payable sur place avant le jeu.</p></details>
 
       </div>
     </div>
