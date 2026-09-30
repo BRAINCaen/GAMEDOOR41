@@ -351,6 +351,28 @@
       .cmp-cta:hover { transform:none; }
     }
 
+    /* Tarifs : les 3 formules côte à côte (avant : 2 en haut, 1 en dessous), sans puces parasites */
+    .price-grid--3 { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px; }
+    .price-grid--3 .price-card { padding:28px 22px; }
+    .price-grid--3 .price-card .btn { justify-content:center; }
+    .price-grid--3 .price-details { list-style:none; padding:0; margin:0 0 20px; }
+    .price-grid--3 .price-details li { border-bottom:none; padding:4px 0; }
+    @media (max-width: 900px) {
+      .price-grid--3 { gap:12px; }
+      .price-grid--3 .price-card { padding:22px 12px; }
+      .price-grid--3 .price-amount { font-size:2.2rem; }
+      .price-grid--3 .price-card .btn { padding:12px 10px; letter-spacing:.06em; }
+    }
+    /* Téléphone : une formule par ligne, mais compacte (prix et bouton sur la même ligne) */
+    @media (max-width: 600px) {
+      .price-grid--3 { grid-template-columns:1fr; gap:14px; }
+      .price-grid--3 .price-card { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:14px; text-align:left; padding:18px 18px 16px; }
+      .price-grid--3 .price-card h4 { grid-column:1; margin:0; }
+      .price-grid--3 .price-amount { grid-column:1; margin:6px 0 2px; font-size:2.1rem; }
+      .price-grid--3 .price-details { grid-column:1; margin:0; font-size:.95rem; }
+      .price-grid--3 .price-card .btn { grid-column:2; grid-row:1 / span 3; width:auto !important; padding:12px 18px; }
+      .price-grid--3 .price-card.featured::before { left:auto; right:18px; transform:none; }
+    }
     /* Scroll naturel : la section démarre dès le haut du viewport, le menu fixe
        overlaie le bg image (effet full-bleed cinéma). Le panel a un margin-top qui
        clear le menu pour que son contenu commence juste sous lui. */
@@ -1161,23 +1183,23 @@
         <h2>À partir de <span class="text-orange">24€</span> par personne</h2>
         <p class="subtitle" style="margin-top:8px;">Tarif dégressif · Réduit / étudiant dès 21,60€/pers. sur justificatif</p>
       </div>
-      <div class="price-grid fade-in" style="max-width:800px;margin:0 auto;">
+      <div class="price-grid price-grid--3 fade-in" style="max-width:1000px;margin:0 auto;">
         <div class="price-card">
           <h4>2 joueurs</h4>
           <div class="price-amount">37€ <small>/pers.</small></div>
-          <div class="price-details"><li>74€ la session</li></div>
+          <ul class="price-details"><li>74€ la session</li></ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" style="width:100%;">Réserver</a>
         </div>
         <div class="price-card featured">
           <h4>3-4 joueurs</h4>
           <div class="price-amount">25-28€ <small>/pers.</small></div>
-          <div class="price-details"><li>84€ à 100€ la session</li></div>
+          <ul class="price-details"><li>84€ à 100€ la session</li></ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" style="width:100%;">Réserver</a>
         </div>
         <div class="price-card">
           <h4>5-6 joueurs</h4>
           <div class="price-amount">24€ <small>/pers.</small></div>
-          <div class="price-details"><li>120€ à 144€ la session</li></div>
+          <ul class="price-details"><li>120€ à 144€ la session</li></ul>
           <a href="https://braincaen.4escape.io/booking" class="btn btn-escape" target="_blank" rel="noopener" style="width:100%;">Réserver</a>
         </div>
       </div>
