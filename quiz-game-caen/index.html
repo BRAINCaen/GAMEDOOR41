@@ -31,7 +31,7 @@
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" type="image/avif" imagesrcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" imagesizes="100vw">
+    <link rel="preload" as="image" type="image/avif" imagesrcset="/img/quiz/salle-quiz-480w.avif 480w, /img/quiz/salle-quiz-768w.avif 768w, /img/quiz/salle-quiz-1024w.avif 1024w" imagesizes="(max-width: 860px) 92vw, 45vw">
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
   <link rel="stylesheet" href="/css/style.css?v=ae805abf">
 
@@ -162,6 +162,75 @@
     ]
   }
   </script>
+  <style>
+    /* ============================================================
+       HERO QUIZ — « c'est un quiz, comme à la télé » en un coup d'œil.
+       Texte court à gauche ; à droite un écran de plateau (photo du buzzer, bandeau EN DIRECT) et 3 jokers du jeu.
+       ============================================================ */
+    .qh { position:relative; overflow:hidden; padding:clamp(28px, 4vw, 60px) 0 clamp(40px, 5vw, 72px); background:#0b0614; }
+    .qh-bg {
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 70% at 76% 48%, rgba(157,78,221,0.42) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 60% at 8% 95%, rgba(61,93,192,0.22) 0%, transparent 70%);
+    }
+    .qh-bg::before {
+      content:""; position:absolute; inset:0;
+      background:url('/img/quiz/asset-quiz-fond-briques-nuit-1024w.jpg') center / cover no-repeat;
+      opacity:0.18;
+    }
+    .qh-inner { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:clamp(24px, 4vw, 64px); align-items:center; }
+    .qh-kicker {
+      margin:0 0 14px; font-family:var(--font-display); font-size:15px; font-weight:600;
+      letter-spacing:.26em; text-transform:uppercase; color:#C98BF5;
+    }
+    .qh-h1 {
+      margin:0; font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+      font-size:clamp(2.4rem, 4.1vw, 4.1rem); line-height:.98; color:#fff;
+    }
+    .qh-h1 span { display:block; color:var(--gd-quiz); text-shadow:0 0 34px rgba(157,78,221,0.65); }
+    .qh-pitch { margin:20px 0 0; max-width:31em; font-size:1.12rem; line-height:1.6; color:#E8E2D6; }
+    .qh-cta { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+
+    .qh-visual { position:relative; padding:34px 40px 56px 24px; }
+    .qh-tv {
+      position:relative; aspect-ratio:4 / 3; border-radius:18px; overflow:hidden; background:#000;
+      border:3px solid rgba(201,139,245,0.75);
+      box-shadow:0 0 0 8px rgba(157,78,221,0.14), 0 0 60px rgba(157,78,221,0.55), 0 30px 60px rgba(0,0,0,0.6);
+      transform:rotate(-2deg);
+    }
+    .qh-tv picture, .qh-tv img { display:block; width:100%; height:100%; }
+    .qh-tv img { object-fit:cover; object-position:center 60%; }
+    .qh-live {
+      position:absolute; top:14px; display:inline-flex; align-items:center; gap:8px; padding:7px 12px; border-radius:6px;
+      font-family:var(--font-display); font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#fff; line-height:1;
+    }
+    .qh-live { left:14px; background:#E0243C; box-shadow:0 4px 16px rgba(224,36,60,0.5); }
+    .qh-dot { width:8px; height:8px; border-radius:50%; background:#fff; }
+    /* Les images des jokers ont beaucoup de marge transparente : on recadre sur la carte elle-même (218 x 265 px sur 480 de large) */
+    .qh-joker { position:absolute; display:block; width:clamp(96px, 8.4vw, 132px); aspect-ratio:218 / 265; overflow:hidden; filter:drop-shadow(0 10px 22px rgba(0,0,0,0.65)); }
+    .qh-joker img { display:block; width:220.2%; max-width:none; height:auto; margin:-10.55% 0 0 -61.9%; }
+    .qh-joker--1 img { margin-top:-14.2%; }
+    .qh-joker--1 { top:0; right:4px; transform:rotate(9deg); }
+    .qh-joker--2 { bottom:6px; left:0; transform:rotate(-9deg); }
+    .qh-joker--3 { bottom:0; right:16%; transform:rotate(5deg); }
+
+    @media (max-width: 860px) {
+      .qh-inner { grid-template-columns:1fr; gap:0; }
+      .qh-text { display:contents; }
+      .qh-kicker { order:1; } .qh-h1 { order:2; } .qh-visual { order:3; } .qh-pitch { order:4; } .qh-cta { order:5; }
+      .qh-visual { width:100%; max-width:520px; margin:6px auto 0; padding:22px 26px 40px 14px; }
+    }
+    @media (max-width: 600px) {
+      .qh { padding:22px 0 34px; }
+      .qh-h1 { font-size:2.6rem; }
+      .qh-pitch { font-size:1rem; margin-top:14px; }
+      .qh-cta { margin-top:20px; }
+      .qh-cta .btn { flex:1 1 auto; justify-content:center; padding-left:16px; padding-right:16px; }
+      .qh-joker { width:78px; }
+      .qh-live { font-size:12px; padding:6px 9px; top:10px; left:10px; }
+    }
+  </style>
 </head>
 <body class="quiz-accent escape-room-page quiz-room-page">
 
@@ -209,22 +278,43 @@
     </div>
   </div>
 
-  <!-- HERO -->
-  <section class="page-hero">
-    <picture>
-      <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
-      <source type="image/webp" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.webp 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.webp 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.webp 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.webp 1400w" sizes="100vw">
-      <img src="/img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.jpg 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.jpg 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.jpg 1400w" sizes="100vw" alt="Salle quiz Buzz Your Brain Caen - vue large plateau TV avec buzzers" width="1400" height="788" loading="eager" decoding="async" fetchpriority="high">
-    </picture>
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-      <p class="kicker" style="color:var(--gd-quiz);">BUZZ YOUR BRAIN · Caen</p>
-      <h1>Le Quiz Game qui rend Caen <span class="accent" style="color:var(--gd-quiz);">complètement dingue</span></h1>
-      <p class="subtitle">Vrai plateau TV à Mondeville · 3 manches de folie · Jokers diaboliques · 13 000+ joueurs depuis 2022</p>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;align-items:center;">
-        <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-reserver-quiz">Réserver un quiz</a>
-        <a href="/tarifs/#tarifs-quiz" class="btn btn-outline">Voir les tarifs</a>
-        <span style="color:var(--grey);">4–16 candidats · 60 min · Dès 15€/pers. · <strong style="color:var(--white);">4.9/5 sur 2 219 avis</strong></span>
+  <!-- HERO — on comprend en un coup d'œil : un quiz comme à la télé (écran de plateau + jokers), peu de texte -->
+  <section class="qh" aria-labelledby="qh-titre">
+    <div class="qh-bg" aria-hidden="true"></div>
+    <div class="container qh-inner">
+      <div class="qh-text">
+        <p class="qh-kicker">Quiz game &amp; blind test · Caen</p>
+        <h1 id="qh-titre" class="qh-h1">Le quiz <span>comme à la télé</span></h1>
+        <p class="qh-pitch">Buzzers en main, chauffeur de salle, jokers diaboliques&nbsp;: vous êtes les candidats d'un vrai jeu télé. Pas besoin d'être calé, juste d'être le plus rapide.</p>
+        <div class="qh-cta">
+          <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-reserver-quiz">Réserver un quiz</a>
+          <a href="/tarifs/#tarifs-quiz" class="btn btn-outline">Voir les tarifs</a>
+        </div>
+      </div>
+      <div class="qh-visual" aria-hidden="true">
+        <div class="qh-tv">
+          <picture>
+            <source type="image/avif" srcset="/img/quiz/salle-quiz-480w.avif 480w, /img/quiz/salle-quiz-768w.avif 768w, /img/quiz/salle-quiz-1024w.avif 1024w" sizes="(max-width: 860px) 92vw, 45vw">
+            <source type="image/webp" srcset="/img/quiz/salle-quiz-480w.webp 480w, /img/quiz/salle-quiz-768w.webp 768w, /img/quiz/salle-quiz-1024w.webp 1024w" sizes="(max-width: 860px) 92vw, 45vw">
+            <img src="/img/quiz/salle-quiz-1024w.jpg" srcset="/img/quiz/salle-quiz-480w.jpg 480w, /img/quiz/salle-quiz-768w.jpg 768w, /img/quiz/salle-quiz-1024w.jpg 1024w" sizes="(max-width: 860px) 92vw, 45vw" alt="" width="1024" height="768" fetchpriority="high" decoding="async">
+          </picture>
+          <span class="qh-live"><span class="qh-dot"></span>En direct</span>
+        </div>
+        <picture class="qh-joker qh-joker--1">
+          <source type="image/avif" srcset="/img/quiz/joker-le-tricheur-480w.avif">
+          <source type="image/webp" srcset="/img/quiz/joker-le-tricheur-480w.webp">
+          <img src="/img/quiz/joker-le-tricheur-480w.png" alt="" width="480" height="329" loading="lazy" decoding="async">
+        </picture>
+        <picture class="qh-joker qh-joker--2">
+          <source type="image/avif" srcset="/img/quiz/joker-gel-de-cerveau-480w.avif">
+          <source type="image/webp" srcset="/img/quiz/joker-gel-de-cerveau-480w.webp">
+          <img src="/img/quiz/joker-gel-de-cerveau-480w.png" alt="" width="480" height="313" loading="lazy" decoding="async">
+        </picture>
+        <picture class="qh-joker qh-joker--3">
+          <source type="image/avif" srcset="/img/quiz/joker-coup-de-pression-480w.avif">
+          <source type="image/webp" srcset="/img/quiz/joker-coup-de-pression-480w.webp">
+          <img src="/img/quiz/joker-coup-de-pression-480w.png" alt="" width="480" height="313" loading="lazy" decoding="async">
+        </picture>
       </div>
     </div>
   </section>
