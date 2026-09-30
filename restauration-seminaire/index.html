@@ -20,826 +20,412 @@
   <style>
     :root {
       --orange: #E07020;
+      --orange-2: #F58A3A;
       --noir: #0C0800;
       --creme: #F0EBE2;
-      --card-bg: #1A1610;
+      --card: #16110B;
+      --card-2: #1E170F;
       --border: #2E2820;
-      --grey-light: #C8C2B8;
-      --grey-medium: #8A8078;
-      --green: #2D8C4E;
-      --red: #c0392b;
+      --muted: #A89F94;
+      --muted-2: #7C7369;
+      --green: #3FAE6A;
+      --red: #E0543C;
       --gold: #FFD740;
       --froid: #7FC8E8;
+      --hdr: 64px;
+      /* Une couleur par service : on sait d'un coup d'œil ce qui est une entrée, un plat, un dessert… */
+      --c-entree: #7CC576;
+      --c-plat: #F0883E;
+      --c-fromage: #F2C14E;
+      --c-dessert: #F28CB1;
+      --c-viennoiserie: #D9A066;
+      --c-chaud: #C8935A;
+      --c-boisson: #5AB0E6;
+      --c-apero: #C58CF2;
     }
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      background: var(--noir);
-      color: var(--creme);
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.55;
-      min-height: 100vh;
+      background: var(--noir); color: var(--creme);
+      font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--orange); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a { color: var(--orange); }
+    button { font: inherit; color: inherit; }
+    .i, svg.i { width: 1em; height: 1em; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .c-entree { --c: var(--c-entree); } .c-plat { --c: var(--c-plat); } .c-fromage { --c: var(--c-fromage); }
+    .c-dessert { --c: var(--c-dessert); } .c-viennoiserie { --c: var(--c-viennoiserie); } .c-chaud { --c: var(--c-chaud); }
+    .c-boisson { --c: var(--c-boisson); } .c-apero { --c: var(--c-apero); }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    /* HEADER */
+    /* ============ EN-TÊTE ============ */
     .resto-header {
-      background: rgba(12,8,0,0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(12,8,0,0.95); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .resto-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px; font-weight: 900;
-      text-transform: uppercase; letter-spacing: -0.5px;
-      color: var(--creme);
-    }
+    .resto-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; color: var(--creme); }
     .resto-logo .dot { color: var(--orange); }
-    .resto-baseline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--grey-medium);
-    }
+    .resto-baseline { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
 
-    /* CONTAINER */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-    /* HERO */
+    /* ============ HERO ============ */
     .hero {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background: linear-gradient(135deg, #1a1208 0%, #0C0800 100%);
-      border-bottom: 3px solid var(--orange);
+      text-align: center; padding: 40px 16px 28px;
+      background: radial-gradient(90% 70% at 50% 0%, rgba(224,112,32,0.18) 0%, transparent 70%);
     }
-    .hero-kicker {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--orange);
-      font-weight: 700; margin-bottom: 12px;
+    .hero-kicker { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 10px; }
+    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; text-transform: uppercase; line-height: 0.98; letter-spacing: -0.5px; font-size: clamp(36px, 7vw, 64px); }
+    .hero h1 span { color: var(--orange); }
+    .hero-sub { color: var(--muted); font-size: 16px; margin: 12px auto 22px; max-width: 520px; }
+    .people {
+      display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center;
+      background: var(--card); border: 2px solid var(--orange); border-radius: 18px;
+      padding: 12px 18px; box-shadow: 0 10px 30px rgba(224,112,32,0.18);
     }
-    .hero h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(36px, 6vw, 56px);
-      font-weight: 900; text-transform: uppercase;
-      letter-spacing: -1px; line-height: 1.05;
-      margin-bottom: 16px;
+    .people-label, .people-unit { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; }
+    .people-label .i { color: var(--orange); font-size: 22px; }
+    .hero-capacite { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .facts { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 900px; margin: 22px auto 0; }
+    .fact {
+      display: flex; align-items: center; gap: 12px; text-align: left;
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px;
     }
-    .hero h1 .accent { color: var(--orange); }
-    .hero p {
-      font-size: 17px; color: var(--grey-light);
-      max-width: 640px; margin: 0 auto 32px;
-    }
-    .hero-input-wrap {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: var(--card-bg); padding: 12px 18px;
-      border: 2px solid var(--orange); border-radius: 8px;
-    }
-    .hero-input-wrap label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 14px; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--orange);
-      font-weight: 700;
-    }
-    .hero-input-wrap input {
-      width: 80px; padding: 6px 10px;
-      background: var(--noir); color: var(--creme);
-      border: 1px solid var(--border); border-radius: 4px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px; font-weight: 700; text-align: center;
-    }
+    .fact > .i { font-size: 26px; color: var(--orange); }
+    .fact--froid > .i { color: var(--froid); }
+    .fact strong { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; line-height: 1.1; }
+    .fact span { font-size: 13px; color: var(--muted); line-height: 1.35; }
+    .fact--froid strong { color: var(--froid); }
+    .conditions { max-width: 900px; margin: 12px auto 0; text-align: left; }
+    .conditions summary { cursor: pointer; color: var(--muted); font-size: 14px; list-style: none; display: inline-flex; align-items: center; gap: 6px; }
+    .conditions summary::-webkit-details-marker { display: none; }
+    .conditions summary::after { content: '▾'; transition: transform .2s; }
+    .conditions[open] summary::after { transform: rotate(180deg); }
+    .conditions ul { list-style: none; margin-top: 10px; background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--orange); border-radius: 12px; padding: 12px 16px; }
+    .conditions li { font-size: 14px; color: var(--muted); padding: 5px 0; }
+    .conditions li strong { color: var(--creme); }
 
-    /* SECTIONS */
-    .resto-section { padding: 50px 0 30px; border-bottom: 1px solid var(--border); }
-    .resto-section:last-of-type { border-bottom: none; }
-    .section-head { margin-bottom: 30px; }
-    .section-head .meta {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--grey-medium);
-      font-weight: 600; margin-bottom: 8px;
-    }
-    .section-head h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 32px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.5px;
-      line-height: 1.05; padding-bottom: 8px;
-      border-bottom: 3px solid var(--orange);
-      display: inline-block;
-    }
-    .section-head h2 .num { color: var(--orange); margin-right: 8px; }
-    .section-head p {
-      font-size: 14px; color: var(--grey-light);
-      max-width: 720px; margin-top: 14px; line-height: 1.55;
-    }
-
-    /* CARDS GRID */
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-
-    /* CARD */
-    .resto-card {
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 22px;
-      display: flex; flex-direction: column;
-      transition: all 0.2s;
-      position: relative;
-    }
-    .resto-card:hover { border-color: var(--orange); }
-    .resto-card.selected {
-      border-color: var(--orange);
-      background: linear-gradient(135deg, rgba(224,112,32,0.12) 0%, var(--card-bg) 100%);
-      box-shadow: 0 8px 24px rgba(224,112,32,0.25);
-    }
-    .resto-card.recommended {
-      border-color: var(--gold);
-    }
-    .resto-card.recommended::before {
-      content: 'RECOMMANDÉ';
-      position: absolute; top: -12px; right: 16px;
-      background: var(--gold); color: var(--noir);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 2px; font-weight: 700;
-      padding: 4px 10px; border-radius: 4px;
-    }
-    .card-tag {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--orange);
-      font-weight: 700; margin-bottom: 8px;
-    }
-    .card-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 24px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0;
-      line-height: 1.05; margin-bottom: 6px;
-    }
-    .card-subtitle {
-      font-size: 13px; color: var(--grey-light);
-      margin-bottom: 12px;
-    }
-    .card-price {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 32px; font-weight: 900;
-      color: var(--orange); line-height: 1;
-      letter-spacing: -1px; margin-bottom: 4px;
-    }
-    .card-price small {
-      font-size: 12px; color: var(--grey-medium);
-      font-weight: 500; font-family: 'DM Sans', sans-serif;
-      margin-left: 4px;
-    }
-    .card-price-ttc {
-      font-size: 11px; color: var(--grey-medium);
-      margin-bottom: 16px;
-    }
-    .card-includes {
-      list-style: none; margin: 0 0 16px 0; padding: 0;
-      font-size: 13px; color: var(--grey-light);
-      flex: 1; line-height: 1.55;
-    }
-    .card-includes li {
-      padding: 4px 0 4px 16px; position: relative;
-      border-bottom: 1px dotted var(--border);
-    }
-    .card-includes li:last-child { border-bottom: none; }
-    .card-includes li::before {
-      content: '→'; position: absolute; left: 0;
-      color: var(--orange); font-weight: 700;
-    }
-    .card-actions {
-      display: flex; gap: 8px; align-items: center;
-      margin-top: auto; padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-    .btn-info {
-      background: transparent; border: 1px solid var(--grey-medium);
-      color: var(--grey-light); padding: 8px 12px;
-      border-radius: 6px; cursor: pointer;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; letter-spacing: 1px; font-weight: 600;
-      text-transform: uppercase; transition: all 0.15s;
-    }
-    .btn-info:hover { border-color: var(--orange); color: var(--orange); }
-    .btn-toggle {
-      flex: 1; background: var(--orange); color: var(--noir);
-      border: none; padding: 10px 16px; border-radius: 6px;
-      cursor: pointer; font-family: 'Barlow Condensed', sans-serif;
-      font-size: 14px; letter-spacing: 1.5px; font-weight: 800;
-      text-transform: uppercase; transition: all 0.15s;
-    }
-    .btn-toggle:hover { background: #ff8838; }
-    .btn-toggle.selected { background: var(--green); color: var(--creme); }
-    .qty-controls {
-      display: flex; align-items: center; gap: 6px;
-      margin-top: 8px; justify-content: center;
-    }
-    .qty-controls button {
-      width: 32px; height: 32px;
-      background: var(--card-bg); color: var(--creme);
-      border: 1px solid var(--orange); border-radius: 4px;
-      cursor: pointer; font-size: 18px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .qty-controls button:hover { background: var(--orange); color: var(--noir); }
-    .qty-controls .qty-val {
-      min-width: 50px; text-align: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px; font-weight: 700;
-    }
-    .qty-controls .qty-unit {
-      font-size: 11px; color: var(--grey-medium);
-      margin-left: 4px;
-    }
-
-    /* ============ ACCORDION DÉJEUNER ============ */
-    .accordion-wrap {
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 48px;
-      align-items: stretch;
-    }
-    .accordion-list { display: flex; flex-direction: column; }
-    .accordion-row {
-      position: relative;
-      border-bottom: 1px solid rgba(138,128,120,0.25);
-      cursor: pointer;
-      padding: 14px 0;
-      transition: padding-left 0.5s ease;
-    }
-    .accordion-row:hover { padding-left: 10px; }
-    .accordion-row.is-active { padding-left: 22px; }
-    .accordion-row .row-bar {
-      position: absolute;
-      left: 0; top: 50%; transform: translateY(-50%);
-      width: 3px; height: 0;
-      background: var(--orange);
-      transition: height 0.4s ease, opacity 0.3s ease;
-      opacity: 0;
-      border-radius: 2px;
-    }
-    .accordion-row.is-active .row-bar {
-      height: calc(100% - 16px); opacity: 1;
-    }
-    .accordion-row .row-top {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px;
-    }
-    .row-title-block { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-    .row-tag {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 3px;
-      text-transform: uppercase; font-weight: 700;
-      color: var(--orange);
-      opacity: 0.55;
-      transition: opacity 0.3s ease;
-    }
-    .accordion-row.is-active .row-tag,
-    .accordion-row:hover .row-tag { opacity: 1; }
-    .row-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 24px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.5px;
-      line-height: 1.05;
-      color: var(--grey-medium);
-      transition: color 0.3s ease;
-      display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
-    }
-    .accordion-row.is-active .row-title,
-    .accordion-row:hover .row-title { color: var(--creme); }
-    .row-rec-badge {
-      display: inline-block;
-      background: var(--gold); color: var(--noir);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 10px; letter-spacing: 2px; font-weight: 700;
-      padding: 3px 8px; border-radius: 4px;
-    }
-    .row-num {
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-size: 13px; font-weight: 500;
-      color: var(--grey-medium); opacity: 0.35;
-      transition: opacity 0.3s ease;
-      letter-spacing: 1px;
-    }
-    .accordion-row.is-active .row-num { opacity: 0.9; }
-    .row-collapse {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transition: max-height 0.55s ease, opacity 0.4s ease, margin-top 0.4s ease;
-      margin-top: 0;
-    }
-    .accordion-row.is-active .row-collapse {
-      max-height: 240px;
-      opacity: 1;
-      margin-top: 12px;
-    }
-    .row-meta-line {
-      display: flex; align-items: baseline; gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .row-sub {
-      font-size: 14px; color: var(--grey-light);
-      flex: 1;
-    }
-    .row-price-inline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px; font-weight: 800;
-      color: var(--orange); line-height: 1;
-      letter-spacing: -0.5px;
-      white-space: nowrap;
-    }
-    .row-price-inline small {
-      font-size: 11px; color: var(--grey-medium);
-      font-weight: 500; font-family: 'DM Sans', sans-serif;
-      margin-left: 4px;
-    }
-    .row-actions {
-      display: flex; gap: 10px; align-items: center;
-      margin-top: 4px;
-    }
-    .accordion-row.selected .row-tag { color: var(--green); opacity: 1; }
-    .accordion-row.selected .row-bar { background: var(--green); opacity: 1; height: calc(100% - 16px); }
-
-    /* PREVIEW (right column) */
-    .accordion-preview {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-    }
-    .preview-inner {
-      flex: 1;
-      padding: 24px 28px 20px;
-      position: relative;
-      display: flex; flex-direction: column;
-      background: linear-gradient(135deg,
-        rgba(224,112,32,0.06) 0%,
-        var(--card-bg) 45%,
-        #000 130%);
-      animation: previewFadeIn 0.45s ease;
-    }
-    @keyframes previewFadeIn {
-      from { opacity: 0; transform: scale(0.97) rotate(1deg); }
-      to   { opacity: 1; transform: scale(1) rotate(0); }
-    }
-    .preview-head {
-      display: flex; align-items: center; gap: 18px;
-      margin-bottom: 14px;
-    }
-    .preview-icon-big {
-      color: var(--orange);
-      opacity: 0.85;
-      width: 64px; height: 64px;
-      flex-shrink: 0;
-    }
-    .preview-icon-big svg { width: 100%; height: 100%; }
-    .preview-head-text { flex: 1; min-width: 0; }
-    .preview-tag {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--orange);
-      font-weight: 700; margin-bottom: 6px;
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    }
-    .preview-rec {
-      background: var(--gold); color: var(--noir);
-      font-size: 10px; letter-spacing: 2px;
-      padding: 3px 8px; border-radius: 4px;
-    }
-    .preview-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 30px; font-weight: 900;
-      text-transform: uppercase; letter-spacing: -1px;
-      line-height: 1; margin-bottom: 4px;
-      color: var(--creme);
-    }
-    .preview-subtitle {
-      font-size: 14px; color: var(--grey-light);
-      margin-bottom: 14px;
-    }
-    .preview-price-block {
-      display: flex; align-items: baseline; gap: 14px;
-      margin-bottom: 14px;
-      border-top: 1px solid var(--border);
+    /* ============ BARRE D'ÉTAPES ============ */
+    .steps {
+      position: sticky; top: var(--hdr); z-index: 90;
+      display: flex; gap: 8px; justify-content: center;
+      padding: 10px 12px; background: rgba(12,8,0,0.94);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
-      padding: 10px 0;
-      flex-wrap: wrap;
+      overflow-x: auto; scrollbar-width: none;
     }
-    .preview-price-ht {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 30px; font-weight: 900;
-      color: var(--orange); line-height: 1;
-      letter-spacing: -1px;
+    .steps::-webkit-scrollbar { display: none; }
+    .step-link {
+      flex: none; display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--card);
+      color: var(--creme); text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+      transition: background .2s, border-color .2s, color .2s;
     }
-    .preview-price-ht small {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px; color: var(--grey-medium);
-      margin-left: 4px; font-weight: 500;
-    }
-    .preview-price-ttc {
-      font-size: 12px; color: var(--grey-medium);
-    }
-    .preview-includes {
-      list-style: none; padding: 0; margin: 0 0 12px 0;
-      font-size: 14px; color: var(--grey-light);
-    }
-    .preview-includes li {
-      padding: 5px 0 5px 18px; position: relative;
-      border-bottom: 1px dotted var(--border);
-    }
-    .preview-includes li:last-child { border-bottom: none; }
-    .preview-includes li::before {
-      content: '→'; position: absolute; left: 0;
-      color: var(--orange); font-weight: 700;
-    }
-    .preview-fig {
-      margin-top: auto;
-      align-self: flex-end;
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-size: 11px; letter-spacing: 2px;
-      color: var(--grey-medium); opacity: 0.45;
-      padding-top: 10px;
-    }
+    .step-link .i { font-size: 18px; color: var(--sc, var(--orange)); }
+    .step-link.is-active { border-color: var(--sc, var(--orange)); background: color-mix(in srgb, var(--sc, var(--orange)) 18%, var(--card)); }
+    .step-count { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--green); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; display: none; align-items: center; justify-content: center; }
+    .step-count.has { display: inline-flex; }
 
-    /* ============ REPAS SERVIS FROIDS ============ */
-    .froid-notice {
-      display: flex; gap: 16px; align-items: flex-start;
-      background: rgba(127,200,232,0.08);
-      border: 1px solid rgba(127,200,232,0.45);
-      border-left: 4px solid var(--froid);
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin-bottom: 32px;
-      max-width: 820px;
+    /* ============ MISE EN PAGE ============ */
+    .layout { max-width: 1240px; margin: 0 auto; padding: 0 16px 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    @media (min-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; } }
+    .step { padding: 36px 0 8px; scroll-margin-top: calc(var(--hdr) + 64px); }
+    .step + .step { border-top: 1px solid var(--border); }
+    .step-head { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: center; margin-bottom: 22px; }
+    .step-ico {
+      grid-row: span 2; width: 58px; height: 58px; border-radius: 18px;
+      display: grid; place-items: center; font-size: 30px;
+      color: var(--sc); background: color-mix(in srgb, var(--sc) 16%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 45%, transparent);
     }
-    .froid-notice-icon {
-      font-size: 26px; line-height: 1;
-      color: var(--froid);
-      flex-shrink: 0;
-    }
-    .froid-notice-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--froid);
-      margin-bottom: 6px;
-    }
-    .froid-notice p:not(.froid-notice-title) {
-      font-size: 14px; color: var(--grey-light);
-    }
-    .froid-badge {
-      display: inline-block;
-      border: 1px solid rgba(127,200,232,0.55);
-      color: var(--froid);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: 2px; font-weight: 700;
-      text-transform: uppercase;
-      padding: 3px 8px; border-radius: 4px;
-      white-space: nowrap;
-    }
-    .preview-froid {
-      font-size: 13px; color: var(--froid);
-      margin: -6px 0 14px;
-    }
-    .form-froid-rappel {
-      font-size: 14px; color: var(--froid);
-      margin: 4px 0 16px;
-    }
+    .step-num { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--sc); font-weight: 700; }
+    .step-head h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(28px, 5vw, 40px); font-weight: 900; text-transform: uppercase; line-height: 1; }
+    .step-tags { grid-column: 1 / -1; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .step-tags li { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--creme); background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; }
+    .step-tags li .i { color: var(--sc); font-size: 15px; }
+    .step-tags li.is-froid { color: var(--froid); border-color: rgba(127,200,232,.45); }
+    .step-tags li.is-froid .i { color: var(--froid); }
+    .step-foot { font-size: 13px; color: var(--muted-2); margin-top: 16px; }
+    #etape-accueil, .step-link[data-step="accueil"] { --sc: var(--c-chaud); }
+    #etape-dejeuner, .step-link[data-step="dejeuner"] { --sc: var(--c-plat); }
+    #etape-apero, .step-link[data-step="apero"] { --sc: var(--c-apero); }
+    #etape-boissons, .step-link[data-step="boissons"] { --sc: var(--c-boisson); }
+    #etape-envoyer, .step-link[data-step="envoyer"] { --sc: var(--green); }
 
-    /* ============ LIEU DU REPAS ============ */
-    .lieu-section { padding: 36px 0 6px; }
-    .lieu-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--orange);
-      border-radius: 8px;
-      padding: 20px 24px;
-      max-width: 820px;
+    /* ============ CARTES DE FORMULES ============ */
+    .offers { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+    .offer {
+      position: relative; display: flex; flex-direction: column; gap: 14px;
+      background: linear-gradient(170deg, var(--card-2) 0%, var(--card) 60%);
+      border: 2px solid var(--border); border-radius: 20px; padding: 18px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
     }
-    .lieu-kicker {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; letter-spacing: 3px; font-weight: 700;
-      text-transform: uppercase; color: var(--orange);
-      margin-bottom: 6px;
+    .offer:hover { border-color: #4a3f33; }
+    .offer.is-rec { border-color: rgba(255,215,64,0.55); }
+    .offer.is-selected { border-color: var(--green); box-shadow: 0 0 0 4px rgba(63,174,106,0.18), 0 14px 30px rgba(0,0,0,.35); }
+    .offer-ribbon { position: absolute; top: -12px; right: 16px; background: var(--gold); color: var(--noir); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 2px; font-weight: 800; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+    .offer-check { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; display: none; place-items: center; font-size: 18px; }
+    .offer.is-selected .offer-check { display: grid; }
+    .offer-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); font-weight: 700; }
+    .offer-name { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; text-transform: uppercase; line-height: 1; margin-top: 2px; padding-right: 34px; }
+    .offer-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    /* Pictogrammes de la carte : une seule ligne, icône au-dessus, mot en dessous */
+    .offer-hl { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; }
+    .offer-hl li {
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; min-width: 0; text-align: center;
+      font-size: 12.5px; line-height: 1.2; color: var(--creme);
+      background: color-mix(in srgb, var(--c) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+      border-radius: 12px; padding: 10px 4px 9px;
     }
-    .lieu-card h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 26px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.3px;
-      line-height: 1.1; margin-bottom: 12px;
+    .offer-hl li .i { font-size: 24px; color: var(--c); }
+    .offer-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; margin-top: auto; }
+    .offer-price strong { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; color: var(--orange); line-height: 1; letter-spacing: -0.5px; }
+    .offer-price span { font-size: 13px; color: var(--muted); }
+    .offer-price small { flex-basis: 100%; font-size: 12px; color: var(--muted-2); }
+    .offer-actions { display: flex; gap: 8px; }
+    .btn-ghost, .btn-choose {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      border-radius: 12px; padding: 11px 14px; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+      transition: background .2s, border-color .2s, color .2s, transform .1s;
     }
-    .lieu-list { list-style: none; padding: 0; margin: 0; }
-    .lieu-list li {
-      font-size: 14px; color: var(--grey-light);
-      padding: 7px 0 7px 18px; position: relative;
-      border-bottom: 1px dotted var(--border);
-    }
-    .lieu-list li:last-child { border-bottom: none; }
-    .lieu-list li::before {
-      content: '→'; position: absolute; left: 0;
-      color: var(--orange); font-weight: 700;
-    }
-    .lieu-list strong { color: var(--creme); }
+    .btn-ghost { background: transparent; border: 1px solid #4a3f33; color: var(--creme); }
+    .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-choose { flex: 1; background: var(--orange); border: 1px solid var(--orange); color: #fff; }
+    .btn-choose:hover { background: var(--orange-2); }
+    .btn-choose:active { transform: scale(.98); }
+    .btn-choose.selected { background: var(--green); border-color: var(--green); }
+    .btn-ghost .i, .btn-choose .i { font-size: 17px; }
+    .qty-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(63,174,106,0.1); border: 1px solid rgba(63,174,106,0.4); border-radius: 12px; padding: 8px 10px; font-size: 14px; }
+    .qty-controls[hidden] { display: none; }
 
-    /* Plateaux cocktail froids (compteur au plateau) */
-    .plateaux-froids { margin-top: 28px; max-width: 820px; }
-    .boisson-desc {
-      display: block; margin-top: 3px;
-      font-size: 12px; color: var(--grey-medium); line-height: 1.45;
-    }
-    .boisson-price small {
-      display: block;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px; font-weight: 500;
-      color: var(--grey-medium); letter-spacing: 0;
-    }
-    .panier-note {
-      font-size: 11px; color: var(--grey-medium);
-      margin-top: 8px; line-height: 1.4;
-    }
-    .hero-capacite {
-      margin-top: 10px;
-      font-size: 13px; color: var(--grey-medium);
-    }
-    .panier-alerte {
-      font-size: 12px; font-weight: 700; color: #ff9966;
-      margin-bottom: 8px; line-height: 1.4;
-    }
-    /* Sur grand écran, le récap fixe (320 px en bas à droite) ne doit pas recouvrir les compteurs des boissons */
-    @media (min-width: 1024px) {
-      .boissons-grid { margin-right: 300px; }
-    }
+    /* Compteurs + / − (même composant partout) */
+    .stepper { display: inline-flex; align-items: center; background: var(--noir); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .stepper button, .stepper-btn { width: 36px; height: 36px; border: 0; background: var(--card-2); color: var(--creme); font-size: 20px; font-weight: 700; cursor: pointer; line-height: 1; }
+    .stepper button:hover, .stepper-btn:hover { background: var(--orange); color: #fff; }
+    .stepper input, .stepper .qty-val { width: 46px; text-align: center; background: transparent; border: 0; color: var(--creme); font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; -moz-appearance: textfield; }
+    .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .stepper--lg .stepper-btn { width: 46px; height: 46px; font-size: 26px; }
+    .stepper--lg input { width: 64px; font-size: 32px; }
 
-    @media (max-width: 900px) {
-      .accordion-wrap { grid-template-columns: 1fr; gap: 0; }
-      .accordion-preview { display: none; }
-      .accordion-row:hover { padding-left: 8px; }
-      .accordion-row.is-active { padding-left: 18px; }
-      .row-title { font-size: 24px; }
+    /* ============ APÉRITIF : AIDE + PLATEAUX ============ */
+    .apero-helper {
+      display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: center;
+      margin: 18px 0; padding: 14px 16px; border-radius: 16px;
+      background: color-mix(in srgb, var(--c-apero) 10%, var(--card)); border: 1px solid color-mix(in srgb, var(--c-apero) 40%, transparent);
     }
+    .apero-helper > .i { grid-row: span 2; font-size: 30px; color: var(--c-apero); }
+    .apero-helper p { font-size: 15px; }
+    .apero-helper strong { color: var(--creme); }
+    .gauge { grid-column: 2; height: 8px; border-radius: 999px; background: var(--card-2); overflow: hidden; }
+    .gauge span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--c-apero), var(--green)); border-radius: inherit; transition: width .3s; }
+    .trays-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin: 10px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .trays-title .i { color: var(--c-apero); }
+    .trays { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .tray {
+      display: grid; grid-template-columns: auto 1fr; gap: 10px 12px; align-items: start;
+      background: var(--card); border: 2px solid var(--border); border-radius: 16px; padding: 14px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .tray.is-selected { border-color: var(--green); box-shadow: 0 0 0 3px rgba(63,174,106,0.15); }
+    .tray-ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 24px; color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+    .tray h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800; text-transform: uppercase; line-height: 1.05; }
+    .tray p { font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+    .tray p.open { display: block; -webkit-line-clamp: unset; }
+    .tray-foot { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .tray-price { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--orange); line-height: 1; }
+    .tray-price small { display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--muted-2); }
 
-    /* BOISSONS */
-    .boissons-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-    .boissons-col h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 1px;
-      color: var(--orange); padding-bottom: 8px;
-      border-bottom: 2px solid var(--orange);
-      margin-bottom: 12px;
-    }
-    .boisson-row {
-      display: grid; grid-template-columns: 1fr auto auto;
-      align-items: center; gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px dotted var(--border);
-    }
-    .boisson-name { font-size: 14px; color: var(--creme); }
-    .boisson-name .vol { color: var(--grey-medium); font-size: 12px; }
-    .boisson-price {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 14px; font-weight: 700;
-      color: var(--orange); white-space: nowrap;
-      letter-spacing: 0.3px;
-    }
-    .boisson-qty {
-      display: flex; align-items: center; gap: 4px;
-    }
-    .boisson-qty button {
-      width: 26px; height: 26px;
-      background: var(--card-bg); color: var(--creme);
-      border: 1px solid var(--border); border-radius: 4px;
-      cursor: pointer; font-size: 14px; font-weight: 700;
-    }
-    .boisson-qty button:hover { border-color: var(--orange); color: var(--orange); }
-    .boisson-qty input {
-      width: 40px; padding: 4px;
-      background: var(--noir); color: var(--creme);
-      border: 1px solid var(--border); border-radius: 4px;
-      text-align: center; font-weight: 700;
-    }
+    /* ============ BOISSONS ============ */
+    .drinks { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .drink-cat { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
+    .drink-cat h3 { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .drink-cat h3 .i { font-size: 22px; color: var(--c-boisson); }
+    .drink-cat h3 small { margin-left: auto; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--muted-2); text-transform: none; letter-spacing: 0; }
+    .drink { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; padding: 8px 0; border-top: 1px dashed var(--border); }
+    .drink:first-of-type { border-top: 0; }
+    .drink-name { font-size: 14px; }
+    .drink-name small { color: var(--muted-2); }
+    .drink-price { grid-column: 1; font-size: 13px; color: var(--orange); font-weight: 700; }
+    .drink .stepper { grid-column: 2; grid-row: 1 / span 2; }
+    .drink.is-selected .drink-name { color: #fff; font-weight: 700; }
 
-    /* PANIER STICKY */
-    .panier {
-      position: fixed; bottom: 20px; right: 20px;
-      width: 320px; max-height: 80vh;
-      background: var(--card-bg);
-      border: 2px solid var(--orange); border-radius: 12px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-      z-index: 50;
-      display: flex; flex-direction: column;
-      transform: translateX(0);
-      transition: transform 0.3s ease;
-    }
-    .panier.collapsed { transform: translateX(calc(100% - 48px)); }
-    .panier-toggle {
-      position: absolute; left: -2px; top: 12px;
-      width: 48px; height: 48px;
-      background: var(--orange); color: var(--noir);
-      border: none; border-radius: 8px 0 0 8px;
-      cursor: pointer; font-size: 18px;
-      display: none; align-items: center; justify-content: center;
-    }
-    .panier.collapsed .panier-toggle { display: flex; }
-    .panier-head {
-      padding: 14px 18px; border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .panier-head h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 16px; letter-spacing: 2px;
-      text-transform: uppercase; font-weight: 800;
-      color: var(--orange);
-    }
-    .panier-toggle-small {
-      background: transparent; border: 1px solid var(--border);
-      color: var(--grey-medium); padding: 4px 8px; border-radius: 4px;
-      cursor: pointer; font-size: 12px;
-    }
-    .panier-items {
-      flex: 1; overflow-y: auto;
-      padding: 12px 18px;
-      max-height: 320px;
-    }
-    .panier-item {
-      display: flex; justify-content: space-between;
-      padding: 6px 0; font-size: 12px;
-      border-bottom: 1px dotted var(--border);
-      gap: 8px;
-    }
-    .panier-item:last-child { border-bottom: none; }
-    .panier-item .pi-name { flex: 1; color: var(--grey-light); }
-    .panier-item .pi-qty { color: var(--orange); font-weight: 700; }
-    .panier-item .pi-price {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; color: var(--creme); white-space: nowrap;
-    }
-    .panier-empty {
-      text-align: center; padding: 30px 12px;
-      color: var(--grey-medium); font-size: 13px;
-      font-style: italic;
-    }
-    .panier-totals {
-      padding: 14px 18px;
-      border-top: 1px solid var(--border);
-      background: rgba(224,112,32,0.05);
-    }
-    .panier-total-row {
-      display: flex; justify-content: space-between;
-      padding: 3px 0; font-size: 13px;
-    }
-    .panier-total-row.ttc {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px; font-weight: 900;
-      color: var(--orange);
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-      margin-top: 6px;
-    }
-
-    /* FORMULAIRE */
-    .form-section {
-      padding: 50px 0;
-      background: linear-gradient(135deg, #0d0a06 0%, #1a1208 100%);
-      border-top: 3px solid var(--orange);
-    }
-    .form-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      max-width: 720px; margin: 0 auto;
-    }
-    .form-card h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 28px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.5px;
-      margin-bottom: 8px; color: var(--creme);
-    }
-    .form-card .form-intro {
-      color: var(--grey-light); font-size: 14px;
-      margin-bottom: 24px;
-    }
-    .form-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-      margin-bottom: 16px;
-    }
+    /* ============ FORMULAIRE ============ */
+    .form-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 22px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .form-row.full { grid-template-columns: 1fr; }
-    .form-group label {
-      display: block;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 12px; letter-spacing: 2px;
-      text-transform: uppercase; font-weight: 700;
-      color: var(--orange); margin-bottom: 6px;
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+    .form-group input, .form-group textarea {
+      background: var(--noir); color: var(--creme); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 14px; font: inherit; font-size: 16px;
     }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; padding: 10px 14px;
-      background: var(--noir); color: var(--creme);
-      border: 1px solid var(--border); border-radius: 6px;
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-    }
-    .form-group input:focus, .form-group textarea:focus {
-      outline: none; border-color: var(--orange);
-    }
-    .form-group textarea { min-height: 100px; resize: vertical; }
-
-    /* BUTTONS */
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(224,112,32,.2); }
+    .form-group textarea { min-height: 90px; resize: vertical; }
+    .form-froid-rappel { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: var(--froid); background: rgba(127,200,232,0.07); border: 1px solid rgba(127,200,232,0.3); border-radius: 12px; padding: 10px 12px; margin: 4px 0 16px; }
+    .form-froid-rappel .i { font-size: 18px; margin-top: 2px; }
     .btn-submit {
-      width: 100%; padding: 16px 24px;
-      background: var(--orange); color: var(--noir);
-      border: none; border-radius: 8px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px; letter-spacing: 2px; font-weight: 800;
-      text-transform: uppercase; cursor: pointer;
-      transition: all 0.15s;
-      margin-top: 12px;
+      width: 100%; border: 0; border-radius: 14px; padding: 16px; cursor: pointer;
+      background: var(--orange); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase;
+      box-shadow: 0 10px 26px rgba(224,112,32,0.35); display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .btn-submit:hover:not(:disabled) { background: #ff8838; transform: translateY(-1px); }
-    .btn-submit:disabled { background: var(--card-bg); color: var(--grey-medium); cursor: not-allowed; }
+    .btn-submit:hover { background: var(--orange-2); }
+    .btn-submit:disabled { opacity: .7; cursor: wait; }
+    .feedback-msg { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14px; }
+    .feedback-msg.success { background: rgba(63,174,106,0.14); border: 1px solid rgba(63,174,106,0.5); }
+    .feedback-msg.error { background: rgba(224,84,60,0.12); border: 1px solid rgba(224,84,60,0.5); }
 
-    .feedback-msg {
-      margin-top: 16px; padding: 14px 18px;
-      border-radius: 8px; font-weight: 600;
-      display: none;
+    /* ============ RÉCAP DE COMMANDE ============ */
+    .cart {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 16px; display: flex; flex-direction: column; gap: 12px;
     }
-    .feedback-msg.success { background: rgba(45,140,78,0.15); border: 2px solid var(--green); color: var(--green); }
-    .feedback-msg.error { background: rgba(192,57,43,0.15); border: 2px solid var(--red); color: #ff6666; }
+    @media (min-width: 1100px) { .cart { position: sticky; top: calc(var(--hdr) + 72px); margin-top: 36px; max-height: calc(100vh - var(--hdr) - 90px); overflow: auto; } }
+    .cart-head { display: flex; align-items: center; gap: 10px; }
+    .cart-head .i { font-size: 22px; color: var(--orange); }
+    .cart-head h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; text-transform: uppercase; }
+    .cart-people { margin-left: auto; font-size: 13px; color: var(--muted); }
+    .cart-close { display: none; background: none; border: 0; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); padding: 0 4px; }
+    .panier-empty { font-size: 14px; color: var(--muted); display: flex; gap: 10px; align-items: center; }
+    .panier-empty .i { font-size: 26px; color: var(--muted-2); }
+    .cart-items { display: flex; flex-direction: column; gap: 12px; }
+    .cart-group { display: flex; flex-direction: column; gap: 6px; }
+    .cart-group + .cart-group { border-top: 1px dashed var(--border); padding-top: 10px; }
+    .cart-group h4 { display: flex; align-items: center; gap: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: var(--gc); }
+    .panier-item { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: baseline; font-size: 13.5px; }
+    .pi-name { color: var(--creme); }
+    .pi-qty { color: var(--muted); font-weight: 700; }
+    .pi-price { font-weight: 700; white-space: nowrap; }
+    .panier-totals { border-top: 1px solid var(--border); padding-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+    .panier-total-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+    .panier-total-row.ttc { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--creme); }
+    .panier-total-row.pp { font-size: 13px; }
+    .panier-alerte { font-size: 13px; font-weight: 700; color: #ff9966; background: rgba(224,84,60,0.12); border-radius: 10px; padding: 8px 10px; }
+    .panier-note { font-size: 12px; color: var(--muted-2); line-height: 1.4; }
+    .cart-cta { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--orange); color: #fff; text-decoration: none; border-radius: 12px; padding: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .cartbar { display: none; }
 
-    /* MODAL */
-    .modal-bg {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: none; align-items: center; justify-content: center;
-      z-index: 200; padding: 20px;
-    }
-    .modal-bg.open { display: flex; }
-    .modal {
-      background: var(--card-bg);
-      border: 2px solid var(--orange);
-      border-radius: 12px;
-      max-width: 600px; max-height: 85vh;
-      overflow-y: auto; padding: 28px;
-      position: relative;
-    }
-    .modal-close {
-      position: absolute; top: 14px; right: 14px;
-      width: 32px; height: 32px;
-      background: var(--noir); color: var(--creme);
-      border: 1px solid var(--border); border-radius: 50%;
-      cursor: pointer; font-size: 18px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .modal h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 26px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.5px;
-      color: var(--orange); margin-bottom: 4px;
-    }
-    .modal .modal-subtitle {
-      font-size: 13px; color: var(--grey-medium);
-      margin-bottom: 18px;
-    }
-    .modal h4 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 14px; letter-spacing: 2px;
-      text-transform: uppercase; font-weight: 700;
-      color: var(--orange); margin: 18px 0 8px;
-    }
-    .modal p, .modal li {
-      font-size: 14px; color: var(--grey-light);
-      line-height: 1.6;
-    }
-    .modal ul { padding-left: 20px; }
-    .modal-source {
-      margin-top: 20px; padding-top: 16px;
-      border-top: 1px solid var(--border);
-      font-size: 12px; color: var(--grey-medium);
-      font-style: italic;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .form-row { grid-template-columns: 1fr; }
-      .panier {
-        width: calc(100% - 24px); right: 12px; left: 12px;
-        max-height: 60vh;
+    /* Téléphone et tablette : le récap devient une barre en bas qui s'ouvre en volet */
+    @media (max-width: 1099px) {
+      body { padding-bottom: 84px; }
+      .cart {
+        position: fixed; left: 8px; right: 8px; bottom: 8px; z-index: 120;
+        max-height: 78vh; overflow: auto; border-radius: 20px;
+        box-shadow: 0 -10px 40px rgba(0,0,0,.6);
+        transform: translateY(calc(100% + 20px)); transition: transform .3s ease; visibility: hidden;
       }
-      .hero { padding: 40px 16px 30px; }
-      .resto-section { padding: 30px 0 20px; }
+      .cart.is-open { transform: none; visibility: visible; }
+      .cart-close { display: block; }
+      .cartbar {
+        position: fixed; left: 8px; right: 8px; bottom: 8px; z-index: 110;
+        display: flex; align-items: center; gap: 10px;
+        background: var(--card-2); border: 1px solid #4a3f33; border-radius: 16px; padding: 12px 14px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.55); cursor: pointer; text-align: left;
+      }
+      .cartbar .i { font-size: 22px; color: var(--orange); }
+      .cartbar-count { font-size: 14px; color: var(--muted); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .cartbar-total { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; }
+      .cartbar-go { background: var(--orange); color: #fff; border-radius: 10px; padding: 6px 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; font-size: 15px; }
+      .cartbar.has-items { border-color: var(--green); }
     }
+
+    /* ============ FICHE « VOIR LE MENU » ============ */
+    .modal-bg { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.78); display: none; align-items: center; justify-content: center; padding: 16px; }
+    .modal-bg.open { display: flex; }
+    .modal { position: relative; width: 100%; max-width: 820px; max-height: 90vh; overflow: auto; background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 22px; }
+    .modal-close { position: sticky; top: 0; float: right; margin: -6px -6px 0 0; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--card-2); color: var(--creme); font-size: 22px; cursor: pointer; z-index: 2; }
+    .menu-head { margin-bottom: 16px; padding-right: 40px; }
+    .menu-head h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; text-transform: uppercase; line-height: 1; margin-top: 2px; }
+    .menu-price { color: var(--orange); font-weight: 700; margin-top: 6px; }
+    .menu-price span { color: var(--muted); font-weight: 400; }
+    .menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .menu-block { background: color-mix(in srgb, var(--c) 7%, var(--card-2)); border: 1px solid color-mix(in srgb, var(--c) 30%, transparent); border-top: 4px solid var(--c); border-radius: 16px; padding: 14px; }
+    .menu-block h4 { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 900; text-transform: uppercase; color: var(--c); margin-bottom: 8px; line-height: 1; }
+    .menu-block h4 .i { font-size: 26px; }
+    .menu-block h4 em { font-style: normal; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--muted); text-transform: none; }
+    .menu-block ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .menu-block li { font-size: 14px; line-height: 1.35; padding-left: 14px; position: relative; }
+    .menu-block li::before { content: ''; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+    .menu-block li.is-dujour { color: var(--muted); font-style: italic; }
+    .menu-inclus { font-size: 14px; color: var(--muted); }
+    .badge-vegan { display: inline-block; margin-left: 4px; padding: 1px 7px; border-radius: 999px; background: rgba(124,197,118,0.18); color: var(--c-entree); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; vertical-align: 1px; }
+    .menu-extras { display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; font-size: 13.5px; color: var(--muted); }
+    .menu-extras .i { color: var(--green); font-size: 18px; margin-top: 1px; }
+    .menu-meta { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .menu-meta li { font-size: 12.5px; background: var(--card-2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; color: var(--muted); }
+    .menu-allergenes { margin-top: 12px; font-size: 13.5px; color: var(--muted); }
+    .menu-allergenes summary { cursor: pointer; color: var(--creme); font-weight: 700; }
+    .menu-allergenes p { margin-top: 6px; }
+    .modal .btn-choose { width: 100%; margin-top: 16px; padding: 14px; font-size: 18px; }
+
+    @media (max-width: 700px) {
+      .hero { padding-top: 26px; }
+      .hero h1 span { display: block; }
+      .hero-kicker { font-size: 12px; letter-spacing: 2px; }
+      .people { flex-wrap: nowrap; gap: 10px; padding: 10px 12px; }
+      .people-label, .people-unit { font-size: 15px; }
+      .stepper--lg .stepper-btn { width: 40px; height: 42px; font-size: 24px; }
+      .stepper--lg input { width: 50px; font-size: 28px; }
+      .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .fact { flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 10px 6px; }
+      .fact strong { font-size: 15px; }
+      .fact span { font-size: 11.5px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .step-head { gap: 2px 12px; }
+      .step-ico { width: 50px; height: 50px; font-size: 26px; border-radius: 16px; }
+      .steps { justify-content: flex-start; }
+      .modal { padding: 16px; border-radius: 18px; }
+      .menu-head h3 { font-size: 28px; }
+    }
+    @media (max-width: 380px) {
+      .people-label .i { display: none; }
+      .people { gap: 8px; }
+      .fact span { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .cart, .gauge span { transition: none; } }
   </style>
 </head>
 <body>
+
+  <!-- Icônes : Lucide (licence ISC, lucide.dev), sauf « cheese » dessiné pour le site -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></symbol>
+    <symbol id="i-snowflake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 20-1.25-2.5L6 18" /><path d="M10 4 8.75 6.5 6 6" /><path d="m14 20 1.25-2.5L18 18" /><path d="m14 4 1.25 2.5L18 6" /><path d="m17 21-3-6h-4" /><path d="m17 3-3 6 1.5 3" /><path d="M2 12h6.5L10 9" /><path d="m20 10-1.5 2 1.5 2" /><path d="M22 12h-6.5L14 15" /><path d="m4 10 1.5 2L4 14" /><path d="m7 21 3-6-1.5-3" /><path d="m7 3 3 6h4" /></symbol>
+    <symbol id="i-armchair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3" /><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z" /><path d="M5 18v2" /><path d="M19 18v2" /></symbol>
+    <symbol id="i-door-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21H2" /><path d="M10 3H7a2 2 0 00-2 2v16" /><path d="M14 12h.01" /><path d="M19 21V5a2 2 0 00-1.675-1.974l-6.163-1.013A1 1 0 0010 3v18a1 1 0 001.124.992z" /><path d="M22 21h-3" /></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" /></symbol>
+    <symbol id="i-utensils" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" /><path d="M7 2v20" /><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /></symbol>
+    <symbol id="i-party-popper" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 11.3 2 22l10.7-3.79" /><path d="M4 3h.01" /><path d="M22 8h.01" /><path d="M15 2h.01" /><path d="M22 20h.01" /><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10" /><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17" /><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7" /><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z" /></symbol>
+    <symbol id="i-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8" /><path d="M7 10h10" /><path d="M12 15v7" /><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z" /></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></symbol>
+    <symbol id="i-chef-hat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z" /><path d="M6 17h12" /></symbol>
+    <symbol id="i-concierge-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1Z" /><path d="M20 16a8 8 0 1 0-16 0" /><path d="M12 4v4" /><path d="M10 4h4" /></symbol>
+    <symbol id="i-bottle-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a6 6 0 0 0 1.2 3.6l.6.8A6 6 0 0 1 17 13v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-8a6 6 0 0 1 1.2-3.6l.6-.8A6 6 0 0 0 10 5z" /><path d="M17 13h-4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h4" /></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></symbol>
+    <symbol id="i-shopping-basket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 11-1 9" /><path d="m19 11-4-7" /><path d="M2 11h20" /><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4" /><path d="M4.5 15.5h15" /><path d="m5 11 4-7" /><path d="m9 11 1 9" /></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></symbol>
+    <symbol id="i-clipboard-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M12 11h4" /><path d="M12 16h4" /><path d="M8 11h.01" /><path d="M8 16h.01" /></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /><path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" /></symbol>
+    <symbol id="i-croissant" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 18H4.774a1.5 1.5 0 0 1-1.352-.97 11 11 0 0 1 .132-6.487" /><path d="M18 10.2V4.774a1.5 1.5 0 0 0-.97-1.352 11 11 0 0 0-6.486.132" /><path d="M18 5a4 3 0 0 1 4 3 2 2 0 0 1-2 2 10 10 0 0 0-5.139 1.42" /><path d="M5 18a3 4 0 0 0 3 4 2 2 0 0 0 2-2 10 10 0 0 1 1.42-5.14" /><path d="M8.709 2.554a10 10 0 0 0-6.155 6.155 1.5 1.5 0 0 0 .676 1.626l9.807 5.42a2 2 0 0 0 2.718-2.718l-5.42-9.807a1.5 1.5 0 0 0-1.626-.676" /></symbol>
+    <symbol id="i-glass-water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.116 4.104A1 1 0 0 1 6.11 3h11.78a1 1 0 0 1 .994 1.105L17.19 20.21A2 2 0 0 1 15.2 22H8.8a2 2 0 0 1-2-1.79z" /><path d="M6 12a5 5 0 0 1 6 0 5 5 0 0 0 6 0" /></symbol>
+    <symbol id="i-cup-soda" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8" /><path d="M5 8h14" /><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0" /><path d="m12 8 1-6h2" /></symbol>
+    <symbol id="i-sandwich" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.37 11.223 8.372-6.777a2 2 0 0 1 2.516 0l8.371 6.777" /><path d="M21 15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-5.25" /><path d="M3 15a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h9" /><path d="m6.67 15 6.13 4.6a2 2 0 0 0 2.8-.4l3.15-4.2" /><rect width="20" height="4" x="2" y="11" rx="1" /></symbol>
+    <symbol id="i-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16H4a2 2 0 1 1 0-4h16a2 2 0 1 1 0 4h-4.25" /><path d="M5 12a2 2 0 0 1-2-2 9 7 0 0 1 18 0 2 2 0 0 1-2 2" /><path d="M5 16a2 2 0 0 0-2 2 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 2 2 0 0 0-2-2q0 0 0 0" /><path d="m6.67 12 6.13 4.6a2 2 0 0 0 2.8-.4l3.15-4.2" /></symbol>
+    <symbol id="i-salad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10" /><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z" /><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1" /><path d="m13 12 4-4" /><path d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2" /></symbol>
+    <symbol id="i-drumstick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.4 15.63a7.875 6 135 1 1 6.23-6.23 4.5 3.43 135 0 0-6.23 6.23" /><path d="m8.29 12.71-2.6 2.6a2.5 2.5 0 1 0-1.65 4.65A2.5 2.5 0 1 0 8.7 18.3l2.59-2.59" /></symbol>
+    <symbol id="i-cake-slice" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 13H3" /><path d="M16 17H3" /><path d="m7.2 7.9-3.388 2.5A2 2 0 0 0 3 12.01V20a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-8.654c0-2-2.44-6.026-6.44-8.026a1 1 0 0 0-1.082.057L10.4 5.6" /><circle cx="9" cy="7" r="2" /></symbol>
+    <symbol id="i-ham" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.144 21.144A7.274 10.445 45 1 0 2.856 10.856" /><path d="M13.144 21.144A7.274 4.365 45 0 0 2.856 10.856a7.274 4.365 45 0 0 10.288 10.288" /><path d="M16.565 10.435 18.6 8.4a2.501 2.501 0 1 0 1.65-4.65 2.5 2.5 0 1 0-4.66 1.66l-2.024 2.025" /><path d="m8.5 16.5-1-1" /></symbol>
+    <symbol id="i-wheat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22 16 8" /><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z" /><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z" /><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z" /><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z" /><path d="M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z" /><path d="M15.47 13.47 17 15l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z" /><path d="M19.47 9.47 21 11l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L13 11l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z" /></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20" /><path d="M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13" /></symbol>
+    <symbol id="i-cupcake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-9" /><path d="M14 4h1a3 3 0 013 3l-.004.125A4 4 0 0121 11v2" /><path d="m15.5 22 1.5-9" /><path d="M21 13a1 1 0 01.919 1.394l-2.74 6.394A2 2 0 0117.34 22H6.659a2 2 0 01-1.838-1.212l-2.74-6.394A1 1 0 013 13z" /><path d="M3 13v-2a4 4 0 013.003-3.875L6 7a3 3 0 013-3h1" /><path d="M8.5 22 7 13" /><circle cx="12" cy="4" r="2" /></symbol>
+    <symbol id="i-donut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 10a2.5 2.5 0 0 1-2.4-3H18a2.95 2.95 0 0 1-2.6-4.4 10 10 0 1 0 6.3 7.1c-.3.2-.8.3-1.2.3" /><circle cx="12" cy="12" r="3" /></symbol>
+    <symbol id="i-beer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 11h1a3 3 0 0 1 0 6h-1" /><path d="M9 12v6" /><path d="M13 12v6" /><path d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z" /><path d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8" /></symbol>
+    <symbol id="i-cheese" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 18h19v-7.5L12 5 2.5 18z"/><path d="M12 5l9.5 5.5"/><circle cx="9" cy="14.5" r="1.3"/><circle cx="14.5" cy="13.5" r="1.6"/><circle cx="18" cy="16" r="0.9"/></symbol>
+  </svg>
 
   <!-- ========== HEADER ========== -->
   <header class="resto-header">
@@ -850,193 +436,222 @@
     <a href="mailto:contact@gamedoor41.fr" style="font-size:13px;color:var(--orange);">contact@gamedoor41.fr</a>
   </header>
 
-  <!-- ========== HERO ========== -->
+  <main>
+  <!-- ========== EN-TÊTE DE PAGE ========== -->
   <section class="hero">
-    <div class="container">
-      <p class="hero-kicker">Devis express · réponse sous 48 h</p>
-      <h1>Vous jouez. <span class="accent">On nourrit.</span></h1>
-      <p>Sélectionnez vos formules en quelques clics. On vous envoie un devis personnalisé sous 48 h ouvrées.</p>
-      <div class="hero-input-wrap">
-        <label for="nbPersonnes">Nombre de personnes</label>
-        <input type="number" id="nbPersonnes" min="1" max="40" value="10">
-      </div>
-      <p class="hero-capacite">40 personnes maximum debout · 20 personnes maximum assises</p>
+    <p class="hero-kicker">Devis express · réponse sous 48 h ouvrées</p>
+    <h1>Composez le repas <span>de votre groupe</span></h1>
+    <p class="hero-sub">Choisissez en quelques clics, on vous envoie un devis détaillé.</p>
+    <div class="people">
+      <label class="people-label" for="nbPersonnes"><svg class="i"><use href="#i-users"/></svg>Vous êtes</label>
+      <span class="stepper stepper--lg">
+        <button type="button" class="stepper-btn" data-people="-1" aria-label="Une personne de moins">−</button>
+        <input type="number" id="nbPersonnes" min="1" max="40" value="10" inputmode="numeric">
+        <button type="button" class="stepper-btn" data-people="1" aria-label="Une personne de plus">+</button>
+      </span>
+      <span class="people-unit">personnes</span>
     </div>
+    <ul class="facts">
+      <li class="fact fact--froid"><svg class="i"><use href="#i-snowflake"/></svg><span><strong>Tout est servi froid</strong>Seuls le café et le thé sont chauds.</span></li>
+      <li class="fact"><svg class="i"><use href="#i-armchair"/></svg><span><strong>20 assis · 40 debout</strong>Dans notre salle d'accueil.</span></li>
+      <li class="fact"><svg class="i"><use href="#i-door-open"/></svg><span><strong>Salle privatisée</strong>200 € HT l'heure · 500 € HT la ½ journée.</span></li>
+    </ul>
+    <details class="conditions">
+      <summary>Les conditions en détail</summary>
+      <ul>
+        <li><strong>Pas de salle de réunion.</strong> GAMEDOOR·41 n'a pas de salle de réunion, ni pour l'instant de salle de réception : votre repas se prend dans notre salle d'accueil.</li>
+        <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), tout le site vous est réservé, salle d'accueil comprise. Elle figurera sur votre devis.</li>
+        <li><strong>Accueil café : debout</strong>, en libre-service au comptoir ; assis sur demande (20 personnes maximum).</li>
+        <li><strong>Déjeuner : assis</strong>, 20 personnes maximum. Nous installons tables et chaises dans la salle d'accueil.</li>
+        <li><strong>Apéritif dînatoire : buffet debout</strong>, 40 personnes maximum, quelques chaises à disposition.</li>
+        <li><strong>Aucun plat chaud.</strong> Nous ne pouvons rien réchauffer sur place : tous les plats sont servis froids.</li>
+      </ul>
+    </details>
   </section>
 
-  <!-- ========== OÙ ET COMMENT SE PASSE LE REPAS ========== -->
-  <section class="lieu-section" aria-labelledby="lieu-titre">
-    <div class="container">
-      <div class="lieu-card" role="note">
-        <p class="lieu-kicker">À lire avant de commander</p>
-        <h2 id="lieu-titre">Où et comment se passe votre repas</h2>
-        <ul class="lieu-list">
-          <li><strong>Pas de salle de réunion.</strong> GAMEDOOR·41 n'a pas de salle de réunion, ni pour l'instant de salle de réception. Votre repas se prend dans notre <strong>salle d'accueil</strong>.</li>
-          <li><strong>Privatisation obligatoire.</strong> Dès que vous commandez un repas (accueil café, déjeuner ou apéritif dînatoire), la privatisation est obligatoire : tout le site vous est réservé, salle d'accueil comprise. Tarif : 200 € HT l'heure, 500 € HT la demi-journée. Elle figurera sur votre devis.</li>
-          <li><strong>Accueil café : en libre-service, debout.</strong> Tout est posé sur un comptoir et chacun se sert ; assis sur demande (20 personnes maximum).</li>
-          <li><strong>Déjeuner (plateaux-repas, box, wraps) : repas assis, 20 personnes maximum.</strong> Nous réaménageons la salle d'accueil avec tables et chaises.</li>
-          <li><strong>Apéritif dînatoire : buffet debout, 40 personnes maximum.</strong> Chacun se sert ; quelques chaises sont à disposition, mais on reste debout.</li>
-          <li><strong>Aucun plat chaud.</strong> Nous ne pouvons rien réchauffer sur place : tous les plats sont servis froids. Seuls le café et le thé sont chauds.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <!-- ========== ÉTAPES ========== -->
+  <nav class="steps" aria-label="Étapes de la commande">
+    <a class="step-link" data-step="accueil" href="#etape-accueil"><svg class="i"><use href="#i-coffee"/></svg>Accueil café<b class="step-count" data-count="accueil"></b></a>
+    <a class="step-link" data-step="dejeuner" href="#etape-dejeuner"><svg class="i"><use href="#i-utensils"/></svg>Déjeuner<b class="step-count" data-count="dejeuner"></b></a>
+    <a class="step-link" data-step="apero" href="#etape-apero"><svg class="i"><use href="#i-party-popper"/></svg>Apéritif<b class="step-count" data-count="apero"></b></a>
+    <a class="step-link" data-step="boissons" href="#etape-boissons"><svg class="i"><use href="#i-wine"/></svg>Boissons<b class="step-count" data-count="boissons"></b></a>
+    <a class="step-link" data-step="envoyer" href="#etape-envoyer"><svg class="i"><use href="#i-send"/></svg>Envoyer</a>
+  </nav>
 
-  <!-- ========== SECTION 01 — ACCUEIL CAFÉ ========== -->
-  <section class="resto-section">
-    <div class="container">
-      <div class="section-head">
-        <p class="meta">À votre arrivée</p>
-        <h2><span class="num">01</span>L'accueil café</h2>
-        <p>Vos équipes arrivent : café Senseo et thé en libre-service, viennoiseries fraîches, jus en carafe. Tout est posé sur un comptoir dans notre salle d'accueil privatisée : chacun se sert, <strong>debout</strong> (assis sur demande, 20 personnes maximum).</p>
-      </div>
-      <div class="cards-grid" id="cards-accueil"></div>
-    </div>
-  </section>
+  <div class="layout">
+    <div class="layout-main">
 
-  <!-- ========== SECTION 02 — DÉJEUNER ========== -->
-  <section class="resto-section">
-    <div class="container">
-      <div class="section-head">
-        <p class="meta">Entre deux activités ou en clôture</p>
-        <h2><span class="num">02</span>Le déjeuner</h2>
-        <p>Plateaux-repas et box <strong>froids</strong> de la carte de <strong>Grandsire Traiteur</strong> (certifié ISO 20121, fournisseur normand), livrés prêts à consommer. <strong>Repas assis, 20 personnes maximum</strong> : nous installons tables et chaises dans notre salle d'accueil privatisée. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres.</p>
-      </div>
-      <div class="froid-notice" role="note">
-        <span class="froid-notice-icon" aria-hidden="true">❄</span>
-        <div>
-          <p class="froid-notice-title">Tous les plateaux-repas sont servis froids</p>
-          <p>Le traiteur livre des plateaux-repas froids, prêts à ouvrir et à déguster tels quels. Nous n'avons rien pour réchauffer sur place : nous ne proposons donc que les recettes froides de la carte Grandsire. La volaille, le poisson ou la viande se mangent froids, eux aussi. Les plats chauds ou « à réchauffer » de la carte du traiteur ne sont pas disponibles chez nous.</p>
+      <!-- ========== 1 · ACCUEIL CAFÉ ========== -->
+      <section class="step" id="etape-accueil" data-step="accueil">
+        <header class="step-head">
+          <span class="step-ico"><svg class="i"><use href="#i-coffee"/></svg></span>
+          <p class="step-num">Étape 1 · à votre arrivée</p>
+          <h2>L'accueil café</h2>
+          <ul class="step-tags">
+            <li><svg class="i"><use href="#i-users"/></svg>Debout, en libre-service</li>
+            <li><svg class="i"><use href="#i-armchair"/></svg>Assis sur demande (20 max)</li>
+          </ul>
+        </header>
+        <div class="offers" id="cards-accueil"></div>
+      </section>
+
+      <!-- ========== 2 · DÉJEUNER ========== -->
+      <section class="step" id="etape-dejeuner" data-step="dejeuner">
+        <header class="step-head">
+          <span class="step-ico"><svg class="i"><use href="#i-utensils"/></svg></span>
+          <p class="step-num">Étape 2 · le midi</p>
+          <h2>Le déjeuner</h2>
+          <ul class="step-tags">
+            <li><svg class="i"><use href="#i-armchair"/></svg>Assis, 20 personnes max</li>
+            <li class="is-froid"><svg class="i"><use href="#i-snowflake"/></svg>Servi froid, prêt à consommer</li>
+            <li><svg class="i"><use href="#i-chef-hat"/></svg>4 plateaux min. par composition</li>
+          </ul>
+        </header>
+        <div class="offers" id="cards-dejeuner"></div>
+        <p class="step-foot">Plateaux Grandsire Traiteur (Démouville, certifié ISO 20121). Les plats chauds ou « à réchauffer » du traiteur ne sont pas proposés : nous n'avons rien pour réchauffer sur place.</p>
+      </section>
+
+      <!-- ========== 3 · APÉRITIF ========== -->
+      <section class="step" id="etape-apero" data-step="apero">
+        <header class="step-head">
+          <span class="step-ico"><svg class="i"><use href="#i-party-popper"/></svg></span>
+          <p class="step-num">Étape 3 · en clôture</p>
+          <h2>L'apéritif dînatoire</h2>
+          <ul class="step-tags">
+            <li><svg class="i"><use href="#i-users"/></svg>Buffet debout, 40 personnes max</li>
+            <li class="is-froid"><svg class="i"><use href="#i-snowflake"/></svg>Tout est froid</li>
+          </ul>
+        </header>
+        <div class="offers" id="cards-apero"></div>
+        <div class="apero-helper" id="apero-helper" aria-live="polite"></div>
+        <h3 class="trays-title"><svg class="i"><use href="#i-concierge-bell"/></svg>Plateaux cocktail · Grandsire Traiteur</h3>
+        <div class="trays" id="plateaux-froids-grid"></div>
+      </section>
+
+      <!-- ========== 4 · BOISSONS ========== -->
+      <section class="step" id="etape-boissons" data-step="boissons">
+        <header class="step-head">
+          <span class="step-ico"><svg class="i"><use href="#i-wine"/></svg></span>
+          <p class="step-num">Étape 4 · pour accompagner</p>
+          <h2>Les boissons</h2>
+          <ul class="step-tags">
+            <li><svg class="i"><use href="#i-bottle-wine"/></svg>Facturées à la bouteille ouverte</li>
+          </ul>
+        </header>
+        <div class="drinks" id="boissons-grid"></div>
+      </section>
+
+      <!-- ========== 5 · ENVOYER ========== -->
+      <section class="step" id="etape-envoyer" data-step="envoyer">
+        <header class="step-head">
+          <span class="step-ico"><svg class="i"><use href="#i-send"/></svg></span>
+          <p class="step-num">Étape 5 · c'est presque fini</p>
+          <h2>Envoyer ma demande</h2>
+          <ul class="step-tags">
+            <li><svg class="i"><use href="#i-clock"/></svg>Devis détaillé sous 48 h ouvrées</li>
+          </ul>
+        </header>
+        <div class="form-card">
+          <form id="form-devis-resto" method="post">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="resto-societe">Société / Organisation *</label>
+                <input type="text" id="resto-societe" name="societe" autocomplete="organization" required>
+              </div>
+              <div class="form-group">
+                <label for="resto-contact">Personne en charge *</label>
+                <input type="text" id="resto-contact" name="contact" placeholder="Prénom Nom" autocomplete="name" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="resto-email">Email *</label>
+                <input type="email" id="resto-email" name="email" autocomplete="email" required>
+              </div>
+              <div class="form-group">
+                <label for="resto-tel">Téléphone *</label>
+                <input type="tel" id="resto-tel" name="telephone" autocomplete="tel" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="resto-date">Date de l'événement</label>
+                <input type="date" id="resto-date" name="date_event">
+              </div>
+              <div class="form-group">
+                <label for="resto-heure">Heure de l'activité</label>
+                <input type="time" id="resto-heure" name="heure_event">
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label for="resto-message">Allergies, demandes particulières</label>
+                <textarea id="resto-message" name="message" placeholder="Ex : allergie aux fruits à coque, déjeuner vers 12h30..."></textarea>
+              </div>
+            </div>
+
+            <p class="form-froid-rappel"><svg class="i"><use href="#i-snowflake"/></svg><span>Rappel : tous les plats sont livrés et servis froids (seuls le café et le thé sont chauds), dans notre salle d'accueil (privatisation obligatoire du site, 200 € HT l'heure, 500 € HT la demi-journée, qui figurera sur votre devis). Nous n'avons pas de salle de réunion.</span></p>
+
+            <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
+
+            <div id="feedback-msg" class="feedback-msg" role="status"></div>
+          </form>
+          <script>
+            /* Si le script principal n'a pas pu se charger, on n'envoie rien et on affiche l'adresse mail */
+            document.getElementById('form-devis-resto').addEventListener('submit', function (e) {
+              if (window.devisRestoPret) return;
+              e.preventDefault();
+              var f = document.getElementById('feedback-msg');
+              f.className = 'feedback-msg error';
+              f.style.display = 'block';
+              f.innerHTML = '❌ Le formulaire n’a pas pu se charger. Rechargez la page ou écrivez-nous à <a href="mailto:contact@gamedoor41.fr" style="color:#ff9966;">contact@gamedoor41.fr</a>.';
+            });
+          </script>
         </div>
+      </section>
+    </div>
+
+    <!-- ========== RÉCAP DE COMMANDE ========== -->
+    <aside class="cart" id="panier" aria-label="Votre commande">
+      <div class="cart-head">
+        <svg class="i"><use href="#i-shopping-basket"/></svg>
+        <h3>Votre commande</h3>
+        <span class="cart-people" id="cart-people"></span>
+        <button type="button" class="cart-close" id="panier-hide" aria-label="Fermer le récapitulatif">×</button>
       </div>
-      <div class="accordion-wrap" id="dejeuner-accordion">
-        <div class="accordion-list" id="dejeuner-list"></div>
-        <aside class="accordion-preview" id="dejeuner-preview"></aside>
+      <div class="cart-items" id="panier-items">
+        <div class="panier-empty"><svg class="i"><use href="#i-shopping-basket"/></svg>Rien pour l'instant : choisissez une formule, elle apparaîtra ici.</div>
       </div>
-    </div>
-  </section>
-
-  <!-- ========== SECTION 03 — APÉRITIF ========== -->
-  <section class="resto-section">
-    <div class="container">
-      <div class="section-head">
-        <p class="meta">En clôture · buffet debout</p>
-        <h2><span class="num">03</span>L'apéritif dînatoire</h2>
-        <p>Dernière énigme résolue ? Dernière question du quiz trouvée ? On prolonge le moment autour d'un <strong>buffet froid</strong>, dans notre salle d'accueil privatisée : chacun se sert, <strong>debout</strong> (quelques chaises à disposition), 40 personnes maximum.</p>
-        <p>Pour un apéritif qui remplace le repas, comptez environ 20 pièces par personne (c'est la base des formules cocktail du traiteur), soit 2 plateaux de 30 pièces pour 3 personnes.</p>
+      <div class="panier-totals" id="panier-totals" style="display:none;">
+        <p class="panier-alerte" id="panier-alerte" style="display:none;"></p>
+        <div class="panier-total-row"><span>Total HT</span><span id="total-ht">0,00 €</span></div>
+        <div class="panier-total-row"><span>TVA estimée</span><span id="total-tva">0,00 €</span></div>
+        <div class="panier-total-row ttc"><span>Total TTC</span><span id="total-ttc">0,00 €</span></div>
+        <div class="panier-total-row pp"><span>Soit par personne</span><span id="total-pp">0,00 € TTC</span></div>
+        <p class="panier-note">Hors privatisation obligatoire du site (200 € HT l'heure, 500 € HT la demi-journée) : elle figurera sur votre devis.</p>
       </div>
-      <div class="cards-grid" id="cards-apero"></div>
-      <div class="plateaux-froids" id="plateaux-froids-grid"></div>
-    </div>
-  </section>
+      <a class="cart-cta" href="#etape-envoyer" id="cart-cta">Envoyer ma demande <svg class="i"><use href="#i-arrow-right"/></svg></a>
+    </aside>
+  </div>
+  </main>
 
-  <!-- ========== SECTION 04 — BOISSONS ========== -->
-  <section class="resto-section">
-    <div class="container">
-      <div class="section-head">
-        <p class="meta">À la bouteille ouverte</p>
-        <h2><span class="num">04</span>La carte des boissons</h2>
-        <p>TVA 10 % sur eau, jus et café · TVA 20 % sur alcools, vins, apéritifs. Facturation à la bouteille ouverte.</p>
-      </div>
-      <div class="boissons-grid" id="boissons-grid"></div>
-    </div>
-  </section>
+  <button type="button" class="cartbar" id="panier-show" aria-controls="panier">
+    <svg class="i"><use href="#i-shopping-basket"/></svg>
+    <span class="cartbar-count" id="cartbar-count">Votre commande</span>
+    <strong class="cartbar-total" id="cartbar-total">0,00 €</strong>
+    <span class="cartbar-go">Voir</span>
+  </button>
 
-  <!-- ========== FORMULAIRE CONTACT ========== -->
-  <section class="form-section">
-    <div class="container">
-      <div class="form-card">
-        <h2>Vos coordonnées</h2>
-        <p class="form-intro">Plus que quelques infos et on vous prépare un devis détaillé sous 48 h ouvrées.</p>
-
-        <form id="form-devis-resto" method="post">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="resto-societe">Société / Organisation *</label>
-              <input type="text" id="resto-societe" name="societe" required>
-            </div>
-            <div class="form-group">
-              <label for="resto-contact">Personne en charge *</label>
-              <input type="text" id="resto-contact" name="contact" placeholder="Prénom Nom" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="resto-email">Email *</label>
-              <input type="email" id="resto-email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="resto-tel">Téléphone *</label>
-              <input type="tel" id="resto-tel" name="telephone" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="resto-date">Date événement</label>
-              <input type="date" id="resto-date" name="date_event">
-            </div>
-            <div class="form-group">
-              <label for="resto-heure">Heure activité</label>
-              <input type="time" id="resto-heure" name="heure_event">
-            </div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label for="resto-message">Message libre (allergies, demandes spécifiques)</label>
-              <textarea id="resto-message" name="message" placeholder="Ex : allergie aux fruits à coque, déjeuner vers 12h30..."></textarea>
-            </div>
-          </div>
-
-          <p class="form-froid-rappel"><span aria-hidden="true">❄</span> Rappel : tous les plats sont livrés et servis froids (seuls le café et le thé sont chauds), dans notre salle d'accueil (privatisation obligatoire du site, 200 € HT l'heure, 500 € HT la demi-journée, qui figurera sur votre devis). Nous n'avons pas de salle de réunion.</p>
-
-          <button type="submit" class="btn-submit" id="btn-submit">Envoyer ma demande de devis</button>
-
-          <div id="feedback-msg" class="feedback-msg"></div>
-        </form>
-        <script>
-          /* Si le script principal n'a pas pu se charger, on n'envoie rien et on affiche l'adresse mail */
-          document.getElementById('form-devis-resto').addEventListener('submit', function (e) {
-            if (window.devisRestoPret) return;
-            e.preventDefault();
-            var f = document.getElementById('feedback-msg');
-            f.className = 'feedback-msg error';
-            f.style.display = 'block';
-            f.innerHTML = '❌ Le formulaire n\u2019a pas pu se charger. Rechargez la page ou écrivez-nous à <a href="mailto:contact@gamedoor41.fr" style="color:#ff9966;">contact@gamedoor41.fr</a>.';
-          });
-        </script>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== PANIER STICKY ========== -->
-  <aside class="panier" id="panier">
-    <button class="panier-toggle" id="panier-show" aria-label="Afficher le panier">🛒</button>
-    <div class="panier-head">
-      <h3>Récap devis</h3>
-      <button class="panier-toggle-small" id="panier-hide">_</button>
-    </div>
-    <div class="panier-items" id="panier-items">
-      <div class="panier-empty">Aucune formule sélectionnée. Cochez les options qui vous intéressent.</div>
-    </div>
-    <div class="panier-totals" id="panier-totals" style="display:none;">
-      <p class="panier-alerte" id="panier-alerte" style="display:none;"></p>
-      <div class="panier-total-row"><span>Total HT</span><span id="total-ht">0,00 €</span></div>
-      <div class="panier-total-row"><span>TVA estimée</span><span id="total-tva">0,00 €</span></div>
-      <div class="panier-total-row ttc"><span>Total TTC</span><span id="total-ttc">0,00 €</span></div>
-      <p class="panier-note">Hors privatisation obligatoire du site (200 € HT l'heure, 500 € HT la demi-journée) : elle figurera sur votre devis.</p>
-    </div>
-  </aside>
-
-  <!-- ========== MODAL ========== -->
+  <!-- ========== FICHE « VOIR LE MENU » ========== -->
   <div class="modal-bg" id="modal-bg">
-    <div class="modal">
-      <button class="modal-close" id="modal-close">×</button>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Fermer">×</button>
       <div id="modal-content"></div>
     </div>
   </div>
 
   <!-- ========== SCRIPTS ========== -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="module">
 
     const firebaseConfig = {
@@ -1067,239 +682,910 @@
     const EMAILJS_PUBLIC_KEY  = "rGgrPogMTC1wL0aOv";
 
     // ========== CATALOGUE PRODUITS ==========
+    // menu : la composition rangée par service (cat = entree, plat, fromage, dessert, viennoiserie, chaud, boisson)
+    // highlights : les pictogrammes affichés sur la carte
     const CATALOG = {
-      accueil: [
+      "accueil": [
         {
-          id: 'accueil-express', name: 'Express', tag: 'Accueil café',
-          price: 4.50, tva: 10, unit: '/ pers.',
-          subtitle: 'Le minimum efficace',
-          includes: ['1 viennoiserie par personne', 'Café Senseo libre service', 'Bouilloire + thés', 'Eau plate'],
-          info: {
-            details: '<p>Format compact pour bien démarrer la journée. Viennoiseries fraîches du jour livrées avec le café Senseo (capsules + bouilloire pour les thés).</p>',
-            inclus: ['1 mini-croissant <strong>OU</strong> mini-pain au chocolat <strong>OU</strong> mini-pain aux raisins (au choix selon dispo)', 'Café Senseo capsules en libre service', 'Bouilloire électrique + sélection de thés (Earl Grey, vert, infusion)', 'Eau plate 50 cl'],
-            allergenes: 'Viennoiseries : gluten, œufs, lait. Sur demande : version sans gluten possible.',
-            min: '8 personnes minimum'
+          "id": "accueil-express",
+          "name": "Express",
+          "tag": "Accueil café",
+          "price": 4.5,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "Le minimum efficace",
+          "highlights": [
+            {
+              "icon": "croissant",
+              "cat": "viennoiserie",
+              "text": "1 viennoiserie"
+            },
+            {
+              "icon": "coffee",
+              "cat": "chaud",
+              "text": "Café & thé"
+            },
+            {
+              "icon": "glass-water",
+              "cat": "boisson",
+              "text": "Eau plate"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "viennoiserie",
+              "label": "Viennoiserie",
+              "items": [
+                "1 mini-croissant ou mini-pain au chocolat ou mini-pain aux raisins (au choix selon dispo)"
+              ]
+            },
+            {
+              "cat": "chaud",
+              "label": "Café & thé",
+              "items": [
+                "Café Senseo capsules en libre service",
+                "Bouilloire électrique + sélection de thés (Earl Grey, vert, infusion)"
+              ]
+            },
+            {
+              "cat": "boisson",
+              "label": "À boire",
+              "items": [
+                "Eau plate 50 cl"
+              ]
+            }
+          ],
+          "info": {
+            "allergenes": "Viennoiseries : gluten, œufs, lait. Sur demande : version sans gluten possible.",
+            "min": "8 personnes minimum"
           }
         },
         {
-          id: 'accueil-complete', name: 'Complète', tag: 'Accueil café · Signature',
-          price: 7.50, tva: 10, unit: '/ pers.', recommended: true,
-          subtitle: 'Notre format signature',
-          includes: ['2 viennoiseries variées', 'Café Senseo + bouilloire thé', 'Jus de fruits en carafe', 'Eau plate'],
-          info: {
-            details: '<p>Format complet pour démarrer la journée confortablement. Deux viennoiseries variées par personne et jus de fruits en carafe au choix.</p>',
-            inclus: ['2 viennoiseries variées par personne (mini-croissant, mini-pain chocolat, mini-pain aux raisins, brioche)', 'Café Senseo capsules en libre service', 'Bouilloire électrique + sélection de thés', 'Jus de fruits en carafe au choix : pomme, orange ou multivitaminé', 'Eau plate'],
-            allergenes: 'Viennoiseries : gluten, œufs, lait. Sur demande : alternatives sans gluten.',
-            min: '8 personnes minimum'
+          "id": "accueil-complete",
+          "name": "Complète",
+          "tag": "Accueil café · Signature",
+          "price": 7.5,
+          "tva": 10,
+          "unit": "/ pers.",
+          "recommended": true,
+          "subtitle": "Notre format signature",
+          "highlights": [
+            {
+              "icon": "croissant",
+              "cat": "viennoiserie",
+              "text": "2 viennoiseries"
+            },
+            {
+              "icon": "coffee",
+              "cat": "chaud",
+              "text": "Café & thé"
+            },
+            {
+              "icon": "cup-soda",
+              "cat": "boisson",
+              "text": "Jus de fruits"
+            },
+            {
+              "icon": "glass-water",
+              "cat": "boisson",
+              "text": "Eau plate"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "viennoiserie",
+              "label": "Viennoiseries",
+              "items": [
+                "2 viennoiseries variées par personne (mini-croissant, mini-pain chocolat, mini-pain aux raisins, brioche)"
+              ]
+            },
+            {
+              "cat": "chaud",
+              "label": "Café & thé",
+              "items": [
+                "Café Senseo capsules en libre service",
+                "Bouilloire électrique + sélection de thés"
+              ]
+            },
+            {
+              "cat": "boisson",
+              "label": "À boire",
+              "items": [
+                "Jus de fruits en carafe au choix : pomme, orange ou multivitaminé",
+                "Eau plate"
+              ]
+            }
+          ],
+          "info": {
+            "allergenes": "Viennoiseries : gluten, œufs, lait. Sur demande : alternatives sans gluten.",
+            "min": "8 personnes minimum"
           }
         }
       ],
-      // Carte de Grandsire Traiteur : plateaux-repas AUTOMNE 2026 (mail de Franck du 29/09/2026) ; wraps, pasta box, box et
-      // plateaux cocktail : brochure Été 2026 (« Menu-ete-2026-1.pdf ») en attendant la brochure d'automne. Prix HT Grandsire.
-      // Uniquement les recettes FROIDES : pas de pasta box « à réchauffer », pas de formule cocktail avec pièces chaudes,
-      // pas de supplément « plat chaud » (rien ne peut être réchauffé sur place).
-      dejeuner: [
+      "dejeuner": [
         {
-          id: 'dej-pouce', name: 'Sur le pouce', tag: 'Essentiel',
-          price: 13.00, tva: 10, unit: '/ pers.',
-          subtitle: 'Wrap ou pasta box froide',
-          includes: ['1 wrap (8 recettes) ou 1 pasta box froide (3 recettes)', '1 dessert au choix', "Bouteille d'eau 50 cl", 'Remis en valisette isotherme'],
-          info: {
-            details: '<p>Format léger, livré froid et prêt à consommer. Au choix : la formule wrap ou la pasta box froide de la carte de Grandsire Traiteur. Chaque composition se commande par 4 formules minimum.</p>',
-            inclus: [
-              '<strong>Wrap au choix</strong> : jambon fumé de la Manche, mimolette d\'Isigny, fromage frais et salade · poulet et crudités, oignons frits, tomates confites, fromage frais et ciboulette · saumon, guacamole épicé, concombre et salade · brie, crème de chorizo et salade · poulet croustillant (nuggets), salade et fromage frais sauce César · thon à la marmelade de yuzu · légumes tex-mex · wrap et son fish & chips, sauce tartare',
-              '<strong>OU pasta box froide au choix</strong> : penne au salami et légumes, billes de mozzarella, olives noires et basilic · salade de tagliatelles fraîches, jambon fumé, emmental, parmesan et pesto · salade de fusilli au thon, poivrons, tomates et œuf, mayonnaise curry-citron vert',
-              '<strong>Dessert au choix</strong> : grande brochette de fruits frais, tartelette citron, muffin chocolat noisette ou brownie',
-              'Bouteille d\'eau 50 cl et serviette, en valisette isotherme (avec couverts en bois et boule de pain pour la formule wrap)'
-            ],
-            allergenes: 'Selon la recette choisie : gluten, lait, œufs, poisson possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 formules minimum par composition',
-            fournisseur: 'Grandsire Traiteur'
+          "id": "dej-pouce",
+          "name": "Sur le pouce",
+          "tag": "Essentiel",
+          "price": 13,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "Wrap ou pasta box froide",
+          "highlights": [
+            {
+              "icon": "sandwich",
+              "cat": "plat",
+              "text": "Wrap ou pasta box"
+            },
+            {
+              "icon": "cake-slice",
+              "cat": "dessert",
+              "text": "Dessert"
+            },
+            {
+              "icon": "glass-water",
+              "cat": "boisson",
+              "text": "Eau 50 cl"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "plat",
+              "label": "Wrap",
+              "choix": true,
+              "items": [
+                "Jambon fumé de la Manche, mimolette d'Isigny, fromage frais et salade",
+                "Poulet et crudités, oignons frits, tomates confites, fromage frais et ciboulette",
+                "Saumon, guacamole épicé, concombre et salade",
+                "Brie, crème de chorizo et salade",
+                "Poulet croustillant (nuggets), salade et fromage frais sauce César",
+                "Thon à la marmelade de yuzu",
+                "Légumes tex-mex",
+                "Wrap et son fish & chips, sauce tartare"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Ou pasta box froide",
+              "choix": true,
+              "items": [
+                "Penne au salami et légumes, billes de mozzarella, olives noires et basilic",
+                "Salade de tagliatelles fraîches, jambon fumé, emmental, parmesan et pesto",
+                "Salade de fusilli au thon, poivrons, tomates et œuf, mayonnaise curry-citron vert"
+              ]
+            },
+            {
+              "cat": "dessert",
+              "label": "Dessert",
+              "choix": true,
+              "items": [
+                "Grande brochette de fruits frais",
+                "Tartelette citron",
+                "Muffin chocolat noisette",
+                "Brownie"
+              ]
+            }
+          ],
+          "extras": [
+            "Bouteille d'eau 50 cl et serviette, en valisette isotherme (avec couverts en bois et boule de pain pour la formule wrap)"
+          ],
+          "info": {
+            "allergenes": "Selon la recette choisie : gluten, lait, œufs, poisson possibles. Signalez allergies et régimes dans votre demande.",
+            "min": "4 formules minimum par composition",
+            "fournisseur": "Grandsire Traiteur"
           }
         },
         {
-          id: 'dej-box', name: 'Box burger ou bagel', tag: 'Box isotherme',
-          price: 15.00, tva: 10, unit: '/ pers.',
-          subtitle: 'Burger ou bagel froid',
-          includes: ['1 burger froid (2 recettes) ou 1 bagel froid (3 recettes)', 'Chips ou salade italienne', '1 dessert au choix', "Bouteille d'eau 50 cl"],
-          info: {
-            details: '<p>Box froide remise en valisette isotherme, prête à consommer. Carte de Grandsire Traiteur. Chaque composition se commande par 4 box minimum.</p>',
-            inclus: [
-              '<strong>Burger froid au choix</strong> : chicken burger (graine de courge, poulet croustillant, oignons rouges, tomme de Savoie, sauce crémeuse aux herbes) · burger façon asiatique (effiloché de bœuf, coriandre, petits légumes, houmous de patate douce)',
-              '<strong>OU bagel froid au choix</strong> : norvégien (courgettes grillées, chèvre, noix, pomme) · nordique (saumon fumé, ricotta, pousses d\'épinard, crevettes, citron vert) · volaille (poulet, bacon, oignons frits, tomate, salade, sauce barbecue)',
-              '<strong>Accompagnement au choix</strong> : paquet de chips ou salade italienne',
-              '<strong>Dessert au choix</strong> : grande brochette de fruits frais, tartelette citron, muffin chocolat noisette ou brownie',
-              'Bouteille d\'eau 50 cl et serviette'
-            ],
-            allergenes: 'Selon la recette choisie : gluten, lait, œufs, poisson, crustacés possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 box minimum par composition',
-            fournisseur: 'Grandsire Traiteur'
+          "id": "dej-box",
+          "name": "Box burger ou bagel",
+          "tag": "Box isotherme",
+          "price": 15,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "Burger ou bagel froid",
+          "highlights": [
+            {
+              "icon": "hamburger",
+              "cat": "plat",
+              "text": "Burger ou bagel"
+            },
+            {
+              "icon": "salad",
+              "cat": "entree",
+              "text": "Chips ou salade"
+            },
+            {
+              "icon": "cake-slice",
+              "cat": "dessert",
+              "text": "Dessert"
+            },
+            {
+              "icon": "glass-water",
+              "cat": "boisson",
+              "text": "Eau 50 cl"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "plat",
+              "label": "Burger froid",
+              "choix": true,
+              "items": [
+                "Chicken burger (graine de courge, poulet croustillant, oignons rouges, tomme de Savoie, sauce crémeuse aux herbes)",
+                "Burger façon asiatique (effiloché de bœuf, coriandre, petits légumes, houmous de patate douce)"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Ou bagel froid",
+              "choix": true,
+              "items": [
+                "Norvégien (courgettes grillées, chèvre, noix, pomme)",
+                "Nordique (saumon fumé, ricotta, pousses d'épinard, crevettes, citron vert)",
+                "Volaille (poulet, bacon, oignons frits, tomate, salade, sauce barbecue)"
+              ]
+            },
+            {
+              "cat": "entree",
+              "label": "Accompagnement",
+              "choix": true,
+              "items": [
+                "Paquet de chips",
+                "Salade italienne"
+              ]
+            },
+            {
+              "cat": "dessert",
+              "label": "Dessert",
+              "choix": true,
+              "items": [
+                "Grande brochette de fruits frais",
+                "Tartelette citron",
+                "Muffin chocolat noisette",
+                "Brownie"
+              ]
+            }
+          ],
+          "extras": [
+            "Bouteille d'eau 50 cl et serviette"
+          ],
+          "info": {
+            "allergenes": "Selon la recette choisie : gluten, lait, œufs, poisson, crustacés possibles. Signalez allergies et régimes dans votre demande.",
+            "min": "4 box minimum par composition",
+            "fournisseur": "Grandsire Traiteur"
           }
         },
-        // Plateaux-repas AUTOMNE 2026 : composition envoyée par Franck (Grandsire) le 29/09/2026, en attendant la brochure.
-        // Prix : Franck n'en a pas donné ; on garde les tarifs 2026 de chaque gamme (identiques au printemps et à l'été).
         {
-          id: 'dej-figue', name: 'Plateau Figue', tag: 'Confort · Essentiel',
-          price: 16.50, tva: 10, unit: '/ pers.',
-          subtitle: '4 services · gamme essentielle',
-          includes: ['Entrée au choix (terrine de poissons, quiche au butternut…)', 'Plat froid au choix (poulet croustillant, saumon au citron vert…)', 'Fromage', 'Dessert au choix'],
-          info: {
-            details: '<p>Le plateau-repas essentiel de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
-            inclus: [
-              '<strong>Entrée au choix</strong> : terrine de poissons aux légumes d\'automne, coulis balsamique · terrine de campagne, chutney de tomates et échalotes · quiche au butternut rôti, guacamole et crème de parmesan · quiche à la sardine, poireaux et tomme de Normandie · entrée du jour',
-              '<strong>Plat froid au choix</strong> : filet de poulet croustillant (cacahuètes, sarrasin), penne et potimarron rôti · filet de maquereau, salade de riz aux légumes de saison · émincé de bœuf laqué au soja et citronnelle, nouilles chinoises et légumes · saumon au citron vert et quinoa au curry, petits légumes · plat du jour',
-              '<strong>Fromage</strong>',
-              '<strong>Dessert au choix</strong> : clafoutis banane · tarte fine cannelle, caramel · riz au lait, coulis du moment · sablé myrtille, tonka (végan) · dessert du jour',
-              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
-            ],
-            allergenes: 'Selon les recettes choisies : gluten, arachide (poulet aux cacahuètes), poissons, soja, lait, œufs, sulfites (coulis balsamique) possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum par composition',
-            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          "id": "dej-figue",
+          "name": "Plateau Figue",
+          "tag": "Confort · Essentiel",
+          "price": 16.5,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "4 services · gamme essentielle",
+          "highlights": [
+            {
+              "icon": "salad",
+              "cat": "entree",
+              "text": "Entrée"
+            },
+            {
+              "icon": "drumstick",
+              "cat": "plat",
+              "text": "Plat froid"
+            },
+            {
+              "icon": "cheese",
+              "cat": "fromage",
+              "text": "Fromage"
+            },
+            {
+              "icon": "cake-slice",
+              "cat": "dessert",
+              "text": "Dessert"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "entree",
+              "label": "Entrée",
+              "choix": true,
+              "items": [
+                "Terrine de poissons aux légumes d'automne, coulis balsamique",
+                "Terrine de campagne, chutney de tomates et échalotes",
+                "Quiche au butternut rôti, guacamole et crème de parmesan",
+                "Quiche à la sardine, poireaux et tomme de Normandie",
+                "Entrée du jour"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Plat froid",
+              "choix": true,
+              "items": [
+                "Filet de poulet croustillant (cacahuètes, sarrasin), penne et potimarron rôti",
+                "Filet de maquereau, salade de riz aux légumes de saison",
+                "Émincé de bœuf laqué au soja et citronnelle, nouilles chinoises et légumes",
+                "Saumon au citron vert et quinoa au curry, petits légumes",
+                "Plat du jour"
+              ]
+            },
+            {
+              "cat": "fromage",
+              "label": "Fromage",
+              "choix": false,
+              "items": []
+            },
+            {
+              "cat": "dessert",
+              "label": "Dessert",
+              "choix": true,
+              "items": [
+                "Clafoutis banane",
+                "Tarte fine cannelle, caramel",
+                "Riz au lait, coulis du moment",
+                "Sablé myrtille, tonka (végan)",
+                "Dessert du jour"
+              ]
+            }
+          ],
+          "extras": [
+            "Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain"
+          ],
+          "info": {
+            "allergenes": "Selon les recettes choisies : gluten, arachide (poulet aux cacahuètes), poissons, soja, lait, œufs, sulfites (coulis balsamique) possibles. Signalez allergies et régimes dans votre demande.",
+            "min": "4 plateaux minimum par composition",
+            "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
+            "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
           }
         },
         {
-          id: 'dej-marron', name: 'Plateau Marron', tag: 'Confort · Premium',
-          price: 19.00, tva: 10, unit: '/ pers.', recommended: true,
-          subtitle: '4 services · gamme premium',
-          includes: ['Entrée au choix (burrata, saumon fumé…)', 'Plat froid au choix (volaille rôtie au miel, dorade royale…)', 'Fromage', 'Dessert au choix'],
-          info: {
-            details: '<p>Le plateau premium de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
-            inclus: [
-              '<strong>Entrée au choix</strong> : quiche au potiron et fourme d\'Ambert · terrine de lentilles et légumes, coulis balsamique · burrata, crémeux de butternut au parmesan et croûtons à l\'ail · saumon fumé et houmous de butternut au sésame · entrée du jour',
-              '<strong>Plat froid au choix</strong> : filet de volaille rôti au miel, salade de penne au potiron et poire · lieu noir rôti au beurre noisette, légumes d\'automne et crémeux de patate douce · émincé de veau, salade d\'épeautre aux légumes et coulis de mâche · dorade royale aux noix, blé et crème de potiron · plat du jour',
-              '<strong>Fromage</strong>',
-              '<strong>Dessert au choix</strong> : feuilleté amandes, banane, chocolat · crumble pommes · cookie garni chocolat, pécan, praliné · riz au lait vanille, coulis mangue (végan) · dessert du jour',
-              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
-            ],
-            allergenes: 'Selon les recettes choisies : gluten, poissons, sésame, lait, œufs, fruits à coque (noix, amandes, noisettes, pécan), sulfites (coulis balsamique) possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum par composition',
-            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          "id": "dej-marron",
+          "name": "Plateau Marron",
+          "tag": "Confort · Premium",
+          "price": 19,
+          "tva": 10,
+          "unit": "/ pers.",
+          "recommended": true,
+          "subtitle": "4 services · gamme premium",
+          "highlights": [
+            {
+              "icon": "salad",
+              "cat": "entree",
+              "text": "Entrée"
+            },
+            {
+              "icon": "drumstick",
+              "cat": "plat",
+              "text": "Plat froid"
+            },
+            {
+              "icon": "cheese",
+              "cat": "fromage",
+              "text": "Fromage"
+            },
+            {
+              "icon": "cake-slice",
+              "cat": "dessert",
+              "text": "Dessert"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "entree",
+              "label": "Entrée",
+              "choix": true,
+              "items": [
+                "Quiche au potiron et fourme d'Ambert",
+                "Terrine de lentilles et légumes, coulis balsamique",
+                "Burrata, crémeux de butternut au parmesan et croûtons à l'ail",
+                "Saumon fumé et houmous de butternut au sésame",
+                "Entrée du jour"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Plat froid",
+              "choix": true,
+              "items": [
+                "Filet de volaille rôti au miel, salade de penne au potiron et poire",
+                "Lieu noir rôti au beurre noisette, légumes d'automne et crémeux de patate douce",
+                "Émincé de veau, salade d'épeautre aux légumes et coulis de mâche",
+                "Dorade royale aux noix, blé et crème de potiron",
+                "Plat du jour"
+              ]
+            },
+            {
+              "cat": "fromage",
+              "label": "Fromage",
+              "choix": false,
+              "items": []
+            },
+            {
+              "cat": "dessert",
+              "label": "Dessert",
+              "choix": true,
+              "items": [
+                "Feuilleté amandes, banane, chocolat",
+                "Crumble pommes",
+                "Cookie garni chocolat, pécan, praliné",
+                "Riz au lait vanille, coulis mangue (végan)",
+                "Dessert du jour"
+              ]
+            }
+          ],
+          "extras": [
+            "Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain"
+          ],
+          "info": {
+            "allergenes": "Selon les recettes choisies : gluten, poissons, sésame, lait, œufs, fruits à coque (noix, amandes, noisettes, pécan), sulfites (coulis balsamique) possibles. Signalez allergies et régimes dans votre demande.",
+            "min": "4 plateaux minimum par composition",
+            "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
+            "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
           }
         },
         {
-          id: 'dej-vege', name: 'Plateau Végétarien', tag: 'Confort · Végétarien',
-          price: 19.00, tva: 10, unit: '/ pers.',
-          subtitle: '4 services · végétarien',
-          includes: ['Entrée au choix (houmous, taboulé…)', 'Plat froid au choix (lentilles corail, focaccia…)', 'Fromage', 'Dessert au choix (dont 3 végans)'],
-          info: {
-            details: '<p>Le plateau-repas végétarien de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
-            inclus: [
-              '<strong>Entrée au choix</strong> : tartine de houmous, citron confit et cumin, mini pita toastée · taboulé de boulgour, tomates, concombres et feta · wrap d\'épeautre, potimarron grillé, oignons rouges en pickles · entrée du jour',
-              '<strong>Plat froid au choix</strong> : salade de lentilles corail, carottes rôties au miel, noisette et vinaigrette · focaccia au caviar d\'aubergine, tzatziki · plat du jour',
-              '<strong>Fromage</strong>',
-              '<strong>Dessert au choix</strong> : riz au lait vanille, coulis mangue (végan) · tiramisu coco, passion (végan) · sablé myrtille, tonka (végan) · dessert du jour',
-              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
-            ],
-            allergenes: 'Selon les recettes choisies : gluten, sésame, lait, fruits à coque (noisette) possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum par composition',
-            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          "id": "dej-vege",
+          "name": "Plateau Végétarien",
+          "tag": "Confort · Végétarien",
+          "price": 19,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "4 services · végétarien",
+          "highlights": [
+            {
+              "icon": "salad",
+              "cat": "entree",
+              "text": "Entrée"
+            },
+            {
+              "icon": "drumstick",
+              "cat": "plat",
+              "text": "Plat froid"
+            },
+            {
+              "icon": "cheese",
+              "cat": "fromage",
+              "text": "Fromage"
+            },
+            {
+              "icon": "cake-slice",
+              "cat": "dessert",
+              "text": "Dessert"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "entree",
+              "label": "Entrée",
+              "choix": true,
+              "items": [
+                "Tartine de houmous, citron confit et cumin, mini pita toastée",
+                "Taboulé de boulgour, tomates, concombres et feta",
+                "Wrap d'épeautre, potimarron grillé, oignons rouges en pickles",
+                "Entrée du jour"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Plat froid",
+              "choix": true,
+              "items": [
+                "Salade de lentilles corail, carottes rôties au miel, noisette et vinaigrette",
+                "Focaccia au caviar d'aubergine, tzatziki",
+                "Plat du jour"
+              ]
+            },
+            {
+              "cat": "fromage",
+              "label": "Fromage",
+              "choix": false,
+              "items": []
+            },
+            {
+              "cat": "dessert",
+              "label": "Dessert",
+              "choix": true,
+              "items": [
+                "Riz au lait vanille, coulis mangue (végan)",
+                "Tiramisu coco, passion (végan)",
+                "Sablé myrtille, tonka (végan)",
+                "Dessert du jour"
+              ]
+            }
+          ],
+          "extras": [
+            "Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain"
+          ],
+          "info": {
+            "allergenes": "Selon les recettes choisies : gluten, sésame, lait, fruits à coque (noisette) possibles. Signalez allergies et régimes dans votre demande.",
+            "min": "4 plateaux minimum par composition",
+            "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
+            "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
           }
         },
         {
-          id: 'dej-pomme', name: 'Plateau Pomme', tag: 'Premium · Gastronomique',
-          price: 24.80, tva: 10, unit: '/ pers.',
-          subtitle: '4 services · gastronomique',
-          includes: ['Entrée au choix (foie gras, trio de Saint-Jacques…)', 'Plat froid au choix (filet de bœuf aux 5 baies, filet de bar…)', 'Fromage', 'Dessert au choix'],
-          info: {
-            details: '<p>Le plateau gastronomique de la carte d\'automne de Grandsire Traiteur : entrée, plat, fromage et dessert, livré froid et prêt à consommer. Chaque composition (même entrée, plat et dessert) se commande par 4 plateaux minimum.</p>',
-            inclus: [
-              '<strong>Entrée au choix</strong> : foie gras de canard et confit d\'échalotes au porto rouge · trio de Saint-Jacques et crémeux de patate douce à l\'orange · tartare de saumon et gambas aux agrumes · entrée du jour',
-              '<strong>Plat froid au choix</strong> : filet de bœuf aux 5 baies, tagliatelles fraîches aux morilles et crème de beaufort · filet de bar rôti, panais et topinambour, sauce vierge · brochette de Saint-Jacques et gambas, risotto aux légumes, noix et copeaux de mimolette · filet de canette, boulgour à la figue et potiron, sauce miel et moutarde · plat du jour',
-              '<strong>Fromage</strong>',
-              '<strong>Dessert au choix</strong> : chocolat citron · moelleux chocolat, cœur Nutella · tiramisu coco, passion (végan) · tartelette croustillante fruit de saison · dessert du jour',
-              'Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain'
-            ],
-            allergenes: 'Selon les recettes choisies : gluten, poissons, crustacés, mollusques, lait, œufs, soja (moelleux cœur Nutella), fruits à coque, moutarde possibles. Signalez allergies et régimes dans votre demande.',
-            min: '4 plateaux minimum par composition',
-            options: 'Couverts inox au lieu du bois : + 1,00 € HT / plateau',
-            fournisseur: 'Grandsire Traiteur · certifié ISO 20121'
+          "id": "dej-pomme",
+          "name": "Plateau Pomme",
+          "tag": "Premium · Gastronomique",
+          "price": 24.8,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "4 services · gastronomique",
+          "highlights": [
+            {
+              "icon": "salad",
+              "cat": "entree",
+              "text": "Entrée"
+            },
+            {
+              "icon": "drumstick",
+              "cat": "plat",
+              "text": "Plat froid"
+            },
+            {
+              "icon": "cheese",
+              "cat": "fromage",
+              "text": "Fromage"
+            },
+            {
+              "icon": "cake-slice",
+              "cat": "dessert",
+              "text": "Dessert"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "entree",
+              "label": "Entrée",
+              "choix": true,
+              "items": [
+                "Foie gras de canard et confit d'échalotes au porto rouge",
+                "Trio de Saint-Jacques et crémeux de patate douce à l'orange",
+                "Tartare de saumon et gambas aux agrumes",
+                "Entrée du jour"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Plat froid",
+              "choix": true,
+              "items": [
+                "Filet de bœuf aux 5 baies, tagliatelles fraîches aux morilles et crème de beaufort",
+                "Filet de bar rôti, panais et topinambour, sauce vierge",
+                "Brochette de Saint-Jacques et gambas, risotto aux légumes, noix et copeaux de mimolette",
+                "Filet de canette, boulgour à la figue et potiron, sauce miel et moutarde",
+                "Plat du jour"
+              ]
+            },
+            {
+              "cat": "fromage",
+              "label": "Fromage",
+              "choix": false,
+              "items": []
+            },
+            {
+              "cat": "dessert",
+              "label": "Dessert",
+              "choix": true,
+              "items": [
+                "Chocolat citron",
+                "Moelleux chocolat, cœur Nutella",
+                "Tiramisu coco, passion (végan)",
+                "Tartelette croustillante fruit de saison",
+                "Dessert du jour"
+              ]
+            }
+          ],
+          "extras": [
+            "Couverts en bois, gobelet recyclable, assiette compostable, serviette et boule de pain"
+          ],
+          "info": {
+            "allergenes": "Selon les recettes choisies : gluten, poissons, crustacés, mollusques, lait, œufs, soja (moelleux cœur Nutella), fruits à coque, moutarde possibles. Signalez allergies et régimes dans votre demande.",
+            "min": "4 plateaux minimum par composition",
+            "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
+            "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
           }
         }
       ],
-      apero: [
+      "apero": [
         {
-          id: 'apero-conquerant', name: 'Les Conquérants', tag: 'Apéro terroir normand',
-          price: 9.00, tva: 10, unit: '/ pers.',
-          subtitle: 'Notre signature locale',
-          includes: ['Plateau fromages affinés au lait cru', 'Charcuterie fine 200 g/pers', "Sélection saisonnière", 'À compléter avec cidre ou crémant', 'Servi froid, en buffet debout'],
-          info: {
-            details: '<p>Notre signature locale. Plateau gourmand mixte (fromages affinés + charcuterie fine) sélectionné par la <strong>Fromagerie Conquérant</strong> à Caen. Sélection saisonnière au lait cru. 200 g de produits par personne. Servi froid, en buffet.</p>',
-            inclus: [
-              '<strong>Plateau Gourmand Mixte Fromagerie Conquérant</strong>',
-              'Sélection de fromages affinés au lait cru (5-6 variétés selon saison) : camembert au lait cru, livarot, pont-l\'évêque, neufchâtel, brie de Meaux, comté affiné…',
-              'Sélection de charcuteries fines (3-4 variétés) : jambon sec, saucisson sec, rosette, terrine maison, rillettes locales…',
-              'Pain de campagne tranché',
-              'Beurre demi-sel + cornichons + condiments',
-              'Présentation en planche bois ou carton premium'
-            ],
-            allergenes: 'Lait cru (fromages), porc (charcuterie), gluten (pain). Allergie lait : prévenir. Cette formule n\'est pas adaptée aux femmes enceintes (lait cru).',
-            min: '4 personnes minimum',
-            options: 'À compléter avec cidre brut normand 5 € HT/75 cl ou crémant de Loire 10 € HT/75 cl pour un apéro complet',
-            fournisseur: 'Fromagerie Conquérant · Caen · <a href="https://fromagerie-conquerant.com/products/plateau-gourmand-mixte" target="_blank" rel="noopener">Voir le produit</a>'
+          "id": "apero-conquerant",
+          "name": "Les Conquérants",
+          "tag": "Apéro terroir normand",
+          "price": 9,
+          "tva": 10,
+          "unit": "/ pers.",
+          "subtitle": "Notre signature locale",
+          "highlights": [
+            {
+              "icon": "cheese",
+              "cat": "fromage",
+              "text": "Fromages au lait cru"
+            },
+            {
+              "icon": "ham",
+              "cat": "plat",
+              "text": "Charcuterie fine"
+            },
+            {
+              "icon": "wheat",
+              "cat": "entree",
+              "text": "Pain de campagne"
+            }
+          ],
+          "menu": [
+            {
+              "cat": "fromage",
+              "label": "Fromages affinés au lait cru (5-6 variétés selon saison)",
+              "items": [
+                "Camembert au lait cru",
+                "Livarot",
+                "Pont-l'évêque",
+                "Neufchâtel",
+                "Brie de Meaux",
+                "Comté affiné"
+              ]
+            },
+            {
+              "cat": "plat",
+              "label": "Charcuteries fines (3-4 variétés)",
+              "items": [
+                "Jambon sec",
+                "Saucisson sec",
+                "Rosette",
+                "Terrine maison",
+                "Rillettes locales"
+              ]
+            },
+            {
+              "cat": "entree",
+              "label": "Avec",
+              "items": [
+                "Pain de campagne tranché",
+                "Beurre demi-sel, cornichons, condiments",
+                "Présentation en planche bois ou carton premium"
+              ]
+            }
+          ],
+          "extras": [
+            "Plateau Gourmand Mixte Fromagerie Conquérant"
+          ],
+          "info": {
+            "allergenes": "Lait cru (fromages), porc (charcuterie), gluten (pain). Allergie lait : prévenir. Cette formule n'est pas adaptée aux femmes enceintes (lait cru).",
+            "min": "4 personnes minimum",
+            "options": "À compléter avec cidre brut normand 5 € HT/75 cl ou crémant de Loire 10 € HT/75 cl pour un apéro complet",
+            "fournisseur": "Fromagerie Conquérant · Caen · <a href=\"https://fromagerie-conquerant.com/products/plateau-gourmand-mixte\" target=\"_blank\" rel=\"noopener\">Voir le produit</a>"
           }
         }
       ],
-      // Plateaux cocktail FROIDS de la brochure Été 2026, toujours en vigueur (commandés au plateau, pas à la personne).
-      // Écartés : « 30 savouris chauds » et formules cocktail 20/22 pièces (pièces chaudes).
-      plateauxFroids: {
-        title: 'Plateaux cocktail froids · Grandsire Traiteur',
-        items: [
-          { id: 'pc-wraps', name: 'Plateau de 30 wraps', vol: '30 pièces', price: 36.36, tva: 10,
-            desc: 'Jambon fumé et mimolette · poulet crudités · saumon guacamole · fish & chips sauce tartare · thon au yuzu' },
-          { id: 'pc-savouris', name: 'Plateau de 30 savouris froids', vol: '30 pièces', price: 36.36, tva: 10,
-            desc: 'Dôme de volaille teriyaki · sablé de hareng fumé · briochin rillette de thon · rouleau de printemps · wrap saumon guacamole · brochette melon et jambon fumé' },
-          { id: 'pc-fraicheur', name: 'Plateau de 30 pièces fraîcheurs', vol: '30 pièces', price: 36.36, tva: 10,
-            desc: 'Macaron de magret à l\'orange · cheesecake aux petits pois · navette de jambon de volaille · brochette crevettes-ananas · chaud-froid de volaille (recette froide) · wrap fish & chips' },
-          { id: 'pc-boulangeres', name: 'Plateau de 30 boulangères et mini-clubs', vol: '30 pièces', price: 36.36, tva: 10,
-            desc: 'Navette de volaille miel-épices · briochin Neufchâtel et pomme · mini-clubs saumon fumé, bœuf sauce tartare, crudités · bruschetta légumes-anchois' },
-          { id: 'pc-pain-surprise', name: 'Pain surprise', vol: '50 pièces', price: 40.00, tva: 10,
-            desc: 'Au choix : charcuterie, poisson, ou mixte charcuterie-poisson-crudités' },
-          { id: 'pc-fours-finesse', name: 'Plateau de 30 fours frais « Finesse »', vol: '30 pièces · sucré', price: 36.36, tva: 10,
-            desc: 'Choux banane · brownie crémeux · coque coco-passion · tartelette fruits de saison · sablé cappuccino · carré de pain d\'épices' },
-          { id: 'pc-fours-saveurs', name: 'Plateau de 30 fours frais « Saveurs »', vol: '30 pièces · sucré', price: 36.36, tva: 10,
-            desc: 'Sablé ananas · macarons · sablé exotique · cup pécan-chocolat-cannelle · petite tartelette tatin · cube coco-chocolat' }
+      "plateauxFroids": {
+        "title": "Plateaux cocktail froids · Grandsire Traiteur",
+        "items": [
+          {
+            "id": "pc-wraps",
+            "name": "Plateau de 30 wraps",
+            "vol": "30 pièces",
+            "price": 36.36,
+            "tva": 10,
+            "desc": "Jambon fumé et mimolette · poulet crudités · saumon guacamole · fish & chips sauce tartare · thon au yuzu",
+            "icon": "sandwich",
+            "short": "30 wraps",
+            "pieces": 30
+          },
+          {
+            "id": "pc-savouris",
+            "name": "Plateau de 30 savouris froids",
+            "vol": "30 pièces",
+            "price": 36.36,
+            "tva": 10,
+            "desc": "Dôme de volaille teriyaki · sablé de hareng fumé · briochin rillette de thon · rouleau de printemps · wrap saumon guacamole · brochette melon et jambon fumé",
+            "icon": "concierge-bell",
+            "short": "30 savouris froids",
+            "pieces": 30
+          },
+          {
+            "id": "pc-fraicheur",
+            "name": "Plateau de 30 pièces fraîcheurs",
+            "vol": "30 pièces",
+            "price": 36.36,
+            "tva": 10,
+            "desc": "Macaron de magret à l'orange · cheesecake aux petits pois · navette de jambon de volaille · brochette crevettes-ananas · chaud-froid de volaille (recette froide) · wrap fish & chips",
+            "icon": "leaf",
+            "short": "30 pièces fraîcheurs",
+            "pieces": 30
+          },
+          {
+            "id": "pc-boulangeres",
+            "name": "Plateau de 30 boulangères et mini-clubs",
+            "vol": "30 pièces",
+            "price": 36.36,
+            "tva": 10,
+            "desc": "Navette de volaille miel-épices · briochin Neufchâtel et pomme · mini-clubs saumon fumé, bœuf sauce tartare, crudités · bruschetta légumes-anchois",
+            "icon": "croissant",
+            "short": "30 boulangères & mini-clubs",
+            "pieces": 30
+          },
+          {
+            "id": "pc-pain-surprise",
+            "name": "Pain surprise",
+            "vol": "50 pièces",
+            "price": 40,
+            "tva": 10,
+            "desc": "Au choix : charcuterie, poisson, ou mixte charcuterie-poisson-crudités",
+            "icon": "wheat",
+            "short": "Pain surprise",
+            "pieces": 50
+          },
+          {
+            "id": "pc-fours-finesse",
+            "name": "Plateau de 30 fours frais « Finesse »",
+            "vol": "30 pièces · sucré",
+            "price": 36.36,
+            "tva": 10,
+            "desc": "Choux banane · brownie crémeux · coque coco-passion · tartelette fruits de saison · sablé cappuccino · carré de pain d'épices",
+            "icon": "cupcake",
+            "short": "30 fours « Finesse »",
+            "pieces": 30,
+            "sucre": true
+          },
+          {
+            "id": "pc-fours-saveurs",
+            "name": "Plateau de 30 fours frais « Saveurs »",
+            "vol": "30 pièces · sucré",
+            "price": 36.36,
+            "tva": 10,
+            "desc": "Sablé ananas · macarons · sablé exotique · cup pécan-chocolat-cannelle · petite tartelette tatin · cube coco-chocolat",
+            "icon": "donut",
+            "short": "30 fours « Saveurs »",
+            "pieces": 30,
+            "sucre": true
+          }
         ]
       },
-      boissons: {
-        soft: {
-          title: 'Soft & cafés (TVA 10 %)',
-          items: [
-            { id: 'b-eau-50', name: 'Eau plate Cristaline', vol: '50 cl', price: 0.90, tva: 10 },
-            { id: 'b-eau-150', name: 'Eau plate Cristaline', vol: '1,5 L', price: 1.50, tva: 10 },
-            { id: 'b-badoit', name: 'Eau gazeuse Badoit', vol: '1 L', price: 1.50, tva: 10 },
-            { id: 'b-coca', name: 'Coca-Cola', vol: '1,25 L', price: 3.00, tva: 10 },
-            { id: 'b-jus-or', name: "Jus d'orange", vol: '1 L', price: 3.00, tva: 10 },
-            { id: 'b-jus-po', name: 'Jus de pomme artisanal', vol: '1 L', price: 3.50, tva: 10 },
-            { id: 'b-cafe', name: 'Thermos de café', vol: '1 L', price: 15.00, tva: 10 }
-          ]
+      "boissons": {
+        "soft": {
+          "title": "Eaux, softs & café",
+          "items": [
+            {
+              "id": "b-eau-50",
+              "name": "Eau plate Cristaline",
+              "vol": "50 cl",
+              "price": 0.9,
+              "tva": 10
+            },
+            {
+              "id": "b-eau-150",
+              "name": "Eau plate Cristaline",
+              "vol": "1,5 L",
+              "price": 1.5,
+              "tva": 10
+            },
+            {
+              "id": "b-badoit",
+              "name": "Eau gazeuse Badoit",
+              "vol": "1 L",
+              "price": 1.5,
+              "tva": 10
+            },
+            {
+              "id": "b-coca",
+              "name": "Coca-Cola",
+              "vol": "1,25 L",
+              "price": 3,
+              "tva": 10
+            },
+            {
+              "id": "b-jus-or",
+              "name": "Jus d'orange",
+              "vol": "1 L",
+              "price": 3,
+              "tva": 10
+            },
+            {
+              "id": "b-jus-po",
+              "name": "Jus de pomme artisanal",
+              "vol": "1 L",
+              "price": 3.5,
+              "tva": 10
+            },
+            {
+              "id": "b-cafe",
+              "name": "Thermos de café",
+              "vol": "1 L",
+              "price": 15,
+              "tva": 10
+            }
+          ],
+          "icon": "cup-soda"
         },
-        cidre: {
-          title: 'Cidre & bières (TVA 20 %)',
-          items: [
-            { id: 'b-cidre', name: 'Cidre normand', vol: '75 cl', price: 5.00, tva: 20 },
-            { id: 'b-biere', name: 'Bière', vol: '25 cl', price: 1.25, tva: 20 }
-          ]
+        "cidre": {
+          "title": "Cidre & bière",
+          "items": [
+            {
+              "id": "b-cidre",
+              "name": "Cidre normand",
+              "vol": "75 cl",
+              "price": 5,
+              "tva": 20
+            },
+            {
+              "id": "b-biere",
+              "name": "Bière",
+              "vol": "25 cl",
+              "price": 1.25,
+              "tva": 20
+            }
+          ],
+          "icon": "beer"
         },
-        vins: {
-          title: 'Vins (TVA 20 %)',
-          items: [
-            { id: 'b-sauvignon', name: 'Sauvignon de Touraine', vol: '75 cl', price: 8.00, tva: 20 },
-            { id: 'b-rose', name: 'Rosé de Provence', vol: '75 cl', price: 8.00, tva: 20 },
-            { id: 'b-bordeaux', name: 'Bordeaux rouge', vol: '75 cl', price: 8.00, tva: 20 },
-            { id: 'b-st-emilion', name: 'Saint-Émilion', vol: '75 cl', price: 14.00, tva: 20 }
-          ]
+        "vins": {
+          "title": "Vins",
+          "items": [
+            {
+              "id": "b-sauvignon",
+              "name": "Sauvignon de Touraine",
+              "vol": "75 cl",
+              "price": 8,
+              "tva": 20
+            },
+            {
+              "id": "b-rose",
+              "name": "Rosé de Provence",
+              "vol": "75 cl",
+              "price": 8,
+              "tva": 20
+            },
+            {
+              "id": "b-bordeaux",
+              "name": "Bordeaux rouge",
+              "vol": "75 cl",
+              "price": 8,
+              "tva": 20
+            },
+            {
+              "id": "b-st-emilion",
+              "name": "Saint-Émilion",
+              "vol": "75 cl",
+              "price": 14,
+              "tva": 20
+            }
+          ],
+          "icon": "wine"
         },
-        apero: {
-          title: 'Apéritifs & bulles (TVA 20 %)',
-          items: [
-            { id: 'b-cremant', name: 'Crémant de Loire', vol: '75 cl', price: 10.00, tva: 20 },
-            { id: 'b-methode', name: 'Méthode traditionnelle', vol: '75 cl', price: 7.00, tva: 20 },
-            { id: 'b-champ', name: 'Champagne', vol: '75 cl', price: 18.00, tva: 20 },
-            { id: 'b-cassis', name: 'Crème de cassis', vol: '1 L', price: 11.00, tva: 20 }
-          ]
+        "apero": {
+          "title": "Bulles & apéritifs",
+          "items": [
+            {
+              "id": "b-cremant",
+              "name": "Crémant de Loire",
+              "vol": "75 cl",
+              "price": 10,
+              "tva": 20
+            },
+            {
+              "id": "b-methode",
+              "name": "Méthode traditionnelle",
+              "vol": "75 cl",
+              "price": 7,
+              "tva": 20
+            },
+            {
+              "id": "b-champ",
+              "name": "Champagne",
+              "vol": "75 cl",
+              "price": 18,
+              "tva": 20
+            },
+            {
+              "id": "b-cassis",
+              "name": "Crème de cassis",
+              "vol": "1 L",
+              "price": 11,
+              "tva": 20
+            }
+          ],
+          "icon": "party-popper"
         }
       }
     };
@@ -1307,172 +1593,30 @@
     // ========== ÉTAT GLOBAL ==========
     const state = {
       nbPersonnes: 10,
-      selection: {}  // { itemId: { qty, unit, price, tva, name } }
+      selection: {}  // { itemId: { qty, unit, price, tva, name, tag, group } }
     };
-
-    // ========== RENDU CARDS ==========
-    function renderCards(category, containerId) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = CATALOG[category].map(item => `
-        <div class="resto-card ${item.recommended ? 'recommended' : ''}" data-id="${item.id}">
-          <span class="card-tag">${item.tag}</span>
-          <h3 class="card-title">${item.name}</h3>
-          <p class="card-subtitle">${item.subtitle}</p>
-          <div class="card-price">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></div>
-          <div class="card-price-ttc">${(item.price * (1 + item.tva/100)).toFixed(2).replace('.', ',')} € TTC ${item.unit}</div>
-          <ul class="card-includes">
-            ${item.includes.map(i => `<li>${i}</li>`).join('')}
-          </ul>
-          <div class="card-actions">
-            ${item.infoUrl
-              ? `<a class="btn-info" href="${item.infoUrl}" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>`
-              : `<button class="btn-info" data-info="${item.id}">ⓘ Détails</button>`}
-            <button class="btn-toggle" data-toggle="${item.id}">+ Sélectionner</button>
-          </div>
-          <div class="qty-controls" data-qty="${item.id}" style="display:none;">
-            <button data-minus="${item.id}">−</button>
-            <span class="qty-val" data-qty-val="${item.id}">${state.nbPersonnes}</span>
-            <span class="qty-unit">pers.</span>
-            <button data-plus="${item.id}">+</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // ========== ACCORDION DÉJEUNER ==========
-    const DEJEUNER_ICONS = {
-      'dej-pouce': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18l-2 8H5z"/><path d="M5 11V7a4 4 0 0 1 8 0v4"/><path d="M11 11V8a4 4 0 0 1 8 0v3"/></svg>',
-      'dej-box': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M4 12h16"/></svg>',
-      'dej-figue': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="3"/></svg>',
-      'dej-marron': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg>',
-      'dej-vege': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/></svg>',
-      'dej-pomme': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l-1 6a5 5 0 0 1-10 0z"/><path d="M12 14v6"/><path d="M8 20h8"/></svg>'
-    };
-
-    function renderDejeunerAccordion() {
-      const items = CATALOG.dejeuner;
-      const list = document.getElementById('dejeuner-list');
-      list.innerHTML = items.map((item, idx) => `
-        <article class="accordion-row${idx === 0 ? ' is-active' : ''}" data-id="${item.id}" data-idx="${idx}" data-accordion-row>
-          <span class="row-bar" aria-hidden="true"></span>
-          <div class="row-top">
-            <div class="row-title-block">
-              <span class="row-tag">${item.tag}</span>
-              <h3 class="row-title">${item.name}${item.recommended ? '<span class="row-rec-badge">Recommandé</span>' : ''}</h3>
-            </div>
-            <span class="row-num">0${idx + 1} / 0${items.length}</span>
-          </div>
-          <div class="row-collapse">
-            <div class="row-meta-line">
-              <p class="row-sub">${item.subtitle}</p>
-              <span class="froid-badge"><span aria-hidden="true">❄</span> Servi froid</span>
-              <span class="row-price-inline">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
-            </div>
-            <div class="row-actions">
-              ${item.infoUrl
-                ? `<a class="btn-info" href="${item.infoUrl}" target="_blank" rel="noopener noreferrer">ⓘ Détails</a>`
-                : `<button class="btn-info" data-info="${item.id}">ⓘ Détails</button>`}
-              <button class="btn-toggle" data-toggle="${item.id}">+ Sélectionner</button>
-            </div>
-            <div class="qty-controls" data-qty="${item.id}" style="display:none;">
-              <button data-minus="${item.id}">−</button>
-              <span class="qty-val" data-qty-val="${item.id}">${state.nbPersonnes}</span>
-              <span class="qty-unit">pers.</span>
-              <button data-plus="${item.id}">+</button>
-            </div>
-          </div>
-        </article>
-      `).join('');
-      renderDejeunerPreview(0);
-    }
-
-    function renderDejeunerPreview(idx) {
-      const item = CATALOG.dejeuner[idx];
-      const preview = document.getElementById('dejeuner-preview');
-      if (!preview || !item) return;
-      const totalItems = CATALOG.dejeuner.length;
-      preview.innerHTML = `
-        <div class="preview-inner">
-          <div class="preview-head">
-            <div class="preview-icon-big">${DEJEUNER_ICONS[item.id] || ''}</div>
-            <div class="preview-head-text">
-              <div class="preview-tag">${item.tag}${item.recommended ? '<span class="preview-rec">Recommandé</span>' : ''}</div>
-              <h3 class="preview-title">${item.name}</h3>
-            </div>
-          </div>
-          <p class="preview-subtitle">${item.subtitle}</p>
-          <p class="preview-froid"><span aria-hidden="true">❄</span> Livré froid · prêt à consommer · aucun réchauffage · repas assis</p>
-          <div class="preview-price-block">
-            <span class="preview-price-ht">${item.price.toFixed(2).replace('.', ',')} €<small>HT ${item.unit}</small></span>
-            <span class="preview-price-ttc">${(item.price * (1 + item.tva/100)).toFixed(2).replace('.', ',')} € TTC ${item.unit}</span>
-          </div>
-          <ul class="preview-includes">
-            ${item.includes.map(i => `<li>${i}</li>`).join('')}
-          </ul>
-          <div class="preview-fig">FIG. 0${idx + 1} / 0${totalItems}</div>
-        </div>
-      `;
-    }
-
-    function setActiveDejeunerRow(row) {
-      if (!row || row.classList.contains('is-active')) return;
-      const list = document.getElementById('dejeuner-list');
-      list.querySelectorAll('.accordion-row.is-active').forEach(r => r.classList.remove('is-active'));
-      row.classList.add('is-active');
-      renderDejeunerPreview(parseInt(row.dataset.idx, 10));
-    }
-
-    function renderBoissons() {
-      const container = document.getElementById('boissons-grid');
-      const cats = Object.keys(CATALOG.boissons);
-      container.innerHTML = cats.map(cat => {
-        const block = CATALOG.boissons[cat];
-        return `
-          <div class="boissons-col">
-            <h3>${block.title}</h3>
-            ${block.items.map(item => `
-              <div class="boisson-row">
-                <span class="boisson-name">${item.name} <span class="vol">${item.vol}</span></span>
-                <span class="boisson-price">${item.price.toFixed(2).replace('.', ',')} € HT</span>
-                <span class="boisson-qty">
-                  <button data-bminus="${item.id}">−</button>
-                  <input type="number" min="0" value="0" data-bqty="${item.id}">
-                  <button data-bplus="${item.id}">+</button>
-                </span>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      }).join('');
-    }
-
-    // Plateaux cocktail froids : même compteur que les boissons (commande au plateau)
-    function renderPlateauxFroids() {
-      const container = document.getElementById('plateaux-froids-grid');
-      if (!container) return;
-      const block = CATALOG.plateauxFroids;
-      container.innerHTML = `
-        <div class="boissons-col plateaux-col">
-          <h3>${block.title}</h3>
-          ${block.items.map(item => `
-            <div class="boisson-row">
-              <span class="boisson-name">${item.name} <span class="vol">${item.vol}</span>
-                <span class="boisson-desc">${item.desc}</span>
-              </span>
-              <span class="boisson-price">${item.price.toFixed(2).replace('.', ',')} € HT<small>le plateau</small></span>
-              <span class="boisson-qty">
-                <button data-bminus="${item.id}">−</button>
-                <input type="number" min="0" value="0" data-bqty="${item.id}" aria-label="Nombre de plateaux : ${item.name}">
-                <button data-bplus="${item.id}">+</button>
-              </span>
-            </div>
-          `).join('')}
-        </div>
-      `;
-    }
 
     // Capacité de la salle d'accueil : 20 personnes assises (déjeuner), 40 debout (accueil café, apéritif)
     const CAPACITE = { assis: 20, debout: 40 };
+    const GROUPES = {
+      accueil:  { label: 'Accueil café', icon: 'coffee',       color: 'var(--c-chaud)' },
+      dejeuner: { label: 'Déjeuner',     icon: 'utensils',     color: 'var(--c-plat)' },
+      apero:    { label: 'Apéritif',     icon: 'party-popper', color: 'var(--c-apero)' },
+      boissons: { label: 'Boissons',     icon: 'wine',         color: 'var(--c-boisson)' }
+    };
+    const ICONE_SERVICE = { entree: 'salad', plat: 'drumstick', fromage: 'cheese', dessert: 'cake-slice', viennoiserie: 'croissant', chaud: 'coffee', boisson: 'glass-water' };
+
+    const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+    const ico = (name, cls = 'i') => `<svg class="${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+    const parPersonne = () => Object.values(CATALOG).filter(Array.isArray).flat();
+    const plateauxFroids = () => CATALOG.plateauxFroids.items;
+    const toutesBoissons = () => Object.values(CATALOG.boissons).flatMap(b => b.items);
+    function groupeDe(id) {
+      if (CATALOG.accueil.some(i => i.id === id)) return 'accueil';
+      if (CATALOG.dejeuner.some(i => i.id === id)) return 'dejeuner';
+      if (CATALOG.apero.some(i => i.id === id) || plateauxFroids().some(i => i.id === id)) return 'apero';
+      return 'boissons';
+    }
     function capFor(itemId) {
       return CATALOG.dejeuner.some(i => i.id === itemId) ? CAPACITE.assis : CAPACITE.debout;
     }
@@ -1482,20 +1626,109 @@
         .reduce((n, [, sel]) => n + sel.qty, 0);
     }
 
-    // ========== GESTION SÉLECTION ==========
-    function toggleCard(itemId) {
-      const item = [...CATALOG.accueil, ...CATALOG.dejeuner, ...CATALOG.apero].find(i => i.id === itemId);
-      if (!item) return;
-      const card = document.querySelector(`[data-id="${itemId}"]`);
-      const btn = card.querySelector('[data-toggle]');
-      const qtyControls = card.querySelector('[data-qty]');
+    // ========== CARTES (accueil, déjeuner, Conquérants) ==========
+    function carte(item) {
+      const sel = state.selection[item.id];
+      return `
+        <article class="offer${item.recommended ? ' is-rec' : ''}${sel ? ' is-selected' : ''}" data-id="${item.id}">
+          ${item.recommended ? '<span class="offer-ribbon">Recommandé</span>' : ''}
+          <span class="offer-check" aria-hidden="true">${ico('check')}</span>
+          <div>
+            <span class="offer-tag">${item.tag}</span>
+            <h3 class="offer-name">${item.name}</h3>
+            <p class="offer-sub">${item.subtitle}</p>
+          </div>
+          <ul class="offer-hl">
+            ${item.highlights.map(h => `<li class="c-${h.cat}">${ico(h.icon)}<span>${h.text}</span></li>`).join('')}
+          </ul>
+          <div class="offer-price"><strong>${eur(item.price)}</strong><span>HT ${item.unit}</span><small>${eur(item.price * (1 + item.tva / 100))} TTC ${item.unit}</small></div>
+          <div class="offer-actions">
+            <button type="button" class="btn-ghost" data-info="${item.id}">${ico('clipboard-list')}Le menu</button>
+            <button type="button" class="btn-choose${sel ? ' selected' : ''}" data-toggle="${item.id}" aria-pressed="${sel ? 'true' : 'false'}">${sel ? '✓ Choisi' : 'Choisir'}</button>
+          </div>
+          <div class="qty-controls" data-qty="${item.id}"${sel ? '' : ' hidden'}>
+            <span>Pour</span>
+            <span class="stepper">
+              <button type="button" data-minus="${item.id}" aria-label="Une personne de moins">−</button>
+              <span class="qty-val" data-qty-val="${item.id}">${sel ? sel.qty : state.nbPersonnes}</span>
+              <button type="button" data-plus="${item.id}" aria-label="Une personne de plus">+</button>
+            </span>
+            <span>pers.</span>
+          </div>
+        </article>`;
+    }
+    function renderCards(category, containerId) {
+      document.getElementById(containerId).innerHTML = CATALOG[category].map(carte).join('');
+    }
 
+    // ========== PLATEAUX COCKTAIL (au plateau) ==========
+    function stepperQte(id, label) {
+      const q = state.selection[id]?.qty || 0;
+      return `<span class="stepper">
+        <button type="button" data-bminus="${id}" aria-label="Retirer : ${label}">−</button>
+        <input type="number" min="0" value="${q}" data-bqty="${id}" inputmode="numeric" aria-label="Quantité : ${label}">
+        <button type="button" data-bplus="${id}" aria-label="Ajouter : ${label}">+</button>
+      </span>`;
+    }
+    function renderPlateauxFroids() {
+      document.getElementById('plateaux-froids-grid').innerHTML = plateauxFroids().map(item => `
+        <article class="tray${state.selection[item.id] ? ' is-selected' : ''}" data-id="${item.id}">
+          <span class="tray-ico c-${item.sucre ? 'dessert' : 'plat'}">${ico(item.icon)}</span>
+          <div><h4>${item.short}</h4><p>${item.desc}</p></div>
+          <div class="tray-foot">
+            <span class="tray-price">${eur(item.price)} HT<small>le plateau de ${item.pieces} pièces</small></span>
+            ${stepperQte(item.id, item.name)}
+          </div>
+        </article>`).join('');
+    }
+
+    // Aide de l'apéritif : combien de plateaux pour le nombre de personnes, et où en est la sélection
+    function renderAperoHelper() {
+      const n = state.nbPersonnes;
+      const conseil = Math.ceil(n * 20 / 30);
+      const pieces = plateauxFroids().reduce((s, it) => s + (state.selection[it.id]?.qty || 0) * it.pieces, 0);
+      const parPers = pieces / n;
+      const el = document.getElementById('apero-helper');
+      el.innerHTML = `${ico('sparkles')}
+        <p>Vous êtes <strong>${n}</strong> : pour un apéritif qui remplace le repas, prévoyez environ <strong>${conseil} plateau${conseil > 1 ? 'x' : ''} de 30 pièces</strong> (20 pièces par personne).</p>
+        <p>${pieces ? `Votre sélection : <strong>${pieces} pièces</strong>, soit <strong>${Math.round(parPers)} par personne</strong>.` : 'Ajoutez des plateaux ci-dessous : on calcule pour vous.'}</p>
+        <div class="gauge" aria-hidden="true"><span style="width:${Math.min(100, parPers / 20 * 100)}%"></span></div>`;
+    }
+
+    // ========== BOISSONS ==========
+    function renderBoissons() {
+      document.getElementById('boissons-grid').innerHTML = Object.values(CATALOG.boissons).map(block => `
+        <div class="drink-cat">
+          <h3>${ico(block.icon)}${block.title}<small>TVA ${block.items[0].tva} %</small></h3>
+          ${block.items.map(item => `
+            <div class="drink${state.selection[item.id] ? ' is-selected' : ''}" data-id="${item.id}">
+              <span class="drink-name">${item.name} <small>${item.vol}</small></span>
+              <span class="drink-price">${eur(item.price)} HT</span>
+              ${stepperQte(item.id, item.name + ' ' + item.vol)}
+            </div>`).join('')}
+        </div>`).join('');
+    }
+
+    // ========== SÉLECTION ==========
+    function majBoutons(itemId) {
+      const sel = state.selection[itemId];
+      document.querySelectorAll(`[data-toggle="${itemId}"]`).forEach(b => {
+        b.classList.toggle('selected', !!sel);
+        b.textContent = sel ? '✓ Choisi' : 'Choisir';
+        b.setAttribute('aria-pressed', sel ? 'true' : 'false');
+      });
+      const card = document.querySelector(`.offer[data-id="${itemId}"]`);
+      if (!card) return;
+      card.classList.toggle('is-selected', !!sel);
+      const qc = card.querySelector('[data-qty]');
+      qc.hidden = !sel;
+      if (sel) card.querySelector('[data-qty-val]').textContent = sel.qty;
+    }
+    function toggleCard(itemId) {
+      const item = parPersonne().find(i => i.id === itemId);
+      if (!item) return;
       if (state.selection[itemId]) {
         delete state.selection[itemId];
-        card.classList.remove('selected');
-        btn.textContent = '+ Sélectionner';
-        btn.classList.remove('selected');
-        qtyControls.style.display = 'none';
       } else {
         state.selection[itemId] = {
           qty: Math.min(state.nbPersonnes, capFor(itemId)),
@@ -1503,32 +1736,23 @@
           price: item.price,
           tva: item.tva,
           name: item.name,
-          tag: item.tag
+          tag: item.tag,
+          group: groupeDe(itemId)
         };
-        card.classList.add('selected');
-        btn.textContent = '✓ Sélectionné';
-        btn.classList.add('selected');
-        qtyControls.style.display = 'flex';
-        const qtyVal = card.querySelector('[data-qty-val]');
-        if (qtyVal) qtyVal.textContent = state.selection[itemId].qty;
       }
+      majBoutons(itemId);
       updatePanier();
     }
-
     function adjustQty(itemId, delta) {
       if (!state.selection[itemId]) return;
-      const newQty = Math.min(capFor(itemId), Math.max(1, state.selection[itemId].qty + delta));
-      state.selection[itemId].qty = newQty;
-      const qtyValEl = document.querySelector(`[data-qty-val="${itemId}"]`);
-      if (qtyValEl) qtyValEl.textContent = newQty;
+      state.selection[itemId].qty = Math.min(capFor(itemId), Math.max(1, state.selection[itemId].qty + delta));
+      majBoutons(itemId);
       updatePanier();
     }
-
     function setBoissonQty(itemId, qty) {
       qty = Math.max(0, parseInt(qty) || 0);
-      const allBoissons = Object.values(CATALOG.boissons).flatMap(b => b.items);
-      const plateau = CATALOG.plateauxFroids.items.find(i => i.id === itemId);
-      const item = plateau || allBoissons.find(i => i.id === itemId);
+      const plateau = plateauxFroids().find(i => i.id === itemId);
+      const item = plateau || toutesBoissons().find(i => i.id === itemId);
       if (!item) return;
       if (qty === 0) {
         delete state.selection[itemId];
@@ -1539,72 +1763,110 @@
           price: item.price,
           tva: item.tva,
           name: plateau ? item.name + ' (' + item.vol + ', servi froid)' : item.name + ' (' + item.vol + ')',
-          tag: plateau ? 'Apéritif dînatoire' : 'Boisson'
+          tag: plateau ? 'Apéritif dînatoire' : 'Boisson',
+          group: plateau ? 'apero' : 'boissons'
         };
       }
       const input = document.querySelector(`[data-bqty="${itemId}"]`);
       // Pendant la frappe, on ne réécrit pas le champ (sinon « -3 » ou « 2.7 » donnent 3 ou 7) : il est normalisé à la sortie
       if (input && input !== document.activeElement) input.value = qty;
+      document.querySelector(`[data-id="${itemId}"]`)?.classList.toggle('is-selected', qty > 0);
+      updatePanier();
+    }
+    // Quand le nombre de personnes change, les formules « par personne » suivent (sauf celles réglées à la main)
+    function setPersonnes(n, precedent) {
+      state.nbPersonnes = Math.min(CAPACITE.debout, Math.max(1, n));
+      Object.entries(state.selection).forEach(([id, sel]) => {
+        if (sel.group === 'boissons' || plateauxFroids().some(p => p.id === id)) return;
+        if (sel.qty === Math.min(precedent, capFor(id))) { sel.qty = Math.min(state.nbPersonnes, capFor(id)); majBoutons(id); }
+      });
       updatePanier();
     }
 
-    // ========== PANIER ==========
+    // ========== RÉCAP ==========
     function updatePanier() {
       const items = Object.entries(state.selection);
       const itemsEl = document.getElementById('panier-items');
       const totalsEl = document.getElementById('panier-totals');
+      document.getElementById('cart-people').textContent = state.nbPersonnes + ' pers.';
+      renderAperoHelper();
 
+      // Compteurs de la barre d'étapes
+      Object.keys(GROUPES).forEach(g => {
+        const n = items.filter(([, s]) => s.group === g).length;
+        const b = document.querySelector(`[data-count="${g}"]`);
+        if (b) { b.textContent = n; b.classList.toggle('has', n > 0); }
+      });
+
+      const bar = document.getElementById('panier-show');
       if (items.length === 0) {
-        itemsEl.innerHTML = '<div class="panier-empty">Aucune formule sélectionnée. Cochez les options qui vous intéressent.</div>';
+        itemsEl.innerHTML = `<div class="panier-empty">${ico('shopping-basket')}Rien pour l'instant : choisissez une formule, elle apparaîtra ici.</div>`;
         totalsEl.style.display = 'none';
+        document.getElementById('cartbar-count').textContent = 'Votre commande est vide';
+        document.getElementById('cartbar-total').textContent = eur(0);
+        bar.classList.remove('has-items');
         return;
       }
 
       let totalHT = 0, totalTVA = 0;
-      itemsEl.innerHTML = items.map(([id, sel]) => {
-        const lineHT = sel.price * sel.qty;
-        const lineTVA = lineHT * (sel.tva / 100);
-        totalHT += lineHT;
-        totalTVA += lineTVA;
-        return `
-          <div class="panier-item">
-            <span class="pi-name">${sel.name}</span>
-            <span class="pi-qty">×${sel.qty}</span>
-            <span class="pi-price">${lineHT.toFixed(2).replace('.', ',')} €</span>
-          </div>
-        `;
+      itemsEl.innerHTML = Object.entries(GROUPES).map(([g, meta]) => {
+        const lignes = items.filter(([, s]) => s.group === g);
+        if (!lignes.length) return '';
+        return `<div class="cart-group" style="--gc:${meta.color}">
+          <h4>${ico(meta.icon)}${meta.label}</h4>
+          ${lignes.map(([id, sel]) => {
+            const lineHT = sel.price * sel.qty;
+            totalHT += lineHT;
+            totalTVA += lineHT * (sel.tva / 100);
+            return `<div class="panier-item"><span class="pi-name">${sel.name}</span><span class="pi-qty">×${sel.qty}</span><span class="pi-price">${eur(lineHT)}</span></div>`;
+          }).join('')}
+        </div>`;
       }).join('');
 
-      document.getElementById('total-ht').textContent = totalHT.toFixed(2).replace('.', ',') + ' €';
-      document.getElementById('total-tva').textContent = totalTVA.toFixed(2).replace('.', ',') + ' €';
-      document.getElementById('total-ttc').textContent = (totalHT + totalTVA).toFixed(2).replace('.', ',') + ' €';
-      totalsEl.style.display = 'block';
+      document.getElementById('total-ht').textContent = eur(totalHT);
+      document.getElementById('total-tva').textContent = eur(totalTVA);
+      document.getElementById('total-ttc').textContent = eur(totalHT + totalTVA);
+      document.getElementById('total-pp').textContent = eur((totalHT + totalTVA) / state.nbPersonnes) + ' TTC';
+      totalsEl.style.display = 'flex';
       const assis = totalDejeuner();
       const alerte = document.getElementById('panier-alerte');
-      if (alerte) {
-        alerte.style.display = assis > CAPACITE.assis ? 'block' : 'none';
-        alerte.textContent = `⚠ Déjeuner assis : ${CAPACITE.assis} personnes maximum (${assis} sélectionnées).`;
-      }
+      alerte.style.display = assis > CAPACITE.assis ? 'block' : 'none';
+      alerte.textContent = `⚠ Déjeuner assis : ${CAPACITE.assis} personnes maximum (${assis} sélectionnées).`;
+
+      const n = items.length;
+      document.getElementById('cartbar-count').textContent = `${n} article${n > 1 ? 's' : ''} · ${state.nbPersonnes} pers.`;
+      document.getElementById('cartbar-total').textContent = eur(totalHT + totalTVA);
+      bar.classList.add('has-items');
     }
 
-    // ========== MODAL INFO ==========
+    // ========== FICHE « LE MENU » ==========
+    const vegan = t => t.replace(/\s*\(végan\)/gi, ' <span class="badge-vegan">végan</span>');
     function showInfo(itemId) {
-      const item = [...CATALOG.accueil, ...CATALOG.dejeuner, ...CATALOG.apero].find(i => i.id === itemId);
-      if (!item || !item.info) return;
-      const info = item.info;
-      const content = `
-        <h3>${item.name}</h3>
-        <p class="modal-subtitle">${item.tag} · ${item.price.toFixed(2).replace('.', ',')} € HT ${item.unit}</p>
-        ${info.details || ''}
-        ${info.inclus ? `<h4>Composition détaillée</h4><ul>${info.inclus.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
-        ${info.options ? `<h4>Options & variantes</h4><p>${info.options}</p>` : ''}
-        ${info.allergenes ? `<h4>Allergènes & régimes</h4><p>${info.allergenes}</p>` : ''}
-        ${info.min ? `<h4>Minimum de commande</h4><p>${info.min}</p>` : ''}
-        ${info.fournisseur ? `<div class="modal-source">Fournisseur : ${info.fournisseur}</div>` : ''}
-      `;
-      document.getElementById('modal-content').innerHTML = content;
+      const item = parPersonne().find(i => i.id === itemId);
+      if (!item) return;
+      const info = item.info || {};
+      const sel = state.selection[itemId];
+      const blocs = item.menu.map(b => `
+        <section class="menu-block c-${b.cat}">
+          <h4>${ico(ICONE_SERVICE[b.cat] || 'utensils')}${b.label}${b.choix ? ' <em>au choix</em>' : ''}</h4>
+          ${b.items.length ? `<ul>${b.items.map(t => `<li${/du jour$/i.test(t) ? ' class="is-dujour"' : ''}>${vegan(t)}</li>`).join('')}</ul>` : '<p class="menu-inclus">Inclus dans le plateau.</p>'}
+        </section>`).join('');
+      const meta = [info.min, info.options, info.fournisseur ? 'Fournisseur : ' + info.fournisseur : ''].filter(Boolean);
+      document.getElementById('modal-content').innerHTML = `
+        <div class="menu-head">
+          <span class="offer-tag">${item.tag}</span>
+          <h3 id="modal-title">${item.name}</h3>
+          <p class="menu-price">${eur(item.price)} HT ${item.unit} <span>· ${eur(item.price * (1 + item.tva / 100))} TTC</span></p>
+        </div>
+        <div class="menu-grid">${blocs}</div>
+        ${item.extras && item.extras.length ? `<p class="menu-extras">${ico('check')}<span>${item.extras.join(' · ')}</span></p>` : ''}
+        ${meta.length ? `<ul class="menu-meta">${meta.map(m => `<li>${m}</li>`).join('')}</ul>` : ''}
+        ${info.allergenes ? `<details class="menu-allergenes"><summary>Allergènes</summary><p>${info.allergenes}</p></details>` : ''}
+        <button type="button" class="btn-choose${sel ? ' selected' : ''}" data-toggle="${item.id}" aria-pressed="${sel ? 'true' : 'false'}">${sel ? '✓ Choisi' : 'Choisir'}</button>`;
       document.getElementById('modal-bg').classList.add('open');
+      document.getElementById('modal-close').focus();
     }
+    function fermerModal() { document.getElementById('modal-bg').classList.remove('open'); }
 
     // ========== ENVOI DEMANDE ==========
     function generateDevisText() {
@@ -1756,59 +2018,51 @@
 
     // ========== INIT ==========
     document.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('.resto-header');
+      const majHeader = () => document.documentElement.style.setProperty('--hdr', header.offsetHeight + 'px');
+      majHeader(); window.addEventListener('resize', majHeader, { passive: true });
+
       renderCards('accueil', 'cards-accueil');
-      renderDejeunerAccordion();
+      renderCards('dejeuner', 'cards-dejeuner');
       renderCards('apero', 'cards-apero');
       renderPlateauxFroids();
       renderBoissons();
+      updatePanier();
 
-      // Accordion déjeuner : activation au survol (desktop) + clic (mobile / explicite)
-      const dejList = document.getElementById('dejeuner-list');
-      if (dejList) {
-        dejList.addEventListener('mouseover', (e) => {
-          const row = e.target.closest('[data-accordion-row]');
-          if (row) setActiveDejeunerRow(row);
-        });
-        dejList.addEventListener('click', (e) => {
-          const row = e.target.closest('[data-accordion-row]');
-          if (row) setActiveDejeunerRow(row);
-        });
-      }
+      const panier = document.getElementById('panier');
+      const inputPers = document.getElementById('nbPersonnes');
 
-      // Event delegation
+      // Clics (délégation)
       document.body.addEventListener('click', (e) => {
-        const t = e.target;
+        if (e.target.matches('.tray p')) { e.target.classList.toggle('open'); return; }
+        const t = e.target.closest('button, a');
+        if (!t) { if (e.target.id === 'modal-bg') fermerModal(); return; }
         if (t.matches('[data-toggle]')) toggleCard(t.getAttribute('data-toggle'));
         else if (t.matches('[data-info]')) showInfo(t.getAttribute('data-info'));
         else if (t.matches('[data-plus]')) adjustQty(t.getAttribute('data-plus'), 1);
         else if (t.matches('[data-minus]')) adjustQty(t.getAttribute('data-minus'), -1);
-        else if (t.matches('[data-bplus]')) {
-          const id = t.getAttribute('data-bplus');
-          const current = state.selection[id]?.qty || 0;
-          setBoissonQty(id, current + 1);
-        } else if (t.matches('[data-bminus]')) {
-          const id = t.getAttribute('data-bminus');
-          const current = state.selection[id]?.qty || 0;
-          setBoissonQty(id, current - 1);
-        } else if (t.id === 'modal-close' || t.id === 'modal-bg') {
-          document.getElementById('modal-bg').classList.remove('open');
-        } else if (t.id === 'panier-hide') {
-          document.getElementById('panier').classList.add('collapsed');
-        } else if (t.id === 'panier-show') {
-          document.getElementById('panier').classList.remove('collapsed');
+        else if (t.matches('[data-bplus]')) { const id = t.getAttribute('data-bplus'); setBoissonQty(id, (state.selection[id]?.qty || 0) + 1); }
+        else if (t.matches('[data-bminus]')) { const id = t.getAttribute('data-bminus'); setBoissonQty(id, (state.selection[id]?.qty || 0) - 1); }
+        else if (t.matches('[data-people]')) {
+          const avant = state.nbPersonnes;
+          setPersonnes(avant + parseInt(t.getAttribute('data-people'), 10), avant);
+          inputPers.value = state.nbPersonnes;
         }
+        else if (t.id === 'modal-close') fermerModal();
+        else if (t.id === 'panier-show') panier.classList.toggle('is-open');
+        else if (t.id === 'panier-hide' || t.id === 'cart-cta') panier.classList.remove('is-open');
       });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fermerModal(); panier.classList.remove('is-open'); } });
 
+      // Saisies au clavier
       document.body.addEventListener('input', (e) => {
         if (e.target.id === 'nbPersonnes') {
-          state.nbPersonnes = Math.min(CAPACITE.debout, Math.max(1, parseInt(e.target.value) || 1));
-          // Mise à jour de la qty par défaut pour les nouveaux ajouts uniquement
-          // Les sélections existantes gardent leur qty actuelle (l'utilisateur a peut-être ajusté)
+          const v = parseInt(e.target.value, 10);
+          if (v >= 1) setPersonnes(v, state.nbPersonnes);
         } else if (e.target.matches('[data-bqty]')) {
           setBoissonQty(e.target.getAttribute('data-bqty'), e.target.value);
         }
       });
-
       // À la sortie du champ, on affiche la quantité réellement retenue
       document.body.addEventListener('change', (e) => {
         if (e.target.matches('[data-bqty]')) {
@@ -1817,6 +2071,21 @@
           e.target.value = state.nbPersonnes;
         }
       });
+
+      // Barre d'étapes : l'étape visible est mise en évidence
+      const liens = [...document.querySelectorAll('.step-link')];
+      if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(en => {
+            if (!en.isIntersecting) return;
+            const s = en.target.getAttribute('data-step');
+            liens.forEach(l => l.classList.toggle('is-active', l.getAttribute('data-step') === s));
+            const actif = liens.find(l => l.getAttribute('data-step') === s);
+            if (actif) actif.parentElement.scrollTo({ left: actif.offsetLeft - 16, behavior: 'smooth' });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        document.querySelectorAll('.step[data-step]').forEach(s => obs.observe(s));
+      }
 
       document.getElementById('form-devis-resto').addEventListener('submit', submitDevis);
       window.devisRestoPret = true;
