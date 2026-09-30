@@ -231,6 +231,37 @@
       .qh-live { font-size:12px; padding:6px 9px; top:10px; left:10px; }
     }
   </style>
+  <style>
+    /* Tarifs quiz : 3 formules côte à côte (téléphone : une par ligne, compacte), couleurs du quiz */
+    .qz-prix { padding:64px 0; }
+    .qz-prix-grid { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px; max-width:1000px; margin:0 auto; }
+    .qz-prix .price-card { padding:28px 22px; }
+    .qz-prix .price-card:hover { border-color:var(--gd-quiz); box-shadow:0 0 20px rgba(157,78,221,0.3); }
+    .qz-prix .price-card.featured { border-color:var(--gd-quiz); box-shadow:0 0 28px rgba(157,78,221,0.25); }
+    .qz-prix .price-card.featured::before { content:'FORMAT GROUPE'; background:var(--gd-quiz); white-space:nowrap; }
+    .qz-prix .price-amount { color:#C98BF5; }
+    .qz-prix .price-details { list-style:none; padding:0; margin:0 0 20px; }
+    .qz-prix .price-details li { border-bottom:none; padding:4px 0; }
+    .qz-prix .price-card .btn { width:100%; justify-content:center; }
+    .qz-prix-note { max-width:820px; margin:22px auto 0; text-align:center; color:var(--grey-light); font-size:0.95rem; line-height:1.6; }
+    .qz-prix-note a { color:#C98BF5; }
+    @media (max-width: 900px) {
+      .qz-prix-grid { gap:12px; }
+      .qz-prix .price-card { padding:22px 12px; }
+      .qz-prix .price-amount { font-size:2.2rem; }
+      .qz-prix .price-card .btn { padding:12px 10px; letter-spacing:.06em; }
+    }
+    @media (max-width: 600px) {
+      .qz-prix { padding:44px 0; }
+      .qz-prix-grid { grid-template-columns:1fr; gap:14px; }
+      .qz-prix .price-card { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:14px; text-align:left; padding:18px 18px 16px; }
+      .qz-prix .price-card h4 { grid-column:1; margin:0; }
+      .qz-prix .price-amount { grid-column:1; margin:6px 0 2px; font-size:2.1rem; }
+      .qz-prix .price-details { grid-column:1; margin:0; font-size:.95rem; }
+      .qz-prix .price-card .btn { grid-column:2; grid-row:1 / span 3; width:auto; padding:12px 18px; }
+      .qz-prix .price-card.featured::before { left:auto; right:18px; transform:none; }
+    }
+  </style>
 </head>
 <body class="quiz-accent escape-room-page quiz-room-page">
 
@@ -288,7 +319,7 @@
         <p class="qh-pitch">Buzzers en main, chauffeur de salle, jokers diaboliques&nbsp;: vous êtes les candidats d'un vrai jeu télé. Pas besoin d'être calé, juste d'être le plus rapide.</p>
         <div class="qh-cta">
           <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-reserver-quiz">Réserver un quiz</a>
-          <a href="/tarifs/#tarifs-quiz" class="btn btn-outline">Voir les tarifs</a>
+          <a href="#tarifs" class="btn btn-outline">Voir les tarifs</a>
         </div>
       </div>
       <div class="qh-visual" aria-hidden="true">
@@ -402,6 +433,38 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- TARIFS QUIZ — mêmes montants que /tarifs/#tarifs-quiz (à tenir à jour ensemble) -->
+  <section class="section qz-prix" id="tarifs" aria-labelledby="qz-prix-titre">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="kicker" style="color:var(--gd-quiz);">Tarifs Quiz Game</p>
+        <h2 id="qz-prix-titre">À partir de <span style="color:var(--gd-quiz);">15€</span> par candidat</h2>
+        <p class="subtitle" style="margin-top:8px;">Tarif dégressif : plus vous êtes nombreux, moins c'est cher · 60 min d'émission</p>
+      </div>
+      <div class="price-grid qz-prix-grid fade-in">
+        <div class="price-card">
+          <h4>4 à 6 candidats</h4>
+          <div class="price-amount">21€ <small>/pers.</small></div>
+          <ul class="price-details"><li>Dès 84€ la session</li></ul>
+          <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-reserver-quiz-tarifs">Réserver</a>
+        </div>
+        <div class="price-card featured">
+          <h4>7 à 10 candidats</h4>
+          <div class="price-amount">17-19€ <small>/pers.</small></div>
+          <ul class="price-details"><li>Dès 133€ la session</li></ul>
+          <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-reserver-quiz-tarifs">Réserver</a>
+        </div>
+        <div class="price-card">
+          <h4>11 à 16 candidats</h4>
+          <div class="price-amount">15-16€ <small>/pers.</small></div>
+          <ul class="price-details"><li>Dès 176€ la session</li></ul>
+          <a href="https://braincaen.4escape.io/booking" class="btn btn-quiz" target="_blank" rel="noopener" data-track="cta-reserver-quiz-tarifs">Réserver</a>
+        </div>
+      </div>
+      <p class="qz-prix-note fade-in">Entreprises, CSE, associations&nbsp;: 15€ HT/pers. · EVJF / EVG&nbsp;: la place de la mariée ou du marié est offerte (code MARIAGE) · <a href="/tarifs/#tarifs-quiz">Tous les tarifs et réductions</a></p>
     </div>
   </section>
 
