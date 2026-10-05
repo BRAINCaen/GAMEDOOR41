@@ -187,7 +187,7 @@
           </div>
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Restauration</h3>
-            <p style="color: var(--grey-light); font-size: 0.92rem;">Accueil café, déjeuner en plateaux-repas (assis, 20 personnes maximum) ou apéritif dînatoire (debout, 40 maximum), livrés par Grandsire Traiteur et la Fromagerie Conquérant et servis froids dans notre salle d'accueil. <strong>Privatisation obligatoire</strong> de tout le site dès que vous consommez sur place (200 € HT l'heure, 500 € HT la demi-journée). Carte complète : <a href="/restauration-seminaire/" style="color: var(--orange);">restauration séminaire</a>.</p>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Accueil café, déjeuner en plateaux-repas (assis, 20 personnes maximum) ou apéritif dînatoire (debout, 40 maximum), livrés par Grandsire Traiteur et la Fromagerie Conquérant et servis froids dans notre salle d'accueil. <strong>Moins de 20 personnes</strong> : pas de commande traiteur, mais le buffet Les Conquérants (fromages et charcuteries, servi debout), l'accueil café et les douceurs sucrées ; dès 20 personnes, toute la carte. <strong>Privatisation obligatoire</strong> de tout le site dès que vous consommez sur place (200 € HT l'heure, 500 € HT la demi-journée). Carte complète : <a href="/restauration-seminaire/" style="color: var(--orange);">restauration séminaire</a>.</p>
           </div>
         </div>
       </div>
@@ -279,7 +279,7 @@
   </footer>
 
   <script defer src="/js/main.js?v=e4f2b2b5"></script>
-  <script defer src="/js/carte-restauration.js?v=92246866"></script>
+  <script defer src="/js/carte-restauration.js?v=3f410051"></script>
 
   <!-- ============================================================
        SIMULATEUR REACT — restylé GAMEDOOR·41 (Tailwind brand tokens)
@@ -305,6 +305,9 @@
   // Carte restauration : UNE SEULE SOURCE, /js/carte-restauration.js (partagée avec /restauration-seminaire/)
   const CARTE = window.CARTE_RESTAURATION || null;
   const CAPACITE = (CARTE && CARTE.capacite) || { assis: 20, debout: 40 };
+  // En dessous de ce nombre de personnes, pas de commande chez Grandsire Traiteur (plateaux-repas, plateaux cocktail, boissons) :
+  // il reste l'accueil café, le buffet Les Conquérants servi debout et les douceurs sucrées
+  const SEUIL_TRAITEUR = (CARTE && CARTE.seuilTraiteur) || 20;
 
   // Tarifs pro (TVA 10 %)
   const TARIFS_PRO_HT  = { escape: 15.91, quiz: 13.64 };
@@ -377,8 +380,9 @@
   const parPersonne = (it, groupe, cap) => ({
     id: it.id, groupe, name: it.name, tag: it.tag, subtitle: it.subtitle || '',
     resume: (it.highlights || []).map(h => h.text).join(' · '),
-    priceHT: it.price, tva: it.tva, perPerson: true, min: minDe(it), cap, recommended: !!it.recommended
+    priceHT: it.price, tva: it.tva, perPerson: true, min: minDe(it), cap, recommended: !!it.recommended, fournisseur: it.fournisseur
   });
+  const aLUnite = (it, groupe, tag, unit) => ({ id: it.id, groupe, name: it.name, tag, subtitle: it.desc || '', priceHT: it.price, tva: it.tva, perPerson: false, unit, pieces: it.pieces, min: 1, fournisseur: it.fournisseur });
   function construireCarte(cat) {
     if (!cat) return [];
     return [
@@ -389,10 +393,12 @@
       { id: 'apero', icon: '🥂', title: 'Apéritif dînatoire', hint: 'Buffet debout · ' + CAPACITE.debout + ' pers. max · plateaux froids',
         items: [
           ...cat.apero.map(i => parPersonne(i, 'apero', CAPACITE.debout)),
-          ...cat.plateauxFroids.items.map(it => ({ id: it.id, groupe: 'apero', name: it.name, tag: 'Plateau', subtitle: it.desc, priceHT: it.price, tva: it.tva, perPerson: false, unit: it.pieces > 30 ? 'pain(s)' : 'plateau(x)', pieces: it.pieces, min: 1 }))
+          ...cat.plateauxFroids.items.map(it => aLUnite(it, 'apero', 'Plateau', it.pieces > 30 ? 'pain(s)' : 'plateau(x)'))
         ] },
+      { id: 'douceurs', icon: '🍰', title: 'Douceurs sucrées', hint: 'Viennoiseries, macarons, mignardises · à l\'unité, pour l\'accueil, le dessert ou l\'apéritif',
+        items: (cat.douceurs ? cat.douceurs.items : []).map(it => aLUnite(it, 'douceurs', 'Douceur', 'paquet(s)')) },
       { id: 'boissons', icon: '🍷', title: 'Boissons', hint: 'À la bouteille · TVA 20 % sur l\'alcool',
-        items: Object.values(cat.boissons).flatMap(b => b.items.map(it => ({ id: it.id, groupe: 'boissons', name: it.name + ' (' + it.vol + ')', tag: b.title, subtitle: '', priceHT: it.price, tva: it.tva, perPerson: false, unit: 'bouteille(s)', alcool: it.tva === 20, min: 1 }))) }
+        items: Object.values(cat.boissons).flatMap(b => b.items.map(it => ({ ...aLUnite(it, 'boissons', b.title, 'bouteille(s)'), name: it.name + ' (' + it.vol + ')', alcool: it.tva === 20 }))) }
     ];
   }
   const CARTE_SECTIONS = construireCarte(CARTE && CARTE.catalog);
@@ -458,7 +464,7 @@
   }
 
   // Ligne « par personne » (accueil café, déjeuner, apéritif Conquérants)
-  function LignePersonne({ item, sel, groupe, isPro, onToggle, onQty }) {
+  function LignePersonne({ item, sel, groupe, isPro, onToggle, onQty, note }) {
     const prix = isPro ? eur(item.priceHT) + ' HT' : eur(prixTTC(item.priceHT, item.tva));
     return (
       <div className={cls('rounded-lg border p-2.5 transition-all', sel ? 'border-emerald-500/70 bg-emerald-500/10' : 'border-gd-border bg-gd-card hover:border-gd-orange/50')}>
@@ -471,6 +477,7 @@
             </span>
             <span className="block text-gd-cream/55 text-xs leading-snug mt-0.5">{item.subtitle}{item.resume ? ' — ' + item.resume : ''}</span>
             {item.min > 1 && <span className="block text-gd-cream/40 text-[11px] mt-0.5">Dès {item.min} personnes</span>}
+            {note && <span className="block text-amber-300 text-[11px] mt-0.5">{note}</span>}
           </span>
           <span className="text-emerald-400 text-sm sim-display tracking-wide whitespace-nowrap text-right">{prix}<span className="block opacity-70 text-[11px]">par pers.</span></span>
         </label>
@@ -516,7 +523,7 @@
     const [selection, setSelection] = useState({});             // { itemId: { qty, auto } }
     const [privatisation, setPrivatisation] = useState(null);   // '1h' | '2h' | 'demi' | null
     const [privatManuelle, setPrivatManuelle] = useState(false);
-    const [sectionsOuvertes, setSectionsOuvertes] = useState({ accueil: true, dejeuner: true, apero: true, boissons: false });
+    const [sectionsOuvertes, setSectionsOuvertes] = useState({ accueil: true, dejeuner: true, apero: true, douceurs: false, boissons: false });
     const [selectedGiftCard, setSelectedGiftCard] = useState(null);
     const [wantPhysicalBox, setWantPhysicalBox] = useState(false);
     const [showSummary, setShowSummary] = useState(false);
@@ -556,11 +563,19 @@
       setNbEscapePartage(null);
       if (groupe < GROUPE_MIN + QUIZ_MIN || groupe > COMBO_MAX_SIMULTANE) setModeCombo(m => (m === 'partage' ? null : m));
       if (groupe > CAPACITE.debout) { setSurPlace(null); setSelection({}); setPrivatisation(null); setPrivatManuelle(false); }
+      // Sous le seuil traiteur, les articles Grandsire déjà choisis sont retirés
+      if (groupe < SEUIL_TRAITEUR) setSelection(prev => {
+        const next = {}; let changed = false;
+        Object.entries(prev).forEach(([id, s]) => { const it = CARTE_BY_ID[id]; if (it && it.fournisseur === 'grandsire') changed = true; else next[id] = s; });
+        return changed ? next : prev;
+      });
     }, [groupe]);
 
     // ----- Sur place -----
     const qtyDe = (id) => (selection[id] && selection[id].qty) || 0;
     const groupeTropGrand = groupe > CAPACITE.debout;
+    const traiteurBloque = groupe < SEUIL_TRAITEUR;                                   // moins de 20 : pas de commande Grandsire
+    const verrouille = (item) => traiteurBloque && item.fournisseur === 'grandsire';
     const hasFood = !isGift && surPlace === true && !groupeTropGrand && CARTE_ITEMS.some(i => qtyDe(i.id) > 0);
     const hasDejeuner = CARTE_ITEMS.some(i => i.groupe === 'dejeuner' && qtyDe(i.id) > 0);
     const nbDejeuners = CARTE_ITEMS.filter(i => i.groupe === 'dejeuner').reduce((s, i) => s + qtyDe(i.id), 0);
@@ -706,6 +721,7 @@
         t += "Privatisation obligatoire (tout le site, salle d'accueil comprise).\n";
         t += 'Tous les plats sont servis froids. Debout : ' + CAPACITE.debout + ' personnes maximum ; assis (déjeuner) : ' + CAPACITE.assis + ' personnes maximum.\n';
         t += 'Traiteurs : Grandsire Traiteur · Fromagerie Conquérant.\n';
+        if (traiteurBloque) t += 'Groupe de moins de ' + SEUIL_TRAITEUR + ' : pas de commande traiteur Grandsire (buffet Conquérants servi debout, accueil café, douceurs).\n';
       }
       t += '\n--- TOTAUX ---\n';
       t += 'Total HT : ' + r.totalHT.toFixed(2) + '€\n';
@@ -1095,35 +1111,45 @@
             <div className="p-3 bg-gd-orange/10 border border-gd-orange/40 rounded-lg text-xs text-gd-cream/80 space-y-1">
               <p><strong className="text-gd-orange">Bon à savoir :</strong> tout est livré par nos traiteurs (Grandsire Traiteur, Fromagerie Conquérant) et servi <strong>froid</strong> ; seuls le café et le thé sont chauds.</p>
               <p>Déjeuner assis : <strong>{CAPACITE.assis} places</strong>. Accueil café et apéritif debout : <strong>{CAPACITE.debout} personnes</strong>. Pas de salle de réunion.</p>
+              {traiteurBloque
+                ? <p><strong className="text-amber-400">Moins de {SEUIL_TRAITEUR} personnes</strong> : pas de commande traiteur possible (plateaux-repas, plateaux cocktail, boissons). Votre repas, c'est le buffet <strong>Les Conquérants</strong> (fromages et charcuteries) servi debout, avec l'accueil café et les douceurs sucrées si vous voulez.</p>
+                : <p><strong className="text-emerald-400">Dès {SEUIL_TRAITEUR} personnes</strong> : toute la carte est disponible, plateaux-repas compris.</p>}
               <p><a href="/restauration-seminaire/" target="_blank" rel="noopener" className="text-gd-orange underline">Voir la carte complète, les compositions et les allergènes ↗</a></p>
             </div>
             {CARTE_SECTIONS.length === 0 && <p className="text-center text-red-400 text-sm">La carte n'a pas pu se charger : rechargez la page ou consultez <a href="/restauration-seminaire/" className="underline">la carte restauration</a>.</p>}
             {CARTE_SECTIONS.map(sec => {
               const nSel = sec.items.filter(i => qtyDe(i.id) > 0).length;
-              const open = !!sectionsOuvertes[sec.id];
+              const dispo = sec.items.filter(i => !verrouille(i));
+              const toutVerrouille = sec.items.length > 0 && dispo.length === 0;
+              const open = !!sectionsOuvertes[sec.id] && !toutVerrouille;
               return (
-                <div key={sec.id} className="rounded-lg border border-gd-border bg-gd-card/60 overflow-hidden">
-                  <button type="button" onClick={() => setSectionsOuvertes(p => ({ ...p, [sec.id]: !open }))} aria-expanded={open}
-                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-gd-card">
+                <div key={sec.id} className={cls('rounded-lg border border-gd-border bg-gd-card/60 overflow-hidden', toutVerrouille && 'opacity-70')}>
+                  <button type="button" onClick={() => setSectionsOuvertes(p => ({ ...p, [sec.id]: !open }))} aria-expanded={open} disabled={toutVerrouille}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-gd-card disabled:cursor-default">
                     <span className="text-2xl">{sec.icon}</span>
                     <span className="flex-1 min-w-0">
-                      <span className="flex items-center gap-2 sim-display tracking-wider uppercase text-sm font-bold text-gd-cream">{sec.title}
+                      <span className="flex items-center gap-2 flex-wrap sim-display tracking-wider uppercase text-sm font-bold text-gd-cream">{sec.title}
                         {nSel > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px]">{nSel} choisi{nSel > 1 ? 's' : ''}</span>}
+                        {toutVerrouille && <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[10px]">🔒 Dès {SEUIL_TRAITEUR} pers.</span>}
                       </span>
-                      <span className="block text-gd-cream/50 text-[11px]">{sec.hint}</span>
+                      <span className="block text-gd-cream/50 text-[11px]">{toutVerrouille ? 'Commande traiteur : à partir de ' + SEUIL_TRAITEUR + ' personnes. Vous êtes ' + groupe + '.' : sec.hint}</span>
                     </span>
-                    <span className="text-gd-cream/60 text-lg" aria-hidden="true">{open ? '−' : '+'}</span>
+                    {!toutVerrouille && <span className="text-gd-cream/60 text-lg" aria-hidden="true">{open ? '−' : '+'}</span>}
                   </button>
                   {open && (
                     <div className="px-3 pb-3 space-y-2">
                       {sec.id === 'dejeuner' && groupe > CAPACITE.assis && <p className="text-amber-400 text-xs">⚠ {CAPACITE.assis} places assises au maximum : vous êtes {groupe}.</p>}
-                      {sec.items.filter(i => i.perPerson).map(item => (
-                        <LignePersonne key={item.id} item={item} sel={selection[item.id]} groupe={groupe} isPro={isPro} onToggle={() => toggleItem(item)} onQty={(q) => setQty(item, q)} />
+                      {dispo.filter(i => i.perPerson).map(item => (
+                        <LignePersonne key={item.id} item={item} sel={selection[item.id]} groupe={groupe} isPro={isPro} onToggle={() => toggleItem(item)} onQty={(q) => setQty(item, q)}
+                          note={traiteurBloque && item.fournisseur === 'conquerant' ? 'Pour moins de ' + SEUIL_TRAITEUR + ' personnes, c\'est votre repas : buffet servi debout.' : null} />
                       ))}
-                      {sec.id === 'apero' && (
+                      {sec.id === 'apero' && !traiteurBloque && (
                         <p className="text-gd-cream/55 text-[11px] pt-1">Plateaux cocktail froids (prix au plateau). Repère : environ 20 pièces par personne pour un apéritif qui remplace le repas, soit <strong className="text-gd-cream/80">{Math.ceil(groupe * 20 / 30)} plateaux de 30</strong> pour {groupe} personnes. Pain surprise : garniture à préciser dans votre message.</p>
                       )}
-                      {sec.items.filter(i => !i.perPerson).map(item => (
+                      {sec.id === 'apero' && traiteurBloque && (
+                        <p className="text-gd-cream/55 text-[11px] pt-1">🔒 Plateaux cocktail du traiteur : à partir de {SEUIL_TRAITEUR} personnes.</p>
+                      )}
+                      {dispo.filter(i => !i.perPerson).map(item => (
                         <LigneUnite key={item.id} item={item} qty={qtyDe(item.id)} isPro={isPro} onQty={(q) => setQty(item, q)} />
                       ))}
                     </div>

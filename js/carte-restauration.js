@@ -1,10 +1,14 @@
-/* GAMEDOOR·41 — Carte restauration (traiteurs Grandsire + Fromagerie Conquérant).
+/* GAMEDOOR·41 — Carte restauration (traiteurs Grandsire + Fromagerie Conquérant, douceurs sucrées maison/Picard).
    UNE SEULE SOURCE pour deux pages : /restauration-seminaire/ (commande de repas) et /devis/ (simulateur).
    Prix en euros HT, TVA en %. Modifier ici, puis lancer : node scripts/perf-assets.mjs
    (sinon les visiteurs déjà venus gardent l'ancienne carte en cache pendant un an). */
 window.CARTE_RESTAURATION = {
   // Salle d'accueil : 20 personnes assises (déjeuner), 40 debout (accueil café, apéritif)
   capacite: { assis: 20, debout: 40 },
+  // En dessous de ce nombre de personnes, pas de commande chez Grandsire Traiteur (plateaux-repas, plateaux cocktail,
+  // boissons de leur carte) : il reste l'accueil café, le buffet Les Conquérants (servi debout) et les douceurs sucrées.
+  // Chaque article porte son "fournisseur" : grandsire (soumis au seuil), conquerant, maison, picard.
+  seuilTraiteur: 20,
   // menu : la composition rangée par service (cat = entree, plat, fromage, dessert, viennoiserie, chaud, boisson)
   // highlights : les pictogrammes affichés sur la carte
   catalog: {
@@ -61,7 +65,8 @@ window.CARTE_RESTAURATION = {
         "info": {
           "allergenes": "Viennoiseries : gluten, œufs, lait. Sur demande : version sans gluten possible.",
           "min": "8 personnes minimum"
-        }
+        },
+        "fournisseur": "maison"
       },
       {
         "id": "accueil-complete",
@@ -122,7 +127,8 @@ window.CARTE_RESTAURATION = {
         "info": {
           "allergenes": "Viennoiseries : gluten, œufs, lait. Sur demande : alternatives sans gluten.",
           "min": "8 personnes minimum"
-        }
+        },
+        "fournisseur": "maison"
       }
     ],
     "dejeuner": [
@@ -196,7 +202,8 @@ window.CARTE_RESTAURATION = {
           "allergenes": "Selon la recette choisie : gluten, lait, œufs, poisson possibles. Signalez allergies et régimes dans votre demande.",
           "min": "4 formules minimum par composition",
           "fournisseur": "Grandsire Traiteur"
-        }
+        },
+        "fournisseur": "grandsire"
       },
       {
         "id": "dej-box",
@@ -276,7 +283,8 @@ window.CARTE_RESTAURATION = {
           "allergenes": "Selon la recette choisie : gluten, lait, œufs, poisson, crustacés possibles. Signalez allergies et régimes dans votre demande.",
           "min": "4 box minimum par composition",
           "fournisseur": "Grandsire Traiteur"
-        }
+        },
+        "fournisseur": "grandsire"
       },
       {
         "id": "dej-figue",
@@ -360,7 +368,8 @@ window.CARTE_RESTAURATION = {
           "min": "4 plateaux minimum par composition",
           "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
           "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
-        }
+        },
+        "fournisseur": "grandsire"
       },
       {
         "id": "dej-marron",
@@ -445,7 +454,8 @@ window.CARTE_RESTAURATION = {
           "min": "4 plateaux minimum par composition",
           "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
           "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
-        }
+        },
+        "fournisseur": "grandsire"
       },
       {
         "id": "dej-vege",
@@ -526,7 +536,8 @@ window.CARTE_RESTAURATION = {
           "min": "4 plateaux minimum par composition",
           "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
           "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
-        }
+        },
+        "fournisseur": "grandsire"
       },
       {
         "id": "dej-pomme",
@@ -609,7 +620,8 @@ window.CARTE_RESTAURATION = {
           "min": "4 plateaux minimum par composition",
           "options": "Couverts inox au lieu du bois : + 1,00 € HT / plateau",
           "fournisseur": "Grandsire Traiteur · certifié ISO 20121"
-        }
+        },
+        "fournisseur": "grandsire"
       }
     ],
     "apero": [
@@ -681,7 +693,8 @@ window.CARTE_RESTAURATION = {
           "min": "4 personnes minimum",
           "options": "À compléter avec cidre brut normand 5 € HT/75 cl ou crémant de Loire 10 € HT/75 cl pour un apéro complet",
           "fournisseur": "Fromagerie Conquérant · Caen · <a href=\"https://fromagerie-conquerant.com/products/plateau-gourmand-mixte\" target=\"_blank\" rel=\"noopener\">Voir le produit</a>"
-        }
+        },
+        "fournisseur": "conquerant"
       }
     ],
     "plateauxFroids": {
@@ -696,7 +709,8 @@ window.CARTE_RESTAURATION = {
           "desc": "Jambon fumé et mimolette · poulet crudités · saumon guacamole · fish & chips sauce tartare · thon au yuzu",
           "icon": "sandwich",
           "short": "30 wraps",
-          "pieces": 30
+          "pieces": 30,
+          "fournisseur": "grandsire"
         },
         {
           "id": "pc-savouris",
@@ -707,7 +721,8 @@ window.CARTE_RESTAURATION = {
           "desc": "Dôme de volaille teriyaki · sablé de hareng fumé · briochin rillette de thon · rouleau de printemps · wrap saumon guacamole · brochette melon et jambon fumé",
           "icon": "utensils",
           "short": "30 savouris froids",
-          "pieces": 30
+          "pieces": 30,
+          "fournisseur": "grandsire"
         },
         {
           "id": "pc-fraicheur",
@@ -718,7 +733,8 @@ window.CARTE_RESTAURATION = {
           "desc": "Macaron de magret à l'orange · cheesecake aux petits pois · navette de jambon de volaille · brochette crevettes-ananas · chaud-froid de volaille (recette froide) · wrap fish & chips",
           "icon": "leaf",
           "short": "30 pièces fraîcheurs",
-          "pieces": 30
+          "pieces": 30,
+          "fournisseur": "grandsire"
         },
         {
           "id": "pc-boulangeres",
@@ -729,7 +745,8 @@ window.CARTE_RESTAURATION = {
           "desc": "Navette de volaille miel-épices · briochin Neufchâtel et pomme · mini-clubs saumon fumé, bœuf sauce tartare, crudités · bruschetta légumes-anchois",
           "icon": "croissant",
           "short": "30 boulangères & mini-clubs",
-          "pieces": 30
+          "pieces": 30,
+          "fournisseur": "grandsire"
         },
         {
           "id": "pc-pain-surprise",
@@ -740,7 +757,8 @@ window.CARTE_RESTAURATION = {
           "desc": "Au choix : charcuterie, poisson, ou mixte charcuterie-poisson-crudités",
           "icon": "wheat",
           "short": "Pain surprise",
-          "pieces": 50
+          "pieces": 50,
+          "fournisseur": "grandsire"
         },
         {
           "id": "pc-fours-finesse",
@@ -752,7 +770,8 @@ window.CARTE_RESTAURATION = {
           "icon": "cupcake",
           "short": "30 fours « Finesse »",
           "pieces": 30,
-          "sucre": true
+          "sucre": true,
+          "fournisseur": "grandsire"
         },
         {
           "id": "pc-fours-saveurs",
@@ -764,7 +783,130 @@ window.CARTE_RESTAURATION = {
           "icon": "donut",
           "short": "30 fours « Saveurs »",
           "pieces": 30,
-          "sucre": true
+          "sucre": true,
+          "fournisseur": "grandsire"
+        }
+      ]
+    },
+    "douceurs": {
+      "title": "Douceurs sucrées",
+      "items": [
+        {
+          "id": "d-chouquettes",
+          "name": "12 chouquettes",
+          "vol": "12 pièces",
+          "price": 2.91,
+          "desc": "Petits choux au sucre perlé",
+          "icon": "cupcake",
+          "short": "12 chouquettes",
+          "pieces": 12,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-tartinettes",
+          "name": "12 tartinettes amande",
+          "vol": "12 pièces",
+          "price": 3.91,
+          "desc": "Fines brioches feuilletées aux amandes",
+          "icon": "croissant",
+          "short": "12 tartinettes amande",
+          "pieces": 12,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-tartinettes-choco",
+          "name": "12 tartinettes amande-chocolat",
+          "vol": "12 pièces",
+          "price": 4,
+          "desc": "Fines brioches feuilletées amande et chocolat",
+          "icon": "croissant",
+          "short": "12 tartinettes choco",
+          "pieces": 12,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-viennoiseries",
+          "name": "12 petites viennoiseries",
+          "vol": "12 pièces",
+          "price": 6.36,
+          "desc": "Mini-croissants, mini-pains au chocolat, mini-pains aux raisins",
+          "icon": "croissant",
+          "short": "12 mini-viennoiseries",
+          "pieces": 12,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-pack-gourmand",
+          "name": "Pack petit-déjeuner gourmand",
+          "vol": "36 pièces",
+          "price": 11.82,
+          "desc": "Assortiment de 36 mini-viennoiseries et douceurs du matin",
+          "icon": "croissant",
+          "short": "Pack gourmand 36 pièces",
+          "pieces": 36,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-macarons-12",
+          "name": "Assortiment 12 macarons",
+          "vol": "12 pièces",
+          "price": 6,
+          "desc": "Macarons assortis, parfums variés",
+          "icon": "donut",
+          "short": "12 macarons",
+          "pieces": 12,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-macarons-16",
+          "name": "Assortiment 16 macarons",
+          "vol": "16 pièces",
+          "price": 6.5,
+          "desc": "Macarons assortis, parfums variés",
+          "icon": "donut",
+          "short": "16 macarons",
+          "pieces": 16,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-mignardises-16",
+          "name": "Mignardises",
+          "vol": "16 pièces",
+          "price": 10,
+          "desc": "Mini-pâtisseries assorties",
+          "icon": "cake-slice",
+          "short": "16 mignardises",
+          "pieces": 16,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
+        },
+        {
+          "id": "d-petits-fours-16",
+          "name": "Assortiment 16 petits fours sucrés",
+          "vol": "16 pièces",
+          "price": 11,
+          "desc": "Petits fours sucrés assortis",
+          "icon": "cupcake",
+          "short": "16 petits fours sucrés",
+          "pieces": 16,
+          "tva": 10,
+          "sucre": true,
+          "fournisseur": "picard"
         }
       ]
     },
@@ -777,49 +919,56 @@ window.CARTE_RESTAURATION = {
             "name": "Eau plate Cristaline",
             "vol": "50 cl",
             "price": 0.9,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-eau-150",
             "name": "Eau plate Cristaline",
             "vol": "1,5 L",
             "price": 1.5,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-badoit",
             "name": "Eau gazeuse Badoit",
             "vol": "1 L",
             "price": 1.5,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-coca",
             "name": "Coca-Cola",
             "vol": "1,25 L",
             "price": 3,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-jus-or",
             "name": "Jus d'orange",
             "vol": "1 L",
             "price": 3,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-jus-po",
             "name": "Jus de pomme artisanal",
             "vol": "1 L",
             "price": 3.5,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-cafe",
             "name": "Thermos de café",
             "vol": "1 L",
             "price": 15,
-            "tva": 10
+            "tva": 10,
+            "fournisseur": "grandsire"
           }
         ],
         "icon": "cup-soda"
@@ -832,14 +981,16 @@ window.CARTE_RESTAURATION = {
             "name": "Cidre normand",
             "vol": "75 cl",
             "price": 5,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-biere",
             "name": "Bière",
             "vol": "25 cl",
             "price": 1.25,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           }
         ],
         "icon": "beer"
@@ -852,28 +1003,32 @@ window.CARTE_RESTAURATION = {
             "name": "Sauvignon de Touraine",
             "vol": "75 cl",
             "price": 8,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-rose",
             "name": "Rosé de Provence",
             "vol": "75 cl",
             "price": 8,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-bordeaux",
             "name": "Bordeaux rouge",
             "vol": "75 cl",
             "price": 8,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-st-emilion",
             "name": "Saint-Émilion",
             "vol": "75 cl",
             "price": 14,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           }
         ],
         "icon": "wine"
@@ -886,28 +1041,32 @@ window.CARTE_RESTAURATION = {
             "name": "Crémant de Loire",
             "vol": "75 cl",
             "price": 10,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-methode",
             "name": "Méthode traditionnelle",
             "vol": "75 cl",
             "price": 7,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-champ",
             "name": "Champagne",
             "vol": "75 cl",
             "price": 18,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           },
           {
             "id": "b-cassis",
             "name": "Crème de cassis",
             "vol": "1 L",
             "price": 11,
-            "tva": 20
+            "tva": 20,
+            "fournisseur": "grandsire"
           }
         ],
         "icon": "party-popper"

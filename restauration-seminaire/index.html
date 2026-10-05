@@ -309,6 +309,14 @@
     .panier-total-row.ttc { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--creme); }
     .panier-total-row.pp { font-size: 13px; }
     .panier-alerte { font-size: 13px; font-weight: 700; color: #ff9966; background: rgba(224,84,60,0.12); border-radius: 10px; padding: 8px 10px; }
+    .is-locked { opacity: .45; filter: grayscale(.5); }
+    .is-locked .btn-choose, .is-locked .stepper, .is-locked .qty-controls { pointer-events: none; }
+    .seuil-alerte { margin-top: 16px; font-size: 15px; padding: 12px 14px; color: #ffd27a; background: rgba(255,196,64,0.08); border: 1px solid rgba(255,196,64,0.5); }
+    .seuil-alerte[hidden] { display: none; }
+    #seuil-apero, #seuil-boissons { margin-top: 0; margin-bottom: 12px; }
+    .trays-title--douceurs { margin-top: 22px; }
+    .trays-title--douceurs .i { color: var(--c-dessert); }
+    .trays-note { font-size: 13px; color: var(--muted); margin: -6px 0 12px; }
     .dej-alerte { margin-top: 16px; font-size: 15px; padding: 12px 14px; border: 1px solid rgba(224,84,60,0.5); }
     .dej-alerte[hidden] { display: none; }
     .panier-note { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; color: var(--creme); line-height: 1.4; background: rgba(224,112,32,.10); border: 1px dashed rgba(224,112,32,.55); border-radius: 10px; padding: 8px 10px; margin-top: 6px; }
@@ -488,6 +496,7 @@
         <li><strong>Déjeuner : assis</strong>, 20 personnes maximum. Nous installons tables et chaises dans la salle d'accueil.</li>
         <li><strong>Apéritif dînatoire : buffet debout</strong>, 40 personnes maximum, quelques chaises à disposition.</li>
         <li><strong>Aucun plat chaud.</strong> Nous ne pouvons rien réchauffer sur place : tous les plats sont servis froids.</li>
+        <li><strong>Traiteur à partir de 20 personnes.</strong> En dessous de 20, pas de commande de plateaux-repas, de plateaux cocktail ni de boissons chez notre traiteur : votre repas est le buffet Les Conquérants (fromages et charcuteries, servi debout), avec l'accueil café et les douceurs sucrées si vous le souhaitez.</li>
       </ul>
     </details>
   </section>
@@ -528,9 +537,11 @@
             <li><svg class="i"><use href="#i-armchair"/></svg>Assis, 20 personnes max</li>
             <li class="is-froid"><svg class="i"><use href="#i-snowflake"/></svg>Servi froid, prêt à consommer</li>
             <li><svg class="i"><use href="#i-chef-hat"/></svg>4 plateaux identiques minimum</li>
+            <li><svg class="i"><use href="#i-users"/></svg>À partir de 20 personnes</li>
           </ul>
         </header>
         <div class="offers" id="cards-dejeuner"></div>
+        <p class="panier-alerte seuil-alerte" id="seuil-dejeuner" role="status" hidden></p>
         <p class="panier-alerte dej-alerte" id="dej-alerte" role="status" hidden></p>
         <p class="step-foot"><strong>Entrée, plat et dessert au choix, par 4 plateaux identiques minimum</strong> (même entrée, même plat, même dessert) : vous pouvez par exemple prévoir 4 plateaux végétariens à côté des autres. Plateaux Grandsire Traiteur (Démouville, certifié ISO 20121). Les plats chauds ou « à réchauffer » du traiteur ne sont pas proposés : nous n'avons rien pour réchauffer sur place.</p>
       </section>
@@ -549,7 +560,11 @@
         <div class="offers" id="cards-apero"></div>
         <div class="apero-helper" id="apero-helper" aria-live="polite"></div>
         <h3 class="trays-title"><svg class="i"><use href="#i-snowflake"/></svg>Plateaux cocktail froids · Grandsire Traiteur</h3>
+        <p class="panier-alerte seuil-alerte" id="seuil-apero" role="status" hidden></p>
         <div class="trays" id="plateaux-froids-grid"></div>
+        <h3 class="trays-title trays-title--douceurs"><svg class="i"><use href="#i-cake-slice"/></svg>Douceurs sucrées</h3>
+        <p class="trays-note">Viennoiseries, macarons, mignardises : pour l'accueil, le dessert ou l'apéritif. Disponibles quel que soit le nombre de personnes.</p>
+        <div class="trays" id="douceurs-grid"></div>
       </section>
 
       <!-- ========== 4 · BOISSONS ========== -->
@@ -562,6 +577,7 @@
             <li><svg class="i"><use href="#i-bottle-wine"/></svg>Facturées à la bouteille ouverte</li>
           </ul>
         </header>
+        <p class="panier-alerte seuil-alerte" id="seuil-boissons" role="status" hidden></p>
         <div class="drinks" id="boissons-grid"></div>
       </section>
 
@@ -676,7 +692,7 @@
 
   <!-- ========== SCRIPTS ========== -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script defer src="/js/carte-restauration.js?v=92246866"></script>
+  <script defer src="/js/carte-restauration.js?v=3f410051"></script>
   <script type="module">
 
     const firebaseConfig = {
@@ -720,10 +736,12 @@
 
     // Capacité de la salle d'accueil : 20 personnes assises (déjeuner), 40 debout (accueil café, apéritif)
     const CAPACITE = window.CARTE_RESTAURATION.capacite;
+    const SEUIL_TRAITEUR = window.CARTE_RESTAURATION.seuilTraiteur || 20;   // en dessous : pas de commande chez Grandsire Traiteur
     const GROUPES = {
       accueil:  { label: 'Accueil café', icon: 'coffee',       color: 'var(--c-chaud)' },
       dejeuner: { label: 'Déjeuner',     icon: 'utensils',     color: 'var(--c-plat)' },
       apero:    { label: 'Apéritif',     icon: 'party-popper', color: 'var(--c-apero)' },
+      douceurs: { label: 'Douceurs',     icon: 'cake-slice',   color: 'var(--c-dessert)' },
       boissons: { label: 'Boissons',     icon: 'wine',         color: 'var(--c-boisson)' }
     };
     const ICONE_SERVICE = { entree: 'salad', plat: 'drumstick', fromage: 'cheese', dessert: 'cake-slice', viennoiserie: 'croissant', chaud: 'coffee', boisson: 'glass-water' };
@@ -732,11 +750,13 @@
     const ico = (name, cls = 'i') => `<svg class="${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
     const parPersonne = () => Object.values(CATALOG).filter(Array.isArray).flat();
     const plateauxFroids = () => CATALOG.plateauxFroids.items;
+    const douceurs = () => (CATALOG.douceurs ? CATALOG.douceurs.items : []);
     const toutesBoissons = () => Object.values(CATALOG.boissons).flatMap(b => b.items);
     function groupeDe(id) {
       if (CATALOG.accueil.some(i => i.id === id)) return 'accueil';
       if (CATALOG.dejeuner.some(i => i.id === id)) return 'dejeuner';
       if (CATALOG.apero.some(i => i.id === id) || plateauxFroids().some(i => i.id === id)) return 'apero';
+      if (douceurs().some(i => i.id === id)) return 'douceurs';
       return 'boissons';
     }
     function capFor(itemId) {
@@ -805,6 +825,19 @@
         </article>`).join('');
     }
 
+    // ========== DOUCEURS SUCRÉES (à l'unité, disponibles quel que soit le nombre de personnes) ==========
+    function renderDouceurs() {
+      document.getElementById('douceurs-grid').innerHTML = douceurs().map(item => `
+        <article class="tray${state.selection[item.id] ? ' is-selected' : ''}" data-id="${item.id}">
+          <span class="tray-ico c-dessert">${ico(item.icon)}</span>
+          <div><h4>${item.short}</h4><p id="desc-${item.id}">${item.desc}</p><button type="button" class="tray-more" aria-controls="desc-${item.id}" aria-expanded="false" hidden>Voir tout</button></div>
+          <div class="tray-foot">
+            <span class="tray-price">${eur(item.price)} HT<small>le paquet de ${item.pieces} pièces</small></span>
+            ${stepperQte(item.id, item.name)}
+          </div>
+        </article>`).join('');
+    }
+
     // « Voir tout le plateau » seulement quand la composition est vraiment coupée
     function majTrayMore() {
       document.querySelectorAll('.tray').forEach(t => {
@@ -858,6 +891,7 @@
     function toggleCard(itemId) {
       const item = parPersonne().find(i => i.id === itemId);
       if (!item) return;
+      if (!state.selection[itemId] && verrouTraiteur() && item.fournisseur === 'grandsire') return;   // sous le seuil : pas de commande traiteur
       if (state.selection[itemId]) {
         delete state.selection[itemId];
       } else {
@@ -885,19 +919,21 @@
     function setBoissonQty(itemId, qty) {
       qty = Math.max(0, parseInt(qty) || 0);
       const plateau = plateauxFroids().find(i => i.id === itemId);
-      const item = plateau || toutesBoissons().find(i => i.id === itemId);
+      const douceur = douceurs().find(i => i.id === itemId);
+      const item = plateau || douceur || toutesBoissons().find(i => i.id === itemId);
       if (!item) return;
+      if (qty > 0 && verrouTraiteur() && item.fournisseur === 'grandsire') qty = 0;   // sous le seuil : pas de commande traiteur
       if (qty === 0) {
         delete state.selection[itemId];
       } else {
         state.selection[itemId] = {
           qty,
-          unit: plateau ? 'plateau(x)' : ' x ' + item.vol,
+          unit: plateau ? 'plateau(x)' : douceur ? 'paquet(s)' : ' x ' + item.vol,
           price: item.price,
           tva: item.tva,
           name: plateau ? item.name + ' (' + item.vol + ', servi froid)' : item.name + ' (' + item.vol + ')',
-          tag: plateau ? 'Apéritif dînatoire' : 'Boisson',
-          group: plateau ? 'apero' : 'boissons'
+          tag: plateau ? 'Apéritif dînatoire' : douceur ? 'Douceurs sucrées' : 'Boisson',
+          group: plateau ? 'apero' : douceur ? 'douceurs' : 'boissons'
         };
       }
       const input = document.querySelector(`[data-bqty="${itemId}"]`);
@@ -913,7 +949,28 @@
       Object.entries(state.selection).forEach(([id, sel]) => {
         if (sel.auto) { sel.qty = Math.min(state.nbPersonnes, capFor(id)); majBoutons(id); }
       });
+      majVerrous();
       updatePanier();
+    }
+
+    // ========== SEUIL TRAITEUR ==========
+    // En dessous de SEUIL_TRAITEUR personnes, pas de commande chez Grandsire : plateaux-repas, plateaux cocktail et boissons
+    // sont grisés et retirés de la sélection ; restent l'accueil café, le buffet Les Conquérants et les douceurs sucrées.
+    const verrouTraiteur = () => state.nbPersonnes < SEUIL_TRAITEUR;
+    function majVerrous() {
+      const v = verrouTraiteur();
+      ['cards-dejeuner', 'plateaux-froids-grid', 'boissons-grid'].forEach(id => document.getElementById(id).classList.toggle('is-locked', v));
+      const message = quoi => `🔒 Vous êtes ${state.nbPersonnes} : ${quoi} se commandent chez notre traiteur à partir de ${SEUIL_TRAITEUR} personnes. En dessous, votre repas est le buffet Les Conquérants (fromages et charcuteries, servi debout), avec l'accueil café et les douceurs sucrées si vous le souhaitez.`;
+      Object.entries({ 'seuil-dejeuner': 'les plateaux-repas', 'seuil-apero': 'les plateaux cocktail', 'seuil-boissons': 'les boissons' }).forEach(([id, quoi]) => {
+        const el = document.getElementById(id); el.hidden = !v; el.textContent = message(quoi);
+      });
+      if (!v) return;
+      let retire = false;
+      Object.keys(state.selection).forEach(id => {
+        const it = parPersonne().find(i => i.id === id) || plateauxFroids().find(i => i.id === id) || toutesBoissons().find(i => i.id === id);
+        if (it && it.fournisseur === 'grandsire') { delete state.selection[id]; retire = true; if (parPersonne().some(i => i.id === id)) majBoutons(id); }
+      });
+      if (retire) { renderPlateauxFroids(); renderBoissons(); majTrayMore(); }
     }
 
     // ========== RÉCAP ==========
@@ -995,6 +1052,7 @@
       if (!item) return;
       const info = item.info || {};
       const sel = state.selection[itemId];
+      const verrou = !sel && verrouTraiteur() && item.fournisseur === 'grandsire';
       const blocs = item.menu.map(b => `
         <section class="menu-block c-${b.cat}">
           <h4>${ico(b.icon || ICONE_SERVICE[b.cat] || 'utensils')}${b.label}${b.choix ? ' <em>au choix</em>' : ''}</h4>
@@ -1012,7 +1070,7 @@
         ${item.extras && item.extras.length ? `<p class="menu-extras">${ico('check')}<span>${item.extras.join(' · ')}</span></p>` : ''}
         ${meta.length ? `<ul class="menu-meta">${meta.map(m => `<li>${m}</li>`).join('')}</ul>` : ''}
         ${info.allergenes ? `<details class="menu-allergenes"><summary>Allergènes</summary><p>${info.allergenes}</p></details>` : ''}
-        <button type="button" class="btn-choose${sel ? ' selected' : ''}" data-toggle="${item.id}" aria-pressed="${sel ? 'true' : 'false'}">${sel ? '✓ Choisi' : 'Choisir'}</button>`;
+        <button type="button" class="btn-choose${sel ? ' selected' : ''}" data-toggle="${item.id}" aria-pressed="${sel ? 'true' : 'false'}"${verrou ? ' disabled' : ''}>${sel ? '✓ Choisi' : verrou ? '🔒 À partir de ' + SEUIL_TRAITEUR + ' personnes' : 'Choisir'}</button>`;
       const bg = document.getElementById('modal-bg');
       if (!bg.classList.contains('open')) focusAvantFiche = document.activeElement;
       bg.classList.add('open');
@@ -1036,6 +1094,7 @@
       let text = '═══════════════════════════════════\nDÉTAIL DE LA DEMANDE\n═══════════════════════════════════\n\n';
       text += `Nombre de personnes : ${state.nbPersonnes}\n`;
       text += `⚠ Privatisation obligatoire (tout le site, salle d'accueil comprise) : à ajouter au devis\n\n`;
+      if (verrouTraiteur()) text += `Moins de ${SEUIL_TRAITEUR} personnes : pas de commande traiteur Grandsire (buffet Conquérants servi debout, accueil café, douceurs).\n\n`;
 
       let totalHT = 0, totalTVA = 0;
       items.forEach(([id, sel]) => {
@@ -1189,8 +1248,10 @@
       renderCards('dejeuner', 'cards-dejeuner');
       renderCards('apero', 'cards-apero');
       renderPlateauxFroids();
+      renderDouceurs();
       majTrayMore(); window.addEventListener('resize', majTrayMore, { passive: true }); document.fonts?.ready.then(majTrayMore);
       renderBoissons();
+      majVerrous();
       updatePanier();
 
       const panier = document.getElementById('panier');
