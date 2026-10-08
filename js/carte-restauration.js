@@ -5,9 +5,11 @@
 window.CARTE_RESTAURATION = {
   // Salle d'accueil : 20 personnes assises (déjeuner), 40 debout (accueil café, apéritif)
   capacite: { assis: 20, debout: 40 },
-  // En dessous de ce nombre de personnes, pas de commande chez Grandsire Traiteur (plateaux-repas, plateaux cocktail,
-  // boissons de leur carte) : il reste l'accueil café, le buffet Les Conquérants (servi debout) et les douceurs sucrées.
+  // En dessous de ce nombre de personnes, pas de commande chez Grandsire Traiteur (plateaux-repas, plateaux cocktail) :
+  // il reste l'accueil café, le buffet Les Conquérants (servi debout), les douceurs sucrées et les boissons.
   // Chaque article porte son "fournisseur" : grandsire (soumis au seuil), conquerant, maison, picard.
+  // Boissons en "maison" (consigne d'Alan du 08/10/2026) : pas concernées par le seuil, même si elles viennent de la carte Grandsire.
+  // "note" d'une catégorie de boissons : affichée sous son titre (bouteilles données à titre d'exemple).
   seuilTraiteur: 20,
   // menu : la composition rangée par service (cat = entree, plat, fromage, dessert, viennoiserie, chaud, boisson)
   // highlights : les pictogrammes affichés sur la carte
@@ -920,7 +922,7 @@ window.CARTE_RESTAURATION = {
             "vol": "50 cl",
             "price": 0.9,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-eau-150",
@@ -928,7 +930,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1,5 L",
             "price": 1.5,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-badoit",
@@ -936,7 +938,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1 L",
             "price": 1.5,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-coca",
@@ -944,7 +946,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1,25 L",
             "price": 3,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-jus-or",
@@ -952,7 +954,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1 L",
             "price": 3,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-jus-po",
@@ -960,7 +962,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1 L",
             "price": 3.5,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-cafe",
@@ -968,7 +970,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1 L",
             "price": 15,
             "tva": 10,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           }
         ],
         "icon": "cup-soda"
@@ -982,7 +984,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 5,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-biere",
@@ -990,13 +992,14 @@ window.CARTE_RESTAURATION = {
             "vol": "25 cl",
             "price": 1.25,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           }
         ],
         "icon": "beer"
       },
       "vins": {
         "title": "Vins",
+        "note": "Bouteilles données à titre d'exemple : selon les disponibilités, nous pouvons vous servir un autre cépage, une autre appellation ou une autre maison.",
         "items": [
           {
             "id": "b-sauvignon",
@@ -1004,7 +1007,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 8,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-rose",
@@ -1012,7 +1015,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 8,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-bordeaux",
@@ -1020,7 +1023,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 8,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-st-emilion",
@@ -1028,13 +1031,14 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 14,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           }
         ],
         "icon": "wine"
       },
       "apero": {
         "title": "Bulles & apéritifs",
+        "note": "Bouteilles données à titre d'exemple : selon les disponibilités, nous pouvons vous servir une autre appellation ou une autre maison.",
         "items": [
           {
             "id": "b-cremant",
@@ -1042,7 +1046,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 10,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-methode",
@@ -1050,7 +1054,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 7,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-champ",
@@ -1058,7 +1062,7 @@ window.CARTE_RESTAURATION = {
             "vol": "75 cl",
             "price": 18,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           },
           {
             "id": "b-cassis",
@@ -1066,7 +1070,7 @@ window.CARTE_RESTAURATION = {
             "vol": "1 L",
             "price": 11,
             "tva": 20,
-            "fournisseur": "grandsire"
+            "fournisseur": "maison"
           }
         ],
         "icon": "party-popper"

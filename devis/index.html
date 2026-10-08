@@ -279,7 +279,7 @@
   </footer>
 
   <script defer src="/js/main.js?v=e4f2b2b5"></script>
-  <script defer src="/js/carte-restauration.js?v=3f410051"></script>
+  <script defer src="/js/carte-restauration.js?v=ee9373c2"></script>
 
   <!-- ============================================================
        SIMULATEUR REACT — restylé GAMEDOOR·41 (Tailwind brand tokens)
@@ -305,8 +305,8 @@
   // Carte restauration : UNE SEULE SOURCE, /js/carte-restauration.js (partagée avec /restauration-seminaire/)
   const CARTE = window.CARTE_RESTAURATION || null;
   const CAPACITE = (CARTE && CARTE.capacite) || { assis: 20, debout: 40 };
-  // En dessous de ce nombre de personnes, pas de commande chez Grandsire Traiteur (plateaux-repas, plateaux cocktail, boissons) :
-  // il reste l'accueil café, le buffet Les Conquérants servi debout et les douceurs sucrées
+  // En dessous de ce nombre de personnes, pas de commande chez Grandsire Traiteur (plateaux-repas, plateaux cocktail) :
+  // il reste l'accueil café, le buffet Les Conquérants servi debout, les douceurs sucrées et les boissons
   const SEUIL_TRAITEUR = (CARTE && CARTE.seuilTraiteur) || 20;
 
   // Tarifs pro (TVA 10 %)
@@ -397,7 +397,8 @@
         ] },
       { id: 'douceurs', icon: '🍰', title: 'Douceurs sucrées', hint: 'Viennoiseries, macarons, mignardises · à l\'unité, pour l\'accueil, le dessert ou l\'apéritif',
         items: (cat.douceurs ? cat.douceurs.items : []).map(it => aLUnite(it, 'douceurs', 'Douceur', 'paquet(s)')) },
-      { id: 'boissons', icon: '🍷', title: 'Boissons', hint: 'À la bouteille · TVA 20 % sur l\'alcool',
+      { id: 'boissons', icon: '🍷', title: 'Boissons', hint: 'À la bouteille · TVA 20 % sur l\'alcool · quel que soit le nombre de personnes',
+        note: cat.boissons.vins && cat.boissons.vins.note,
         items: Object.values(cat.boissons).flatMap(b => b.items.map(it => ({ ...aLUnite(it, 'boissons', b.title, 'bouteille(s)'), name: it.name + ' (' + it.vol + ')', alcool: it.tva === 20 }))) }
     ];
   }
@@ -721,7 +722,7 @@
         t += "Privatisation obligatoire (tout le site, salle d'accueil comprise).\n";
         t += 'Tous les plats sont servis froids. Debout : ' + CAPACITE.debout + ' personnes maximum ; assis (déjeuner) : ' + CAPACITE.assis + ' personnes maximum.\n';
         t += 'Traiteurs : Grandsire Traiteur · Fromagerie Conquérant.\n';
-        if (traiteurBloque) t += 'Groupe de moins de ' + SEUIL_TRAITEUR + ' : pas de commande traiteur Grandsire (buffet Conquérants servi debout, accueil café, douceurs).\n';
+        if (traiteurBloque) t += 'Groupe de moins de ' + SEUIL_TRAITEUR + ' : pas de commande traiteur Grandsire (buffet Conquérants servi debout, accueil café, douceurs, boissons).\n';
       }
       t += '\n--- TOTAUX ---\n';
       t += 'Total HT : ' + r.totalHT.toFixed(2) + '€\n';
@@ -1112,7 +1113,7 @@
               <p><strong className="text-gd-orange">Bon à savoir :</strong> tout est livré par nos traiteurs (Grandsire Traiteur, Fromagerie Conquérant) et servi <strong>froid</strong> ; seuls le café et le thé sont chauds.</p>
               <p>Déjeuner assis : <strong>{CAPACITE.assis} places</strong>. Accueil café et apéritif debout : <strong>{CAPACITE.debout} personnes</strong>. Pas de salle de réunion.</p>
               {traiteurBloque
-                ? <p><strong className="text-amber-400">Moins de {SEUIL_TRAITEUR} personnes</strong> : pas de commande traiteur possible (plateaux-repas, plateaux cocktail, boissons). Votre repas, c'est le buffet <strong>Les Conquérants</strong> (fromages et charcuteries) servi debout, avec l'accueil café et les douceurs sucrées si vous voulez.</p>
+                ? <p><strong className="text-amber-400">Moins de {SEUIL_TRAITEUR} personnes</strong> : pas de commande traiteur possible (plateaux-repas, plateaux cocktail). Votre repas, c'est le buffet <strong>Les Conquérants</strong> (fromages et charcuteries) servi debout, avec l'accueil café, les douceurs sucrées et les boissons si vous voulez.</p>
                 : <p><strong className="text-emerald-400">Dès {SEUIL_TRAITEUR} personnes</strong> : toute la carte est disponible, plateaux-repas compris.</p>}
               <p><a href="/restauration-seminaire/" target="_blank" rel="noopener" className="text-gd-orange underline">Voir la carte complète, les compositions et les allergènes ↗</a></p>
             </div>
@@ -1138,6 +1139,7 @@
                   </button>
                   {open && (
                     <div className="px-3 pb-3 space-y-2">
+                      {sec.note && <p className="text-gd-cream/70 text-[11px] leading-snug rounded-md border border-dashed border-gd-border px-2.5 py-2">🍷 <strong className="text-gd-cream">Vins et bulles</strong> : {sec.note.charAt(0).toLowerCase() + sec.note.slice(1)}</p>}
                       {sec.id === 'dejeuner' && groupe > CAPACITE.assis && <p className="text-amber-400 text-xs">⚠ {CAPACITE.assis} places assises au maximum : vous êtes {groupe}.</p>}
                       {dispo.filter(i => i.perPerson).map(item => (
                         <LignePersonne key={item.id} item={item} sel={selection[item.id]} groupe={groupe} isPro={isPro} onToggle={() => toggleItem(item)} onQty={(q) => setQty(item, q)}
