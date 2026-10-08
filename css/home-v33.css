@@ -2119,19 +2119,8 @@ a.hero-tripadvisor:hover {
   text-transform: uppercase;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: border-color .25s ease, color .25s ease, background .25s ease, box-shadow .25s ease, transform .25s ease;
-}
-.trust-marquee:hover .trust-logo {
-  /* Subtle dim on neighbours when paused — focus auto sur celui hovered */
-  opacity: .55;
-}
-.trust-marquee .trust-logo:hover {
-  opacity: 1;
-  border-color: var(--gd-orange);
-  color: var(--gd-orange);
-  background: linear-gradient(180deg, rgba(224,112,32,.18), rgba(224,112,32,.04));
-  box-shadow: 0 0 0 1px rgba(224,112,32,.35), 0 8px 32px rgba(224,112,32,.18);
-  transform: translateY(-2px);
+  /* Simples étiquettes, pas des liens : aucun effet au survol (il laissait croire qu'on pouvait cliquer) */
+  cursor: default;
 }
 /* Backwards compat si quelqu'un utilise encore .trust-logos sans marquee */
 .trust-logos {
