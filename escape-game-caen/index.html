@@ -173,13 +173,8 @@
       -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 9%, #000 97%, transparent 100%);
       mask-image:linear-gradient(90deg, transparent 0, #000 9%, #000 97%, transparent 100%);
     }
-    /* Patiente : ses cheveux (2e calque --avant, calé sur le personnage) passent devant le bouton, la question
-       reste devant eux. Placée à distance fixe du bord gauche : les cheveux tombent sur la flèche quelle que soit la largeur. */
+    /* Patiente placée à distance fixe du bord gauche ; ses cheveux passent DERRIÈRE le bouton (bouton entièrement visible) */
     .exp-room--psy .exp-orient-perso picture { right:auto; left:60px; }
-    .exp-orient-perso--avant { z-index:5; }
-    .exp-room--psy .exp-orient-text { z-index:auto; }
-    .exp-room--psy .exp-orient-q { position:relative; z-index:6; }
-    .exp-room--psy .exp-orient-cta { position:relative; z-index:2; }
     .exp-orient-card:hover .exp-orient-perso picture { transform:translateY(-8px) scale(1.04); }
     .exp-orient-text {
       position:relative; z-index:2;
@@ -819,13 +814,6 @@
               <source type="image/avif" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.avif 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.avif 720w" sizes="(max-width: 760px) 195px, 230px">
               <source type="image/webp" srcset="/img/escape/personnage-psychiatric-patiente-camisole-400w.webp 400w, /img/escape/personnage-psychiatric-patiente-camisole-720w.webp 720w" sizes="(max-width: 760px) 195px, 230px">
               <img src="/img/escape/personnage-psychiatric-patiente-camisole-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
-            </picture>
-          </span>
-          <span class="exp-orient-perso exp-orient-perso--avant" aria-hidden="true">
-            <picture>
-              <source type="image/avif" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.avif 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.avif 720w" sizes="(max-width: 760px) 195px, 230px">
-              <source type="image/webp" srcset="/img/escape/personnage-psychiatric-cheveux-premier-plan-400w.webp 400w, /img/escape/personnage-psychiatric-cheveux-premier-plan-720w.webp 720w" sizes="(max-width: 760px) 195px, 230px">
-              <img src="/img/escape/personnage-psychiatric-cheveux-premier-plan-720w.png" alt="" width="720" height="1162" loading="lazy" decoding="async">
             </picture>
           </span>
           <span class="exp-orient-text">

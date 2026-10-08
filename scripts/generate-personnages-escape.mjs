@@ -14,16 +14,8 @@ const QUALITY = { webp: 80, avif: 55 };
 const MAP = [
   { src: '2.png', slug: 'personnage-back-to-the-80s' },
   { src: 'policier-menottes-tendues.png', slug: 'personnage-garde-a-vue-policier-menottes-tendues' }, // photo du 28/09/2026
-  // Patiente en camisole (photo du 28/09/2026). Ses cheveux sont aussi extraits seuls, aux mêmes dimensions,
-  // pour un calque posé devant le bouton de la carte. Polygone en coordonnées de la photo détourée.
-  {
-    src: 'patiente-camisole.png', slug: 'personnage-psychiatric-patiente-camisole',
-    premierPlan: {
-      slug: 'personnage-psychiatric-cheveux-premier-plan',
-      zone: [[290, 0], [640, 0], [715, 200], [765, 330], [780, 520], [765, 800], [760, 1000], [740, 1150], [725, 1350],
-        [640, 1512], [300, 1512], [285, 1300], [290, 1150], [272, 900], [258, 600], [252, 350], [272, 150]],
-    },
-  },
+  { src: 'patiente-camisole.png', slug: 'personnage-psychiatric-patiente-camisole' }, // photo du 28/09/2026
+  // Pour un calque posé devant le bouton, ajouter premierPlan: { slug, zone: [[x, y], …] } (polygone autour des cheveux)
 ];
 
 const rampe = (v, a, b) => { const t = Math.min(1, Math.max(0, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
