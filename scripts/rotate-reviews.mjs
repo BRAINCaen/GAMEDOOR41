@@ -228,6 +228,9 @@ function assertJsonLdValid(content, filePath) {
 }
 
 // Build le bloc complet entre marqueurs (section + grid + articles).
+// Le balisage Schema.org de ces avis est dans la fiche Product JSON-LD du <head>,
+// pas ici : ne PAS rajouter d itemscope/itemprop dans ce bloc. (Aucun commentaire HTML
+// n est emis : les commentaires sont visibles dans les outils de developpement.)
 function buildReviewsSection(reviews, page, rating, reviewCount) {
   const accent = ACCENT_BY_THEME[page.theme] || 'var(--gd-escape-on-dark)';
   const articles = reviews
@@ -237,10 +240,7 @@ function buildReviewsSection(reviews, page, rating, reviewCount) {
   const ratingFmt = Number(rating).toFixed(1);
   const heading = (page.headingHtml || 'Ce qu\'ils ont vécu <span style="color:{accent};">chez GAMEDOOR&middot;41</span>')
     .replace(/\{accent\}/g, accent);
-  return `<!-- REVIEWS:START theme=${page.theme} n=${reviews.length} -->
-  <!-- TEMOIGNAGES JOUEURS — cartes visibles, rotation auto. Le balisage
-       Schema.org de ces avis est dans la fiche Product JSON-LD du <head>,
-       pas ici : ne PAS rajouter d'itemscope/itemprop dans ce bloc. -->
+  return `<!-- REVIEWS:START theme=${page.theme} n=${reviews.length} -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="05">

@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHVR0C2M0J"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RHVR0C2M0J',{linker:{domains:["gamedoor41.fr","braincaen.4escape.io"]}});</script>
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -158,15 +157,12 @@
         "@type": "Question",
         "name": "Où se situe le quiz à Caen ?",
         "acceptedAnswer": {"@type": "Answer", "text": "Au 41 bis rue Pasteur, 14120 Mondeville. À 5 minutes de Caen centre en voiture. Sortie n°4 du périphérique (Mondeville). Parking privé gratuit devant l'établissement (code portail 5061)."}
-      }
+      },
+      {"@type": "Question", "name": "J'ai un code promo ou une carte de réduction : comment l'utiliser ?", "acceptedAnswer": {"@type": "Answer", "text": "Réservez en ligne comme d'habitude. Sur la page « Récapitulatif de Commande », juste au-dessus du montant, saisissez votre code (par exemple CEZAM) dans le champ « Code promo ou Bon cadeau » et cliquez sur Appliquer : la remise se déduit avant le paiement. Le jour J, présentez le justificatif correspondant à l'accueil (carte, attestation, tickets…) : sans justificatif, la différence avec le tarif normal est à régler sur place avant de jouer. Liste complète des codes et des justificatifs : gamedoor41.fr/code-promo/"}}
     ]
   }
   </script>
   <style>
-    /* ============================================================
-       HERO QUIZ — « c'est un quiz, comme à la télé » en un coup d'œil.
-       Texte court à gauche ; à droite un écran de plateau (photo du buzzer, bandeau EN DIRECT) et 3 jokers du jeu.
-       ============================================================ */
     .qh { position:relative; overflow:hidden; padding:clamp(28px, 4vw, 60px) 0 clamp(40px, 5vw, 72px); background:#0b0614; }
     .qh-bg {
       position:absolute; inset:0; pointer-events:none;
@@ -207,7 +203,6 @@
     }
     .qh-live { left:14px; background:#E0243C; box-shadow:0 4px 16px rgba(224,36,60,0.5); }
     .qh-dot { width:8px; height:8px; border-radius:50%; background:#fff; }
-    /* Les images des jokers ont beaucoup de marge transparente : on recadre sur la carte elle-même (218 x 265 px sur 480 de large) */
     .qh-joker { position:absolute; display:block; width:clamp(96px, 8.4vw, 132px); aspect-ratio:218 / 265; overflow:hidden; filter:drop-shadow(0 10px 22px rgba(0,0,0,0.65)); }
     .qh-joker img { display:block; width:220.2%; max-width:none; height:auto; margin:-10.55% 0 0 -61.9%; }
     .qh-joker--1 img { margin-top:-14.2%; }
@@ -232,7 +227,6 @@
     }
   </style>
   <style>
-    /* Tarifs quiz : 3 formules côte à côte (téléphone : une par ligne, compacte), couleurs du quiz */
     .qz-prix { padding:64px 0; }
     .qz-prix-grid { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px; max-width:1000px; margin:0 auto; }
     .qz-prix .price-card { padding:28px 22px; }
@@ -309,7 +303,6 @@
     </div>
   </div>
 
-  <!-- HERO — on comprend en un coup d'œil : un quiz comme à la télé (écran de plateau + jokers), peu de texte -->
   <section class="qh" aria-labelledby="qh-titre">
     <div class="qh-bg" aria-hidden="true"></div>
     <div class="container qh-inner">
@@ -350,7 +343,6 @@
     </div>
   </section>
 
-  <!-- STATS BAND — bandeau statique violet quiz -->
   <div class="stats-band">
     <div class="container">
       <div class="stats-band-inner">
@@ -372,7 +364,6 @@
     </div>
   </div>
 
-  <!-- ACCESSIBILITY NOTICE -->
   <section style="padding:24px 20px 0;">
     <div class="container">
       <div class="access-notice" role="note" aria-label="Information accessibilité">
@@ -385,7 +376,6 @@
     </div>
   </section>
 
-  <!-- ROOM DETAILS — cinéma immersif full-bleed -->
   <section class="room-cinema" id="room-details" aria-label="Détails du quiz Buzz Your Brain">
     <picture class="room-cinema-bg">
       <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
@@ -394,7 +384,6 @@
     </picture>
     <div class="room-cinema-overlay" aria-hidden="true"></div>
 
-    <!-- Vidéo Quiz flottante à gauche -->
     <video class="room-cinema-poster" autoplay muted loop playsinline preload="metadata" poster="/img/quiz/buzzer-closeup.jpg" aria-hidden="true">
       <source src="/video/quiz.mp4" type="video/mp4">
     </video>
@@ -436,7 +425,6 @@
     </div>
   </section>
 
-  <!-- TARIFS QUIZ — mêmes montants que /tarifs/#tarifs-quiz (à tenir à jour ensemble) -->
   <section class="section qz-prix" id="tarifs" aria-labelledby="qz-prix-titre">
     <div class="container">
       <div class="section-header fade-in">
@@ -468,7 +456,6 @@
     </div>
   </section>
 
-  <!-- ÉCRANS RÉGIE TV — feed des 3 caméras du plateau -->
   <section class="section plateau-tv-band" style="padding:64px 0;">
     <div class="container">
       <div class="plateau-tv-header fade-in">
@@ -540,7 +527,6 @@
     </div>
   </section>
 
-  <!-- CRÉDIBILITÉ -->
   <section class="section" style="background:rgba(12,8,0,0.5);padding:56px 0;border-top:1px solid rgba(157,78,221,0.18);">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="2022">
@@ -570,7 +556,6 @@
     </div>
   </section>
 
-  <!-- 3 MANCHES DE FOLIE + JOKERS DIABOLIQUES -->
   <section class="section" style="padding:64px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="03">
@@ -645,7 +630,6 @@
     </div>
   </section>
 
-  <!-- ========= CARROUSEL UNIVERS THÉMATIQUES — Plateau TV ========= -->
   <section class="tv-carousel-section" aria-label="Univers thématiques du quiz">
     <div class="container container-wide">
 
@@ -671,7 +655,6 @@
         <div class="tv-viewport" data-tv-viewport>
           <ul class="tv-track" data-tv-track role="list">
 
-            <!-- 1. Blind Test (affiche premium 100%) -->
             <li class="tv-card tv-card-feature" data-univers="blindtest" style="--tv-accent:#9D4EDD;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -689,7 +672,6 @@
               </div>
             </li>
 
-            <!-- 2. Blind Test 80's -->
             <li class="tv-card" data-univers="80s" style="--tv-accent:#E07020;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -707,7 +689,6 @@
               </div>
             </li>
 
-            <!-- 3. Blind Test 90's -->
             <li class="tv-card" data-univers="90s" style="--tv-accent:#3D5DC0;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -725,7 +706,6 @@
               </div>
             </li>
 
-            <!-- 4. Blind Test 2000's -->
             <li class="tv-card" data-univers="2000s" style="--tv-accent:#9D4EDD;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -743,7 +723,6 @@
               </div>
             </li>
 
-            <!-- 5. Cinema -->
             <li class="tv-card" data-univers="cinema" style="--tv-accent:#E07020;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -761,7 +740,6 @@
               </div>
             </li>
 
-            <!-- 6. Apéro -->
             <li class="tv-card" data-univers="apero" style="--tv-accent:#9D4EDD;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -779,7 +757,6 @@
               </div>
             </li>
 
-            <!-- 7. EVJF / EVG -->
             <li class="tv-card" data-univers="evjf-evg" style="--tv-accent:#E07020;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -797,7 +774,6 @@
               </div>
             </li>
 
-            <!-- 8. Kids -->
             <li class="tv-card" data-univers="kids" style="--tv-accent:#9D4EDD;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -815,7 +791,6 @@
               </div>
             </li>
 
-            <!-- 9. Ados -->
             <li class="tv-card" data-univers="ados" style="--tv-accent:#3D5DC0;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -833,7 +808,6 @@
               </div>
             </li>
 
-            <!-- 10. Anglais -->
             <li class="tv-card" data-univers="anglais" style="--tv-accent:#E07020;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -851,7 +825,6 @@
               </div>
             </li>
 
-            <!-- 11. Japon -->
             <li class="tv-card" data-univers="japon" style="--tv-accent:#9D4EDD;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -869,7 +842,6 @@
               </div>
             </li>
 
-            <!-- 12. FA (Familles & Amis) -->
             <li class="tv-card" data-univers="fa" style="--tv-accent:#3D5DC0;">
               <div class="tv-screen">
                 <span class="tv-scanlines" aria-hidden="true"></span>
@@ -896,7 +868,6 @@
     </div>
   </section>
 
-  <!-- COMMENT ÇA SE PASSE -->
   <section class="section">
     <div class="container">
       <div class="section-header fade-in">
@@ -924,9 +895,6 @@
   </section>
 
   <!-- REVIEWS:START theme=quiz n=3 -->
-  <!-- TEMOIGNAGES JOUEURS — cartes visibles, rotation auto. Le balisage
-       Schema.org de ces avis est dans la fiche Product JSON-LD du <head>,
-       pas ici : ne PAS rajouter d'itemscope/itemprop dans ce bloc. -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="05">
@@ -999,6 +967,11 @@
         </div>
 
         <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">J'ai un code promo ou une carte de réduction : comment l'utiliser ?</h3>
+          <p style="color:var(--grey-light);">Réservez en ligne comme d'habitude. Sur la page « Récapitulatif de Commande », juste au-dessus du montant, saisissez votre code (par exemple <strong>CEZAM</strong>) dans le champ <strong>« Code promo ou Bon cadeau »</strong> et cliquez sur <strong>Appliquer</strong> : la remise se déduit avant le paiement. Le jour J, présentez le justificatif correspondant à l'accueil (carte, attestation, tickets…) : <strong>sans justificatif, la différence avec le tarif normal est à régler sur place avant de jouer</strong>. <a href="/code-promo/" style="color:var(--orange);">Tous les codes et les justificatifs demandés →</a></p>
+        </div>
+
+        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
           <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Le quiz est-il accessible aux personnes sourdes ou malentendantes ?</h3>
           <p style="color:var(--grey-light);">Non. Buzz Your Brain repose sur des contenus <strong>essentiellement audio</strong> : questions à l'oral, blind test musical, ambiance sonore. Les contenus ne sont pas sous-titrés en temps réel. Pour une activité plus visuelle, <a href="/escape-game-caen/" style="color:var(--gd-quiz);">nos escape games</a> sont une meilleure option. <a href="/contact/" style="color:var(--gd-quiz);">Contactez-nous <img width="24" height="24" src="/img/icons/arrow-right.svg" class="gd-icon" alt="" aria-hidden="true"></a> pour en discuter.</p>
         </div>
@@ -1011,7 +984,6 @@
     </div>
   </section>
 
-  <!-- À SAVOIR — magazine bento avec numéros décoratifs -->
   <section class="section" style="padding:48px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="05">
@@ -1047,7 +1019,6 @@
     </div>
   </section>
 
-  <!-- CTA FINAL -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="cta-banner fade-in">
@@ -1061,9 +1032,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       FAQ — Quiz Game à Caen (densification mots-clés long-tail)
-  ============================================================ -->
   <section class="section" style="padding-top:60px;padding-bottom:60px;">
     <div class="container">
       <div class="fade-in" style="max-width:800px;margin:0 auto;">
@@ -1112,7 +1080,6 @@
     </div>
   </section>
 
-  <!-- NOTRE HISTOIRE — Buzz Your Brain depuis 2022 (encart discret SEO) -->
   <section class="section" style="padding:32px 0 48px;background:rgba(12,8,0,0.4);">
     <div class="container">
       <div class="fade-in" style="max-width:760px;margin:0 auto;text-align:center;">
@@ -1123,9 +1090,6 @@
     </div>
   </section>
 
-  <!-- =====================================================
-       BANDEAU BRAIN HERITAGE — continuité Brain → GAMEDOOR·41
-  ===================================================== -->
   <section class="heritage" aria-label="Continuité de l'équipe Brain Escape Game">
     <div class="container container-wide">
       <div class="heritage-band reveal">
@@ -1149,7 +1113,6 @@
     </div>
   </section>
 
-    <!-- MAILLAGE MAGAZINE — audit 2026-07-13 : maillage descendant business -> posts -->
   <section class="section" aria-labelledby="mag-links-title" style="background:var(--dark);padding:56px 0;">
     <div class="container">
       <p class="kicker" style="color:var(--orange);margin-bottom:8px;">À lire sur le magazine</p>
@@ -1185,7 +1148,7 @@
         <p style="margin-top:12px;"><a href="/brain-devient-gamedoor41/">Anciennement Brain Escape Game &amp; Buzz Your Brain</a></p>
         
         <div class="footer-col"><h4>Activités</h4><a href="/escape-game-caen/">Escape Game Caen</a><a href="/quiz-game-caen/">Quiz Game Caen</a><a href="/escape-game-famille-caen/">Escape Game en famille</a><a href="/escape-game-enfant-caen/">Escape Game enfant</a><a href="/cadeau/" class="desktop-only" aria-label="Carte Cadeau" title="Carte Cadeau" style="font-size:1.4em;line-height:1;">🎁</a>
-        <a href="/cadeau/" class="mobile-only">🎁 Carte Cadeau</a><a href="/tarifs/">Tarifs</a><a href="/avis/">Avis clients</a></div>
+        <a href="/cadeau/" class="mobile-only">🎁 Carte Cadeau</a><a href="/tarifs/">Tarifs</a><a href="/code-promo/">Codes promo</a><a href="/avis/">Avis clients</a></div>
         <div class="footer-col"><h4>Nos salles</h4><a href="/escape-game-caen/garde-a-vue/">Garde à Vue</a><a href="/escape-game-caen/psychiatric/">Psychiatric</a><a href="/escape-game-caen/back-to-the-80s/">Back to the 80's</a></div>
         <div class="footer-col"><h4>Occasions</h4><a href="/team-building-caen/">Team Building Caen</a><a href="/evjf-caen/">EVJF</a><a href="/evg-caen/">EVG</a><a href="/anniversaire-caen/">Anniversaire Caen</a></div>
       </div>
@@ -1303,7 +1266,6 @@
       .room-grid { grid-template-columns: 1fr !important; }
     }
   </style>
-<!-- WhatsApp floating chat button -->
 <a href="https://wa.me/33631469322?text=Bonjour%20GAMEDOOR%C2%B741%2C%20je%20vous%20contacte%20pour..." target="_blank" rel="noopener" class="wa-float" aria-label="Discuter sur WhatsApp" data-track="cta-whatsapp">
   <svg viewBox="0 0 24 24" fill="white" width="32" height="32" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg>
 </a>

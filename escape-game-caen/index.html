@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHVR0C2M0J"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RHVR0C2M0J',{linker:{domains:["gamedoor41.fr","braincaen.4escape.io"]}});</script>
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -29,16 +28,10 @@
   <link rel="apple-touch-icon" href="/img/logo/logo-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts : UNE seule requete Google Fonts pour les 3 familles.
-       Barlow Condensed sert au hero GAMEDOOR·ESCAPE, Oswald et DM Sans au
-       reste de la page. Elles etaient chargees en deux requetes separees
-       (audit 06/08/2026) : deux allers-retours reseau au lieu d'un, sur une
-       page dont 87 % des visites viennent du telephone. -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
     <link rel="preload" as="image" type="image/avif" imagesrcset="/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.avif 480w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-768w.avif 768w, /img/escape/salle-garde-a-vue-barreaux-poste-garde-1024w.avif 1024w, /img/escape/salle-garde-a-vue-barreaux-poste-garde.avif 1672w" imagesizes="100vw">
   <link rel="stylesheet" href="/css/style.css?v=a5d0e1dc">
   <style>
-    /* === Hero GAMEDOOR·ESCAPE — refonte compacte & audacieuse : eyebrow + wordmark + 3 cards d'orientation directes === */
     .gd-hero {
       position:relative; min-height:auto;
       display:flex; align-items:center; justify-content:center;
@@ -77,17 +70,14 @@
       color:#A8A095; margin:0 0 22px;
     }
 
-    /* Grille d'orientation directement dans le hero (marge haute : les têtes des personnages dépassent des cartes) */
     .gd-hero-orient-grid {
       display:grid; grid-template-columns:repeat(3, 1fr);
       gap:18px; max-width:1000px; margin:clamp(40px, 5vw, 64px) auto 0;
     }
     @media (max-width: 760px) {
-      /* Espaces assez grands pour que la tête de chaque personnage ne morde ni sur le titre ni sur la carte du dessus */
       .gd-hero-orient-grid { grid-template-columns:1fr; gap:72px; max-width:480px; margin-top:76px; }
     }
 
-    /* Boutons sous les cards : « Réserver » plein, les deux autres en contour */
     .gd-hero-secondary {
       display:flex; gap:12px;
       justify-content:center; flex-wrap:wrap;
@@ -116,12 +106,6 @@
       .gd-hero-secondary { flex-direction:column; align-items:stretch; max-width:480px; margin:26px auto 0; gap:10px; }
     }
 
-    /* === Pattern DS « Brand · Decorative section number » + kicker numéroté magazine ===
-       Appliqué sur les sections salles pour rendu éditorial premium-immersif. */
-    /* ============================================================
-       BLOC ORIENTATION — « Quelle expérience est faite pour vous ? »
-       ============================================================ */
-    /* Chaque carte porte le personnage de sa salle : il dépasse du haut de la carte (clip-path ouvert vers le haut). */
     .exp-orient-card {
       --room:#3D5DC0; --room-bg:#3D5DC0; --room-glow:rgba(61,93,192,0.38);
       position:relative; display:flex; flex-direction:column; justify-content:flex-end;
@@ -130,7 +114,6 @@
       background:
         radial-gradient(110% 85% at 88% 100%, var(--room-glow) 0%, transparent 62%),
         linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(12,8,0,0.92) 72%);
-      /* Contour et halo à la couleur de la salle affichés en permanence (sur téléphone, il n'y a pas de survol) */
       border:1px solid var(--room);
       border-radius:18px;
       box-shadow:0 18px 40px rgba(0,0,0,0.45), 0 0 34px var(--room-glow);
@@ -145,9 +128,6 @@
       box-shadow:0 22px 46px rgba(0,0,0,0.5), 0 0 46px var(--room-glow);
     }
     .exp-orient-card:focus-visible { outline:2px solid var(--room); outline-offset:3px; }
-    /* Voile sombre derrière le texte (en bas à gauche) pour le garder lisible devant le personnage.
-       Transparent en haut de la carte : sinon il assombrit le personnage jusqu'au bord et la partie
-       qui dépasse au-dessus reste claire, avec une démarcation nette. */
     .exp-orient-card::after {
       content:''; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
       background:radial-gradient(140% 110% at 0% 100%, rgba(12,8,0,0.85) 0%, rgba(12,8,0,0.55) 38%, transparent 68%),
@@ -166,14 +146,11 @@
       display:block; height:100%; width:auto; max-width:none;
       filter:drop-shadow(0 14px 22px rgba(0,0,0,0.6));
     }
-    /* Policier décalé à gauche : la main qui tient les menottes reste dans la carte.
-       Sa main gauche et son coude touchent les bords de la photo : fondu plutôt qu'une coupure nette. */
     .exp-room--gav .exp-orient-perso picture { right:2%; }
     .exp-room--gav .exp-orient-perso img {
       -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 9%, #000 97%, transparent 100%);
       mask-image:linear-gradient(90deg, transparent 0, #000 9%, #000 97%, transparent 100%);
     }
-    /* Patiente placée à distance fixe du bord gauche ; ses cheveux passent DERRIÈRE le bouton (bouton entièrement visible) */
     .exp-room--psy .exp-orient-perso picture { right:auto; left:60px; }
     .exp-orient-card:hover .exp-orient-perso picture { transform:translateY(-8px) scale(1.04); }
     .exp-orient-text {
@@ -202,16 +179,12 @@
       .exp-orient-card { min-height:188px; padding:16px 16px 16px; border-radius:16px; }
       .exp-orient-perso { clip-path:inset(-60% 0 0 0 round 0 0 16px 16px); }
       .exp-orient-perso picture { height:132%; right:-3%; }
-      /* Policier et patiente plus grands et descendus : plus visibles sur téléphone. Chez le policier, le bas de
-         l'avant-bras gauche (coupé par la photo) passe sous la carte au lieu d'apparaître tronqué. */
       .exp-room--gav .exp-orient-perso picture { height:175%; bottom:-50%; right:2%; }
-      /* La patiente reste à droite comme les autres (le bouton est trop loin pour ses cheveux) */
       .exp-room--psy .exp-orient-perso picture { height:165%; bottom:-41%; left:auto; right:-3%; }
       .exp-orient-text { max-width:58%; gap:12px; }
       .exp-orient-q { font-size:1.2rem; }
       .exp-orient-cta { font-size:15px; padding:9px 14px; }
     }
-    /* Petits téléphones : la question du policier passe à la ligne plus tôt pour ne pas buter sur l'écusson POLICE */
     @media (max-width: 380px) {
       .exp-room--gav .exp-orient-perso picture { right:-4%; }
       .exp-room--gav .exp-orient-text { max-width:50%; }
@@ -221,11 +194,6 @@
       .exp-orient-card:hover, .exp-orient-card:hover .exp-orient-perso picture { transform:none; }
     }
 
-    /* ============================================================
-       COMPARATIF DES 3 SALLES — bandeau « commun aux 3 » + une carte par salle.
-       Ordinateur : 3 cartes côte à côte, lignes alignées d'une carte à l'autre (subgrid).
-       Téléphone : cartes qui défilent au doigt, une par une, avec le bord de la suivante visible.
-       ============================================================ */
     .cmp-ico { width:18px; height:18px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
     .cmp-atouts {
       list-style:none; margin:0 0 26px; padding:0;
@@ -312,7 +280,6 @@
 
     @media (max-width: 960px) {
       .cmp-atouts { grid-template-columns:repeat(2, minmax(0, 1fr)); }
-      /* Tablette : cartes étroites, on resserre pour que le bouton tienne sur une ligne */
       .cmp-row { padding:12px 16px; }
       .cmp-head { padding:16px; }
       .cmp-cta { margin:4px 16px 18px; padding:9px 14px; font-size:14px; letter-spacing:.05em; }
@@ -325,7 +292,6 @@
         font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--grey);
       }
       .cmp-hint span { color:var(--orange); }
-      /* Cartes en carrousel : 84 % de largeur, on voit le bord de la suivante */
       .cmp-grid {
         grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:84%; column-gap:14px;
         overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain;
@@ -333,7 +299,6 @@
         -webkit-overflow-scrolling:touch; scrollbar-width:none;
       }
       .cmp-grid::-webkit-scrollbar { display:none; }
-      /* Une carte à la fois : pas besoin d'aligner les lignes entre cartes (évite les blancs), bouton calé en bas */
       .cmp-grid { grid-template-rows:none; }
       .cmp-card { scroll-snap-align:start; grid-row:auto; display:flex; flex-direction:column; }
       .cmp-list { display:block; }
@@ -346,7 +311,6 @@
       .cmp-cta:hover { transform:none; }
     }
 
-    /* Tarifs : les 3 formules côte à côte (avant : 2 en haut, 1 en dessous), sans puces parasites */
     .price-grid--3 { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px; }
     .price-grid--3 .price-card { padding:28px 22px; }
     .price-grid--3 .price-card .btn { justify-content:center; }
@@ -358,7 +322,6 @@
       .price-grid--3 .price-amount { font-size:2.2rem; }
       .price-grid--3 .price-card .btn { padding:12px 10px; letter-spacing:.06em; }
     }
-    /* Téléphone : une formule par ligne, mais compacte (prix et bouton sur la même ligne) */
     @media (max-width: 600px) {
       .price-grid--3 { grid-template-columns:1fr; gap:14px; }
       .price-grid--3 .price-card { display:grid; grid-template-columns:1fr auto; align-items:center; column-gap:14px; text-align:left; padding:18px 18px 16px; }
@@ -368,15 +331,9 @@
       .price-grid--3 .price-card .btn { grid-column:2; grid-row:1 / span 3; width:auto !important; padding:12px 18px; }
       .price-grid--3 .price-card.featured::before { left:auto; right:18px; transform:none; }
     }
-    /* Scroll naturel : la section démarre dès le haut du viewport, le menu fixe
-       overlaie le bg image (effet full-bleed cinéma). Le panel a un margin-top qui
-       clear le menu pour que son contenu commence juste sous lui. */
     html { scroll-padding-top: 0; }
     .salle-section { scroll-margin-top: 0; }
 
-    /* ============================================================
-       CROSS-SELL QUIZ — bandeau sous les salles, couleur sous-marque ·QUIZ
-       ============================================================ */
     .quiz-cross-sell {
       position:relative; overflow:hidden; isolation:isolate;
       padding:clamp(56px, 10vh, 120px) 0;
@@ -439,11 +396,6 @@
       }
     }
 
-    /* ============================================================
-       SALLE SECTION — cinéma immersif inspiré ledonjon.fr
-       Chaque salle = 1 viewport. Vidéo full-bleed en fond.
-       Panel translucide latéral avec tout le contenu.
-       ============================================================ */
     .salle-section {
       position:relative; overflow:hidden; padding:0 !important;
       min-height:100vh; display:flex; align-items:stretch;
@@ -451,7 +403,6 @@
     .salle-section .container {
       max-width:100% !important; padding:0 !important;
       position:relative; width:100%;
-      /* pas de z-index ici sinon ça crée un stacking context qui cache le numéro déco */
     }
     .salle-grid {
       display:block !important;
@@ -459,7 +410,6 @@
       min-height:100vh;
     }
 
-    /* Vidéo en fond plein cadre */
     .salle-media {
       position:absolute !important; inset:0 !important;
       z-index:0; width:100%; height:100%;
@@ -480,7 +430,6 @@
       border-radius:0 !important;
       display:block;
     }
-    /* Voile sombre dégradé pour la lisibilité */
     .salle-media::after {
       content:''; position:absolute; inset:0; z-index:1;
       pointer-events:none;
@@ -494,7 +443,6 @@
         linear-gradient(270deg, rgba(12,8,0,0.55) 0%, rgba(12,8,0,0) 55%);
     }
 
-    /* Numéro décoratif géant, watermark navy escape — z-index entre vidéo (0) et panel (3) */
     .salle-num-deco {
       position:absolute; top:6vh; right:clamp(24px, 4vw, 64px); z-index:2; pointer-events:none;
       font-family:'Barlow Condensed','Oswald',sans-serif; font-weight:900; line-height:.85;
@@ -505,7 +453,6 @@
     }
     .salle-reverse .salle-num-deco { right:auto; left:clamp(24px, 4vw, 64px); }
 
-    /* Panel translucide flottant — contient tout le contenu de la salle, calé sur 1 viewport */
     .salle-body {
       position:relative; z-index:3;
       background:rgba(12, 8, 0, 0.66);
@@ -533,7 +480,6 @@
       font-size:max(1rem, 16px);
     }
 
-    /* Densité ULTRA serrée — tout doit tenir en 1 viewport */
     .salle-body p { margin-bottom:5px !important; line-height:1.4; color:#E8E2D6 !important; }
     .salle-body h2 { font-size:clamp(1.6rem, 3.6vw, 2.4rem); margin-bottom:3px !important; line-height:1.04; color:#F0EBE2; }
     .salle-body .salle-kicker { margin-bottom:3px !important; color:#E07020; }
@@ -570,7 +516,6 @@
       background:var(--gd-escape); color:var(--gd-cream);
     }
 
-    /* Ordinateur : sections compactes (plus d'écran entier par salle), panneau plus léger, centré sur la photo */
     @media (min-width: 901px) {
       .salle-section, .salle-grid { min-height:clamp(460px, 60vh, 600px); }
       .salle-grid { display:flex !important; align-items:center; }
@@ -585,7 +530,6 @@
       .salle-body h2 { font-size:clamp(1.8rem, 2.4vw, 2.2rem); margin-top:4px; }
       .salle-body .room-card-meta { gap:4px 16px; margin:6px 0 10px !important; }
       .salle-body .room-card-meta .gd-icon { width:18px; height:18px; }
-      /* Vignettes masquées sur ordinateur : la grande photo de fond montre déjà la salle */
       .salle-body .gallery-grid { display:none; }
       .salle-body .btn { padding:10px 18px !important; font-size:0.95rem !important; }
       .salle-body > div[style*="display:flex;gap:12px"] { padding-top:4px; }
@@ -596,7 +540,6 @@
     .salle-body > .room-vintage-tag, .salle-tags { align-self:flex-start; }
     .salle-tags .room-vintage-tag, .salle-tags .exp-card-badge { margin-bottom:0 !important; }
 
-    /* Mobile : panel pleine largeur en bas, vidéo full-bleed en arrière */
     @media (max-width: 900px) {
       .salle-body {
         width:auto;
@@ -612,8 +555,6 @@
     @media (max-width: 720px) {
       .salle-num-deco { top:8px; right:12px; font-size:120px; }
 
-      /* Sections de salle : retirer le 100vh forcé qui crée d'énormes vides
-         sur mobile. La section s'adapte à son contenu. */
       .salle-section {
         min-height:auto !important;
       }
@@ -628,7 +569,6 @@
       .salle-reverse .salle-body {
         margin:24px 14px 24px !important;
       }
-      /* Photo de fond : on lui donne une hauteur visible au-dessus du panel */
       .salle-media {
         position:relative !important;
         height:30vh;
@@ -636,7 +576,6 @@
         max-height:280px;
       }
       .salle-grid { display:flex !important; flex-direction:column; }
-      /* Cards d'orientation : réglages mobiles dans le bloc « personnages » plus haut */
     }
   </style>
   
@@ -664,7 +603,8 @@
       {"@type": "Question", "name": "Quel âge minimum pour un escape game à Caen ?", "acceptedAnswer": {"@type": "Answer", "text": "Dès 7 ans accompagné d'un adulte sur Back to the 80's. Dès 10 ans accompagné sur Garde à Vue. Dès 12 ans sur Psychiatric. En autonomie totale, comptez 14-15 ans selon la salle."}},
       {"@type": "Question", "name": "Combien de temps dure un escape game à Caen ?", "acceptedAnswer": {"@type": "Answer", "text": "60 minutes de jeu dans la salle. À cela s'ajoutent 5 minutes de briefing et 10 minutes de débrief avec photo souvenir, soit environ 1h15 sur place."}},
       {"@type": "Question", "name": "Peut-on faire un escape game à Caen à 2 ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, nos 3 salles sont jouables dès 2 joueurs, et dans chacune vous choisissez le niveau de difficulté selon votre expérience. Pour un duo aguerri, Psychiatric niveau 2 est notre recommandation. Tarif duo : 37€/pers."}},
-      {"@type": "Question", "name": "Y a-t-il un escape game à Caen ouvert le dimanche ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, GAMEDOOR·41 est ouvert 7 jours sur 7. Les week-ends et ponts (Ascension, 14 juillet, Toussaint, Noël) se remplissent en premier. Réservez idéalement 4 à 7 jours à l'avance. Réservation 100% en ligne sur braincaen.4escape.io."}}
+      {"@type": "Question", "name": "Y a-t-il un escape game à Caen ouvert le dimanche ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, GAMEDOOR·41 est ouvert 7 jours sur 7. Les week-ends et ponts (Ascension, 14 juillet, Toussaint, Noël) se remplissent en premier. Réservez idéalement 4 à 7 jours à l'avance. Réservation 100% en ligne sur braincaen.4escape.io."}},
+      {"@type": "Question", "name": "J'ai un code promo ou une carte de réduction : comment l'utiliser ?", "acceptedAnswer": {"@type": "Answer", "text": "Réservez en ligne comme d'habitude. Sur la page « Récapitulatif de Commande », juste au-dessus du montant, saisissez votre code (par exemple CEZAM) dans le champ « Code promo ou Bon cadeau » et cliquez sur Appliquer : la remise se déduit avant le paiement. Le jour J, présentez le justificatif correspondant à l'accueil (carte, attestation, tickets…) : sans justificatif, la différence avec le tarif normal est à régler sur place avant de jouer. Liste complète des codes et des justificatifs : gamedoor41.fr/code-promo/"}}
     ]
   }
   </script>
@@ -717,7 +657,6 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="site-header scrolled" role="banner">
     <div class="nav-inner">
       <a href="/" class="nav-logo"><img decoding="async" src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR 41" class="logo-img" width="224" height="32"></a>
@@ -764,7 +703,6 @@
     </div>
   </div>
 
-  <!-- PAGE HERO — V3.3 GAMEDOOR·ESCAPE -->
   <section class="gd-hero" id="hero">
     <div class="gd-hero-bg" aria-hidden="true">
       <picture>
@@ -831,12 +769,6 @@
     </div>
   </section>
 
-  <!-- =====================================================
-       COMPARATEUR — "quelle salle choisir"
-       Place juste apres le hero : c'est la question que se pose
-       quelqu'un qui arrive sur "escape game caen", et il doit pouvoir
-       y repondre sans scroller les trois fiches detaillees.
-  ===================================================== -->
   <section class="section" id="comparateur" style="padding:64px 0;">
     <div class="container">
       <div class="section-header-editorial fade-in" data-num="00">
@@ -850,7 +782,6 @@
         <strong style="color:var(--white);">l'ambiance que vous cherchez et l'âge du groupe</strong>.
       </p>
 
-      <!-- Icônes du comparatif : mêmes tracés que /img/icons/, mais en ligne pour prendre la couleur de chaque salle -->
       <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
         <symbol id="cmp-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
         <symbol id="cmp-i-theater" viewBox="0 0 24 24"><path d="M3 10V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v3"/><path d="M3 10v4a9 9 0 0 0 18 0v-4"/><circle cx="9" cy="12" r="0.5" fill="currentColor"/><circle cx="15" cy="12" r="0.5" fill="currentColor"/><path d="M9 16c1 1 2 1 3 1s2 0 3-1"/></symbol>
@@ -864,7 +795,6 @@
         <symbol id="cmp-i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></symbol>
       </svg>
 
-      <!-- Ce qui est identique dans les 3 salles : sorti des cartes pour qu'elles ne montrent que ce qui les distingue -->
       <ul class="cmp-atouts fade-in" aria-label="Commun aux 3 salles">
         <li><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-clock"/></svg><span><strong>60 min</strong> de jeu</span></li>
         <li><svg class="cmp-ico" aria-hidden="true"><use href="#cmp-i-theater"/></svg><span><strong>Game master</strong> acteur</span></li>
@@ -1136,7 +1066,6 @@
     </div>
   </section>
 
-  <!-- CROSS-SELL QUIZ GAME — pousse vers la sous-marque ·QUIZ après les salles escape -->
   <section class="quiz-cross-sell" aria-labelledby="quiz-cross-sell-h">
     <picture class="quiz-cross-sell-bg">
       <source type="image/avif" srcset="/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.avif 480w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-768w.avif 768w, /img/quiz/salle-quiz-buzz-your-brain-vue-large-1024w.avif 1024w, /img/quiz/salle-quiz-buzz-your-brain-vue-large.avif 1400w" sizes="100vw">
@@ -1163,7 +1092,6 @@
     </div>
   </section>
 
-<!-- PRICING QUICK -->
   <section class="section">
     <div class="container">
       <div class="section-header fade-in">
@@ -1195,7 +1123,6 @@
     </div>
   </section>
 
-  <!-- COMMENT ÇA SE PASSE -->
   <section class="section">
     <div class="container">
       <div class="section-header fade-in">
@@ -1222,7 +1149,6 @@
     </div>
   </section>
 
-  <!-- OCCASIONS -->
   <section class="section" style="background:var(--dark);padding-top:60px;padding-bottom:60px;">
     <div class="container">
       <div class="section-header fade-in">
@@ -1301,6 +1227,11 @@
           <p style="color:var(--grey-light);">Oui, nos 3 salles sont jouables <strong>dès 2 joueur·euse·s</strong>. Dans chacune, vous choisissez le niveau de difficulté selon votre expérience. Pour un duo aguerri qui veut du challenge, Psychiatric niveau 2 est notre recommandation. Tarif duo : 37 €/pers (couple, ami·e·s, sortie originale). Voir notre article <a href="/post/escape-game-a-deux-astuces-avantages/" style="color:var(--orange);">Escape Game à deux : astuces et avantages</a>.</p>
         </div>
 
+        <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--dark-border);">
+          <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">J'ai un code promo ou une carte de réduction : comment l'utiliser ?</h3>
+          <p style="color:var(--grey-light);">Réservez en ligne comme d'habitude. Sur la page « Récapitulatif de Commande », juste au-dessus du montant, saisissez votre code (par exemple <strong>CEZAM</strong>) dans le champ <strong>« Code promo ou Bon cadeau »</strong> et cliquez sur <strong>Appliquer</strong> : la remise se déduit avant le paiement. Le jour J, présentez le justificatif correspondant à l'accueil (carte, attestation, tickets…) : <strong>sans justificatif, la différence avec le tarif normal est à régler sur place avant de jouer</strong>. <a href="/code-promo/" style="color:var(--orange);">Tous les codes et les justificatifs demandés →</a></p>
+        </div>
+
         <div>
           <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--white);">Y a-t-il un escape game à Caen ouvert le dimanche ?</h3>
           <p style="color:var(--grey-light);">Oui, GAMEDOOR·41 est ouvert <strong>7 jours sur 7</strong> avec des créneaux du lundi au dimanche. Les week-ends et ponts (Ascension, 14 juillet, Toussaint, Noël) se remplissent en premier — réservez idéalement 4 à 7 jours à l'avance. Réservation 100% en ligne sur <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener" style="color:var(--orange);">braincaen.4escape.io</a>.</p>
@@ -1311,7 +1242,6 @@
     </div>
   </section>
 
-  <!-- SEO TEXT BLOCK -->
   <section class="section" style="padding-top:40px;padding-bottom:60px;background:var(--dark);">
     <div class="container">
       <div style="max-width:800px;margin:0 auto;text-align:center;" class="fade-in">
@@ -1324,7 +1254,6 @@
     </div>
   </section>
 
-  <!-- INTRO NARRATIVE (déplacé en bas — pitch GM acteur) -->
   <section class="section" style="padding-top:40px;padding-bottom:40px;">
     <div class="container">
       <div class="fade-in" style="max-width:800px;margin:0 auto;text-align:center;">
@@ -1336,7 +1265,6 @@
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="section" style="padding:60px 0;">
     <div class="container">
       <div class="cta-banner fade-in">
@@ -1347,10 +1275,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <!-- =====================================================
-       BANDEAU BRAIN HERITAGE — continuité Brain → GAMEDOOR·41
-  ===================================================== -->
   <section class="heritage" aria-label="Continuité de l'équipe Brain Escape Game">
     <div class="container container-wide">
       <div class="heritage-band reveal">
@@ -1388,7 +1312,7 @@
           <h4>Activités</h4>
           <a href="/escape-game-caen/">Escape Game Caen</a>
           <a href="/quiz-game-caen/">Quiz Game Caen</a><a href="/escape-game-famille-caen/">Escape Game en famille</a><a href="/escape-game-enfant-caen/">Escape Game enfant</a>
-          <a href="/tarifs/">Tarifs</a><a href="/avis/">Avis clients</a>
+          <a href="/tarifs/">Tarifs</a><a href="/code-promo/">Codes promo</a><a href="/avis/">Avis clients</a>
         </div>
         <div class="footer-col">
           <h4>Nos salles</h4>
@@ -1412,7 +1336,6 @@
     </div>
   </footer>
 
-  <!-- STICKY MOBILE -->
   <div class="sticky-cta">
     <div class="sticky-cta-inner">
       <a href="mailto:contact@gamedoor41.fr" class="btn btn-outline" style="border-color:var(--grey);">Nous écrire</a>
@@ -1433,7 +1356,6 @@
       #psychiatric > .container > div > div:last-child { order: 2 !important; }
     }
   </style>
-<!-- WhatsApp floating chat button -->
 <a href="https://wa.me/33631469322?text=Bonjour%20GAMEDOOR%C2%B741%2C%20je%20vous%20contacte%20pour..." target="_blank" rel="noopener" class="wa-float" aria-label="Discuter sur WhatsApp" data-track="cta-whatsapp">
   <svg viewBox="0 0 24 24" fill="white" width="32" height="32" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg>
 </a>
