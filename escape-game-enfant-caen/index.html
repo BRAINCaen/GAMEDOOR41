@@ -161,6 +161,26 @@
     </div>
   </section>
 
+  <style>
+    .age-band { background:linear-gradient(90deg, rgba(61,93,192,0.14), rgba(255,107,0,0.08)); border-top:1px solid rgba(61,93,192,0.35); border-bottom:1px solid rgba(61,93,192,0.35); padding:14px 0; }
+    .age-band-inner { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:8px 22px; font-size:0.95rem; color:var(--grey-light); }
+    .age-band-titre { font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#fff; }
+    .age-band a { color:var(--grey-light); text-decoration:none; white-space:nowrap; }
+    .age-band a strong { display:inline-block; margin-right:6px; padding:2px 9px; border-radius:999px; background:rgba(61,93,192,0.25); color:#fff; font-family:var(--font-display); }
+    .age-band a:hover { color:#fff; }
+    .age-band-vac { color:var(--orange) !important; font-weight:600; }
+    @media (max-width:640px) { .age-band-inner { flex-direction:column; gap:8px; } .age-band a { white-space:normal; text-align:center; } }
+  </style>
+  <section class="age-band" aria-label="Dès quel âge ?">
+    <div class="container age-band-inner">
+      <span class="age-band-titre">Dès quel âge&nbsp;?</span>
+      <a href="/escape-game-caen/back-to-the-80s/"><strong>7 ans</strong>Back to the 80's, avec un adulte</a>
+      <a href="/escape-game-caen/garde-a-vue/"><strong>10 ans</strong>Garde à Vue</a>
+      <a href="/escape-game-caen/psychiatric/"><strong>12 ans</strong>Psychiatric</a>
+      <a class="age-band-vac" href="/post/vacances-toussaint-caen-2026/">🎃 Vacances de la Toussaint : ouvert tous les jours, nos 12 sorties Halloween →</a>
+    </div>
+  </section>
+
   <div class="stats-band">
     <div class="container">
       <div class="stats-band-inner">
