@@ -4,6 +4,7 @@
   <!-- ===== PAGE D'ACCUEIL ===== -->
   <url>
     <loc>https://gamedoor41.fr/</loc>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -71,7 +72,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/psychiatric/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -147,6 +148,7 @@
   <!-- ===== MAGAZINE / BLOG ===== -->
   <url>
     <loc>https://gamedoor41.fr/magazine/</loc>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -157,8 +159,14 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://gamedoor41.fr/post/vacances-toussaint-caen-2026/</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://gamedoor41.fr/post/halloween-caen-escape-game-psychiatric/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
