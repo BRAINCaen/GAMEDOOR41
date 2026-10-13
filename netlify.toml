@@ -556,6 +556,17 @@
 # ============================================================
 
 # Sécurité globale
+# L'article du magazine « Escape game à Mondeville » est devenu une vraie page du site (13/10/2026)
+[[redirects]]
+  from = "/post/escape-game-mondeville/"
+  to = "/escape-game-mondeville/"
+  status = 301
+
+[[redirects]]
+  from = "/post/escape-game-mondeville"
+  to = "/escape-game-mondeville/"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]

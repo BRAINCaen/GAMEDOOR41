@@ -20,7 +20,7 @@
   <!-- ===== ACTIVITÉS PRINCIPALES ===== -->
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/quiz-game-caen/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -66,7 +66,7 @@
   <!-- ===== SALLES ESCAPE (univers) ===== -->
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/garde-a-vue/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -78,7 +78,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/back-to-the-80s/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -112,7 +112,7 @@
   <!-- ===== TRANSACTIONNELLES ===== -->
   <url>
     <loc>https://gamedoor41.fr/tarifs/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -135,6 +135,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/contact/</loc>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -177,8 +178,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamedoor41.fr/post/escape-game-mondeville/</loc>
-    <lastmod>2026-05-07</lastmod>
+    <loc>https://gamedoor41.fr/escape-game-mondeville/</loc>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
