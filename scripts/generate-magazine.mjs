@@ -211,7 +211,7 @@ const articles = [
     category: 'Carte cadeau',
     categoryClass: 'events',
     title: 'Carte cadeau Escape Game & Quiz Game à Caen',
-    excerpt: "60 minutes de déconnexion à offrir : escape game ou quiz, version numérique (instantanée) ou coffret mystère. Validité illimitée, sans date limite.",
+    excerpt: "60 minutes de déconnexion à offrir : escape game ou quiz, version numérique (instantanée) ou coffret mystère. Valable 12 mois, prolongation sur demande.",
     date: '2025-12-07',
     dateLabel: '7 décembre 2025',
     readTime: '3 min',

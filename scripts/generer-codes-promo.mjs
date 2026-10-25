@@ -64,7 +64,7 @@ export const CODES = [
 
   // --- Cheques-vacances, box & cartes cadeaux ---
   { code: 'ANCV', nom: 'Chèques-Vacances ANCV (papier)', famille: 'paiement', remise: '0 € en ligne', justif: 'Vos chèques ANCV, pour régler la session à l’accueil', mots: 'ancv chèques vacances cheque cheques' },
-  { code: null, nom: 'Carte cadeau GAMEDOOR·41', famille: 'paiement', remise: 'Montant de la carte', justif: 'Rien à présenter : le code reçu par e-mail suffit', mots: 'carte cadeau bon cadeau coffret mystère e-carte', codeTexte: 'Votre code unique' },
+  { code: null, nom: 'Carte cadeau GAMEDOOR·41', famille: 'paiement', remise: 'Montant de la carte', justif: 'Rien à présenter : le code reçu par e-mail suffit · valable 12 mois, prolongation sur demande par mail avec le code', mots: 'carte cadeau bon cadeau coffret mystère e-carte', codeTexte: 'Votre code unique' },
   { code: 'BOOMRANG', nom: 'Box Boomrang · Live Escape Box', famille: 'paiement', remise: '0 € en ligne', justif: 'Votre coffret et le code inscrit dedans · escape game uniquement', mots: 'box boomrang live escape box coffret nature découvertes' },
 
   // --- Occasions ---
