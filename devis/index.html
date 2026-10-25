@@ -277,6 +277,13 @@
   const QUIZ_MIN = 4, QUIZ_MAX = 16;                              // 4 à 16 candidats par session
   const COMBO_MAX_SIMULTANE = ESCAPE_MAX_SIMULTANE + QUIZ_MAX;    // 46 personnes en même temps (escape + quiz en parallèle)
   const GROUPE_MIN = 2, GROUPE_MAX = 80;
+  // Les univers d'escape et leur nombre de salles physiques : le client répartit lui-même ses équipes
+  const SALLES = [
+    { id: 'gav', nom: 'Garde à Vue',      nb: 2, couleur: '#3D5DC0', emoji: '🚔', info: 'Enquête au commissariat · dès 10 ans' },
+    { id: 'psy', nom: 'Psychiatric',      nb: 2, couleur: '#BE1B1B', emoji: '🏥', info: 'Hôpital abandonné, horreur non gore · dès 12 ans' },
+    { id: 'b80', nom: "Back to the 80's", nb: 1, couleur: '#E07020', emoji: '🕹️', info: 'Fun et nostalgie · dès 7 ans avec un adulte' },
+  ];
+  const SALLES_VIDES = { gav: 0, psy: 0, b80: 0 };
 
   // Carte restauration : UNE SEULE SOURCE, /js/carte-restauration.js (partagée avec /restauration-seminaire/)
   const CARTE = window.CARTE_RESTAURATION || null;
@@ -495,6 +502,8 @@
     const [activite, setActivite] = useState(PARAMS.activite);  // 'escape' | 'quiz' | 'both'
     const [modeCombo, setModeCombo] = useState(null);           // 'tous' (tout le monde fait les deux) | 'partage' (deux groupes en parallèle)
     const [nbEscapePartage, setNbEscapePartage] = useState(null); // null = répartition automatique
+    const [salles, setSalles] = useState(SALLES_VIDES);         // { gav, psy, b80 } = nombre d'équipes par univers (choix obligatoire)
+    const [ordreCombo, setOrdreCombo] = useState(null);         // 'escape' | 'quiz' = activité jouée en premier (mode « tout le monde fait les deux »)
     const [reduction, setReduction] = useState(PARAMS.reduction);
     const [surPlace, setSurPlace] = useState(null);             // true | false | null
     const [selection, setSelection] = useState({});             // { itemId: { qty, auto } }
@@ -505,7 +514,7 @@
     const [wantPhysicalBox, setWantPhysicalBox] = useState(false);
     const [showSummary, setShowSummary] = useState(false);
     const [showDevisForm, setShowDevisForm] = useState(false);
-    const [devisForm, setDevisForm] = useState({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureArrivee: '', message: '' });
+    const [devisForm, setDevisForm] = useState({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureActivite2: '', heureArrivee: '', message: '' });
     const [emailSent, setEmailSent] = useState(false);
     const [emailSending, setEmailSending] = useState(false);
     const [emailError, setEmailError] = useState(false);
@@ -534,6 +543,32 @@
     })();
     const nEscape = activite === 'escape' ? groupe : activite === 'both' ? (modeCombo === 'partage' ? repartition.escape : groupe) : 0;
     const nQuiz   = activite === 'quiz'   ? groupe : activite === 'both' ? (modeCombo === 'partage' ? repartition.quiz   : groupe) : 0;
+    // ----- Salles d'escape : le client place ses équipes dans les univers -----
+    const nbEquipes = equipesEscape(nEscape).length;
+    const vaguesEscape = Math.max(1, Math.ceil(nbEquipes / ESCAPE_SALLES));
+    const maxParUnivers = (u) => u.nb * vaguesEscape;
+    const equipesPlacees = SALLES.reduce((t, u) => t + (salles[u.id] || 0), 0);
+    const equipesRestantes = nbEquipes - equipesPlacees;
+    const sallesChoisies = nEscape === 0 || (nbEquipes > 0 && equipesRestantes === 0);
+    useEffect(() => { setSalles(SALLES_VIDES); }, [nbEquipes]);
+    const sallesTexte = () => SALLES.filter(u => salles[u.id] > 0).map(u => u.nom + ' ×' + salles[u.id]).join(', ');
+    const placerEquipe = (id, valeur) => setSalles(prev => ({ ...prev, [id]: valeur }));
+    // ----- Déroulé et heures de début -----
+    const comboSuccessif = activite === 'both' && modeCombo === 'tous';
+    const premiereActivite = comboSuccessif ? (ordreCombo === 'quiz' ? 'quiz' : ordreCombo === 'escape' ? 'escape' : null) : null;
+    const nomActivite = (a) => a === 'quiz' ? 'quiz Buzz Your Brain' : 'escape game';
+    const heureOuInconnue = (h) => h || 'heure non renseignée';
+    const derouleTexte = () => {
+      if (isGift) return '-';
+      if (comboSuccessif) {
+        if (!premiereActivite) return 'escape + quiz, ordre non choisi';
+        const seconde = premiereActivite === 'quiz' ? 'escape' : 'quiz';
+        return nomActivite(premiereActivite) + ' à ' + heureOuInconnue(devisForm.heureActivite) + ', puis ' + nomActivite(seconde) + ' à ' + heureOuInconnue(devisForm.heureActivite2);
+      }
+      if (activite === 'both') return 'escape game et quiz en même temps (deux groupes), début à ' + heureOuInconnue(devisForm.heureActivite);
+      if (activite === 'quiz') return 'quiz Buzz Your Brain à ' + heureOuInconnue(devisForm.heureActivite);
+      return 'escape game à ' + heureOuInconnue(devisForm.heureActivite) + (vaguesEscape > 1 ? ' (' + pluriel(vaguesEscape, 'vague') + ' à la suite)' : '');
+    };
     // Quand le nombre de personnes change : répartition auto, mode « partage » abandonné s'il devient impossible,
     // et restauration effacée au-delà de la capacité de la salle d'accueil
     useEffect(() => {
@@ -592,10 +627,11 @@
     useEffect(() => { if (!reducList.some(r => r.id === reduction)) setReduction('none'); }, [activite]);
 
     const activiteTexte = () => {
-      if (activite === 'escape') return 'Escape Game — ' + pluriel(groupe, 'joueur') + ', ' + texteEquipes(groupe);
+      const sallesSuffixe = nEscape > 0 ? ' · Salles : ' + (sallesTexte() || 'non choisies') : '';
+      if (activite === 'escape') return 'Escape Game — ' + pluriel(groupe, 'joueur') + ', ' + texteEquipes(groupe) + sallesSuffixe;
       if (activite === 'quiz') return 'Quiz Buzz Your Brain — ' + pluriel(groupe, 'candidat') + ', ' + texteSessions(groupe, !isPro);
-      if (activite === 'both' && modeCombo === 'partage') return 'Escape Game (' + repartition.escape + ') + Quiz (' + repartition.quiz + ') en même temps — ' + groupe + ' participants au total, chacun fait une activité';
-      if (activite === 'both') return 'Escape Game + Quiz Buzz Your Brain — les ' + groupe + ' participants font les 2 activités, l\'une après l\'autre';
+      if (activite === 'both' && modeCombo === 'partage') return 'Escape Game (' + repartition.escape + ') + Quiz (' + repartition.quiz + ') en même temps — ' + groupe + ' participants au total, chacun fait une activité' + sallesSuffixe;
+      if (activite === 'both') return 'Escape Game + Quiz Buzz Your Brain — les ' + groupe + ' participants font les 2 activités, ' + (ordreCombo === 'quiz' ? 'quiz puis escape' : ordreCombo === 'escape' ? 'escape puis quiz' : 'l\'une après l\'autre') + sallesSuffixe;
       return '—';
     };
 
@@ -684,9 +720,10 @@
         t += '\n--- ÉVÉNEMENT ---\n';
         t += 'Participants : ' + groupe + '\n';
         t += 'Organisation : ' + activiteTexte() + '\n';
+        if (nEscape > 0) t += 'Salles escape : ' + (sallesTexte() || 'non choisies') + ' (' + pluriel(nbEquipes, 'équipe') + ')\n';
         t += 'Sur place : ' + (hasFood ? 'oui (voir détail)' : 'non') + '\n';
         if (devisForm.dateSouhaitee) t += 'Date souhaitée : ' + devisForm.dateSouhaitee + '\n';
-        if (devisForm.heureActivite) t += 'Heure souhaitée : ' + devisForm.heureActivite + '\n';
+        t += 'Déroulé : ' + derouleTexte() + '\n';
         if (devisForm.heureArrivee && hasFood) t += "Heure d'arrivée : " + devisForm.heureArrivee + '\n';
       }
 
@@ -728,10 +765,13 @@
         telephone: devisForm.telephone || 'non-renseigné',
         client_type: clientType === 'entreprise' ? 'Entreprise' : clientType === 'association' ? 'Association' : 'Particulier',
         activite: activiteTexte(),
+        salles: nEscape > 0 ? (sallesTexte() || 'non choisies') : '-',
         participants: groupe,
         nb_personnes: groupe,
         date_souhaitee: devisForm.dateSouhaitee || 'non-renseignée',
         heure_activite: devisForm.heureActivite || 'non-renseignée',
+        heure_activite_2: comboSuccessif ? (devisForm.heureActivite2 || 'non-renseignée') : '-',
+        deroule: derouleTexte(),
         heure_arrivee: devisForm.heureArrivee || '-',
         detail: detailLines,
         total_ht: r.totalHT.toFixed(2) + '€',
@@ -1023,6 +1063,37 @@
                   <span>🎤 au quiz : <strong className="text-gd-cream">{repartition.quiz}</strong></span>
                 </div>
               )}
+              {modeCombo === 'tous' && (
+                <div className="flex items-center justify-center gap-2 flex-wrap text-sm text-gd-cream/80">
+                  <span>Dans quel ordre ?</span>
+                  <button type="button" onClick={() => setOrdreCombo('escape')} className={cls('px-3 py-1.5 rounded-lg border text-xs sim-display tracking-wider uppercase transition-all', ordreCombo === 'escape' ? 'border-emerald-500 bg-emerald-500/15 text-gd-cream' : 'border-gd-border text-gd-cream/70 hover:border-emerald-500/60')}>🚪 Escape d'abord, puis quiz</button>
+                  <button type="button" onClick={() => setOrdreCombo('quiz')} className={cls('px-3 py-1.5 rounded-lg border text-xs sim-display tracking-wider uppercase transition-all', ordreCombo === 'quiz' ? 'border-emerald-500 bg-emerald-500/15 text-gd-cream' : 'border-gd-border text-gd-cream/70 hover:border-emerald-500/60')}>🎤 Quiz d'abord, puis escape</button>
+                  {!ordreCombo && <span className="block w-full text-center text-amber-400 text-xs">Choisissez l'ordre pour continuer.</span>}
+                </div>
+              )}
+            </div>
+          )}
+          {nEscape > 0 && (activite !== 'both' || modeCombo) && (
+            <div className="rounded-xl border-2 p-3 space-y-3" style={{ borderColor: sallesChoisies ? 'rgba(16,185,129,0.6)' : 'rgba(251,191,36,0.6)', background: sallesChoisies ? 'rgba(16,185,129,0.06)' : 'rgba(251,191,36,0.06)' }}>
+              <div className="text-center">
+                <p className="sim-display tracking-wider uppercase text-sm font-bold text-gd-cream">Quelles salles ?</p>
+                <p className="text-xs text-gd-cream/65 mt-1">Placez vos {pluriel(nbEquipes, 'équipe')} dans nos univers : 2 salles Garde à Vue, 2 salles Psychiatric, 1 salle Back to the 80's{vaguesEscape > 1 ? ', en ' + pluriel(vaguesEscape, 'vague') : ''}.</p>
+              </div>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {SALLES.map(u => (
+                  <div key={u.id} className={cls('p-3 rounded-xl border-2 text-center transition-all', salles[u.id] > 0 ? 'bg-gd-card' : 'bg-gd-card/60')} style={{ borderColor: salles[u.id] > 0 ? u.couleur : 'rgba(255,255,255,0.12)' }}>
+                    <span className="text-2xl">{u.emoji}</span>
+                    <span className="block sim-display font-bold text-gd-cream mt-1">{u.nom}</span>
+                    <span className="block text-[11px] text-gd-cream/65 mt-1 leading-snug">{u.info}</span>
+                    <span className="block text-[11px] text-gd-cream/50 mt-1">{pluriel(u.nb, 'salle')} · max {pluriel(maxParUnivers(u), 'équipe')}</span>
+                    <div className="mt-2 flex justify-center"><Stepper value={salles[u.id]} min={0} max={Math.min(maxParUnivers(u), salles[u.id] + Math.max(0, equipesRestantes))} onChange={(v) => placerEquipe(u.id, v)} label={'Équipes dans ' + u.nom} /></div>
+                    <span className="block text-xs mt-1" style={{ color: salles[u.id] > 0 ? u.couleur : 'rgba(240,235,226,0.4)' }}>{salles[u.id] > 0 ? pluriel(salles[u.id], 'équipe') : 'aucune équipe'}</span>
+                  </div>
+                ))}
+              </div>
+              {sallesChoisies
+                ? <p className="text-center text-emerald-400 text-xs">✓ {pluriel(nbEquipes, 'équipe')} placée{nbEquipes > 1 ? 's' : ''} : {sallesTexte()}</p>
+                : <p className="text-center text-amber-400 text-xs">Il reste {pluriel(equipesRestantes, 'équipe')} à placer pour continuer.</p>}
             </div>
           )}
           {activite === 'escape' && eq.length > ESCAPE_SALLES && (
@@ -1180,18 +1251,26 @@
         </div>
         <input type="email" placeholder="Email *" value={devisForm.email} autoComplete="email"
           onChange={(e) => setDevisForm(prev => ({ ...prev, email: e.target.value }))} className={champ} />
-        <div className="grid grid-cols-2 gap-2">
+        <div className={cls('grid gap-2', comboSuccessif ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2')}>
           <div>
             <input type="date" value={devisForm.dateSouhaitee} aria-label="Date souhaitée"
-              onChange={(e) => setDevisForm(prev => ({ ...prev, dateSouhaitee: e.target.value }))} className={champ} />
-            <p className="text-gd-cream/50 text-[11px] mt-1">Date souhaitée</p>
+              onChange={(e) => setDevisForm(prev => ({ ...prev, dateSouhaitee: e.target.value }))} className={cls(champ, !devisForm.dateSouhaitee && 'border-amber-500/60')} />
+            <p className="text-gd-cream/50 text-[11px] mt-1">Date souhaitée *</p>
           </div>
           <div>
             <input type="text" placeholder="ex. 14h00" value={devisForm.heureActivite} aria-label="Heure de début"
-              onChange={(e) => setDevisForm(prev => ({ ...prev, heureActivite: e.target.value }))} className={champ} />
-            <p className="text-gd-cream/50 text-[11px] mt-1">Heure de début</p>
+              onChange={(e) => setDevisForm(prev => ({ ...prev, heureActivite: e.target.value }))} className={cls(champ, !devisForm.heureActivite && 'border-amber-500/60')} />
+            <p className="text-gd-cream/50 text-[11px] mt-1">{comboSuccessif ? 'Début ' + (premiereActivite === 'quiz' ? 'du quiz' : "de l'escape") + ' (1re activité) *' : activite === 'both' ? 'Heure de début (escape et quiz en même temps) *' : 'Heure de début souhaitée *'}</p>
           </div>
+          {comboSuccessif && (
+            <div>
+              <input type="text" placeholder="ex. 16h30" value={devisForm.heureActivite2} aria-label="Heure de début de la deuxième activité"
+                onChange={(e) => setDevisForm(prev => ({ ...prev, heureActivite2: e.target.value }))} className={cls(champ, !devisForm.heureActivite2 && 'border-amber-500/60')} />
+              <p className="text-gd-cream/50 text-[11px] mt-1">Début {premiereActivite === 'quiz' ? "de l'escape" : 'du quiz'} (2e activité) *</p>
+            </div>
+          )}
         </div>
+        {!isGift && <p className="text-gd-cream/60 text-[11px]">Déroulé qui sera transmis : <strong className="text-gd-cream">{derouleTexte()}</strong></p>}
         {hasFood && (
           <input type="text" placeholder="Heure d'arrivée sur place (ex. 9h00)" value={devisForm.heureArrivee} aria-label="Heure d'arrivée"
             onChange={(e) => setDevisForm(prev => ({ ...prev, heureArrivee: e.target.value }))} className={champ} />
@@ -1206,7 +1285,7 @@
       setGroupe(10); setActivite(null); setModeCombo(null); setNbEscapePartage(null);
       setReduction('none'); setSurPlace(null); setSelection({}); setPrivatisation(null); setPrivatManuelle(false);
       setSelectedGiftCard(null); setWantPhysicalBox(false);
-      setDevisForm({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureArrivee: '', message: '' });
+      setDevisForm({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureActivite2: '', heureArrivee: '', message: '' }); setOrdreCombo(null); setSalles(SALLES_VIDES);
       setEmailSent(false); setEmailSending(false); setEmailError(false);
     };
 
@@ -1215,7 +1294,7 @@
       const r = calculateTotal();
       const groupes = [['activite', isGift ? '🎁 Carte cadeau' : '🎮 Activités'], ['surplace', '🍽 Sur place'], ['privatisation', '🔑 Privatisation']];
       const montant = (d) => d.bonus ? 'OFFERT' : isPro ? eur(d.subtotalHT) + ' HT' : eur(d.subtotalTTC);
-      const formOk = isValidPhone(devisForm.telephone) && devisForm.email && devisForm.contact && (!isPro || devisForm.societe);
+      const formOk = isValidPhone(devisForm.telephone) && devisForm.email && devisForm.contact && (!isPro || devisForm.societe) && (isGift || (devisForm.dateSouhaitee && devisForm.heureActivite && (!comboSuccessif || devisForm.heureActivite2)));
       const formulaire = (
         <div className="space-y-3">
           {renderDevisForm()}
@@ -1342,7 +1421,7 @@
         case 'qui': return clientType !== null;
         case 'cadeau': return selectedGiftCard !== null;
         case 'groupe': return groupe >= GROUPE_MIN && groupe <= GROUPE_MAX;
-        case 'activites': return activite !== null && (activite !== 'both' || modeCombo === 'tous' || (modeCombo === 'partage' && partagePossible));
+        case 'activites': return activite !== null && (activite !== 'both' || modeCombo === 'tous' || (activite === 'both' && modeCombo === 'partage' && partagePossible)) && sallesChoisies && (!comboSuccessif || !!ordreCombo);
         case 'reductions': return true;
         case 'surplace': return surPlace !== null && !(hasFood && !privatisation) && !(hasFood && nbDejeuners > CAPACITE.assis);
         default: return true;
