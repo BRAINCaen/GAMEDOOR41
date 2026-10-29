@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-28T02:15:17.535Z",
+  "updatedAt": "2026-10-29T01:49:41.144Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2320,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 35,
-  "googleAdded": 0,
+  "poolSize": 36,
+  "googleAdded": 1,
   "reviews": [
     {
       "author": "Mila M.",
@@ -37,6 +37,18 @@
       "date": "2026-08-06",
       "source": "google",
       "themes": [
+        "back-to-80s"
+      ],
+      "context": ""
+    },
+    {
+      "author": "Didrik L.",
+      "rating": 5,
+      "text": "Bonsoir, les internautes ! Ayant fait les trois escape games dans la journée et ayant passé du temps avec les Game Masters, voici mon avis. Les escape rooms : les salles sont incroyablement stylées ! Gros point fort pour la salle d’horreur ! Ça rajoute une dose d’adrénaline supplémentaire et ça change ! Mais gros big up à celle de « Garde à vue », qui restera ma préférée, car elle est super drôle. « Les Années 80 » est aussi trop cool, car elle est remplie de références à la pop culture (vraiment, vous m’avez eu avec Les Goonies). Mais surtout, ce qui m’a marqué… LES GAME MASTERS ! Je l’écris en majuscules parce que, vraiiiiiiiment, bravo ! C’était incroyable. Lily-Rose : un RP hyperactif, vraiment incroyable ! Tu débordes d’énergie et on sent que tu prends énormément de plaisir dans ce que tu fais. Franchement, malgré ton expérience d’un mois seulement, ça ne se ressent absolument pas dans ton personnage. Génial ! Mais vraiment, BIG UP à RED !!! Ton blaze de dresseur Pokémon est trop stylé ! Il a un nom de fou, c’est un très bon acteur et il joue son rôle à fond. On a pris le temps de discuter un peu avec lui après la session, et on ressent toute la passion qu’il a pour son métier. Franchement, ça donne envie de découvrir toujours plus de salles et de rôles. Je parle beaucoup, mais l’expérience en vaut vraiment le coup. Alors n’hésitez pas !",
+      "date": "2026-08-06",
+      "source": "google",
+      "themes": [
+        "garde-a-vue",
         "back-to-80s"
       ],
       "context": ""
