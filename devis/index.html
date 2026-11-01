@@ -285,6 +285,30 @@
   // il reste l'accueil café, le buffet Les Conquérants servi debout, les douceurs sucrées et les boissons
   const SEUIL_TRAITEUR = (CARTE && CARTE.seuilTraiteur) || 20;
 
+  // Choix OBLIGATOIRE de la salle (escape) et de l'émission (quiz) : sans ça, on reçoit des demandes sans savoir quoi préparer
+  const SALLES_ESCAPE = [
+    { id: 'garde-a-vue',     name: 'Garde à Vue',      desc: 'Policier · dès 10 ans · 2 salles' },
+    { id: 'psychiatric',     name: 'Psychiatric',      desc: 'Horreur, non gore · dès 12 ans · 2 salles' },
+    { id: 'back-to-the-80s', name: "Back to the 80's", desc: 'Familial · dès 7 ans avec adulte · 1 salle' }
+  ];
+  const EMISSIONS_QUIZ = [
+    { id: 'blindtest', name: '100% Blind Test', desc: 'Tubes 80 → aujourd\'hui' },
+    { id: 'horror',    name: 'HORROR QUIZ',     desc: 'Dès 18 ans (14 avec un adulte)' },
+    { id: 'annees80',  name: 'Années 80',       desc: 'Néons, synthés' },
+    { id: 'annees90',  name: 'Années 90',       desc: 'Pop FM, eurodance' },
+    { id: 'annees2000', name: 'Années 2000',    desc: 'R&B, rap français, pop teen' },
+    { id: 'cinema',    name: 'Cinéma',          desc: 'Répliques cultes, BO' },
+    { id: 'apero',     name: 'Apéro',           desc: 'Zéro pression' },
+    { id: 'evjf',      name: 'EVJF / EVG',      desc: 'Défis, blind test mariage' },
+    { id: 'kids',      name: 'Kids',            desc: 'Dès 8 ans' },
+    { id: 'ados',      name: 'Ados',            desc: '12-17 ans' },
+    { id: 'anglais',   name: 'Anglais',         desc: 'Pop culture US/UK' },
+    { id: 'japon',     name: 'Japon',           desc: 'Mangas, animés, J-pop' },
+    { id: 'familles',  name: 'Familles & Amis', desc: 'Tous âges' }
+  ];
+  const nomSalle = (id) => (SALLES_ESCAPE.find(x => x.id === id) || {}).name || id;
+  const nomEmission = (id) => (EMISSIONS_QUIZ.find(x => x.id === id) || {}).name || id;
+
   // Tarifs pro (TVA 10 %)
   const TARIFS_PRO_HT  = { escape: 15.91, quiz: 13.64 };
   const TARIFS_PRO_TTC = { escape: 17.50, quiz: 15.00 };
@@ -493,6 +517,8 @@
     const [clientType, setClientType] = useState(PARAMS.type);  // 'entreprise' | 'association' | 'particulier' | 'cadeau'
     const [groupe, setGroupe] = useState(PARAMS.groupe);        // nombre de personnes dans le groupe (compté UNE fois)
     const [activite, setActivite] = useState(PARAMS.activite);  // 'escape' | 'quiz' | 'both'
+    const [sallesEscape, setSallesEscape] = useState([]);       // ids de SALLES_ESCAPE (une par équipe au plus)
+    const [emissionQuiz, setEmissionQuiz] = useState(null);     // id de EMISSIONS_QUIZ
     const [modeCombo, setModeCombo] = useState(null);           // 'tous' (tout le monde fait les deux) | 'partage' (deux groupes en parallèle)
     const [nbEscapePartage, setNbEscapePartage] = useState(null); // null = répartition automatique
     const [reduction, setReduction] = useState(PARAMS.reduction);
@@ -534,6 +560,17 @@
     })();
     const nEscape = activite === 'escape' ? groupe : activite === 'both' ? (modeCombo === 'partage' ? repartition.escape : groupe) : 0;
     const nQuiz   = activite === 'quiz'   ? groupe : activite === 'both' ? (modeCombo === 'partage' ? repartition.quiz   : groupe) : 0;
+    // Autant de salles différentes que d'équipes (3 univers au maximum)
+    const maxSalles = Math.max(1, Math.min(SALLES_ESCAPE.length, equipesEscape(nEscape).length));
+    useEffect(() => { setSallesEscape(prev => prev.length > maxSalles ? prev.slice(0, maxSalles) : prev); }, [maxSalles]);
+    const toggleSalle = (id) => setSallesEscape(prev => {
+      if (prev.includes(id)) return prev.filter(x => x !== id);
+      if (maxSalles === 1) return [id];
+      return prev.length >= maxSalles ? prev : [...prev, id];
+    });
+    const texteSalles = () => sallesEscape.length ? sallesEscape.map(nomSalle).join(' + ') : 'salle non choisie';
+    const texteEmission = () => emissionQuiz ? nomEmission(emissionQuiz) : 'émission non choisie';
+    const themesOk = (nEscape === 0 || sallesEscape.length > 0) && (nQuiz === 0 || !!emissionQuiz);
     // Quand le nombre de personnes change : répartition auto, mode « partage » abandonné s'il devient impossible,
     // et restauration effacée au-delà de la capacité de la salle d'accueil
     useEffect(() => {
@@ -592,10 +629,10 @@
     useEffect(() => { if (!reducList.some(r => r.id === reduction)) setReduction('none'); }, [activite]);
 
     const activiteTexte = () => {
-      if (activite === 'escape') return 'Escape Game — ' + pluriel(groupe, 'joueur') + ', ' + texteEquipes(groupe);
-      if (activite === 'quiz') return 'Quiz Buzz Your Brain — ' + pluriel(groupe, 'candidat') + ', ' + texteSessions(groupe, !isPro);
-      if (activite === 'both' && modeCombo === 'partage') return 'Escape Game (' + repartition.escape + ') + Quiz (' + repartition.quiz + ') en même temps — ' + groupe + ' participants au total, chacun fait une activité';
-      if (activite === 'both') return 'Escape Game + Quiz Buzz Your Brain — les ' + groupe + ' participants font les 2 activités, l\'une après l\'autre';
+      if (activite === 'escape') return 'Escape Game « ' + texteSalles() + ' » — ' + pluriel(groupe, 'joueur') + ', ' + texteEquipes(groupe);
+      if (activite === 'quiz') return 'Quiz Buzz Your Brain « ' + texteEmission() + ' » — ' + pluriel(groupe, 'candidat') + ', ' + texteSessions(groupe, !isPro);
+      if (activite === 'both' && modeCombo === 'partage') return 'Escape Game « ' + texteSalles() + ' » (' + repartition.escape + ') + Quiz « ' + texteEmission() + ' » (' + repartition.quiz + ') en même temps — ' + groupe + ' participants au total, chacun fait une activité';
+      if (activite === 'both') return 'Escape Game « ' + texteSalles() + ' » + Quiz Buzz Your Brain « ' + texteEmission() + ' » — les ' + groupe + ' participants font les 2 activités, l\'une après l\'autre';
       return '—';
     };
 
@@ -625,22 +662,22 @@
       if (nEscape > 0) {
         const equipes = equipesEscape(nEscape);
         if (isPro) {
-          add({ groupe: 'activite', name: 'Escape Game · ' + pluriel(nEscape, 'joueur'), info: texteEquipes(nEscape), qty: nEscape, unit: 'pers.',
+          add({ groupe: 'activite', name: 'Escape Game « ' + texteSalles() + ' » · ' + pluriel(nEscape, 'joueur'), info: texteEquipes(nEscape), qty: nEscape, unit: 'pers.',
             priceHT: TARIFS_PRO_HT.escape, priceTTC: TARIFS_PRO_TTC.escape, subtotalHT: nEscape * TARIFS_PRO_HT.escape, subtotalTTC: nEscape * TARIFS_PRO_TTC.escape, tva: 10 });
         } else {
           const ttc = equipes.reduce((s, t) => s + ESCAPE_PRICES_TTC[t], 0) * (1 - remise);
-          add({ groupe: 'activite', name: 'Escape Game · ' + pluriel(nEscape, 'joueur') + (remise ? ' (-10 %)' : ''), info: texteEquipes(nEscape), qty: 1,
+          add({ groupe: 'activite', name: 'Escape Game « ' + texteSalles() + ' » · ' + pluriel(nEscape, 'joueur') + (remise ? ' (-10 %)' : ''), info: texteEquipes(nEscape), qty: 1,
             priceHT: toHT(ttc), priceTTC: ttc, subtotalHT: toHT(ttc), subtotalTTC: ttc, tva: 10 });
         }
       }
       if (nQuiz > 0) {
         const sessions = sessionsQuiz(nQuiz);
         if (isPro) {
-          add({ groupe: 'activite', name: 'Quiz Buzz Your Brain · ' + pluriel(nQuiz, 'candidat'), info: texteSessions(nQuiz, false), qty: nQuiz, unit: 'pers.',
+          add({ groupe: 'activite', name: 'Quiz Buzz Your Brain « ' + texteEmission() + ' » · ' + pluriel(nQuiz, 'candidat'), info: texteSessions(nQuiz, false), qty: nQuiz, unit: 'pers.',
             priceHT: TARIFS_PRO_HT.quiz, priceTTC: TARIFS_PRO_TTC.quiz, subtotalHT: nQuiz * TARIFS_PRO_HT.quiz, subtotalTTC: nQuiz * TARIFS_PRO_TTC.quiz, tva: 10 });
         } else {
           const ttc = sessions.reduce((s, t) => s + QUIZ_PRICES_TTC[Math.max(QUIZ_MIN, t)], 0) * (1 - remise);
-          add({ groupe: 'activite', name: 'Quiz Buzz Your Brain · ' + pluriel(nQuiz, 'candidat') + (remise ? ' (-10 %)' : ''), info: texteSessions(nQuiz), qty: 1,
+          add({ groupe: 'activite', name: 'Quiz Buzz Your Brain « ' + texteEmission() + ' » · ' + pluriel(nQuiz, 'candidat') + (remise ? ' (-10 %)' : ''), info: texteSessions(nQuiz), qty: 1,
             priceHT: toHT(ttc), priceTTC: ttc, subtotalHT: toHT(ttc), subtotalTTC: ttc, tva: 10 });
         }
       }
@@ -684,6 +721,8 @@
         t += '\n--- ÉVÉNEMENT ---\n';
         t += 'Participants : ' + groupe + '\n';
         t += 'Organisation : ' + activiteTexte() + '\n';
+        if (nEscape > 0) t += 'Salle(s) escape : ' + texteSalles() + '\n';
+        if (nQuiz > 0)   t += 'Émission quiz : ' + texteEmission() + '\n';
         t += 'Sur place : ' + (hasFood ? 'oui (voir détail)' : 'non') + '\n';
         if (devisForm.dateSouhaitee) t += 'Date souhaitée : ' + devisForm.dateSouhaitee + '\n';
         if (devisForm.heureActivite) t += 'Heure souhaitée : ' + devisForm.heureActivite + '\n';
@@ -714,6 +753,7 @@
     };
 
     const sendEmail = () => {
+      if (!isGift && !themesOk) { setShowSummary(false); setShowDevisForm(false); setStep(etapes.findIndex(e => e.id === 'activites')); return; }
       setEmailSending(true);
       setEmailError(false);
       const r = calculateTotal();
@@ -728,6 +768,8 @@
         telephone: devisForm.telephone || 'non-renseigné',
         client_type: clientType === 'entreprise' ? 'Entreprise' : clientType === 'association' ? 'Association' : 'Particulier',
         activite: activiteTexte(),
+        salles_escape: nEscape > 0 ? texteSalles() : '-',
+        emission_quiz: nQuiz > 0 ? texteEmission() : '-',
         participants: groupe,
         nb_personnes: groupe,
         date_souhaitee: devisForm.dateSouhaitee || 'non-renseignée',
@@ -1025,6 +1067,41 @@
               )}
             </div>
           )}
+          {nEscape > 0 && (
+            <div className={cls('rounded-xl border p-3 space-y-2', sallesEscape.length ? 'border-gd-border bg-gd-card/40' : 'border-amber-400/60 bg-amber-400/5')}>
+              <p className="sim-display tracking-wider uppercase text-sm font-bold text-center" style={{ color: '#6383d6' }}>🚪 Quelle salle ? <span className="text-amber-400">*</span></p>
+              <p className="text-center text-gd-cream/60 text-xs">{maxSalles > 1 ? 'Vous avez ' + pluriel(equipesEscape(nEscape).length, 'équipe') + ' : choisissez jusqu\'à ' + maxSalles + ' univers différents.' : 'Choisissez votre univers.'}</p>
+              <div className="grid sm:grid-cols-3 gap-2">
+                {SALLES_ESCAPE.map(sa => {
+                  const choisie = sallesEscape.includes(sa.id);
+                  return (
+                    <button key={sa.id} type="button" onClick={() => toggleSalle(sa.id)} aria-pressed={choisie}
+                      className={cls('p-2.5 rounded-lg border-2 text-left transition-all', choisie ? 'border-emerald-500 bg-emerald-500/10' : 'border-gd-border bg-gd-card hover:border-emerald-500/60')}>
+                      <span className="block sim-display font-bold text-gd-cream text-sm">{choisie ? '✓ ' : ''}{sa.name}</span>
+                      <span className="block text-[11px] text-gd-cream/60 leading-snug mt-0.5">{sa.desc}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {nQuiz > 0 && (
+            <div className={cls('rounded-xl border p-3 space-y-2', emissionQuiz ? 'border-gd-border bg-gd-card/40' : 'border-amber-400/60 bg-amber-400/5')}>
+              <p className="sim-display tracking-wider uppercase text-sm font-bold text-center" style={{ color: '#c489f5' }}>🎤 Quelle émission de quiz ? <span className="text-amber-400">*</span></p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {EMISSIONS_QUIZ.map(em => (
+                  <button key={em.id} type="button" onClick={() => setEmissionQuiz(em.id)} aria-pressed={emissionQuiz === em.id}
+                    className={cls('p-2 rounded-lg border-2 text-left transition-all', emissionQuiz === em.id ? 'border-emerald-500 bg-emerald-500/10' : 'border-gd-border bg-gd-card hover:border-emerald-500/60')}>
+                    <span className="block sim-display font-bold text-gd-cream text-sm">{emissionQuiz === em.id ? '✓ ' : ''}{em.name}</span>
+                    <span className="block text-[11px] text-gd-cream/60 leading-snug mt-0.5">{em.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {activite && !themesOk && (activite !== 'both' || modeCombo) && (
+            <p className="text-center text-amber-400 text-xs">* Choix obligatoire pour continuer : on a besoin de savoir {nEscape > 0 && !sallesEscape.length && nQuiz > 0 && !emissionQuiz ? 'quelle salle et quelle émission' : nEscape > 0 && !sallesEscape.length ? 'quelle salle' : 'quelle émission'} préparer pour vous.</p>
+          )}
           {activite === 'escape' && eq.length > ESCAPE_SALLES && (
             <p className="text-center text-amber-400 text-xs">Plus de {ESCAPE_MAX_SIMULTANE} joueurs : les équipes passent en {Math.ceil(eq.length / ESCAPE_SALLES)} vagues, ou combinez avec le quiz pour jouer tous en même temps.</p>
           )}
@@ -1203,7 +1280,7 @@
 
     const resetAll = () => {
       setStep(0); setShowSummary(false); setShowDevisForm(false); setClientType(null);
-      setGroupe(10); setActivite(null); setModeCombo(null); setNbEscapePartage(null);
+      setGroupe(10); setActivite(null); setModeCombo(null); setNbEscapePartage(null); setSallesEscape([]); setEmissionQuiz(null);
       setReduction('none'); setSurPlace(null); setSelection({}); setPrivatisation(null); setPrivatManuelle(false);
       setSelectedGiftCard(null); setWantPhysicalBox(false);
       setDevisForm({ societe: '', contact: '', telephone: '', email: '', dateSouhaitee: '', heureActivite: '', heureArrivee: '', message: '' });
@@ -1342,7 +1419,7 @@
         case 'qui': return clientType !== null;
         case 'cadeau': return selectedGiftCard !== null;
         case 'groupe': return groupe >= GROUPE_MIN && groupe <= GROUPE_MAX;
-        case 'activites': return activite !== null && (activite !== 'both' || modeCombo === 'tous' || (modeCombo === 'partage' && partagePossible));
+        case 'activites': return activite !== null && (activite !== 'both' || modeCombo === 'tous' || (modeCombo === 'partage' && partagePossible)) && themesOk;
         case 'reductions': return true;
         case 'surplace': return surPlace !== null && !(hasFood && !privatisation) && !(hasFood && nbDejeuners > CAPACITE.assis);
         default: return true;
