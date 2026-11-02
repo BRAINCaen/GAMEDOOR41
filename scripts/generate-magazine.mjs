@@ -6,6 +6,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+console.error("Script de migration d'avril 2026, périmé : il récrirait 11 articles, magazine/index.html et _redirects avec d'anciens textes. Ne pas le relancer.");
+process.exit(1);
 
 // =============================================================================
 // Articles (11) — slugs propres sans accents + ancien slug Brain pour redirect
@@ -268,7 +270,7 @@ const articles = [
 <h3>Validité&nbsp;?</h3>
 <p>Aucune limite temporelle.</p>
 <h3>Pour un groupe&nbsp;?</h3>
-<p>Oui — cartes pour 2-6 joueurs (escape) ou 4-16 (quiz), ou montant libre (15€-200€).</p>
+<p>Oui — cartes pour 2-6 joueurs (escape) ou 4-16 (quiz), ou montant libre (dès 15 €).</p>
 <h3>Localisation&nbsp;?</h3>
 <p>Mondeville, 5 minutes du centre-ville de Caen, parking gratuit.</p>
 <h3>Remboursable&nbsp;?</h3>

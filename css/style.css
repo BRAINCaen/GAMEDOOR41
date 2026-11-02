@@ -992,6 +992,9 @@ textarea.devis-input { resize: vertical; min-height: 80px; }
   font-size: 1rem;
   color: var(--grey);
 }
+/* Ligne « Suivez-nous » : c'est un <p>, mais elle doit occuper toute la largeur
+   comme .footer-bottom (sinon « p { max-width: 65ch } » coupe son filet du haut). */
+.footer-social { max-width: none; }
 
 @media (max-width: 768px) {
   .footer-grid {

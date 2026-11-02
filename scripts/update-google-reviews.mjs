@@ -35,6 +35,7 @@ const HTML_FILES = [
   'evg-caen/index.html',
   'mariage-caen/index.html',
   'anniversaire-caen/index.html',
+  'escape-game-enfant-caen/index.html',
   'cadeau/index.html',
   'tarifs/index.html',
   'references-entreprises-caen/index.html',

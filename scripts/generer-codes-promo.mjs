@@ -68,7 +68,9 @@ export const CODES = [
   { code: 'BOOMRANG', nom: 'Box Boomrang · Live Escape Box', famille: 'paiement', remise: '0 € en ligne', justif: 'Votre coffret et le code inscrit dedans · escape game uniquement', mots: 'box boomrang live escape box coffret nature découvertes' },
 
   // --- Occasions ---
-  { code: 'ETUDIANT', nom: 'Étudiant·e adulte', famille: 'occasions', remise: '−10 %', justif: 'Carte étudiante en cours de validité · 18 ans et + · escape game uniquement · hors juillet et août', mots: 'étudiant etudiant étudiante student carte étudiante université fac école' },
+  // Pas de coupon ETUDIANT dans 4escape : le tarif etudiant est une categorie de joueur (« Adulte etudiant »),
+  // a choisir au recapitulatif de commande, escape game seulement (verifie dans un vrai panier le 02/11/2026).
+  { code: null, ancre: 'etudiant', codeTexte: 'Aucun : choisissez « Adulte étudiant » au choix des joueurs', nom: 'Étudiant·e adulte', famille: 'occasions', remise: '−10 %', justif: 'Carte étudiante en cours de validité · 18 ans et + · escape game uniquement · hors juillet et août', mots: 'ETUDIANT étudiant etudiant étudiante student carte étudiante université fac école' },
   { code: 'MARIAGE', nom: 'Place mariée · marié offerte', famille: 'occasions', remise: '1 place offerte', justif: 'Accessoire « reine » ou « roi du jour » porté à l’arrivée (voile, couronne, écharpe…)', mots: 'mariage mariée marié evjf evg enterrement vie jeune fille garçon' },
 ];
 
@@ -76,7 +78,7 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const slug = (s) => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 function htmlItem(c) {
-  const id = 'code-' + slug(c.code || c.nom);
+  const id = 'code-' + slug(c.ancre || c.code || c.nom);
   const cherche = [c.code, c.nom, c.mots, c.justif].filter(Boolean).join(' ');
   const code = c.code
     ? `<code class="cp-code-val">${esc(c.code)}</code><button type="button" class="cp-copier" data-code="${esc(c.code)}" aria-label="Copier le code ${esc(c.code)}">Copier</button>`

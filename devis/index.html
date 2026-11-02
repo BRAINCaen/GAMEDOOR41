@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
-  <link rel="stylesheet" href="/css/style.css?v=a5d0e1dc">
+  <link rel="stylesheet" href="/css/style.css?v=eb4ab62e">
 
   <script type="application/ld+json">
   {
@@ -294,19 +294,21 @@
   ];
   const EMISSIONS_QUIZ = [
     { id: 'blindtest', name: '100% Blind Test', desc: 'Tubes 80 → aujourd\'hui' },
-    { id: 'horror',    name: 'HORROR QUIZ',     desc: 'Dès 18 ans (14 avec un adulte)' },
+    { id: 'horror',    name: 'HORROR QUIZ',     desc: 'Dès 18 ans (12 avec un adulte)' },
     { id: 'annees80',  name: 'Années 80',       desc: 'Néons, synthés' },
     { id: 'annees90',  name: 'Années 90',       desc: 'Pop FM, eurodance' },
     { id: 'annees2000', name: 'Années 2000',    desc: 'R&B, rap français, pop teen' },
     { id: 'cinema',    name: 'Cinéma',          desc: 'Répliques cultes, BO' },
     { id: 'apero',     name: 'Apéro',           desc: 'Zéro pression' },
     { id: 'evjf',      name: 'EVJF / EVG',      desc: 'Défis, blind test mariage' },
-    { id: 'kids',      name: 'Kids',            desc: 'Dès 8 ans' },
-    { id: 'ados',      name: 'Ados',            desc: '12-17 ans' },
-    { id: 'anglais',   name: 'Anglais',         desc: 'Pop culture US/UK' },
-    { id: 'japon',     name: 'Japon',           desc: 'Mangas, animés, J-pop' },
+    { id: 'kids',      name: 'Kids',            desc: '8-11 ans' },
+    { id: 'ados',      name: 'GENZ',            desc: '12-17 ans' },
+    { id: 'anglais',   name: 'Anglais',         desc: 'Pop culture US/UK', horsLigne: true },
+    { id: 'japon',     name: 'Japon',           desc: 'Mangas, animés, J-pop', horsLigne: true },
+    { id: 'disney',    name: 'Disney',          desc: 'Films d’animation' },
     { id: 'familles',  name: 'Familles & Amis', desc: 'Tous âges' }
   ];
+  // horsLigne : absente de la liste « Choisir son Quiz » de la réservation en ligne (vu le 02/11/2026) : elle se choisit sur place
   const nomSalle = (id) => (SALLES_ESCAPE.find(x => x.id === id) || {}).name || id;
   const nomEmission = (id) => (EMISSIONS_QUIZ.find(x => x.id === id) || {}).name || id;
 
@@ -351,7 +353,7 @@
   const MARIAGE_NOTE = '* Mariée·marié offert·e sur présentation d\'un accessoire reine/roi du jour à l\'arrivée (voile, couronne, nœud pap…).';
   const REDUCTIONS_ESCAPE = [
     { id: 'none',         name: 'Aucune réduction',           discount: 0,    code: null },
-    { id: 'etudiant',     name: 'Étudiant (sur justificatif)', discount: 0.10, code: 'ETUDIANT' },
+    { id: 'etudiant',     name: 'Étudiant (sur justificatif)', discount: 0.10, code: null, escapeSeulement: true, note: 'Pas de code : en réservant, choisissez « Adulte étudiant » pour chaque étudiant·e au récapitulatif de commande. Escape game uniquement, pas de tarif étudiant sur le quiz.' },
     { id: 'cezam',        name: "Carte CEZAM",                discount: 0.10, code: 'CEZAM' },
     { id: 'trip',         name: "Trip Normand",               discount: 0.10, code: 'TRIP' },
     { id: 'ambassadeur',  name: 'Pass Ambassadeur Normandie', discount: 0.10, code: 'PAN' },
@@ -363,7 +365,6 @@
   ];
   const REDUCTIONS_QUIZ = [
     { id: 'none',     name: 'Aucune réduction',           discount: 0, code: null },
-    { id: 'etudiant', name: 'Étudiant (sur justificatif)', discount: 0.10, code: 'ETUDIANT' },
     { id: 'mariage',  name: 'EVJF / EVG',                 discount: 0, code: 'MARIAGE',  bonus: '1 place offerte mariée·marié*', note: MARIAGE_NOTE }
   ];
 
@@ -658,6 +659,7 @@
 
       const reduc = reducList.find(r => r.id === reduction);
       const remise = !isPro && reduc && reduc.discount > 0 ? reduc.discount : 0;
+      const remiseQuiz = reduc && reduc.escapeSeulement ? 0 : remise;   // tarif étudiant : escape game seulement
       const isMariage = !isPro && reduction === 'mariage';
 
       if (nEscape > 0) {
@@ -677,8 +679,8 @@
           add({ groupe: 'activite', name: 'Quiz Buzz Your Brain « ' + texteEmission() + ' » · ' + pluriel(nQuiz, 'candidat'), info: texteSessions(nQuiz, false), qty: nQuiz, unit: 'pers.',
             priceHT: TARIFS_PRO_HT.quiz, priceTTC: TARIFS_PRO_TTC.quiz, subtotalHT: nQuiz * TARIFS_PRO_HT.quiz, subtotalTTC: nQuiz * TARIFS_PRO_TTC.quiz, tva: 10 });
         } else {
-          const ttc = sessions.reduce((s, t) => s + QUIZ_PRICES_TTC[Math.max(QUIZ_MIN, t)], 0) * (1 - remise);
-          add({ groupe: 'activite', name: 'Quiz Buzz Your Brain « ' + texteEmission() + ' » · ' + pluriel(nQuiz, 'candidat') + (remise ? ' (-10 %)' : ''), info: texteSessions(nQuiz), qty: 1,
+          const ttc = sessions.reduce((s, t) => s + QUIZ_PRICES_TTC[Math.max(QUIZ_MIN, t)], 0) * (1 - remiseQuiz);
+          add({ groupe: 'activite', name: 'Quiz Buzz Your Brain « ' + texteEmission() + ' » · ' + pluriel(nQuiz, 'candidat') + (remiseQuiz ? ' (-10 %)' : ''), info: texteSessions(nQuiz), qty: 1,
             priceHT: toHT(ttc), priceTTC: ttc, subtotalHT: toHT(ttc), subtotalTTC: ttc, tva: 10 });
         }
       }
@@ -1098,6 +1100,9 @@
                   </button>
                 ))}
               </div>
+              {!isPro && emissionQuiz && (EMISSIONS_QUIZ.find(x => x.id === emissionQuiz) || {}).horsLigne && (
+                <p className="text-center text-amber-400 text-xs">Réservation en ligne : {nomEmission(emissionQuiz)} n'est pas dans la liste « Choisir son Quiz ». Prenez une autre émission en réservant, vous la changerez sur place.</p>
+              )}
             </div>
           )}
           {activite && !themesOk && (activite !== 'both' || modeCombo) && (

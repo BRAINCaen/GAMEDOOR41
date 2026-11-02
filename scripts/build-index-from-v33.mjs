@@ -310,7 +310,7 @@ ${components}`;
           "itemOffered": {
             "@type": "Service",
             "name": "Escape Game à Caen",
-            "description": "3 salles immersives à thème (Garde à Vue, Psychiatric, Bunker bientôt) — 60 minutes pour sortir, de 2 à 6 joueurs."
+            "description": "5 salles, 3 univers (Garde à Vue, Psychiatric, Back to the 80's) — 60 min de jeu, 1h30 sur place, de 2 à 6 joueurs par salle."
           },
           "price": "24",
           "priceCurrency": "EUR",
