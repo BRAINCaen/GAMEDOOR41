@@ -18,7 +18,7 @@
     id: 'horror-quiz-2026-10',
     fin: null,
     article: '/post/horror-quiz-caen/',
-    reserver: 'https://braincaen.4escape.io/booking',
+    reserver: 'https://gamedoor41.fr/reserver/',
     image: '/img/promo/horror-quiz',
     alt: 'HORROR QUIZ, la nouvelle émission du quiz Buzz Your Brain : jumpscares, méchants cultes et plateau rouge sang. 4 à 16 joueurs, 60 min, dès 15 € par personne, à Mondeville près de Caen.',
     kicker: 'Nouvelle émission · Buzz Your Brain',

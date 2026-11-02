@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Track booking link clicks
-  document.querySelectorAll('a[href*="4escape.io/booking"]').forEach(el => {
+  document.querySelectorAll('a[href*="/reserver"]').forEach(el => {
     el.addEventListener('click', () => {
       trackEvent('begin_checkout', {
         source: el.getAttribute('data-track') || 'booking_link',

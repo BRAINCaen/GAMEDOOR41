@@ -15,15 +15,15 @@
 
 # Exception ciblée AVANT le catch-all : la page « JE RESERVE ! » du site
 # Buzz (encore indexée par Google sous ce titre) part directement au
-# booking 4escape — un clic réservation doit rester un clic réservation.
+# réservation du site (module du Hub) — un clic réservation doit rester un clic réservation.
 # Même destination que /reserver plus bas ; placée ici car le catch-all
 # host-level Buzz ci-dessous capterait sinon le path en premier.
-https://buzz-your-brain-caen.fr/reserver      https://braincaen.4escape.io/booking  301!
-https://www.buzz-your-brain-caen.fr/reserver  https://braincaen.4escape.io/booking  301!
-https://buzzyourbrain-caen.fr/reserver        https://braincaen.4escape.io/booking  301!
-https://www.buzzyourbrain-caen.fr/reserver    https://braincaen.4escape.io/booking  301!
-https://buzzyourbraincaen.fr/reserver         https://braincaen.4escape.io/booking  301!
-https://www.buzzyourbraincaen.fr/reserver     https://braincaen.4escape.io/booking  301!
+https://buzz-your-brain-caen.fr/reserver      https://gamedoor41.fr/reserver/  301!
+https://www.buzz-your-brain-caen.fr/reserver  https://gamedoor41.fr/reserver/  301!
+https://buzzyourbrain-caen.fr/reserver        https://gamedoor41.fr/reserver/  301!
+https://www.buzzyourbrain-caen.fr/reserver    https://gamedoor41.fr/reserver/  301!
+https://buzzyourbraincaen.fr/reserver         https://gamedoor41.fr/reserver/  301!
+https://www.buzzyourbraincaen.fr/reserver     https://gamedoor41.fr/reserver/  301!
 
 https://buzz-your-brain-caen.fr/*         https://gamedoor41.fr/quiz-game-caen/   301!
 https://www.buzz-your-brain-caen.fr/*     https://gamedoor41.fr/quiz-game-caen/   301!
@@ -120,10 +120,9 @@ https://www.buzzyourbraincaen.fr/*        https://gamedoor41.fr/quiz-game-caen/ 
 # ----- DEVIS/CONTACT WIX SHORT URLS -----
 /contact-1                                /contact/                              301
 /contact-2                                /contact/                              301
-/booking                                  https://braincaen.4escape.io/booking   301
-/reservation                              https://braincaen.4escape.io/booking   301
-/reserver                                 https://braincaen.4escape.io/booking   301
-/shop                                     https://braincaen.4escape.io/shop      301
+/booking                                  /reserver/   301
+/reservation                              /reserver/   301
+/shop                                     https://synergia-hub.netlify.app/bons-cadeaux      302
 
 # =============================================================
 # CATCH-ALL HOST-LEVEL — domaines Brain/Buzz/Backroom → GAMEDOOR·41

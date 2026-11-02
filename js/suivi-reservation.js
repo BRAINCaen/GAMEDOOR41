@@ -1,7 +1,7 @@
 /* GAMEDOOR·41 — mesure GA4 des clics « Réserver » sur les pages qui ne chargent pas /js/main.js.
  *
  * /js/main.js envoie l'événement GA4 « begin_checkout » à chaque clic sur un lien de réservation
- * (braincaen.4escape.io/booking). Mais main.js n'est pas chargé sur l'accueil, le magazine, les articles
+ * (/reserver/, le module de réservation du site). Mais main.js n'est pas chargé sur l'accueil, le magazine, les articles
  * /post/…, /avis/ et /restauration-seminaire/ : sans ce fichier, les clics « Réserver » de ces pages
  * n'étaient pas comptés dans GA4.
  *
@@ -38,7 +38,7 @@
   // Identique au suivi « booking link clicks » de main.js.
   function brancher() {
     if (mainJsPresent()) return;
-    var liens = document.querySelectorAll('a[href*="4escape.io/booking"]');
+    var liens = document.querySelectorAll('a[href*="/reserver"]');
     Array.prototype.forEach.call(liens, function (el) {
       el.addEventListener('click', function () {
         trackEvent('begin_checkout', {

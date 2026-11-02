@@ -122,9 +122,9 @@
         <a href="/magazine/">Magazine</a>
         <a href="/contact/">Contact</a>
         <a href="/brain-devient-gamedoor41/" class="mobile-only">Brain devient GAMEDOOR·41</a>
-        <a href="https://braincaen.4escape.io/booking" class="mobile-only nav-cta-mobile" target="_blank" rel="noopener">Réserver</a>
+        <a href="https://gamedoor41.fr/reserver/" class="mobile-only nav-cta-mobile">Réserver</a>
       </nav>
-      <a href="https://braincaen.4escape.io/booking" class="nav-cta" target="_blank" rel="noopener">Réserver</a>
+      <a href="https://gamedoor41.fr/reserver/" class="nav-cta">Réserver</a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -168,7 +168,7 @@
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; text-align: left;">
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Réservation</h3>
-            <p style="color: var(--grey-light); font-size: 0.92rem;">Particuliers : réservation directe possible <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener" style="color: var(--orange);">en ligne</a>. Pros / privatisation / restauration : devis sous 48h.</p>
+            <p style="color: var(--grey-light); font-size: 0.92rem;">Particuliers : réservation directe possible <a href="https://gamedoor41.fr/reserver/" style="color: var(--orange);">en ligne</a>. Pros / privatisation / restauration : devis sous 48h.</p>
           </div>
           <div style="flex: 1 1 240px; max-width: 280px; padding: 16px; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: var(--radius);">
             <h3 style="font-size: 1rem; color: var(--white); margin-bottom: 6px;">Paiement</h3>
@@ -232,7 +232,7 @@
       <p style="line-height:1.7; margin:0 0 14px;">Pour les <strong>professionnels</strong> (PME, ETI, grands groupes, banques, collectivités, associations), notre devis inclut systématiquement : facture entreprise au format SARL BOEHME (RCS Caen 823&nbsp;227&nbsp;111), règlement à 30&nbsp;jours sur RIB, prise en charge ANCV / CESU / CSE possible. Les CGV B2B s'appliquent — notamment la <strong>garantie report</strong> qui sécurise vos dates contre les imprévus de dernière minute.</p>
 
       <h3 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; text-transform:uppercase; font-size:22px; letter-spacing:.08em; margin:32px 0 12px; color:#E07020;">Délais de réponse et confirmation</h3>
-      <p style="line-height:1.7; margin:0 0 14px;">Devis simulé en ligne : tarif immédiat, valable 30 jours. Devis personnalisé envoyé par email : sous 48 heures ouvrées. Confirmation de réservation : à validation du devis et du paiement en ligne (acompte ou règlement total selon le délai). Aucun paiement sur place pour la réservation initiale — exclusivement en ligne via notre plateforme sécurisée 4escape.io. Les compléments éventuels (justificatif manquant, supplément le jour J) se règlent sur place avant le jeu.</p>
+      <p style="line-height:1.7; margin:0 0 14px;">Devis simulé en ligne : tarif immédiat, valable 30 jours. Devis personnalisé envoyé par email : sous 48 heures ouvrées. Confirmation de réservation : à validation du devis et du paiement en ligne (acompte ou règlement total selon le délai). Aucun paiement sur place pour la réservation initiale — exclusivement en ligne via notre plateforme de paiement sécurisée. Les compléments éventuels (justificatif manquant, supplément le jour J) se règlent sur place avant le jeu.</p>
 
       <h3 style="font-family:'Barlow Condensed',sans-serif; font-weight:700; text-transform:uppercase; font-size:22px; letter-spacing:.08em; margin:32px 0 12px; color:#E07020;">Une question avant de simuler&nbsp;?</h3>
       <p style="line-height:1.7; margin:0 0 14px;">Pour toute demande spécifique (groupe atypique, configuration mixte escape + quiz sur la même soirée, journée d'activités pour votre séminaire d'entreprise (nous n'avons pas de salle de réunion), privatisation week-end), contactez-nous par email à <a href="mailto:contact@gamedoor41.fr" style="color:#E07020;">contact@gamedoor41.fr</a>. Nous répondons en moyenne sous 4 heures ouvrées et proposons toujours plusieurs configurations selon votre budget et vos contraintes de date.</p>
@@ -321,7 +321,7 @@
   const QUIZ_PRICES_TTC   = { 4: 84, 5: 105, 6: 126, 7: 133, 8: 144, 9: 153, 10: 170, 11: 176, 12: 192, 13: 195, 14: 210, 15: 225, 16: 240 };
   const toHT = (ttc) => ttc / 1.10;
 
-  // Cartes cadeau (vente directe via shop 4escape.io — bouton externe)
+  // Cartes cadeau (boutique en ligne du module de réservation — bouton externe)
   const GIFT_CARDS = {
     escape: [
       { id: 'escape2', name: 'Escape Room — 2 personnes', priceTTC: 74,  persons: 2 },
@@ -1387,14 +1387,14 @@
           </div>
 
           {isGift ? (
-            <a href="https://braincaen.4escape.io/shop" target="_blank" rel="noopener noreferrer" className="block text-center py-3 bg-amber-400 text-black rounded-lg sim-display font-black tracking-wider uppercase hover:bg-amber-300 transition-all">🎁 Offrir cette carte cadeau</a>
+            <a href="https://synergia-hub.netlify.app/bons-cadeaux" target="_blank" rel="noopener noreferrer" className="block text-center py-3 bg-amber-400 text-black rounded-lg sim-display font-black tracking-wider uppercase hover:bg-amber-300 transition-all">🎁 Offrir cette carte cadeau</a>
           ) : needsDevis ? (
             showDevisForm ? formulaire : (
               <button type="button" onClick={() => setShowDevisForm(true)} className="w-full py-3 bg-gd-orange text-black rounded-lg sim-display font-black tracking-wider uppercase hover:bg-gd-orange/90 transition-all">📝 Demander mon devis</button>
             )
           ) : (
             <div className="space-y-2">
-              <a href="https://braincaen.4escape.io/booking" target="_blank" rel="noopener noreferrer" className="block text-center py-3 bg-emerald-600 text-white rounded-lg sim-display font-black tracking-wider uppercase hover:bg-emerald-500 transition-all">📅 Réserver en ligne</a>
+              <a href="https://gamedoor41.fr/reserver/" className="block text-center py-3 bg-emerald-600 text-white rounded-lg sim-display font-black tracking-wider uppercase hover:bg-emerald-500 transition-all">📅 Réserver en ligne</a>
               {showDevisForm ? formulaire : (
                 <button type="button" onClick={() => setShowDevisForm(true)} className="w-full py-2.5 border border-gd-orange/60 text-gd-cream rounded-lg text-sm sim-display tracking-wider uppercase font-bold hover:bg-gd-orange/10 transition-all">💬 Une question ? Envoyez-nous cette simulation</button>
               )}
