@@ -363,41 +363,29 @@
 # 2026-05-07). Si une vieille URL Wix non mappée arrive, elle tombe
 # proprement sur /404.html (page custom GAMEDOOR navigation).
 
-# --- Réservation ---
+# --- Réservation (module du Hub sur /reserver/ depuis le 02/11/2026 ; /reserver est une vraie page, pas de redirection) ---
 
 [[redirects]]
   from = "/reservation"
-  to = "https://braincaen.4escape.io/booking"
+  to = "/reserver/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/reservation/"
-  to = "https://braincaen.4escape.io/booking"
+  to = "/reserver/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/booking"
-  to = "https://braincaen.4escape.io/booking"
+  to = "/reserver/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/booking/"
-  to = "https://braincaen.4escape.io/booking"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/reserver"
-  to = "https://braincaen.4escape.io/booking"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/reserver/"
-  to = "https://braincaen.4escape.io/booking"
+  to = "/reserver/"
   status = 301
   force = true
 
