@@ -251,7 +251,7 @@ function buildReviewsSection(reviews, page, rating, reviewCount) {
 ${articles}
       </div>
       <p style="text-align:center;margin-top:32px;font-size:0.95rem;color:var(--grey-light);">
-        Note moyenne <strong style="color:var(--white);">${ratingFmt}/5</strong> sur <a href="https://g.page/r/CUTt-ugPQ0YREBM/review" target="_blank" rel="noopener" style="color:${accent};">${countFmt} avis Google</a> pour l'ensemble de GAMEDOOR&middot;41.
+        Note moyenne <strong style="color:var(--white);">${ratingFmt}/5</strong> sur <a href="https://g.page/r/CYsBAVRtGhivEBM/review" target="_blank" rel="noopener" style="color:${accent};">${countFmt} avis Google</a> pour l'ensemble de GAMEDOOR&middot;41.
       </p>
     </div>
   </section>
