@@ -341,7 +341,8 @@ ${components}`;
     "sameAs": [
       "https://www.google.com/maps/place/Brain+Escape+Game/@49.1842,-0.3508",
       "https://www.facebook.com/braincaen",
-      "https://www.instagram.com/brain_caen/"
+      "https://www.instagram.com/gamedoor41",
+      "https://www.tiktok.com/@gamedoor41"
     ]
   }
   </script>
