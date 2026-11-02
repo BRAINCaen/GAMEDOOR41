@@ -166,7 +166,7 @@ const articles = [
     category: 'Saison',
     categoryClass: 'quiz',
     title: 'Quiz Game Noël à Caen — Buzz Your Brain spécial fêtes',
-    excerpt: "Une version festive du Quiz Buzz Your Brain pendant les fêtes : thème Noël, questions revisitées, 4 à 16 joueurs. 100% fêtes, 0% prise de tête.",
+    excerpt: "Pendant les fêtes, le quiz Buzz Your Brain réunit familles, amis et collègues sur un vrai plateau TV : 4 à 16 candidats, émission au choix, pull de Noël bienvenu.",
     date: '2025-12-08',
     dateLabel: '8 décembre 2025',
     readTime: '2 min',

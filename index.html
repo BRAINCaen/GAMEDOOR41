@@ -339,26 +339,6 @@
   </div>
 </section>
 
-<style>
-.saison { background: var(--gd-black); padding: 22px 0 34px; border-bottom: 1px solid var(--hairline); }
-.saison-band { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:8px 18px; padding:14px 22px; border:2px solid rgba(190,27,27,.55); border-radius:8px; background:linear-gradient(90deg, rgba(190,27,27,.16) 0%, rgba(224,112,32,.08) 100%); font-family:var(--gd-font-display); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; font-size:15px; color:var(--gd-cream); text-align:center; }
-.saison-band strong { color:#ff6b6b; font-weight:900; }
-.saison-band a { color:var(--gd-orange); text-decoration:none; border-bottom:1px solid rgba(224,112,32,.5); transition:color .2s ease, border-color .2s ease; }
-.saison-band a:hover, .saison-band a:focus-visible { color:#fff; border-bottom-color:#fff; }
-.saison-sep { color:var(--gd-orange); opacity:.5; }
-@media (max-width:640px) { .saison-band { font-size:13px; letter-spacing:1px; padding:12px 14px; gap:6px 12px; } .saison-sep { display:none; } .saison-band > * { flex-basis:100%; } }
-</style>
-<section class="saison" aria-label="Vacances de la Toussaint et Halloween 2026">
-  <div class="container">
-    <div class="saison-band">
-      <span><strong>🎃 Vacances de la Toussaint</strong> · 17 oct → 2 nov · ouvert tous les jours</span>
-      <span class="saison-sep" aria-hidden="true">·</span>
-      <a href="/post/vacances-toussaint-caen-2026/">12 sorties 100 % Halloween à Caen</a>
-      <span class="saison-sep" aria-hidden="true">·</span>
-      <a href="/post/halloween-caen-escape-game-psychiatric/">Halloween à Psychiatric · 31 oct complet, places toute la quinzaine</a>
-    </div>
-  </div>
-</section>
 
 <section class="bento-section" id="experiences">
   <div class="container container-wide">
@@ -467,6 +447,7 @@
       </article>
 
       <article class="card card-action" data-card="action" id="action">
+        <a href="/post/escape-game-ou-action-game-caen/#death-zone" class="card-link" aria-label="Action game à Caen : Death Zone arrive bientôt chez GAMEDOOR·41"></a>
         <div class="visual viz viz-action" aria-hidden="true">
           <div class="target"></div>
           <div class="pulse"></div>
@@ -511,6 +492,47 @@
       </article>
 
     </div>
+    </div>
+  </div>
+</section>
+
+<section class="gd-cadeau" aria-labelledby="gd-cadeau-titre-accueil">
+  <style>
+    .gd-cadeau { padding:56px 0; background:#0d0a07; border-top:1px solid rgba(224,112,32,.18); border-bottom:1px solid rgba(224,112,32,.18); }
+    .gd-cadeau-carte { display:grid; grid-template-columns:minmax(0,320px) minmax(0,1fr); gap:32px; align-items:center; max-width:980px; margin:0 auto; padding:22px; border:2px solid rgba(224,112,32,.55); border-radius:14px; background:linear-gradient(135deg, rgba(224,112,32,.10) 0%, rgba(157,78,221,.08) 100%); }
+    .gd-cadeau-visuel { display:block; border-radius:10px; overflow:hidden; aspect-ratio:4/5; background:#140d18; }
+    .gd-cadeau-visuel img { display:block; width:100%; height:100%; object-fit:cover; object-position:50% 62%; }
+    .gd-cadeau-kicker { margin:0 0 8px; font-family:var(--gd-font-display, var(--font-display)); font-weight:700; letter-spacing:.18em; text-transform:uppercase; font-size:.9rem; color:var(--gd-orange, var(--orange, #E07020)); }
+    .gd-cadeau h2 { margin:0 0 12px; font-family:var(--gd-font-display, var(--font-display)); font-weight:800; text-transform:uppercase; font-size:clamp(1.6rem, 3vw, 2.3rem); line-height:1.08; color:#F0EBE2; }
+    .gd-cadeau p { margin:0 0 12px; color:var(--gd-grey-light, var(--grey-light, #C8C2B8)); font-size:1.05rem; line-height:1.65; }
+    .gd-cadeau ul { list-style:none; margin:0 0 18px; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+    .gd-cadeau li { padding:6px 12px; border:1px solid rgba(240,235,226,.18); border-radius:999px; color:#F0EBE2; font-size:.95rem; }
+    .gd-cadeau-actions { display:flex; flex-wrap:wrap; gap:12px; }
+    @media (max-width:760px) { .gd-cadeau-carte { grid-template-columns:1fr; gap:18px; padding:16px; } .gd-cadeau-visuel { aspect-ratio:16/10; } .gd-cadeau-actions .btn { width:100%; text-align:center; } }
+  </style>
+  <div class="container">
+    <div class="gd-cadeau-carte">
+      <a class="gd-cadeau-visuel" href="/cadeau/" aria-label="Carte cadeau GAMEDOOR·41 : escape game ou quiz">
+        <picture>
+          <source type="image/jpeg" srcset="/img/magazine/cartes-cadeau-quiz-neon-480w.jpg 480w, /img/magazine/cartes-cadeau-quiz-neon-768w.jpg 768w" sizes="(max-width:760px) 92vw, 320px">
+          <img width="768" height="1364" src="/img/magazine/cartes-cadeau-quiz-neon-768w.jpg" alt="Cartes cadeau du quiz Buzz Your Brain sur le plateau néon de GAMEDOOR·41 à Mondeville" loading="lazy" decoding="async">
+        </picture>
+      </a>
+      <div>
+        <p class="gd-cadeau-kicker">Carte cadeau · Noël approche</p>
+        <h2 id="gd-cadeau-titre-accueil">Offrez une expérience, pas un objet</h2>
+        <p>Un escape game ou une émission du quiz sur notre plateau TV, du montant de votre choix. La version numérique part tout de suite par e-mail, même la veille de Noël&nbsp;; le Coffret Mystère est livré sous 5 jours ou à retirer sur place, à Mondeville.</p>
+        <ul aria-label="La carte cadeau en bref">
+          <li>De 15 à 200&nbsp;€</li>
+          <li>Escape ou quiz</li>
+          <li>Valable 12 mois</li>
+          <li>E-carte immédiate</li>
+        </ul>
+        <div class="gd-cadeau-actions">
+          <a href="https://braincaen.4escape.io/shop" class="btn btn-primary btn-arrow" target="_blank" rel="noopener" data-track="cta-carte-cadeau-accueil">Offrir une carte cadeau</a>
+          <a href="/cadeau/" class="btn btn-outline">Comment ça marche</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -730,7 +752,7 @@
 
       <p style="color:#C8C2B8;font-size:1.05rem;line-height:1.7;margin:0 0 14px;">Brain Escape Game Caen, c'était (et c'est toujours) <strong>3 univers immersifs</strong> joués par plus de 56&nbsp;000 personnes depuis 2017&nbsp;: <a href="/escape-game-caen/psychiatric/" style="color:#E07020;">Psychiatric</a> (l'horreur, 26&nbsp;000 joueur·euse·s), <a href="/escape-game-caen/garde-a-vue/" style="color:#E07020;">Garde à Vue</a> ex In Prison (l'enquête, 18&nbsp;000) et <a href="/escape-game-caen/back-to-the-80s/" style="color:#E07020;">Back to the 80's</a> (le voyage rétro nommé Top 100 France, 12&nbsp;000). <a href="/escape-game-caen/" style="color:#E07020;">Voir tous les escape games à Caen</a>.</p>
 
-      <p style="color:#C8C2B8;font-size:1.05rem;line-height:1.7;margin:0 0 14px;">Buzz Your Brain Caen, c'était (et c'est toujours) le <strong>quiz géant type plateau TV</strong> avec 8 pupitres et buzzers, joué par plus de 13&nbsp;000 candidat·e·s depuis 2022. <a href="/quiz-game-caen/" style="color:#9D4EDD;">Voir le quiz game Buzz Your Brain à Caen</a>.</p>
+      <p style="color:#C8C2B8;font-size:1.05rem;line-height:1.7;margin:0 0 14px;">Buzz Your Brain Caen, c'était (et c'est toujours) le <strong>quiz géant type plateau TV</strong> avec 8 pupitres et buzzers, joué par plus de 13&nbsp;000 candidat·e·s depuis 2022. <a href="/quiz-game-caen/" style="color:#9D4EDD;">Voir le quiz game Buzz Your Brain à Caen</a>, notre <a href="/quiz-game-caen/#quiz-room" style="color:#9D4EDD;">quiz room plateau TV à Caen-Mondeville</a>.</p>
 
       <p style="color:#C8C2B8;font-size:1.05rem;line-height:1.7;margin:0;">Pourquoi le changement de nom&nbsp;? Pour réunir nos deux activités sous une seule marque, plus simple à mémoriser, et préparer l'arrivée de Death Zone (notre prochaine expérience action game) sous le même toit. Tous les liens, fiches Google, anciens domaines (brain-escapegame-caen.fr, buzzyourbrain-caen.fr, braincaen.fr) redirigent automatiquement ici. <strong>Rien n'a changé pour vous, sauf le nom au-dessus de la porte.</strong></p>
     </div>

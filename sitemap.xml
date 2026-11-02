@@ -4,7 +4,7 @@
   <!-- ===== PAGE D'ACCUEIL ===== -->
   <url>
     <loc>https://gamedoor41.fr/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -20,7 +20,7 @@
   <!-- ===== ACTIVITÉS PRINCIPALES ===== -->
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -28,13 +28,13 @@
   <!-- ===== SEGMENT FAMILLE & ENFANTS ===== -->
   <url>
     <loc>https://gamedoor41.fr/escape-game-famille-caen/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/escape-game-enfant-caen/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -46,13 +46,13 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/quiz-game-caen/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/team-building-caen/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -72,7 +72,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/escape-game-caen/psychiatric/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -98,7 +98,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/anniversaire-caen/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -112,7 +112,7 @@
   <!-- ===== TRANSACTIONNELLES ===== -->
   <url>
     <loc>https://gamedoor41.fr/tarifs/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -124,7 +124,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/cadeau/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -150,7 +150,7 @@
   <!-- ===== MAGAZINE / BLOG ===== -->
   <url>
     <loc>https://gamedoor41.fr/magazine/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -162,19 +162,25 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/horror-quiz-caen/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://gamedoor41.fr/post/sortie-equipe-fin-annee-caen/</loc>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/vacances-toussaint-caen-2026/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/halloween-caen-escape-game-psychiatric/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -228,7 +234,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/anniversaire-enfant-caen/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -240,7 +246,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/escape-game-ou-action-game-caen/</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -252,7 +258,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/buzz-your-brain-jeu-televise-realiste-caen/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
@@ -276,7 +282,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/carte-cadeau-escape-quiz-caen/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -306,7 +312,7 @@
   </url>
   <url>
     <loc>https://gamedoor41.fr/post/quiz-game-noel-caen-buzz-your-brain/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
