@@ -1,13 +1,33 @@
 {
-  "updatedAt": "2026-11-03T03:55:41.473Z",
+  "updatedAt": "2026-11-04T02:21:38.479Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
-  "reviewCount": 2320,
+  "reviewCount": 2319,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 36,
-  "googleAdded": 0,
+  "poolSize": 38,
+  "googleAdded": 2,
   "reviews": [
+    {
+      "author": "4dan_0",
+      "rating": 5,
+      "text": "Super immersion, game master super dans son rôle et même après la partie. Le meilleur escape game que j’ai fait, l’horreur est très bien maîtriser. Je recommande fortement !!!!!",
+      "date": "2026-10-13",
+      "source": "google",
+      "themes": [],
+      "context": ""
+    },
+    {
+      "author": "Jeanne L.",
+      "rating": 5,
+      "text": "C’était vrm génial, nous étions trois nous avons fait psychiatrie. On s’y est vraiment cru dès le début, on a eu peur c’était vraiment très bien fait ! Nous recommandons vivement ! Et nous reviendrons avec grand plaisir, le personnel est super sympa",
+      "date": "2026-10-11",
+      "source": "google",
+      "themes": [
+        "psychiatric"
+      ],
+      "context": ""
+    },
     {
       "author": "Mila M.",
       "rating": 5,
