@@ -1,6 +1,6 @@
 /* GAMEDOOR·41 — fenêtre promotionnelle (pop-up) affichée à l'arrivée sur le site.
  *
- * Promotion en cours : HORROR QUIZ, la nouvelle émission du quiz Buzz Your Brain (30/10/2026).
+ * Aucune promotion en cours : la pop-up HORROR QUIZ (30/10/2026), prévue pour les vacances de la Toussaint, est arrêtée depuis le 05/11/2026.
  *
  * - s'ouvre quelques secondes après l'arrivée, sur toutes les pages sauf l'article de la promo et les pages légales ;
  * - se ferme avec la croix, un clic à côté ou la touche Échap ; elle ne revient alors pas avant PAUSE_JOURS ;
@@ -14,7 +14,7 @@
   'use strict';
 
   var PROMO = {
-    actif: true,
+    actif: false,
     id: 'horror-quiz-2026-10',
     fin: null,
     article: '/post/horror-quiz-caen/',
