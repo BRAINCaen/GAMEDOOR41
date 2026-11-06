@@ -91,6 +91,7 @@
     .qp-mention p:last-child, .qp-mention ul:last-child { margin-bottom: 0; }
     .qp-mention .qp-mention-titre { font-family: var(--gd-font-display); font-size: 18px; letter-spacing: .5px; text-transform: uppercase; }
     .qp-table-scroll { overflow-x: auto; }
+    @media (max-width: 600px) { .qp-table-scroll th:nth-child(3), .qp-table-scroll td:nth-child(3) { display: none; } }
     .qp-questions { list-style: none; padding-left: 0; }
     .qp-questions li { margin-bottom: 12px; }
     .qp-format { display: inline-block; min-width: 58px; margin-right: 8px; padding: 1px 8px; border: 1px solid rgba(224,112,32,.45); border-radius: 999px; background: rgba(224,112,32,.10); color: var(--gd-orange); font-family: var(--gd-font-display); font-size: 13px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; text-align: center; }
