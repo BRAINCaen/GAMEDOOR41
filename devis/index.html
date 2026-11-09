@@ -312,9 +312,9 @@
   const nomSalle = (id) => (SALLES_ESCAPE.find(x => x.id === id) || {}).name || id;
   const nomEmission = (id) => (EMISSIONS_QUIZ.find(x => x.id === id) || {}).name || id;
 
-  // Tarifs pro (TVA 10 %)
-  const TARIFS_PRO_HT  = { escape: 15.91, quiz: 13.64 };
+  // Tarifs pro (TVA 10 %) : le TTC fait foi, le HT en découle sans arrondi (même calcul que les devis du Hub, au centime près)
   const TARIFS_PRO_TTC = { escape: 17.50, quiz: 15.00 };
+  const TARIFS_PRO_HT  = { escape: TARIFS_PRO_TTC.escape / 1.10, quiz: TARIFS_PRO_TTC.quiz / 1.10 };
 
   // Tarifs publics — grille particuliers (TTC, TVA 10 %) : même grille que /tarifs/
   const ESCAPE_PRICES_TTC = { 2: 74, 3: 84, 4: 100, 5: 120, 6: 144 };
@@ -641,10 +641,19 @@
     // ===== CALCUL =====
     const calculateTotal = () => {
       const details = [];
-      let totalHT = 0, tva10 = 0, tva20 = 0, totalTTC = 0;
-      const add = (d) => {
-        details.push(d); totalHT += d.subtotalHT; totalTTC += d.subtotalTTC;
-        if (d.tva === 20) tva20 += d.subtotalTTC - d.subtotalHT; else tva10 += d.subtotalTTC - d.subtotalHT;
+      const add = (d) => { details.push(d); };
+      // Totaux comme les devis du Hub : TTC additionnés par taux de TVA, HT de chaque taux = TTC / (1 + taux) arrondi au centime.
+      const r2 = (n) => Math.round(n * 100) / 100;
+      const totaux = () => {
+        const parTaux = {};
+        details.forEach(d => { if (d.subtotalTTC) parTaux[d.tva] = r2((parTaux[d.tva] || 0) + d.subtotalTTC); });
+        let totalHT = 0, totalTTC = 0, tva10 = 0, tva20 = 0;
+        Object.entries(parTaux).forEach(([taux, ttc]) => {
+          const ht = r2(ttc / (1 + Number(taux) / 100));
+          totalHT += ht; totalTTC += ttc;
+          if (Number(taux) === 20) tva20 += ttc - ht; else tva10 += ttc - ht;
+        });
+        return { totalHT: r2(totalHT), totalTTC: r2(totalTTC), tva10: r2(tva10), tva20: r2(tva20) };
       };
 
       if (isGift) {
@@ -654,7 +663,8 @@
           if (wantPhysicalBox) add({ groupe: 'activite', name: 'Coffret cadeau physique', qty: 1, priceHT: toHT(10), priceTTC: 10, subtotalHT: toHT(10), subtotalTTC: 10, tva: 10 });
         }
         const pers = card ? card.persons : 1;
-        return { details, totalHT, tva10, tva20, totalTTC, totalPersons: pers, perPersonHT: totalHT / pers, perPersonTTC: totalTTC / pers, isGiftCard: true };
+        const t = totaux();
+        return { details, ...t, totalPersons: pers, perPersonHT: t.totalHT / pers, perPersonTTC: t.totalTTC / pers, isGiftCard: true };
       }
 
       const reduc = reducList.find(r => r.id === reduction);
@@ -692,13 +702,15 @@
         CARTE_ITEMS.forEach(item => {
           const q = qtyDe(item.id);
           if (q > 0) add({ groupe: 'surplace', id: item.id, editable: true, name: item.name, info: item.sectionTitle, qty: q, unit: item.perPerson ? 'pers.' : item.unit,
-            priceHT: item.priceHT, priceTTC: prixTTC(item.priceHT, item.tva), subtotalHT: item.priceHT * q, subtotalTTC: item.priceHT * q * (1 + item.tva / 100), tva: item.tva });
+            // Prix TTC à l'unité arrondi au centime, puis × quantité : comme une ligne de devis du Hub (le HT en découle).
+            priceHT: item.priceHT, priceTTC: prixTTC(item.priceHT, item.tva), subtotalHT: prixTTC(item.priceHT, item.tva) * q / (1 + item.tva / 100), subtotalTTC: prixTTC(item.priceHT, item.tva) * q, tva: item.tva });
         });
         const priv = PRIVATISATION.find(p => p.id === privatisation);
         if (priv) add({ groupe: 'privatisation', name: priv.name, info: 'Obligatoire dès que vous consommez sur place · TVA 20 %', qty: 1, priceHT: priv.priceHT, priceTTC: priv.priceTTC, subtotalHT: priv.priceHT, subtotalTTC: priv.priceTTC, tva: 20 });
       }
 
-      return { details, totalHT, tva10, tva20, totalTTC, totalPersons: groupe, perPersonHT: groupe > 0 ? totalHT / groupe : 0, perPersonTTC: groupe > 0 ? totalTTC / groupe : 0 };
+      const t = totaux();
+      return { details, ...t, totalPersons: groupe, perPersonHT: groupe > 0 ? t.totalHT / groupe : 0, perPersonTTC: groupe > 0 ? t.totalTTC / groupe : 0 };
     };
 
     const ligneTexte = (d) => {
