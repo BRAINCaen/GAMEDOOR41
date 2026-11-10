@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-10T04:08:21.373Z",
+  "updatedAt": "2026-11-10T04:37:55.105Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
   "reviewCount": 2319,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 39,
-  "googleAdded": 0,
+  "poolSize": 40,
+  "googleAdded": 1,
   "reviews": [
     {
       "author": "4dan_0",
@@ -36,6 +36,19 @@
       "source": "google",
       "themes": [
         "psychiatric"
+      ],
+      "context": ""
+    },
+    {
+      "author": "Mélissa M.",
+      "rating": 5,
+      "text": "En juillet, nous avions fait l'escape game \"Back to 80's\", et hier nous avons testé le quizz room, pour un enterrement de vie de jeune gens. Pour l'escape game : des énigmes géniales, une belle difficulté, et un univers merveilleux qui nous a totalement transportés. Le jeu d'acteur de la personne qui nous a accueillis était extra, ça ajoute vraiment une dimension immersive incroyable. Pour le quizz room hier soir : on a passé un superbe moment, les buzzers ont chauffé ! Les questions sont fun et bien pensées, les jokers ajoutent du piment au jeu. Une très belle soirée entre amis. Deux expériences différentes, deux fois un excellent moment. On recommande vivement pour une soirée originale entre amis, en famille ou pour un événement spécial comme le nôtre ! L'équipe est super accueillante et au top !",
+      "date": "2026-09-05",
+      "source": "google",
+      "themes": [
+        "back-to-80s",
+        "quiz",
+        "famille"
       ],
       "context": ""
     },
