@@ -4,6 +4,15 @@
 [build]
   publish = "."
 
+# Clés WEB Firebase autorisées au scan des secrets de Netlify (12/11/2026) :
+# publiques par nature (elles identifient un projet Firebase et n’ouvrent aucun
+# droit : la sécurité est faite par les règles Firebase et par le serveur). La
+# détection automatique des secrets reste active pour tout le reste du dépôt.
+#  - projet Synergia (synergia-app-f27e7) : connexion Google de l’éditeur du site
+#  - projet de la page restauration-seminaire (archivage des demandes de devis)
+[build.environment]
+  SECRETS_SCAN_SMART_DETECTION_OMIT_VALUES = "AIzaSyD7uBuAQaOhZ02owkZEuMKC5Vji6PrB2f8,AIzaSyCdfa9-4uXH213PJ-W7Kn89fkobThNybCw"
+
 # ============================================================
 # REDIRECTIONS 301 — Migration Wix → gamedoor41.fr
 # Mapping sémantique complet : chaque URL Wix redirige vers
