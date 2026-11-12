@@ -27440,14 +27440,23 @@ var estCompteActif = (u) => {
   return true;
 };
 var estAdminSynergia = (u) => !!u && (u.isAdmin === true || u.role === "admin" || u.profile && u.profile.role === "admin" || Array.isArray(u.permissions) && u.permissions.includes("admin_access"));
+var ficheVide = (d) => {
+  if (!d || typeof d !== "object") return true;
+  const xp = Number(d.gamification && d.gamification.totalXp) || 0;
+  return xp <= 0 && !d.pseudo && !d.profile && !d.contractData;
+};
 async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
   const base = "https://firestore.googleapis.com/v1/projects/" + projet + "/databases/(default)/documents";
   const h = { Authorization: "Bearer " + jeton, "Content-Type": "application/json" };
-  const r = await fetchFn(base + "/users/" + encodeURIComponent(charge.sub), { headers: h, signal: AbortSignal.timeout(4e3) });
   const fiches = [];
-  if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
-  else if (r.status !== 404) throw new RefusAcces("Lecture de votre fiche Synergia impossible pour le moment.", 503, "INDISPONIBLE");
-  if (!fiches.length && charge.email) {
+  const uids = [charge.sub];
+  if (typeof charge.aliasDe === "string" && /^[A-Za-z0-9_-]{6,128}$/.test(charge.aliasDe) && charge.aliasDe !== charge.sub) uids.push(charge.aliasDe);
+  for (const uid of uids) {
+    const r = await fetchFn(base + "/users/" + encodeURIComponent(uid), { headers: h, signal: AbortSignal.timeout(4e3) });
+    if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
+    else if (r.status !== 404) throw new RefusAcces("Lecture de votre fiche Synergia impossible pour le moment.", 503, "INDISPONIBLE");
+  }
+  if (charge.email) {
     for (const champ of ["email", "profile.email"]) {
       const q = await fetchFn(base + ":runQuery", {
         method: "POST",
@@ -27457,7 +27466,6 @@ async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
       });
       if (!q.ok) continue;
       for (const ligne of await q.json()) if (ligne.document) fiches.push(objetFirestore(ligne.document.fields));
-      if (fiches.length) break;
     }
   }
   return fiches;
@@ -27481,9 +27489,10 @@ async function identifier(requete, env = process.env, { fetchFn = fetch, mainten
   const admins = new Set([...PROPRIETAIRES, ...String(env.EDITEUR_ADMINS || "").split(/[\s,;]+/)].map((e) => e.trim().toLowerCase()).filter(Boolean));
   const proprietaire = admins.has(email);
   const fiches = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
-  const actives = fiches.filter(estCompteActif);
+  const actives = fiches.filter((f) => estCompteActif(f) && !ficheVide(f));
   if (!actives.length && !proprietaire) {
-    throw new RefusAcces(fiches.length ? "Votre compte Synergia n\u2019est plus actif : l\u2019acc\xE8s \xE0 l\u2019\xE9diteur est ferm\xE9." : "Aucune fiche Synergia ne correspond \xE0 " + email + " : demandez \xE0 Allan de v\xE9rifier votre compte.", 403, fiches.length ? "INACTIF" : "INCONNU");
+    const inactive = fiches.some((f) => !estCompteActif(f));
+    throw new RefusAcces(inactive ? "Votre compte Synergia n\u2019est plus actif : l\u2019acc\xE8s \xE0 l\u2019\xE9diteur est ferm\xE9." : "Aucune fiche Synergia active ne correspond \xE0 " + email + " : demandez \xE0 Allan de v\xE9rifier votre compte.", 403, inactive ? "INACTIF" : "INCONNU");
   }
   const fiche = actives[0] || {};
   const nom = String(fiche.pseudo || fiche.profile && fiche.profile.firstName || fiche.firstName || fiche.displayName || charge.name || email.split("@")[0]).trim();
@@ -38263,6 +38272,7 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
   async function gerer2(req) {
     const url = new URL(req.url);
     const nom = url.pathname.replace(/^.*\/api\/editeur\/?/, "").replace(/\/$/, "");
+    if (req.method === "GET" && nom === "etat") return json({ editeur: true, depot: !!github, assistant: !!ia && !!env.ANTHROPIC_API_KEY });
     const route = routes[req.method + " " + nom];
     if (!route) return json({ erreur: "Adresse inconnue : " + nom }, 404);
     try {

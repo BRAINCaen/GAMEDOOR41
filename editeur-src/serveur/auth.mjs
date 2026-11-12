@@ -92,14 +92,36 @@ export const estCompteActif = (u) => {
 
 const estAdminSynergia = (u) => !!u && (u.isAdmin === true || u.role === 'admin' || (u.profile && u.profile.role === 'admin') || (Array.isArray(u.permissions) && u.permissions.includes('admin_access')));
 
+/**
+ * Fiche « vide » : créée par une connexion refusée (compte Google pro pas encore
+ * rattaché), sans rien de ce qu'a un vrai compte (XP, pseudo, profil RH).
+ * Même règle que rattacherCompte.cjs de Synergia.
+ */
+export const ficheVide = (d) => {
+  if (!d || typeof d !== 'object') return true;
+  const xp = Number(d.gamification && d.gamification.totalXp) || 0;
+  return xp <= 0 && !d.pseudo && !d.profile && !d.contractData;
+};
+
+/**
+ * Toutes les fiches Synergia qui peuvent être celles de la personne :
+ *  - users/{uid} du compte connecté ;
+ *  - users/{aliasDe} quand le compte Google pro a été rattaché au vrai compte
+ *    (claim « aliasDe » posé par Synergia, incident Lwiz / Polar du 12/11/2026) ;
+ *  - les fiches dont l'adresse (email ou profile.email) est la sienne.
+ */
 async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
   const base = 'https://firestore.googleapis.com/v1/projects/' + projet + '/databases/(default)/documents';
   const h = { Authorization: 'Bearer ' + jeton, 'Content-Type': 'application/json' };
-  const r = await fetchFn(base + '/users/' + encodeURIComponent(charge.sub), { headers: h, signal: AbortSignal.timeout(4000) });
   const fiches = [];
-  if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
-  else if (r.status !== 404) throw new RefusAcces('Lecture de votre fiche Synergia impossible pour le moment.', 503, 'INDISPONIBLE');
-  if (!fiches.length && charge.email) {
+  const uids = [charge.sub];
+  if (typeof charge.aliasDe === 'string' && /^[A-Za-z0-9_-]{6,128}$/.test(charge.aliasDe) && charge.aliasDe !== charge.sub) uids.push(charge.aliasDe);
+  for (const uid of uids) {
+    const r = await fetchFn(base + '/users/' + encodeURIComponent(uid), { headers: h, signal: AbortSignal.timeout(4000) });
+    if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
+    else if (r.status !== 404) throw new RefusAcces('Lecture de votre fiche Synergia impossible pour le moment.', 503, 'INDISPONIBLE');
+  }
+  if (charge.email) {
     for (const champ of ['email', 'profile.email']) {
       const q = await fetchFn(base + ':runQuery', {
         method: 'POST', headers: h, signal: AbortSignal.timeout(4000),
@@ -107,7 +129,6 @@ async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
       });
       if (!q.ok) continue;
       for (const ligne of await q.json()) if (ligne.document) fiches.push(objetFirestore(ligne.document.fields));
-      if (fiches.length) break;
     }
   }
   return fiches;
@@ -138,11 +159,13 @@ export async function identifier(requete, env = process.env, { fetchFn = fetch, 
   const admins = new Set([...PROPRIETAIRES, ...String(env.EDITEUR_ADMINS || '').split(/[\s,;]+/)].map((e) => e.trim().toLowerCase()).filter(Boolean));
   const proprietaire = admins.has(email);
   const fiches = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
-  const actives = fiches.filter(estCompteActif);
+  // une vraie fiche active (une fiche vide créée par une connexion refusée ne compte pas)
+  const actives = fiches.filter((f) => estCompteActif(f) && !ficheVide(f));
   if (!actives.length && !proprietaire) {
-    throw new RefusAcces(fiches.length
+    const inactive = fiches.some((f) => !estCompteActif(f));
+    throw new RefusAcces(inactive
       ? 'Votre compte Synergia n’est plus actif : l’accès à l’éditeur est fermé.'
-      : 'Aucune fiche Synergia ne correspond à ' + email + ' : demandez à Allan de vérifier votre compte.', 403, fiches.length ? 'INACTIF' : 'INCONNU');
+      : 'Aucune fiche Synergia active ne correspond à ' + email + ' : demandez à Allan de vérifier votre compte.', 403, inactive ? 'INACTIF' : 'INCONNU');
   }
   const fiche = actives[0] || {};
   const nom = String(fiche.pseudo || (fiche.profile && fiche.profile.firstName) || fiche.firstName || fiche.displayName || charge.name || email.split('@')[0]).trim();

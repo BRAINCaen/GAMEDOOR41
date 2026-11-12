@@ -21,12 +21,16 @@ function jeton(charge, { cle = privateKey, kid = 'cle1' } = {}) {
 }
 
 /** Faux réseau : clés publiques de Google + Firestore de Synergia. */
-function reseau({ fiche = { isActive: true, pseudo: 'Léa' }, parEmail = null } = {}) {
+function reseau({ fiche = { isActive: true, pseudo: 'Léa' }, parEmail = null, parUid = null } = {}) {
   return async (url, o = {}) => {
     const rep = (status, body, headers = {}) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...headers } });
     if (url.includes('securetoken@system.gserviceaccount.com')) return rep(200, { keys: [jwk] }, { 'cache-control': 'public, max-age=3600' });
     const enChamps = (f) => Object.fromEntries(Object.entries(f).map(([k, v]) => [k, typeof v === 'boolean' ? { booleanValue: v } : { stringValue: String(v) }]));
-    if (url.includes('/documents/users/')) return fiche ? rep(200, { fields: enChamps(fiche) }) : rep(404, {});
+    if (url.includes('/documents/users/')) {
+      const uid = decodeURIComponent(url.split('/documents/users/')[1]);
+      const f = parUid ? parUid[uid] : fiche;
+      return f ? rep(200, { fields: enChamps(f) }) : rep(404, {});
+    }
     if (url.endsWith(':runQuery')) return rep(200, parEmail ? [{ document: { fields: enChamps(parEmail) } }] : [{}]);
     return rep(404, {});
   };
@@ -85,4 +89,17 @@ test('jetons falsifiés, expirés ou d’un autre projet : refusés', async () =
 test('vérification seule du jeton', async () => {
   const c = await verifierJeton(jeton({ sub: 'uid-v' }), { projet: PROJET, fetchFn: reseau() });
   assert.equal(c.sub, 'uid-v');
+});
+
+test('compte Google pro rattaché (alias) : la vraie fiche est retrouvée', async () => {
+  // fiche vide créée par une connexion refusée + vraie fiche trouvée par l'adresse
+  const q1 = await identifier(requete(jeton({ sub: 'uid-alias1', email: 'lwiz@gamedoor41.fr' })), env, { fetchFn: reseau({ parUid: { 'uid-alias1': { email: 'lwiz@gamedoor41.fr' } }, parEmail: { isActive: true, pseudo: 'Lwiz', email: 'lwiz@gamedoor41.fr' } }) });
+  assert.equal(q1.nom, 'Lwiz');
+  // claim aliasDe posé par Synergia
+  const q2 = await identifier(requete(jeton({ sub: 'uid-alias2', email: 'polar@gamedoor41.fr', aliasDe: 'uid-vrai-polar' })), env, { fetchFn: reseau({ parUid: { 'uid-vrai-polar': { isActive: true, pseudo: 'Polar' } } }) });
+  assert.equal(q2.nom, 'Polar');
+  // seulement une fiche vide : refusé
+  await refuse(jeton({ sub: 'uid-vide', email: 'inconnu@gamedoor41.fr' }), reseau({ parUid: { 'uid-vide': { email: 'inconnu@gamedoor41.fr' } } }), 'INCONNU');
+  // fiche vide + vraie fiche archivée : refusé (ancien membre)
+  await refuse(jeton({ sub: 'uid-parti', email: 'parti@gamedoor41.fr' }), reseau({ parUid: { 'uid-parti': {} }, parEmail: { isActive: true, isArchived: true, pseudo: 'Parti' } }), 'INACTIF');
 });

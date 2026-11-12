@@ -510,6 +510,8 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
   async function gerer(req) {
     const url = new URL(req.url);
     const nom = url.pathname.replace(/^.*\/api\/editeur\/?/, '').replace(/\/$/, '');
+    // diagnostic public : l'éditeur est-il entièrement configuré ? (aucune donnée, aucun secret)
+    if (req.method === 'GET' && nom === 'etat') return json({ editeur: true, depot: !!github, assistant: !!ia && !!env.ANTHROPIC_API_KEY });
     const route = routes[req.method + ' ' + nom];
     if (!route) return json({ erreur: 'Adresse inconnue : ' + nom }, 404);
     try {
