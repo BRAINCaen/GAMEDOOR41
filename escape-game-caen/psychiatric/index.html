@@ -333,6 +333,73 @@
   </section>
 
 
+  <!-- Compteur d'abandons (12/11/2026, demande d'Allan) : le chiffre et tous les textes viennent du Hub (Paramétrage › Compteur
+       d'abandons (site)) : point de départ réglé par un admin + joueurs notés « ont abandonné » par les game masters en fin de
+       session. Bloc caché tant que le Hub ne répond pas « actif » avec un nombre : jamais de « 0 » ni de chiffre inventé. -->
+  <style>
+    .abandons-band { padding: 56px 0; background: radial-gradient(ellipse at 50% 0%, rgba(198, 40, 40, 0.16) 0%, rgba(10, 10, 10, 0) 70%), var(--black); }
+    .abandons-band[hidden] { display: none !important; }
+    .abandons-card { position: relative; max-width: 720px; margin: 0 auto; padding: 36px 24px 32px; text-align: center; border: 1px solid rgba(198, 40, 40, 0.45); border-radius: var(--radius); background: linear-gradient(180deg, #160606 0%, #0c0800 100%); box-shadow: 0 0 48px rgba(198, 40, 40, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.02); overflow: hidden; }
+    .abandons-card::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px); pointer-events: none; }
+    .abandons-kicker { display: flex; justify-content: center; align-items: center; gap: 8px; text-align: center; margin: 0 0 10px; font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: #ef9a9a; }
+    .abandons-kicker svg { width: 18px; height: 18px; flex: none; }
+    .abandons-titre { margin: 0 0 8px; font-family: var(--font-display); font-size: clamp(1.5rem, 4.5vw, 2.1rem); line-height: 1.15; color: var(--gd-cream); text-transform: uppercase; }
+    .abandons-nombre { margin: 6px 0 4px; font-family: var(--font-display); font-weight: 700; font-size: clamp(3.6rem, 16vw, 6rem); line-height: 1; color: #e53935; text-shadow: 0 0 28px rgba(229, 57, 53, 0.55), 0 0 2px rgba(255, 138, 128, 0.9); font-variant-numeric: tabular-nums; }
+    .abandons-libelle { margin: 0 0 14px; font-size: 1.1rem; font-weight: 600; color: var(--gd-cream); }
+    .abandons-note { max-width: 520px; margin: 0 auto 22px; color: var(--grey-light); line-height: 1.6; }
+    @media (max-width: 480px) { .abandons-band { padding: 40px 0; } .abandons-card { padding: 28px 16px 24px; } .abandons-kicker { font-size: 0.7rem; letter-spacing: 0.1em; } .abandons-card .btn { padding-left: 18px; padding-right: 18px; } }
+  </style>
+  <section class="abandons-band" id="compteur-abandons" aria-labelledby="abandons-titre" hidden>
+    <div class="container">
+      <div class="abandons-card">
+        <p class="abandons-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 21H2"/><path d="M10 3H7a2 2 0 0 0-2 2v16"/><path d="M14 12h.01"/><path d="M19 21V5a2 2 0 0 0-1.675-1.974l-6.163-1.013A1 1 0 0 0 10 3v18a1 1 0 0 0 1.124.992z"/><path d="M22 21h-3"/></svg><span data-champ="etiquette">Registre des sorties anticipées</span></p>
+        <h2 class="abandons-titre" id="abandons-titre" data-champ="titre">Ils n’ont pas tenu jusqu’au bout</h2>
+        <p class="abandons-nombre" data-champ="total">0</p>
+        <p class="abandons-libelle" data-champ="libelle">personnes ont abandonné en pleine partie</p>
+        <p class="abandons-note" data-champ="note">Compté par nos game masters à la fin de chaque session. Et vous, vous tiendrez combien de temps ?</p>
+        <a href="https://gamedoor41.fr/reserver/" class="btn btn-escape" data-track="cta-reserver-psychiatric-abandons" data-champ="bouton">Réserver si vous osez</a>
+      </div>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var bloc = document.getElementById('compteur-abandons');
+      if (!bloc || !window.fetch) return;
+      fetch('https://synergia-hub.netlify.app/api/tunnel/compteur-abandons', { credentials: 'omit' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || d.actif !== true || !(d.total > 0)) return;
+          ['etiquette', 'titre', 'libelle', 'note', 'bouton'].forEach(function (k) {
+            var el = bloc.querySelector('[data-champ="' + k + '"]');
+            if (el && typeof d[k] === 'string' && d[k]) el.textContent = d[k];
+          });
+          var n = bloc.querySelector('[data-champ="total"]');
+          var total = Math.floor(d.total);
+          var fmt = function (x) { return x.toLocaleString('fr-FR'); };
+          n.setAttribute('aria-label', fmt(total));
+          bloc.hidden = false;
+          var calme = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (calme || !('IntersectionObserver' in window) || !window.requestAnimationFrame) { n.textContent = fmt(total); return; }
+          n.textContent = fmt(0);
+          // Le nombre défile de 0 au total quand le bloc arrive à l'écran.
+          var io = new IntersectionObserver(function (vus) {
+            if (!vus[0].isIntersecting) return;
+            io.disconnect();
+            var debut = null, duree = 1600;
+            var pas = function (t) {
+              if (debut === null) debut = t;
+              var p = Math.min(1, (t - debut) / duree);
+              n.textContent = fmt(Math.round(total * (1 - Math.pow(1 - p, 3))));
+              if (p < 1) window.requestAnimationFrame(pas);
+            };
+            window.requestAnimationFrame(pas);
+          }, { threshold: 0.4 });
+          io.observe(n);
+        })
+        .catch(function () {});
+    })();
+  </script>
+
   <section class="section patient-file-band" style="padding:64px 0;">
     <div class="container">
       <div class="patient-file-header fade-in">
