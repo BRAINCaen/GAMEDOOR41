@@ -128,3 +128,23 @@ qu'elle n'est pas corrigée.
 
 En français, à l'impératif, préfixés par le type — la convention déjà en place dans
 l'historique : `fix(tarifs): …`, `feat(magazine): …`, `chore(reviews): …`, `seo(post): …`.
+
+## Éditeur du site (gamedoor41.fr/editeur/) — depuis le 12/11/2026
+
+L'équipe modifie le site elle-même avec un éditeur visuel réservé aux comptes Google
+@gamedoor41.fr actifs dans Synergia. **Règle absolue : on peut tout ajouter et tout
+modifier, on ne supprime jamais un contenu publié** (le serveur le refuse). Chaque
+publication de l'équipe arrive sur `main` sous forme de pull request fusionnée
+(branche `editeur/…`, étiquette `editeur`, auteur = la personne) : le site peut donc
+changer entre deux sessions de travail — **`git pull` avant de commencer**, comme
+pour le robot des avis.
+
+- Sources : `editeur-src/` (voir `editeur-src/LISEZMOI.md`) ; fichiers construits et
+  commités : `editeur/` et `netlify/functions/editeur*.mjs` → après toute modification
+  des sources, `cd editeur-src && node --test tests/*.test.mjs && node construire.mjs`.
+- Les pages modifiées avec l'éditeur peuvent contenir un bloc `<style id="gd-editeur" data-gd='…'>`
+  (styles posés dans l'éditeur, régénérés depuis `data-gd`), des classes `gds-*` et des
+  blocs `gdb-*` (styles : `css/editeur-blocs.css`, comportements : `js/editeur-blocs.js`).
+  Ne pas éditer ce bloc de style à la main : modifier `data-gd` ou passer par l'éditeur.
+- Une modification à la main d'une page reste possible comme avant ; l'éditeur relit
+  toujours la dernière version publiée.

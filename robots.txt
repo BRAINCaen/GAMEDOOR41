@@ -12,3 +12,7 @@ Disallow: /CLAUDE.md
 Disallow: /scripts/
 Disallow: /apps-script/
 Disallow: /signatures/
+
+# Editeur du site (reserve a l equipe)
+Disallow: /editeur/
+Disallow: /editeur-src/
