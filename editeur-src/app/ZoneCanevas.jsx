@@ -304,7 +304,8 @@ function BarreTexte({ canevas, zr }) {
   const r = canevas.rectangle(ed.id);
   if (!r) return null;
   const haut = Math.max(4, r.y - zr.top - 44);
-  const gauche = Math.max(4, r.x - zr.left);
+  const largeurBarre = ed.riche ? 470 : 230;
+  const gauche = Math.max(4, Math.min(r.x - zr.left, (zr.width || 2000) - largeurBarre - 12));
   const cmd = (n, v) => (e) => { e.preventDefault(); canevas.commande(n, v); };
   const lien = (e) => {
     e.preventDefault();
