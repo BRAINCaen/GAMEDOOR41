@@ -135,6 +135,16 @@
       <h1 style="margin:0 0 6px;">Réservez votre session</h1>
       <p style="color:var(--grey-light);max-width:720px;margin:0 0 18px;line-height:1.5;">Escape game, quiz game ou les deux à la suite : choisissez, regardez les disponibilités en direct et payez en ligne en toute sécurité. Une question ? <a href="/contact/">Contactez-nous</a>.</p>
       <iframe data-gd41 src="https://synergia-hub.netlify.app/reserver?integre=1" title="Réserver chez GAMEDOOR·41" style="width:100%;border:0;min-height:720px;border-radius:14px;background:#0C0800;" allow="payment"></iframe>
+      <script>
+        // Arrivée par un horaire du jour (bloc « Dernières places aujourd'hui », js/derniere-minute.js) ou par un lien d'activité :
+        // salle, jour et heure transmis au module de réservation, qui s'ouvre directement sur la dernière étape.
+        (function () {
+          var p = new URLSearchParams(window.location.search), f = document.querySelector('iframe[data-gd41]'), q = [];
+          if (!f) return;
+          ['activite', 'jour', 'heure', 'dm', 'dm_jour', 'lang'].forEach(function (k) { var v = p.get(k); if (v && /^[\w:,.-]{1,60}$/.test(v)) q.push(k + '=' + encodeURIComponent(v)); });
+          if (q.length) f.src = 'https://synergia-hub.netlify.app/reserver?integre=1&' + q.join('&');
+        })();
+      </script>
       <p style="color:var(--grey);font-size:.85rem;margin:14px 0 0;">Le module de réservation s'ouvre ci-dessus. S'il ne s'affiche pas, <a href="https://synergia-hub.netlify.app/reserver" target="_blank" rel="noopener">ouvrez-le dans une nouvelle fenêtre</a>.</p>
     </div>
   </section>
