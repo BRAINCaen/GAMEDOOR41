@@ -144,7 +144,7 @@ function flux(cartes) {
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 <channel>
   <title><![CDATA[ GAMEDOOR\u00b741 — Magazine ]]></title>
-  <description><![CDATA[ Magazine GAMEDOOR\u00b741 — escape game, quiz Buzz Your Brain, team building, EVJF/EVG, mariages et anniversaires \u00e0 Caen. Anciennement Brain Escape Game. ]]></description>
+  <description><![CDATA[ Magazine GAMEDOOR\u00b741 — escape game, quiz Buzz Your Brain, team building, EVJF/EVG, mariages et anniversaires \u00e0 Caen. Escape games BRAIN et quiz Buzz Your Brain, exploités sous licence chez GAMEDOOR·41. ]]></description>
   <link>${SITE}/magazine/</link>
   <language>fr</language>
   <generator>GAMEDOOR\u00b741</generator>

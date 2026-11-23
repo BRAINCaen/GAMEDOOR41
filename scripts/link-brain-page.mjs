@@ -9,7 +9,7 @@
 // (menu A = accueil + articles avec home-v33.css, menu B = les autres) :
 //   1. le menu mobile, en bas de la liste ;
 //   2. le pied de page ;
-//   3. le bandeau heritage "Brain Escape Game + Buzz Your Brain = GAMEDOOR·41",
+//   3. le bandeau heritage "GAMEDOOR·41 réunit les Escape Games BRAIN et le Quiz Buzz Your Brain sous un même toit",
 //      qui devient cliquable — c'est l'ancre la plus riche en mots-cles et elle
 //      est deja presente sur 21 pages.
 //
@@ -38,10 +38,10 @@ const fichiers = execSync('git ls-files "*.html"', { encoding: 'utf8' })
 // --- 1. Menu mobile ------------------------------------------------------
 
 const NAV_A = '<a href="/contact/" class="nav-link" data-icon="📍">Contact</a>';
-const NAV_A_NEW = `${NAV_A}\n        <a href="${URL_PAGE}" class="nav-link nav-link-mobile" data-icon="🔁">Brain devient GAMEDOOR·41</a>`;
+const NAV_A_NEW = `${NAV_A}\n        <a href="${URL_PAGE}" class="nav-link nav-link-mobile" data-icon="🔁">Vous cherchiez Brain Caen&nbsp;?</a>`;
 
 const NAV_B = '<a href="https://braincaen.4escape.io/booking" class="mobile-only nav-cta-mobile"';
-const NAV_B_NEW = `<a href="${URL_PAGE}" class="mobile-only">Brain devient GAMEDOOR·41</a>\n        ${NAV_B}`;
+const NAV_B_NEW = `<a href="${URL_PAGE}" class="mobile-only">Vous cherchiez Brain Caen&nbsp;?</a>\n        ${NAV_B}`;
 
 function poserMenu(html) {
   if (html.includes(NAV_A)) return html.replace(NAV_A, NAV_A_NEW);
@@ -51,8 +51,8 @@ function poserMenu(html) {
 
 // --- 2. Pied de page -----------------------------------------------------
 
-const LIEN_FOOTER_B = `          <p style="margin-top:12px;"><a href="${URL_PAGE}">Anciennement Brain Escape Game &amp; Buzz Your Brain</a></p>\n        `;
-const LIEN_FOOTER_A = `\n          <li><a href="${URL_PAGE}">Brain devient GAMEDOOR·41</a></li>`;
+const LIEN_FOOTER_B = `          <p style="margin-top:12px;"><a href="${URL_PAGE}">Vous nous connaissiez sous Brain Caen ou Buzz Your Brain Caen&nbsp;?</a></p>\n        `;
+const LIEN_FOOTER_A = `\n          <li><a href="${URL_PAGE}">Vous cherchiez Brain Caen&nbsp;?</a></li>`;
 
 // Le site compte cinq gabarits de pied de page differents. On les traite du
 // plus specifique au plus generique, et on s'arrete au premier qui matche.
@@ -85,7 +85,7 @@ function poserFooter(html) {
   if (html.includes(FIN_INFOS_ARTICLE)) {
     return html.replace(
       FIN_INFOS_ARTICLE,
-      `<a href="/magazine/">Magazine</a><a href="${URL_PAGE}">Brain devient GAMEDOOR·41</a></div>`,
+      `<a href="/magazine/">Magazine</a><a href="${URL_PAGE}">Vous cherchiez Brain Caen&nbsp;?</a></div>`,
     );
   }
 
@@ -102,7 +102,7 @@ function poserFooter(html) {
       const classe = ancre === LEGAL_MINIMAL ? ' class="footer-legal"' : '';
       return html.replace(
         ancre,
-        `<p${classe}><a href="${URL_PAGE}">Anciennement Brain Escape Game &amp; Buzz Your Brain</a></p>\n    ${ancre}`,
+        `<p${classe}><a href="${URL_PAGE}">Vous nous connaissiez sous Brain Caen ou Buzz Your Brain Caen&nbsp;?</a></p>\n    ${ancre}`,
       );
     }
   }
@@ -112,8 +112,8 @@ function poserFooter(html) {
 
 // --- 3. Bandeau heritage cliquable ---------------------------------------
 
-const BANDEAU = '<span class="heritage-eq"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></span>';
-const BANDEAU_NEW = `<span class="heritage-eq"><a href="${URL_PAGE}"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></a></span>`;
+const BANDEAU = '<span class="heritage-eq"><strong>GAMEDOOR·41 réunit les Escape Games BRAIN et le Quiz Buzz Your Brain sous un même toit</strong></span>';
+const BANDEAU_NEW = `<span class="heritage-eq"><a href="${URL_PAGE}"><strong>GAMEDOOR·41 réunit les Escape Games BRAIN et le Quiz Buzz Your Brain sous un même toit</strong></a></span>`;
 
 function poserBandeau(html) {
   return html.includes(BANDEAU) ? html.replace(BANDEAU, BANDEAU_NEW) : html;
