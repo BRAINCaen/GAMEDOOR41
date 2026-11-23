@@ -11,7 +11,7 @@ import { construireArbre, elements, signature, attr } from '../noyau/arbre.mjs';
 const RACINE = join(import.meta.dirname, '..', '..');
 const FG = creerFauxGithub(RACINE);
 const stockage = stockageMemoire();
-const api = creerApi({ github: FG.fauxGithub, stockage, identifierFn: async () => ({ uid: 'u1', email: 'lea@gamedoor41.fr', nom: 'Léa', admin: false }) });
+const api = creerApi({ github: FG.fauxGithub, stockage, identifierFn: async () => ({ uid: 'u1', email: 'lea@gamedoor41.fr', emailPublic: 'lea@gamedoor41.fr', nom: 'Léa', admin: false }) });
 
 let n = 0;
 async function lancer(type, lot, extra = {}) {
@@ -108,4 +108,29 @@ test('relecture bloquante : publication refusée', async () => {
   ] }] });
   assert.equal(t.etat, 'refuse');
   assert.ok(t.relecture.some((r) => r.niveau === 'bloquant'));
+});
+
+test('membre connecté avec une adresse PERSO : elle n’est jamais écrite dans le dépôt public', async () => {
+  const ecrit = [];
+  const gh = {
+    ...FG.fauxGithub,
+    creerCommit: (message, tree, parent, auteur) => { ecrit.push(JSON.stringify(auteur) + '\n' + message); return FG.fauxGithub.creerCommit(message, tree, parent, auteur); },
+    creerPR: (o) => { ecrit.push(JSON.stringify(o)); return FG.fauxGithub.creerPR(o); },
+    fusionner: (n, o) => { ecrit.push(JSON.stringify(o)); return FG.fauxGithub.fusionner(n, o); },
+  };
+  const stock = stockageMemoire();
+  const api2 = creerApi({ github: gh, stockage: stock, identifierFn: async () => ({ uid: 'u-perso', email: 'lea.perso@gmail.com', emailPublic: null, nom: 'Léa', admin: false }) });
+  const src = await source('contact/index.html');
+  const sec = [...elements(construireArbre(src).racine)].find((e) => e.tag === 'section');
+  const id = 'essai-perso-' + Date.now();
+  await api2.executerTravail(new Request('http://x/', { method: 'POST', headers: { Authorization: 'Bearer x', 'Content-Type': 'application/json' }, body: JSON.stringify({ id, type: 'publier', lot: { base: FG.teteMain, message: 'essai perso', pages: [{ chemin: 'contact/index.html', ops: [
+    { op: 'inserer', id: sec.id, sig: signature(sec), position: 'apres', uid: 'aj0p01', html: '<section class="gdb-section" data-gdb="essai"><div class="container"><p>Ajout perso</p></div></section>' },
+  ] }] } }) }));
+  const t = await stock.lire('travail:' + id);
+  assert.equal(t.etat, 'termine', JSON.stringify(t));
+  assert.ok(ecrit.length >= 3, 'commit + aperçu + publication');
+  const tout = ecrit.join('\n') + JSON.stringify(await Promise.all((await stock.lister('')).map((c) => stock.lire(c))));
+  assert.ok(!/lea\.perso|gmail/i.test(tout), 'adresse perso trouvée : ' + tout.slice(0, 300));
+  assert.match(ecrit[0], /contact@gamedoor41\.fr/);
+  assert.match(ecrit.join('\n'), /Léa/);
 });

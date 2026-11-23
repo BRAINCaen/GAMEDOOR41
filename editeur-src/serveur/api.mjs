@@ -21,6 +21,9 @@ import { creerPage, ajouterAuSitemap, majDateSitemap, urlDeFichier, verifierChem
 import { resumerOperation } from '../noyau/resume.mjs';
 
 export const EXCLUS = /^(signatures|editeur|editeur-src|apps-script|scripts|netlify|node_modules|_archive|_wip|\.github|\.claude|\.vscode)\//;
+// Auteur technique des publications quand la personne n'a pas d'adresse pro : le dépôt du site est
+// PUBLIC, une adresse perso n'y est jamais écrite (ni commit, ni aperçu, ni historique).
+const ADRESSE_TECHNIQUE = 'contact@gamedoor41.fr';
 const MEDIA_RE = /^img\/editeur\/\d{4}-\d{2}\/[a-z0-9][a-z0-9-]{0,90}\.(webp|jpg|jpeg|png|gif|avif|mp4|webm)$/;
 const TYPES_MEDIA = {
   webp: (b) => b.slice(0, 4).toString('latin1') === 'RIFF' && b.slice(8, 12).toString('latin1') === 'WEBP',
@@ -173,7 +176,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
   }
 
   function corpsPR(lot, q, prep) {
-    const lignes = ['Modification préparée dans l’éditeur du site (gamedoor41.fr/editeur/) par **' + q.nom + '** (' + q.email + ').', ''];
+    const lignes = ['Modification préparée dans l’éditeur du site (gamedoor41.fr/editeur/) par **' + q.nom + '**' + (q.emailPublic ? ' (' + q.emailPublic + ')' : '') + '.', ''];
     if (lot.message) lignes.push('> ' + String(lot.message).slice(0, 500), '');
     lignes.push('### Ce qui change');
     for (const r of prep.resume.slice(0, 120)) lignes.push('- `/' + r.chemin.replace(/index\.html$/, '') + '` : ' + r.texte);
@@ -191,12 +194,12 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
     for (const f of prep.fichiers) entrees.push({ chemin: f.chemin, sha: await gh.creerBlob(f.contenu, 'utf-8') });
     const tree = await gh.creerArbre(prep.arbre.treeSha, entrees);
     const titre = titreCommit(lot, q, prep.fichiers);
-    const commit = await gh.creerCommit(titre + '\n\n' + prep.resume.slice(0, 60).map((r) => '- ' + r.texte).join('\n'), tree, prep.base, { nom: q.nom + ' (éditeur du site)', email: q.email });
+    const commit = await gh.creerCommit(titre + '\n\n' + prep.resume.slice(0, 60).map((r) => '- ' + r.texte).join('\n'), tree, prep.base, { nom: q.nom + ' (éditeur du site)', email: q.emailPublic || ADRESSE_TECHNIQUE });
     const branche = nomBranche(q);
     await gh.creerBranche(branche, commit);
     await etape('Création de l’aperçu en ligne');
     const pr = await gh.creerPR({ titre: 'Éditeur : ' + (String(lot.message || '').trim().slice(0, 80) || 'mise à jour du contenu') + ' (' + q.nom + ')', corps: corpsPR(lot, q, prep), tete: branche });
-    await stockage.ecrire('pr:' + pr.numero, { numero: pr.numero, branche, commit, titre, auteur: { nom: q.nom, email: q.email, uid: q.uid }, empreinte: lot.empreinte || null, fichiers: prep.fichiers.map((f) => ({ chemin: f.chemin, sha256: sha256(f.contenu) })), date: new Date().toISOString() });
+    await stockage.ecrire('pr:' + pr.numero, { numero: pr.numero, branche, commit, titre, auteur: { nom: q.nom, email: q.emailPublic, uid: q.uid }, empreinte: lot.empreinte || null, fichiers: prep.fichiers.map((f) => ({ chemin: f.chemin, sha256: sha256(f.contenu) })), date: new Date().toISOString() });
     return { ...pr, branche, commit, titre };
   }
 
@@ -214,7 +217,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
     if (pr.state !== 'open') throw new ErreurEditeur('Cet aperçu a été fermé : relancez la publication.', 'PR');
     if (!/^editeur\//.test(pr.head.ref)) throw new ErreurEditeur('Seuls les aperçus créés par l’éditeur se publient d’ici.', 'PR');
     if (pr.head.sha !== fiche.commit) throw new ErreurEditeur('L’aperçu a été modifié en dehors de l’éditeur : publication refusée par sécurité.', 'PR');
-    const commit = await gh.fusionner(numero, { titre: fiche.titre, message: 'Publié depuis l’éditeur du site par ' + q.nom + ' (' + q.email + ')' + (programme ? ' — publication programmée' : '') + '.', sha: fiche.commit });
+    const commit = await gh.fusionner(numero, { titre: fiche.titre, message: 'Publié depuis l’éditeur du site par ' + q.nom + (q.emailPublic ? ' (' + q.emailPublic + ')' : '') + (programme ? ' — publication programmée' : '') + '.', sha: fiche.commit });
     try { await gh.supprimerBranche(fiche.branche); } catch (_) { /* sans gravité */ }
     await stockage.ecrire('pr:' + numero, { ...fiche, publie: new Date().toISOString(), commitPublie: commit, publiePar: q.nom });
     return { commit, fiche };
@@ -255,7 +258,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
         if (fiche && fiche.empreinte && fiche.empreinte === lot.empreinte) {
           await etape('Mise en ligne');
           const r = await mettreEnLigne(gh, Number(corps.pr), q);
-          await journaliser({ type: 'publication', auteur: { nom: q.nom, email: q.email }, message: lot.message || '', pr: Number(corps.pr), commit: r.commit, fichiers: fiche.fichiers });
+          await journaliser({ type: 'publication', auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || '', pr: Number(corps.pr), commit: r.commit, fichiers: fiche.fichiers });
           await majTravail(id, { etat: 'termine', resultat: { pr: Number(corps.pr), commit: r.commit, fichiers: fiche.fichiers.map((f) => ({ ...f, url: f.chemin.endsWith('.html') ? urlDeFichier(f.chemin) : null })) }, etapes });
           return json({ ok: true });
         }
@@ -268,18 +271,18 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
       const pr = await ecrireVersion(gh, prep, lot, q, etape);
       const fichiers = prep.fichiers.map((f) => ({ chemin: f.chemin, sha256: sha256(f.contenu), url: f.chemin.endsWith('.html') ? urlDeFichier(f.chemin) : null }));
       if (corps.type === 'apercu') {
-        await journaliser({ type: 'apercu', auteur: { nom: q.nom, email: q.email }, message: lot.message || '', pr: pr.numero, fichiers });
+        await journaliser({ type: 'apercu', auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || '', pr: pr.numero, fichiers });
         await majTravail(id, { etat: 'termine', resultat: { pr: pr.numero, branche: pr.branche, fichiers, relecture: prep.relecture, resume: prep.resume }, etapes });
       } else if (corps.type === 'programmer') {
         const quand = new Date(corps.quand);
         if (isNaN(quand) || quand.getTime() < Date.now() + 60e3) throw new ErreurEditeur('Choisissez une date de publication dans le futur.', 'DATE');
-        await stockage.ecrire('programme:' + pr.numero, { pr: pr.numero, quand: quand.toISOString(), auteur: { nom: q.nom, email: q.email, uid: q.uid }, message: lot.message || '', fichiers });
-        await journaliser({ type: 'programmation', auteur: { nom: q.nom, email: q.email }, message: lot.message || '', pr: pr.numero, quand: quand.toISOString(), fichiers });
+        await stockage.ecrire('programme:' + pr.numero, { pr: pr.numero, quand: quand.toISOString(), auteur: { nom: q.nom, email: q.emailPublic, uid: q.uid }, message: lot.message || '', fichiers });
+        await journaliser({ type: 'programmation', auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || '', pr: pr.numero, quand: quand.toISOString(), fichiers });
         await majTravail(id, { etat: 'termine', resultat: { pr: pr.numero, quand: quand.toISOString(), fichiers, relecture: prep.relecture }, etapes });
       } else {
         await etape('Mise en ligne');
         const r = await mettreEnLigne(gh, pr.numero, q);
-        await journaliser({ type: 'publication', auteur: { nom: q.nom, email: q.email }, message: lot.message || '', pr: pr.numero, commit: r.commit, fichiers, resume: prep.resume.slice(0, 80) });
+        await journaliser({ type: 'publication', auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || '', pr: pr.numero, commit: r.commit, fichiers, resume: prep.resume.slice(0, 80) });
         await majTravail(id, { etat: 'termine', resultat: { pr: pr.numero, commit: r.commit, fichiers, relecture: prep.relecture }, etapes });
       }
       return json({ ok: true });
@@ -302,7 +305,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
       const p = await stockage.lire(cle);
       if (!p || p.erreur || new Date(p.quand).getTime() > Date.now()) continue;
       try {
-        const r = await mettreEnLigne(github, p.pr, { nom: p.auteur.nom, email: p.auteur.email }, { programme: true });
+        const r = await mettreEnLigne(github, p.pr, { nom: p.auteur.nom, emailPublic: p.auteur.email || null }, { programme: true });
         await journaliser({ type: 'publication', auteur: p.auteur, message: (p.message || '') + ' (programmée)', pr: p.pr, commit: r.commit, fichiers: p.fichiers });
         await stockage.supprimer(cle);
         publies++;
@@ -415,7 +418,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
       const chemin = String(b.chemin || '');
       if (!/^[a-z0-9/_.-]+\.html$/.test(chemin) || EXCLUS.test(chemin)) throw new ErreurEditeur('Page invalide.', 'PAGE');
       if (JSON.stringify(b).length > 3e6) throw new ErreurEditeur('Brouillon trop gros.', 'TROP');
-      const brouillon = { chemin, base: b.base, sha: b.sha || null, etapes: Array.isArray(b.etapes) ? b.etapes : [], medias: Array.isArray(b.medias) ? b.medias : [], nouvelle: b.nouvelle || null, auteur: { nom: q.nom, email: q.email }, maj: new Date().toISOString() };
+      const brouillon = { chemin, base: b.base, sha: b.sha || null, etapes: Array.isArray(b.etapes) ? b.etapes : [], medias: Array.isArray(b.medias) ? b.medias : [], nouvelle: b.nouvelle || null, auteur: { nom: q.nom, email: q.emailPublic }, maj: new Date().toISOString() };
       await stockage.ecrire('brouillon:' + chemin, brouillon);
       return json({ ok: true, maj: brouillon.maj });
     },
@@ -498,7 +501,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
       if (!p) return json({ ok: true });
       if (p.auteur && p.auteur.uid !== q.uid && !q.admin) throw new RefusAcces('Seule la personne qui a programmé (ou un admin) peut annuler.', 403);
       await stockage.supprimer('programme:' + numero);
-      await journaliser({ type: 'programmation-annulee', auteur: { nom: q.nom, email: q.email }, pr: numero });
+      await journaliser({ type: 'programmation-annulee', auteur: { nom: q.nom, email: q.emailPublic }, pr: numero });
       return json({ ok: true });
     },
 
@@ -506,7 +509,7 @@ export function creerApi({ github, stockage, env = process.env, fetchFn = fetch,
       const { chemin, message } = await req.json();
       const m = String(message || '').trim().slice(0, 2000);
       if (m.length < 5) throw new ErreurEditeur('Décrivez le problème en quelques mots.', 'VIDE');
-      await journaliser({ type: 'signalement', auteur: { nom: q.nom, email: q.email }, chemin: String(chemin || '').slice(0, 200), message: m });
+      await journaliser({ type: 'signalement', auteur: { nom: q.nom, email: q.emailPublic }, chemin: String(chemin || '').slice(0, 200), message: m });
       return json({ ok: true });
     },
   };

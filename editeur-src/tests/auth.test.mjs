@@ -13,7 +13,7 @@ const autre = generateKeyPairSync('rsa', { modulusLength: 2048 });
 const b64 = (o) => Buffer.from(typeof o === 'string' ? o : JSON.stringify(o)).toString('base64url');
 function jeton(charge, { cle = privateKey, kid = 'cle1' } = {}) {
   const maintenant = Math.floor(Date.now() / 1000);
-  const c = { iss: 'https://securetoken.google.com/' + PROJET, aud: PROJET, iat: maintenant - 10, exp: maintenant + 3600, auth_time: maintenant - 10, sub: 'uid-1', email: 'lea@gamedoor41.fr', email_verified: true, firebase: { sign_in_provider: 'google.com' }, ...charge };
+  const c = { iss: 'https://securetoken.google.com/' + PROJET, aud: PROJET, iat: maintenant - 10, exp: maintenant + 3600, auth_time: maintenant - 10, sub: 'uid-1', email: 'lea@gamedoor41.fr', email_verified: true, firebase: { sign_in_provider: 'google.com' }, membre: true, ...charge };
   const tete = b64({ alg: 'RS256', kid, typ: 'JWT' });
   const corps = b64(c);
   const s = createSign('RSA-SHA256').update(tete + '.' + corps).sign(cle).toString('base64url');
@@ -46,13 +46,24 @@ test('membre actif avec Google @gamedoor41.fr : accepté', async () => {
   assert.equal(q.admin, false);
 });
 
-test('compte Google d’un autre domaine : refusé', async () => {
-  await refuse(jeton({ sub: 'uid-gmail', email: 'lea@gmail.com' }), reseau(), 'DOMAINE');
+test('compte Google PERSO d’un membre validé : accepté, et son adresse n’est jamais publiée', async () => {
+  const q = await identifier(requete(jeton({ sub: 'uid-gmail', email: 'lea.perso@gmail.com' })), env, { fetchFn: reseau() });
+  assert.equal(q.nom, 'Léa');
+  assert.equal(q.emailPublic, null);
+  const p = await identifier(requete(jeton({ sub: 'uid-pro-pub' })), env, { fetchFn: reseau() });
+  assert.equal(p.emailPublic, 'lea@gamedoor41.fr');
 });
 
-test('adresse non vérifiée ou connexion par mot de passe : refusées', async () => {
+test('adresse + mot de passe de Synergia (appli Android) : acceptée pour un membre validé', async () => {
+  const q = await identifier(requete(jeton({ sub: 'uid-mdp', email: 'lea.perso@gmail.com', email_verified: false, firebase: { sign_in_provider: 'password' } })), env, { fetchFn: reseau() });
+  assert.equal(q.nom, 'Léa');
+  assert.equal(q.emailPublic, null);
+});
+
+test('Google à adresse non vérifiée, jeton « custom » ou anonyme : refusés', async () => {
   await refuse(jeton({ sub: 'uid-nv', email_verified: false }), reseau(), 'DOMAINE');
-  await refuse(jeton({ sub: 'uid-mdp', firebase: { sign_in_provider: 'password' } }), reseau(), 'DOMAINE');
+  await refuse(jeton({ sub: 'uid-custom', firebase: { sign_in_provider: 'custom' } }), reseau(), 'DOMAINE');
+  await refuse(jeton({ sub: 'uid-anonyme', firebase: { sign_in_provider: 'anonymous' } }), reseau(), 'DOMAINE');
 });
 
 test('compte Synergia archivé ou inactif : refusé', async () => {
@@ -169,4 +180,25 @@ test('adresse de Synergia réglable (EDITEUR_SYNERGIA_URL)', async () => {
   const b = baseFermee({ synergia: { ok: true, actif: true, nom: 'Q' } });
   await identifier(requete(jeton({ sub: 'uid-pro-q', email: 'q@gamedoor41.fr' })), { ...env, EDITEUR_SYNERGIA_URL: 'https://essai.example/' }, { fetchFn: b.net });
   assert.equal(b.appels.synergia[0].url, 'https://essai.example/api/membre-actif');
+});
+
+// ---- « Tous les membres actifs » (Allan, 23/11/2026) : c'est Synergia qui tranche ----
+
+test('TRICHE : mot de passe sur un compte créé avec l’adresse d’Allan (non vérifiée) → jamais propriétaire', async () => {
+  const b = baseFermee({ synergia: { ok: true, actif: false, code: 'AUCUNE_FICHE' } });
+  await refuse(jeton({ sub: 'uid-pirate', email: 'allan@gamedoor41.fr', email_verified: false, firebase: { sign_in_provider: 'password' }, membre: false }), b.net, 'INCONNU');
+  assert.equal(b.appels.synergia.length, 1);
+});
+
+test('sans la marque « membre », la fiche lue ne suffit pas : Synergia tranche (NON_MEMBRE)', async () => {
+  // compte inscrit seul avant la fermeture de la base : fiche remplie, accès jamais validé
+  const b = baseFermee({ propre: { isActive: true, pseudo: 'Inconnu' }, synergia: { ok: true, actif: false, code: 'NON_MEMBRE' } });
+  await refuse(jeton({ sub: 'uid-inscrit-seul', email: 'inconnu@gmail.com', membre: false }), b.net, 'NON_MEMBRE');
+});
+
+test('Google pro sans marque (compte rattaché) : Synergia confirme par le pseudo → accepté', async () => {
+  const b = baseFermee({ synergia: { ok: true, actif: true, nom: 'Makalù', admin: false } });
+  const q = await identifier(requete(jeton({ sub: 'uid-pro-mk', email: 'makalu@gamedoor41.fr', membre: false })), env, { fetchFn: b.net });
+  assert.equal(q.nom, 'Makalù');
+  assert.equal(q.emailPublic, 'makalu@gamedoor41.fr');
 });

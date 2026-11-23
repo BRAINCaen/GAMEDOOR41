@@ -27462,7 +27462,7 @@ async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
       incomplet = true;
     }
   }
-  if (charge.email) {
+  if (charge.email && charge.email_verified === true) {
     for (const champ of ["email", "profile.email"]) {
       try {
         const q = await fetchFn(base + ":runQuery", {
@@ -27512,27 +27512,32 @@ async function identifier(requete, env = process.env, { fetchFn = fetch, mainten
   const charge = await verifierJeton(jeton, { projet, fetchFn, maintenant });
   const email = String(charge.email || "").trim().toLowerCase();
   const fournisseur = charge.firebase && charge.firebase.sign_in_provider;
-  if (fournisseur !== "google.com" || charge.email_verified !== true || !email.endsWith("@" + domaine)) {
-    throw new RefusAcces("L\u2019\xE9diteur est r\xE9serv\xE9 aux comptes Google @" + domaine + " de l\u2019\xE9quipe. Reconnectez-vous avec votre adresse @" + domaine + ".", 403, "DOMAINE");
+  const verifiee = charge.email_verified === true && !!email;
+  if (!(fournisseur === "google.com" && verifiee || fournisseur === "password")) {
+    throw new RefusAcces("Connectez-vous avec Google ou avec l\u2019adresse et le mot de passe de votre compte Synergia.", 403, "DOMAINE");
   }
+  const pro = verifiee && email.endsWith("@" + domaine);
   const admins = new Set([...PROPRIETAIRES, ...String(env.EDITEUR_ADMINS || "").split(/[\s,;]+/)].map((e) => e.trim().toLowerCase()).filter(Boolean));
-  const proprietaire = admins.has(email);
-  const { fiches, incomplet } = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
+  const proprietaire = verifiee && admins.has(email);
+  const membre = charge.membre === true;
+  const { fiches, incomplet } = membre ? await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn }) : { fiches: [], incomplet: true };
   const actives = fiches.filter((f) => estCompteActif(f) && !ficheVide(f));
   let viaSynergia = null;
   if (!actives.length && !proprietaire) {
     viaSynergia = await demanderASynergia(jeton, { env, fetchFn });
     if (!viaSynergia || !viaSynergia.actif) {
-      const inactive = viaSynergia ? viaSynergia.code === "INACTIF" : fiches.some((f) => !estCompteActif(f));
-      if (!viaSynergia && !inactive && incomplet) {
+      const code = viaSynergia ? viaSynergia.code : fiches.some((f) => !estCompteActif(f)) ? "INACTIF" : null;
+      if (!code && incomplet) {
         throw new RefusAcces("V\xE9rification de votre compte Synergia impossible pour le moment : r\xE9essayez dans une minute.", 503, "INDISPONIBLE");
       }
-      throw new RefusAcces(inactive ? "Votre compte Synergia n\u2019est plus actif : l\u2019acc\xE8s \xE0 l\u2019\xE9diteur est ferm\xE9." : "Aucune fiche Synergia active ne porte l\u2019adresse " + email + " : demandez \xE0 Allan d\u2019indiquer cette adresse sur votre fiche Synergia.", 403, inactive ? "INACTIF" : "INCONNU");
+      if (code === "INACTIF") throw new RefusAcces("Votre compte Synergia n\u2019est plus actif : l\u2019acc\xE8s \xE0 l\u2019\xE9diteur est ferm\xE9.", 403, "INACTIF");
+      if (code === "NON_MEMBRE") throw new RefusAcces("Votre compte Synergia n\u2019est pas encore valid\xE9 : demandez \xE0 Allan de l\u2019accepter dans Synergia (Acc\xE8s \xE0 Synergia), puis reconnectez-vous ici.", 403, "NON_MEMBRE");
+      throw new RefusAcces("Aucun compte Synergia actif ne correspond \xE0 " + (email || "ce compte") + ". Connectez-vous avec le compte que vous utilisez pour Synergia (Google, ou adresse et mot de passe), ou demandez \xE0 Allan.", 403, "INCONNU");
     }
   }
   const fiche = actives[0] || {};
-  const nom = String(viaSynergia && viaSynergia.nom || fiche.pseudo || fiche.profile && fiche.profile.firstName || fiche.firstName || fiche.displayName || charge.name || email.split("@")[0]).trim();
-  const qui = { uid: charge.sub, email, nom, admin: proprietaire || actives.some(estAdminSynergia) || !!viaSynergia && viaSynergia.admin === true };
+  const nom = String(viaSynergia && viaSynergia.nom || fiche.pseudo || fiche.profile && fiche.profile.firstName || fiche.firstName || fiche.displayName || charge.name || (pro ? email.split("@")[0] : "") || "Membre").trim();
+  const qui = { uid: charge.sub, email, emailPublic: pro ? email : null, nom, admin: proprietaire || actives.some(estAdminSynergia) || !!viaSynergia && viaSynergia.admin === true };
   if (cache.size > 300) cache.clear();
   cache.set(jeton, { qui, expire: Math.min(charge.exp * 1e3, maintenant + 5 * 6e4) });
   return qui;
@@ -37820,6 +37825,7 @@ function resumerOperation(op) {
 
 // serveur/api.mjs
 var EXCLUS = /^(signatures|editeur|editeur-src|apps-script|scripts|netlify|node_modules|_archive|_wip|\.github|\.claude|\.vscode)\//;
+var ADRESSE_TECHNIQUE = "contact@gamedoor41.fr";
 var MEDIA_RE = /^img\/editeur\/\d{4}-\d{2}\/[a-z0-9][a-z0-9-]{0,90}\.(webp|jpg|jpeg|png|gif|avif|mp4|webm)$/;
 var TYPES_MEDIA = {
   webp: (b) => b.slice(0, 4).toString("latin1") === "RIFF" && b.slice(8, 12).toString("latin1") === "WEBP",
@@ -37963,7 +37969,7 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
     return "contenu(" + portee + "): " + msg + " \u2014 " + q.nom + " via l\u2019\xE9diteur";
   }
   function corpsPR(lot, q, prep) {
-    const lignes = ["Modification pr\xE9par\xE9e dans l\u2019\xE9diteur du site (gamedoor41.fr/editeur/) par **" + q.nom + "** (" + q.email + ").", ""];
+    const lignes = ["Modification pr\xE9par\xE9e dans l\u2019\xE9diteur du site (gamedoor41.fr/editeur/) par **" + q.nom + "**" + (q.emailPublic ? " (" + q.emailPublic + ")" : "") + ".", ""];
     if (lot.message) lignes.push("> " + String(lot.message).slice(0, 500), "");
     lignes.push("### Ce qui change");
     for (const r of prep.resume.slice(0, 120)) lignes.push("- `/" + r.chemin.replace(/index\.html$/, "") + "` : " + r.texte);
@@ -37983,12 +37989,12 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
     for (const f of prep.fichiers) entrees.push({ chemin: f.chemin, sha: await gh.creerBlob(f.contenu, "utf-8") });
     const tree = await gh.creerArbre(prep.arbre.treeSha, entrees);
     const titre = titreCommit(lot, q, prep.fichiers);
-    const commit = await gh.creerCommit(titre + "\n\n" + prep.resume.slice(0, 60).map((r) => "- " + r.texte).join("\n"), tree, prep.base, { nom: q.nom + " (\xE9diteur du site)", email: q.email });
+    const commit = await gh.creerCommit(titre + "\n\n" + prep.resume.slice(0, 60).map((r) => "- " + r.texte).join("\n"), tree, prep.base, { nom: q.nom + " (\xE9diteur du site)", email: q.emailPublic || ADRESSE_TECHNIQUE });
     const branche = nomBranche(q);
     await gh.creerBranche(branche, commit);
     await etape("Cr\xE9ation de l\u2019aper\xE7u en ligne");
     const pr = await gh.creerPR({ titre: "\xC9diteur : " + (String(lot.message || "").trim().slice(0, 80) || "mise \xE0 jour du contenu") + " (" + q.nom + ")", corps: corpsPR(lot, q, prep), tete: branche });
-    await stockage.ecrire("pr:" + pr.numero, { numero: pr.numero, branche, commit, titre, auteur: { nom: q.nom, email: q.email, uid: q.uid }, empreinte: lot.empreinte || null, fichiers: prep.fichiers.map((f) => ({ chemin: f.chemin, sha256: sha256(f.contenu) })), date: (/* @__PURE__ */ new Date()).toISOString() });
+    await stockage.ecrire("pr:" + pr.numero, { numero: pr.numero, branche, commit, titre, auteur: { nom: q.nom, email: q.emailPublic, uid: q.uid }, empreinte: lot.empreinte || null, fichiers: prep.fichiers.map((f) => ({ chemin: f.chemin, sha256: sha256(f.contenu) })), date: (/* @__PURE__ */ new Date()).toISOString() });
     return { ...pr, branche, commit, titre };
   }
   async function journaliser(entree) {
@@ -38004,7 +38010,7 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
     if (pr.state !== "open") throw new ErreurEditeur("Cet aper\xE7u a \xE9t\xE9 ferm\xE9 : relancez la publication.", "PR");
     if (!/^editeur\//.test(pr.head.ref)) throw new ErreurEditeur("Seuls les aper\xE7us cr\xE9\xE9s par l\u2019\xE9diteur se publient d\u2019ici.", "PR");
     if (pr.head.sha !== fiche.commit) throw new ErreurEditeur("L\u2019aper\xE7u a \xE9t\xE9 modifi\xE9 en dehors de l\u2019\xE9diteur : publication refus\xE9e par s\xE9curit\xE9.", "PR");
-    const commit = await gh.fusionner(numero, { titre: fiche.titre, message: "Publi\xE9 depuis l\u2019\xE9diteur du site par " + q.nom + " (" + q.email + ")" + (programme ? " \u2014 publication programm\xE9e" : "") + ".", sha: fiche.commit });
+    const commit = await gh.fusionner(numero, { titre: fiche.titre, message: "Publi\xE9 depuis l\u2019\xE9diteur du site par " + q.nom + (q.emailPublic ? " (" + q.emailPublic + ")" : "") + (programme ? " \u2014 publication programm\xE9e" : "") + ".", sha: fiche.commit });
     try {
       await gh.supprimerBranche(fiche.branche);
     } catch (_) {
@@ -38046,7 +38052,7 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
         if (fiche && fiche.empreinte && fiche.empreinte === lot.empreinte) {
           await etape("Mise en ligne");
           const r = await mettreEnLigne(gh, Number(corps.pr), q);
-          await journaliser({ type: "publication", auteur: { nom: q.nom, email: q.email }, message: lot.message || "", pr: Number(corps.pr), commit: r.commit, fichiers: fiche.fichiers });
+          await journaliser({ type: "publication", auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || "", pr: Number(corps.pr), commit: r.commit, fichiers: fiche.fichiers });
           await majTravail(id, { etat: "termine", resultat: { pr: Number(corps.pr), commit: r.commit, fichiers: fiche.fichiers.map((f) => ({ ...f, url: f.chemin.endsWith(".html") ? urlDeFichier(f.chemin) : null })) }, etapes });
           return json({ ok: true });
         }
@@ -38059,18 +38065,18 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
       const pr = await ecrireVersion(gh, prep, lot, q, etape);
       const fichiers = prep.fichiers.map((f) => ({ chemin: f.chemin, sha256: sha256(f.contenu), url: f.chemin.endsWith(".html") ? urlDeFichier(f.chemin) : null }));
       if (corps.type === "apercu") {
-        await journaliser({ type: "apercu", auteur: { nom: q.nom, email: q.email }, message: lot.message || "", pr: pr.numero, fichiers });
+        await journaliser({ type: "apercu", auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || "", pr: pr.numero, fichiers });
         await majTravail(id, { etat: "termine", resultat: { pr: pr.numero, branche: pr.branche, fichiers, relecture: prep.relecture, resume: prep.resume }, etapes });
       } else if (corps.type === "programmer") {
         const quand = new Date(corps.quand);
         if (isNaN(quand) || quand.getTime() < Date.now() + 6e4) throw new ErreurEditeur("Choisissez une date de publication dans le futur.", "DATE");
-        await stockage.ecrire("programme:" + pr.numero, { pr: pr.numero, quand: quand.toISOString(), auteur: { nom: q.nom, email: q.email, uid: q.uid }, message: lot.message || "", fichiers });
-        await journaliser({ type: "programmation", auteur: { nom: q.nom, email: q.email }, message: lot.message || "", pr: pr.numero, quand: quand.toISOString(), fichiers });
+        await stockage.ecrire("programme:" + pr.numero, { pr: pr.numero, quand: quand.toISOString(), auteur: { nom: q.nom, email: q.emailPublic, uid: q.uid }, message: lot.message || "", fichiers });
+        await journaliser({ type: "programmation", auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || "", pr: pr.numero, quand: quand.toISOString(), fichiers });
         await majTravail(id, { etat: "termine", resultat: { pr: pr.numero, quand: quand.toISOString(), fichiers, relecture: prep.relecture }, etapes });
       } else {
         await etape("Mise en ligne");
         const r = await mettreEnLigne(gh, pr.numero, q);
-        await journaliser({ type: "publication", auteur: { nom: q.nom, email: q.email }, message: lot.message || "", pr: pr.numero, commit: r.commit, fichiers, resume: prep.resume.slice(0, 80) });
+        await journaliser({ type: "publication", auteur: { nom: q.nom, email: q.emailPublic }, message: lot.message || "", pr: pr.numero, commit: r.commit, fichiers, resume: prep.resume.slice(0, 80) });
         await majTravail(id, { etat: "termine", resultat: { pr: pr.numero, commit: r.commit, fichiers, relecture: prep.relecture }, etapes });
       }
       return json({ ok: true });
@@ -38094,7 +38100,7 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
       const p = await stockage.lire(cle);
       if (!p || p.erreur || new Date(p.quand).getTime() > Date.now()) continue;
       try {
-        const r = await mettreEnLigne(github, p.pr, { nom: p.auteur.nom, email: p.auteur.email }, { programme: true });
+        const r = await mettreEnLigne(github, p.pr, { nom: p.auteur.nom, emailPublic: p.auteur.email || null }, { programme: true });
         await journaliser({ type: "publication", auteur: p.auteur, message: (p.message || "") + " (programm\xE9e)", pr: p.pr, commit: r.commit, fichiers: p.fichiers });
         await stockage.supprimer(cle);
         publies++;
@@ -38208,7 +38214,7 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
       const chemin = String(b.chemin || "");
       if (!/^[a-z0-9/_.-]+\.html$/.test(chemin) || EXCLUS.test(chemin)) throw new ErreurEditeur("Page invalide.", "PAGE");
       if (JSON.stringify(b).length > 3e6) throw new ErreurEditeur("Brouillon trop gros.", "TROP");
-      const brouillon = { chemin, base: b.base, sha: b.sha || null, etapes: Array.isArray(b.etapes) ? b.etapes : [], medias: Array.isArray(b.medias) ? b.medias : [], nouvelle: b.nouvelle || null, auteur: { nom: q.nom, email: q.email }, maj: (/* @__PURE__ */ new Date()).toISOString() };
+      const brouillon = { chemin, base: b.base, sha: b.sha || null, etapes: Array.isArray(b.etapes) ? b.etapes : [], medias: Array.isArray(b.medias) ? b.medias : [], nouvelle: b.nouvelle || null, auteur: { nom: q.nom, email: q.emailPublic }, maj: (/* @__PURE__ */ new Date()).toISOString() };
       await stockage.ecrire("brouillon:" + chemin, brouillon);
       return json({ ok: true, maj: brouillon.maj });
     },
@@ -38297,14 +38303,14 @@ function creerApi({ github, stockage, env = process.env, fetchFn = fetch, identi
       if (!p) return json({ ok: true });
       if (p.auteur && p.auteur.uid !== q.uid && !q.admin) throw new RefusAcces("Seule la personne qui a programm\xE9 (ou un admin) peut annuler.", 403);
       await stockage.supprimer("programme:" + numero);
-      await journaliser({ type: "programmation-annulee", auteur: { nom: q.nom, email: q.email }, pr: numero });
+      await journaliser({ type: "programmation-annulee", auteur: { nom: q.nom, email: q.emailPublic }, pr: numero });
       return json({ ok: true });
     },
     "POST signaler": async (req, q) => {
       const { chemin, message } = await req.json();
       const m = String(message || "").trim().slice(0, 2e3);
       if (m.length < 5) throw new ErreurEditeur("D\xE9crivez le probl\xE8me en quelques mots.", "VIDE");
-      await journaliser({ type: "signalement", auteur: { nom: q.nom, email: q.email }, chemin: String(chemin || "").slice(0, 200), message: m });
+      await journaliser({ type: "signalement", auteur: { nom: q.nom, email: q.emailPublic }, chemin: String(chemin || "").slice(0, 200), message: m });
       return json({ ok: true });
     }
   };

@@ -39,7 +39,7 @@ async function fichierPublie(chemin) {
 const identifierFn = async (req) => {
   const m = /^Bearer essai:([a-z0-9-]+)$/i.exec(req.headers.get('authorization') || '');
   if (!m) throw new RefusAcces('Connexion requise (mode essai : ?essai=prenom).', 401, 'CONNEXION');
-  return { uid: 'essai-' + m[1], email: m[1] + '@gamedoor41.fr', nom: m[1][0].toUpperCase() + m[1].slice(1), admin: m[1] !== 'stagiaire' };
+  return { uid: 'essai-' + m[1], email: m[1] + '@gamedoor41.fr', emailPublic: m[1] + '@gamedoor41.fr', nom: m[1][0].toUpperCase() + m[1].slice(1), admin: m[1] !== 'stagiaire' };
 };
 const fauxIa = async (p) => ({
   explication: 'Mode essai : je propose d’ajouter un encadré d’information sous l’élément sélectionné.',

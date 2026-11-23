@@ -1,7 +1,7 @@
 // Disposition générale de l'éditeur + connexion + raccourcis clavier
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { etat, maj, useEtat, toast, docCourant } from './etat.js';
-import { surChangement, connecter, connecterPleinePage, deconnecter, messageErreur, navigateurIntegre } from './auth.js';
+import { surChangement, connecter, connecterPleinePage, connecterMotDePasse, motDePasseOublie, deconnecter, messageErreur, navigateurIntegre } from './auth.js';
 import { demarrer, annuler, retablir } from './actions.js';
 import { Bouton, Toasts, Chargement, Modale } from './ui/base.jsx';
 import { Icone } from './ui/icones.jsx';
@@ -71,20 +71,35 @@ function Connexion() {
   const connexion = useEtat((e) => e.connexion);
   const erreur = useEtat((e) => e.erreurConnexion);
   const code = useEtat((e) => e.codeErreurConnexion);
+  const [adresse, setAdresse] = useState('');
+  const [motDePasse, setMotDePasse] = useState('');
+  const [envoi, setEnvoi] = useState(false);
   const appli = navigateurIntegre();
+  const echec = (e) => maj({ erreurConnexion: messageErreur(e), codeErreurConnexion: (e && e.code) || 'inconnu' });
   const go = () => {
     // la fenêtre Google s'ouvre ICI, dans le clic, avant toute autre chose
     const p = connecter();
     maj({ erreurConnexion: null, codeErreurConnexion: null });
-    p.catch((e) => maj({ erreurConnexion: messageErreur(e), codeErreurConnexion: (e && e.code) || 'inconnu' }));
+    p.catch(echec);
   };
-  const pleinePage = () => {
-    connecterPleinePage().catch((e) => maj({ erreurConnexion: messageErreur(e), codeErreurConnexion: (e && e.code) || 'inconnu' }));
+  const pleinePage = () => { connecterPleinePage().catch(echec); };
+  const parMotDePasse = (ev) => {
+    ev.preventDefault();
+    if (envoi) return;
+    maj({ erreurConnexion: null, codeErreurConnexion: null });
+    setEnvoi(true);
+    connecterMotDePasse(adresse, motDePasse).catch(echec).finally(() => setEnvoi(false));
+  };
+  const oublie = () => {
+    const a = adresse.trim();
+    if (!a) { maj({ erreurConnexion: 'Saisissez d’abord votre adresse ci-dessus, puis cliquez sur « Mot de passe oublié ».', codeErreurConnexion: null }); return; }
+    motDePasseOublie(a).then(() => toast('Si un compte Synergia existe pour ' + a + ', un lien pour choisir un nouveau mot de passe vient d’y être envoyé.', 'succes')).catch(echec);
   };
   const copier = () => {
     const url = location.origin + '/editeur/';
     try { navigator.clipboard.writeText(url).then(() => toast('Adresse copiée : collez-la dans Chrome ou Safari.', 'succes')); } catch (_) { window.prompt('Copiez cette adresse :', url); }
   };
+  const occupe = connexion === 'attente' || connexion === 'verification';
   return (
     <div class="ecran-connexion">
       <div class="carte-connexion">
@@ -94,16 +109,26 @@ function Connexion() {
         {appli ? (
           <div class="erreur-connexion">
             <Icone nom="alerte" />
-            <span>Vous avez ouvert cette page dans {appli === 'une application' ? 'le navigateur d’une application' : appli}. Google y refuse souvent la connexion : ouvrez plutôt <b>gamedoor41.fr/editeur/</b> dans Chrome ou Safari (de préférence sur ordinateur).<br /><button type="button" class="lien" onClick={copier}>Copier l’adresse</button></span>
+            <span>Vous avez ouvert cette page dans {appli === 'une application' ? 'le navigateur d’une application' : appli}. Google y refuse souvent la connexion : ouvrez plutôt <b>gamedoor41.fr/editeur/</b> dans Chrome ou Safari, ou connectez-vous plus bas avec l’adresse et le mot de passe de Synergia.<br /><button type="button" class="lien" onClick={copier}>Copier l’adresse</button></span>
           </div>
         ) : null}
-        {connexion === 'attente' || connexion === 'verification' ? <Chargement texte={connexion === 'verification' ? 'Vérification de votre compte Synergia…' : 'Chargement…'} /> : (
-          <Bouton variante="principal" icone="utilisateur" onClick={go}>Se connecter avec Google (@gamedoor41.fr)</Bouton>
+        {occupe ? <Chargement texte={connexion === 'verification' ? 'Vérification de votre compte Synergia…' : 'Chargement…'} /> : (
+          <>
+            <Bouton variante="principal" icone="utilisateur" onClick={go}>Se connecter avec Google</Bouton>
+            <p class="petit-texte">Votre compte Google @gamedoor41.fr, ou celui avec lequel vous vous connectez à Synergia.</p>
+            <div class="separateur-connexion"><span>ou avec le mot de passe Synergia</span></div>
+            <form class="form-connexion" onSubmit={parMotDePasse}>
+              <label class="champ"><span class="champ-libelle">Adresse e-mail</span><input type="email" name="email" autocomplete="username" value={adresse} onInput={(e) => setAdresse(e.currentTarget.value)} required /></label>
+              <label class="champ"><span class="champ-libelle">Mot de passe</span><input type="password" name="password" autocomplete="current-password" value={motDePasse} onInput={(e) => setMotDePasse(e.currentTarget.value)} required /></label>
+              <Bouton type="submit" variante="normal" icone="cadenas" desactive={envoi}>{envoi ? 'Connexion…' : 'Se connecter'}</Bouton>
+              <button type="button" class="lien" onClick={oublie}>Mot de passe oublié ?</button>
+            </form>
+          </>
         )}
         {erreur ? <p class="erreur-connexion"><Icone nom="alerte" /> <span>{erreur}</span></p> : null}
-        {code === 'auth/popup-blocked' || code === 'auth/operation-not-supported-in-this-environment' ? <Bouton variante="fantome" icone="externe" onClick={pleinePage}>Se connecter en pleine page</Bouton> : null}
+        {code === 'auth/popup-blocked' || code === 'auth/operation-not-supported-in-this-environment' ? <Bouton variante="fantome" icone="externe" onClick={pleinePage}>Se connecter avec Google en pleine page</Bouton> : null}
         {connexion === 'refus' ? <Bouton variante="fantome" icone="sortir" onClick={() => deconnecter()}>Changer de compte</Bouton> : null}
-        <p class="petit-texte">Accès réservé aux membres actifs de l’équipe (compte Synergia actif), avec leur adresse Google @gamedoor41.fr.</p>
+        <p class="petit-texte">Accès réservé aux membres actifs de l’équipe dans Synergia.</p>
       </div>
     </div>
   );

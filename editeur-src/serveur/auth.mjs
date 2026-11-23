@@ -1,11 +1,13 @@
 // ==========================================================================
 // Éditeur du site — QUI EST CONNECTÉ ?
 //
-// Accès réservé aux membres ACTIFS de l'équipe dans Synergia, connectés avec
-// leur compte Google @gamedoor41.fr.
+// Accès réservé aux membres ACTIFS de l'équipe dans Synergia. Depuis le
+// 23/11/2026 (Allan : « autorise tous les membres actifs ») : quelle que soit
+// leur façon de se connecter à Synergia — Google @gamedoor41.fr, compte Google
+// habituel, ou adresse + mot de passe de Synergia.
 //  1. Jeton Firebase (projet Synergia) vérifié ICI, sans bibliothèque :
 //     signature RS256 avec les clés publiques de Google, émetteur, audience,
-//     dates, fournisseur « google.com », adresse vérifiée @gamedoor41.fr.
+//     dates, fournisseur « google.com » (adresse vérifiée) ou « password ».
 //  2. Fiche Synergia lue avec le jeton de la personne (API Firestore) :
 //     users/{uid}, sinon la fiche dont l'adresse est la sienne ; la règle
 //     « compte actif » est celle de Synergia (shared/utils/compteActif.js).
@@ -132,7 +134,8 @@ async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
       else if (r.status !== 404) incomplet = true;
     } catch (_) { incomplet = true; }
   }
-  if (charge.email) {
+  // une adresse NON vérifiée (connexion par mot de passe) ne sert jamais à chercher une fiche
+  if (charge.email && charge.email_verified === true) {
     for (const champ of ['email', 'profile.email']) {
       try {
         const q = await fetchFn(base + ':runQuery', {
@@ -185,30 +188,42 @@ export async function identifier(requete, env = process.env, { fetchFn = fetch, 
   const charge = await verifierJeton(jeton, { projet, fetchFn, maintenant });
   const email = String(charge.email || '').trim().toLowerCase();
   const fournisseur = charge.firebase && charge.firebase.sign_in_provider;
-  if (fournisseur !== 'google.com' || charge.email_verified !== true || !email.endsWith('@' + domaine)) {
-    throw new RefusAcces('L’éditeur est réservé aux comptes Google @' + domaine + ' de l’équipe. Reconnectez-vous avec votre adresse @' + domaine + '.', 403, 'DOMAINE');
+  const verifiee = charge.email_verified === true && !!email;
+  // Décision d'Allan (23/11/2026) : TOUS les membres actifs, quelle que soit leur façon de se
+  // connecter à Synergia — Google (pro ou habituel, adresse vérifiée par Google) ou adresse +
+  // mot de passe de Synergia (appli Android). Jamais un jeton « custom » ou anonyme.
+  if (!((fournisseur === 'google.com' && verifiee) || fournisseur === 'password')) {
+    throw new RefusAcces('Connectez-vous avec Google ou avec l’adresse et le mot de passe de votre compte Synergia.', 403, 'DOMAINE');
   }
+  const pro = verifiee && email.endsWith('@' + domaine);
   const admins = new Set([...PROPRIETAIRES, ...String(env.EDITEUR_ADMINS || '').split(/[\s,;]+/)].map((e) => e.trim().toLowerCase()).filter(Boolean));
-  const proprietaire = admins.has(email);
-  const { fiches, incomplet } = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
+  // une adresse non vérifiée (mot de passe) n'ouvre JAMAIS les droits d'un propriétaire
+  const proprietaire = verifiee && admins.has(email);
+  // Lecture directe seulement pour un membre validé (marque « membre » posée par Synergia) :
+  // sans elle, la base fermée refuse tout sauf sa propre fiche, et une fiche remplie avant
+  // la fermeture ne prouve pas qu'on fait partie de l'équipe → c'est Synergia qui tranche.
+  const membre = charge.membre === true;
+  const { fiches, incomplet } = membre ? await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn }) : { fiches: [], incomplet: true };
   // une vraie fiche active (une fiche vide créée par une connexion refusée ne compte pas)
   const actives = fiches.filter((f) => estCompteActif(f) && !ficheVide(f));
   let viaSynergia = null;
   if (!actives.length && !proprietaire) {
     viaSynergia = await demanderASynergia(jeton, { env, fetchFn });
     if (!viaSynergia || !viaSynergia.actif) {
-      const inactive = viaSynergia ? viaSynergia.code === 'INACTIF' : fiches.some((f) => !estCompteActif(f));
-      if (!viaSynergia && !inactive && incomplet) {
+      const code = viaSynergia ? viaSynergia.code : (fiches.some((f) => !estCompteActif(f)) ? 'INACTIF' : null);
+      if (!code && incomplet) {
         throw new RefusAcces('Vérification de votre compte Synergia impossible pour le moment : réessayez dans une minute.', 503, 'INDISPONIBLE');
       }
-      throw new RefusAcces(inactive
-        ? 'Votre compte Synergia n’est plus actif : l’accès à l’éditeur est fermé.'
-        : 'Aucune fiche Synergia active ne porte l’adresse ' + email + ' : demandez à Allan d’indiquer cette adresse sur votre fiche Synergia.', 403, inactive ? 'INACTIF' : 'INCONNU');
+      if (code === 'INACTIF') throw new RefusAcces('Votre compte Synergia n’est plus actif : l’accès à l’éditeur est fermé.', 403, 'INACTIF');
+      if (code === 'NON_MEMBRE') throw new RefusAcces('Votre compte Synergia n’est pas encore validé : demandez à Allan de l’accepter dans Synergia (Accès à Synergia), puis reconnectez-vous ici.', 403, 'NON_MEMBRE');
+      throw new RefusAcces('Aucun compte Synergia actif ne correspond à ' + (email || 'ce compte') + '. Connectez-vous avec le compte que vous utilisez pour Synergia (Google, ou adresse et mot de passe), ou demandez à Allan.', 403, 'INCONNU');
     }
   }
   const fiche = actives[0] || {};
-  const nom = String((viaSynergia && viaSynergia.nom) || fiche.pseudo || (fiche.profile && fiche.profile.firstName) || fiche.firstName || fiche.displayName || charge.name || email.split('@')[0]).trim();
-  const qui = { uid: charge.sub, email, nom, admin: proprietaire || actives.some(estAdminSynergia) || (!!viaSynergia && viaSynergia.admin === true) };
+  const nom = String((viaSynergia && viaSynergia.nom) || fiche.pseudo || (fiche.profile && fiche.profile.firstName) || fiche.firstName || fiche.displayName || charge.name || (pro ? email.split('@')[0] : '') || 'Membre').trim();
+  // emailPublic : seule adresse écrite dans le dépôt PUBLIC du site (auteur, aperçu, historique) ;
+  // une adresse perso n'y apparaît jamais.
+  const qui = { uid: charge.sub, email, emailPublic: pro ? email : null, nom, admin: proprietaire || actives.some(estAdminSynergia) || (!!viaSynergia && viaSynergia.admin === true) };
   if (cache.size > 300) cache.clear();
   cache.set(jeton, { qui, expire: Math.min(charge.exp * 1000, maintenant + 5 * 60e3) });
   return qui;

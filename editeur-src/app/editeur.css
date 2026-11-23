@@ -59,6 +59,11 @@ code, kbd { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; backgroun
 .carte-connexion .btn-e { width: 100%; min-height: 46px; font-size: 15px; }
 .erreur-connexion { color: #fca5a5 !important; background: var(--e-rouge-fond); border: 1px solid rgba(239,68,68,.35); padding: 10px 12px; border-radius: var(--e-rayon); display: flex; gap: 8px; text-align: left; }
 .petit-texte { font-size: 12px; color: var(--e-texte-3) !important; }
+.separateur-connexion { width: 100%; display: flex; align-items: center; gap: 10px; color: var(--e-texte-3); font-size: 12px; }
+.separateur-connexion span { flex: none; max-width: 80%; }
+.separateur-connexion::before, .separateur-connexion::after { content: ''; flex: 1; border-top: 1px solid var(--e-bord); }
+.form-connexion { width: 100%; display: grid; gap: 10px; text-align: left; }
+.form-connexion .lien { justify-self: center; font-size: 13px; }
 
 /* ---------- disposition ---------- */
 .editeur { height: 100%; display: grid; grid-template-rows: 52px minmax(0, 1fr) 28px; grid-template-columns: minmax(0, 1fr); }

@@ -1,4 +1,6 @@
-// Connexion Google (compte @gamedoor41.fr) avec le projet Firebase de Synergia.
+// Connexion avec le compte Synergia (projet Firebase de Synergia) : Google (adresse
+// @gamedoor41.fr ou compte Google habituel de Synergia) ou adresse + mot de passe de
+// Synergia (comme dans l'appli Android). Allan, 23/11/2026 : « tous les membres actifs ».
 // Le serveur revérifie TOUT (jeton, domaine, compte actif) : ce fichier ne sert
 // qu'à obtenir le jeton. Mode essai (local uniquement) : ?essai=nom
 //
@@ -16,6 +18,7 @@ import { initializeApp } from 'firebase/app';
 import {
   initializeAuth, browserLocalPersistence, indexedDBLocalPersistence, browserPopupRedirectResolver,
   GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut,
+  signInWithEmailAndPassword, sendPasswordResetEmail,
 } from 'firebase/auth';
 
 const CONFIG = {
@@ -40,7 +43,8 @@ try {
 
 const fournisseur = () => {
   const p = new GoogleAuthProvider();
-  p.setCustomParameters({ hd: 'gamedoor41.fr', prompt: 'select_account' });
+  // pas de « hd » : le compte Google habituel de Synergia (même perso) doit pouvoir être choisi
+  p.setCustomParameters({ prompt: 'select_account' });
   return p;
 };
 
@@ -73,6 +77,21 @@ export function connecter() {
   return signInWithPopup(auth, fournisseur());
 }
 
+/** Adresse + mot de passe du compte Synergia. */
+export function connecterMotDePasse(adresse, motDePasse) {
+  if (essai) return Promise.resolve();
+  if (!auth) return Promise.reject(erreurInit || new Error('Connexion indisponible'));
+  return signInWithEmailAndPassword(auth, String(adresse || '').trim(), String(motDePasse || ''));
+}
+
+/** Lien « choisir un nouveau mot de passe » envoyé par Synergia (même compte). */
+export function motDePasseOublie(adresse) {
+  if (essai) return Promise.resolve();
+  if (!auth) return Promise.reject(erreurInit || new Error('Connexion indisponible'));
+  auth.languageCode = 'fr';
+  return sendPasswordResetEmail(auth, String(adresse || '').trim());
+}
+
 /** Connexion en pleine page (proposée seulement si la fenêtre est bloquée). */
 export function connecterPleinePage() {
   if (!auth) return Promise.reject(erreurInit || new Error('Connexion indisponible'));
@@ -96,7 +115,7 @@ export function messageErreur(e) {
   const code = c ? ' (code : ' + c + ')' : (e && e.message ? ' (' + String(e.message).slice(0, 120) + ')' : '');
   const appli = navigateurIntegre();
   if (appli && /popup|operation-not-supported|web-storage|internal-error|network/.test(c)) {
-    return 'Vous êtes dans le navigateur intégré ' + (appli === 'une application' ? 'd’une application' : 'de ' + appli) + ', où Google refuse la connexion. Ouvrez gamedoor41.fr/editeur/ dans Chrome ou Safari.' + code;
+    return 'Vous êtes dans le navigateur intégré ' + (appli === 'une application' ? 'd’une application' : 'de ' + appli) + ', où Google refuse la connexion. Ouvrez gamedoor41.fr/editeur/ dans Chrome ou Safari, ou connectez-vous avec l’adresse et le mot de passe de Synergia.' + code;
   }
   switch (c) {
     case 'auth/unauthorized-domain': return 'Cette adresse n’est pas autorisée pour la connexion : utilisez https://gamedoor41.fr/editeur/' + code;
@@ -107,8 +126,15 @@ export function messageErreur(e) {
     case 'auth/web-storage-unsupported': return 'Votre navigateur bloque le stockage nécessaire à la connexion (navigation privée, cookies bloqués ou bloqueur). Ouvrez la page dans Chrome ou Safari, en navigation normale.' + code;
     case 'auth/operation-not-supported-in-this-environment': return 'Ce navigateur ne permet pas la connexion Google. Ouvrez gamedoor41.fr/editeur/ dans Chrome ou Safari.' + code;
     case 'auth/internal-error': return 'Erreur de connexion côté Google. Réessayez dans Chrome ou Safari ; si cela recommence, envoyez une capture de ce message à Allan.' + code;
-    case 'auth/admin-restricted-operation': return 'Synergia n’accepte pas encore ce compte Google : connectez-vous d’abord une fois à Synergia avec votre adresse @gamedoor41.fr, puis revenez ici.' + code;
-    case 'auth/account-exists-with-different-credential': return 'Cette adresse est liée à un autre mode de connexion dans Synergia : connectez-vous d’abord à Synergia avec votre adresse @gamedoor41.fr, puis revenez ici.' + code;
+    case 'auth/admin-restricted-operation': return 'Synergia n’accepte pas encore ce compte Google : connectez-vous avec le compte que vous utilisez pour Synergia (Google, ou adresse et mot de passe).' + code;
+    case 'auth/account-exists-with-different-credential': return 'Cette adresse est liée à un autre mode de connexion dans Synergia : connectez-vous ici avec l’adresse et le mot de passe de Synergia, ou avec le compte Google que vous utilisez pour Synergia.' + code;
+    case 'auth/invalid-credential':
+    case 'auth/invalid-login-credentials':
+    case 'auth/wrong-password':
+    case 'auth/user-not-found': return 'Adresse ou mot de passe incorrect : utilisez ceux de votre compte Synergia (ou « Mot de passe oublié »).' + code;
+    case 'auth/invalid-email':
+    case 'auth/missing-email': return 'Adresse e-mail invalide : vérifiez-la.' + code;
+    case 'auth/missing-password': return 'Saisissez votre mot de passe Synergia.' + code;
     case 'auth/user-disabled': return 'Ce compte est désactivé dans Synergia.' + code;
     case 'auth/too-many-requests': return 'Trop de tentatives : patientez quelques minutes puis réessayez.' + code;
     default: return 'Connexion impossible. Envoyez une capture de ce message à Allan.' + code;
