@@ -28,7 +28,7 @@ const BANDEAU = `  <!-- =====================================================
   <section class="heritage" aria-label="Continuité de l'équipe Brain Escape Game">
     <div class="container container-wide">
       <div class="heritage-band reveal">
-        <span class="heritage-eq"><strong>Brain Escape Game + Buzz Your Brain = GAMEDOOR·41</strong></span>
+        <span class="heritage-eq"><strong>GAMEDOOR·41 réunit les Escape Games BRAIN et le Quiz Buzz Your Brain sous un même toit</strong></span>
         <span class="heritage-sep" aria-hidden="true">·</span>
         <span class="heritage-tag">
           <img src="/img/icons/users.svg" alt="" aria-hidden="true" class="heritage-ico">

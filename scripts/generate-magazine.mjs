@@ -695,7 +695,7 @@ ${article.body.trim()}
         <a href="/magazine/">Magazine</a>
       </div>
     </div>
-    <p class="footer-legal">© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 06 31 46 93 22</p>
+    <p class="footer-legal">© 2026 SARL BOEHME · GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 06 31 46 93 22</p>
   </div>
 </footer>
 
@@ -788,7 +788,7 @@ ${cards}
 
 <footer class="footer">
   <div class="container container-wide">
-    <p class="footer-legal">© 2026 GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 06 31 46 93 22</p>
+    <p class="footer-legal">© 2026 SARL BOEHME · GAMEDOOR·41 — 41 bis rue Pasteur, 14120 Mondeville · 06 31 46 93 22</p>
   </div>
 </footer>
 
