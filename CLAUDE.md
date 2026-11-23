@@ -131,8 +131,10 @@ l'historique : `fix(tarifs): …`, `feat(magazine): …`, `chore(reviews): …`,
 
 ## Éditeur du site (gamedoor41.fr/editeur/) — depuis le 12/11/2026
 
-L'équipe modifie le site elle-même avec un éditeur visuel réservé aux comptes Google
-@gamedoor41.fr actifs dans Synergia. **Règle absolue : on peut tout ajouter et tout
+L'équipe modifie le site elle-même avec un éditeur visuel réservé aux **membres actifs de
+Synergia** (depuis le 23/11/2026 : Google @gamedoor41.fr, compte Google habituel de Synergia,
+ou adresse + mot de passe de Synergia ; c'est Synergia qui tranche via `/api/membre-actif`).
+Une adresse perso n'est jamais écrite dans ce dépôt public (auteur technique contact@). **Règle absolue : on peut tout ajouter et tout
 modifier, on ne supprime jamais un contenu publié** (le serveur le refuse). Chaque
 publication de l'équipe arrive sur `main` sous forme de pull request fusionnée
 (branche `editeur/…`, étiquette `editeur`, auteur = la personne) : le site peut donc
