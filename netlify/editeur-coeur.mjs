@@ -27374,6 +27374,7 @@ import { createPublicKey, verify as verifierSignature } from "node:crypto";
 var PROJET_DEFAUT = "synergia-app-f27e7";
 var DOMAINE_DEFAUT = "gamedoor41.fr";
 var PROPRIETAIRES = ["allan@gamedoor41.fr"];
+var SYNERGIA_DEFAUT = "https://synergia-brain-caen.netlify.app";
 var URL_CLES = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
 var RefusAcces = class extends Error {
   constructor(message, statut = 403, code = "REFUS") {
@@ -27449,26 +27450,54 @@ async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
   const base = "https://firestore.googleapis.com/v1/projects/" + projet + "/databases/(default)/documents";
   const h = { Authorization: "Bearer " + jeton, "Content-Type": "application/json" };
   const fiches = [];
+  let incomplet = false;
   const uids = [charge.sub];
   if (typeof charge.aliasDe === "string" && /^[A-Za-z0-9_-]{6,128}$/.test(charge.aliasDe) && charge.aliasDe !== charge.sub) uids.push(charge.aliasDe);
   for (const uid of uids) {
-    const r = await fetchFn(base + "/users/" + encodeURIComponent(uid), { headers: h, signal: AbortSignal.timeout(4e3) });
-    if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
-    else if (r.status !== 404) throw new RefusAcces("Lecture de votre fiche Synergia impossible pour le moment.", 503, "INDISPONIBLE");
+    try {
+      const r = await fetchFn(base + "/users/" + encodeURIComponent(uid), { headers: h, signal: AbortSignal.timeout(4e3) });
+      if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
+      else if (r.status !== 404) incomplet = true;
+    } catch (_) {
+      incomplet = true;
+    }
   }
   if (charge.email) {
     for (const champ of ["email", "profile.email"]) {
-      const q = await fetchFn(base + ":runQuery", {
-        method: "POST",
-        headers: h,
-        signal: AbortSignal.timeout(4e3),
-        body: JSON.stringify({ structuredQuery: { from: [{ collectionId: "users" }], where: { fieldFilter: { field: { fieldPath: champ }, op: "EQUAL", value: { stringValue: charge.email } } }, limit: 5 } })
-      });
-      if (!q.ok) continue;
-      for (const ligne of await q.json()) if (ligne.document) fiches.push(objetFirestore(ligne.document.fields));
+      try {
+        const q = await fetchFn(base + ":runQuery", {
+          method: "POST",
+          headers: h,
+          signal: AbortSignal.timeout(4e3),
+          body: JSON.stringify({ structuredQuery: { from: [{ collectionId: "users" }], where: { fieldFilter: { field: { fieldPath: champ }, op: "EQUAL", value: { stringValue: charge.email } } }, limit: 5 } })
+        });
+        if (!q.ok) {
+          incomplet = true;
+          continue;
+        }
+        for (const ligne of await q.json()) if (ligne.document) fiches.push(objetFirestore(ligne.document.fields));
+      } catch (_) {
+        incomplet = true;
+      }
     }
   }
-  return fiches;
+  return { fiches, incomplet };
+}
+async function demanderASynergia(jeton, { env, fetchFn }) {
+  const base = String(env.EDITEUR_SYNERGIA_URL || SYNERGIA_DEFAUT).replace(/\/+$/, "");
+  try {
+    const r = await fetchFn(base + "/api/membre-actif", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + jeton, "Content-Type": "application/json" },
+      body: "{}",
+      signal: AbortSignal.timeout(6500)
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return d && d.ok === true && typeof d.actif === "boolean" ? d : null;
+  } catch (_) {
+    return null;
+  }
 }
 var cache = /* @__PURE__ */ new Map();
 async function identifier(requete, env = process.env, { fetchFn = fetch, maintenant = Date.now() } = {}) {
@@ -27488,15 +27517,22 @@ async function identifier(requete, env = process.env, { fetchFn = fetch, mainten
   }
   const admins = new Set([...PROPRIETAIRES, ...String(env.EDITEUR_ADMINS || "").split(/[\s,;]+/)].map((e) => e.trim().toLowerCase()).filter(Boolean));
   const proprietaire = admins.has(email);
-  const fiches = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
+  const { fiches, incomplet } = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
   const actives = fiches.filter((f) => estCompteActif(f) && !ficheVide(f));
+  let viaSynergia = null;
   if (!actives.length && !proprietaire) {
-    const inactive = fiches.some((f) => !estCompteActif(f));
-    throw new RefusAcces(inactive ? "Votre compte Synergia n\u2019est plus actif : l\u2019acc\xE8s \xE0 l\u2019\xE9diteur est ferm\xE9." : "Aucune fiche Synergia active ne correspond \xE0 " + email + " : demandez \xE0 Allan de v\xE9rifier votre compte.", 403, inactive ? "INACTIF" : "INCONNU");
+    viaSynergia = await demanderASynergia(jeton, { env, fetchFn });
+    if (!viaSynergia || !viaSynergia.actif) {
+      const inactive = viaSynergia ? viaSynergia.code === "INACTIF" : fiches.some((f) => !estCompteActif(f));
+      if (!viaSynergia && !inactive && incomplet) {
+        throw new RefusAcces("V\xE9rification de votre compte Synergia impossible pour le moment : r\xE9essayez dans une minute.", 503, "INDISPONIBLE");
+      }
+      throw new RefusAcces(inactive ? "Votre compte Synergia n\u2019est plus actif : l\u2019acc\xE8s \xE0 l\u2019\xE9diteur est ferm\xE9." : "Aucune fiche Synergia active ne porte l\u2019adresse " + email + " : demandez \xE0 Allan d\u2019indiquer cette adresse sur votre fiche Synergia.", 403, inactive ? "INACTIF" : "INCONNU");
+    }
   }
   const fiche = actives[0] || {};
-  const nom = String(fiche.pseudo || fiche.profile && fiche.profile.firstName || fiche.firstName || fiche.displayName || charge.name || email.split("@")[0]).trim();
-  const qui = { uid: charge.sub, email, nom, admin: proprietaire || actives.some(estAdminSynergia) };
+  const nom = String(viaSynergia && viaSynergia.nom || fiche.pseudo || fiche.profile && fiche.profile.firstName || fiche.firstName || fiche.displayName || charge.name || email.split("@")[0]).trim();
+  const qui = { uid: charge.sub, email, nom, admin: proprietaire || actives.some(estAdminSynergia) || !!viaSynergia && viaSynergia.admin === true };
   if (cache.size > 300) cache.clear();
   cache.set(jeton, { qui, expire: Math.min(charge.exp * 1e3, maintenant + 5 * 6e4) });
   return qui;
@@ -37804,7 +37840,10 @@ var json = (donnee, statut = 200) => new Response(JSON.stringify(donnee), {
   headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" }
 });
 function erreurVersReponse(e) {
-  if (e instanceof RefusAcces) return json({ erreur: e.message, code: e.code }, e.statut);
+  if (e instanceof RefusAcces) {
+    if (e.statut !== 401) console.warn("[editeur] acc\xE8s refus\xE9 : " + e.code);
+    return json({ erreur: e.message, code: e.code }, e.statut);
+  }
   if (e instanceof ErreurEditeur) return json({ erreur: e.message, code: e.code, details: e.details }, 422);
   if (e instanceof ErreurGithub) return json({ erreur: e.message, code: "GITHUB", statut: e.statut }, 502);
   if (e && e.name === "TimeoutError") return json({ erreur: "Un service ext\xE9rieur ne r\xE9pond pas. R\xE9essayez dans un instant.", code: "DELAI" }, 504);

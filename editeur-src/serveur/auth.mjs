@@ -9,6 +9,10 @@
 //  2. Fiche Synergia lue avec le jeton de la personne (API Firestore) :
 //     users/{uid}, sinon la fiche dont l'adresse est la sienne ; la règle
 //     « compte actif » est celle de Synergia (shared/utils/compteActif.js).
+//     Base Synergia fermée depuis le 16/11/2026 : si cette lecture ne trouve
+//     rien (compte Google pro rattaché, fiche RH…), Synergia répond lui-même
+//     (/api/membre-actif, lecture seule, avec le même jeton) — cas de Makalu
+//     le 23/11/2026, refusé alors qu'il est membre actif.
 //  3. Admins de l'éditeur : propriétaires (allan@gamedoor41.fr), admins
 //     Synergia, et la variable Netlify EDITEUR_ADMINS (adresses séparées par
 //     des virgules).
@@ -20,6 +24,7 @@ import { createPublicKey, verify as verifierSignature } from 'node:crypto';
 export const PROJET_DEFAUT = 'synergia-app-f27e7';
 export const DOMAINE_DEFAUT = 'gamedoor41.fr';
 export const PROPRIETAIRES = ['allan@gamedoor41.fr'];
+export const SYNERGIA_DEFAUT = 'https://synergia-brain-caen.netlify.app';
 const URL_CLES = 'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com';
 
 export class RefusAcces extends Error {
@@ -114,24 +119,51 @@ async function fichesSynergia(charge, jeton, { projet, fetchFn }) {
   const base = 'https://firestore.googleapis.com/v1/projects/' + projet + '/databases/(default)/documents';
   const h = { Authorization: 'Bearer ' + jeton, 'Content-Type': 'application/json' };
   const fiches = [];
+  // incomplet = une lecture a été refusée ou a échoué. Depuis la fermeture de la base
+  // Synergia (16/11/2026), un compte sans la marque « membre » ne lit QUE sa propre
+  // fiche : la fiche d'un compte rattaché et la recherche par adresse sont refusées.
+  let incomplet = false;
   const uids = [charge.sub];
   if (typeof charge.aliasDe === 'string' && /^[A-Za-z0-9_-]{6,128}$/.test(charge.aliasDe) && charge.aliasDe !== charge.sub) uids.push(charge.aliasDe);
   for (const uid of uids) {
-    const r = await fetchFn(base + '/users/' + encodeURIComponent(uid), { headers: h, signal: AbortSignal.timeout(4000) });
-    if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
-    else if (r.status !== 404) throw new RefusAcces('Lecture de votre fiche Synergia impossible pour le moment.', 503, 'INDISPONIBLE');
+    try {
+      const r = await fetchFn(base + '/users/' + encodeURIComponent(uid), { headers: h, signal: AbortSignal.timeout(4000) });
+      if (r.ok) fiches.push(objetFirestore((await r.json()).fields));
+      else if (r.status !== 404) incomplet = true;
+    } catch (_) { incomplet = true; }
   }
   if (charge.email) {
     for (const champ of ['email', 'profile.email']) {
-      const q = await fetchFn(base + ':runQuery', {
-        method: 'POST', headers: h, signal: AbortSignal.timeout(4000),
-        body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'users' }], where: { fieldFilter: { field: { fieldPath: champ }, op: 'EQUAL', value: { stringValue: charge.email } } }, limit: 5 } }),
-      });
-      if (!q.ok) continue;
-      for (const ligne of await q.json()) if (ligne.document) fiches.push(objetFirestore(ligne.document.fields));
+      try {
+        const q = await fetchFn(base + ':runQuery', {
+          method: 'POST', headers: h, signal: AbortSignal.timeout(4000),
+          body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'users' }], where: { fieldFilter: { field: { fieldPath: champ }, op: 'EQUAL', value: { stringValue: charge.email } } }, limit: 5 } }),
+        });
+        if (!q.ok) { incomplet = true; continue; }
+        for (const ligne of await q.json()) if (ligne.document) fiches.push(objetFirestore(ligne.document.fields));
+      } catch (_) { incomplet = true; }
     }
   }
-  return fiches;
+  return { fiches, incomplet };
+}
+
+/**
+ * Quand la fiche n'est pas lisible avec le jeton de la personne, on pose la question
+ * à Synergia, qui lit avec ses propres droits (/api/membre-actif, lecture seule, même
+ * jeton). Réponse : { actif: true, nom, admin } ou { actif: false, code } ; null si
+ * Synergia ne répond pas (l'éditeur garde alors sa propre conclusion).
+ */
+async function demanderASynergia(jeton, { env, fetchFn }) {
+  const base = String(env.EDITEUR_SYNERGIA_URL || SYNERGIA_DEFAUT).replace(/\/+$/, '');
+  try {
+    const r = await fetchFn(base + '/api/membre-actif', {
+      method: 'POST', headers: { Authorization: 'Bearer ' + jeton, 'Content-Type': 'application/json' }, body: '{}',
+      signal: AbortSignal.timeout(6500),
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return d && d.ok === true && typeof d.actif === 'boolean' ? d : null;
+  } catch (_) { return null; }
 }
 
 const cache = new Map();
@@ -158,18 +190,25 @@ export async function identifier(requete, env = process.env, { fetchFn = fetch, 
   }
   const admins = new Set([...PROPRIETAIRES, ...String(env.EDITEUR_ADMINS || '').split(/[\s,;]+/)].map((e) => e.trim().toLowerCase()).filter(Boolean));
   const proprietaire = admins.has(email);
-  const fiches = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
+  const { fiches, incomplet } = await fichesSynergia({ ...charge, email }, jeton, { projet, fetchFn });
   // une vraie fiche active (une fiche vide créée par une connexion refusée ne compte pas)
   const actives = fiches.filter((f) => estCompteActif(f) && !ficheVide(f));
+  let viaSynergia = null;
   if (!actives.length && !proprietaire) {
-    const inactive = fiches.some((f) => !estCompteActif(f));
-    throw new RefusAcces(inactive
-      ? 'Votre compte Synergia n’est plus actif : l’accès à l’éditeur est fermé.'
-      : 'Aucune fiche Synergia active ne correspond à ' + email + ' : demandez à Allan de vérifier votre compte.', 403, inactive ? 'INACTIF' : 'INCONNU');
+    viaSynergia = await demanderASynergia(jeton, { env, fetchFn });
+    if (!viaSynergia || !viaSynergia.actif) {
+      const inactive = viaSynergia ? viaSynergia.code === 'INACTIF' : fiches.some((f) => !estCompteActif(f));
+      if (!viaSynergia && !inactive && incomplet) {
+        throw new RefusAcces('Vérification de votre compte Synergia impossible pour le moment : réessayez dans une minute.', 503, 'INDISPONIBLE');
+      }
+      throw new RefusAcces(inactive
+        ? 'Votre compte Synergia n’est plus actif : l’accès à l’éditeur est fermé.'
+        : 'Aucune fiche Synergia active ne porte l’adresse ' + email + ' : demandez à Allan d’indiquer cette adresse sur votre fiche Synergia.', 403, inactive ? 'INACTIF' : 'INCONNU');
+    }
   }
   const fiche = actives[0] || {};
-  const nom = String(fiche.pseudo || (fiche.profile && fiche.profile.firstName) || fiche.firstName || fiche.displayName || charge.name || email.split('@')[0]).trim();
-  const qui = { uid: charge.sub, email, nom, admin: proprietaire || actives.some(estAdminSynergia) };
+  const nom = String((viaSynergia && viaSynergia.nom) || fiche.pseudo || (fiche.profile && fiche.profile.firstName) || fiche.firstName || fiche.displayName || charge.name || email.split('@')[0]).trim();
+  const qui = { uid: charge.sub, email, nom, admin: proprietaire || actives.some(estAdminSynergia) || (!!viaSynergia && viaSynergia.admin === true) };
   if (cache.size > 300) cache.clear();
   cache.set(jeton, { qui, expire: Math.min(charge.exp * 1000, maintenant + 5 * 60e3) });
   return qui;

@@ -103,3 +103,70 @@ test('compte Google pro rattaché (alias) : la vraie fiche est retrouvée', asyn
   // fiche vide + vraie fiche archivée : refusé (ancien membre)
   await refuse(jeton({ sub: 'uid-parti', email: 'parti@gamedoor41.fr' }), reseau({ parUid: { 'uid-parti': {} }, parEmail: { isActive: true, isArchived: true, pseudo: 'Parti' } }), 'INACTIF');
 });
+
+// ---- Base Synergia FERMÉE (depuis le 16/11/2026) : un compte sans la marque « membre »
+// ne lit que SA fiche ; la fiche du vrai compte et la recherche par adresse sont refusées
+// (403). L'éditeur demande alors à Synergia (/api/membre-actif). Cas de Makalu, 23/11/2026.
+function baseFermee({ propre = null, synergia = undefined, synergiaStatut = 200 } = {}) {
+  const appels = { synergia: [] };
+  const net = async (url, o = {}) => {
+    const rep = (status, body, headers = {}) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', ...headers } });
+    if (url.includes('securetoken@system.gserviceaccount.com')) return rep(200, { keys: [jwk] }, { 'cache-control': 'public, max-age=3600' });
+    const porteur = String((o.headers && o.headers.Authorization) || '').replace(/^Bearer /, '');
+    const sub = JSON.parse(Buffer.from(porteur.split('.')[1] || 'e30', 'base64url').toString()).sub;
+    if (url.includes('/documents/users/')) {
+      const uid = decodeURIComponent(url.split('/documents/users/')[1]);
+      if (uid !== sub) return rep(403, { error: { status: 'PERMISSION_DENIED' } });
+      return propre ? rep(200, { fields: Object.fromEntries(Object.entries(propre).map(([k, v]) => [k, typeof v === 'boolean' ? { booleanValue: v } : { stringValue: String(v) }])) }) : rep(404, {});
+    }
+    if (url.endsWith(':runQuery')) return rep(403, [{ error: { status: 'PERMISSION_DENIED' } }]);
+    if (url.endsWith('/api/membre-actif')) {
+      appels.synergia.push({ url, methode: o.method, porteur });
+      if (synergia === undefined) return rep(404, {});
+      if (synergia === 'panne') throw new TypeError('fetch failed');
+      return rep(synergiaStatut, synergia);
+    }
+    return rep(404, {});
+  };
+  return { net, appels };
+}
+
+test('base fermée, compte Google pro rattaché : Synergia confirme → accepté (nom et admin de Synergia)', async () => {
+  const { net, appels } = baseFermee({ synergia: { ok: true, actif: true, nom: 'Makalu', admin: false } });
+  const j = jeton({ sub: 'uid-pro-makalu', email: 'makalu@gamedoor41.fr', aliasDe: 'uid-vrai-makalu' });
+  const q = await identifier(requete(j), env, { fetchFn: net });
+  assert.equal(q.nom, 'Makalu');
+  assert.equal(q.admin, false);
+  assert.equal(q.uid, 'uid-pro-makalu');
+  assert.equal(appels.synergia.length, 1);
+  assert.equal(appels.synergia[0].url, 'https://synergia-brain-caen.netlify.app/api/membre-actif');
+  assert.equal(appels.synergia[0].methode, 'POST');
+  assert.equal(appels.synergia[0].porteur, j);
+  const q2 = await identifier(requete(jeton({ sub: 'uid-pro-chef', email: 'chef@gamedoor41.fr' })), env, { fetchFn: baseFermee({ synergia: { ok: true, actif: true, nom: 'Chef', admin: true } }).net });
+  assert.equal(q2.admin, true);
+});
+
+test('base fermée : Synergia dit « pas de fiche » → INCONNU, « plus actif » → INACTIF', async () => {
+  await refuse(jeton({ sub: 'uid-pro-x1', email: 'x1@gamedoor41.fr' }), baseFermee({ synergia: { ok: true, actif: false, code: 'AUCUNE_FICHE' } }).net, 'INCONNU');
+  await refuse(jeton({ sub: 'uid-pro-x2', email: 'x2@gamedoor41.fr' }), baseFermee({ synergia: { ok: true, actif: false, code: 'INACTIF' } }).net, 'INACTIF');
+  // la fiche propre active suffit : Synergia n'est pas dérangé
+  const b = baseFermee({ propre: { isActive: true, pseudo: 'Léa' }, synergia: { ok: true, actif: false, code: 'AUCUNE_FICHE' } });
+  const q = await identifier(requete(jeton({ sub: 'uid-pro-lea' })), env, { fetchFn: b.net });
+  assert.equal(q.nom, 'Léa');
+  assert.equal(b.appels.synergia.length, 0);
+});
+
+test('base fermée et Synergia muet (pas encore en ligne, panne, réponse bizarre) : « réessayez », jamais un faux refus', async () => {
+  for (const [i, opts] of [[1, {}], [2, { synergia: 'panne' }], [3, { synergia: { ok: false }, synergiaStatut: 503 }], [4, { synergia: { ok: true } }]]) {
+    await refuse(jeton({ sub: 'uid-pro-m' + i, email: 'm' + i + '@gamedoor41.fr' }), baseFermee(opts).net, 'INDISPONIBLE');
+  }
+  // propriétaire : jamais bloqué
+  const q = await identifier(requete(jeton({ sub: 'uid-pro-allan', email: 'allan@gamedoor41.fr' })), env, { fetchFn: baseFermee().net });
+  assert.equal(q.admin, true);
+});
+
+test('adresse de Synergia réglable (EDITEUR_SYNERGIA_URL)', async () => {
+  const b = baseFermee({ synergia: { ok: true, actif: true, nom: 'Q' } });
+  await identifier(requete(jeton({ sub: 'uid-pro-q', email: 'q@gamedoor41.fr' })), { ...env, EDITEUR_SYNERGIA_URL: 'https://essai.example/' }, { fetchFn: b.net });
+  assert.equal(b.appels.synergia[0].url, 'https://essai.example/api/membre-actif');
+});

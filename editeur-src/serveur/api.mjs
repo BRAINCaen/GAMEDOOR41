@@ -42,7 +42,11 @@ const json = (donnee, statut = 200) => new Response(JSON.stringify(donnee), {
 });
 
 function erreurVersReponse(e) {
-  if (e instanceof RefusAcces) return json({ erreur: e.message, code: e.code }, e.statut);
+  if (e instanceof RefusAcces) {
+    // trace du CODE seulement (jamais l’adresse ni le jeton) : diagnostic dans les journaux Netlify
+    if (e.statut !== 401) console.warn('[editeur] accès refusé : ' + e.code);
+    return json({ erreur: e.message, code: e.code }, e.statut);
+  }
   if (e instanceof ErreurEditeur) return json({ erreur: e.message, code: e.code, details: e.details }, 422);
   if (e instanceof ErreurGithub) return json({ erreur: e.message, code: 'GITHUB', statut: e.statut }, 502);
   if (e && e.name === 'TimeoutError') return json({ erreur: 'Un service extérieur ne répond pas. Réessayez dans un instant.', code: 'DELAI' }, 504);
