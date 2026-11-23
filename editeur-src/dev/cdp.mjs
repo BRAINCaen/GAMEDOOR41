@@ -11,6 +11,7 @@ export async function lancerChrome({ port = 9333, visible = false } = {}) {
   const profil = mkdtempSync(join(tmpdir(), 'gdx-chrome-'));
   const args = ['--remote-debugging-port=' + port, '--user-data-dir=' + profil, '--no-first-run', '--no-default-browser-check', '--disable-extensions', '--window-size=1600,1000', '--lang=fr-FR'];
   if (!visible) args.push('--headless=new');
+  if (process.env.GDX_CHROME_ARGS) args.push(...process.env.GDX_CHROME_ARGS.split(' ').filter(Boolean));
   const p = spawn(CHROME, [...args, 'about:blank'], { stdio: 'ignore' });
   let version = null;
   for (let i = 0; i < 60 && !version; i++) {

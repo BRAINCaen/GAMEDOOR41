@@ -1,7 +1,7 @@
 // Disposition générale de l'éditeur + connexion + raccourcis clavier
 import { useEffect } from 'preact/hooks';
 import { etat, maj, useEtat, toast, docCourant } from './etat.js';
-import { surChangement, connecter, deconnecter, messageErreur } from './auth.js';
+import { surChangement, connecter, connecterPleinePage, deconnecter, messageErreur, navigateurIntegre } from './auth.js';
 import { demarrer, annuler, retablir } from './actions.js';
 import { Bouton, Toasts, Chargement, Modale } from './ui/base.jsx';
 import { Icone } from './ui/icones.jsx';
@@ -70,9 +70,20 @@ export function App() {
 function Connexion() {
   const connexion = useEtat((e) => e.connexion);
   const erreur = useEtat((e) => e.erreurConnexion);
-  const go = async () => {
-    maj({ erreurConnexion: null });
-    try { await connecter(); } catch (e) { maj({ erreurConnexion: messageErreur(e) }); }
+  const code = useEtat((e) => e.codeErreurConnexion);
+  const appli = navigateurIntegre();
+  const go = () => {
+    // la fenêtre Google s'ouvre ICI, dans le clic, avant toute autre chose
+    const p = connecter();
+    maj({ erreurConnexion: null, codeErreurConnexion: null });
+    p.catch((e) => maj({ erreurConnexion: messageErreur(e), codeErreurConnexion: (e && e.code) || 'inconnu' }));
+  };
+  const pleinePage = () => {
+    connecterPleinePage().catch((e) => maj({ erreurConnexion: messageErreur(e), codeErreurConnexion: (e && e.code) || 'inconnu' }));
+  };
+  const copier = () => {
+    const url = location.origin + '/editeur/';
+    try { navigator.clipboard.writeText(url).then(() => toast('Adresse copiée : collez-la dans Chrome ou Safari.', 'succes')); } catch (_) { window.prompt('Copiez cette adresse :', url); }
   };
   return (
     <div class="ecran-connexion">
@@ -80,10 +91,17 @@ function Connexion() {
         <img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" width="224" height="32" />
         <h1>Éditeur du site</h1>
         <p>Modifiez gamedoor41.fr en direct, voyez le résultat sur ordinateur et sur téléphone, puis publiez. On peut tout ajouter et tout modifier — on ne supprime jamais un contenu publié.</p>
+        {appli ? (
+          <div class="erreur-connexion">
+            <Icone nom="alerte" />
+            <span>Vous avez ouvert cette page dans {appli === 'une application' ? 'le navigateur d’une application' : appli}. Google y refuse souvent la connexion : ouvrez plutôt <b>gamedoor41.fr/editeur/</b> dans Chrome ou Safari (de préférence sur ordinateur).<br /><button type="button" class="lien" onClick={copier}>Copier l’adresse</button></span>
+          </div>
+        ) : null}
         {connexion === 'attente' || connexion === 'verification' ? <Chargement texte={connexion === 'verification' ? 'Vérification de votre compte Synergia…' : 'Chargement…'} /> : (
           <Bouton variante="principal" icone="utilisateur" onClick={go}>Se connecter avec Google (@gamedoor41.fr)</Bouton>
         )}
-        {erreur ? <p class="erreur-connexion"><Icone nom="alerte" /> {erreur}</p> : null}
+        {erreur ? <p class="erreur-connexion"><Icone nom="alerte" /> <span>{erreur}</span></p> : null}
+        {code === 'auth/popup-blocked' || code === 'auth/operation-not-supported-in-this-environment' ? <Bouton variante="fantome" icone="externe" onClick={pleinePage}>Se connecter en pleine page</Bouton> : null}
         {connexion === 'refus' ? <Bouton variante="fantome" icone="sortir" onClick={() => deconnecter()}>Changer de compte</Bouton> : null}
         <p class="petit-texte">Accès réservé aux membres actifs de l’équipe (compte Synergia actif), avec leur adresse Google @gamedoor41.fr.</p>
       </div>
