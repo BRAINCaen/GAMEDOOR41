@@ -288,6 +288,43 @@ rempl('politique-confidentialite/index.html', 'Google Analytics ou équivalent �
 rempl('politique-cookies/index.html', ' ou équivalent — durée maximale 13 mois.', ' 4 — durée maximale 13 mois.');
 
 // ---------------------------------------------------------------------------------------
+// 9. Distinction de Back to the 80's : on cite l'organisme et l'année
+//    Source (lue le 23/11/2026) : https://www.the-escapers.com/goldenscapes/2025/meilleure-salle
+//    « Back to the 80's - GameDoor 41 (Caen) » : 70ᵉ du classement « Meilleure salle » des Goldenscapes 2025
+//    (92ᵉ l'année précédente). On n'écrit plus « Top 100 France » sans source ni « nommée ».
+// ---------------------------------------------------------------------------------------
+const ESCAPERS = 'https://www.the-escapers.com/goldenscapes/2025/meilleure-salle';
+const TOP100 = 'Top 100 The Escapers 2025';
+const RANG = '70ᵉ du classement «&nbsp;Meilleure salle&nbsp;» des Goldenscapes 2025';
+{
+  const f = 'escape-game-caen/back-to-the-80s/index.html';
+  rempl(f, '"award": "Nomination — Top 100 France des meilleures salles (classement communautaire The Escapers)"', '"award": "70ᵉ du classement « Meilleure salle » des Goldenscapes 2025 (The Escapers)"');
+  rempl(f, '<span class="label">France · The Escapers</span>', '<span class="label">The Escapers · Goldenscapes 2025</span>');
+  rempl(f, '<h3>Nommée TOP 100 France</h3>', `<h3>${TOP100}</h3>`);
+  rempl(f, 'Sélectionnée parmi les 100 meilleures salles francophones par la communauté The Escapers (France, Belgique, Suisse) sur retours joueurs.', `${RANG}, établi par les votes de la communauté The Escapers (92ᵉ l'année précédente). <a href="${ESCAPERS}" target="_blank" rel="noopener">Voir le classement</a>.`);
+  rempl(f, 'elle est nommée parmi les meilleures salles francophones par la communauté The Escapers (TOP 100 France).', 'elle est classée 70ᵉ meilleure salle aux Goldenscapes 2025, le classement de la communauté The Escapers.');
+}
+{
+  const f = 'post/canicule-caen-escape-game-climatise/index.html';
+  rempl(f, "Le classement TOP 100 France récompense la qualité du scénario, des décors et l'authenticité de l'immersion années 80.", 'Elle est 70ᵉ du classement « Meilleure salle » des Goldenscapes 2025, établi par les votes de la communauté The Escapers.', 'tous');
+  // La salle a ouvert en 2021 (et non 2017, année d'ouverture de l'établissement).
+  rempl(f, '12 000 joueurs depuis 2017', '12 000 joueurs depuis 2021', 2);
+}
+rempl('avis/index.html', '<strong>TOP 100 France</strong> grâce à vos retours.', "Back to the 80's est <strong>70ᵉ meilleure salle</strong> aux Goldenscapes 2025 de The Escapers, grâce à vos votes.");
+rempl('brain-devient-gamedoor41/index.html', 'une nomination au Top 100 France des meilleures salles.', 'une 70ᵉ place au classement «&nbsp;Meilleure salle&nbsp;» des Goldenscapes 2025 (The Escapers).');
+{
+  const tout = [...PAGES, 'blog-feed.xml'];
+  partout('TOP 100 des escape games de France', TOP100, tout);
+  partout('TOP 100 des meilleurs escape games de France', TOP100, tout);
+  for (const f of tout) {
+    const d = lire(f);
+    d.texte = d.texte
+      .replace(/\b([Nn])ommé(e?) (?:au )?(?:TOP|Top) 100 France/g, (m, n, e) => { bilan.faites++; return `${n === 'N' ? 'C' : 'c'}lassé${e} ${TOP100}`; })
+      .replace(/(?:TOP|Top) 100 France/g, () => { bilan.faites++; return TOP100; });
+  }
+}
+
+// ---------------------------------------------------------------------------------------
 // Écriture
 // ---------------------------------------------------------------------------------------
 let modifies = 0;

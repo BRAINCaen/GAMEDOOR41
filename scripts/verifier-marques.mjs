@@ -28,6 +28,7 @@ const INTERDITS = [
   ['adresse « en centre-ville »', /rue Pasteur en centre-ville|unique en centre-ville/i, 'L’établissement est à Mondeville, ZAC Calix.'],
   ['« N°1 » sans source', /N°1<|#1 sur Caen|numéro 1 (à|de|sur) Caen/i, 'Pas de classement sans source datée.'],
   ['« unique en Normandie »', /unique en Normandie/i, 'Pas d’allégation absolue sans source.'],
+  ['« Top 100 France » sans source', /top 100 (France|des (meilleurs )?escape games)/i, 'Citer The Escapers : « Top 100 The Escapers 2025 » (70ᵉ aux Goldenscapes 2025).'],
   ['vieux compteur d’avis', /plus de 2(&nbsp;| )?[0-2]00 avis/i, 'Compteur Google dépassé.'],
 ];
 
