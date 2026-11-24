@@ -266,3 +266,5 @@ html.av-fige, html.av-fige body { overflow:hidden; }
 }
 @media (max-height:480px) and (orientation:landscape) { .av-actions--colle { position:static; } }
 @media (prefers-reduced-motion:reduce) { .av-porte--attente, .av-chrono-barre i { animation:none; } }
+.av-son-sans { display:inline-flex; align-items:center; min-height:44px; margin:2px 0 0; padding:0; border:0; background:none; color:var(--grey-light); font:inherit; font-size:.92rem; text-decoration:underline; cursor:pointer; }
+.av-son-notes { margin:8px 0 0; padding:12px 14px; background:#1b1b1b; border-left:4px solid var(--c); border-radius:0 8px 8px 0; color:var(--av-creme); font-size:1.05rem; line-height:1.7; }

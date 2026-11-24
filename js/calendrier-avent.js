@@ -311,15 +311,23 @@
   function blocSon(d) {
     var b = el('button', { type: 'button', class: 'av-son' });
     var aide = el('p', { class: 'av-son-aide', text: 'Pas de son ? Montez le volume et retirez le mode silencieux du téléphone.' });
+    /* secours : personne ne doit rester bloqué parce que son téléphone est muet */
+    var NOMS = { C: 'Do', D: 'Ré', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
+    var secours = d.audio.genre === 'melodie'
+      ? el('p', { class: 'av-son-notes', hidden: true }, [el('b', { text: 'Les notes : ' }), d.audio.notes.map(function (n) { return (NOMS[n[0]] || '?') + (n[1] >= 2 ? ' —' : ''); }).join(' · ')])
+      : el('p', { class: 'av-son-notes', hidden: true, text: 'Le message est aussi écrit juste au-dessus, avec les points et les traits.' });
+    var sans = el('button', { type: 'button', class: 'av-son-sans', text: 'Je ne peux pas mettre le son' });
+    function montrerSecours() { secours.hidden = false; sans.hidden = true; }
+    sans.addEventListener('click', montrerSecours);
     function repos() { b.innerHTML = ICONES.son + '<span>' + (b.getAttribute('data-ecoute') ? 'Réécouter' : 'Écouter') + '</span>'; b.disabled = false; }
     b.addEventListener('click', function () {
       var ms = jouerSon(d.audio);
-      if (!ms) { aide.textContent = 'Le son ne fonctionne pas sur cet appareil.'; return; }
+      if (!ms) { aide.textContent = 'Le son ne fonctionne pas sur cet appareil.'; montrerSecours(); return; }
       b.setAttribute('data-ecoute', '1'); b.disabled = true; b.innerHTML = ICONES.son + '<span>Écoute en cours…</span>';
       setTimeout(repos, ms + 150);
     });
     repos();
-    return el('div', { class: 'av-son-bloc' }, [b, aide]);
+    return el('div', { class: 'av-son-bloc' }, [b, aide, sans, secours]);
   }
 
   /* --- le défi --- */
