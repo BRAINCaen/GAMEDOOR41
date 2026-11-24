@@ -177,12 +177,22 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     if (!dus.length) return 0;
     const faits = new Set((await stockage.lister('tirages/')).map((c) => c.slice('tirages/'.length)));
     const manquants = dus.filter((c) => !faits.has(c));
-    if (!manquants.length) return 0;
+    // Aperçu avec jour simulé seulement : on voyage dans le temps, donc un tirage déjà fait peut être
+    // périmé (des joueurs d'essai sont arrivés ou partis depuis). On le refait, sauf si l'équipe y a touché.
+    const aRevoir = essai && quand.simule ? dus.filter((c) => faits.has(c)) : [];
+    if (!manquants.length && !aRevoir.length) return 0;
     const joueurs = await tousLesJoueurs();
+    const tirer = async (c) => (/^\d\d$/.test(c) ? tirerJour(Number(c), joueurs) : tirerFinal(c, joueurs));
     let n = 0;
     for (const c of manquants) {
-      const t = /^\d\d$/.test(c) ? await tirerJour(Number(c), joueurs) : tirerFinal(c, joueurs);
-      if (await stockage.ecrire('tirages/' + c, t, { siAbsent: true })) n++;
+      if (await stockage.ecrire('tirages/' + c, await tirer(c), { siAbsent: true })) n++;
+    }
+    for (const c of aRevoir) {
+      const vieux = await stockage.lire('tirages/' + c);
+      if (!vieux || vieux.prevenu || vieux.lot || (vieux.anciens && vieux.anciens.length)) continue;
+      const neuf = await tirer(c);
+      const disparu = vieux.gagnant && !joueurs.some((x) => x.id === vieux.gagnant.id);
+      if (neuf.participants !== vieux.participants || neuf.billets !== vieux.billets || disparu) { await stockage.ecrire('tirages/' + c, neuf); n++; }
     }
     tiragesCache = { quand: 0, valeurs: {} };
     return n;

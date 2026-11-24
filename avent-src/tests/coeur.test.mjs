@@ -169,6 +169,27 @@ test('tirage du jour : un seul gagnant, parmi ceux qui ont joué le jour même, 
   assert.equal(await m.moteur.assurerTirages(m.moteur.quandReel()), 0);
 });
 
+test('aperçu avec jour simulé : un tirage périmé est refait, jamais sur le vrai site', async () => {
+  const essai = await monde({ contexte: 'apercu', date: '2026-11-25T10:00:00+01:00' });
+  assert.equal((await essai.appel('GET', 'etat', { jour: 6 })).corps.resultats[5].gagnant, null, 'personne n’a encore joué');
+  const r = await essai.appel('POST', 'jouer', { jour: 5, corps: { j: 5, reponse: '105', prenom: 'Allan', email: 'allan@exemple.fr', reglement: true } });
+  assert.equal(r.statut, 200);
+  essai.a('2026-11-25T10:01:00+01:00');
+  assert.equal((await essai.appel('GET', 'etat', { jour: 6 })).corps.resultats[5].gagnant, 'Allan (al•••@e•••)', 'le tirage d’essai suit les nouveaux joueurs');
+  await essai.appel('POST', 'essai/effacer', { jeton: r.corps.jeton });
+  essai.a('2026-11-25T10:02:00+01:00');
+  assert.equal((await essai.appel('GET', 'etat', { jour: 6 })).corps.resultats[5].gagnant, null, 'joueur d’essai effacé : plus de gagnant');
+
+  const vrai = await monde({ date: '2026-12-05T10:00:00+01:00' });
+  await vrai.inscrire(1, 5, '105');
+  vrai.a('2026-12-06T12:30:00+01:00');
+  const avant = (await vrai.appel('GET', 'etat')).corps.resultats[5].gagnant;
+  await vrai.inscrire(2, 5, '105');
+  vrai.a('2026-12-06T12:32:00+01:00');
+  assert.equal((await vrai.appel('GET', 'etat')).corps.resultats[5].gagnant, avant, 'sur le vrai site, un tirage fait ne bouge plus');
+  assert.equal((await vrai.stockage.lire('tirages/05')).participants, 1);
+});
+
 test('écran de l’équipe : code, bilan, retirer au sort, lots, export, défis', async () => {
   const m = await monde({ date: '2026-12-05T10:00:00+01:00' });
   assert.equal((await m.appel('GET', 'equipe/bilan', { code: 'nimporte' })).statut, 401);
