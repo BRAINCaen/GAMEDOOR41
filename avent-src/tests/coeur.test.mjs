@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { creerMoteur, normaliserEmail, parisDe, jourCalendrier, resultatVisible, verifierDefis, defiPublic, corriger, lireJeton, signer, etiquetteGagnant, MAX_INSCRIPTIONS_PAR_IP } from '../coeur.mjs';
 import { stockageMemoire } from '../stockage.mjs';
 import { contexteDe } from '../entree.mjs';
+import { lotsPrevus } from '../lots-2026.mjs';
 
 import { defisDEssai } from './defis-essai.mjs';
 const bonne = (d) => (d.type === 'qcm' ? d.bonne : d.code);
@@ -216,6 +217,42 @@ test('écran de l’équipe : code, bilan, retirer au sort, lots, export, défis
   assert.equal(csv.trim().split('\r\n').length, 3, 'seulement les 2 personnes qui ont demandé les nouvelles');
   assert.equal((await m.appel('GET', 'equipe/defis', { code })).corps.defis.length, 24);
   assert.equal((await m.appel('POST', 'equipe/defis', { code, corps: { defis: m.defis.slice(1) } })).statut, 400);
+});
+
+test('lots : ceux du fichier des lots, servis à la page, corrigeables par l’équipe', async () => {
+  const prevus = lotsPrevus();
+  assert.equal(Object.keys(prevus).length, 26, '24 portes + grand tirage + tirage des 24 portes');
+  assert.equal(prevus[2].lot, '1 place de quiz'); assert.equal(prevus[2].jeu, null);
+  [6, 13, 20, 24].forEach((j) => assert.match(prevus[j].lot, /^1 place d’escape game/, 'jour à étoile ' + j));
+  assert.equal(Object.keys(prevus).filter((k) => prevus[k].jeu).length, 11);
+  assert.match(prevus[15].lot, /^1 place de quiz \+ le jeu Retour vers le futur$/);
+  assert.match(prevus.assidus.lot, /4 à 16 candidats/);
+
+  const horloge = { t: new Date('2026-12-04T10:00:00+01:00') };
+  const stockage = stockageMemoire();
+  const moteur = creerMoteur({ stockage, contexte: 'production', maintenant: () => horloge.t, lotsPrevus: prevus });
+  await stockage.ecrire('config/defis', defisDEssai());
+  const appel = async (methode, chemin, { corps, code } = {}) => {
+    const r = await moteur.gerer(new Request('https://gamedoor41.fr/api/avent/' + chemin, { method: methode, headers: code ? { 'x-avent-code': code } : {}, body: corps ? JSON.stringify(corps) : undefined }), { ip: '3.3.3.3' });
+    return { statut: r.status, corps: await r.json() };
+  };
+  let e = (await appel('GET', 'etat')).corps;
+  assert.equal(e.portes[3].lot, '1 place de quiz + le jeu Black Stories'); assert.equal(e.portes[3].jeu, 'Black Stories');
+  assert.equal(e.portes[4].jeu, null);
+  assert.match(e.lotsFinaux.grand, /DeLorean/);
+  // un joueur le 4, résultat le 5 à midi : le lot prévu s'affiche sans que l'équipe saisisse quoi que ce soit
+  assert.equal((await appel('POST', 'jouer', { corps: { j: 4, reponse: bonne(defisDEssai()[3]), prenom: 'Lou', email: 'lou@exemple.fr', reglement: true } })).statut, 200);
+  horloge.t = new Date('2026-12-05T12:30:00+01:00');
+  e = (await appel('GET', 'etat')).corps;
+  assert.equal(e.resultats[4].lot, '1 place de quiz + le jeu Black Stories');
+  // l'équipe corrige le lot d'un jour : la page suit, le repère « jeu » reste
+  await appel('POST', 'equipe/initialiser', { corps: { code: 'un-code-assez-long' } });
+  assert.equal((await appel('POST', 'equipe/lots', { code: 'un-code-assez-long', corps: { lots: { 8: '1 place de quiz + un jeu surprise' } } })).statut, 200);
+  e = (await appel('GET', 'etat')).corps;
+  assert.equal(e.portes[7].lot, '1 place de quiz + un jeu surprise');
+  assert.equal(e.portes[3].lot, '1 place de quiz + le jeu Black Stories');
+  const b = (await appel('GET', 'equipe/bilan', { code: 'un-code-assez-long' })).corps;
+  assert.equal(b.jours[3].lot, '1 place de quiz + le jeu Black Stories'); assert.equal(b.lots[8], '1 place de quiz + un jeu surprise');
 });
 
 test('grand tirage et tirage des assidus après le 24', async () => {

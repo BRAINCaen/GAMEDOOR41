@@ -68,6 +68,7 @@
     cadenas: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
     coche: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     etoile: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6-4.5-4.2 6.1-.8Z" fill="currentColor"/></svg>',
+    cadeau: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5h17v4h-17zM5 12.5h14V21H5z" fill="currentColor"/><path d="M12 8.5V21" stroke="rgba(0,0,0,.5)" stroke-width="2.4"/><path d="M12 8.2C10.2 3.6 5.6 4 6.2 6.6 6.7 8.4 9.6 8.3 12 8.2Zm0 0c1.8-4.6 6.4-4.2 5.8-1.6-.5 1.8-3.4 1.7-5.8 1.6Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>',
     son: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4Z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.7 7.7 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     alerte: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 10v4.5M12 17.2v.3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>'
   };
@@ -116,14 +117,15 @@
       var e = etatPorte(p.j), u = UNIVERS[p.univers] || UNIVERS.final;
       var libelle = e === 'jouee' && !maReponse(p.j) ? 'Fermée' : LIBELLES[e];
       var porte = el('button', {
-        type: 'button', class: 'av-porte av-porte--' + p.univers + ' is-' + e + (p.gros ? ' is-gros' : ''),
-        'aria-label': 'Porte ' + p.j + ', ' + u.nom + ', ' + (e === 'verrou' ? 'fermée jusqu’au ' + dateTexte(p.j) : libelle.toLowerCase()) + (p.gros ? ', gros lot' : ''),
+        type: 'button', class: 'av-porte av-porte--' + p.univers + ' is-' + e + (p.gros ? ' is-gros' : '') + (p.jeu ? ' is-jeu' : ''),
+        'aria-label': 'Porte ' + p.j + ', ' + u.nom + ', ' + (e === 'verrou' ? 'fermée jusqu’au ' + dateTexte(p.j) : libelle.toLowerCase()) + (p.lot ? ', à gagner : ' + p.lot : p.gros ? ', jour à étoile' : ''),
         'data-libelle': p.j + ' · ' + libelle,
         onclick: function () { ouvrir(p.j, porte); }
       }, [
         el('span', { class: 'av-porte-fond', 'aria-hidden': 'true' }),
         el('span', { class: 'av-porte-battant', 'aria-hidden': 'true' }, [
           p.gros ? el('span', { class: 'av-porte-gros', html: ICONES.etoile }) : null,
+          p.jeu ? el('span', { class: 'av-porte-jeu', html: ICONES.cadeau }) : null,
           el('span', { class: 'av-porte-num', text: String(p.j) }),
           el('span', { class: 'av-porte-etat', html: e === 'verrou' ? ICONES.cadenas : '<b>' + libelle + '</b>' }),
           el('span', { class: 'av-porte-poignee' })
@@ -142,7 +144,13 @@
     else if (auj > 24) message = 'Le calendrier est terminé. Merci d’avoir joué !';
     else if (maReponse(auj)) message = 'Porte du jour jouée. Résultat demain à midi, et une nouvelle porte dès minuit.';
     else message = 'La porte ' + auj + ' vous attend : un défi d’une minute.';
-    bandeau.appendChild(el('p', { class: 'av-joueur-msg' }, [moi ? el('strong', { text: 'Bonjour ' + moi.prenom + '. ' }) : null, message]));
+    /* le lot du jour, sous le message : ce qu'on peut gagner en ouvrant la porte */
+    var porteLot = porteDe(auj < 1 ? 1 : auj), repJour = maReponse(auj);
+    var quandLot = auj < 1 ? 'À gagner dès le 1er : ' : auj > 24 ? null : !repJour ? 'À gagner aujourd’hui : ' : repJour.leJour ? 'Au tirage de demain midi : ' : null;
+    bandeau.appendChild(el('p', { class: 'av-joueur-msg' }, [
+      moi ? el('strong', { text: 'Bonjour ' + moi.prenom + '. ' }) : null, message,
+      quandLot && porteLot && porteLot.lot ? el('span', { class: 'av-joueur-lot' }, [el('i', { html: ICONES.cadeau }), el('b', { text: quandLot }), porteLot.lot]) : null
+    ]));
     if (moi) bandeau.appendChild(el('p', { class: 'av-joueur-compte' }, [
       el('span', {}, [el('b', { text: String(nb) }), (nb > 1 ? 'portes ouvertes' : 'porte ouverte') + ' sur 24']),
       el('span', {}, [el('b', { text: String(moi.tickets) }), (moi.tickets > 1 ? 'tickets' : 'ticket') + ' pour le grand tirage'])
@@ -153,8 +161,8 @@
     if (etat.finaux && (etat.finaux.grand || etat.finaux.assidus)) {
       var f = etat.finaux;
       bandeau.appendChild(el('p', { class: 'av-joueur-finaux' }, [
-        f.grand ? el('span', {}, [el('b', { text: 'Grand tirage : ' }), f.grand.gagnant || 'aucun participant']) : null,
-        f.assidus ? el('span', {}, [el('b', { text: 'Tirage des 24 portes : ' }), f.assidus.gagnant || 'personne n’a ouvert les 24 portes']) : null
+        f.grand ? el('span', {}, [el('b', { text: 'Grand tirage : ' }), f.grand.gagnant ? f.grand.gagnant + (f.grand.lot ? ' gagne ' + f.grand.lot : '') : 'aucun participant']) : null,
+        f.assidus ? el('span', {}, [el('b', { text: 'Tirage des 24 portes : ' }), f.assidus.gagnant ? f.assidus.gagnant + (f.assidus.lot ? ' gagne ' + f.assidus.lot : '') : 'personne n’a ouvert les 24 portes']) : null
       ]));
     }
   }
@@ -193,6 +201,9 @@
       el('h2', { class: 'av-defi-titre', id: 'av-dialogue-titre', text: p.titre || 'Porte ' + p.j }),
       sousTitre ? el('p', { class: 'av-defi-sous', text: sousTitre }) : null
     ]);
+  }
+  function bandeLot(p, quand) {
+    return p.lot ? el('p', { class: 'av-lot-jour' }, [el('i', { html: ICONES.cadeau }), el('span', {}, [el('b', { text: quand }), p.lot])]) : null;
   }
   function actions(noeuds, classe) { return el('div', { class: 'av-actions' + (classe ? ' ' + classe : '') }, noeuds); }
   function boutonFermer(texte) { return actions([el('button', { type: 'button', class: 'btn btn-outline', text: texte || 'Fermer', onclick: fermer })]); }
@@ -365,6 +376,7 @@
     });
     montrer([
       entete(p, rattrapage ? 'Porte en rattrapage : 1 ticket pour le grand tirage.' : null),
+      rattrapage ? null : bandeLot(p, 'À gagner aujourd’hui : '),
       el('p', { class: 'av-defi-intro', text: d.intro }),
       visuel(d),
       d.audio ? blocSon(d) : null,
@@ -401,6 +413,7 @@
     });
     montrer([
       entete(p),
+      rattrapage ? null : bandeLot(p, 'À gagner aujourd’hui : '),
       el('p', { class: 'av-defi-intro', text: d.intro }),
       el('div', { class: 'av-info' }, [el('p', { class: 'av-info-fort', text: m.secondes + ' secondes, une seule fois.' }), el('p', { text: 'Ensuite, l’image disparaît et la question arrive.' })]),
       actions([lancer], 'av-actions--colle'),
@@ -497,6 +510,7 @@
         el('p', { text: r.leJour ? 'La bonne réponse et le gagnant du jour seront affichés demain à midi, derrière cette porte.' : 'Porte ouverte en rattrapage : la réponse s’affiche le lendemain du jour de la porte, à midi.' }),
         el('p', { class: 'av-info-tickets' }, [el('b', { text: String(moi.tickets) }), ' ' + (moi.tickets > 1 ? 'tickets' : 'ticket') + ' pour le grand tirage du 24 décembre.'])
       ]),
+      r.leJour ? bandeLot(p, 'Vous êtes dans le tirage de demain midi : ') : null,
       el('p', { class: 'av-defi-regle', text: r.leJour ? 'Si votre réponse est juste, un ticket de plus s’ajoutera demain midi, avec le résultat.' : 'Une porte ouverte en retard donne 1 ticket.' }),
       appelAction(p),
       actions([el('button', { type: 'button', class: 'btn btn-outline', text: 'Retour au calendrier', onclick: fermer }), partage()], 'av-actions--bas')

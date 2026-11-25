@@ -268,3 +268,31 @@ html.av-fige, html.av-fige body { overflow:hidden; }
 @media (prefers-reduced-motion:reduce) { .av-porte--attente, .av-chrono-barre i { animation:none; } }
 .av-son-sans { display:inline-flex; align-items:center; min-height:44px; margin:2px 0 0; padding:0; border:0; background:none; color:var(--grey-light); font:inherit; font-size:.92rem; text-decoration:underline; cursor:pointer; }
 .av-son-notes { margin:8px 0 0; padding:12px 14px; background:#1b1b1b; border-left:4px solid var(--c); border-radius:0 8px 8px 0; color:var(--av-creme); font-size:1.05rem; line-height:1.7; }
+
+/* ---------- les lots : jeu du jour sur la porte, dans la fenêtre, et la liste des jeux ---------- */
+.av-porte-jeu { position:absolute; top:5%; left:7%; color:#fff; filter:drop-shadow(0 1px 1px rgba(0,0,0,.6)); }
+.av-porte-jeu svg { display:block; width:clamp(14px, 4.4vw, 20px); height:auto; }
+.av-porte--final .av-porte-jeu { color:#1a1400; }
+.av-legende-jeu svg { width:18px; height:18px; color:#fff; }
+.av-joueur-lot { display:block; margin-top:6px; font-size:.98rem; color:var(--av-creme); }
+.av-joueur-lot b { color:var(--av-or); }
+.av-joueur-lot i, .av-lot-jour i { display:inline-block; width:18px; height:18px; margin-right:7px; vertical-align:-3px; color:var(--av-or); }
+.av-joueur-lot svg, .av-lot-jour svg { display:block; width:100%; height:100%; }
+.av-lot-jour { display:flex; align-items:flex-start; gap:2px; margin:0 0 16px; padding:10px 12px; background:#1d1a05; border:1px solid #4a4210; border-radius:8px; color:var(--av-creme); font-size:.98rem; line-height:1.35; }
+.av-lot-jour i { flex:none; margin-top:1px; vertical-align:0; }
+.av-lot-jour b { color:var(--av-or); }
+.av-info + .av-lot-jour { margin:12px 0 0; }
+.av-lot-quand { line-height:1.35; }
+.av-jeux-titre { margin:40px 0 6px; font-size:1.5rem; }
+.av-jeux-intro { margin:0 0 18px; color:var(--grey-light); }
+.av-jeux { display:grid; gap:12px; grid-template-columns:1fr; margin:0; padding:0; list-style:none; }
+@media (min-width:720px) { .av-jeux { grid-template-columns:repeat(2, 1fr); gap:14px 16px; } }
+@media (min-width:1100px) { .av-jeux { grid-template-columns:repeat(3, 1fr); } }
+.av-jeu { display:flex; align-items:flex-start; gap:14px; padding:14px; background:var(--dark-card); border:1px solid var(--dark-border); border-left:4px solid var(--c); border-radius:10px; }
+.av-jeu > div { min-width:0; }
+.av-jeu-porte { flex:none; display:flex; align-items:center; justify-content:center; width:46px; height:64px; border-radius:4px 4px 2px 2px; background:var(--c); color:#fff; font-family:var(--font-display); font-weight:700; font-size:1.5rem; box-shadow:inset 0 0 0 2px rgba(0,0,0,.3), inset 0 0 14px rgba(0,0,0,.3); }
+.av-jeu p { margin:0; color:var(--grey-light); font-size:.96rem; }
+.av-jeu .av-jeu-quand { font-family:var(--font-display); text-transform:uppercase; letter-spacing:1.2px; font-size:.8rem; color:var(--grey-light); }
+.av-jeu h4 { margin:2px 0 6px; font-size:1.15rem; line-height:1.2; color:#fff; overflow-wrap:anywhere; }
+.av-jeu h4 span { display:block; font-family:var(--font-body, inherit); font-weight:400; font-size:.92rem; letter-spacing:0; text-transform:none; color:var(--av-creme); }
+.av-jeu .av-jeu-place { margin-top:8px; color:#fff; font-weight:700; font-size:.92rem; }

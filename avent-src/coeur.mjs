@@ -117,10 +117,11 @@ const json = (corps, statut = 200) => new Response(JSON.stringify(corps), { stat
 const refus = (statut, code, message) => json({ erreur: code, message }, statut);
 
 // ---------- le moteur ----------
-export function creerMoteur({ stockage, maintenant = () => new Date(), contexte = 'production' }) {
+export function creerMoteur({ stockage, maintenant = () => new Date(), contexte = 'production', lotsPrevus = {} }) {
   const essai = contexte !== 'production';
   let secretCache = null;
   let tiragesCache = { quand: 0, valeurs: {} };
+  let lotsCache = { quand: 0, valeurs: null };
 
   async function secret() {
     if (secretCache) return secretCache;
@@ -133,6 +134,18 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     return s;
   }
   async function defis() { return (await stockage.lire('config/defis')) || null; }
+  /** Les lots : ceux du fichier des lots (avent-src/lots-2026.mjs), corrigés par ce que l'équipe a saisi.
+   *  Par clé (1 à 24, grand, assidus) : { lot: la phrase affichée, jeu: le nom du jeu en plus, ou null }. */
+  async function lots() {
+    const t = maintenant().getTime();
+    if (lotsCache.valeurs && t - lotsCache.quand < 45000) return lotsCache.valeurs;
+    const saisis = (await stockage.lire('config/lots')) || {};
+    const tout = {};
+    Object.keys(lotsPrevus).forEach((k) => { tout[k] = { lot: String(lotsPrevus[k].lot || ''), jeu: lotsPrevus[k].jeu || null }; });
+    Object.keys(saisis).forEach((k) => { if (saisis[k]) tout[k] = { lot: String(saisis[k]), jeu: tout[k] ? tout[k].jeu : null }; });
+    lotsCache = { quand: t, valeurs: tout };
+    return tout;
+  }
 
   function quandPour(req) {
     const p = parisDe(maintenant());
@@ -219,18 +232,21 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     if (!liste) return refus(503, 'pas_pret', 'Le calendrier n’est pas encore prêt.');
     try { await assurerTirages(quand); } catch (e) { console.error('[avent] tirage impossible :', e && e.message); }
     const tir = await tirages();
+    const prevus = await lots();
+    const lotDe = (k) => (prevus[k] && prevus[k].lot) || null;
     const resultats = {};
     liste.forEach((d) => {
       if (!resultatVisible(d.j, quand)) return;
       const t = tir[pad(d.j)];
-      resultats[d.j] = { bonne: texteBonne(d), explication: d.explication, tire: !!t, gagnant: t && t.gagnant ? t.gagnant.etiquette : null, participants: t ? t.participants : null, lot: (t && t.lot) || null };
+      resultats[d.j] = { bonne: texteBonne(d), explication: d.explication, tire: !!t, gagnant: t && t.gagnant ? t.gagnant.etiquette : null, participants: t ? t.participants : null, lot: (t && t.lot) || lotDe(d.j) };
     });
     const finaux = {};
-    ['grand', 'assidus'].forEach((g) => { if (tir[g]) finaux[g] = { gagnant: tir[g].gagnant ? tir[g].gagnant.etiquette : null, lot: tir[g].lot || null }; });
+    ['grand', 'assidus'].forEach((g) => { if (tir[g]) finaux[g] = { gagnant: tir[g].gagnant ? tir[g].gagnant.etiquette : null, lot: tir[g].lot || lotDe(g) }; });
     const joueur = await joueurDuJeton(req);
     return json({
       cal: quand.cal, simule: quand.simule, essai,
-      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null })),
+      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null, lot: lotDe(d.j), jeu: (prevus[d.j] && prevus[d.j].jeu) || null })),
+      lotsFinaux: { grand: lotDe('grand'), assidus: lotDe('assidus') },
       resultats, finaux, moi: joueur ? vueJoueur(joueur, quand) : null,
     });
   }
@@ -315,7 +331,10 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
   }
   async function bilan(req) {
     const quand = quandPour(req);
-    const [joueurs, liste, lots] = await Promise.all([tousLesJoueurs(), defis(), stockage.lire('config/lots')]);
+    lotsCache.quand = 0;
+    const [joueurs, liste, prevus] = await Promise.all([tousLesJoueurs(), defis(), lots()]);
+    const textes = {};
+    Object.keys(prevus).forEach((k) => { textes[k] = prevus[k].lot; });
     try { await assurerTirages(quand); } catch (e) { console.error('[avent] tirage impossible :', e && e.message); }
     tiragesCache.quand = 0;
     const tir = await tirages();
@@ -324,14 +343,14 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
       let joues = 0, leJour = 0, justes = 0;
       joueurs.forEach((x) => { const r = x.reponses && x.reponses[j]; if (r) { joues++; if (r.leJour) leJour++; if (r.juste) justes++; } });
       const d = liste && liste.find((x) => x.j === j);
-      jours.push({ j, titre: d ? d.titre : '', univers: d ? d.univers : '', gros: !!(d && d.gros), joues, leJour, justes, lot: (lots && lots[j]) || '', tirage: tir[pad(j)] || null });
+      jours.push({ j, titre: d ? d.titre : '', univers: d ? d.univers : '', gros: !!(d && d.gros), joues, leJour, justes, lot: textes[j] || '', tirage: tir[pad(j)] || null });
     }
     return json({
       cal: quand.cal, essai, pret: !!liste,
       inscrits: joueurs.length, actifs: joueurs.filter((x) => Object.keys(x.reponses || {}).length).length,
       nouvelles: joueurs.filter((x) => x.nouvelles).length, assidus: joueurs.filter((x) => Object.keys(x.reponses || {}).length >= NB_PORTES).length,
       participations: joueurs.reduce((n, x) => n + Object.keys(x.reponses || {}).length, 0),
-      jours, finaux: { grand: tir.grand || null, assidus: tir.assidus || null }, lots: lots || {},
+      jours, finaux: { grand: tir.grand || null, assidus: tir.assidus || null }, lots: textes,
     });
   }
   async function equipeEcrire(req, action) {
@@ -343,9 +362,10 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
       return json({ ok: true, nombre: corps.defis.length });
     }
     if (action === 'lots') {
-      const lots = {};
-      Object.keys(corps.lots || {}).forEach((k) => { if (/^(\d{1,2}|grand|assidus)$/.test(k)) lots[k] = String(corps.lots[k] || '').slice(0, 200); });
-      await stockage.ecrire('config/lots', lots);
+      const saisis = {};
+      Object.keys(corps.lots || {}).forEach((k) => { if (/^(\d{1,2}|grand|assidus)$/.test(k)) saisis[k] = String(corps.lots[k] || '').slice(0, 200); });
+      await stockage.ecrire('config/lots', saisis);
+      lotsCache = { quand: 0, valeurs: null };
       return json({ ok: true });
     }
     if (action === 'tirage') {

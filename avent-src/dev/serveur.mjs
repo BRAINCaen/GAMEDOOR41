@@ -9,6 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { creerMoteur } from '../coeur.mjs';
 import { stockageMemoire } from '../stockage.mjs';
+import { lotsPrevus } from '../lots-2026.mjs';
 
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const port = Number(process.argv[2]) || 8948;
@@ -17,7 +18,7 @@ const lent = Number(process.env.LENT) || 0;
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.avif': 'image/avif', '.ico': 'image/x-icon' };
 
 const stockage = stockageMemoire();
-const moteur = creerMoteur({ stockage, contexte: 'apercu' });
+const moteur = creerMoteur({ stockage, contexte: 'apercu', lotsPrevus: lotsPrevus() });
 let defis;
 if (fichier) defis = JSON.parse(fs.readFileSync(fichier, 'utf8'));
 else defis = (await import('../tests/defis-essai.mjs')).defisDEssai();

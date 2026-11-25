@@ -1,6 +1,7 @@
 // Points d'entrée Netlify du calendrier de l'Avent (regroupés dans netlify/avent-coeur.mjs).
 import { creerMoteur } from './coeur.mjs';
 import { stockageNetlify } from './stockage.mjs';
+import { lotsPrevus } from './lots-2026.mjs';
 
 // Un aperçu (deploy-preview-…--gamedoor41.netlify.app) ou un essai local n'est jamais « le vrai jeu ».
 // Dans le doute, on se considère en production : c'est le réglage le plus strict.
@@ -10,7 +11,7 @@ export function contexteDe(hote) {
 
 const moteurs = {};
 function moteur(contexte) {
-  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, stockage: stockageNetlify(contexte === 'production' ? 'avent-2026' : 'avent-2026-apercu') });
+  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), stockage: stockageNetlify(contexte === 'production' ? 'avent-2026' : 'avent-2026-apercu') });
   return moteurs[contexte];
 }
 

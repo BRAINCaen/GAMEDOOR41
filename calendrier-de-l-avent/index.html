@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
   <link rel="stylesheet" href="/css/style.css?v=2ecc6a2b">
-  <link rel="stylesheet" href="/css/calendrier-avent.css?v=test4">
+  <link rel="stylesheet" href="/css/calendrier-avent.css?v=test5">
 </head>
 <body>
 
@@ -59,7 +59,7 @@
     <div class="hero-content container" style="text-align:center;">
       <p class="kicker" style="color:var(--orange);">CALENDRIER DE L'AVENT · DU 1er AU 24 DÉCEMBRE</p>
       <h1 style="margin-bottom:10px;">Les 24 portes<br><span class="accent">de GAMEDOOR·41</span></h1>
-      <p class="subtitle" style="max-width:720px;margin:0 auto;">Chaque jour, une porte s'ouvre. Derrière, un défi d'une minute : une énigme d'escape game ou une question de quiz. Et chaque jour, un gagnant.</p>
+      <p class="subtitle" style="max-width:720px;margin:0 auto;">Chaque jour, une porte s'ouvre. Derrière, un défi d'une minute : une énigme d'escape game ou une question de quiz. Et chaque jour, un gagnant : une place offerte, et souvent un jeu en plus.</p>
     </div>
   </section>
 
@@ -92,7 +92,8 @@
           <li class="av-teinte--psy"><i></i>Psychiatric</li>
           <li class="av-teinte--80s"><i></i>Back to the 80's</li>
           <li class="av-teinte--quiz"><i></i>Quiz Buzz Your Brain</li>
-          <li class="av-teinte--final"><i></i>★ Jours de gros lot</li>
+          <li class="av-teinte--final"><i></i>★ Jour à étoile : place d'escape game</li>
+          <li class="av-legende-jeu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5h17v4h-17zM5 12.5h14V21H5z" fill="currentColor"/><path d="M12 8.5V21" stroke="rgba(0,0,0,.5)" stroke-width="2.4"/><path d="M12 8.2C10.2 3.6 5.6 4 6.2 6.6 6.7 8.4 9.6 8.3 12 8.2Zm0 0c1.8-4.6 6.4-4.2 5.8-1.6-.5 1.8-3.4 1.7-5.8 1.6Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>Un jeu en plus à gagner</li>
         </ul>
       </div>
     </section>
@@ -110,14 +111,31 @@
 
     <section class="section" style="background:var(--dark);padding:56px 0;">
       <div class="container">
-        <div class="section-header"><p class="kicker">Les lots</p><h2>Un gagnant chaque jour, un grand tirage le 24</h2></div>
+        <!-- lots:debut (écrit par avent-src/ecrire-lots.mjs à partir de avent-src/lots-2026.mjs : ne pas modifier ici) -->
+        <div class="section-header"><p class="kicker">Les lots</p><h2>Un gagnant chaque jour, et 12 cadeaux en plus</h2></div>
         <ul class="av-lots">
-          <li class="av-carte av-lot av-lot--orange"><p class="av-lot-quand">Chaque jour</p><h3>Une place offerte ou un jeu</h3><p>Un gagnant tiré au sort parmi les joueurs du jour : une place d'escape game ou de quiz, ou un jeu de société.</p></li>
-          <li class="av-carte av-lot av-lot--or"><p class="av-lot-quand">Dimanches 6, 13 et 20</p><h3>Une session pour 4</h3><p>Les portes à étoile : une session complète à partager, escape game ou quiz.</p></li>
-          <li class="av-carte av-lot av-lot--or"><p class="av-lot-quand">Jeudi 24 décembre</p><h3>Le grand tirage</h3><p>Une soirée escape game + quiz pour 6. Chaque ticket gagné pendant le mois est une chance de plus.</p></li>
-          <li class="av-carte av-lot av-lot--orange"><p class="av-lot-quand">Les 24 portes ouvertes</p><h3>Le tirage des assidus</h3><p>Un tirage réservé à celles et ceux qui ont ouvert toutes les portes.</p></li>
+          <li class="av-carte av-lot av-lot--orange"><p class="av-lot-quand">Chaque jour</p><h3>1 place de quiz offerte</h3><p>Un gagnant tiré au sort parmi les joueurs du jour, que la réponse soit juste ou non. Une place pour une session de quiz Buzz Your Brain, de 4 à 16 candidats.</p></li>
+          <li class="av-carte av-lot av-lot--or"><p class="av-lot-quand">★ dimanches 6, 13 et 20, jeudi 24 décembre</p><h3>1 place d’escape game offerte</h3><p>Les jours à étoile, la place de quiz devient une place d’escape game, dans la salle de votre choix : Garde à Vue, Psychiatric ou Back to the 80’s.</p></li>
+          <li class="av-carte av-lot av-lot--or"><p class="av-lot-quand">Le grand tirage</p><h3>Une DeLorean radio-commandée</h3><p>La voiture de Retour vers le futur, à piloter à la télécommande. Chaque ticket gagné pendant le mois est une chance de plus.</p></li>
+          <li class="av-carte av-lot av-lot--orange"><p class="av-lot-quand">Les 24 portes ouvertes</p><h3>Une session de quiz complète</h3><p>Un tirage réservé à celles et ceux qui ont ouvert les 24 portes : une session de quiz offerte pour 4 à 16 candidats, émission au choix.</p></li>
         </ul>
-        <p class="av-note">1 ticket par porte ouverte le jour même, 1 de plus si la réponse est juste, 1 ticket pour une porte ouverte en retard. Lots non échangeables et non remboursables. Places offertes valables 12 mois.</p>
+        <h3 class="av-jeux-titre">11 jours, un jeu en plus de la place</h3>
+        <p class="av-jeux-intro">Ces jours-là, le gagnant du jour repart avec sa place et avec un jeu, choisi dans l’univers de la porte.</p>
+        <ol class="av-jeux">
+          <li class="av-jeu av-teinte--gav"><span class="av-jeu-porte" aria-hidden="true">1</span><div><p class="av-jeu-quand">mardi 1er décembre</p><h4>Dossiers Criminels Pocket <span>Qui a tué Isabella Vega ?</span></h4><p>Une enquête de poche : des indices, des suspects, un coupable à démasquer.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--psy"><span class="av-jeu-porte" aria-hidden="true">4</span><div><p class="av-jeu-quand">vendredi 4 décembre</p><h4>Black Stories</h4><p>50 énigmes macabres à résoudre en posant des questions. Réponses permises : oui ou non.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--quiz"><span class="av-jeu-porte" aria-hidden="true">6</span><div><p class="av-jeu-quand">★ dimanche 6 décembre</p><h4>Esquissé ? <span>Version 6 joueurs</span></h4><p>Le téléphone arabe en dessin : on dessine, on devine, et tout dérape.</p><p class="av-jeu-place">Avec 1 place d’escape game</p></div></li>
+          <li class="av-jeu av-teinte--80s"><span class="av-jeu-porte" aria-hidden="true">7</span><div><p class="av-jeu-quand">lundi 7 décembre</p><h4>E.T. l’Extra-Terrestre</h4><p>Jeu d’aventure coopératif : aidez E.T. à rentrer chez lui avant les agents. 2 à 4 joueurs, dès 10 ans, 30 minutes.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--quiz"><span class="av-jeu-porte" aria-hidden="true">10</span><div><p class="av-jeu-quand">jeudi 10 décembre</p><h4>Snort Funny <span>Le jeu « ingroinyable »</span></h4><p>Un jeu d’ambiance pour faire rire toute la table.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--gav"><span class="av-jeu-porte" aria-hidden="true">13</span><div><p class="av-jeu-quand">★ dimanche 13 décembre</p><h4>Sous Scellés <span>La Fille du Troisième</span></h4><p>Un dossier d’enquête à ouvrir chez vous : à vous de résoudre l’affaire.</p><p class="av-jeu-place">Avec 1 place d’escape game</p></div></li>
+          <li class="av-jeu av-teinte--80s"><span class="av-jeu-porte" aria-hidden="true">15</span><div><p class="av-jeu-quand">mardi 15 décembre</p><h4>Retour vers le futur</h4><p>Jeu d’aventure coopératif : faites monter la DeLorean à 88 miles à l’heure avant l’éclair. 2 à 4 joueurs, dès 10 ans, 50 minutes.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--psy"><span class="av-jeu-porte" aria-hidden="true">16</span><div><p class="av-jeu-quand">mercredi 16 décembre</p><h4>Scream, le jeu</h4><p>Jeu de société coopératif : faites équipe pour échapper au tueur masqué.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--quiz"><span class="av-jeu-porte" aria-hidden="true">18</span><div><p class="av-jeu-quand">vendredi 18 décembre</p><h4>Longueur d’onde</h4><p>Jeu d’ambiance en équipes : êtes-vous sur la même longueur d’onde que vos amis ?</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+          <li class="av-jeu av-teinte--psy"><span class="av-jeu-porte" aria-hidden="true">20</span><div><p class="av-jeu-quand">★ dimanche 20 décembre</p><h4>Chucky, le jeu</h4><p>Jeu d’horreur coopératif : tous ensemble contre la poupée.</p><p class="av-jeu-place">Avec 1 place d’escape game</p></div></li>
+          <li class="av-jeu av-teinte--80s"><span class="av-jeu-porte" aria-hidden="true">23</span><div><p class="av-jeu-quand">mercredi 23 décembre</p><h4>The Goonies <span>Ne disent jamais mourir</span></h4><p>Jeu d’aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 à 5 joueurs, dès 12 ans, 50 minutes.</p><p class="av-jeu-place">Avec 1 place de quiz</p></div></li>
+        </ol>
+        <p class="av-note">Le tirage du jour se fait parmi les portes ouvertes le jour même. Le grand tirage et le tirage des 24 portes sont annoncés le 25 décembre à midi. Tickets : 1 par porte ouverte le jour même, 1 de plus si la réponse est juste, 1 pour une porte ouverte en retard. Places offertes valables 12 mois. Jeux à retirer à l’accueil, à Mondeville. Lots non échangeables et non remboursables.</p>
+        <!-- lots:fin -->
       </div>
     </section>
 
@@ -138,10 +156,12 @@
             <li><strong>Organisateur.</strong> SARL BOEHME (GAMEDOOR·41), 41 bis rue Pasteur, 14120 Mondeville.</li>
             <li><strong>Dates.</strong> Du mardi 1er décembre 2026 à 0 h au jeudi 24 décembre 2026 à 23 h 59.</li>
             <li><strong>Participation.</strong> Jeu gratuit et sans obligation d'achat, ouvert aux personnes majeures. Une seule participation par personne et par porte, avec une seule adresse mail. L'équipe de GAMEDOOR·41 ne participe pas.</li>
-            <li><strong>Tirages.</strong> Chaque jour, un gagnant est tiré au sort parmi les personnes qui ont joué la porte du jour, que leur réponse soit juste ou non. Le grand tirage du 24 décembre se fait parmi tous les tickets. Le tirage des assidus se fait parmi les personnes qui ont ouvert les 24 portes.</li>
+            <li><strong>Tirages.</strong> Chaque jour, un gagnant est tiré au sort parmi les personnes qui ont joué la porte du jour le jour même, que leur réponse soit juste ou non. Le grand tirage se fait parmi tous les tickets, et le tirage des 24 portes parmi les personnes qui ont ouvert les 24 portes : tous deux ont lieu le 25 décembre à midi.</li>
             <li><strong>Tickets.</strong> 1 ticket par porte ouverte le jour même, 1 ticket de plus si la réponse est juste, 1 ticket pour une porte ouverte un autre jour.</li>
             <li><strong>Gagnants.</strong> Ils sont prévenus par mail. Leur prénom et le début masqué de leur adresse mail sont affichés sur cette page. Sans réponse sous 15 jours, le lot est remis en jeu.</li>
-            <li><strong>Lots.</strong> Les places offertes sont des codes à saisir à la réservation sur gamedoor41.fr, valables 12 mois. Les jeux sont à retirer à l'accueil, à Mondeville. Les lots ne sont ni échangeables ni remboursables.</li>
+            <!-- lots-reglement:debut -->
+            <li><strong>Lots.</strong> Chaque jour : 1 place de quiz Buzz Your Brain. Les 6, 13, 20 et 24 décembre : 1 place d’escape game à la place. Certains jours, le gagnant reçoit en plus un jeu (le 1er : Dossiers Criminels Pocket ; le 4 : Black Stories ; le 6 : Esquissé ? ; le 7 : E.T. l’Extra-Terrestre ; le 10 : Snort Funny ; le 13 : Sous Scellés : La Fille du Troisième ; le 15 : Retour vers le futur ; le 16 : Scream, le jeu ; le 18 : Longueur d’onde ; le 20 : Chucky, le jeu ; le 23 : The Goonies). Grand tirage : la DeLorean radio-commandée de Retour vers le futur. Tirage des 24 portes : 1 session de quiz pour 4 à 16 candidats, émission au choix. Les places et la session sont des codes à saisir à la réservation sur gamedoor41.fr, valables 12 mois. Les jeux sont à retirer à l’accueil, à Mondeville. Les lots ne sont ni échangeables ni remboursables.</li>
+            <!-- lots-reglement:fin -->
             <li><strong>Données personnelles.</strong> Le prénom et l'adresse mail servent uniquement au jeu. Ils sont supprimés le 31 janvier 2027, sauf pour les personnes qui ont demandé à recevoir nos nouvelles. Pour toute demande : contact@gamedoor41.fr.</li>
           </ol>
         </details>
@@ -192,6 +212,6 @@
   </footer>
 
   <script defer src="/js/main.js?v=5d2c59a3"></script>
-  <script defer src="/js/calendrier-avent.js?v=test4"></script>
+  <script defer src="/js/calendrier-avent.js?v=test5"></script>
 </body>
 </html>

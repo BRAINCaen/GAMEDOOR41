@@ -106,7 +106,8 @@
     var ordre = b.jours.slice().sort(function (x, y) { return y.j - x.j; }).filter(function (x) { return x.j <= Math.max(b.cal, 1); });
     ordre.forEach(function (x) {
       zone.appendChild(el('section', { class: 'carte jour' + (x.j === b.cal ? ' auj' : '') + (x.gros ? ' gros' : '') }, [
-        el('h2', { text: 'Porte ' + x.j + ' · ' + dateTexte(x.j) + (x.gros ? ' ★ gros lot' : '') }),
+        el('h2', { text: 'Porte ' + x.j + ' · ' + dateTexte(x.j) + (x.gros ? ' ★' : '') }),
+        x.lot ? el('p', { class: 'meta', style: 'color:#ffd740;', text: 'Lot prévu : ' + x.lot }) : null,
         el('p', { class: 'meta', text: (UNIVERS[x.univers] || '') + ' · « ' + x.titre + ' » · ' + x.leJour + ' joueur' + (x.leJour > 1 ? 's' : '') + ' le jour même' + (x.joues > x.leJour ? ' (+ ' + (x.joues - x.leJour) + ' en rattrapage)' : '') + ' · ' + x.justes + ' bonne' + (x.justes > 1 ? 's' : '') + ' réponse' + (x.justes > 1 ? 's' : '') }),
         x.j >= b.cal && b.cal <= 24 ? el('p', { class: 'note', text: x.j === b.cal ? 'Porte du jour : le tirage se fait demain à midi.' : '' }) : blocTirage(x.j, x.tirage, x.lot, 'pour la porte ' + x.j + ' (' + dateTexte(x.j) + ')')
       ]));

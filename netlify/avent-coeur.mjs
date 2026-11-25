@@ -1106,10 +1106,11 @@ function vueJoueur(joueur, quand) {
 var ENTETES = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex" };
 var json = (corps, statut = 200) => new Response(JSON.stringify(corps), { status: statut, headers: ENTETES });
 var refus = (statut, code, message) => json({ erreur: code, message }, statut);
-function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), contexte = "production" }) {
+function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), contexte = "production", lotsPrevus: lotsPrevus2 = {} }) {
   const essai = contexte !== "production";
   let secretCache = null;
   let tiragesCache = { quand: 0, valeurs: {} };
+  let lotsCache = { quand: 0, valeurs: null };
   async function secret() {
     if (secretCache) return secretCache;
     let s = await stockage.lire("config/secret");
@@ -1122,6 +1123,20 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
   }
   async function defis() {
     return await stockage.lire("config/defis") || null;
+  }
+  async function lots() {
+    const t = maintenant().getTime();
+    if (lotsCache.valeurs && t - lotsCache.quand < 45e3) return lotsCache.valeurs;
+    const saisis = await stockage.lire("config/lots") || {};
+    const tout = {};
+    Object.keys(lotsPrevus2).forEach((k) => {
+      tout[k] = { lot: String(lotsPrevus2[k].lot || ""), jeu: lotsPrevus2[k].jeu || null };
+    });
+    Object.keys(saisis).forEach((k) => {
+      if (saisis[k]) tout[k] = { lot: String(saisis[k]), jeu: tout[k] ? tout[k].jeu : null };
+    });
+    lotsCache = { quand: t, valeurs: tout };
+    return tout;
   }
   function quandPour(req) {
     const p = parisDe(maintenant());
@@ -1231,22 +1246,25 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       console.error("[avent] tirage impossible :", e && e.message);
     }
     const tir = await tirages();
+    const prevus = await lots();
+    const lotDe = (k) => prevus[k] && prevus[k].lot || null;
     const resultats = {};
     liste.forEach((d) => {
       if (!resultatVisible(d.j, quand)) return;
       const t = tir[pad(d.j)];
-      resultats[d.j] = { bonne: texteBonne(d), explication: d.explication, tire: !!t, gagnant: t && t.gagnant ? t.gagnant.etiquette : null, participants: t ? t.participants : null, lot: t && t.lot || null };
+      resultats[d.j] = { bonne: texteBonne(d), explication: d.explication, tire: !!t, gagnant: t && t.gagnant ? t.gagnant.etiquette : null, participants: t ? t.participants : null, lot: t && t.lot || lotDe(d.j) };
     });
     const finaux = {};
     ["grand", "assidus"].forEach((g) => {
-      if (tir[g]) finaux[g] = { gagnant: tir[g].gagnant ? tir[g].gagnant.etiquette : null, lot: tir[g].lot || null };
+      if (tir[g]) finaux[g] = { gagnant: tir[g].gagnant ? tir[g].gagnant.etiquette : null, lot: tir[g].lot || lotDe(g) };
     });
     const joueur = await joueurDuJeton(req);
     return json({
       cal: quand.cal,
       simule: quand.simule,
       essai,
-      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null })),
+      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null, lot: lotDe(d.j), jeu: prevus[d.j] && prevus[d.j].jeu || null })),
+      lotsFinaux: { grand: lotDe("grand"), assidus: lotDe("assidus") },
       resultats,
       finaux,
       moi: joueur ? vueJoueur(joueur, quand) : null
@@ -1335,7 +1353,12 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
   }
   async function bilan(req) {
     const quand = quandPour(req);
-    const [joueurs, liste, lots] = await Promise.all([tousLesJoueurs(), defis(), stockage.lire("config/lots")]);
+    lotsCache.quand = 0;
+    const [joueurs, liste, prevus] = await Promise.all([tousLesJoueurs(), defis(), lots()]);
+    const textes = {};
+    Object.keys(prevus).forEach((k) => {
+      textes[k] = prevus[k].lot;
+    });
     try {
       await assurerTirages(quand);
     } catch (e) {
@@ -1355,7 +1378,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
         }
       });
       const d = liste && liste.find((x) => x.j === j);
-      jours.push({ j, titre: d ? d.titre : "", univers: d ? d.univers : "", gros: !!(d && d.gros), joues, leJour, justes, lot: lots && lots[j] || "", tirage: tir[pad(j)] || null });
+      jours.push({ j, titre: d ? d.titre : "", univers: d ? d.univers : "", gros: !!(d && d.gros), joues, leJour, justes, lot: textes[j] || "", tirage: tir[pad(j)] || null });
     }
     return json({
       cal: quand.cal,
@@ -1368,7 +1391,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       participations: joueurs.reduce((n, x) => n + Object.keys(x.reponses || {}).length, 0),
       jours,
       finaux: { grand: tir.grand || null, assidus: tir.assidus || null },
-      lots: lots || {}
+      lots: textes
     });
   }
   async function equipeEcrire(req, action) {
@@ -1385,11 +1408,12 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       return json({ ok: true, nombre: corps.defis.length });
     }
     if (action === "lots") {
-      const lots = {};
+      const saisis = {};
       Object.keys(corps.lots || {}).forEach((k) => {
-        if (/^(\d{1,2}|grand|assidus)$/.test(k)) lots[k] = String(corps.lots[k] || "").slice(0, 200);
+        if (/^(\d{1,2}|grand|assidus)$/.test(k)) saisis[k] = String(corps.lots[k] || "").slice(0, 200);
       });
-      await stockage.ecrire("config/lots", lots);
+      await stockage.ecrire("config/lots", saisis);
+      lotsCache = { quand: 0, valeurs: null };
       return json({ ok: true });
     }
     if (action === "tirage") {
@@ -1476,13 +1500,46 @@ function stockageNetlify(nom) {
   };
 }
 
+// avent-src/lots-2026.mjs
+var ETOILES = [6, 13, 20, 24];
+var PLACE_QUIZ = "1 place de quiz";
+var PLACE_ESCAPE = "1 place d\u2019escape game";
+var JEUX = {
+  1: { univers: "gav", nom: "Dossiers Criminels Pocket", sous: "Qui a tu\xE9 Isabella Vega ?", court: "Dossiers Criminels Pocket", detail: "Une enqu\xEAte de poche : des indices, des suspects, un coupable \xE0 d\xE9masquer." },
+  4: { univers: "psy", nom: "Black Stories", court: "Black Stories", detail: "50 \xE9nigmes macabres \xE0 r\xE9soudre en posant des questions. R\xE9ponses permises : oui ou non." },
+  6: { univers: "quiz", nom: "Esquiss\xE9 ?", sous: "Version 6 joueurs", court: "Esquiss\xE9 ?", detail: "Le t\xE9l\xE9phone arabe en dessin : on dessine, on devine, et tout d\xE9rape." },
+  7: { univers: "80s", nom: "E.T. l\u2019Extra-Terrestre", court: "E.T. l\u2019Extra-Terrestre", detail: "Jeu d\u2019aventure coop\xE9ratif : aidez E.T. \xE0 rentrer chez lui avant les agents. 2 \xE0 4 joueurs, d\xE8s 10 ans, 30 minutes." },
+  10: { univers: "quiz", nom: "Snort Funny", sous: "Le jeu \xAB ingroinyable \xBB", court: "Snort Funny", detail: "Un jeu d\u2019ambiance pour faire rire toute la table." },
+  13: { univers: "gav", nom: "Sous Scell\xE9s", sous: "La Fille du Troisi\xE8me", court: "Sous Scell\xE9s : La Fille du Troisi\xE8me", detail: "Un dossier d\u2019enqu\xEAte \xE0 ouvrir chez vous : \xE0 vous de r\xE9soudre l\u2019affaire." },
+  15: { univers: "80s", nom: "Retour vers le futur", court: "Retour vers le futur", detail: "Jeu d\u2019aventure coop\xE9ratif : faites monter la DeLorean \xE0 88 miles \xE0 l\u2019heure avant l\u2019\xE9clair. 2 \xE0 4 joueurs, d\xE8s 10 ans, 50 minutes." },
+  16: { univers: "psy", nom: "Scream, le jeu", court: "Scream, le jeu", detail: "Jeu de soci\xE9t\xE9 coop\xE9ratif : faites \xE9quipe pour \xE9chapper au tueur masqu\xE9." },
+  18: { univers: "quiz", nom: "Longueur d\u2019onde", court: "Longueur d\u2019onde", detail: "Jeu d\u2019ambiance en \xE9quipes : \xEAtes-vous sur la m\xEAme longueur d\u2019onde que vos amis ?" },
+  20: { univers: "psy", nom: "Chucky, le jeu", court: "Chucky, le jeu", detail: "Jeu d\u2019horreur coop\xE9ratif : tous ensemble contre la poup\xE9e." },
+  23: { univers: "80s", nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." }
+};
+var FINAUX = {
+  grand: { quand: "Le grand tirage", nom: "Une DeLorean radio-command\xE9e", lot: "la DeLorean radio-command\xE9e de Retour vers le futur", detail: "La voiture de Retour vers le futur, \xE0 piloter \xE0 la t\xE9l\xE9commande. Chaque ticket gagn\xE9 pendant le mois est une chance de plus." },
+  assidus: { quand: "Les 24 portes ouvertes", nom: "Une session de quiz compl\xE8te", lot: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix", detail: "Un tirage r\xE9serv\xE9 \xE0 celles et ceux qui ont ouvert les 24 portes : une session de quiz offerte pour 4 \xE0 16 candidats, \xE9mission au choix." }
+};
+function lotsPrevus() {
+  const lots = {};
+  for (let j = 1; j <= 24; j++) {
+    const place = ETOILES.includes(j) ? PLACE_ESCAPE : PLACE_QUIZ;
+    const jeu = JEUX[j];
+    lots[j] = { lot: jeu ? place + " + le jeu " + jeu.court : place, jeu: jeu ? jeu.court : null };
+  }
+  lots.grand = { lot: FINAUX.grand.lot, jeu: null };
+  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null };
+  return lots;
+}
+
 // avent-src/entree.mjs
 function contexteDe(hote) {
   return /--gamedoor41\.netlify\.app$/i.test(hote) || /^(localhost|127\.0\.0\.1)$/i.test(hote) ? "apercu" : "production";
 }
 var moteurs = {};
 function moteur(contexte) {
-  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, stockage: stockageNetlify(contexte === "production" ? "avent-2026" : "avent-2026-apercu") });
+  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), stockage: stockageNetlify(contexte === "production" ? "avent-2026" : "avent-2026-apercu") });
   return moteurs[contexte];
 }
 async function gererAvent(req, context) {
