@@ -1234,10 +1234,10 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const tout = {};
     Object.keys(lotsPrevus2).forEach((k) => {
       const p = lotsPrevus2[k];
-      tout[k] = { lot: String(p.lot || ""), jeu: p.jeu || null, objet: p.objet || null, place: p.place || null };
+      tout[k] = { lot: String(p.lot || ""), jeu: p.jeu || null, objet: p.objet || null, place: p.place || null, image: p.image || null };
     });
     Object.keys(saisis).forEach((k) => {
-      if (saisis[k]) tout[k] = { ...tout[k] || { jeu: null, objet: null, place: null }, lot: String(saisis[k]) };
+      if (saisis[k]) tout[k] = { ...tout[k] || { jeu: null, objet: null, place: null, image: null }, lot: String(saisis[k]) };
     });
     lotsCache = { quand: t, valeurs: tout };
     return tout;
@@ -1497,7 +1497,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       cal: quand.cal,
       simule: quand.simule,
       essai,
-      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null, lot: lotDe(d.j), jeu: prevus[d.j] && prevus[d.j].jeu || null })),
+      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null, lot: lotDe(d.j), jeu: prevus[d.j] && prevus[d.j].jeu || null, image: prevus[d.j] && prevus[d.j].image || null })),
       lotsFinaux: { grand: lotDe("grand"), assidus: lotDe("assidus") },
       resultats,
       finaux,
@@ -1850,32 +1850,39 @@ function stockageNetlify(nom) {
 var ETOILES = [6, 13, 20, 24];
 var PLACE_QUIZ = "1 place de quiz";
 var PLACE_ESCAPE = "1 place d\u2019escape game";
+var VERSION_IMAGES = 1;
+var img = (chemin) => chemin + "?v=" + VERSION_IMAGES;
+var IMAGES_PLACES = {
+  quiz: img("/img/quiz/salle-quiz-buzzers-premier-plan-480w.jpg"),
+  escape: img("/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.jpg"),
+  session: img("/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg")
+};
 var JEUX = {
-  1: { univers: "gav", nom: "Dossiers Criminels Pocket", sous: "Qui a tu\xE9 Isabella Vega ?", court: "Dossiers Criminels Pocket", detail: "Une enqu\xEAte de poche : des indices, des suspects, un coupable \xE0 d\xE9masquer." },
-  4: { univers: "psy", nom: "Black Stories", court: "Black Stories", detail: "50 \xE9nigmes macabres \xE0 r\xE9soudre en posant des questions. R\xE9ponses permises : oui ou non." },
-  6: { univers: "quiz", nom: "Esquiss\xE9 ?", sous: "Version 6 joueurs", court: "Esquiss\xE9 ?", detail: "Le t\xE9l\xE9phone arabe en dessin : on dessine, on devine, et tout d\xE9rape." },
-  7: { univers: "80s", nom: "E.T. l\u2019Extra-Terrestre", court: "E.T. l\u2019Extra-Terrestre", detail: "Jeu d\u2019aventure coop\xE9ratif : aidez E.T. \xE0 rentrer chez lui avant les agents. 2 \xE0 4 joueurs, d\xE8s 10 ans, 30 minutes." },
-  10: { univers: "quiz", nom: "Snort Funny", sous: "Le jeu \xAB ingroinyable \xBB", court: "Snort Funny", detail: "Un jeu d\u2019ambiance pour faire rire toute la table." },
-  13: { univers: "gav", nom: "Sous Scell\xE9s", sous: "La Fille du Troisi\xE8me", court: "Sous Scell\xE9s : La Fille du Troisi\xE8me", detail: "Un dossier d\u2019enqu\xEAte \xE0 ouvrir chez vous : \xE0 vous de r\xE9soudre l\u2019affaire." },
-  15: { univers: "80s", nom: "Retour vers le futur", court: "Retour vers le futur", detail: "Jeu d\u2019aventure coop\xE9ratif : faites monter la DeLorean \xE0 88 miles \xE0 l\u2019heure avant l\u2019\xE9clair. 2 \xE0 4 joueurs, d\xE8s 10 ans, 50 minutes." },
-  16: { univers: "psy", nom: "Scream, le jeu", court: "Scream, le jeu", detail: "Jeu de soci\xE9t\xE9 coop\xE9ratif : faites \xE9quipe pour \xE9chapper au tueur masqu\xE9." },
-  18: { univers: "quiz", nom: "Longueur d\u2019onde", court: "Longueur d\u2019onde", detail: "Jeu d\u2019ambiance en \xE9quipes : \xEAtes-vous sur la m\xEAme longueur d\u2019onde que vos amis ?" },
-  20: { univers: "psy", nom: "Chucky, le jeu", court: "Chucky, le jeu", detail: "Jeu d\u2019horreur coop\xE9ratif : tous ensemble contre la poup\xE9e." },
-  23: { univers: "80s", nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." }
+  1: { univers: "gav", image: img("/img/avent/jeux/dossiers-criminels.jpg"), maison: false, nom: "Dossiers Criminels Pocket", sous: "Qui a tu\xE9 Isabella Vega ?", court: "Dossiers Criminels Pocket", detail: "Une enqu\xEAte de poche : des indices, des suspects, un coupable \xE0 d\xE9masquer." },
+  4: { univers: "psy", image: img("/img/avent/jeux/black-stories.jpg"), maison: false, nom: "Black Stories", court: "Black Stories", detail: "50 \xE9nigmes macabres \xE0 r\xE9soudre en posant des questions. R\xE9ponses permises : oui ou non." },
+  6: { univers: "quiz", image: img("/img/avent/jeux/esquisse.jpg"), maison: false, nom: "Esquiss\xE9 ?", sous: "Version 6 joueurs", court: "Esquiss\xE9 ?", detail: "Le t\xE9l\xE9phone arabe en dessin : on dessine, on devine, et tout d\xE9rape." },
+  7: { univers: "80s", image: img("/img/avent/jeux/et.jpg"), maison: true, nom: "E.T. l\u2019Extra-Terrestre", court: "E.T. l\u2019Extra-Terrestre", detail: "Jeu d\u2019aventure coop\xE9ratif : aidez E.T. \xE0 rentrer chez lui avant les agents. 2 \xE0 4 joueurs, d\xE8s 10 ans, 30 minutes." },
+  10: { univers: "quiz", image: img("/img/avent/jeux/snort-funny.jpg"), maison: false, nom: "Snort Funny", sous: "Le jeu \xAB ingroinyable \xBB", court: "Snort Funny", detail: "Un jeu d\u2019ambiance pour faire rire toute la table." },
+  13: { univers: "gav", image: img("/img/avent/jeux/sous-scelles.jpg"), maison: false, nom: "Sous Scell\xE9s", sous: "La Fille du Troisi\xE8me", court: "Sous Scell\xE9s : La Fille du Troisi\xE8me", detail: "Un dossier d\u2019enqu\xEAte \xE0 ouvrir chez vous : \xE0 vous de r\xE9soudre l\u2019affaire." },
+  15: { univers: "80s", image: img("/img/avent/jeux/retour-vers-le-futur.jpg"), maison: true, nom: "Retour vers le futur", court: "Retour vers le futur", detail: "Jeu d\u2019aventure coop\xE9ratif : faites monter la DeLorean \xE0 88 miles \xE0 l\u2019heure avant l\u2019\xE9clair. 2 \xE0 4 joueurs, d\xE8s 10 ans, 50 minutes." },
+  16: { univers: "psy", image: img("/img/avent/jeux/scream.jpg"), maison: false, nom: "Scream, le jeu", court: "Scream, le jeu", detail: "Jeu de soci\xE9t\xE9 coop\xE9ratif : faites \xE9quipe pour \xE9chapper au tueur masqu\xE9." },
+  18: { univers: "quiz", image: img("/img/avent/jeux/longueur-d-onde.jpg"), maison: false, nom: "Longueur d\u2019onde", court: "Longueur d\u2019onde", detail: "Jeu d\u2019ambiance en \xE9quipes : \xEAtes-vous sur la m\xEAme longueur d\u2019onde que vos amis ?" },
+  20: { univers: "psy", image: img("/img/avent/jeux/chucky.jpg"), maison: false, nom: "Chucky, le jeu", court: "Chucky, le jeu", detail: "Jeu d\u2019horreur coop\xE9ratif : tous ensemble contre la poup\xE9e." },
+  23: { univers: "80s", image: img("/img/avent/jeux/goonies.jpg"), maison: true, nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." }
 };
 var FINAUX = {
-  grand: { quand: "Le grand tirage", nom: "Une DeLorean radio-command\xE9e", lot: "la DeLorean radio-command\xE9e de Retour vers le futur", detail: "La voiture de Retour vers le futur, \xE0 piloter \xE0 la t\xE9l\xE9commande. Chaque ticket gagn\xE9 pendant le mois est une chance de plus." },
-  assidus: { quand: "Les 24 portes ouvertes", nom: "Une session de quiz compl\xE8te", lot: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix", detail: "Un tirage r\xE9serv\xE9 \xE0 celles et ceux qui ont ouvert les 24 portes : une session de quiz offerte pour 4 \xE0 16 candidats, \xE9mission au choix." }
+  grand: { quand: "Le grand tirage", image: img("/img/avent/jeux/delorean.jpg"), maison: false, nom: "Une DeLorean radio-command\xE9e", lot: "la DeLorean radio-command\xE9e de Retour vers le futur", detail: "La voiture de Retour vers le futur, \xE0 piloter \xE0 la t\xE9l\xE9commande. Chaque ticket gagn\xE9 pendant le mois est une chance de plus." },
+  assidus: { quand: "Les 24 portes ouvertes", image: IMAGES_PLACES.session, maison: true, nom: "Une session de quiz compl\xE8te", lot: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix", detail: "Un tirage r\xE9serv\xE9 \xE0 celles et ceux qui ont ouvert les 24 portes : une session de quiz offerte pour 4 \xE0 16 candidats, \xE9mission au choix." }
 };
 function lotsPrevus() {
   const lots = {};
   for (let j = 1; j <= 24; j++) {
     const place = ETOILES.includes(j) ? PLACE_ESCAPE : PLACE_QUIZ;
     const jeu = JEUX[j];
-    lots[j] = { lot: jeu ? place + " + le jeu " + jeu.court : place, jeu: jeu ? jeu.court : null, objet: jeu ? "le jeu " + jeu.court : null, place: ETOILES.includes(j) ? "escape" : "quiz" };
+    lots[j] = { lot: jeu ? place + " + le jeu " + jeu.court : place, jeu: jeu ? jeu.court : null, objet: jeu ? "le jeu " + jeu.court : null, place: ETOILES.includes(j) ? "escape" : "quiz", image: jeu ? jeu.image : null };
   }
-  lots.grand = { lot: FINAUX.grand.lot, jeu: null, objet: FINAUX.grand.lot, place: null };
-  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null, objet: null, place: "session" };
+  lots.grand = { lot: FINAUX.grand.lot, jeu: null, objet: FINAUX.grand.lot, place: null, image: FINAUX.grand.image };
+  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null, objet: null, place: "session", image: null };
   return lots;
 }
 

@@ -59,5 +59,5 @@ try {
   }
   console.log(liste.length + ' visuels écrits dans img/avent/' + (erreurs ? ' — ' + erreurs + ' À REVOIR' : ', tous contrôlés.'));
   ws.close();
-} finally { chrome.kill(); serveur.close(); await pause(300); fs.rmSync(profil, { recursive: true, force: true, maxRetries: 3 }); }
+} finally { chrome.kill(); serveur.close(); await pause(300); try { fs.rmSync(profil, { recursive: true, force: true, maxRetries: 3 }); } catch (_) { /* Chrome garde parfois la main sur son profil : sans gravité */ } }
 process.exit(erreurs ? 1 : 0);

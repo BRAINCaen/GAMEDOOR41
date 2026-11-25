@@ -148,8 +148,8 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     if (lotsCache.valeurs && t - lotsCache.quand < 45000) return lotsCache.valeurs;
     const saisis = (await stockage.lire('config/lots')) || {};
     const tout = {};
-    Object.keys(lotsPrevus).forEach((k) => { const p = lotsPrevus[k]; tout[k] = { lot: String(p.lot || ''), jeu: p.jeu || null, objet: p.objet || null, place: p.place || null }; });
-    Object.keys(saisis).forEach((k) => { if (saisis[k]) tout[k] = { ...(tout[k] || { jeu: null, objet: null, place: null }), lot: String(saisis[k]) }; });
+    Object.keys(lotsPrevus).forEach((k) => { const p = lotsPrevus[k]; tout[k] = { lot: String(p.lot || ''), jeu: p.jeu || null, objet: p.objet || null, place: p.place || null, image: p.image || null }; });
+    Object.keys(saisis).forEach((k) => { if (saisis[k]) tout[k] = { ...(tout[k] || { jeu: null, objet: null, place: null, image: null }), lot: String(saisis[k]) }; });
     lotsCache = { quand: t, valeurs: tout };
     return tout;
   }
@@ -364,7 +364,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     const joueur = await joueurDuJeton(req);
     return json({
       cal: quand.cal, simule: quand.simule, essai,
-      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null, lot: lotDe(d.j), jeu: (prevus[d.j] && prevus[d.j].jeu) || null })),
+      portes: liste.map((d) => ({ j: d.j, univers: d.univers, gros: !!d.gros, titre: d.j <= quand.cal ? d.titre : null, lot: lotDe(d.j), jeu: (prevus[d.j] && prevus[d.j].jeu) || null, image: (prevus[d.j] && prevus[d.j].image) || null })),
       lotsFinaux: { grand: lotDe('grand'), assidus: lotDe('assidus') },
       resultats, finaux, moi: joueur ? vueJoueur(joueur, quand) : null,
     });

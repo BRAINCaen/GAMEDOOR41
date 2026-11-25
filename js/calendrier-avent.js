@@ -203,7 +203,9 @@
     var quandLot = auj < 1 ? 'À gagner dès le 1er : ' : auj > 24 ? null : !repJour ? 'À gagner aujourd’hui : ' : repJour.leJour ? 'Au tirage de demain midi : ' : null;
     bandeau.appendChild(el('p', { class: 'av-joueur-msg' }, [
       moi ? el('strong', { text: 'Bonjour ' + moi.prenom + '. ' }) : null, message,
-      quandLot && porteLot && porteLot.lot ? el('span', { class: 'av-joueur-lot' }, [el('i', { html: ICONES.cadeau }), el('b', { text: quandLot }), porteLot.lot]) : null
+      quandLot && porteLot && porteLot.lot ? el('span', { class: 'av-joueur-lot' + (porteLot.image ? ' a-image' : '') }, porteLot.image
+        ? [el('img', { class: 'av-joueur-lot-img', src: porteLot.image, alt: '', width: '54', height: '54', decoding: 'async' }), el('span', {}, [el('b', { text: quandLot }), porteLot.lot])]
+        : [el('i', { html: ICONES.cadeau }), el('b', { text: quandLot }), porteLot.lot]) : null
     ]));
     if (moi) bandeau.appendChild(el('p', { class: 'av-joueur-compte' }, [
       el('span', {}, [el('b', { text: String(nb) }), (nb > 1 ? 'portes ouvertes' : 'porte ouverte') + ' sur 24']),
@@ -257,7 +259,11 @@
     ]);
   }
   function bandeLot(p, quand) {
-    return p.lot ? el('p', { class: 'av-lot-jour' }, [el('i', { html: ICONES.cadeau }), el('span', {}, [el('b', { text: quand }), p.lot])]) : null;
+    if (!p.lot) return null;
+    return el('p', { class: 'av-lot-jour' + (p.image ? ' a-image' : '') }, [
+      p.image ? el('img', { class: 'av-lot-jour-img', src: p.image, alt: '', width: '54', height: '54', decoding: 'async' }) : el('i', { html: ICONES.cadeau }),
+      el('span', {}, [el('b', { text: quand }), p.lot])
+    ]);
   }
   function actions(noeuds, classe) { return el('div', { class: 'av-actions' + (classe ? ' ' + classe : '') }, noeuds); }
   function boutonFermer(texte) { return actions([el('button', { type: 'button', class: 'btn btn-outline', text: texte || 'Fermer', onclick: fermer })]); }

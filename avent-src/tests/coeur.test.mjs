@@ -239,6 +239,8 @@ test('lots : ceux du fichier des lots, servis à la page, corrigeables par l’�
   let e = (await appel('GET', 'etat')).corps;
   assert.equal(e.portes[3].lot, '1 place de quiz + le jeu Black Stories'); assert.equal(e.portes[3].jeu, 'Black Stories');
   assert.equal(e.portes[4].jeu, null);
+  assert.match(e.portes[3].image, /^\/img\/avent\/jeux\/black-stories\.jpg\?v=\d+$/, 'l’image du jeu est servie à la page');
+  assert.equal(e.portes[4].image, null, 'pas de jeu, pas d’image');
   assert.match(e.lotsFinaux.grand, /DeLorean/);
   // un joueur le 4, résultat le 5 à midi : le lot prévu s'affiche sans que l'équipe saisisse quoi que ce soit
   assert.equal((await appel('POST', 'jouer', { corps: { j: 4, reponse: bonne(defisDEssai()[3]), prenom: 'Lou', email: 'lou@exemple.fr', reglement: true } })).statut, 200);

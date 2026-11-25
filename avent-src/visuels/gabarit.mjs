@@ -1,6 +1,7 @@
 // Gabarit des visuels du calendrier de l'Avent pour les réseaux sociaux (publication 1080 × 1350, story 1080 × 1920).
 // Fait en code, à partir de la charte du site et de VRAIES photos de nos salles : aucune image générée par IA.
 // Les textes viennent de avent-src/lots-2026.mjs : si un lot change, relancer `node avent-src/visuels/fabriquer.mjs`.
+// Les jours où le jeu a une vraie photo de la boîte prise par nous (`maison: true`), la boîte remplace la porte.
 import { ETOILES, JEUX, FINAUX, PLACE_QUIZ, PLACE_ESCAPE } from '../lots-2026.mjs';
 import { dateTexte } from '../messages.mjs';
 
@@ -28,6 +29,10 @@ export function visuel(j, format) {
   const jeu = JEUX[j];
   const place = etoile ? PLACE_ESCAPE : PLACE_QUIZ;
   const sombre = u === 'final';
+  const boite = !!(jeu && jeu.maison && jeu.image);
+  const visuelJour = boite
+    ? `<div class="boite"><img src="${h(jeu.image)}" alt=""><span class="pastille">${j}</span>${etoile ? '<span class="etoile">★</span>' : ''}</div>`
+    : `<div class="porte"><span class="num">${j}</span><span class="poignee"></span>${etoile ? '<span class="etoile">★</span>' : ''}</div>`;
   const corps = fin
     ? `<p class="sur">Les 24 portes sont ouvertes</p>
        <h1 class="grand">Merci d’avoir joué&nbsp;!</h1>
@@ -37,7 +42,7 @@ export function visuel(j, format) {
        <p class="note">Les noms des gagnants sont dans la légende et sur le site.</p>`
     : `<p class="sur">Calendrier de l’Avent</p><p class="date">${h(dateTexte(j))}</p>
        <div class="duo">
-         <div class="porte"><span class="num">${j}</span><span class="poignee"></span>${etoile ? '<span class="etoile">★</span>' : ''}</div>
+         ${visuelJour}
          <div class="texte">
            <p class="univers">${h(NOMS[u])}</p>
            <p class="lot-titre">À gagner aujourd’hui</p>
@@ -63,6 +68,10 @@ export function visuel(j, format) {
   .num { position:relative; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 195 : 232}px; line-height:1; color:${sombre ? '#1a1400' : '#fff'}; text-shadow:${sombre ? 'none' : '0 6px 0 rgba(0,0,0,.35)'}; }
   .poignee { position:absolute; right:9%; top:55%; width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, #b9b9b9 45%, #5d5d5d); box-shadow:0 5px 8px rgba(0,0,0,.5); }
   .etoile { position:absolute; top:3%; right:7%; font-size:64px; line-height:1; color:${sombre ? '#1a1400' : '#FFD740'}; text-shadow:0 3px 4px rgba(0,0,0,.5); }
+  .boite { position:relative; flex:none; width:${story ? 430 : 360}px; transform:rotate(-3deg); }
+  .boite img { display:block; width:100%; height:auto; max-height:${story ? 430 : 500}px; object-fit:contain; border-radius:10px; box-shadow:0 0 0 8px #0a0a0a, 0 0 0 ${etoile ? '13px #FFD740' : '10px rgba(255,255,255,.22)'}, 0 30px 70px rgba(0,0,0,.75); }
+  .pastille { position:absolute; top:-30px; left:-30px; width:104px; height:142px; border-radius:10px 10px 4px 4px; background:linear-gradient(160deg, color-mix(in srgb, ${c} 90%, #fff) 0%, ${c} 40%, color-mix(in srgb, ${c} 60%, #000) 100%); display:flex; align-items:center; justify-content:center; font-family:'Oswald', sans-serif; font-weight:700; font-size:84px; line-height:1; color:${sombre ? '#1a1400' : '#fff'}; text-shadow:0 4px 0 rgba(0,0,0,.35); box-shadow:0 0 0 6px #0a0a0a, 0 14px 30px rgba(0,0,0,.6); transform:rotate(-4deg); }
+  .boite .etoile { top:-26px; right:-22px; }
   .texte { ${story ? 'width:100%;' : 'flex:1 1 0; min-width:0; text-align:left;'} }
   .univers { display:inline-block; padding:6px 18px; border-radius:99px; background:${c}; color:${sombre ? '#1a1400' : '#fff'}; font-family:'Oswald', sans-serif; font-weight:600; font-size:28px; letter-spacing:2px; text-transform:uppercase; }
   .lot-titre { margin-top:${story ? 30 : 26}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 44 : 38}px; letter-spacing:4px; text-transform:uppercase; color:#FFD740; }
