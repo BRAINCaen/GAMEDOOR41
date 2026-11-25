@@ -1,7 +1,7 @@
 // Calendrier de l’Avent — écrit par avent-src/construire.mjs.
-// Fonction planifiée : tirage au sort de la veille, tous les jours à midi (11 h UTC = midi à Paris en hiver).
+// Fonction planifiée, toutes les demi-heures : tirage de la veille dès midi, mail au gagnant, bilan à l'équipe.
 import { tirageDuJour } from '../avent-coeur.mjs';
 
 export default async () => { await tirageDuJour(); };
 
-export const config = { schedule: '0 11 * * *' };
+export const config = { schedule: '1,31 * * * *' };

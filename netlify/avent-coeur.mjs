@@ -22,17 +22,17 @@ var init_main = __esm({
     base64Decode = globalThis.Buffer ? (input) => Buffer.from(input, "base64").toString() : (input) => atob(input);
     base64Encode = globalThis.Buffer ? (input) => Buffer.from(getString(input)).toString("base64") : (input) => btoa(getString(input));
     getEnvironment = () => {
-      const { Deno, Netlify, process } = globalThis;
+      const { Deno, Netlify, process: process2 } = globalThis;
       return Netlify?.env ?? Deno?.env ?? {
-        delete: (key) => delete process?.env[key],
-        get: (key) => process?.env[key],
-        has: (key) => Boolean(process?.env[key]),
+        delete: (key) => delete process2?.env[key],
+        get: (key) => process2?.env[key],
+        has: (key) => Boolean(process2?.env[key]),
         set: (key, value) => {
-          if (process?.env) {
-            process.env[key] = value;
+          if (process2?.env) {
+            process2.env[key] = value;
           }
         },
-        toObject: () => process?.env ?? {}
+        toObject: () => process2?.env ?? {}
       };
     };
   }
@@ -212,16 +212,16 @@ var init_chunk_SQCJ2S3G = __esm({
     MIN_RETRY_DELAY = 1e3;
     MAX_RETRY = 5;
     RATE_LIMIT_HEADER = "X-RateLimit-Reset";
-    fetchAndRetry = async (fetch, url, options, attemptsLeft = MAX_RETRY, getRetryUrl) => {
+    fetchAndRetry = async (fetch2, url, options, attemptsLeft = MAX_RETRY, getRetryUrl) => {
       try {
-        const res = await fetch(url, options);
+        const res = await fetch2(url, options);
         const isRetryable = res.status === 429 || res.status >= 500 || getRetryUrl !== void 0 && res.status === 403;
         if (attemptsLeft > 0 && isRetryable) {
           await discardBody(res);
           const delay = getDelay(res.headers.get(RATE_LIMIT_HEADER));
           await sleep(delay);
           const retryUrl = getRetryUrl ? await getRetryUrl() : url;
-          return fetchAndRetry(fetch, retryUrl, options, attemptsLeft - 1, getRetryUrl);
+          return fetchAndRetry(fetch2, retryUrl, options, attemptsLeft - 1, getRetryUrl);
         }
         return res;
       } catch (error) {
@@ -231,7 +231,7 @@ var init_chunk_SQCJ2S3G = __esm({
         const delay = getDelay();
         await sleep(delay);
         const retryUrl = getRetryUrl ? await getRetryUrl() : url;
-        return fetchAndRetry(fetch, retryUrl, options, attemptsLeft - 1, getRetryUrl);
+        return fetchAndRetry(fetch2, retryUrl, options, attemptsLeft - 1, getRetryUrl);
       }
     };
     getDelay = (rateLimitReset) => {
@@ -252,11 +252,11 @@ var init_chunk_SQCJ2S3G = __esm({
       get edgeAccess() {
         return this.edgeURL !== void 0;
       }
-      constructor({ apiURL, consistency, edgeURL, fetch, region, siteID, token, uncachedEdgeURL }) {
+      constructor({ apiURL, consistency, edgeURL, fetch: fetch2, region, siteID, token, uncachedEdgeURL }) {
         this.apiURL = apiURL;
         this.consistency = consistency ?? "eventual";
         this.edgeURL = edgeURL;
-        this.fetch = fetch ?? globalThis.fetch;
+        this.fetch = fetch2 ?? globalThis.fetch;
         this.region = region;
         this.siteID = siteID;
         this.token = token;
@@ -1000,13 +1000,116 @@ var init_main3 = __esm({
 
 // avent-src/coeur.mjs
 import { createHash, createHmac, randomBytes, randomInt, timingSafeEqual } from "node:crypto";
+
+// avent-src/messages.mjs
+var SEMAINE = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+var dateTexte = (j, annee = 2026) => SEMAINE[new Date(Date.UTC(annee, 11, j)).getUTCDay()] + " " + (j === 1 ? "1er" : j) + " d\xE9cembre";
+var h = (t) => String(t == null ? "" : t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+var pad = (n) => String(n).padStart(2, "0");
+var ADRESSE = "41 bis rue Pasteur, 14120 Mondeville";
+var PAGE = "/calendrier-de-l-avent/";
+var RETRAIT_JEUX = "28 f\xE9vrier 2027";
+function habiller(titre, blocs, origine) {
+  const corps = blocs.filter(Boolean).map((b) => b.cadre ? '<div style="margin:18px 0;padding:16px 18px;background:#fff6ec;border-left:5px solid #ff6b00;border-radius:6px;">' + b.cadre + "</div>" : '<p style="margin:0 0 14px;">' + b + "</p>").join("\n");
+  return '<!doctype html><html lang="fr"><body style="margin:0;padding:0;background:#f2efe9;"><div style="max-width:600px;margin:0 auto;padding:24px 14px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.55;color:#1a1a1a;"><div style="background:#0a0a0a;color:#fff;padding:20px 22px;border-radius:10px 10px 0 0;border-bottom:4px solid #ff6b00;"><div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#ff6b00;">Les 24 portes de GAMEDOOR\xB741</div><div style="font-size:22px;font-weight:bold;margin-top:6px;">' + h(titre) + '</div></div><div style="background:#ffffff;padding:22px;border-radius:0 0 10px 10px;">' + corps + '</div><p style="margin:14px 6px 0;font-size:12px;color:#777;">GAMEDOOR\xB741 \xB7 ' + h(ADRESSE) + ' \xB7 <a href="' + h(origine + PAGE) + '" style="color:#777;">le calendrier de l\u2019Avent</a></p></div></body></html>';
+}
+var QUOI = { quiz: "1 place de quiz", escape: "1 place d\u2019escape game", session: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix" };
+function mailGagnant({ prenom, tirage = "jour", jour, participants, lot, place, objet, code, suite = false, essai = false, origine = "https://gamedoor41.fr" }) {
+  const ou = tirage === "grand" ? "du grand tirage" : tirage === "assidus" ? "du tirage des 24 portes ouvertes" : "de la porte " + jour + " (" + dateTexte(jour) + ")";
+  const sujet = (essai ? "[ESSAI] " : "") + (suite ? "Votre code : " + (QUOI[place] || "votre lot") + " (calendrier de l\u2019Avent GAMEDOOR\xB741)" : "Bravo " + prenom + ", vous avez gagn\xE9 au calendrier de l\u2019Avent GAMEDOOR\xB741");
+  const lignes = [], blocs = [];
+  const dire = (texte, html) => {
+    lignes.push(texte);
+    blocs.push(html || h(texte));
+  };
+  dire("Bonjour " + prenom + ",");
+  if (suite) dire("Comme promis, voici le code de votre lot " + ou + " de notre calendrier de l\u2019Avent.");
+  else {
+    dire("Bravo ! Le tirage au sort " + ou + " de notre calendrier de l\u2019Avent est tomb\xE9 sur vous" + (tirage === "jour" && participants > 1 ? ", parmi " + participants + " joueurs" : "") + ".");
+    lignes.push("Votre lot : " + lot);
+    blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre lot</strong><br><span style="font-size:19px;font-weight:bold;">' + h(lot) + "</span>" });
+  }
+  if (place && code) {
+    lignes.push("Votre code : " + code);
+    blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + "</span>" });
+    dire(
+      "Ce code vous offre " + QUOI[place] + ". R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois.",
+      "Ce code vous offre <strong>" + h(QUOI[place]) + '</strong>. R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois.'
+    );
+  } else if (place && !suite) {
+    dire("Le code de votre " + (place === "session" ? "session" : "place") + " vous arrive dans un second mail, sous 48 heures.");
+  }
+  if (objet && !suite) dire(
+    "Votre cadeau, " + objet + ", vous attend \xE0 l\u2019accueil de GAMEDOOR\xB741, " + ADRESSE + ". Venez le chercher le jour de votre session, ou r\xE9pondez \xE0 ce mail pour nous dire quand vous passez. Il est \xE0 retirer avant le " + RETRAIT_JEUX + ".",
+    "Votre cadeau, <strong>" + h(objet) + "</strong>, vous attend \xE0 l\u2019accueil de GAMEDOOR\xB741, " + h(ADRESSE) + ". Venez le chercher le jour de votre session, ou r\xE9pondez \xE0 ce mail pour nous dire quand vous passez. Il est \xE0 retirer avant le " + h(RETRAIT_JEUX) + "."
+  );
+  dire("Les lots ne sont ni \xE9changeables ni remboursables. Une question ? R\xE9pondez simplement \xE0 ce mail.");
+  if (!suite && tirage === "jour" && jour < 24) dire("Et le calendrier continue : une nouvelle porte s\u2019ouvre chaque jour jusqu\u2019au 24 d\xE9cembre.");
+  dire("\xC0 tr\xE8s vite,");
+  dire("L\u2019\xE9quipe GAMEDOOR\xB741");
+  return { sujet, texte: lignes.join("\n\n"), html: habiller(suite ? "Voici votre code" : "Vous avez gagn\xE9 !", blocs, origine) };
+}
+function mailAccuse({ prenom, essai = false, origine = "https://gamedoor41.fr" }) {
+  const lignes = [
+    "Bonjour " + prenom + ",",
+    "Nous avons bien re\xE7u votre message au sujet du calendrier de l\u2019Avent. Nous vous r\xE9pondons sous 48 heures, par mail.",
+    "En attendant, les r\xE9ponses aux questions les plus fr\xE9quentes (tirages, lots, tickets, portes en retard) sont en bas de la page du calendrier : " + origine + PAGE + "#av-questions",
+    "\xC0 tr\xE8s vite,",
+    "L\u2019\xE9quipe GAMEDOOR\xB741"
+  ];
+  const blocs = [
+    h(lignes[0]),
+    h(lignes[1]),
+    'En attendant, les r\xE9ponses aux questions les plus fr\xE9quentes (tirages, lots, tickets, portes en retard) sont <a href="' + h(origine + PAGE + "#av-questions") + '" style="color:#b34a00;">en bas de la page du calendrier</a>.',
+    h(lignes[3]),
+    h(lignes[4])
+  ];
+  return { sujet: (essai ? "[ESSAI] " : "") + "Bien re\xE7u : votre message sur le calendrier de l\u2019Avent GAMEDOOR\xB741", texte: lignes.join("\n\n"), html: habiller("Message bien re\xE7u", blocs, origine) };
+}
+function mailQuestionEquipe({ prenom, email, message, fiche, essai = false, origine = "https://gamedoor41.fr" }) {
+  const lignes = ["Question ou r\xE9clamation re\xE7ue sur le calendrier de l\u2019Avent.", "De : " + prenom + " <" + email + ">", fiche, "Message : \xAB " + message + " \xBB", "Pour r\xE9pondre : bouton \xAB R\xE9pondre \xBB de ce mail. La personne a d\xE9j\xE0 re\xE7u un accus\xE9 de r\xE9ception (r\xE9ponse promise sous 48 heures).", "Toutes les questions : " + origine + PAGE + "equipe/"];
+  const blocs = [h(lignes[0]), "<strong>De :</strong> " + h(prenom) + " &lt;" + h(email) + "&gt;", h(fiche), { cadre: h(message).replace(/\n/g, "<br>") }, h(lignes[4]), '<a href="' + h(origine + PAGE + "equipe/") + '" style="color:#b34a00;">Voir toutes les questions dans l\u2019\xE9cran de l\u2019\xE9quipe</a>'];
+  return { sujet: (essai ? "[ESSAI] " : "") + "[Avent] Question de " + prenom, texte: lignes.join("\n\n"), html: habiller("Une question \xE0 traiter", blocs, origine) };
+}
+function mailRapport({ jour, lignes, alertes, essai = false, origine = "https://gamedoor41.fr" }) {
+  const quoi = jour > 24 ? "Tirages de fin" : "Porte " + jour;
+  const sujet = (essai ? "[ESSAI] " : "") + "[Avent] " + quoi + (alertes.length ? " : " + alertes.length + " action" + (alertes.length > 1 ? "s" : "") + " \xE0 faire" : " : tout est parti tout seul");
+  const texte = [quoi + " du calendrier de l\u2019Avent.", ...lignes, alertes.length ? "\xC0 FAIRE :\n- " + alertes.join("\n- ") : "Rien \xE0 faire.", "\xC9cran de l\u2019\xE9quipe : " + origine + PAGE + "equipe/"].join("\n\n");
+  const blocs = [...lignes.map(h), alertes.length ? { cadre: '<strong style="color:#b00020;">\xC0 faire</strong><ul style="margin:8px 0 0;padding-left:20px;">' + alertes.map((a) => "<li>" + h(a) + "</li>").join("") + "</ul>" } : { cadre: '<strong style="color:#1f8f4a;">Rien \xE0 faire.</strong>' }, '<a href="' + h(origine + PAGE + "equipe/") + '" style="color:#b34a00;">Ouvrir l\u2019\xE9cran de l\u2019\xE9quipe</a>'];
+  return { sujet, texte, html: habiller(quoi + (alertes.length ? " : \xE0 regarder" : " : tout est parti"), blocs, origine) };
+}
+var MOTS = "#calendrierdelavent #jeuconcours #concours #caen #mondeville #normandie #escapegame #quiz #gamedoor41";
+var LIEN = "gamedoor41.fr/calendrier-de-l-avent";
+var fin = (lot, signe) => /[?!.]$/.test(lot) ? "" : signe;
+function legendeJour({ jour, lot, veille }) {
+  const l = ["\u{1F384} Porte " + jour + " du calendrier de l\u2019Avent GAMEDOOR\xB741", "\u{1F381} \xC0 gagner aujourd\u2019hui : " + lot + fin(lot, "."), "Un d\xE9fi d\u2019une minute, une seule r\xE9ponse, et vous \xEAtes dans le tirage au sort de demain midi. Bonne ou mauvaise r\xE9ponse, tout le monde a sa chance."];
+  if (veille && veille.gagnant) l.push("\u{1F3C6} Porte " + veille.jour + " : bravo \xE0 " + veille.gagnant + ", qui remporte " + veille.lot + fin(veille.lot, " !"));
+  l.push("\u{1F449} Pour jouer : " + LIEN + " (lien dans notre bio). Jeu gratuit, jusqu\u2019au 24 d\xE9cembre.");
+  l.push(MOTS);
+  return l.join("\n\n");
+}
+function legendeFin({ veille, grand, assidus }) {
+  const l = ["\u{1F384} Les 24 portes de GAMEDOOR\xB741 sont toutes ouvertes. Merci d\u2019avoir jou\xE9 avec nous tout le mois !"];
+  if (veille && veille.gagnant) l.push("\u{1F3C6} Porte 24 : bravo \xE0 " + veille.gagnant + ", qui remporte " + veille.lot + fin(veille.lot, "."));
+  if (grand && grand.gagnant) l.push("\u{1F697} Grand tirage : " + grand.gagnant + " remporte " + grand.lot + ".");
+  if (assidus && assidus.gagnant) l.push("\u2B50 Tirage des 24 portes ouvertes : " + assidus.gagnant + " remporte " + assidus.lot + ".");
+  l.push("Les gagnants ont re\xE7u un mail. Joyeux No\xEBl \xE0 toutes et \xE0 tous, et \xE0 tr\xE8s vite \xE0 Mondeville !");
+  l.push(MOTS);
+  return l.join("\n\n");
+}
+var quandParis = (annee, j, heure, minute = 0) => annee + "-12-" + pad(j) + "T" + pad(heure) + ":" + pad(minute) + ":00+01:00";
+
+// avent-src/coeur.mjs
 var ANNEE = 2026;
 var NB_PORTES = 24;
 var MAX_INSCRIPTIONS_PAR_IP = 8;
+var MAX_QUESTIONS_PAR_IP = 3;
+var MAX_ESSAIS_MAIL = 6;
+var TYPES_CODES = ["quiz", "escape", "session"];
 var UNIVERS = ["gav", "psy", "80s", "quiz", "final"];
 var JETABLES = ["yopmail.com", "yopmail.fr", "mailinator.com", "guerrillamail.com", "sharklasers.com", "10minutemail.com", "tempmail.com", "temp-mail.org", "trashmail.com", "mekuron.com", "getnada.com", "maildrop.cc", "throwawaymail.com", "mohmal.com", "emailondeck.com", "jetable.org", "tempr.email", "dispostable.com", "fakeinbox.com", "mailnesia.com"];
 var hacher = (texte) => createHash("sha256").update(texte).digest("hex");
-var pad = (n) => String(n).padStart(2, "0");
+var pad2 = (n) => String(n).padStart(2, "0");
 function parisDe(date) {
   const p = {};
   new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", hourCycle: "h23" }).formatToParts(date).forEach((x) => {
@@ -1106,7 +1209,7 @@ function vueJoueur(joueur, quand) {
 var ENTETES = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex" };
 var json = (corps, statut = 200) => new Response(JSON.stringify(corps), { status: statut, headers: ENTETES });
 var refus = (statut, code, message) => json({ erreur: code, message }, statut);
-function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), contexte = "production", lotsPrevus: lotsPrevus2 = {} }) {
+function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), contexte = "production", lotsPrevus: lotsPrevus2 = {}, courrier: courrier2 = null, contact = "contact@gamedoor41.fr" }) {
   const essai = contexte !== "production";
   let secretCache = null;
   let tiragesCache = { quand: 0, valeurs: {} };
@@ -1130,10 +1233,11 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const saisis = await stockage.lire("config/lots") || {};
     const tout = {};
     Object.keys(lotsPrevus2).forEach((k) => {
-      tout[k] = { lot: String(lotsPrevus2[k].lot || ""), jeu: lotsPrevus2[k].jeu || null };
+      const p = lotsPrevus2[k];
+      tout[k] = { lot: String(p.lot || ""), jeu: p.jeu || null, objet: p.objet || null, place: p.place || null };
     });
     Object.keys(saisis).forEach((k) => {
-      if (saisis[k]) tout[k] = { lot: String(saisis[k]), jeu: tout[k] ? tout[k].jeu : null };
+      if (saisis[k]) tout[k] = { ...tout[k] || { jeu: null, objet: null, place: null }, lot: String(saisis[k]) };
     });
     lotsCache = { quand: t, valeurs: tout };
     return tout;
@@ -1164,7 +1268,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const candidats = joueurs.filter((x) => x.reponses && x.reponses[j] && x.reponses[j].leJour && !exclus.includes(x.id));
     const gagnant = candidats.length ? candidats[randomInt(candidats.length)] : null;
     return {
-      cle: pad(j),
+      cle: pad2(j),
       genre: "jour",
       jour: j,
       participants: candidats.length,
@@ -1195,7 +1299,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
   async function assurerTirages(quand) {
     if (quand.simule && !essai) return 0;
     const dus = [];
-    for (let j = 1; j <= NB_PORTES; j++) if (resultatVisible(j, quand)) dus.push(pad(j));
+    for (let j = 1; j <= NB_PORTES; j++) if (resultatVisible(j, quand)) dus.push(pad2(j));
     if (resultatVisible(NB_PORTES, quand)) dus.push("grand", "assidus");
     if (!dus.length) return 0;
     const faits = new Set((await stockage.lister("tirages/")).map((c) => c.slice("tirages/".length)));
@@ -1232,6 +1336,136 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     tiragesCache = { quand: t, valeurs };
     return valeurs;
   }
+  async function reserve() {
+    const r = await stockage.lire("config/codes") || {};
+    TYPES_CODES.forEach((t) => {
+      if (!Array.isArray(r[t])) r[t] = [];
+    });
+    if (!Array.isArray(r.donnes)) r.donnes = [];
+    return r;
+  }
+  async function prendreCode(type, pour) {
+    const r = await reserve();
+    if (!r[type] || !r[type].length) return null;
+    const code = r[type].shift();
+    r.donnes.push({ code, type, pour, le: maintenant().toISOString() });
+    await stockage.ecrire("config/codes", r);
+    return code;
+  }
+  const cleLot = (cle) => /^\d\d$/.test(cle) ? String(Number(cle)) : cle;
+  async function livrer(origine) {
+    if (!courrier2) return { envoyes: 0, echecs: 0 };
+    const prevus = await lots();
+    let envoyes = 0, echecs = 0;
+    for (const cleBlob of await stockage.lister("tirages/")) {
+      const cle = cleBlob.slice("tirages/".length);
+      let t = await stockage.lire(cleBlob);
+      if (!t || !t.gagnant) continue;
+      const p = prevus[cleLot(cle)] || {};
+      const fait = !!(t.mail && t.mail.etat === "envoye");
+      const codeEnRetard = fait && !!t.mail.sansCode;
+      if (fait && !codeEnRetard || !t.mail && t.prevenu) continue;
+      if (!fait && t.mail && t.mail.essais >= MAX_ESSAIS_MAIL) continue;
+      if (codeEnRetard && (!p.place || !t.code && !(await reserve())[p.place].length)) continue;
+      if (!await stockage.ecrire("verrous/lot-" + cle + "-" + Math.floor(maintenant().getTime() / 6e5), { le: maintenant().toISOString() }, { siAbsent: true })) continue;
+      let code = t.code || null;
+      if (!code && p.place) code = await prendreCode(p.place, cle);
+      const message = mailGagnant({ prenom: t.gagnant.prenom, tirage: t.genre, jour: t.jour, participants: t.participants, lot: t.lot || p.lot || "votre lot", place: p.place, objet: p.objet, code, suite: codeEnRetard, essai, origine });
+      const r = await courrier2.envoyer({ a: t.gagnant.email, nom: t.gagnant.prenom, ...message });
+      t = await stockage.lire(cleBlob) || t;
+      t.code = code;
+      const essais = (t.mail && t.mail.essais || 0) + 1;
+      const le = maintenant().toISOString();
+      if (r.ok) {
+        t.mail = { etat: "envoye", le, essais, sansCode: !!p.place && !code };
+        t.prevenu = true;
+        envoyes++;
+      } else if (codeEnRetard) {
+        t.mail = { ...t.mail, erreur: String(r.erreur || "inconnue").slice(0, 200) };
+        echecs++;
+      } else {
+        t.mail = { etat: "echec", le, essais, erreur: String(r.erreur || "inconnue").slice(0, 200) };
+        echecs++;
+      }
+      await stockage.ecrire(cleBlob, t);
+    }
+    tiragesCache = { quand: 0, valeurs: {} };
+    return { envoyes, echecs };
+  }
+  function besoinsCodes(prevus, tir) {
+    const besoin = { quiz: 0, escape: 0, session: 0 };
+    Object.keys(prevus).forEach((k) => {
+      const p = prevus[k], t = tir[/^\d+$/.test(k) ? pad2(Number(k)) : k];
+      if (!p.place) return;
+      if (!t) besoin[p.place]++;
+      else if (t.gagnant && !t.code && !(!t.mail && t.prevenu)) besoin[p.place]++;
+    });
+    return besoin;
+  }
+  async function rapport(quand, origine, { force = false } = {}) {
+    if (!courrier2) return false;
+    let jour = 0;
+    for (let j = 1; j <= NB_PORTES; j++) if (resultatVisible(j, quand)) jour = j;
+    if (!jour) return false;
+    const cle = pad2(jour);
+    if (!force && !await stockage.ecrire("rapports/" + cle, { le: maintenant().toISOString() }, { siAbsent: true })) return false;
+    tiragesCache.quand = 0;
+    lotsCache.quand = 0;
+    const [joueurs, tir, prevus, r, clesQuestions] = await Promise.all([tousLesJoueurs(), tirages(), lots(), reserve(), stockage.lister("questions/")]);
+    const lignes = [], alertes = [];
+    let leJour = 0, justes = 0;
+    joueurs.forEach((x) => {
+      const rep = x.reponses && x.reponses[jour];
+      if (rep && rep.leJour) {
+        leJour++;
+        if (rep.juste) justes++;
+      }
+    });
+    lignes.push("Porte " + jour + " (" + dateTexte(jour, ANNEE) + ") : " + leJour + " joueur" + (leJour > 1 ? "s" : "") + " le jour m\xEAme, " + justes + " bonne" + (justes > 1 ? "s" : "") + " r\xE9ponse" + (justes > 1 ? "s" : "") + ".");
+    const dire = (nom, k) => {
+      const t = tir[k], p = prevus[cleLot(k)] || {};
+      if (!t) {
+        alertes.push(nom + " : le tirage n\u2019a pas eu lieu. Ouvrez l\u2019\xE9cran de l\u2019\xE9quipe pour le relancer.");
+        return;
+      }
+      if (!t.gagnant) {
+        lignes.push(nom + " : pas de gagnant (aucun participant).");
+        return;
+      }
+      const servi = t.mail && t.mail.etat === "envoye";
+      lignes.push(nom + " : " + t.gagnant.prenom + " <" + t.gagnant.email + "> gagne " + (t.lot || p.lot || "son lot") + (t.code ? " \xB7 code " + t.code : "") + " \xB7 " + (servi ? "mail envoy\xE9" : t.prevenu ? "pr\xE9venu \xE0 la main" : "mail pas encore parti") + ".");
+      if (p.objet) lignes.push("\xC0 mettre de c\xF4t\xE9 \xE0 l\u2019accueil pour " + t.gagnant.prenom + " : " + p.objet + ".");
+      if (!servi && !t.prevenu) alertes.push(nom + " : le mail au gagnant n\u2019est pas parti" + (t.mail && t.mail.erreur ? " (" + t.mail.erreur + ")" : "") + ". " + (t.mail && t.mail.essais >= MAX_ESSAIS_MAIL ? "Les essais automatiques sont finis : utilisez \xAB \xC9crire au gagnant \xBB dans l\u2019\xE9cran de l\u2019\xE9quipe." : "Un nouvel essai part tout seul dans la demi-heure."));
+      if (servi && t.mail.sansCode) alertes.push(nom + " : " + t.gagnant.prenom + " attend son code (" + p.place + "), la r\xE9serve est vide. Ajoutez des codes dans l\u2019\xE9cran de l\u2019\xE9quipe : il partira tout seul.");
+    };
+    dire("Gagnant de la porte " + jour, cle);
+    if (jour === NB_PORTES) {
+      dire("Grand tirage", "grand");
+      dire("Tirage des 24 portes", "assidus");
+    }
+    lignes.push("Depuis le d\xE9but : " + joueurs.length + " inscrit" + (joueurs.length > 1 ? "s" : "") + ", " + joueurs.reduce((n, x) => n + Object.keys(x.reponses || {}).length, 0) + " participations, " + joueurs.filter((x) => x.nouvelles).length + " veulent nos nouvelles.");
+    lignes.push("Codes en r\xE9serve : " + TYPES_CODES.map((t) => t + " " + r[t].length).join(", ") + ".");
+    const besoin = besoinsCodes(prevus, tir);
+    TYPES_CODES.forEach((t) => {
+      if (r[t].length < besoin[t]) alertes.push("Il manque " + (besoin[t] - r[t].length) + " code" + (besoin[t] - r[t].length > 1 ? "s" : "") + " \xAB " + t + " \xBB pour finir le mois. \xC0 ajouter dans l\u2019\xE9cran de l\u2019\xE9quipe.");
+    });
+    const questions = (await Promise.all(clesQuestions.map((c) => stockage.lire(c)))).filter((q) => q && q.etat === "ouverte");
+    if (questions.length) {
+      lignes.push("Questions en attente : " + questions.length + ".");
+      const vieilles = questions.filter((q) => maintenant().getTime() - new Date(q.le).getTime() > 48 * 36e5).length;
+      if (vieilles) alertes.push(vieilles + " question" + (vieilles > 1 ? "s attendent" : " attend") + " une r\xE9ponse depuis plus de 48 heures.");
+    }
+    const envoi = await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", ...mailRapport({ jour, lignes, alertes, essai, origine }) });
+    if (!envoi.ok && !force) await stockage.supprimer("rapports/" + cle);
+    return envoi.ok;
+  }
+  async function automate(quand, origine) {
+    if (quand.cal < 1 || quand.cal > 60) return { tirages: 0, envoyes: 0, echecs: 0, rapport: false };
+    const n = await assurerTirages(quand);
+    const l = await livrer(origine);
+    const b = await rapport(quand, origine);
+    return { tirages: n, envoyes: l.envoyes, echecs: l.echecs, rapport: b };
+  }
   async function joueurDuJeton(req) {
     const id = lireJeton(req.headers.get("x-avent-jeton"), (await secret()).hmac);
     return id ? await stockage.lire("joueurs/" + id) : null;
@@ -1251,7 +1485,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const resultats = {};
     liste.forEach((d) => {
       if (!resultatVisible(d.j, quand)) return;
-      const t = tir[pad(d.j)];
+      const t = tir[pad2(d.j)];
       resultats[d.j] = { bonne: texteBonne(d), explication: d.explication, tire: !!t, gagnant: t && t.gagnant ? t.gagnant.etiquette : null, participants: t ? t.participants : null, lot: t && t.lot || lotDe(d.j) };
     });
     const finaux = {};
@@ -1310,7 +1544,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       joueur = await stockage.lire("joueurs/" + id);
       if (!joueur) {
         if (corps.reglement !== true) return refus(400, "reglement", "Cochez la case du r\xE8glement pour participer.");
-        const cleIp = "limites/" + ANNEE + "-" + pad(quand.cal) + "/" + hacher(s.hmac + "|" + (ip || "inconnue")).slice(0, 24);
+        const cleIp = "limites/" + ANNEE + "-" + pad2(quand.cal) + "/" + hacher(s.hmac + "|" + (ip || "inconnue")).slice(0, 24);
         const compteur = await stockage.lire(cleIp) || { n: 0 };
         if (compteur.n >= MAX_INSCRIPTIONS_PAR_IP) return refus(429, "trop", "Trop d\u2019inscriptions depuis cette connexion aujourd\u2019hui. R\xE9essayez demain.");
         await stockage.ecrire(cleIp, { n: compteur.n + 1 });
@@ -1321,6 +1555,73 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     joueur.reponses[j] = { reponse: corrige.reponse, juste: corrige.juste, leJour: j === quand.cal, quand: maintenant().toISOString() };
     await stockage.ecrire("joueurs/" + joueur.id, joueur);
     return json({ ok: true, jeton: signer(joueur.id, s.hmac), moi: vueJoueur(joueur, quand) });
+  }
+  async function question(req, ip, origine) {
+    let corps;
+    try {
+      corps = await req.json();
+    } catch (_) {
+      return refus(400, "illisible", "Demande illisible.");
+    }
+    corps = corps || {};
+    if (corps.site) return json({ ok: true });
+    const mail = normaliserEmail(corps.email), prenom = nettoyerPrenom(corps.prenom);
+    const message = String(corps.message || "").replace(/[\u0000-\u0008\u000b-\u001f<>]/g, "").trim().slice(0, 2e3);
+    if (!mail || !prenom) return refus(400, "identite", "Indiquez votre pr\xE9nom et votre adresse mail.");
+    if (JETABLES.includes(mail.domaine)) return refus(400, "email_jetable", "Les adresses mail temporaires ne sont pas accept\xE9es.");
+    if (message.length < 10) return refus(400, "court", "Votre message est trop court pour que nous puissions vous r\xE9pondre.");
+    const s = await secret(), p = parisDe(maintenant());
+    const jourCle = p.annee + pad2(p.mois) + pad2(p.jour);
+    const cleIp = "limites/q-" + jourCle + "/" + hacher(s.hmac + "|" + (ip || "inconnue")).slice(0, 24);
+    const cleMail = "limites/q-" + jourCle + "/m-" + hacher(s.hmac + "|" + mail.cle).slice(0, 24);
+    const [parIp, parMail] = await Promise.all([stockage.lire(cleIp), stockage.lire(cleMail)]);
+    if (parIp && parIp.n >= MAX_QUESTIONS_PAR_IP || parMail && parMail.n >= MAX_QUESTIONS_PAR_IP) return refus(429, "trop", "Vous nous avez d\xE9j\xE0 \xE9crit plusieurs fois aujourd\u2019hui. Nous vous r\xE9pondons sous 48 heures.");
+    await Promise.all([stockage.ecrire(cleIp, { n: (parIp && parIp.n || 0) + 1 }), stockage.ecrire(cleMail, { n: (parMail && parMail.n || 0) + 1 })]);
+    const id = maintenant().getTime().toString(36) + randomBytes(3).toString("hex");
+    const idJ = idJoueur(mail.cle);
+    const joueur = await stockage.lire("joueurs/" + idJ);
+    let fiche = "Cette adresse n\u2019est pas inscrite au jeu.";
+    if (joueur) {
+      const gains = Object.values(await tirages()).filter((t) => t.gagnant && t.gagnant.id === idJ).map((t) => t.genre === "jour" ? "porte " + t.jour : t.genre === "grand" ? "grand tirage" : "tirage des 24 portes");
+      fiche = "Inscrit\xB7e le " + String(joueur.inscritLe || "").slice(0, 10) + ", " + Object.keys(joueur.reponses || {}).length + " porte(s) ouverte(s)" + (gains.length ? ", a gagn\xE9 : " + gains.join(", ") : ", n\u2019a pas gagn\xE9 pour le moment") + ".";
+    }
+    const q = { id, prenom, email: mail.email, message, le: maintenant().toISOString(), etat: "ouverte", fiche, accuse: false };
+    await stockage.ecrire("questions/" + id, q);
+    if (courrier2) {
+      await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche, essai, origine }) });
+      const r = await courrier2.envoyer({ a: mail.email, nom: prenom, ...mailAccuse({ prenom, essai, origine }) });
+      if (r.ok) {
+        q.accuse = true;
+        await stockage.ecrire("questions/" + id, q);
+      }
+    }
+    return json({ ok: true });
+  }
+  async function annonces(req, origine) {
+    const quand = quandPour(req);
+    const liste = await defis();
+    if (!liste) return refus(503, "pas_pret", "Le calendrier n\u2019est pas encore pr\xEAt.");
+    try {
+      await assurerTirages(quand);
+    } catch (e) {
+      console.error("[avent] tirage impossible :", e && e.message);
+    }
+    const tir = await tirages();
+    const prevus = await lots();
+    const lotDe = (k) => prevus[k] && prevus[k].lot || "";
+    const gagne = (k, jour) => {
+      const t = tir[k];
+      return t ? { jour, gagnant: t.gagnant ? t.gagnant.etiquette : null, lot: t.lot || lotDe(cleLot(k)) } : null;
+    };
+    const image = (nom) => origine + "/img/avent/" + nom + ".jpg";
+    const reseaux = ["instagram", "facebook"];
+    const publications = [];
+    for (let j = 1; j <= NB_PORTES; j++) {
+      publications.push({ id: "avent" + ANNEE + "-story-" + pad2(j), jour: j, format: "story", reseaux, quand: quandParis(ANNEE, j, 8, 0), image: image("story-" + pad2(j)), texte: "Porte " + j + " du calendrier de l\u2019Avent : \xE0 gagner aujourd\u2019hui, " + lotDe(j) + ".", pret: true });
+      publications.push({ id: "avent" + ANNEE + "-post-" + pad2(j), jour: j, format: "post", reseaux, quand: quandParis(ANNEE, j, 12, 15), image: image("post-" + pad2(j)), texte: legendeJour({ jour: j, lot: lotDe(j), veille: j > 1 ? gagne(pad2(j - 1), j - 1) : null }), pret: j === 1 || !!tir[pad2(j - 1)] });
+    }
+    publications.push({ id: "avent" + ANNEE + "-post-25", jour: 25, format: "post", reseaux, quand: quandParis(ANNEE, 25, 12, 15), image: image("post-25"), texte: legendeFin({ veille: gagne(pad2(NB_PORTES), NB_PORTES), grand: gagne("grand"), assidus: gagne("assidus") }), pret: !!(tir[pad2(NB_PORTES)] && tir.grand && tir.assidus) });
+    return json({ cal: quand.cal, essai, maintenant: maintenant().toISOString(), publications });
   }
   async function effacerEssai(req) {
     if (!essai) return refus(404, "inconnu", "Introuvable.");
@@ -1351,34 +1652,37 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     secretCache = neuf;
     return json({ ok: true });
   }
-  async function bilan(req) {
+  async function bilan(req, origine) {
     const quand = quandPour(req);
     lotsCache.quand = 0;
+    try {
+      await assurerTirages(quand);
+      await livrer(origine);
+    } catch (e) {
+      console.error("[avent] remise des lots impossible :", e && e.message);
+    }
     const [joueurs, liste, prevus] = await Promise.all([tousLesJoueurs(), defis(), lots()]);
     const textes = {};
     Object.keys(prevus).forEach((k) => {
       textes[k] = prevus[k].lot;
     });
-    try {
-      await assurerTirages(quand);
-    } catch (e) {
-      console.error("[avent] tirage impossible :", e && e.message);
-    }
     tiragesCache.quand = 0;
     const tir = await tirages();
+    const r = await reserve();
+    const questions = (await Promise.all((await stockage.lister("questions/")).map((c) => stockage.lire(c)))).filter(Boolean);
     const jours = [];
     for (let j = 1; j <= NB_PORTES; j++) {
       let joues = 0, leJour = 0, justes = 0;
       joueurs.forEach((x) => {
-        const r = x.reponses && x.reponses[j];
-        if (r) {
+        const r2 = x.reponses && x.reponses[j];
+        if (r2) {
           joues++;
-          if (r.leJour) leJour++;
-          if (r.juste) justes++;
+          if (r2.leJour) leJour++;
+          if (r2.juste) justes++;
         }
       });
       const d = liste && liste.find((x) => x.j === j);
-      jours.push({ j, titre: d ? d.titre : "", univers: d ? d.univers : "", gros: !!(d && d.gros), joues, leJour, justes, lot: textes[j] || "", tirage: tir[pad(j)] || null });
+      jours.push({ j, titre: d ? d.titre : "", univers: d ? d.univers : "", gros: !!(d && d.gros), joues, leJour, justes, lot: textes[j] || "", tirage: tir[pad2(j)] || null });
     }
     return json({
       cal: quand.cal,
@@ -1391,10 +1695,35 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       participations: joueurs.reduce((n, x) => n + Object.keys(x.reponses || {}).length, 0),
       jours,
       finaux: { grand: tir.grand || null, assidus: tir.assidus || null },
-      lots: textes
+      lots: textes,
+      courrier: !!courrier2,
+      contact,
+      codes: Object.fromEntries(TYPES_CODES.map((t) => [t, r[t].length])),
+      codesDonnes: r.donnes.length,
+      besoins: besoinsCodes(prevus, tir),
+      questions: questions.sort((a, b) => a.le < b.le ? 1 : -1).slice(0, 100)
     });
   }
-  async function equipeEcrire(req, action) {
+  async function ajouterCodes(corps) {
+    const type = String(corps.type || "");
+    if (!TYPES_CODES.includes(type)) return refus(400, "type", "Genre de code inconnu.");
+    const r = await reserve();
+    const connus = /* @__PURE__ */ new Set([...TYPES_CODES.flatMap((t) => r[t]), ...r.donnes.map((d) => d.code)]);
+    const recus = String(corps.codes || "").split(/[\s,;]+/).map((c) => c.trim()).filter(Boolean);
+    const refuses = recus.filter((c) => !/^[A-Za-z0-9_-]{3,40}$/.test(c));
+    let ajoutes = 0;
+    recus.forEach((c) => {
+      if (/^[A-Za-z0-9_-]{3,40}$/.test(c) && !connus.has(c)) {
+        connus.add(c);
+        r[type].push(c);
+        ajoutes++;
+      }
+    });
+    if (corps.vider === true) r[type] = [];
+    await stockage.ecrire("config/codes", r);
+    return json({ ok: true, ajoutes, refuses: refuses.slice(0, 10), codes: Object.fromEntries(TYPES_CODES.map((t) => [t, r[t].length])) });
+  }
+  async function equipeEcrire(req, action, origine) {
     let corps;
     try {
       corps = await req.json();
@@ -1417,7 +1746,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       return json({ ok: true });
     }
     if (action === "tirage") {
-      const cle = /^(grand|assidus)$/.test(corps.cle) ? corps.cle : pad(parseInt(corps.cle, 10));
+      const cle = /^(grand|assidus)$/.test(corps.cle) ? corps.cle : pad2(parseInt(corps.cle, 10));
       const actuel = await stockage.lire("tirages/" + cle);
       if (!actuel) return refus(404, "absent", "Ce tirage n\u2019a pas encore eu lieu.");
       if (corps.action === "prevenu") actuel.prevenu = corps.valeur !== false;
@@ -1426,11 +1755,25 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
         const joueurs = await tousLesJoueurs();
         const anciens = (actuel.anciens || []).concat(actuel.gagnant ? [{ ...actuel.gagnant, remplaceLe: maintenant().toISOString(), raison: String(corps.raison || "").slice(0, 200) }] : []);
         const neuf = actuel.genre === "jour" ? await tirerJour(actuel.jour, joueurs, anciens.map((a) => a.id)) : tirerFinal(actuel.genre, joueurs.filter((x) => !anciens.some((a) => a.id === x.id)));
-        Object.assign(actuel, { gagnant: neuf.gagnant, tireLe: neuf.tireLe, prevenu: false, anciens });
+        Object.assign(actuel, { gagnant: neuf.gagnant, tireLe: neuf.tireLe, prevenu: false, anciens, mail: null, code: null });
       } else return refus(400, "action", "Action inconnue.");
       await stockage.ecrire("tirages/" + cle, actuel);
       tiragesCache = { quand: 0, valeurs: {} };
       return json({ ok: true, tirage: actuel });
+    }
+    if (action === "codes") return ajouterCodes(corps);
+    if (action === "question") {
+      const q = await stockage.lire("questions/" + String(corps.id || "").replace(/[^a-z0-9]/g, ""));
+      if (!q) return refus(404, "absent", "Question introuvable.");
+      q.etat = corps.etat === "ouverte" ? "ouverte" : "traitee";
+      q.traiteeLe = q.etat === "traitee" ? maintenant().toISOString() : null;
+      await stockage.ecrire("questions/" + q.id, q);
+      return json({ ok: true });
+    }
+    if (action === "rapport") {
+      if (!courrier2) return refus(409, "sans_courrier", "L\u2019envoi des mails n\u2019est pas branch\xE9 sur ce site.");
+      const ok = await rapport(quandPour(req), origine, { force: true });
+      return ok ? json({ ok: true, a: contact }) : refus(409, "rien", "Rien \xE0 envoyer : aucun tirage n\u2019a encore eu lieu, ou l\u2019envoi a \xE9chou\xE9.");
     }
     return refus(404, "inconnu", "Introuvable.");
   }
@@ -1442,12 +1785,15 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
   }
   async function gerer(req, { ip } = {}) {
     const url = new URL(req.url);
+    const origine = url.origin;
     const chemin = url.pathname.replace(/^\/api\/avent\/?/, "").replace(/\/+$/, "");
     const m = req.method;
     try {
       if (chemin === "etat" && m === "GET") return await etat(req);
       if (chemin === "defi" && m === "GET") return await defi(req, url);
       if (chemin === "jouer" && m === "POST") return await jouer(req, ip);
+      if (chemin === "question" && m === "POST") return await question(req, ip, origine);
+      if (chemin === "annonces" && m === "GET") return await annonces(req, origine);
       if (chemin === "essai/effacer" && m === "POST") return await effacerEssai(req);
       if (chemin === "equipe/initialiser" && m === "POST") return await initialiser(req);
       if (chemin.startsWith("equipe/")) {
@@ -1455,10 +1801,10 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
           await new Promise((r) => setTimeout(r, 400));
           return refus(401, "code", "Code de l\u2019\xE9quipe incorrect.");
         }
-        if (chemin === "equipe/bilan" && m === "GET") return await bilan(req);
+        if (chemin === "equipe/bilan" && m === "GET") return await bilan(req, origine);
         if (chemin === "equipe/defis" && m === "GET") return json({ defis: await defis() });
         if (chemin === "equipe/export" && m === "GET") return await exporter();
-        if (m === "POST") return await equipeEcrire(req, chemin.slice("equipe/".length));
+        if (m === "POST") return await equipeEcrire(req, chemin.slice("equipe/".length), origine);
       }
       return refus(404, "inconnu", "Introuvable.");
     } catch (e) {
@@ -1466,7 +1812,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       return refus(500, "panne", "Un souci de notre c\xF4t\xE9. R\xE9essayez dans un instant.");
     }
   }
-  return { gerer, assurerTirages, quandReel: () => {
+  return { gerer, assurerTirages, livrer, automate, quandReel: () => {
     const p = parisDe(maintenant());
     return { cal: jourCalendrier(p), heure: p.heure, simule: false };
   } };
@@ -1526,20 +1872,46 @@ function lotsPrevus() {
   for (let j = 1; j <= 24; j++) {
     const place = ETOILES.includes(j) ? PLACE_ESCAPE : PLACE_QUIZ;
     const jeu = JEUX[j];
-    lots[j] = { lot: jeu ? place + " + le jeu " + jeu.court : place, jeu: jeu ? jeu.court : null };
+    lots[j] = { lot: jeu ? place + " + le jeu " + jeu.court : place, jeu: jeu ? jeu.court : null, objet: jeu ? "le jeu " + jeu.court : null, place: ETOILES.includes(j) ? "escape" : "quiz" };
   }
-  lots.grand = { lot: FINAUX.grand.lot, jeu: null };
-  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null };
+  lots.grand = { lot: FINAUX.grand.lot, jeu: null, objet: FINAUX.grand.lot, place: null };
+  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null, objet: null, place: "session" };
   return lots;
 }
 
+// avent-src/courrier.mjs
+function courrierBrevo({ cle, expediteur, repondre, envoi = fetch }) {
+  return {
+    async envoyer({ a, nom, sujet, texte, html, repondreA }) {
+      try {
+        const r = await envoi("https://api.brevo.com/v3/smtp/email", {
+          method: "POST",
+          headers: { "api-key": cle, "content-type": "application/json", accept: "application/json" },
+          body: JSON.stringify({ sender: expediteur, to: [{ email: a, name: nom || void 0 }], replyTo: repondreA || repondre || expediteur, subject: sujet, textContent: texte, htmlContent: html, tags: ["avent-2026"] }),
+          signal: AbortSignal.timeout(1e4)
+        });
+        if (r.ok) return { ok: true };
+        return { ok: false, erreur: "Brevo " + r.status + " " + (await r.text()).slice(0, 160) };
+      } catch (e) {
+        return { ok: false, erreur: String(e && e.message || e).slice(0, 160) };
+      }
+    }
+  };
+}
+
 // avent-src/entree.mjs
+var SITE = "https://gamedoor41.fr";
+var CONTACT = process.env.AVENT_CONTACT || "contact@gamedoor41.fr";
+function courrier() {
+  const cle = process.env.BREVO_API_KEY;
+  return cle ? courrierBrevo({ cle, expediteur: { name: "GAMEDOOR\xB741", email: process.env.AVENT_EXPEDITEUR || CONTACT }, repondre: { name: "GAMEDOOR\xB741", email: CONTACT } }) : null;
+}
 function contexteDe(hote) {
   return /--gamedoor41\.netlify\.app$/i.test(hote) || /^(localhost|127\.0\.0\.1)$/i.test(hote) ? "apercu" : "production";
 }
 var moteurs = {};
 function moteur(contexte) {
-  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), stockage: stockageNetlify(contexte === "production" ? "avent-2026" : "avent-2026-apercu") });
+  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), courrier: courrier(), contact: CONTACT, stockage: stockageNetlify(contexte === "production" ? "avent-2026" : "avent-2026-apercu") });
   return moteurs[contexte];
 }
 async function gererAvent(req, context) {
@@ -1548,9 +1920,9 @@ async function gererAvent(req, context) {
 }
 async function tirageDuJour() {
   const m = moteur("production");
-  const n = await m.assurerTirages(m.quandReel());
-  if (n) console.log("[avent] tirages faits : " + n);
-  return n;
+  const r = await m.automate(m.quandReel(), SITE);
+  if (r.tirages || r.envoyes || r.echecs) console.log("[avent] tirages : " + r.tirages + ", lots envoy\xE9s : " + r.envoyes + ", envois rat\xE9s : " + r.echecs);
+  return r;
 }
 export {
   contexteDe,

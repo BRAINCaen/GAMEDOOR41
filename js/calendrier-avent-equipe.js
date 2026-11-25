@@ -63,6 +63,16 @@
     return 'mailto:' + encodeURIComponent(t.gagnant.email) + '?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
   }
 
+  function quandTexte(iso) { try { return new Date(iso).toLocaleString('fr-FR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+  function etatMail(t) {
+    var code = t.code ? ' · code ' + t.code : '';
+    if (t.mail && t.mail.etat === 'envoye') return 'Mail automatique envoyé le ' + quandTexte(t.mail.le) + code + (t.mail.sansCode ? ' · SANS CODE : la réserve était vide, le code partira dès que vous en ajoutez.' : '.');
+    if (t.mail && t.mail.etat === 'echec') return 'Le mail automatique n’est pas parti (' + (t.mail.erreur || 'erreur') + '), essai ' + t.mail.essais + ' sur 6' + code + '. Un nouvel essai part tout seul ; sinon « Écrire au gagnant ».';
+    if (t.prevenu) return 'Prévenu à la main par l’équipe.';
+    return bilanCourant && bilanCourant.courrier ? 'Le mail automatique part dans la demi-heure.' : 'Mails automatiques pas branchés : utilisez « Écrire au gagnant ».';
+  }
+  var bilanCourant = null;
+
   function blocTirage(cle, t, lotPrevu, quoi) {
     if (!t) return el('p', { class: 'note', text: 'Tirage pas encore fait (le lendemain à midi).' });
     if (!t.gagnant) return el('p', { class: 'note', text: 'Tirage fait : aucun participant.' });
@@ -76,6 +86,7 @@
     return el('div', { class: 'gagnant' }, [
       el('p', { style: 'margin:0 0 4px;' }, [el('strong', { text: t.gagnant.prenom }), ' ', el('span', { class: 'etiquette ' + (t.prevenu ? 'ok' : 'attente'), text: t.prevenu ? 'Prévenu' : 'À prévenir' })]),
       el('p', { class: 'mail', style: 'margin:0;' , text: t.gagnant.email }),
+      el('p', { class: 'note', style: 'color:' + (t.mail && t.mail.etat === 'envoye' && !t.mail.sansCode ? '#39c26b' : '#ffd740') + ';', text: etatMail(t) }),
       el('p', { class: 'note', text: 'Tiré au sort parmi ' + (t.billets != null && cle === 'grand' ? t.billets + ' tickets (' + t.participants + ' joueurs)' : t.participants + ' participant' + (t.participants > 1 ? 's' : '')) + '. Affiché sur le site : ' + t.gagnant.etiquette }),
       el('div', { class: 'lot' }, [champ, el('button', { type: 'button', text: 'Enregistrer le lot', onclick: function (ev) { action({ cle: cle, action: 'lot', valeur: champ.value }, ev.currentTarget); } })]),
       el('div', { class: 'ligne', style: 'margin-top:10px;' }, [
@@ -88,7 +99,84 @@
     ]);
   }
 
+  function dessinerAuto(b) {
+    $('auto-etat').textContent = b.courrier
+      ? 'Mails automatiques : branchés. Le gagnant reçoit son lot et son code par mail dans la demi-heure qui suit le tirage de midi, et le bilan du jour arrive à ' + b.contact + '.'
+      : 'Mails automatiques : PAS branchés sur ce site (il manque la clé Brevo). Les tirages et l’affichage des gagnants se font tout seuls, mais les gagnants sont à prévenir avec « Écrire au gagnant ».';
+    $('auto-etat').style.color = b.courrier ? '#39c26b' : '#ff5a6b';
+    $('bilan-mail').hidden = !b.courrier;
+    var noms = { quiz: 'Places de quiz', escape: 'Places d’escape game', session: 'Session de quiz (tirage des 24 portes)' };
+    var zone = $('codes-etat'); zone.innerHTML = '';
+    ['quiz', 'escape', 'session'].forEach(function (t) {
+      var reste = b.codes[t], besoin = b.besoins[t], manque = Math.max(0, besoin - reste);
+      zone.appendChild(el('p', { class: manque ? 'manque' : '', text: noms[t] + ' : ' + reste + ' en réserve, ' + besoin + ' encore à donner d’ici la fin' + (manque ? ' → IL EN MANQUE ' + manque + '.' : ' → c’est bon.') }));
+    });
+    var q = $('questions'); q.innerHTML = '';
+    var ouvertes = b.questions.filter(function (x) { return x.etat === 'ouverte'; }).length;
+    q.appendChild(el('p', { class: 'note', style: 'margin-top:0;', text: b.questions.length ? ouvertes + ' en attente sur ' + b.questions.length + '. Chaque message arrive aussi par mail à ' + b.contact + ' : « Répondre » écrit directement à la personne.' : 'Aucun message pour le moment. Ils arriveront ici et par mail à ' + b.contact + '.' }));
+    b.questions.forEach(function (x) {
+      var lien = 'mailto:' + encodeURIComponent(x.email) + '?subject=' + encodeURIComponent('Votre message sur le calendrier de l’Avent GAMEDOOR·41') + '&body=' + encodeURIComponent('Bonjour ' + x.prenom + ',\n\n\n\nL’équipe GAMEDOOR·41\n\n— Votre message du ' + quandTexte(x.le) + ' —\n' + x.message);
+      q.appendChild(el('div', { class: 'question' + (x.etat === 'ouverte' ? '' : ' traitee') }, [
+        el('p', { style: 'margin:0;' }, [el('strong', { text: x.prenom }), ' · ', el('span', { class: 'mail', style: 'color:#ffd740;word-break:break-all;', text: x.email }), ' · ' + quandTexte(x.le) + ' ', el('span', { class: 'etiquette ' + (x.etat === 'ouverte' ? 'attente' : 'ok'), text: x.etat === 'ouverte' ? 'En attente' : 'Traitée' })]),
+        el('blockquote', { text: x.message }),
+        el('p', { class: 'note', style: 'margin:0 0 10px;', text: x.fiche + (x.accuse ? ' Accusé de réception envoyé.' : ' Pas d’accusé de réception envoyé.') }),
+        el('div', { class: 'ligne' }, [
+          el('a', { class: 'bouton-lien', href: lien, role: 'button', text: 'Répondre' }),
+          el('button', { type: 'button', text: x.etat === 'ouverte' ? 'Marquer « traitée »' : 'Remettre « en attente »', onclick: function (ev) { ev.currentTarget.disabled = true; api('POST', 'question', { id: x.id, etat: x.etat === 'ouverte' ? 'traitee' : 'ouverte' }).then(entrer); } })
+        ])
+      ]));
+    });
+  }
+  $('bilan-mail').addEventListener('click', function () {
+    var b = $('bilan-mail'), note = $('auto-note');
+    b.disabled = true;
+    api('POST', 'rapport', {}).then(function (r) { b.disabled = false; note.hidden = false; note.textContent = r.statut === 200 ? 'Bilan envoyé à ' + r.corps.a + '.' : (r.corps.message || 'Échec.'); });
+  });
+  $('codes-ajouter').addEventListener('click', function () {
+    var b = $('codes-ajouter'), retour = $('codes-retour');
+    if (!$('codes-liste').value.trim()) return;
+    b.disabled = true;
+    api('POST', 'codes', { type: $('codes-type').value, codes: $('codes-liste').value }).then(function (r) {
+      b.disabled = false; retour.hidden = false;
+      if (r.statut !== 200) { retour.textContent = r.corps.message || 'Échec.'; return; }
+      retour.textContent = r.corps.ajoutes + ' code(s) ajouté(s).' + (r.corps.refuses.length ? ' Refusés (caractères non permis) : ' + r.corps.refuses.join(', ') + '.' : '') + ' Un code déjà connu n’est pas repris.';
+      $('codes-liste').value = '';
+      entrer();
+    });
+  });
+
+  /* aperçu des publications des réseaux sociaux : le fil public que lit Synergia */
+  var fil = null;
+  function dessinerReseaux(jour) {
+    var zone = $('reseaux'); zone.innerHTML = '';
+    if (!fil) { zone.appendChild(el('p', { class: 'note', text: 'Le fil des publications ne répond pas.' })); return; }
+    fil.publications.filter(function (p) { return p.jour === jour; }).forEach(function (p) {
+      zone.appendChild(el('div', { class: 'reseau' }, [
+        el('p', { style: 'margin:0;' }, [el('strong', { text: (p.format === 'story' ? 'Story' : 'Publication') + ' · ' + quandTexte(p.quand) }), ' ', el('span', { class: 'etiquette ' + (p.pret ? 'ok' : 'attente'), text: p.pret ? 'Prête' : 'Attend le tirage de midi' })]),
+        el('img', { src: p.image, alt: 'Visuel de la ' + (p.format === 'story' ? 'story' : 'publication') + ' du ' + p.jour + ' décembre', loading: 'lazy' }),
+        p.format === 'story' ? el('p', { class: 'note', text: 'Une story n’a pas de légende.' }) : el('pre', { text: p.texte })
+      ]));
+    });
+  }
+  function chargerReseaux(cal) {
+    var entetes = {};
+    try { var essai = JSON.parse(localStorage.getItem('gd41_avent_2026') || '{}'); if (essai && essai.jourSimule != null) entetes['x-avent-jour'] = String(essai.jourSimule); } catch (e) { /* rien */ }
+    fetch('/api/avent/annonces', { headers: entetes, cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (f) {
+      fil = f;
+      var choix = $('reseaux-jour');
+      if (!choix.options.length) {
+        for (var j = 1; j <= 25; j++) choix.appendChild(el('option', { value: String(j), text: j === 25 ? 'vendredi 25 décembre (fin du jeu)' : dateTexte(j) }));
+        choix.value = String(Math.min(25, Math.max(1, cal)));
+        choix.addEventListener('change', function () { dessinerReseaux(parseInt(choix.value, 10)); });
+      }
+      dessinerReseaux(parseInt(choix.value, 10));
+    });
+  }
+
   function dessiner(b) {
+    bilanCourant = b;
+    dessinerAuto(b);
+    chargerReseaux(b.cal);
     $('sous-titre').textContent = (b.essai ? 'APERÇU D’ESSAI (faux joueurs) · ' : '') + (b.cal < 1 ? 'Le jeu commence le 1er décembre.' : b.cal > 24 ? 'Le jeu est terminé.' : 'Aujourd’hui : porte ' + b.cal + '.') + (b.pret ? '' : ' ATTENTION : les 24 défis ne sont pas chargés.');
     var c = $('chiffres'); c.innerHTML = '';
     c.appendChild(chiffre(b.inscrits, 'inscrits'));

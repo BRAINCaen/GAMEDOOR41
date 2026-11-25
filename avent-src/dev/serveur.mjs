@@ -3,6 +3,7 @@
 //   node avent-src/dev/serveur.mjs [port] [fichier des défis .json]
 //   → http://localhost:8948/calendrier-de-l-avent/   (code de l'équipe : code-equipe-essai)
 // Variable LENT=800 : ajoute 800 ms à chaque réponse du serveur (réseau de téléphone).
+// Variable MAILS=<dossier> : les mails automatiques y sont écrits (un fichier .html par mail) au lieu d'être envoyés.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,7 +19,17 @@ const lent = Number(process.env.LENT) || 0;
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.avif': 'image/avif', '.ico': 'image/x-icon' };
 
 const stockage = stockageMemoire();
-const moteur = creerMoteur({ stockage, contexte: 'apercu', lotsPrevus: lotsPrevus() });
+let numero = 0;
+const courrier = process.env.MAILS ? {
+  async envoyer(m) {
+    fs.mkdirSync(process.env.MAILS, { recursive: true });
+    const nom = String(++numero).padStart(2, '0') + '-' + m.a.replace(/[^a-z0-9]+/gi, '_');
+    fs.writeFileSync(path.join(process.env.MAILS, nom + '.html'), '<!-- À : ' + m.a + ' · Sujet : ' + m.sujet + ' -->' + m.html);
+    fs.writeFileSync(path.join(process.env.MAILS, nom + '.txt'), ['À : ' + m.a, 'Sujet : ' + m.sujet, '', m.texte].join('\n'));
+    return { ok: true };
+  },
+} : null;
+const moteur = creerMoteur({ stockage, contexte: 'apercu', lotsPrevus: lotsPrevus(), courrier, contact: 'equipe@exemple.fr' });
 let defis;
 if (fichier) defis = JSON.parse(fs.readFileSync(fichier, 'utf8'));
 else defis = (await import('../tests/defis-essai.mjs')).defisDEssai();

@@ -296,3 +296,24 @@ html.av-fige, html.av-fige body { overflow:hidden; }
 .av-jeu h4 { margin:2px 0 6px; font-size:1.15rem; line-height:1.2; color:#fff; overflow-wrap:anywhere; }
 .av-jeu h4 span { display:block; font-family:var(--font-body, inherit); font-weight:400; font-size:.92rem; letter-spacing:0; text-transform:none; color:var(--av-creme); }
 .av-jeu .av-jeu-place { margin-top:8px; color:#fff; font-weight:700; font-size:.92rem; }
+
+/* ---------- les gagnants, les questions fréquentes, le formulaire ---------- */
+.av-gagnants { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
+.av-gagnant-ligne { display:grid; grid-template-columns:1fr; gap:2px 16px; padding:12px 14px; background:var(--dark-card); border:1px solid var(--dark-border); border-left:4px solid var(--c); border-radius:8px; }
+@media (min-width:760px) { .av-gagnant-ligne { grid-template-columns:230px 1fr 1.4fr; align-items:center; } }
+.av-gagnant-quand { font-family:var(--font-display); text-transform:uppercase; letter-spacing:1px; font-size:.82rem; color:var(--grey-light); }
+.av-gagnant-qui { font-family:var(--font-display); font-size:1.15rem; color:#fff; overflow-wrap:anywhere; }
+.av-gagnant-lot { color:var(--av-creme); font-size:.96rem; }
+.av-questions { display:grid; gap:8px; }
+.av-question { background:var(--dark-card); border:1px solid var(--dark-border); border-radius:10px; padding:0 16px; }
+.av-question summary { cursor:pointer; min-height:52px; display:flex; align-items:center; padding:10px 0; font-weight:700; color:#fff; list-style-position:outside; }
+.av-question[open] summary { color:var(--orange); }
+.av-question p { margin:0 0 16px; color:var(--grey-light); }
+.av-question a { color:var(--orange); }
+.av-ecrire { margin:28px 0 0; padding:22px 20px; background:var(--dark-card); border:1px solid var(--dark-border); border-radius:12px; }
+.av-ecrire h3 { margin:0 0 4px; font-size:1.25rem; }
+.av-form textarea { width:100%; min-height:130px; padding:12px 14px; font:inherit; font-size:max(16px, 1.05rem); color:#fff; background:#0b0b0b; border:2px solid #3a3a3a; border-radius:10px; resize:vertical; }
+.av-form textarea:focus-visible { outline:none; border-color:var(--orange); }
+.av-piege { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.av-ecrire-ok { margin:4px 0 0; padding:12px 14px; background:#10301c; border-left:4px solid #1f8f4a; border-radius:0 8px 8px 0; color:#fff; }
+@media (max-width:640px) { .av-ecrire { padding:18px 14px; } }

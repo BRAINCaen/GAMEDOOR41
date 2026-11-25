@@ -30,15 +30,16 @@ export const FINAUX = {
   assidus: { quand: 'Les 24 portes ouvertes', nom: 'Une session de quiz complète', lot: '1 session de quiz pour 4 à 16 candidats, émission au choix', detail: 'Un tirage réservé à celles et ceux qui ont ouvert les 24 portes : une session de quiz offerte pour 4 à 16 candidats, émission au choix.' },
 };
 
-/** Ce que le moteur sert : pour chaque porte le lot en une phrase, et le nom du jeu s'il y en a un. */
+/** Ce que le moteur sert : pour chaque porte le lot en une phrase, le nom du jeu s'il y en a un, l'objet à retirer
+ *  à l'accueil, et le genre de code à envoyer au gagnant (place de quiz, place d'escape game, session de quiz). */
 export function lotsPrevus() {
   const lots = {};
   for (let j = 1; j <= 24; j++) {
     const place = ETOILES.includes(j) ? PLACE_ESCAPE : PLACE_QUIZ;
     const jeu = JEUX[j];
-    lots[j] = { lot: jeu ? place + ' + le jeu ' + jeu.court : place, jeu: jeu ? jeu.court : null };
+    lots[j] = { lot: jeu ? place + ' + le jeu ' + jeu.court : place, jeu: jeu ? jeu.court : null, objet: jeu ? 'le jeu ' + jeu.court : null, place: ETOILES.includes(j) ? 'escape' : 'quiz' };
   }
-  lots.grand = { lot: FINAUX.grand.lot, jeu: null };
-  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null };
+  lots.grand = { lot: FINAUX.grand.lot, jeu: null, objet: FINAUX.grand.lot, place: null };
+  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null, objet: null, place: 'session' };
   return lots;
 }

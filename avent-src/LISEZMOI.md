@@ -17,6 +17,31 @@ Page publique : `/calendrier-de-l-avent/` · écran de l'équipe : `/calendrier-
   Fonction planifiée `avent-tirage` + rattrapage automatique à la première visite après midi.
 - **Garde-fous** : adresses mail jetables refusées, 8 inscriptions par connexion et par jour.
 
+## Ce qui se fait tout seul
+
+- **Lots** : `lots-2026.mjs` est la seule source (place de quiz chaque jour, place d'escape game les jours à
+  étoile, un jeu en plus 11 jours, grand tirage, tirage des 24 portes). Après une modification :
+  `node avent-src/ecrire-lots.mjs` (rubrique « Les lots » + règlement de la page) puis
+  `node avent-src/visuels/fabriquer.mjs` (visuels des réseaux sociaux), et `construire.mjs`.
+- **Mail au gagnant** (`messages.mjs`, `courrier.mjs`) : dans la demi-heure qui suit le tirage, avec son lot
+  et un code pris dans la **réserve de codes** (collés par l'équipe dans son écran : quiz, escape, session).
+  Un gagnant n'est servi qu'une fois ; en cas de panne, nouvel essai à chaque passage (6 au plus) ;
+  si la réserve est vide, le mail part quand même et le code suit dès qu'on en ajoute.
+  Il faut la variable **`BREVO_API_KEY`** sur le site Netlify. Sans elle, rien ne part : l'équipe prévient
+  les gagnants à la main (bouton « Écrire au gagnant »).
+- **Bilan du jour** : un mail à l'équipe après chaque tirage (joueurs, gagnant, code, jeu à mettre de côté,
+  réserve de codes, questions en attente, et ce qui demande une action).
+- **Questions et réclamations** : `POST /api/avent/question` (formulaire de la page). Gardées, transmises à
+  l'équipe par mail (« Répondre » écrit à la personne), accusé de réception automatique.
+- **Réseaux sociaux** : `GET /api/avent/annonces` donne le fil des 49 publications (story à 8 h, publication
+  à 12 h 15 avec le gagnant de la veille, publication de fin le 25). Chaque publication a un identifiant
+  fixe, une heure, un visuel (`/img/avent/…jpg`), une légende et `pret` (faux tant que le tirage attendu
+  n'a pas eu lieu). L'Espace Com de Synergia lit ce fil et publie sur Instagram et Facebook.
+- Fonction planifiée `avent-tirage` : toutes les demi-heures ; elle ne fait rien hors décembre.
+
+Variables Netlify du site : `BREVO_API_KEY` (secrète, obligatoire pour les mails), et si besoin
+`AVENT_CONTACT` (adresse de l'équipe, par défaut contact@gamedoor41.fr) et `AVENT_EXPEDITEUR`.
+
 ## Où sont les données
 
 Netlify Blobs. Le vrai site écrit dans le magasin `avent-2026`, les aperçus (deploy-preview…) dans
@@ -36,7 +61,7 @@ Il n'est écrit nulle part dans le dépôt.
 
 ## Travailler dessus
 
-    node --test avent-src/tests/coeur.test.mjs     # essais du moteur
+    node --test avent-src/tests/coeur.test.mjs avent-src/tests/automate.test.mjs   # essais du moteur
     node avent-src/dev/serveur.mjs                 # site + moteur en local, en mémoire
     node avent-src/construire.mjs                  # refabrique netlify/avent-coeur.mjs et les 2 fonctions
 

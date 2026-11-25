@@ -134,7 +134,61 @@
       grille.appendChild(porte);
     });
     dessinerJoueur();
+    dessinerGagnants();
   }
+
+  /* ---------- les gagnants (liste publique, les plus récents en haut) ---------- */
+  function dessinerGagnants() {
+    var bloc = document.getElementById('av-gagnants-bloc'), liste = document.getElementById('av-gagnants');
+    if (!bloc || !liste) return;
+    liste.innerHTML = '';
+    function ligne(teinte, quand, nom, lot) {
+      liste.appendChild(el('li', { class: 'av-gagnant-ligne av-teinte--' + teinte }, [
+        el('span', { class: 'av-gagnant-quand', text: quand }),
+        el('span', { class: 'av-gagnant-qui', text: nom }),
+        lot ? el('span', { class: 'av-gagnant-lot', text: lot }) : null
+      ]));
+    }
+    var f = etat.finaux || {};
+    if (f.assidus && f.assidus.gagnant) ligne('final', 'Tirage des 24 portes ouvertes', f.assidus.gagnant, f.assidus.lot);
+    if (f.grand && f.grand.gagnant) ligne('final', 'Grand tirage', f.grand.gagnant, f.grand.lot);
+    etat.portes.slice().sort(function (a, b) { return b.j - a.j; }).forEach(function (p) {
+      var r = etat.resultats[p.j];
+      if (r && r.tire && r.gagnant) ligne(p.univers, 'Porte ' + p.j + ' · ' + dateTexte(p.j), r.gagnant, r.lot);
+    });
+    bloc.hidden = !liste.children.length;
+  }
+
+  /* ---------- une question, une réclamation ---------- */
+  (function () {
+    var form = document.getElementById('av-ecrire');
+    if (!form) return;
+    var prenom = document.getElementById('av-q-prenom'), email = document.getElementById('av-q-email'), message = document.getElementById('av-q-message');
+    var piege = document.getElementById('av-q-site'), erreur = document.getElementById('av-q-erreur'), ok = document.getElementById('av-q-ok'), bouton = document.getElementById('av-q-envoyer');
+    var enCours = false;
+    prenom.addEventListener('focus', function () { if (!prenom.value && etat && etat.moi) prenom.value = etat.moi.prenom; });
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      if (enCours) return;
+      var pr = prenom.value.trim(), m = email.value.trim().toLowerCase(), texte = message.value.trim();
+      var souci = pr.length < 2 ? 'Indiquez votre prénom.' : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m) ? 'Cette adresse mail ne semble pas complète.' : texte.length < 10 ? 'Écrivez votre question en quelques mots.' : '';
+      ok.hidden = true; erreur.hidden = true;
+      if (souci) { erreur.textContent = souci; erreur.hidden = false; erreur.scrollIntoView({ block: 'nearest' }); return; }
+      enCours = true; bouton.disabled = true; bouton.textContent = 'Envoi…';
+      api('POST', 'question', { prenom: pr, email: m, message: texte, site: piege.value }).then(function (r) {
+        enCours = false; bouton.disabled = false; bouton.textContent = 'Envoyer mon message';
+        if (r.statut === 200) {
+          message.value = '';
+          ok.textContent = 'Message bien reçu, ' + pr + '. Nous vous répondons par mail sous 48 heures.';
+          ok.hidden = false; ok.scrollIntoView({ block: 'nearest' });
+          suivre('avent_question', {});
+        } else {
+          erreur.textContent = (r.corps && r.corps.message) || 'Un souci de notre côté. Réessayez dans un instant.';
+          erreur.hidden = false; erreur.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    });
+  })();
 
   function dessinerJoueur() {
     var auj = etat.cal, moi = etat.moi, nb = moi ? Object.keys(moi.reponses).length : 0;

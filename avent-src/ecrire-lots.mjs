@@ -44,14 +44,14 @@ export function rubrique() {
     L.push('  <li class="av-jeu av-teinte--' + x.univers + '"><span class="av-jeu-porte" aria-hidden="true">' + j + '</span><div><p class="av-jeu-quand">' + (etoile ? '★ ' : '') + h(jourDe(j) + ' ' + numero(j) + ' décembre') + '</p><h4>' + h(x.nom) + (x.sous ? ' <span>' + h(x.sous) + '</span>' : '') + '</h4><p>' + h(x.detail) + '</p><p class="av-jeu-place">Avec ' + h(etoile ? PLACE_ESCAPE : PLACE_QUIZ) + '</p></div></li>');
   });
   L.push('</ol>');
-  L.push('<p class="av-note">Le tirage du jour se fait parmi les portes ouvertes le jour même. Le grand tirage et le tirage des 24 portes sont annoncés le 25 décembre à midi. Tickets : 1 par porte ouverte le jour même, 1 de plus si la réponse est juste, 1 pour une porte ouverte en retard. Places offertes valables 12 mois. Jeux à retirer à l’accueil, à Mondeville. Lots non échangeables et non remboursables.</p>');
+  L.push('<p class="av-note">Le tirage du jour se fait parmi les portes ouvertes le jour même. Le grand tirage et le tirage des 24 portes sont annoncés le 25 décembre à midi. Tickets : 1 par porte ouverte le jour même, 1 de plus si la réponse est juste, 1 pour une porte ouverte en retard. Places offertes valables 12 mois. Jeux à retirer à l’accueil, à Mondeville, avant le 28 février 2027. Lots non échangeables et non remboursables.</p>');
   return L.map((l) => '        ' + l).join('\n');
 }
 
 export function ligneReglement() {
   const jours = Object.keys(JEUX).map(Number).sort((a, b) => a - b);
   const jeux = jours.map((j) => 'le ' + numero(j) + ' : ' + JEUX[j].court).join(' ; ');
-  return '            <li><strong>Lots.</strong> Chaque jour : ' + h(PLACE_QUIZ) + ' Buzz Your Brain. Les ' + h(liste(ETOILES.map(numero))) + ' décembre : ' + h(PLACE_ESCAPE) + ' à la place. Certains jours, le gagnant reçoit en plus un jeu (' + h(jeux) + '). Grand tirage : ' + h(FINAUX.grand.lot) + '. Tirage des 24 portes : ' + h(FINAUX.assidus.lot) + '. Les places et la session sont des codes à saisir à la réservation sur gamedoor41.fr, valables 12 mois. Les jeux sont à retirer à l’accueil, à Mondeville. Les lots ne sont ni échangeables ni remboursables.</li>';
+  return '            <li><strong>Lots.</strong> Chaque jour : ' + h(PLACE_QUIZ) + ' Buzz Your Brain. Les ' + h(liste(ETOILES.map(numero))) + ' décembre : ' + h(PLACE_ESCAPE) + ' à la place. Certains jours, le gagnant reçoit en plus un jeu (' + h(jeux) + '). Grand tirage : ' + h(FINAUX.grand.lot) + '. Tirage des 24 portes : ' + h(FINAUX.assidus.lot) + '. Les places et la session sont des codes à saisir à la réservation sur gamedoor41.fr, valables 12 mois. Les jeux et la DeLorean sont à retirer à l’accueil, à Mondeville, avant le 28 février 2027 : passé cette date, ils sont perdus. Les lots ne sont ni échangeables ni remboursables.</li>';
 }
 
 function remplacer(page, nom, contenu) {

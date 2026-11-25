@@ -33,11 +33,11 @@ export default async (req, context) => gererAvent(req, context);
 
 export const config = { path: '/api/avent/*' };
 `);
-writeFileSync(join(RACINE, 'netlify', 'functions', 'avent-tirage.mjs'), tete + `// Fonction planifiée : tirage au sort de la veille, tous les jours à midi (11 h UTC = midi à Paris en hiver).
+writeFileSync(join(RACINE, 'netlify', 'functions', 'avent-tirage.mjs'), tete + `// Fonction planifiée, toutes les demi-heures : tirage de la veille dès midi, mail au gagnant, bilan à l'équipe.
 import { tirageDuJour } from '../avent-coeur.mjs';
 
 export default async () => { await tirageDuJour(); };
 
-export const config = { schedule: '0 11 * * *' };
+export const config = { schedule: '1,31 * * * *' };
 `);
 console.log('Calendrier de l’Avent construit : netlify/avent-coeur.mjs (' + Math.round(statSync(COEUR).size / 1024) + ' Ko) + 2 fonctions.');

@@ -45,13 +45,27 @@
     .lot { display:flex; gap:8px; margin:10px 0 0; }
     .lot input { flex:1 1 auto; min-width:0; }
     details summary { cursor:pointer; padding:6px 0; color:var(--gris); }
+    .carte > h2 { margin:0 0 8px; font-size:1.1rem; }
+    textarea, select { width:100%; min-height:46px; padding:8px 12px; border-radius:9px; border:1px solid #3a3a3a; background:#000; color:var(--texte); }
+    .reserve { display:grid; gap:6px; margin:10px 0 12px; }
+    .reserve p { margin:0; padding:8px 12px; background:#0f0f0f; border-radius:8px; border-left:4px solid var(--vert); }
+    .reserve p.manque { border-left-color:var(--rouge); }
+    .question { background:#0f0f0f; border-radius:10px; padding:12px; margin:10px 0 0; border-left:4px solid var(--or); }
+    .question.traitee { border-left-color:var(--bord); opacity:.7; }
+    .question blockquote { margin:8px 0; padding:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .bouton-lien { display:inline-flex; align-items:center; min-height:46px; padding:8px 16px; border-radius:9px; background:var(--orange); color:#000; font-weight:700; text-decoration:none; }
+    .reseaux { display:grid; gap:14px; grid-template-columns:1fr; }
+    @media (min-width:720px) { .reseaux { grid-template-columns:1fr 1fr; } }
+    .reseau { background:#0f0f0f; border-radius:10px; padding:12px; }
+    .reseau img { display:block; width:100%; max-width:300px; height:auto; border-radius:8px; margin:8px 0; }
+    .reseau pre { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; font-size:.9rem; color:var(--texte); }
     [hidden] { display:none !important; }
   </style>
 </head>
 <body>
   <header>
     <h1>Les 24 portes : écran de l'équipe</h1>
-    <p id="sous-titre">Participants, gagnants du jour, lots.</p>
+    <p id="sous-titre">Participants, gagnants, lots, questions.</p>
   </header>
   <main>
     <section class="carte" id="acces">
@@ -70,10 +84,40 @@
         <a id="export" href="#" role="button">Télécharger les adresses « nouvelles » (CSV)</a>
         <a href="/calendrier-de-l-avent/">Voir le calendrier</a>
       </div>
+      <section class="carte">
+        <h2>Ce qui part tout seul</h2>
+        <p id="auto-etat" style="margin:0;"></p>
+        <div class="ligne" style="margin-top:10px;"><button type="button" id="bilan-mail">Recevoir le bilan du jour par mail</button></div>
+        <p class="note" id="auto-note" hidden></p>
+      </section>
+      <section class="carte">
+        <h2>Réserve de codes des places offertes</h2>
+        <p class="note" style="margin-top:0;">Créez les codes dans le Hub (Réductions › En masse), puis collez-les ici, un par ligne. Chaque gagnant reçoit le sien par mail, tout seul.</p>
+        <div class="reserve" id="codes-etat"></div>
+        <label for="codes-type"><strong>Ajouter des codes</strong></label>
+        <select id="codes-type" style="margin:6px 0 8px;">
+          <option value="quiz">1 place de quiz (20 jours)</option>
+          <option value="escape">1 place d'escape game (les 6, 13, 20 et 24)</option>
+          <option value="session">1 session de quiz, 4 à 16 candidats (tirage des 24 portes)</option>
+        </select>
+        <textarea id="codes-liste" rows="4" placeholder="Un code par ligne" autocapitalize="characters" autocomplete="off" spellcheck="false"></textarea>
+        <div class="ligne" style="margin-top:8px;"><button type="button" class="fort" id="codes-ajouter">Ajouter ces codes</button></div>
+        <p class="note" id="codes-retour" hidden></p>
+      </section>
+      <section class="carte">
+        <h2>Questions et réclamations</h2>
+        <div id="questions"></div>
+      </section>
+      <section class="carte">
+        <h2>Réseaux sociaux : ce qui est publié tout seul</h2>
+        <p class="note" style="margin-top:0;">Chaque jour sur Instagram et Facebook : une story à 8 h (le lot du jour) et une publication à 12 h 15 (le lot du jour + le gagnant de la veille). C'est l'Espace Com de Synergia qui publie, à partir de ce fil.</p>
+        <div class="ligne" style="margin:10px 0;"><label for="reseaux-jour">Voir le jour</label> <select id="reseaux-jour" style="width:auto;flex:1 1 180px;"></select></div>
+        <div class="reseaux" id="reseaux"></div>
+      </section>
       <div id="finaux"></div>
       <div id="jours"></div>
     </div>
   </main>
-  <script defer src="/js/calendrier-avent-equipe.js?v=test5"></script>
+  <script defer src="/js/calendrier-avent-equipe.js?v=test7"></script>
 </body>
 </html>
