@@ -1,13 +1,22 @@
 {
-  "updatedAt": "2026-11-24T06:57:35.282Z",
+  "updatedAt": "2026-11-25T04:54:03.367Z",
   "placeId": "ChIJD_Yw80FoCkgRiwEBVG0aGK8",
   "name": "GAMEDOOR·41",
   "rating": 4.9,
-  "reviewCount": 2327,
+  "reviewCount": 2328,
   "source": "Google Places API (New) — Text Search",
-  "poolSize": 45,
-  "googleAdded": 0,
+  "poolSize": 46,
+  "googleAdded": 1,
   "reviews": [
+    {
+      "author": "N S.",
+      "rating": 5,
+      "text": "Je suis venue cet été avec un groupe de jeunes ados. C'était super ! Le meilleur escape game que j'ai fait, bien peur, on a tellement rigolé et les jeunes aussi ont adorés ! Nous avons été super bien accueilli par Makalu ( j'avais carrément pris sa carte en photo pour lui mettre un avis car il est vraiment top! ) je recommande vivement et j'y retournerai !",
+      "date": "2026-11-18",
+      "source": "google",
+      "themes": [],
+      "context": ""
+    },
     {
       "author": "virgil B.",
       "rating": 5,
