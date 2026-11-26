@@ -1018,7 +1018,7 @@ var LOT = "une session de quiz Buzz Your Brain offerte, de 4 à 16 personnes";
 var PIECES = {
   1: { ouverture: "2026-12-03T07:00:00Z", limite: "2026-12-09T22:59:59Z", limiteTexte: "mercredi 9 décembre, 23 h 59", titre: "Le message intercepté" },
   2: { ouverture: "2026-12-10T07:00:00Z", limite: "2026-12-16T22:59:59Z", limiteTexte: "mercredi 16 décembre, 23 h 59", titre: "Le cadenas de la hotte" },
-  3: { ouverture: "2026-12-17T07:00:00Z", limite: "2026-12-18T11:00:00Z", limiteTexte: "vendredi 18 décembre, 12 h", titre: "Le dernier interrogatoire" }
+  3: { ouverture: "2026-12-17T07:00:00Z", limite: "2026-12-24T11:00:00Z", limiteTexte: "jeudi 24 décembre, 12 h", titre: "Le dernier interrogatoire" }
 };
 var FIN_INSCRIPTIONS = "2026-12-16T22:59:59Z";
 
@@ -1095,8 +1095,8 @@ var lienJeu = (origine, n, t) => `${origine}/defi-noel/piece/?n=${n}&t=${encodeU
 var lienPartage = (origine, n) => `${origine}/defi-noel/piece/?n=${n}`;
 
 function mailConfirmation(e, origine) {
-  const html = cadre(`<p>Bonjour ${h(e.prenom)},</p><p><b>${h(e.entreprise)}</b> est bien inscrite au Calendrier de l'Avent des énigmes. Le Père Noël est en garde à vue à Mondeville, et votre équipe fait partie des enquêteurs.</p><p><b>La suite :</b> le jeudi 3 décembre au matin, vous recevrez la pièce n°1 du dossier, puis la n°2 le 10 et la n°3 le 17. Chaque fois : une énigme, un son mystère et un quiz éclair Buzz Your Brain. Environ 10 minutes en équipe.</p><p>Vous êtes le référent : c'est vous qui envoyez les réponses au nom de l'équipe, depuis votre lien personnel. Gardez ce mail, le lien ci-dessous ouvre toujours le dossier de ${h(e.entreprise)}.</p>${bouton(lienJeu(origine, 1, e.t), "Mon dossier d'enquête")}<p>À gagner pour l'entreprise qui aura le meilleur score : <b>${LOT}</b>. Résultats le vendredi 18 décembre à 17 h.</p><p>Une question ? Répondez simplement à ce mail.</p>`);
-  const texte = `Bonjour ${e.prenom},\n\n${e.entreprise} est bien inscrite au Calendrier de l'Avent des énigmes de GAMEDOOR·41.\nPièce n°1 le jeudi 3 décembre, puis le 10 et le 17. Votre lien personnel : ${lienJeu(origine, 1, e.t)}\n\nÀ gagner : ${LOT}. Résultats le vendredi 18 décembre à 17 h.\n\nGAMEDOOR·41 — 02 31 53 07 51`;
+  const html = cadre(`<p>Bonjour ${h(e.prenom)},</p><p><b>${h(e.entreprise)}</b> est bien inscrite au Calendrier de l'Avent des énigmes. Le Père Noël est en garde à vue à Mondeville, et votre équipe fait partie des enquêteurs.</p><p><b>La suite :</b> le jeudi 3 décembre au matin, vous recevrez la pièce n°1 du dossier, puis la n°2 le 10 et la n°3 le 17. Chaque fois : une énigme, un son mystère et un quiz éclair Buzz Your Brain. Environ 10 minutes en équipe.</p><p>Vous êtes le référent : c'est vous qui envoyez les réponses au nom de l'équipe, depuis votre lien personnel. Gardez ce mail, le lien ci-dessous ouvre toujours le dossier de ${h(e.entreprise)}.</p>${bouton(lienJeu(origine, 1, e.t), "Mon dossier d'enquête")}<p>À gagner pour l'entreprise qui aura le meilleur score : <b>${LOT}</b>. Résultats le jeudi 24 décembre à 17 h.</p><p>Une question ? Répondez simplement à ce mail.</p>`);
+  const texte = `Bonjour ${e.prenom},\n\n${e.entreprise} est bien inscrite au Calendrier de l'Avent des énigmes de GAMEDOOR·41.\nPièce n°1 le jeudi 3 décembre, puis le 10 et le 17. Votre lien personnel : ${lienJeu(origine, 1, e.t)}\n\nÀ gagner : ${LOT}. Résultats le jeudi 24 décembre à 17 h.\n\nGAMEDOOR·41 — 02 31 53 07 51`;
   return { sujet: "Inscription confirmée : le dossier Père Noël vous attend", html, texte };
 }
 function mailEquipe(e) {

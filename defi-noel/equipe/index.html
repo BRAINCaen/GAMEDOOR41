@@ -106,7 +106,7 @@
   function linkedin(){
     var faites=[1,2,3].filter(function(n){return B.resultats[n].length;}).pop()||1;
     var top=B.classement.filter(function(l){return l.linkedin;}).slice(0,8),max=faites*6;
-    var prochaine={1:'Prochaine pièce jeudi 10 déc.',2:'Dernière pièce jeudi 17 déc.',3:'Résultats vendredi 18 déc. à 17 h'}[faites];
+    var prochaine={1:'Prochaine pièce jeudi 10 déc.',2:'Dernière pièce jeudi 17 déc.',3:'Résultats jeudi 24 déc. à 17 h'}[faites];
     return '<p>Faites une capture de ce carré et publiez-le sur LinkedIn en identifiant les entreprises. Seules celles qui ont accepté apparaissent.</p><div class="li"><div class="k">CALENDRIER DE L\'AVENT DES ÉNIGMES</div><h3>Classement après la pièce n°'+faites+'</h3>'+top.map(function(l,i){return '<div class="r"><span style="font:800 20px \'Barlow Condensed\';color:#9fb0d0">'+(i+1)+'</span><div class="bar"><i style="width:'+Math.round(l.total/max*100)+'%"></i><span>'+esc(l.entreprise)+'</span></div><b style="text-align:right">'+l.total+' pts</b></div>';}).join('')+'<div class="foot">'+prochaine+' · Il est encore temps de rejoindre l\'enquête : gamedoor41.fr/defi-noel</div></div>';
   }
   function mails(){
