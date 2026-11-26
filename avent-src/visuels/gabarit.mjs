@@ -2,7 +2,7 @@
 // Fait en code, à partir de la charte du site et de VRAIES photos de nos salles : aucune image générée par IA.
 // Les textes viennent de avent-src/lots-2026.mjs : si un lot change, relancer `node avent-src/visuels/fabriquer.mjs`.
 // Les jours où le jeu a une vraie photo de la boîte prise par nous (`maison: true`), la boîte remplace la porte.
-import { ETOILES, JEUX, FINAUX, PLACE_QUIZ, PLACE_ESCAPE } from '../lots-2026.mjs';
+import { ETOILES, JEUX, FINAUX, PLACE, POUR_UN } from '../lots-2026.mjs';
 import { dateTexte } from '../messages.mjs';
 
 export const FORMATS = { post: { l: 1080, h: 1350 }, story: { l: 1080, h: 1920 } };
@@ -27,7 +27,7 @@ export function visuel(j, format) {
   const c = TEINTES[u];
   const etoile = ETOILES.includes(j);
   const jeu = JEUX[j];
-  const place = etoile ? PLACE_ESCAPE : PLACE_QUIZ;
+  const place = etoile ? PLACE.escape : PLACE.quiz;
   const sombre = u === 'final';
   const boite = !!(jeu && jeu.maison && jeu.image);
   const visuelJour = boite
@@ -37,8 +37,9 @@ export function visuel(j, format) {
     ? `<p class="sur">Les 24 portes sont ouvertes</p>
        <h1 class="grand">Merci d’avoir joué&nbsp;!</h1>
        <div class="lot"><p class="lot-titre">Les grands gagnants</p>
-         <p class="lot-ligne">Grand tirage&nbsp;: ${h(FINAUX.grand.nom.replace(/^Une /, 'la '))}</p>
-         <p class="lot-ligne">Tirage des 24 portes&nbsp;: ${h(FINAUX.assidus.nom.replace(/^Une /, 'une '))}</p></div>
+         <p class="lot-ligne">Grand tirage&nbsp;: une session d’escape game</p>
+         <p class="lot-ligne">Tirage des 24 portes&nbsp;: une session de quiz</p>
+         <p class="lot-ligne">Pas de perdant&nbsp;: 1 place de quiz pour 1 joueur à tous les autres</p></div>
        <p class="note">Les noms des gagnants sont dans la légende et sur le site.</p>`
     : `<p class="sur">Calendrier de l’Avent</p><p class="date">${h(dateTexte(j))}</p>
        <div class="duo">
@@ -46,8 +47,8 @@ export function visuel(j, format) {
          <div class="texte">
            <p class="univers">${h(NOMS[u])}</p>
            <p class="lot-titre">À gagner aujourd’hui</p>
-           <p class="lot-place">${h(place)}</p>
-           ${jeu ? `<p class="plus">+ le jeu</p><p class="lot-jeu">${h(jeu.nom)}</p>${jeu.sous ? `<p class="lot-sous">${h(jeu.sous)}</p>` : ''}` : ''}
+           <p class="lot-place">${h(place)}</p><p class="lot-pour">${h(POUR_UN)}</p>
+           ${jeu ? `<p class="plus">${h(jeu.plus || '+ le jeu')}</p><p class="lot-jeu">${h((jeu.visuel && jeu.visuel.nom) || jeu.nom)}</p>${(jeu.visuel && jeu.visuel.sous) || jeu.sous ? `<p class="lot-sous">${h((jeu.visuel && jeu.visuel.sous) || jeu.sous)}</p>` : ''}` : ''}
          </div>
        </div>
        ${story ? '' : '<p class="note">Un défi d’une minute. Un gagnant tiré au sort chaque jour.</p>'}`;
@@ -62,10 +63,10 @@ export function visuel(j, format) {
   .logo { height:${story ? 62 : 58}px; width:auto; }
   .sur { margin-top:${story ? 44 : 30}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 40 : 36}px; letter-spacing:5px; text-transform:uppercase; color:#ff6b00; }
   .date { margin-top:4px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 62 : 56}px; line-height:1.1; text-transform:uppercase; }
-  .duo { flex:1 1 auto; display:flex; flex-direction:${story ? 'column' : 'row'}; align-items:center; justify-content:center; gap:${story ? 40 : 56}px; width:100%; ${story ? 'margin-top:54px; justify-content:flex-start;' : ''} }
-  .porte { position:relative; flex:none; width:${story ? 300 : 350}px; height:${story ? 435 : 520}px; border-radius:14px 14px 5px 5px; background:linear-gradient(160deg, color-mix(in srgb, ${c} 90%, #fff) 0%, ${c} 40%, color-mix(in srgb, ${c} 60%, #000) 100%); box-shadow:0 0 0 8px #0a0a0a, 0 0 0 ${etoile ? '13px #FFD740' : '10px rgba(255,255,255,.22)'}, 0 30px 70px rgba(0,0,0,.75), inset 0 0 60px rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; transform:rotate(-3deg); }
+  .duo { flex:1 1 auto; display:flex; flex-direction:${story ? 'column' : 'row'}; align-items:center; justify-content:center; gap:${story ? 30 : 56}px; width:100%; ${story ? 'margin-top:40px; justify-content:flex-start;' : ''} }
+  .porte { position:relative; flex:none; width:${story ? 270 : 350}px; height:${story ? 390 : 520}px; border-radius:14px 14px 5px 5px; background:linear-gradient(160deg, color-mix(in srgb, ${c} 90%, #fff) 0%, ${c} 40%, color-mix(in srgb, ${c} 60%, #000) 100%); box-shadow:0 0 0 8px #0a0a0a, 0 0 0 ${etoile ? '13px #FFD740' : '10px rgba(255,255,255,.22)'}, 0 30px 70px rgba(0,0,0,.75), inset 0 0 60px rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; transform:rotate(-3deg); }
   .porte::before { content:""; position:absolute; inset:9% 12%; border:5px solid rgba(0,0,0,.24); border-radius:8px; box-shadow:inset 0 0 0 2px rgba(255,255,255,.16); }
-  .num { position:relative; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 195 : 232}px; line-height:1; color:${sombre ? '#1a1400' : '#fff'}; text-shadow:${sombre ? 'none' : '0 6px 0 rgba(0,0,0,.35)'}; }
+  .num { position:relative; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 178 : 232}px; line-height:1; color:${sombre ? '#1a1400' : '#fff'}; text-shadow:${sombre ? 'none' : '0 6px 0 rgba(0,0,0,.35)'}; }
   .poignee { position:absolute; right:9%; top:55%; width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, #b9b9b9 45%, #5d5d5d); box-shadow:0 5px 8px rgba(0,0,0,.5); }
   .etoile { position:absolute; top:3%; right:7%; font-size:64px; line-height:1; color:${sombre ? '#1a1400' : '#FFD740'}; text-shadow:0 3px 4px rgba(0,0,0,.5); }
   .boite { position:relative; flex:none; width:${story ? 430 : 360}px; transform:rotate(-3deg); }
@@ -74,13 +75,14 @@ export function visuel(j, format) {
   .boite .etoile { top:-26px; right:-22px; }
   .texte { ${story ? 'width:100%;' : 'flex:1 1 0; min-width:0; text-align:left;'} }
   .univers { display:inline-block; padding:6px 18px; border-radius:99px; background:${c}; color:${sombre ? '#1a1400' : '#fff'}; font-family:'Oswald', sans-serif; font-weight:600; font-size:28px; letter-spacing:2px; text-transform:uppercase; }
-  .lot-titre { margin-top:${story ? 30 : 26}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 44 : 38}px; letter-spacing:4px; text-transform:uppercase; color:#FFD740; }
+  .lot-titre { margin-top:${story ? 22 : 26}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 44 : 38}px; letter-spacing:4px; text-transform:uppercase; color:#FFD740; }
   .lot-place { margin-top:8px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 92 : 78}px; line-height:1.05; text-transform:uppercase; }
+  .lot-pour { margin-top:6px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 44 : 38}px; letter-spacing:2px; text-transform:uppercase; color:#FFD740; }
   .plus { margin-top:${story ? 26 : 22}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 40 : 34}px; letter-spacing:3px; text-transform:uppercase; color:#FFD740; }
   .lot-jeu { margin-top:4px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 76 : 62}px; line-height:1.08; text-transform:uppercase; color:#F0EBE2; overflow-wrap:break-word; }
   .lot-sous { margin-top:8px; font-size:${story ? 36 : 32}px; color:#F0EBE2; }
-  .grand { margin-top:${story ? 120 : 70}px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 150 : 132}px; line-height:1.02; text-transform:uppercase; }
-  .lot { margin-top:${story ? 90 : 60}px; padding:34px 36px; width:100%; background:rgba(0,0,0,.6); border:3px solid #FFD740; border-radius:18px; }
+  .grand { margin-top:${story ? 110 : 44}px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 150 : 132}px; line-height:1.02; text-transform:uppercase; }
+  .lot { margin-top:${story ? 80 : 44}px; padding:34px 36px; width:100%; background:rgba(0,0,0,.6); border:3px solid #FFD740; border-radius:18px; }
   .lot .lot-titre { margin-top:0; }
   .lot-ligne { margin-top:16px; font-size:${story ? 42 : 38}px; line-height:1.3; color:#F0EBE2; }
   .note { ${story ? 'margin-top:44px;' : 'margin:30px 0 30px;'} font-size:${story ? 38 : 34}px; color:#F0EBE2; }

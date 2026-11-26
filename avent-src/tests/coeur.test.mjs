@@ -191,6 +191,30 @@ test('aperçu avec jour simulé : un tirage périmé est refait, jamais sur le v
   assert.equal((await vrai.stockage.lire('tirages/05')).participants, 1);
 });
 
+test('une même personne ne gagne qu’un tirage : on retire parmi les autres, sauf s’il n’y a personne d’autre', async () => {
+  const m = await monde({ date: '2026-12-01T10:00:00+01:00' });
+  const jetons = {};
+  for (let j = 1; j <= 4; j++) {
+    m.a('2026-12-0' + j + 'T10:00:00+01:00');
+    for (const n of [1, 2, 3]) {
+      const r = await m.appel('POST', 'jouer', { corps: { j, reponse: bonne(m.defis[j - 1]), prenom: 'Joueur' + n, email: 'joueur' + n + '@exemple.fr', reglement: true }, jeton: jetons[n], ip: '10.1.1.' + n });
+      assert.equal(r.statut, 200); jetons[n] = r.corps.jeton;
+    }
+  }
+  m.a('2026-12-05T12:05:00+01:00');
+  assert.equal(await m.moteur.assurerTirages(m.moteur.quandReel()), 4);
+  const t = [];
+  for (let j = 1; j <= 4; j++) t.push(await m.stockage.lire('tirages/0' + j));
+  assert.equal(new Set(t.slice(0, 3).map((x) => x.gagnant.id)).size, 3, 'portes 1 à 3 : trois gagnants différents');
+  assert.deepEqual(t.slice(0, 3).map((x) => x.dejaGagnants), [0, 1, 2]);
+  assert.ok(t[3].gagnant, 'porte 4 : les trois ont déjà gagné, on tire quand même parmi tous');
+  assert.equal(t[3].dejaGagnants, 0); assert.equal(t[3].participants, 3);
+  // l'équipe remplace le gagnant de la porte 3 : ni lui, ni ceux qui ont gagné ailleurs s'il reste quelqu'un d'autre
+  await m.appel('POST', 'equipe/initialiser', { corps: { code: 'un-code-assez-long' } });
+  const r = await m.appel('POST', 'equipe/tirage', { code: 'un-code-assez-long', corps: { cle: 3, action: 'retirer' } });
+  assert.notEqual(r.corps.tirage.gagnant.id, t[2].gagnant.id);
+});
+
 test('écran de l’équipe : code, bilan, retirer au sort, lots, export, défis', async () => {
   const m = await monde({ date: '2026-12-05T10:00:00+01:00' });
   assert.equal((await m.appel('GET', 'equipe/bilan', { code: 'nimporte' })).statut, 401);
@@ -222,10 +246,15 @@ test('écran de l’équipe : code, bilan, retirer au sort, lots, export, défis
 test('lots : ceux du fichier des lots, servis à la page, corrigeables par l’équipe', async () => {
   const prevus = lotsPrevus();
   assert.equal(Object.keys(prevus).length, 26, '24 portes + grand tirage + tirage des 24 portes');
-  assert.equal(prevus[2].lot, '1 place de quiz'); assert.equal(prevus[2].jeu, null);
-  [6, 13, 20, 24].forEach((j) => assert.match(prevus[j].lot, /^1 place d’escape game/, 'jour à étoile ' + j));
-  assert.equal(Object.keys(prevus).filter((k) => prevus[k].jeu).length, 11);
-  assert.match(prevus[15].lot, /^1 place de quiz \+ le jeu Retour vers le futur$/);
+  assert.equal(prevus[2].lot, '1 place de quiz pour 1 joueur'); assert.equal(prevus[2].jeu, null);
+  [6, 13, 20, 24].forEach((j) => assert.match(prevus[j].lot, /^1 place d’escape game pour 1 joueur/, 'jour à étoile ' + j));
+  assert.equal(Object.keys(prevus).filter((k) => prevus[k].jeu).length, 12, '11 jeux + la DeLorean');
+  assert.match(prevus[15].lot, /^1 place de quiz pour 1 joueur \+ le jeu Retour vers le futur$/);
+  assert.equal(prevus[24].lot, '1 place d’escape game pour 1 joueur + la DeLorean radio-commandée');
+  assert.equal(prevus[24].objet, 'la DeLorean radio-commandée');
+  assert.equal(prevus[16].lot, '1 place de quiz pour 1 joueur + le jeu Scream');
+  assert.equal(prevus.grand.place, 'sessionEscape'); assert.match(prevus.grand.lot, /session d’escape game pour 2 à 6 joueurs/); assert.equal(prevus.grand.objet, null);
+  assert.equal(prevus.assidus.place, 'session');
   assert.match(prevus.assidus.lot, /4 à 16 candidats/);
 
   const horloge = { t: new Date('2026-12-04T10:00:00+01:00') };
@@ -237,24 +266,24 @@ test('lots : ceux du fichier des lots, servis à la page, corrigeables par l’�
     return { statut: r.status, corps: await r.json() };
   };
   let e = (await appel('GET', 'etat')).corps;
-  assert.equal(e.portes[3].lot, '1 place de quiz + le jeu Black Stories'); assert.equal(e.portes[3].jeu, 'Black Stories');
+  assert.equal(e.portes[3].lot, '1 place de quiz pour 1 joueur + le jeu Black Stories'); assert.equal(e.portes[3].jeu, 'Black Stories');
   assert.equal(e.portes[4].jeu, null);
   assert.match(e.portes[3].image, /^\/img\/avent\/jeux\/black-stories\.jpg\?v=\d+$/, 'l’image du jeu est servie à la page');
   assert.equal(e.portes[4].image, null, 'pas de jeu, pas d’image');
-  assert.match(e.lotsFinaux.grand, /DeLorean/);
+  assert.match(e.lotsFinaux.grand, /session d’escape game/);
   // un joueur le 4, résultat le 5 à midi : le lot prévu s'affiche sans que l'équipe saisisse quoi que ce soit
   assert.equal((await appel('POST', 'jouer', { corps: { j: 4, reponse: bonne(defisDEssai()[3]), prenom: 'Lou', email: 'lou@exemple.fr', reglement: true } })).statut, 200);
   horloge.t = new Date('2026-12-05T12:30:00+01:00');
   e = (await appel('GET', 'etat')).corps;
-  assert.equal(e.resultats[4].lot, '1 place de quiz + le jeu Black Stories');
+  assert.equal(e.resultats[4].lot, '1 place de quiz pour 1 joueur + le jeu Black Stories');
   // l'équipe corrige le lot d'un jour : la page suit, le repère « jeu » reste
   await appel('POST', 'equipe/initialiser', { corps: { code: 'un-code-assez-long' } });
   assert.equal((await appel('POST', 'equipe/lots', { code: 'un-code-assez-long', corps: { lots: { 8: '1 place de quiz + un jeu surprise' } } })).statut, 200);
   e = (await appel('GET', 'etat')).corps;
   assert.equal(e.portes[7].lot, '1 place de quiz + un jeu surprise');
-  assert.equal(e.portes[3].lot, '1 place de quiz + le jeu Black Stories');
+  assert.equal(e.portes[3].lot, '1 place de quiz pour 1 joueur + le jeu Black Stories');
   const b = (await appel('GET', 'equipe/bilan', { code: 'un-code-assez-long' })).corps;
-  assert.equal(b.jours[3].lot, '1 place de quiz + le jeu Black Stories'); assert.equal(b.lots[8], '1 place de quiz + un jeu surprise');
+  assert.equal(b.jours[3].lot, '1 place de quiz pour 1 joueur + le jeu Black Stories'); assert.equal(b.lots[8], '1 place de quiz + un jeu surprise');
 });
 
 test('grand tirage et tirage des assidus après le 24', async () => {

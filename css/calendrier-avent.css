@@ -88,6 +88,8 @@
 .av-lot--or { --c:var(--av-or); }
 .av-lot--orange { --c:var(--orange); }
 .av-note { margin:18px 0 0; color:var(--grey); font-size:.92rem; }
+.av-pas-de-perdant { max-width:none; margin:18px 0 0; padding:16px 20px; background:#1d1a05; border:2px solid var(--av-or); border-radius:10px; color:var(--av-creme); font-size:1.02rem; line-height:1.5; }
+.av-pas-de-perdant-titre { display:inline-block; margin-right:8px; padding:3px 12px; border-radius:99px; background:var(--av-or); color:#000; font-family:var(--font-display); font-weight:700; letter-spacing:1px; text-transform:uppercase; font-size:.9rem; }
 .av-cadeau { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 28px; background:linear-gradient(120deg, #1b1206, #2a1606); border:1px solid #4a2a0c; border-radius:12px; padding:26px 24px; }
 .av-cadeau h2 { margin:0 0 6px; font-size:1.6rem; }
 .av-cadeau p { margin:0; color:var(--grey-light); max-width:620px; }

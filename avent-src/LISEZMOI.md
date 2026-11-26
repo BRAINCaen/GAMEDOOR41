@@ -15,16 +15,27 @@ Page publique : `/calendrier-de-l-avent/` · écran de l'équipe : `/calendrier-
 - **Tirages** : chaque jour à midi, un gagnant parmi celles et ceux qui ont joué la veille le jour même ;
   le 25 à midi, le grand tirage (un ticket = une chance) et le tirage des 24 portes ouvertes.
   Fonction planifiée `avent-tirage` + rattrapage automatique à la première visite après midi.
+- **Un seul gain par personne** (décision d'Allan du 26/11/2026) : à chaque tirage, ceux qui ont déjà gagné un
+  autre tirage sont écartés et on tire parmi les autres ; s'il ne reste personne d'autre, on tire parmi tous.
+  Le tirage garde le nombre de joueurs écartés (`dejaGagnants`), affiché dans l'écran de l'équipe.
+- **Pas de perdant** : le 25 à midi, après les deux tirages de la fin, chaque joueur qui n'a gagné aucun tirage
+  reçoit 1 place de quiz pour 1 joueur (fiches `pas-de-perdant/<id>`), par mail, avec un code de quiz de la
+  réserve. Jamais de mail sans code : on attend que l'équipe en ajoute. Envoi par paquets de 60 toutes les
+  demi-heures, 6 à la fois. Pas de lot de consolation pour les tirages du jour.
+- **Codes** : chaque code donné est d'abord réservé (`codes-pris/<code>`, écriture « seulement si absent ») :
+  même deux passages en même temps ne donnent jamais le même code à deux personnes.
 - **Garde-fous** : adresses mail jetables refusées, 8 inscriptions par connexion et par jour.
 
 ## Ce qui se fait tout seul
 
-- **Lots** : `lots-2026.mjs` est la seule source (place de quiz chaque jour, place d'escape game les jours à
-  étoile, un jeu en plus 11 jours, grand tirage, tirage des 24 portes). Après une modification :
+- **Lots** : `lots-2026.mjs` est la seule source (1 place de quiz POUR 1 JOUEUR chaque jour, 1 place d'escape
+  game pour 1 joueur les jours à étoile, un cadeau en plus 12 jours dont la DeLorean le 24, grand tirage =
+  session d'escape game complète, tirage des 24 portes = session de quiz complète). Après une modification :
   `node avent-src/ecrire-lots.mjs` (rubrique « Les lots » + règlement de la page) puis
   `node avent-src/visuels/fabriquer.mjs` (visuels des réseaux sociaux), et `construire.mjs`.
 - **Mail au gagnant** (`messages.mjs`, `courrier.mjs`) : dans la demi-heure qui suit le tirage, avec son lot
-  et un code pris dans la **réserve de codes** (collés par l'équipe dans son écran : quiz, escape, session).
+  et un code pris dans la **réserve de codes** (collés par l'équipe dans son écran : quiz, escape, session de
+  quiz, session d'escape game).
   Un gagnant n'est servi qu'une fois ; en cas de panne, nouvel essai à chaque passage (6 au plus) ;
   si la réserve est vide, le mail part quand même et le code suit dès qu'on en ajoute.
   Il faut la variable **`BREVO_API_KEY`** sur le site Netlify. Sans elle, rien ne part : l'équipe prévient

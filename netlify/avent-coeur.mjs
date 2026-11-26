@@ -1013,7 +1013,19 @@ function habiller(titre, blocs, origine) {
   const corps = blocs.filter(Boolean).map((b) => b.cadre ? '<div style="margin:18px 0;padding:16px 18px;background:#fff6ec;border-left:5px solid #ff6b00;border-radius:6px;">' + b.cadre + "</div>" : '<p style="margin:0 0 14px;">' + b + "</p>").join("\n");
   return '<!doctype html><html lang="fr"><body style="margin:0;padding:0;background:#f2efe9;"><div style="max-width:600px;margin:0 auto;padding:24px 14px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.55;color:#1a1a1a;"><div style="background:#0a0a0a;color:#fff;padding:20px 22px;border-radius:10px 10px 0 0;border-bottom:4px solid #ff6b00;"><div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#ff6b00;">Les 24 portes de GAMEDOOR\xB741</div><div style="font-size:22px;font-weight:bold;margin-top:6px;">' + h(titre) + '</div></div><div style="background:#ffffff;padding:22px;border-radius:0 0 10px 10px;">' + corps + '</div><p style="margin:14px 6px 0;font-size:12px;color:#777;">GAMEDOOR\xB741 \xB7 ' + h(ADRESSE) + ' \xB7 <a href="' + h(origine + PAGE) + '" style="color:#777;">le calendrier de l\u2019Avent</a></p></div></body></html>';
 }
-var QUOI = { quiz: "1 place de quiz", escape: "1 place d\u2019escape game", session: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix" };
+var QUOI = {
+  quiz: "1 place de quiz pour 1 joueur",
+  escape: "1 place d\u2019escape game pour 1 joueur",
+  session: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix",
+  sessionEscape: "1 session d\u2019escape game pour 2 \xE0 6 joueurs, salle au choix"
+};
+var PRECISION = {
+  quiz: "Il vaut pour une seule personne, pas pour une session enti\xE8re : les autres joueurs de votre groupe paient leur place au tarif habituel.",
+  escape: "Il vaut pour une seule personne, pas pour une session enti\xE8re : les autres joueurs de votre \xE9quipe paient leur place au tarif habituel. Salle au choix : Garde \xE0 Vue, Psychiatric ou Back to the 80\u2019s.",
+  session: "Il offre la session enti\xE8re \xE0 tout votre groupe, de 4 \xE0 16 candidats : choisissez l\u2019\xE9mission en r\xE9servant.",
+  sessionEscape: "Il offre la session enti\xE8re \xE0 toute votre \xE9quipe, de 2 \xE0 6 joueurs, dans la salle de votre choix : Garde \xE0 Vue, Psychiatric ou Back to the 80\u2019s."
+};
+var PROLONGER = "Besoin de le prolonger ou d\u2019une demande particuli\xE8re ? \xC9crivez-nous \xE0 contact@gamedoor41.fr avec le code.";
 function mailGagnant({ prenom, tirage = "jour", jour, participants, lot, place, objet, code, suite = false, essai = false, origine = "https://gamedoor41.fr" }) {
   const ou = tirage === "grand" ? "du grand tirage" : tirage === "assidus" ? "du tirage des 24 portes ouvertes" : "de la porte " + jour + " (" + dateTexte(jour) + ")";
   const sujet = (essai ? "[ESSAI] " : "") + (suite ? "Votre code : " + (QUOI[place] || "votre lot") + " (calendrier de l\u2019Avent GAMEDOOR\xB741)" : "Bravo " + prenom + ", vous avez gagn\xE9 au calendrier de l\u2019Avent GAMEDOOR\xB741");
@@ -1033,11 +1045,11 @@ function mailGagnant({ prenom, tirage = "jour", jour, participants, lot, place, 
     lignes.push("Votre code : " + code);
     blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + "</span>" });
     dire(
-      "Ce code vous offre " + QUOI[place] + ". R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois.",
-      "Ce code vous offre <strong>" + h(QUOI[place]) + '</strong>. R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois.'
+      "Ce code vous offre " + QUOI[place] + ". " + PRECISION[place] + " R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. " + PROLONGER,
+      "Ce code vous offre <strong>" + h(QUOI[place]) + "</strong>. " + h(PRECISION[place]) + ' R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. ' + h(PROLONGER)
     );
   } else if (place && !suite) {
-    dire("Le code de votre " + (place === "session" ? "session" : "place") + " vous arrive dans un second mail, sous 48 heures.");
+    dire("Le code de votre " + (/^session/.test(place) ? "session" : "place") + " vous arrive dans un second mail, sous 48 heures.");
   }
   if (objet && !suite) dire(
     "Votre cadeau, " + objet + ", vous attend \xE0 l\u2019accueil de GAMEDOOR\xB741, " + ADRESSE + ". Venez le chercher le jour de votre session, ou r\xE9pondez \xE0 ce mail pour nous dire quand vous passez. Il est \xE0 retirer avant le " + RETRAIT_JEUX + ".",
@@ -1048,6 +1060,25 @@ function mailGagnant({ prenom, tirage = "jour", jour, participants, lot, place, 
   dire("\xC0 tr\xE8s vite,");
   dire("L\u2019\xE9quipe GAMEDOOR\xB741");
   return { sujet, texte: lignes.join("\n\n"), html: habiller(suite ? "Voici votre code" : "Vous avez gagn\xE9 !", blocs, origine) };
+}
+function mailPasDePerdant({ prenom, code, essai = false, origine = "https://gamedoor41.fr" }) {
+  const lignes = [], blocs = [];
+  const dire = (texte, html) => {
+    lignes.push(texte);
+    blocs.push(html || h(texte));
+  };
+  dire("Bonjour " + prenom + ",");
+  dire("Merci d\u2019avoir jou\xE9 \xE0 notre calendrier de l\u2019Avent ! Le tirage au sort ne vous a pas d\xE9sign\xE9 cette fois, mais chez nous il n\u2019y a pas de perdant : voici " + QUOI.quiz + ", offerte.");
+  lignes.push("Votre code : " + code);
+  blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + "</span>" });
+  dire(
+    "Ce code vous offre " + QUOI.quiz + " Buzz Your Brain. " + PRECISION.quiz + " R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. " + PROLONGER,
+    "Ce code vous offre <strong>" + h(QUOI.quiz) + "</strong> Buzz Your Brain. " + h(PRECISION.quiz) + ' R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. ' + h(PROLONGER)
+  );
+  dire("Les lots ne sont ni \xE9changeables ni remboursables. Une question ? R\xE9pondez simplement \xE0 ce mail.");
+  dire("Joyeux No\xEBl, et \xE0 tr\xE8s vite \xE0 Mondeville,");
+  dire("L\u2019\xE9quipe GAMEDOOR\xB741");
+  return { sujet: (essai ? "[ESSAI] " : "") + "Pas de perdant : votre place de quiz offerte (calendrier de l\u2019Avent GAMEDOOR\xB741)", texte: lignes.join("\n\n"), html: habiller("Pas de perdant !", blocs, origine) };
 }
 function mailAccuse({ prenom, essai = false, origine = "https://gamedoor41.fr" }) {
   const lignes = [
@@ -1082,7 +1113,7 @@ var MOTS = "#calendrierdelavent #jeuconcours #concours #caen #mondeville #norman
 var LIEN = "gamedoor41.fr/calendrier-de-l-avent";
 var fin = (lot, signe) => /[?!.]$/.test(lot) ? "" : signe;
 function legendeJour({ jour, lot, veille }) {
-  const l = ["\u{1F384} Porte " + jour + " du calendrier de l\u2019Avent GAMEDOOR\xB741", "\u{1F381} \xC0 gagner aujourd\u2019hui : " + lot + fin(lot, "."), "Un d\xE9fi d\u2019une minute, une seule r\xE9ponse, et vous \xEAtes dans le tirage au sort de demain midi. Bonne ou mauvaise r\xE9ponse, tout le monde a sa chance."];
+  const l = ["\u{1F384} Porte " + jour + " du calendrier de l\u2019Avent GAMEDOOR\xB741", "\u{1F381} \xC0 gagner aujourd\u2019hui : " + lot + fin(lot, "."), "Un d\xE9fi d\u2019une minute, une seule r\xE9ponse, et vous \xEAtes dans le tirage au sort de demain midi. Bonne ou mauvaise r\xE9ponse, tout le monde a sa chance. Et pas de perdant : le 25 d\xE9cembre, chaque joueur qui n\u2019a rien gagn\xE9 re\xE7oit 1 place de quiz pour 1 joueur."];
   if (veille && veille.gagnant) l.push("\u{1F3C6} Porte " + veille.jour + " : bravo \xE0 " + veille.gagnant + ", qui remporte " + veille.lot + fin(veille.lot, " !"));
   l.push("\u{1F449} Pour jouer : " + LIEN + " (lien dans notre bio). Jeu gratuit, jusqu\u2019au 24 d\xE9cembre.");
   l.push(MOTS);
@@ -1091,9 +1122,10 @@ function legendeJour({ jour, lot, veille }) {
 function legendeFin({ veille, grand, assidus }) {
   const l = ["\u{1F384} Les 24 portes de GAMEDOOR\xB741 sont toutes ouvertes. Merci d\u2019avoir jou\xE9 avec nous tout le mois !"];
   if (veille && veille.gagnant) l.push("\u{1F3C6} Porte 24 : bravo \xE0 " + veille.gagnant + ", qui remporte " + veille.lot + fin(veille.lot, "."));
-  if (grand && grand.gagnant) l.push("\u{1F697} Grand tirage : " + grand.gagnant + " remporte " + grand.lot + ".");
+  if (grand && grand.gagnant) l.push("\u{1F510} Grand tirage : " + grand.gagnant + " remporte " + grand.lot + ".");
   if (assidus && assidus.gagnant) l.push("\u2B50 Tirage des 24 portes ouvertes : " + assidus.gagnant + " remporte " + assidus.lot + ".");
-  l.push("Les gagnants ont re\xE7u un mail. Joyeux No\xEBl \xE0 toutes et \xE0 tous, et \xE0 tr\xE8s vite \xE0 Mondeville !");
+  l.push("\u{1F381} Et comme il n\u2019y a pas de perdant, tous les autres joueurs re\xE7oivent 1 place de quiz pour 1 joueur.");
+  l.push("Chacun a re\xE7u son mail. Joyeux No\xEBl \xE0 toutes et \xE0 tous, et \xE0 tr\xE8s vite \xE0 Mondeville !");
   l.push(MOTS);
   return l.join("\n\n");
 }
@@ -1105,7 +1137,11 @@ var NB_PORTES = 24;
 var MAX_INSCRIPTIONS_PAR_IP = 8;
 var MAX_QUESTIONS_PAR_IP = 3;
 var MAX_ESSAIS_MAIL = 6;
-var TYPES_CODES = ["quiz", "escape", "session"];
+var PAQUET_PAS_DE_PERDANT = 60;
+var EN_MEME_TEMPS = 6;
+var TYPES_CODES = ["quiz", "escape", "session", "sessionEscape"];
+var NOMS_CODES = { quiz: "places de quiz", escape: "places d\u2019escape game", session: "session de quiz", sessionEscape: "session d\u2019escape game" };
+var UN_CODE = { quiz: "place de quiz", escape: "place d\u2019escape game", session: "session de quiz", sessionEscape: "session d\u2019escape game" };
 var UNIVERS = ["gav", "psy", "80s", "quiz", "final"];
 var JETABLES = ["yopmail.com", "yopmail.fr", "mailinator.com", "guerrillamail.com", "sharklasers.com", "10minutemail.com", "tempmail.com", "temp-mail.org", "trashmail.com", "mekuron.com", "getnada.com", "maildrop.cc", "throwawaymail.com", "mohmal.com", "emailondeck.com", "jetable.org", "tempr.email", "dispostable.com", "fakeinbox.com", "mailnesia.com"];
 var hacher = (texte) => createHash("sha256").update(texte).digest("hex");
@@ -1264,37 +1300,53 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     }
     return sortie;
   }
-  async function tirerJour(j, joueurs, exclus = []) {
-    const candidats = joueurs.filter((x) => x.reponses && x.reponses[j] && x.reponses[j].leJour && !exclus.includes(x.id));
-    const gagnant = candidats.length ? candidats[randomInt(candidats.length)] : null;
-    return {
-      cle: pad2(j),
-      genre: "jour",
-      jour: j,
-      participants: candidats.length,
-      tireLe: maintenant().toISOString(),
-      gagnant: gagnant ? { id: gagnant.id, prenom: gagnant.prenom, email: gagnant.email, etiquette: etiquetteGagnant(gagnant) } : null,
-      prevenu: false
-    };
+  const fiche = (g) => g ? { id: g.id, prenom: g.prenom, email: g.email, etiquette: etiquetteGagnant(g) } : null;
+  function piocher(urne, gagnants) {
+    const libres = urne.filter((x) => !gagnants.has(x.id));
+    const choix = libres.length ? libres : urne;
+    const ecartes = libres.length ? new Set(urne.filter((x) => gagnants.has(x.id)).map((x) => x.id)).size : 0;
+    return { gagnant: choix.length ? choix[randomInt(choix.length)] : null, ecartes };
   }
-  function tirerFinal(genre, joueurs) {
+  function tirerJour(j, joueurs, { retires = [], gagnants = /* @__PURE__ */ new Set() } = {}) {
+    const candidats = joueurs.filter((x) => x.reponses && x.reponses[j] && x.reponses[j].leJour && !retires.includes(x.id));
+    const { gagnant, ecartes } = piocher(candidats, gagnants);
+    return { cle: pad2(j), genre: "jour", jour: j, participants: candidats.length, dejaGagnants: ecartes, tireLe: maintenant().toISOString(), gagnant: fiche(gagnant), prevenu: false };
+  }
+  function tirerFinal(genre, joueurs, { retires = [], gagnants = /* @__PURE__ */ new Set() } = {}) {
     const tout = () => true;
+    const eligibles = joueurs.filter((x) => !retires.includes(x.id));
     let urne = [];
-    if (genre === "grand") joueurs.forEach((x) => {
+    if (genre === "grand") eligibles.forEach((x) => {
       const n = ticketsDe(x, tout);
       for (let i = 0; i < n; i++) urne.push(x);
     });
-    else urne = joueurs.filter((x) => Object.keys(x.reponses || {}).length >= NB_PORTES);
-    const gagnant = urne.length ? urne[randomInt(urne.length)] : null;
+    else urne = eligibles.filter((x) => Object.keys(x.reponses || {}).length >= NB_PORTES);
+    const { gagnant, ecartes } = piocher(urne, gagnants);
     return {
       cle: genre,
       genre,
-      participants: genre === "grand" ? joueurs.filter((x) => Object.keys(x.reponses || {}).length).length : urne.length,
+      participants: genre === "grand" ? eligibles.filter((x) => Object.keys(x.reponses || {}).length).length : urne.length,
       billets: urne.length,
+      dejaGagnants: ecartes,
       tireLe: maintenant().toISOString(),
-      gagnant: gagnant ? { id: gagnant.id, prenom: gagnant.prenom, email: gagnant.email, etiquette: etiquetteGagnant(gagnant) } : null,
+      gagnant: fiche(gagnant),
       prevenu: false
     };
+  }
+  function gagnantsAutres(tir, sauf) {
+    const s = /* @__PURE__ */ new Set();
+    Object.values(tir).forEach((t) => {
+      if (t && t.gagnant && t.cle !== sauf) s.add(t.gagnant.id);
+    });
+    return s;
+  }
+  async function lireTirages() {
+    const cles = await stockage.lister("tirages/");
+    const valeurs = {};
+    (await Promise.all(cles.map((c) => stockage.lire(c)))).forEach((x) => {
+      if (x) valeurs[x.cle] = x;
+    });
+    return valeurs;
   }
   async function assurerTirages(quand) {
     if (quand.simule && !essai) return 0;
@@ -1302,23 +1354,32 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     for (let j = 1; j <= NB_PORTES; j++) if (resultatVisible(j, quand)) dus.push(pad2(j));
     if (resultatVisible(NB_PORTES, quand)) dus.push("grand", "assidus");
     if (!dus.length) return 0;
-    const faits = new Set((await stockage.lister("tirages/")).map((c) => c.slice("tirages/".length)));
-    const manquants = dus.filter((c) => !faits.has(c));
-    const aRevoir = essai && quand.simule ? dus.filter((c) => faits.has(c)) : [];
+    const connus = await lireTirages();
+    const manquants = dus.filter((c) => !connus[c]);
+    const aRevoir = essai && quand.simule ? dus.filter((c) => connus[c]) : [];
     if (!manquants.length && !aRevoir.length) return 0;
     const joueurs = await tousLesJoueurs();
-    const tirer = async (c) => /^\d\d$/.test(c) ? tirerJour(Number(c), joueurs) : tirerFinal(c, joueurs);
+    const tirer = (c) => {
+      const choix = { gagnants: gagnantsAutres(connus, c) };
+      return /^\d\d$/.test(c) ? tirerJour(Number(c), joueurs, choix) : tirerFinal(c, joueurs, choix);
+    };
     let n = 0;
     for (const c of manquants) {
-      if (await stockage.ecrire("tirages/" + c, await tirer(c), { siAbsent: true })) n++;
+      const t = tirer(c);
+      if (await stockage.ecrire("tirages/" + c, t, { siAbsent: true })) {
+        n++;
+        connus[c] = t;
+      } else connus[c] = await stockage.lire("tirages/" + c) || t;
     }
     for (const c of aRevoir) {
-      const vieux = await stockage.lire("tirages/" + c);
+      const vieux = connus[c];
       if (!vieux || vieux.prevenu || vieux.lot || vieux.anciens && vieux.anciens.length) continue;
-      const neuf = await tirer(c);
+      const neuf = tirer(c);
       const disparu = vieux.gagnant && !joueurs.some((x) => x.id === vieux.gagnant.id);
-      if (neuf.participants !== vieux.participants || neuf.billets !== vieux.billets || disparu) {
+      const doublon = vieux.gagnant && neuf.dejaGagnants > 0 && gagnantsAutres(connus, c).has(vieux.gagnant.id);
+      if (neuf.participants !== vieux.participants || neuf.billets !== vieux.billets || disparu || doublon) {
         await stockage.ecrire("tirages/" + c, neuf);
+        connus[c] = neuf;
         n++;
       }
     }
@@ -1328,13 +1389,51 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
   async function tirages() {
     const t = maintenant().getTime();
     if (t - tiragesCache.quand < 45e3) return tiragesCache.valeurs;
-    const cles = await stockage.lister("tirages/");
-    const valeurs = {};
-    (await Promise.all(cles.map((c) => stockage.lire(c)))).forEach((x) => {
-      if (x) valeurs[x.cle] = x;
-    });
+    const valeurs = await lireTirages();
     tiragesCache = { quand: t, valeurs };
     return valeurs;
+  }
+  async function assurerPasDePerdant(quand) {
+    if (!resultatVisible(NB_PORTES, quand) || quand.simule && !essai) return 0;
+    const tir = await lireTirages();
+    if (!tir.grand || !tir.assidus) return 0;
+    if (!essai && await stockage.lire("etat/pas-de-perdant")) return 0;
+    const gagnants = gagnantsAutres(tir, null);
+    const deja = new Set((await stockage.lister("pas-de-perdant/")).map((c) => c.slice("pas-de-perdant/".length)));
+    const nouveaux = (await tousLesJoueurs()).filter((x) => Object.keys(x.reponses || {}).length && !gagnants.has(x.id) && !deja.has(x.id));
+    let n = 0;
+    for (let i = 0; i < nouveaux.length; i += 20) {
+      const faits = await Promise.all(nouveaux.slice(i, i + 20).map((x) => stockage.ecrire("pas-de-perdant/" + x.id, { id: x.id, prenom: x.prenom, email: x.email, le: maintenant().toISOString(), code: null, mail: null }, { siAbsent: true })));
+      n += faits.filter(Boolean).length;
+    }
+    await stockage.ecrire("etat/pas-de-perdant", { le: maintenant().toISOString(), fiches: deja.size + n });
+    return n;
+  }
+  async function fichesPasDePerdant() {
+    const cles = await stockage.lister("pas-de-perdant/");
+    const sortie = [];
+    for (let i = 0; i < cles.length; i += 25) (await Promise.all(cles.slice(i, i + 25).map((c) => stockage.lire(c)))).forEach((f) => {
+      if (f) sortie.push(f);
+    });
+    return sortie;
+  }
+  async function etatPasDePerdant(joueurs, tir) {
+    const fiches = await fichesPasDePerdant();
+    if (!fiches.length) {
+      const gagnants = gagnantsAutres(tir, null);
+      const n = joueurs.filter((x) => Object.keys(x.reponses || {}).length && !gagnants.has(x.id)).length;
+      return { fait: !!(tir.grand && tir.assidus), estimation: !(tir.grand && tir.assidus), joueurs: n, envoyees: 0, attendentCode: 0, echecs: 0, aDonner: tir.grand && tir.assidus ? 0 : n };
+    }
+    const envoyee = (f) => !!(f.mail && f.mail.etat === "envoye");
+    return {
+      fait: true,
+      estimation: false,
+      joueurs: fiches.length,
+      envoyees: fiches.filter(envoyee).length,
+      attendentCode: fiches.filter((f) => !envoyee(f) && !f.code).length,
+      echecs: fiches.filter((f) => !envoyee(f) && f.mail && f.mail.etat === "echec").length,
+      aDonner: fiches.filter((f) => !envoyee(f) && !f.code).length
+    };
   }
   async function reserve() {
     const r = await stockage.lire("config/codes") || {};
@@ -1344,16 +1443,78 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     if (!Array.isArray(r.donnes)) r.donnes = [];
     return r;
   }
-  async function prendreCode(type, pour) {
+  async function codesPris() {
+    return new Set((await stockage.lister("codes-pris/")).map((c) => c.slice("codes-pris/".length)));
+  }
+  async function reserveNette() {
+    const [r, pris] = await Promise.all([reserve(), codesPris()]);
+    TYPES_CODES.forEach((t) => {
+      r[t] = r[t].filter((c) => !pris.has(c));
+    });
+    return r;
+  }
+  async function prendreCodes(type, pour) {
+    if (!pour.length) return [];
     const r = await reserve();
-    if (!r[type] || !r[type].length) return null;
-    const code = r[type].shift();
-    r.donnes.push({ code, type, pour, le: maintenant().toISOString() });
+    if (!r[type] || !r[type].length) return [];
+    const pris = await codesPris();
+    const le = maintenant().toISOString();
+    const donnes = [], gardes = [];
+    for (const code of r[type]) {
+      if (pris.has(code)) continue;
+      if (donnes.length >= pour.length) {
+        gardes.push(code);
+        continue;
+      }
+      if (await stockage.ecrire("codes-pris/" + code, { type, pour: pour[donnes.length], le }, { siAbsent: true })) {
+        r.donnes.push({ code, type, pour: pour[donnes.length], le });
+        donnes.push(code);
+      }
+    }
+    r[type] = gardes;
     await stockage.ecrire("config/codes", r);
-    return code;
+    return donnes;
+  }
+  async function prendreCode(type, pour) {
+    return (await prendreCodes(type, [pour]))[0] || null;
   }
   const cleLot = (cle) => /^\d\d$/.test(cle) ? String(Number(cle)) : cle;
-  async function livrer(origine) {
+  async function livrerPasDePerdant(origine, paquet) {
+    const fiches = await fichesPasDePerdant();
+    const envoyee = (f) => !!(f.mail && f.mail.etat === "envoye");
+    let libres = (await reserveNette()).quiz.length;
+    const choisies = fiches.filter((f) => !envoyee(f) && !(f.mail && f.mail.essais >= MAX_ESSAIS_MAIL) && (f.code || libres-- > 0)).slice(0, paquet);
+    if (!choisies.length) return { envoyes: 0, echecs: 0 };
+    const tranche = Math.floor(maintenant().getTime() / 6e5);
+    const miennes = [];
+    for (let i = 0; i < choisies.length; i += 20) {
+      const part = choisies.slice(i, i + 20);
+      const ok = await Promise.all(part.map((f) => stockage.ecrire("verrous/pdp-" + f.id + "-" + tranche, { le: maintenant().toISOString() }, { siAbsent: true })));
+      part.forEach((f, k) => {
+        if (ok[k]) miennes.push(f);
+      });
+    }
+    const sansCode = miennes.filter((f) => !f.code);
+    const codes = await prendreCodes("quiz", sansCode.map((f) => "pas-de-perdant " + f.id));
+    sansCode.forEach((f, k) => {
+      f.code = codes[k] || null;
+    });
+    await Promise.all(sansCode.filter((f) => f.code).map((f) => stockage.ecrire("pas-de-perdant/" + f.id, f)));
+    const aEnvoyer = miennes.filter((f) => f.code);
+    let envoyes = 0, echecs = 0;
+    for (let i = 0; i < aEnvoyer.length; i += EN_MEME_TEMPS) {
+      await Promise.all(aEnvoyer.slice(i, i + EN_MEME_TEMPS).map(async (f) => {
+        const r = await courrier2.envoyer({ a: f.email, nom: f.prenom, ...mailPasDePerdant({ prenom: f.prenom, code: f.code, essai, origine }) });
+        const essais = (f.mail && f.mail.essais || 0) + 1;
+        f.mail = r.ok ? { etat: "envoye", le: maintenant().toISOString(), essais } : { etat: "echec", le: maintenant().toISOString(), essais, erreur: String(r.erreur || "inconnue").slice(0, 200) };
+        if (r.ok) envoyes++;
+        else echecs++;
+        await stockage.ecrire("pas-de-perdant/" + f.id, f);
+      }));
+    }
+    return { envoyes, echecs };
+  }
+  async function livrer(origine, { paquet = PAQUET_PAS_DE_PERDANT } = {}) {
     if (!courrier2) return { envoyes: 0, echecs: 0 };
     const prevus = await lots();
     let envoyes = 0, echecs = 0;
@@ -1390,16 +1551,18 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       await stockage.ecrire(cleBlob, t);
     }
     tiragesCache = { quand: 0, valeurs: {} };
-    return { envoyes, echecs };
+    const pdp = await livrerPasDePerdant(origine, paquet);
+    return { envoyes: envoyes + pdp.envoyes, echecs: echecs + pdp.echecs };
   }
-  function besoinsCodes(prevus, tir) {
-    const besoin = { quiz: 0, escape: 0, session: 0 };
+  function besoinsCodes(prevus, tir, pdp) {
+    const besoin = Object.fromEntries(TYPES_CODES.map((t) => [t, 0]));
     Object.keys(prevus).forEach((k) => {
       const p = prevus[k], t = tir[/^\d+$/.test(k) ? pad2(Number(k)) : k];
-      if (!p.place) return;
+      if (!p.place || !(p.place in besoin)) return;
       if (!t) besoin[p.place]++;
       else if (t.gagnant && !t.code && !(!t.mail && t.prevenu)) besoin[p.place]++;
     });
+    besoin.quiz += pdp ? pdp.aDonner : 0;
     return besoin;
   }
   async function rapport(quand, origine, { force = false } = {}) {
@@ -1411,7 +1574,8 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     if (!force && !await stockage.ecrire("rapports/" + cle, { le: maintenant().toISOString() }, { siAbsent: true })) return false;
     tiragesCache.quand = 0;
     lotsCache.quand = 0;
-    const [joueurs, tir, prevus, r, clesQuestions] = await Promise.all([tousLesJoueurs(), tirages(), lots(), reserve(), stockage.lister("questions/")]);
+    const [joueurs, tir, prevus, r, clesQuestions] = await Promise.all([tousLesJoueurs(), tirages(), lots(), reserveNette(), stockage.lister("questions/")]);
+    const pdp = await etatPasDePerdant(joueurs, tir);
     const lignes = [], alertes = [];
     let leJour = 0, justes = 0;
     joueurs.forEach((x) => {
@@ -1436,18 +1600,23 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       lignes.push(nom + " : " + t.gagnant.prenom + " <" + t.gagnant.email + "> gagne " + (t.lot || p.lot || "son lot") + (t.code ? " \xB7 code " + t.code : "") + " \xB7 " + (servi ? "mail envoy\xE9" : t.prevenu ? "pr\xE9venu \xE0 la main" : "mail pas encore parti") + ".");
       if (p.objet) lignes.push("\xC0 mettre de c\xF4t\xE9 \xE0 l\u2019accueil pour " + t.gagnant.prenom + " : " + p.objet + ".");
       if (!servi && !t.prevenu) alertes.push(nom + " : le mail au gagnant n\u2019est pas parti" + (t.mail && t.mail.erreur ? " (" + t.mail.erreur + ")" : "") + ". " + (t.mail && t.mail.essais >= MAX_ESSAIS_MAIL ? "Les essais automatiques sont finis : utilisez \xAB \xC9crire au gagnant \xBB dans l\u2019\xE9cran de l\u2019\xE9quipe." : "Un nouvel essai part tout seul dans la demi-heure."));
-      if (servi && t.mail.sansCode) alertes.push(nom + " : " + t.gagnant.prenom + " attend son code (" + p.place + "), la r\xE9serve est vide. Ajoutez des codes dans l\u2019\xE9cran de l\u2019\xE9quipe : il partira tout seul.");
+      if (servi && t.mail.sansCode) alertes.push(nom + " : " + t.gagnant.prenom + " attend son code (" + (UN_CODE[p.place] || p.place) + "), la r\xE9serve est vide. Ajoutez des codes dans l\u2019\xE9cran de l\u2019\xE9quipe : il partira tout seul.");
     };
     dire("Gagnant de la porte " + jour, cle);
     if (jour === NB_PORTES) {
       dire("Grand tirage", "grand");
       dire("Tirage des 24 portes", "assidus");
-    }
+      if (pdp.fait) {
+        lignes.push("Pas de perdant : " + pdp.joueurs + " joueur" + (pdp.joueurs > 1 ? "s" : "") + " sans aucun gain re\xE7oi" + (pdp.joueurs > 1 ? "vent" : "t") + " 1 place de quiz pour 1 joueur \xB7 " + pdp.envoyees + " mail" + (pdp.envoyees > 1 ? "s" : "") + " parti" + (pdp.envoyees > 1 ? "s" : "") + (pdp.joueurs > pdp.envoyees ? ", les autres partent tout seuls par paquets de " + PAQUET_PAS_DE_PERDANT + " toutes les demi-heures" : "") + ".");
+        if (pdp.attendentCode > r.quiz.length) alertes.push("Pas de perdant : " + (pdp.attendentCode - r.quiz.length) + " joueur" + (pdp.attendentCode - r.quiz.length > 1 ? "s attendent leur" : " attend sa") + " place de quiz, il manque des codes. Ajoutez des codes \xAB places de quiz \xBB dans l\u2019\xE9cran de l\u2019\xE9quipe : les mails partiront tout seuls.");
+      }
+    } else if (pdp.joueurs) lignes.push("Pas de perdant (le 25 d\xE9cembre) : \xE0 ce jour, " + pdp.joueurs + " joueur" + (pdp.joueurs > 1 ? "s n\u2019ont" : " n\u2019a") + " rien gagn\xE9 et recevr" + (pdp.joueurs > 1 ? "ont" : "a") + " 1 place de quiz : comptez autant de codes de quiz en plus.");
     lignes.push("Depuis le d\xE9but : " + joueurs.length + " inscrit" + (joueurs.length > 1 ? "s" : "") + ", " + joueurs.reduce((n, x) => n + Object.keys(x.reponses || {}).length, 0) + " participations, " + joueurs.filter((x) => x.nouvelles).length + " veulent nos nouvelles.");
-    lignes.push("Codes en r\xE9serve : " + TYPES_CODES.map((t) => t + " " + r[t].length).join(", ") + ".");
-    const besoin = besoinsCodes(prevus, tir);
+    lignes.push("Codes en r\xE9serve : " + TYPES_CODES.map((t) => NOMS_CODES[t] + " " + r[t].length).join(", ") + ".");
+    const besoin = besoinsCodes(prevus, tir, pdp);
     TYPES_CODES.forEach((t) => {
-      if (r[t].length < besoin[t]) alertes.push("Il manque " + (besoin[t] - r[t].length) + " code" + (besoin[t] - r[t].length > 1 ? "s" : "") + " \xAB " + t + " \xBB pour finir le mois. \xC0 ajouter dans l\u2019\xE9cran de l\u2019\xE9quipe.");
+      if (t === "quiz" && pdp.fait) return;
+      if (r[t].length < besoin[t]) alertes.push("Il manque " + (besoin[t] - r[t].length) + " code" + (besoin[t] - r[t].length > 1 ? "s" : "") + " \xAB " + NOMS_CODES[t] + " \xBB pour finir le mois" + (t === "quiz" && pdp.aDonner ? " (dont " + pdp.aDonner + " pour \xAB pas de perdant \xBB)" : "") + ". \xC0 ajouter dans l\u2019\xE9cran de l\u2019\xE9quipe.");
     });
     const questions = (await Promise.all(clesQuestions.map((c) => stockage.lire(c)))).filter((q) => q && q.etat === "ouverte");
     if (questions.length) {
@@ -1462,6 +1631,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
   async function automate(quand, origine) {
     if (quand.cal < 1 || quand.cal > 60) return { tirages: 0, envoyes: 0, echecs: 0, rapport: false };
     const n = await assurerTirages(quand);
+    await assurerPasDePerdant(quand);
     const l = await livrer(origine);
     const b = await rapport(quand, origine);
     return { tirages: n, envoyes: l.envoyes, echecs: l.echecs, rapport: b };
@@ -1493,6 +1663,11 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       if (tir[g]) finaux[g] = { gagnant: tir[g].gagnant ? tir[g].gagnant.etiquette : null, lot: tir[g].lot || lotDe(g) };
     });
     const joueur = await joueurDuJeton(req);
+    const moi = joueur ? vueJoueur(joueur, quand) : null;
+    if (moi && resultatVisible(NB_PORTES, quand)) {
+      const pdp = await stockage.lire("pas-de-perdant/" + joueur.id);
+      if (pdp) moi.pasDePerdant = { envoye: !!(pdp.mail && pdp.mail.etat === "envoye") };
+    }
     return json({
       cal: quand.cal,
       simule: quand.simule,
@@ -1501,7 +1676,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       lotsFinaux: { grand: lotDe("grand"), assidus: lotDe("assidus") },
       resultats,
       finaux,
-      moi: joueur ? vueJoueur(joueur, quand) : null
+      moi
     });
   }
   async function defi(req, url) {
@@ -1580,15 +1755,17 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const id = maintenant().getTime().toString(36) + randomBytes(3).toString("hex");
     const idJ = idJoueur(mail.cle);
     const joueur = await stockage.lire("joueurs/" + idJ);
-    let fiche = "Cette adresse n\u2019est pas inscrite au jeu.";
+    let fiche2 = "Cette adresse n\u2019est pas inscrite au jeu.";
     if (joueur) {
       const gains = Object.values(await tirages()).filter((t) => t.gagnant && t.gagnant.id === idJ).map((t) => t.genre === "jour" ? "porte " + t.jour : t.genre === "grand" ? "grand tirage" : "tirage des 24 portes");
-      fiche = "Inscrit\xB7e le " + String(joueur.inscritLe || "").slice(0, 10) + ", " + Object.keys(joueur.reponses || {}).length + " porte(s) ouverte(s)" + (gains.length ? ", a gagn\xE9 : " + gains.join(", ") : ", n\u2019a pas gagn\xE9 pour le moment") + ".";
+      const pdp = await stockage.lire("pas-de-perdant/" + idJ);
+      if (pdp) gains.push("la place \xAB pas de perdant \xBB (" + (pdp.mail && pdp.mail.etat === "envoye" ? "mail envoy\xE9" + (pdp.code ? ", code " + pdp.code : "") : pdp.code ? "code " + pdp.code + ", mail pas encore parti" : "en attente d\u2019un code") + ")");
+      fiche2 = "Inscrit\xB7e le " + String(joueur.inscritLe || "").slice(0, 10) + ", " + Object.keys(joueur.reponses || {}).length + " porte(s) ouverte(s)" + (gains.length ? ", a gagn\xE9 : " + gains.join(", ") : ", n\u2019a pas gagn\xE9 pour le moment") + ".";
     }
-    const q = { id, prenom, email: mail.email, message, le: maintenant().toISOString(), etat: "ouverte", fiche, accuse: false };
+    const q = { id, prenom, email: mail.email, message, le: maintenant().toISOString(), etat: "ouverte", fiche: fiche2, accuse: false };
     await stockage.ecrire("questions/" + id, q);
     if (courrier2) {
-      await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche, essai, origine }) });
+      await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche: fiche2, essai, origine }) });
       const r = await courrier2.envoyer({ a: mail.email, nom: prenom, ...mailAccuse({ prenom, essai, origine }) });
       if (r.ok) {
         q.accuse = true;
@@ -1657,7 +1834,8 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     lotsCache.quand = 0;
     try {
       await assurerTirages(quand);
-      await livrer(origine);
+      await assurerPasDePerdant(quand);
+      await livrer(origine, { paquet: 15 });
     } catch (e) {
       console.error("[avent] remise des lots impossible :", e && e.message);
     }
@@ -1668,7 +1846,8 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     });
     tiragesCache.quand = 0;
     const tir = await tirages();
-    const r = await reserve();
+    const r = await reserveNette();
+    const pdp = await etatPasDePerdant(joueurs, tir);
     const questions = (await Promise.all((await stockage.lister("questions/")).map((c) => stockage.lire(c)))).filter(Boolean);
     const jours = [];
     for (let j = 1; j <= NB_PORTES; j++) {
@@ -1700,7 +1879,8 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       contact,
       codes: Object.fromEntries(TYPES_CODES.map((t) => [t, r[t].length])),
       codesDonnes: r.donnes.length,
-      besoins: besoinsCodes(prevus, tir),
+      besoins: besoinsCodes(prevus, tir, pdp),
+      pasDePerdant: pdp,
       questions: questions.sort((a, b) => a.le < b.le ? 1 : -1).slice(0, 100)
     });
   }
@@ -1754,8 +1934,9 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       else if (corps.action === "retirer") {
         const joueurs = await tousLesJoueurs();
         const anciens = (actuel.anciens || []).concat(actuel.gagnant ? [{ ...actuel.gagnant, remplaceLe: maintenant().toISOString(), raison: String(corps.raison || "").slice(0, 200) }] : []);
-        const neuf = actuel.genre === "jour" ? await tirerJour(actuel.jour, joueurs, anciens.map((a) => a.id)) : tirerFinal(actuel.genre, joueurs.filter((x) => !anciens.some((a) => a.id === x.id)));
-        Object.assign(actuel, { gagnant: neuf.gagnant, tireLe: neuf.tireLe, prevenu: false, anciens, mail: null, code: null });
+        const choix = { retires: anciens.map((a) => a.id), gagnants: gagnantsAutres(await lireTirages(), cle) };
+        const neuf = actuel.genre === "jour" ? tirerJour(actuel.jour, joueurs, choix) : tirerFinal(actuel.genre, joueurs, choix);
+        Object.assign(actuel, { gagnant: neuf.gagnant, tireLe: neuf.tireLe, dejaGagnants: neuf.dejaGagnants, prevenu: false, anciens, mail: null, code: null });
       } else return refus(400, "action", "Action inconnue.");
       await stockage.ecrire("tirages/" + cle, actuel);
       tiragesCache = { quand: 0, valeurs: {} };
@@ -1848,14 +2029,18 @@ function stockageNetlify(nom) {
 
 // avent-src/lots-2026.mjs
 var ETOILES = [6, 13, 20, 24];
-var PLACE_QUIZ = "1 place de quiz";
-var PLACE_ESCAPE = "1 place d\u2019escape game";
+var POUR_UN = "pour 1 joueur";
+var PLACE = { quiz: "1 place de quiz", escape: "1 place d\u2019escape game" };
+var PLACE_QUIZ = PLACE.quiz + " " + POUR_UN;
+var PLACE_ESCAPE = PLACE.escape + " " + POUR_UN;
+var SALLES = "Garde \xE0 Vue, Psychiatric ou Back to the 80\u2019s";
 var VERSION_IMAGES = 1;
 var img = (chemin) => chemin + "?v=" + VERSION_IMAGES;
 var IMAGES_PLACES = {
   quiz: img("/img/quiz/salle-quiz-buzzers-premier-plan-480w.jpg"),
   escape: img("/img/escape/salle-garde-a-vue-barreaux-poste-garde-480w.jpg"),
-  session: img("/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg")
+  session: img("/img/quiz/salle-quiz-buzz-your-brain-vue-large-480w.jpg"),
+  sessionEscape: img("/img/escape/salle-back-to-80s-borne-arcade-pacman-480w.jpg")
 };
 var JEUX = {
   1: { univers: "gav", image: img("/img/avent/jeux/dossiers-criminels.jpg"), maison: false, nom: "Dossiers Criminels Pocket", sous: "Qui a tu\xE9 Isabella Vega ?", court: "Dossiers Criminels Pocket", detail: "Une enqu\xEAte de poche : des indices, des suspects, un coupable \xE0 d\xE9masquer." },
@@ -1865,24 +2050,30 @@ var JEUX = {
   10: { univers: "quiz", image: img("/img/avent/jeux/snort-funny.jpg"), maison: false, nom: "Snort Funny", sous: "Le jeu \xAB ingroinyable \xBB", court: "Snort Funny", detail: "Un jeu d\u2019ambiance pour faire rire toute la table." },
   13: { univers: "gav", image: img("/img/avent/jeux/sous-scelles.jpg"), maison: false, nom: "Sous Scell\xE9s", sous: "La Fille du Troisi\xE8me", court: "Sous Scell\xE9s : La Fille du Troisi\xE8me", detail: "Un dossier d\u2019enqu\xEAte \xE0 ouvrir chez vous : \xE0 vous de r\xE9soudre l\u2019affaire." },
   15: { univers: "80s", image: img("/img/avent/jeux/retour-vers-le-futur.jpg"), maison: true, nom: "Retour vers le futur", court: "Retour vers le futur", detail: "Jeu d\u2019aventure coop\xE9ratif : faites monter la DeLorean \xE0 88 miles \xE0 l\u2019heure avant l\u2019\xE9clair. 2 \xE0 4 joueurs, d\xE8s 10 ans, 50 minutes." },
-  16: { univers: "psy", image: img("/img/avent/jeux/scream.jpg"), maison: false, nom: "Scream, le jeu", court: "Scream, le jeu", detail: "Jeu de soci\xE9t\xE9 coop\xE9ratif : faites \xE9quipe pour \xE9chapper au tueur masqu\xE9." },
+  16: { univers: "psy", image: img("/img/avent/jeux/scream.jpg"), maison: false, nom: "Scream, le jeu", court: "Scream", detail: "Jeu de soci\xE9t\xE9 coop\xE9ratif : faites \xE9quipe pour \xE9chapper au tueur masqu\xE9." },
   18: { univers: "quiz", image: img("/img/avent/jeux/longueur-d-onde.jpg"), maison: false, nom: "Longueur d\u2019onde", court: "Longueur d\u2019onde", detail: "Jeu d\u2019ambiance en \xE9quipes : \xEAtes-vous sur la m\xEAme longueur d\u2019onde que vos amis ?" },
-  20: { univers: "psy", image: img("/img/avent/jeux/chucky.jpg"), maison: false, nom: "Chucky, le jeu", court: "Chucky, le jeu", detail: "Jeu d\u2019horreur coop\xE9ratif : tous ensemble contre la poup\xE9e." },
-  23: { univers: "80s", image: img("/img/avent/jeux/goonies.jpg"), maison: true, nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." }
+  20: { univers: "psy", image: img("/img/avent/jeux/chucky.jpg"), maison: false, nom: "Chucky, le jeu", court: "Chucky", detail: "Jeu d\u2019horreur coop\xE9ratif : tous ensemble contre la poup\xE9e." },
+  23: { univers: "80s", image: img("/img/avent/jeux/goonies.jpg"), maison: true, nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." },
+  24: { univers: "final", image: img("/img/avent/jeux/delorean.jpg"), maison: false, nom: "DeLorean radio-command\xE9e", sous: "Retour vers le futur", court: "DeLorean radio-command\xE9e", objet: "la DeLorean radio-command\xE9e", plus: "+ la", alt: "La DeLorean radio-command\xE9e", visuel: { nom: "DeLorean", sous: "radio-command\xE9e, de Retour vers le futur" }, detail: "La voiture de Retour vers le futur, \xE0 piloter \xE0 la t\xE9l\xE9commande : le cadeau de la derni\xE8re porte." }
 };
+var objetDe = (jeu) => jeu.objet || "le jeu " + jeu.court;
 var FINAUX = {
-  grand: { quand: "Le grand tirage", image: img("/img/avent/jeux/delorean.jpg"), maison: false, nom: "Une DeLorean radio-command\xE9e", lot: "la DeLorean radio-command\xE9e de Retour vers le futur", detail: "La voiture de Retour vers le futur, \xE0 piloter \xE0 la t\xE9l\xE9commande. Chaque ticket gagn\xE9 pendant le mois est une chance de plus." },
-  assidus: { quand: "Les 24 portes ouvertes", image: IMAGES_PLACES.session, maison: true, nom: "Une session de quiz compl\xE8te", lot: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix", detail: "Un tirage r\xE9serv\xE9 \xE0 celles et ceux qui ont ouvert les 24 portes : une session de quiz offerte pour 4 \xE0 16 candidats, \xE9mission au choix." }
+  grand: { quand: "Le grand tirage", image: IMAGES_PLACES.sessionEscape, maison: true, alt: "La salle Back to the 80\u2019s", nom: "Une session d\u2019escape game compl\xE8te", lot: "1 session d\u2019escape game pour 2 \xE0 6 joueurs, salle au choix", place: "sessionEscape", detail: "Le gros lot, tir\xE9 au sort parmi tous les tickets du mois : une session offerte pour toute votre \xE9quipe, de 2 \xE0 6 joueurs, dans la salle de votre choix (" + SALLES + ")." },
+  assidus: { quand: "Les 24 portes ouvertes", image: IMAGES_PLACES.session, maison: true, alt: "La salle du quiz", nom: "Une session de quiz compl\xE8te", lot: "1 session de quiz pour 4 \xE0 16 candidats, \xE9mission au choix", place: "session", detail: "Tir\xE9e au sort parmi celles et ceux qui ont ouvert les 24 portes : une session offerte pour tout votre groupe, de 4 \xE0 16 candidats, \xE9mission au choix." }
+};
+var PAS_DE_PERDANT = {
+  lot: PLACE_QUIZ,
+  texte: "Le 25 d\xE9cembre, chaque joueur qui n\u2019a gagn\xE9 aucun tirage re\xE7oit quand m\xEAme " + PLACE_QUIZ + ", par mail. Il suffit d\u2019avoir ouvert une porte."
 };
 function lotsPrevus() {
   const lots = {};
   for (let j = 1; j <= 24; j++) {
     const place = ETOILES.includes(j) ? PLACE_ESCAPE : PLACE_QUIZ;
     const jeu = JEUX[j];
-    lots[j] = { lot: jeu ? place + " + le jeu " + jeu.court : place, jeu: jeu ? jeu.court : null, objet: jeu ? "le jeu " + jeu.court : null, place: ETOILES.includes(j) ? "escape" : "quiz", image: jeu ? jeu.image : null };
+    lots[j] = { lot: jeu ? place + " + " + objetDe(jeu) : place, jeu: jeu ? jeu.court : null, objet: jeu ? objetDe(jeu) : null, place: ETOILES.includes(j) ? "escape" : "quiz", image: jeu ? jeu.image : null };
   }
-  lots.grand = { lot: FINAUX.grand.lot, jeu: null, objet: FINAUX.grand.lot, place: null, image: FINAUX.grand.image };
-  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null, objet: null, place: "session", image: null };
+  lots.grand = { lot: FINAUX.grand.lot, jeu: null, objet: null, place: FINAUX.grand.place, image: null };
+  lots.assidus = { lot: FINAUX.assidus.lot, jeu: null, objet: null, place: FINAUX.assidus.place, image: null };
   return lots;
 }
 

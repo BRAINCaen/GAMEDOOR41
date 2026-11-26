@@ -35,7 +35,7 @@ async function monde({ contexte = 'production', date = '2026-12-04T13:00:00+01:0
   return { horloge, stockage, courrier, moteur, defis, appel, a, jouer, passer };
 }
 
-const RESERVE_PLEINE = { quiz: Array.from({ length: 20 }, (_, i) => 'QUIZ-AAA' + (i + 1)).join(' '), escape: 'ESC-BBB1 ESC-BBB2 ESC-BBB3 ESC-BBB4', session: 'SESSION-1' };
+const RESERVE_PLEINE = { quiz: Array.from({ length: 40 }, (_, i) => 'QUIZ-AAA' + (i + 1)).join(' '), escape: 'ESC-BBB1 ESC-BBB2 ESC-BBB3 ESC-BBB4', session: 'SESSION-1', sessionEscape: 'SESSION-ESC-1' };
 
 test('le lot part tout seul : un mail, un code, une seule fois, et le bilan à l’équipe', async () => {
   const m = await monde({ codes: RESERVE_PLEINE });
@@ -50,7 +50,9 @@ test('le lot part tout seul : un mail, un code, une seule fois, et le bilan à l
   assert.match(gagnant.sujet, /^Bravo Joueur\d, vous avez gagné/);
   assert.match(gagnant.texte, /porte 4 \(vendredi 4 décembre\)/);
   assert.match(gagnant.texte, /parmi 5 joueurs/);
-  assert.match(gagnant.texte, /Votre lot : 1 place de quiz \+ le jeu Black Stories/);
+  assert.match(gagnant.texte, /Votre lot : 1 place de quiz pour 1 joueur \+ le jeu Black Stories/);
+  assert.match(gagnant.texte, /Il vaut pour une seule personne, pas pour une session entière/);
+  assert.match(gagnant.texte, /Besoin de le prolonger ou d’une demande particulière \? Écrivez-nous à contact@gamedoor41\.fr avec le code\./);
   assert.match(gagnant.texte, /Votre code : QUIZ-AAA1/);
   assert.match(gagnant.texte, /Votre cadeau, le jeu Black Stories, vous attend à l’accueil/);
   assert.match(gagnant.html, /QUIZ-AAA1/);
@@ -60,14 +62,15 @@ test('le lot part tout seul : un mail, un code, une seule fois, et le bilan à l
   assert.match(bilan.texte, /5 joueurs le jour même, 5 bonnes réponses/);
   assert.match(bilan.texte, /code QUIZ-AAA1 · mail envoyé/);
   assert.match(bilan.texte, /À mettre de côté à l’accueil pour Joueur\d : le jeu Black Stories/);
-  assert.match(bilan.texte, /Codes en réserve : quiz 19, escape 4, session 1/);
+  assert.match(bilan.texte, /Codes en réserve : places de quiz 39, places d’escape game 4, session de quiz 1, session d’escape game 1\./);
+  assert.match(bilan.texte, /Pas de perdant \(le 25 décembre\) : à ce jour, 4 joueurs n’ont rien gagné/);
   // les passages suivants ne renvoient rien
   m.a('2026-12-05T12:31:00+01:00'); assert.deepEqual(await m.passer(), { tirages: 0, envoyes: 0, echecs: 0, rapport: false });
   m.a('2026-12-05T18:31:00+01:00'); await m.passer();
   assert.equal(m.courrier.boite.length, 2);
   // le lot s'affiche tout seul sur la page, le code jamais
   const e = (await m.appel('GET', 'etat')).corps;
-  assert.equal(e.resultats[4].lot, '1 place de quiz + le jeu Black Stories');
+  assert.equal(e.resultats[4].lot, '1 place de quiz pour 1 joueur + le jeu Black Stories');
   assert.doesNotMatch(JSON.stringify(e), /QUIZ-AAA|exemple\.fr/);
 });
 
@@ -75,11 +78,11 @@ test('jour à étoile : c’est un code d’escape game qui part', async () => {
   const m = await monde({ date: '2026-12-06T13:00:00+01:00' });
   await m.jouer(1, 6);
   m.a('2026-12-07T12:05:00+01:00'); await m.passer();
-  assert.match(m.courrier.boite[0].texte, /Votre lot : 1 place d’escape game \+ le jeu Esquissé \?/);
+  assert.match(m.courrier.boite[0].texte, /Votre lot : 1 place d’escape game pour 1 joueur \+ le jeu Esquissé \?/);
   assert.match(m.courrier.boite[0].texte, /Votre code : ESC-BBB1/);
-  assert.match(m.courrier.boite[0].texte, /Ce code vous offre 1 place d’escape game/);
+  assert.match(m.courrier.boite[0].texte, /Ce code vous offre 1 place d’escape game pour 1 joueur\. Il vaut pour une seule personne/);
   assert.doesNotMatch(m.courrier.boite[0].texte, /parmi/, 'un seul joueur : on ne le dit pas');
-  assert.match(m.courrier.boite[1].texte, /Il manque \d+ codes? « escape » pour finir le mois/);
+  assert.match(m.courrier.boite[1].texte, /Il manque \d+ codes? « places d’escape game » pour finir le mois/);
 });
 
 test('réserve vide : le mail part quand même, le code suit dès que l’équipe en ajoute', async () => {
@@ -88,7 +91,7 @@ test('réserve vide : le mail part quand même, le code suit dès que l’équip
   m.a('2026-12-03T12:05:00+01:00'); await m.passer();
   assert.match(m.courrier.boite[0].texte, /Le code de votre place vous arrive dans un second mail, sous 48 heures/);
   assert.match(m.courrier.boite[1].sujet, /action/);
-  assert.match(m.courrier.boite[1].texte, /attend son code \(quiz\), la réserve est vide/);
+  assert.match(m.courrier.boite[1].texte, /attend son code \(place de quiz\), la réserve est vide/);
   m.a('2026-12-03T12:35:00+01:00'); await m.passer();
   assert.equal(m.courrier.boite.length, 2, 'toujours pas de code : pas de second mail');
   const r = await m.appel('POST', 'equipe/codes', { code: CODE, corps: { type: 'quiz', codes: 'NEUF-1, NEUF-2 ; NEUF-1 pas bon!' } });
@@ -155,7 +158,7 @@ test('prévenu à la main par l’équipe : aucun mail automatique ne part en do
   assert.equal(courrier.boite.length, 0);
 });
 
-test('fin du jeu : porte 24, grand tirage (objet à retirer) et tirage des 24 portes (session de quiz)', async () => {
+test('fin du jeu : porte 24 (avec la DeLorean), grand tirage (session d’escape game) et tirage des 24 portes (session de quiz)', async () => {
   const m = await monde({ date: '2026-12-01T10:00:00+01:00', codes: RESERVE_PLEINE });
   for (let j = 1; j <= 24; j++) {
     m.a('2026-12-' + String(j).padStart(2, '0') + 'T10:00:00+01:00');
@@ -166,21 +169,72 @@ test('fin du jeu : porte 24, grand tirage (objet à retirer) et tirage des 24 po
   const r = await m.passer();
   assert.equal(r.tirages, 3); assert.equal(r.envoyes, 3); assert.equal(r.rapport, true);
   const fin = m.courrier.boite.slice(-4);
+  const porte24 = fin.find((x) => /porte 24/.test(x.texte) && /^Bravo/.test(x.sujet));
+  assert.match(porte24.texte, /Votre lot : 1 place d’escape game pour 1 joueur \+ la DeLorean radio-commandée/);
+  assert.match(porte24.texte, /Votre cadeau, la DeLorean radio-commandée, vous attend/);
   const grand = fin.find((x) => /grand tirage/.test(x.texte) && /^Bravo/.test(x.sujet));
   const assidus = fin.find((x) => /24 portes ouvertes/.test(x.texte) && /^Bravo/.test(x.sujet));
-  assert.match(grand.texte, /Votre cadeau, la DeLorean radio-commandée de Retour vers le futur, vous attend/);
-  assert.doesNotMatch(grand.texte, /Votre code/);
+  assert.match(grand.texte, /Votre code : SESSION-ESC-1/);
+  assert.match(grand.texte, /Ce code vous offre 1 session d’escape game pour 2 à 6 joueurs, salle au choix\. Il offre la session entière à toute votre équipe/);
+  assert.doesNotMatch(grand.texte, /Votre cadeau/);
   assert.match(assidus.texte, /Votre code : SESSION-1/);
   assert.match(assidus.texte, /Ce code vous offre 1 session de quiz pour 4 à 16 candidats, émission au choix/);
   const bilan = fin.find((x) => /^\[Avent\]/.test(x.sujet));
   assert.match(bilan.sujet, /tout est parti tout seul/);
   assert.match(bilan.texte, /Grand tirage : Joueur1/); assert.match(bilan.texte, /Tirage des 24 portes : Joueur1/);
-  assert.match(bilan.texte, /Codes en réserve : quiz 0, escape 0, session 0/);
+  assert.match(bilan.texte, /Codes en réserve : places de quiz 20, places d’escape game 0, session de quiz 0, session d’escape game 0\./);
   const b = (await m.appel('GET', 'equipe/bilan', { code: CODE })).corps;
-  assert.deepEqual(b.besoins, { quiz: 0, escape: 0, session: 0 }); assert.equal(b.codesDonnes, 25);
+  assert.deepEqual(b.besoins, { quiz: 0, escape: 0, session: 0, sessionEscape: 0 }); assert.equal(b.codesDonnes, 26);
+  assert.equal(b.pasDePerdant.joueurs, 0, 'le seul joueur a gagné : personne à consoler');
   // en janvier : plus rien ne tourne
   m.a('2027-01-15T12:05:00+01:00');
   assert.deepEqual(await m.passer(), { tirages: 0, envoyes: 0, echecs: 0, rapport: false });
+});
+
+test('pas de perdant : le 25, chaque joueur sans gain reçoit 1 place de quiz pour 1 joueur, jamais sans code, jamais deux fois', async () => {
+  const m = await monde({ date: '2026-12-24T10:00:00+01:00', codes: { escape: 'ESC-BBB1', session: 'SESSION-1', sessionEscape: 'SESSION-ESC-1' } });
+  const jetons = {};
+  for (let n = 1; n <= 6; n++) { const r = await m.jouer(n, 24); assert.equal(r.statut, 200); jetons[n] = r.corps.jeton; }
+  m.a('2026-12-25T12:05:00+01:00');
+  const r = await m.passer();
+  assert.equal(r.envoyes, 2, 'le gagnant de la porte 24 et celui du grand tirage ; pas encore de code de quiz pour les autres');
+  const t24 = await m.stockage.lire('tirages/24'), grand = await m.stockage.lire('tirages/grand'), assidus = await m.stockage.lire('tirages/assidus');
+  assert.notEqual(t24.gagnant.id, grand.gagnant.id, 'le grand tirage écarte le gagnant de la porte 24');
+  assert.equal(grand.dejaGagnants, 1); assert.equal(grand.billets, 12);
+  assert.equal(assidus.gagnant, null, 'personne n’a ouvert les 24 portes');
+  const bilan = m.courrier.boite.find((x) => /^\[Avent\]/.test(x.sujet));
+  assert.match(bilan.texte, /Pas de perdant : 4 joueurs sans aucun gain reçoivent 1 place de quiz pour 1 joueur · 0 mail parti, les autres partent tout seuls/);
+  assert.match(bilan.texte, /Pas de perdant : 4 joueurs attendent leur place de quiz, il manque des codes/);
+  let b = (await m.appel('GET', 'equipe/bilan', { code: CODE })).corps;
+  assert.equal(b.pasDePerdant.fait, true); assert.equal(b.pasDePerdant.joueurs, 4); assert.equal(b.pasDePerdant.attendentCode, 4); assert.equal(b.besoins.quiz, 4);
+  assert.equal(m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).length, 0, 'jamais de mail sans code');
+  // l'équipe ajoute des codes ; deux passages en même temps : chacun reçoit UN code, aucun code ne part deux fois
+  await m.appel('POST', 'equipe/codes', { code: CODE, corps: { type: 'quiz', codes: 'PDP-1 PDP-2 PDP-3 PDP-4 PDP-5' } });
+  m.a('2026-12-25T12:35:00+01:00');
+  const [x, y] = await Promise.all([m.moteur.livrer(SITE), m.moteur.livrer(SITE)]);
+  assert.equal(x.envoyes + y.envoyes, 4);
+  const pdp = m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet));
+  assert.equal(pdp.length, 4);
+  assert.equal(new Set(pdp.map((x) => x.a)).size, 4, 'quatre personnes différentes');
+  assert.equal(new Set(pdp.map((x) => /Votre code : (\S+)/.exec(x.texte)[1])).size, 4, 'quatre codes différents');
+  assert.ok(!pdp.some((x) => x.a === t24.gagnant.email || x.a === grand.gagnant.email), 'les gagnants ne la reçoivent pas');
+  assert.match(pdp[0].texte, /il n’y a pas de perdant : voici 1 place de quiz pour 1 joueur, offerte/);
+  assert.match(pdp[0].texte, /Il vaut pour une seule personne, pas pour une session entière/);
+  assert.match(pdp[0].texte, /Il est valable 12 mois\. Besoin de le prolonger/);
+  // plus rien ne repart ensuite
+  m.a('2026-12-25T13:05:00+01:00'); await m.passer(); m.a('2026-12-25T18:05:00+01:00'); await m.passer();
+  assert.equal(m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).length, 4);
+  b = (await m.appel('GET', 'equipe/bilan', { code: CODE })).corps;
+  assert.equal(b.codes.quiz, 1); assert.equal(b.pasDePerdant.envoyees, 4); assert.equal(b.besoins.quiz, 0);
+  // la page le dit au joueur concerné, pas aux gagnants
+  const etatDe = async (n) => (await m.moteur.gerer(new Request(SITE + '/api/avent/etat', { headers: { 'x-avent-jeton': jetons[n] } }), { ip: '1.1.1.1' })).json();
+  const num = (email) => email.replace(/^joueur(\d+)@.*$/, '$1');
+  const consoles = Object.keys(jetons).filter((n) => n !== num(t24.gagnant.email) && n !== num(grand.gagnant.email));
+  assert.deepEqual((await etatDe(consoles[0])).moi.pasDePerdant, { envoye: true });
+  assert.equal((await etatDe(num(grand.gagnant.email))).moi.pasDePerdant, undefined);
+  // et la publication du 25 aussi
+  const fil = (await m.appel('GET', 'annonces')).corps;
+  assert.match(fil.publications.find((p) => p.id === 'avent2026-post-25').texte, /🎁 Et comme il n’y a pas de perdant, tous les autres joueurs reçoivent 1 place de quiz pour 1 joueur\./);
 });
 
 test('questions et réclamations : gardées, transmises à l’équipe, accusé de réception, pas d’abus possible', async () => {
@@ -220,9 +274,9 @@ test('réseaux sociaux : le fil des publications suit le jeu', async () => {
   assert.equal(f.publications.length, 49, '24 stories + 24 publications + celle du 25');
   assert.equal(new Set(f.publications.map((p) => p.id)).size, 49);
   const pub = (id) => f.publications.find((p) => p.id === id);
-  assert.deepEqual(pub('avent2026-story-04'), { id: 'avent2026-story-04', jour: 4, format: 'story', reseaux: ['instagram', 'facebook'], quand: '2026-12-04T08:00:00+01:00', image: SITE + '/img/avent/story-04.jpg', texte: 'Porte 4 du calendrier de l’Avent : à gagner aujourd’hui, 1 place de quiz + le jeu Black Stories.', pret: true });
+  assert.deepEqual(pub('avent2026-story-04'), { id: 'avent2026-story-04', jour: 4, format: 'story', reseaux: ['instagram', 'facebook'], quand: '2026-12-04T08:00:00+01:00', image: SITE + '/img/avent/story-04.jpg', texte: 'Porte 4 du calendrier de l’Avent : à gagner aujourd’hui, 1 place de quiz pour 1 joueur + le jeu Black Stories.', pret: true });
   assert.equal(pub('avent2026-post-01').pret, true);
-  assert.match(pub('avent2026-post-01').texte, /À gagner aujourd’hui : 1 place de quiz \+ le jeu Dossiers Criminels Pocket\./);
+  assert.match(pub('avent2026-post-01').texte, /À gagner aujourd’hui : 1 place de quiz pour 1 joueur \+ le jeu Dossiers Criminels Pocket\./);
   assert.doesNotMatch(pub('avent2026-post-01').texte, /bravo/i);
   assert.equal(pub('avent2026-post-05').pret, false, 'le tirage de la porte 4 n’a pas encore eu lieu');
   m.a('2026-12-05T12:16:00+01:00');
@@ -230,7 +284,8 @@ test('réseaux sociaux : le fil des publications suit le jeu', async () => {
   const p5 = pub('avent2026-post-05');
   assert.equal(p5.pret, true); assert.equal(p5.quand, '2026-12-05T12:15:00+01:00'); assert.equal(p5.image, SITE + '/img/avent/post-05.jpg');
   assert.match(p5.texte, /^🎄 Porte 5 du calendrier de l’Avent GAMEDOOR·41/);
-  assert.match(p5.texte, /🏆 Porte 4 : bravo à Joueur1 \(jo•••@e•••\), qui remporte 1 place de quiz \+ le jeu Black Stories !/);
+  assert.match(p5.texte, /🏆 Porte 4 : bravo à Joueur1 \(jo•••@e•••\), qui remporte 1 place de quiz pour 1 joueur \+ le jeu Black Stories !/);
+  assert.match(p5.texte, /pas de perdant : le 25 décembre, chaque joueur qui n’a rien gagné reçoit 1 place de quiz pour 1 joueur/);
   assert.doesNotMatch(JSON.stringify(f), /joueur1@exemple|QUIZ-AAA/, 'ni adresse ni code dans le fil public');
   assert.equal(pub('avent2026-post-25').pret, false);
   assert.ok(p5.texte.length < 2200, 'légende sous la limite d’Instagram');

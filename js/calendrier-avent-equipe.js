@@ -87,7 +87,7 @@
       el('p', { style: 'margin:0 0 4px;' }, [el('strong', { text: t.gagnant.prenom }), ' ', el('span', { class: 'etiquette ' + (t.prevenu ? 'ok' : 'attente'), text: t.prevenu ? 'Prévenu' : 'À prévenir' })]),
       el('p', { class: 'mail', style: 'margin:0;' , text: t.gagnant.email }),
       el('p', { class: 'note', style: 'color:' + (t.mail && t.mail.etat === 'envoye' && !t.mail.sansCode ? '#39c26b' : '#ffd740') + ';', text: etatMail(t) }),
-      el('p', { class: 'note', text: 'Tiré au sort parmi ' + (t.billets != null && cle === 'grand' ? t.billets + ' tickets (' + t.participants + ' joueurs)' : t.participants + ' participant' + (t.participants > 1 ? 's' : '')) + '. Affiché sur le site : ' + t.gagnant.etiquette }),
+      el('p', { class: 'note', text: 'Tiré au sort parmi ' + (t.billets != null && cle === 'grand' ? t.billets + ' tickets (' + t.participants + ' joueurs)' : t.participants + ' participant' + (t.participants > 1 ? 's' : '')) + (t.dejaGagnants ? ', sans ' + t.dejaGagnants + ' qui avai' + (t.dejaGagnants > 1 ? 'ent' : 't') + ' déjà gagné' : '') + '. Affiché sur le site : ' + t.gagnant.etiquette }),
       el('div', { class: 'lot' }, [champ, el('button', { type: 'button', text: 'Enregistrer le lot', onclick: function (ev) { action({ cle: cle, action: 'lot', valeur: champ.value }, ev.currentTarget); } })]),
       el('div', { class: 'ligne', style: 'margin-top:10px;' }, [
         el('a', { href: mailGagnant(t, champ.value, quoi), class: 'bouton-mail', role: 'button', style: 'display:inline-flex;align-items:center;min-height:46px;padding:8px 16px;border-radius:9px;background:#ff6b00;color:#000;font-weight:700;text-decoration:none;', text: 'Écrire au gagnant', onclick: function (ev) { ev.currentTarget.href = mailGagnant(t, champ.value, quoi); } }),
@@ -105,12 +105,17 @@
       : 'Mails automatiques : PAS branchés sur ce site (il manque la clé Brevo). Les tirages et l’affichage des gagnants se font tout seuls, mais les gagnants sont à prévenir avec « Écrire au gagnant ».';
     $('auto-etat').style.color = b.courrier ? '#39c26b' : '#ff5a6b';
     $('bilan-mail').hidden = !b.courrier;
-    var noms = { quiz: 'Places de quiz', escape: 'Places d’escape game', session: 'Session de quiz (tirage des 24 portes)' };
+    var noms = { quiz: 'Places de quiz (1 joueur)', escape: 'Places d’escape game (1 joueur)', session: 'Session de quiz complète (tirage des 24 portes)', sessionEscape: 'Session d’escape game complète (grand tirage)' };
     var zone = $('codes-etat'); zone.innerHTML = '';
-    ['quiz', 'escape', 'session'].forEach(function (t) {
-      var reste = b.codes[t], besoin = b.besoins[t], manque = Math.max(0, besoin - reste);
-      zone.appendChild(el('p', { class: manque ? 'manque' : '', text: noms[t] + ' : ' + reste + ' en réserve, ' + besoin + ' encore à donner d’ici la fin' + (manque ? ' → IL EN MANQUE ' + manque + '.' : ' → c’est bon.') }));
+    var pdp = b.pasDePerdant || { joueurs: 0 };
+    ['quiz', 'escape', 'session', 'sessionEscape'].forEach(function (t) {
+      var reste = b.codes[t] || 0, besoin = b.besoins[t] || 0, manque = Math.max(0, besoin - reste);
+      var dont = t === 'quiz' && pdp.aDonner ? ' (dont ' + pdp.aDonner + ' pour « pas de perdant »' + (pdp.estimation ? ', à ce jour' : '') + ')' : '';
+      zone.appendChild(el('p', { class: manque ? 'manque' : '', text: noms[t] + ' : ' + reste + ' en réserve, ' + besoin + ' encore à donner d’ici la fin' + dont + (manque ? ' → IL EN MANQUE ' + manque + '.' : ' → c’est bon.') }));
     });
+    zone.appendChild(el('p', { class: 'note', text: pdp.fait
+      ? 'Pas de perdant : ' + pdp.joueurs + ' joueur(s) sans aucun gain reçoivent 1 place de quiz pour 1 joueur · ' + pdp.envoyees + ' mail(s) parti(s)' + (pdp.attendentCode ? ' · ' + pdp.attendentCode + ' attendent un code' : '') + (pdp.echecs ? ' · ' + pdp.echecs + ' mail(s) en échec, nouvel essai tout seul' : '') + '.'
+      : 'Pas de perdant : le 25 décembre à midi, chaque joueur qui n’a gagné aucun tirage recevra 1 place de quiz pour 1 joueur, par mail, tout seul. À ce jour : ' + pdp.joueurs + ' joueur(s) concerné(s). Prévoyez autant de codes de quiz en plus.' }));
     var q = $('questions'); q.innerHTML = '';
     var ouvertes = b.questions.filter(function (x) { return x.etat === 'ouverte'; }).length;
     q.appendChild(el('p', { class: 'note', style: 'margin-top:0;', text: b.questions.length ? ouvertes + ' en attente sur ' + b.questions.length + '. Chaque message arrive aussi par mail à ' + b.contact + ' : « Répondre » écrit directement à la personne.' : 'Aucun message pour le moment. Ils arriveront ici et par mail à ' + b.contact + '.' }));

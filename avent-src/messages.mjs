@@ -26,10 +26,21 @@ function habiller(titre, blocs, origine) {
     '</div></body></html>';
 }
 
-const QUOI = { quiz: '1 place de quiz', escape: '1 place d’escape game', session: '1 session de quiz pour 4 à 16 candidats, émission au choix' };
+const QUOI = {
+  quiz: '1 place de quiz pour 1 joueur', escape: '1 place d’escape game pour 1 joueur',
+  session: '1 session de quiz pour 4 à 16 candidats, émission au choix', sessionEscape: '1 session d’escape game pour 2 à 6 joueurs, salle au choix',
+};
+/** Ce que vaut le code, sans laisser de place au doute (une place = une personne ; une session = tout le groupe). */
+const PRECISION = {
+  quiz: 'Il vaut pour une seule personne, pas pour une session entière : les autres joueurs de votre groupe paient leur place au tarif habituel.',
+  escape: 'Il vaut pour une seule personne, pas pour une session entière : les autres joueurs de votre équipe paient leur place au tarif habituel. Salle au choix : Garde à Vue, Psychiatric ou Back to the 80’s.',
+  session: 'Il offre la session entière à tout votre groupe, de 4 à 16 candidats : choisissez l’émission en réservant.',
+  sessionEscape: 'Il offre la session entière à toute votre équipe, de 2 à 6 joueurs, dans la salle de votre choix : Garde à Vue, Psychiatric ou Back to the 80’s.',
+};
+const PROLONGER = 'Besoin de le prolonger ou d’une demande particulière ? Écrivez-nous à contact@gamedoor41.fr avec le code.';
 
 /**
- * Mail au gagnant. `tirage` : 'jour' | 'grand' | 'assidus' ; `place` : 'quiz' | 'escape' | 'session' | null ;
+ * Mail au gagnant. `tirage` : 'jour' | 'grand' | 'assidus' ; `place` : 'quiz' | 'escape' | 'session' | 'sessionEscape' | null ;
  * `code` : le code à saisir à la réservation (null si la réserve de codes est vide) ;
  * `suite` : vrai pour le second mail qui apporte un code promis dans le premier.
  */
@@ -47,10 +58,10 @@ export function mailGagnant({ prenom, tirage = 'jour', jour, participants, lot, 
   if (place && code) {
     lignes.push('Votre code : ' + code);
     blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + '</span>' });
-    dire('Ce code vous offre ' + QUOI[place] + '. Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable 12 mois.',
-      'Ce code vous offre <strong>' + h(QUOI[place]) + '</strong>. Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable 12 mois.');
+    dire('Ce code vous offre ' + QUOI[place] + '. ' + PRECISION[place] + ' Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + PROLONGER,
+      'Ce code vous offre <strong>' + h(QUOI[place]) + '</strong>. ' + h(PRECISION[place]) + ' Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + h(PROLONGER));
   } else if (place && !suite) {
-    dire('Le code de votre ' + (place === 'session' ? 'session' : 'place') + ' vous arrive dans un second mail, sous 48 heures.');
+    dire('Le code de votre ' + (/^session/.test(place) ? 'session' : 'place') + ' vous arrive dans un second mail, sous 48 heures.');
   }
   if (objet && !suite) dire('Votre cadeau, ' + objet + ', vous attend à l’accueil de GAMEDOOR·41, ' + ADRESSE + '. Venez le chercher le jour de votre session, ou répondez à ce mail pour nous dire quand vous passez. Il est à retirer avant le ' + RETRAIT_JEUX + '.',
     'Votre cadeau, <strong>' + h(objet) + '</strong>, vous attend à l’accueil de GAMEDOOR·41, ' + h(ADRESSE) + '. Venez le chercher le jour de votre session, ou répondez à ce mail pour nous dire quand vous passez. Il est à retirer avant le ' + h(RETRAIT_JEUX) + '.');
@@ -59,6 +70,22 @@ export function mailGagnant({ prenom, tirage = 'jour', jour, participants, lot, 
   dire('À très vite,');
   dire('L’équipe GAMEDOOR·41');
   return { sujet, texte: lignes.join('\n\n'), html: habiller(suite ? 'Voici votre code' : 'Vous avez gagné !', blocs, origine) };
+}
+
+/** « Pas de perdant » : la place de quiz offerte le 25 décembre à chaque joueur qui n'a gagné aucun tirage. */
+export function mailPasDePerdant({ prenom, code, essai = false, origine = 'https://gamedoor41.fr' }) {
+  const lignes = [], blocs = [];
+  const dire = (texte, html) => { lignes.push(texte); blocs.push(html || h(texte)); };
+  dire('Bonjour ' + prenom + ',');
+  dire('Merci d’avoir joué à notre calendrier de l’Avent ! Le tirage au sort ne vous a pas désigné cette fois, mais chez nous il n’y a pas de perdant : voici ' + QUOI.quiz + ', offerte.');
+  lignes.push('Votre code : ' + code);
+  blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + '</span>' });
+  dire('Ce code vous offre ' + QUOI.quiz + ' Buzz Your Brain. ' + PRECISION.quiz + ' Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + PROLONGER,
+    'Ce code vous offre <strong>' + h(QUOI.quiz) + '</strong> Buzz Your Brain. ' + h(PRECISION.quiz) + ' Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + h(PROLONGER));
+  dire('Les lots ne sont ni échangeables ni remboursables. Une question ? Répondez simplement à ce mail.');
+  dire('Joyeux Noël, et à très vite à Mondeville,');
+  dire('L’équipe GAMEDOOR·41');
+  return { sujet: (essai ? '[ESSAI] ' : '') + 'Pas de perdant : votre place de quiz offerte (calendrier de l’Avent GAMEDOOR·41)', texte: lignes.join('\n\n'), html: habiller('Pas de perdant !', blocs, origine) };
 }
 
 /** Accusé de réception envoyé à la personne qui pose une question ou fait une réclamation. */
@@ -98,7 +125,7 @@ const fin = (lot, signe) => (/[?!.]$/.test(lot) ? '' : signe);
 
 /** Légende de la publication du jour (12 h 15) : le lot du jour + le gagnant de la veille. */
 export function legendeJour({ jour, lot, veille }) {
-  const l = ['🎄 Porte ' + jour + ' du calendrier de l’Avent GAMEDOOR·41', '🎁 À gagner aujourd’hui : ' + lot + fin(lot, '.'), 'Un défi d’une minute, une seule réponse, et vous êtes dans le tirage au sort de demain midi. Bonne ou mauvaise réponse, tout le monde a sa chance.'];
+  const l = ['🎄 Porte ' + jour + ' du calendrier de l’Avent GAMEDOOR·41', '🎁 À gagner aujourd’hui : ' + lot + fin(lot, '.'), 'Un défi d’une minute, une seule réponse, et vous êtes dans le tirage au sort de demain midi. Bonne ou mauvaise réponse, tout le monde a sa chance. Et pas de perdant : le 25 décembre, chaque joueur qui n’a rien gagné reçoit 1 place de quiz pour 1 joueur.'];
   if (veille && veille.gagnant) l.push('🏆 Porte ' + veille.jour + ' : bravo à ' + veille.gagnant + ', qui remporte ' + veille.lot + fin(veille.lot, ' !'));
   l.push('👉 Pour jouer : ' + LIEN + ' (lien dans notre bio). Jeu gratuit, jusqu’au 24 décembre.');
   l.push(MOTS);
@@ -108,9 +135,10 @@ export function legendeJour({ jour, lot, veille }) {
 export function legendeFin({ veille, grand, assidus }) {
   const l = ['🎄 Les 24 portes de GAMEDOOR·41 sont toutes ouvertes. Merci d’avoir joué avec nous tout le mois !'];
   if (veille && veille.gagnant) l.push('🏆 Porte 24 : bravo à ' + veille.gagnant + ', qui remporte ' + veille.lot + fin(veille.lot, '.'));
-  if (grand && grand.gagnant) l.push('🚗 Grand tirage : ' + grand.gagnant + ' remporte ' + grand.lot + '.');
+  if (grand && grand.gagnant) l.push('🔐 Grand tirage : ' + grand.gagnant + ' remporte ' + grand.lot + '.');
   if (assidus && assidus.gagnant) l.push('⭐ Tirage des 24 portes ouvertes : ' + assidus.gagnant + ' remporte ' + assidus.lot + '.');
-  l.push('Les gagnants ont reçu un mail. Joyeux Noël à toutes et à tous, et à très vite à Mondeville !');
+  l.push('🎁 Et comme il n’y a pas de perdant, tous les autres joueurs reçoivent 1 place de quiz pour 1 joueur.');
+  l.push('Chacun a reçu son mail. Joyeux Noël à toutes et à tous, et à très vite à Mondeville !');
   l.push(MOTS);
   return l.join('\n\n');
 }

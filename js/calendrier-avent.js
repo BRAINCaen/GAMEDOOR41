@@ -218,7 +218,8 @@
       var f = etat.finaux;
       bandeau.appendChild(el('p', { class: 'av-joueur-finaux' }, [
         f.grand ? el('span', {}, [el('b', { text: 'Grand tirage : ' }), f.grand.gagnant ? f.grand.gagnant + (f.grand.lot ? ' gagne ' + f.grand.lot : '') : 'aucun participant']) : null,
-        f.assidus ? el('span', {}, [el('b', { text: 'Tirage des 24 portes : ' }), f.assidus.gagnant ? f.assidus.gagnant + (f.assidus.lot ? ' gagne ' + f.assidus.lot : '') : 'personne n’a ouvert les 24 portes']) : null
+        f.assidus ? el('span', {}, [el('b', { text: 'Tirage des 24 portes : ' }), f.assidus.gagnant ? f.assidus.gagnant + (f.assidus.lot ? ' gagne ' + f.assidus.lot : '') : 'personne n’a ouvert les 24 portes']) : null,
+        moi && moi.pasDePerdant ? el('span', {}, [el('b', { text: 'Pas de perdant : ' }), 'vous recevez 1 place de quiz pour 1 joueur' + (moi.pasDePerdant.envoye ? ', partie par mail.' : ', elle arrive par mail.')]) : null
       ]));
     }
   }
