@@ -6,8 +6,7 @@
   <title>Défi de Noël — écran de l'équipe | GAMEDOOR·41</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="/css/defi-noel.css?v=1">
+  <link rel="stylesheet" href="/css/defi-noel.css?v=2">
   <style>
     .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9em,1fr));gap:12px;margin:18px 0}
     .stat{background:var(--card);border-radius:10px;padding:14px}
@@ -90,7 +89,7 @@
   }
   function inscrits(){
     if(!B.entreprises.length)return '<p>Aucune inscription pour l\'instant. Le lien à partager : <b>gamedoor41.fr/defi-noel/</b></p>';
-    return '<div class="scroll"><table><thead><tr><th>Entreprise</th><th>Référent</th><th>Contact</th><th>Joueurs</th><th>Connu par</th><th>LinkedIn</th><th>Inscrite le</th><th>Lien perso</th></tr></thead><tbody>'+B.entreprises.map(function(e){return '<tr><td><b>'+esc(e.entreprise)+'</b><br>'+esc(e.ville)+'</td><td>'+esc(e.prenom+' '+e.nom)+'<br><small>'+esc(e.fonction)+'</small></td><td>'+esc(e.email)+'<br>'+esc(e.telephone)+'</td><td class="n">'+e.joueurs+'</td><td>'+esc(e.source)+'</td><td>'+(e.linkedin?'oui':'non')+'</td><td>'+date(e.cree)+'</td><td><button class="btn-s" data-copie="'+esc(e.lien)+'">Copier</button></td></tr>';}).join('')+'</tbody></table></div>';
+    return '<div class="scroll"><table><thead><tr><th>Entreprise</th><th>Référent</th><th>Contact</th><th>Joueurs</th><th>Connu par</th><th>LinkedIn</th><th>Offres par mail</th><th>Inscrite le</th><th>Lien perso</th><th></th></tr></thead><tbody>'+B.entreprises.map(function(e){var bas=function(k){return '<button class="btn-s" style="background:'+(e[k]?'#1d7a46':'#8a93a5')+'" data-accord="'+k+'" data-id="'+e.id+'" data-v="'+(e[k]?1:0)+'" title="Cliquer pour changer (à la demande de l\'entreprise)">'+(e[k]?'oui':'non')+'</button>';};return '<tr><td><b>'+esc(e.entreprise)+'</b><br>'+esc(e.ville)+'</td><td>'+esc(e.prenom+' '+e.nom)+'<br><small>'+esc(e.fonction)+'</small></td><td>'+esc(e.email)+'<br>'+esc(e.telephone)+'</td><td class="n">'+e.joueurs+'</td><td>'+esc(e.source)+'</td><td>'+bas('linkedin')+'</td><td>'+bas('offres')+'</td><td>'+date(e.cree)+'</td><td><button class="btn-s" data-copie="'+esc(e.lien)+'">Copier</button></td><td><button class="btn-s" style="background:#BE1B1B" data-suppr="'+e.id+'" data-nom="'+esc(e.entreprise)+'">Supprimer</button></td></tr>';}).join('')+'</tbody></table></div><p class="notice">Une entreprise demande l\'effacement de ses données ? Bouton « Supprimer » : l\'entreprise, son lien et toutes ses réponses disparaissent définitivement. Elle retire un accord ? Cliquez sur « oui » pour le passer à « non ». Pour vos appels de janvier, ne rappelez pas une entreprise qui a demandé à ne plus être contactée.</p>';
   }
   var NOMS={enigme:'Énigme',son:'Son',q1:'Q1',q2:'Q2',q3:'Q3'};
   function piece(n){
@@ -117,6 +116,8 @@
     return h+'<div id="emsg"></div>';
   }
   function brancher(){
+    document.querySelectorAll('[data-suppr]').forEach(function(b){b.onclick=function(){if(!confirm('Supprimer définitivement '+b.dataset.nom+' et toutes ses réponses ?'))return;api('supprimer',{id:b.dataset.suppr}).then(function(){charger();}).catch(function(j){alert((j&&j.message)||'Suppression impossible.');});};});
+    document.querySelectorAll('[data-accord]').forEach(function(b){b.onclick=function(){var c={id:b.dataset.id};c[b.dataset.accord]=b.dataset.v!=='1';api('modifier',c).then(function(){charger();});};});
     document.querySelectorAll('[data-copie]').forEach(function(b){b.onclick=function(){try{navigator.clipboard.writeText(b.dataset.copie);b.textContent='Copié';}catch(e){prompt('Lien',b.dataset.copie);}};});
     document.querySelectorAll('.pt button').forEach(function(b){b.onclick=function(){var max=+b.dataset.max,v=(+b.dataset.v+1)%(max+1);api('valider',{n:+b.dataset.n,id:b.dataset.id,epreuve:b.dataset.ep,points:v}).then(function(){charger();});};});
     document.querySelectorAll('[data-envoi]').forEach(function(b){b.onclick=function(){
@@ -126,7 +127,7 @@
     };});
   }
   document.getElementById('csv').onclick=function(){
-    var cols=['entreprise','ville','prenom','nom','fonction','email','telephone','joueurs','source','linkedin','cree','total'];
+    var cols=['entreprise','ville','prenom','nom','fonction','email','telephone','joueurs','source','linkedin','offres','cree','total'];
     var lignes=[cols.concat(['source CRM']).join(';')].concat(B.entreprises.map(function(e){var tot=(B.classement.find(function(l){return l.id===e.id;})||{}).total||0;e.total=tot;return cols.map(function(c){return '"'+String(e[c]==null?'':e[c]).replace(/"/g,'""')+'"';}).concat(['"Calendrier de l\'Avent 2026"']).join(';');}));
     var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+lignes.join('\r\n')],{type:'text/csv;charset=utf-8'}));a.download='defi-noel-inscrits.csv';a.click();
   };
