@@ -1,0 +1,104 @@
+/* Défi de Noël des entreprises 2026 — pages /defi-noel/ */
+:root{--navy:#1B2A4E;--navy2:#24365f;--navy3:#2f4a80;--red:#BE1B1B;--yel:#FFD740;--kraft:#e3c48f;--ink:#14203b;--soft:#5a6478;--line:#dfe3ea;--card:#f4f6fa;--bg:#fff;--ok:#1d7a46}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Barlow,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Barlow Condensed",Oswald,sans-serif;line-height:1.05;margin:0}
+h1{font-size:clamp(36px,5.4vw,60px);font-weight:800}
+h2{font-size:clamp(28px,3.6vw,40px);font-weight:800;margin-bottom:12px}
+h3{font-size:22px;font-weight:700;margin-bottom:6px}
+p{margin:0 0 12px}
+a{color:inherit}
+.band{padding-block:clamp(30px,5vw,64px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto}
+.top{background:var(--navy);padding-block:14px}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.top img{height:28px;width:auto;display:block}
+.top a.lien{color:#cfd8ea;font-size:14px;text-decoration:none;white-space:nowrap}
+.hero{background:var(--navy);color:#fff;padding-top:clamp(18px,3vw,40px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.stamp{display:inline-block;border:3px solid #ff6b6b;color:#ff8a80;font:800 18px "Barlow Condensed",sans-serif;padding:2px 10px;transform:rotate(-3deg);margin-bottom:18px}
+.lead{font-size:clamp(17px,1.6vw,20px);color:#dfe6f5;margin-top:16px;max-width:60ch}
+.lead b{color:var(--yel)}
+.cta{display:inline-block;background:var(--red);color:#fff;font:700 18px Barlow,sans-serif;padding:15px 26px;border-radius:8px;text-decoration:none;border:0;cursor:pointer}
+.cta:hover{filter:brightness(1.08)}
+.cta:focus-visible,.in:focus-visible,button:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.hero .cta{margin-top:24px}
+.hero small{display:block;color:#b9c6e0;margin-top:10px;font-size:14px}
+.dossier{background:var(--kraft);color:#2b1d08;border-radius:6px 22px 6px 6px;padding:22px;position:relative;box-shadow:0 2px 0 #b8955c;transform:rotate(1deg)}
+.dossier .onglet{position:absolute;top:-18px;left:22px;background:var(--kraft);border-radius:8px 8px 0 0;padding:4px 16px;font:800 14px "Barlow Condensed",sans-serif;color:#7a1010}
+.dossier .tamp{position:absolute;right:18px;top:16px;border:3px solid #9b1515;color:#9b1515;font:800 18px "Barlow Condensed",sans-serif;padding:0 8px;transform:rotate(8deg)}
+.dossier h3{font-size:26px;color:#2b1d08;margin:6px 0 10px;padding-right:110px}
+.dossier dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:15px}
+.dossier dt{font-weight:700}
+.dossier dd{margin:0}
+.dossier .code{font:700 16px/1.4 ui-monospace,Consolas,monospace;background:#f3e2bf;border-radius:4px;padding:10px;margin-top:14px;overflow-wrap:anywhere}
+.chiffres{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:clamp(28px,4vw,44px);padding-top:22px;border-top:1px solid #34497a}
+.chiffres b{display:block;font:800 clamp(28px,3.4vw,40px) "Barlow Condensed",sans-serif;color:var(--yel);line-height:1}
+.chiffres span{font-size:15px;color:#dfe6f5}
+.etapes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.etape{border-top:4px solid var(--red);padding-top:14px}
+.etape .date{font:800 20px "Barlow Condensed",sans-serif;color:var(--red)}
+.etape p{font-size:15px;color:var(--soft);margin:4px 0 0}
+.epreuves{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.ep-c{background:var(--card);border-radius:10px;padding:18px}
+.ep-c .pts{float:right;font:800 18px "Barlow Condensed",sans-serif;color:var(--red)}
+.ep-c p{font-size:15px;margin:0;color:var(--soft)}
+.lot{background:var(--yel);color:var(--navy)}
+.lot .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center}
+.lot img{width:100%;border-radius:10px;display:block;aspect-ratio:3/2;object-fit:cover}
+.lot h2{font-size:clamp(30px,4vw,46px)}
+.lot ul{padding-left:20px;margin:12px 0 0}
+.form-band{background:var(--card)}
+.form-band .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,56px);align-items:start}
+form{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:clamp(18px,3vw,28px)}
+.champs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.champ{display:grid;gap:5px}
+.champ.large{grid-column:1/-1}
+label{font-weight:600;font-size:15px}
+.in{width:100%;border:1px solid #b9c1cf;border-radius:8px;padding:11px 12px;font:16px Barlow,system-ui,sans-serif;background:#fff;color:var(--ink)}
+.case{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px;margin-top:14px}
+.case input{width:20px;height:20px;margin:2px 0 0;flex:none;accent-color:var(--red)}
+.piege{position:absolute;left:-9999px}
+.msg{margin-top:14px;padding:12px 14px;border-radius:8px;font-size:15px}
+.msg.err{background:#fde8e8;color:#8a1212}
+.msg.ok{background:#e3f4ea;color:#0e4f2a}
+.merci{text-align:left}
+.merci h3{font-size:30px;margin-bottom:10px}
+.lienbox{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.lienbox input{flex:1 1 260px}
+.btn-s{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:11px 16px;font:600 15px Barlow,sans-serif;cursor:pointer}
+.faq details{border-top:1px solid var(--line);padding:14px 0}
+.faq summary{font-weight:700;cursor:pointer;font-size:17px}
+.faq details p{margin:8px 0 0;color:var(--soft)}
+.pied{background:var(--navy);color:#cfd8ea;font-size:14px}
+.pied .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.pied a{color:#fff}
+/* page de jeu */
+.jeu{max-width:760px;margin:0 auto}
+.bandeau-ent{background:var(--navy);color:#fff}
+.bandeau-ent small{display:block;color:#b9c6e0;font-size:14px}
+.bandeau-ent b{font:800 clamp(26px,4vw,36px) "Barlow Condensed",sans-serif}
+.minuteur{background:var(--yel);color:var(--navy);font-weight:700;font-size:15px;padding-block:8px}
+.minuteur .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.epreuve{border:1px solid var(--line);border-radius:12px;padding:clamp(16px,3vw,24px);margin-bottom:16px}
+.epreuve h2{font-size:clamp(24px,3vw,30px);display:flex;justify-content:space-between;gap:12px}
+.epreuve h2 span{color:var(--red);white-space:nowrap;font-size:.8em}
+.epreuve .enonce{margin-bottom:12px}
+.epreuve .enonce .code{font:700 17px/1.5 ui-monospace,Consolas,monospace;background:var(--kraft);color:#2b1d08;border-radius:6px;padding:12px;overflow-wrap:anywhere}
+.lecteur{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:10px}
+.lecteur button{width:48px;height:48px;border-radius:50%;background:var(--red);border:0;color:#fff;font-size:17px;cursor:pointer;flex:none}
+.lecteur .barre{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.lecteur .barre i{display:block;height:100%;width:0;background:var(--red)}
+.transcription summary{cursor:pointer;color:var(--soft);font-size:14px}
+.transcription p{background:var(--card);border-radius:8px;padding:10px;margin:8px 0 0;font-size:15px}
+.quiz-q{margin:14px 0 6px;font-weight:600}
+.envoi{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.envoi .jeu{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.envoi p{margin:0;font-size:14px;color:var(--soft)}
+.attente{text-align:center;padding-block:60px}
+.attente .gros{font:800 clamp(40px,7vw,72px) "Barlow Condensed",sans-serif;color:var(--red)}
+.partage-note{background:#fff7d6;border:1px solid #f0d77a;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:15px}
+.essai{background:#3b0d0d;color:#ffd7d7;font-size:13px;padding:6px 16px;text-align:center}
+@media(max-width:860px){.hero .wrap,.lot .wrap,.form-band .wrap{grid-template-columns:minmax(0,1fr)}.dossier{transform:none;margin-top:20px}.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.etapes,.epreuves{grid-template-columns:minmax(0,1fr)}.champs{grid-template-columns:minmax(0,1fr)}.dossier h3{padding-right:0;margin-top:34px}}

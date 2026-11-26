@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Le dossier Père Noël | GAMEDOOR·41</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1B2A4E">
+  <meta property="og:title" content="Le dossier Père Noël : aidez-nous à le décoder">
+  <meta property="og:image" content="https://gamedoor41.fr/img/escape/garde-a-vue-porte-1024w.jpg">
+  <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/defi-noel.css?v=1">
+</head>
+<body>
+  <div id="essai" class="essai" hidden>Page test : les réponses envoyées ici ne comptent pas.</div>
+  <div class="top band"><div class="wrap">
+    <a href="/defi-noel/"><img src="/img/logo/logo-horizontal.svg" alt="GAMEDOOR·41" width="196" height="28"></a>
+    <nav id="nav" style="display:flex;gap:14px"></nav>
+  </div></div>
+  <div class="band bandeau-ent" style="padding-block:18px"><div class="wrap jeu">
+    <small id="sur">Calendrier de l'Avent des énigmes</small>
+    <b id="titre">Le dossier Père Noël</b>
+  </div></div>
+  <div class="band minuteur" id="minuteur" hidden><div class="wrap jeu"><span id="m-piece"></span><span id="m-reste"></span></div></div>
+
+  <main class="band"><div class="jeu" id="zone"><p>Ouverture du dossier…</p></div></main>
+
+  <div class="envoi band" id="barre" hidden><div class="jeu">
+    <p id="b-etat">Vous pourrez corriger jusqu'à la date limite.</p>
+    <button class="cta" id="envoyer" type="button">Envoyer les réponses de l'équipe</button>
+  </div></div>
+
+<script>
+(function(){
+  var q=new URLSearchParams(location.search),n=parseInt(q.get('n'),10)||1,t=q.get('t')||'',sim=q.get('simuler')||'';
+  var zone=document.getElementById('zone'),data=null;
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function api(p){return p+(sim?(p.indexOf('?')<0?'?':'&')+'simuler='+encodeURIComponent(sim):'');}
+  function lien(k){return '?n='+k+(t?'&t='+encodeURIComponent(t):'')+(sim?'&simuler='+encodeURIComponent(sim):'');}
+  var nav=document.getElementById('nav');
+  nav.innerHTML=[1,2,3].map(function(k){return '<a href="'+lien(k)+'" style="color:'+(k===n?'#FFD740':'#cfd8ea')+';text-decoration:none;font-weight:700;white-space:nowrap">Pièce '+k+'</a>';}).join('');
+  var JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  function quand(iso){var d=new Date(iso);return JOURS[d.getDay()]+' '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',timeZone:'Europe/Paris'})+' à '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Paris'}).replace(':',' h ');}
+  function reste(iso){var ms=new Date(iso)-(sim?new Date(sim):new Date());if(ms<=0)return 'Réponses closes';var j=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5);return 'Encore '+(j?j+' j ':'')+h+' h';}
+
+  fetch(api('/api/defi-noel/piece?n='+n+(t?'&t='+encodeURIComponent(t):''))).then(function(r){return r.json();}).then(function(d){
+    data=d;
+    if(d.erreur){zone.innerHTML='<div class="attente"><h2>Dossier introuvable</h2><p>'+esc(d.message)+'</p><p><a href="/defi-noel/">Retour à la page du défi</a></p></div>';return;}
+    if(d.essai)document.getElementById('essai').hidden=false;
+    if(d.entreprise){document.getElementById('sur').textContent='Vous enquêtez pour';document.getElementById('titre').textContent=d.entreprise;}
+    else document.getElementById('titre').textContent='Pièce n°'+n+' — '+d.etat.titre;
+    var e=d.etat;
+    document.getElementById('minuteur').hidden=false;
+    document.getElementById('m-piece').textContent='Pièce n°'+n+' sur 3 · '+e.titre;
+    document.getElementById('m-reste').textContent=e.ouverte?reste(e.limite):'Ouverture '+quand(e.ouverture);
+    if(!e.ouverte){zone.innerHTML='<div class="attente"><div class="gros">Pièce n°'+n+'</div><h2>Le dossier est encore sous scellés</h2><p>Il s\'ouvre le '+esc(quand(e.ouverture))+'. Vous recevrez un mail ce matin-là.</p></div>';return;}
+    if(!d.piece){zone.innerHTML='<div class="attente"><h2>Le dossier arrive</h2><p>Nos enquêteurs finissent de le préparer. Revenez dans quelques minutes.</p></div>';return;}
+    rendre(d);
+  }).catch(function(){zone.innerHTML='<div class="attente"><h2>Connexion impossible</h2><p>Vérifiez votre réseau et rechargez la page.</p></div>';});
+
+  function rendre(d){
+    var p=d.piece,mr=d.mesReponses||{},close=d.etat.close,h='';
+    var bloque=close?' disabled':'';
+    if(!t)h+='<div class="partage-note"><b>Lien d\'équipe.</b> Cherchez avec vos collègues : c\'est votre référent qui envoie les réponses, depuis son lien personnel. Pas encore inscrits ? <a href="/defi-noel/#inscription">Inscrivez votre entreprise</a>.</div>';
+    if(close)h+='<div class="partage-note"><b>Les réponses sont closes</b> depuis le '+esc(d.etat.limiteTexte)+'. Les solutions arrivent dans le prochain mail.</div>';
+    if(p.avant)h+='<div class="epreuve">'+p.avant+'</div>';
+    if(p.enigme)h+='<section class="epreuve"><h2>1. L\'énigme <span>'+(p.enigme.points||2)+' points</span></h2><div class="enonce">'+(p.enigme.html||'')+'</div><label for="r-enigme">'+esc(p.enigme.question||'Votre réponse')+'</label><input class="in" id="r-enigme" autocomplete="off" value="'+esc(mr.enigme)+'"'+bloque+'></section>';
+    if(p.son){
+      h+='<section class="epreuve"><h2>2. Le son mystère <span>1 point</span></h2>';
+      if(p.son.audio)h+='<div class="lecteur"><button type="button" id="play" aria-label="Écouter le son">▶</button><div class="barre"><i id="prog"></i></div><audio id="audio" preload="none" src="'+esc(p.son.audio)+'"></audio></div>';
+      else h+='<p class="partage-note">Le son arrive très bientôt sur cette page.</p>';
+      if(p.son.indice)h+='<p><b>Indice :</b> '+esc(p.son.indice)+'</p>';
+      if(p.son.transcription)h+='<details class="transcription"><summary>Pas de son au bureau ? Lire le rapport d\'écoute</summary><p>'+esc(p.son.transcription)+'</p></details>';
+      h+='<label for="r-son" style="display:block;margin-top:10px">'+esc(p.son.question)+'</label><input class="in" id="r-son" autocomplete="off" value="'+esc(mr.son)+'"'+bloque+'></section>';
+    }
+    if(p.quiz&&p.quiz.length){
+      h+='<section class="epreuve"><h2>3. Le quiz éclair Buzz Your Brain <span>'+p.quiz.length+' points</span></h2>';
+      p.quiz.forEach(function(x,i){h+='<label class="quiz-q" for="r-q'+i+'" style="display:block">'+(i+1)+'. '+esc(x.question)+'</label><input class="in" id="r-q'+i+'" autocomplete="off" value="'+esc((mr.quiz||[])[i])+'"'+bloque+'>';});
+      h+='</section>';
+    }
+    if(p.subsidiaire)h+='<section class="epreuve"><h2>Question subsidiaire <span>départage</span></h2><label for="r-sub">'+esc(p.subsidiaire.question)+'</label><input class="in" id="r-sub" type="number" min="0" inputmode="numeric" value="'+esc(mr.subsidiaire)+'"'+bloque+'></section>';
+    zone.innerHTML=h;
+    var a=document.getElementById('audio');
+    if(a){var b=document.getElementById('play'),pr=document.getElementById('prog');
+      b.onclick=function(){if(a.paused){a.play().catch(function(){});b.textContent='❚❚';}else{a.pause();b.textContent='▶';}};
+      a.ontimeupdate=function(){pr.style.width=(a.duration?a.currentTime/a.duration*100:0)+'%';};
+      a.onended=function(){b.textContent='▶';};}
+    if(t&&!close){document.getElementById('barre').hidden=false;
+      if(d.maj)document.getElementById('b-etat').textContent='Réponses enregistrées le '+quand(d.maj)+'. Modifiables jusqu\'au '+d.etat.limiteTexte+'.';
+      else document.getElementById('b-etat').textContent='Modifiables jusqu\'au '+d.etat.limiteTexte+' : on garde la dernière version.';}
+  }
+
+  document.getElementById('envoyer').addEventListener('click',function(){
+    var v=function(id){var el=document.getElementById(id);return el?el.value.trim():'';};
+    var quiz=[0,1,2].map(function(i){return v('r-q'+i);});
+    var reps={enigme:v('r-enigme'),son:v('r-son'),quiz:quiz,subsidiaire:v('r-sub')};
+    var vides=[reps.enigme,reps.son].concat(data&&data.piece&&data.piece.quiz?quiz.slice(0,data.piece.quiz.length):[]).filter(function(x){return !x;}).length;
+    var etat=document.getElementById('b-etat'),btn=this;
+    if(vides&&!btn.dataset.ok){etat.textContent=vides+' réponse'+(vides>1?'s':'')+' vide'+(vides>1?'s':'')+'. Cliquez encore pour envoyer quand même.';btn.dataset.ok='1';return;}
+    btn.disabled=true;btn.textContent='Envoi…';
+    fetch(api('/api/defi-noel/reponses'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({n:n,t:t,reponses:reps})})
+      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+      .then(function(x){btn.disabled=false;delete btn.dataset.ok;
+        if(!x.ok){btn.textContent='Envoyer les réponses de l\'équipe';etat.textContent=x.j.message||'Envoi impossible.';return;}
+        btn.textContent='Mettre à jour les réponses';etat.textContent='C\'est envoyé ! Vous pouvez encore corriger jusqu\'au '+x.j.limiteTexte+'.';
+        if(window.gtag)gtag('event','reponses_defi_noel',{piece:n});})
+      .catch(function(){btn.disabled=false;btn.textContent='Envoyer les réponses de l\'équipe';etat.textContent='Connexion impossible. Vos réponses sont toujours dans la page : réessayez.';});
+  });
+})();
+</script>
+</body>
+</html>
