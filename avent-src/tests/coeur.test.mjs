@@ -299,6 +299,9 @@ test('grand tirage et tirage des assidus après le 24', async () => {
   const e = await m.appel('GET', 'etat', { jeton: jetonAssidu });
   assert.equal(e.corps.moi.tickets, 48);
   assert.equal(e.corps.finaux.assidus.gagnant, 'Assidue (as•••@e•••)');
+  assert.equal((await m.stockage.lire('tirages/grand')).dejaGagnants, 0, 'le grand tirage est ouvert à tous, gagnants du jour compris');
+  assert.equal((await m.stockage.lire('tirages/assidus')).dejaGagnants, 0);
+  assert.equal((await m.stockage.lire('tirages/03')).gagnant.etiquette, 'Joueur50 (jo•••@e•••)', 'porte 3 : Assidue a déjà gagné, c’est l’autre joueur');
   assert.ok(e.corps.finaux.grand.gagnant);
   assert.equal((await m.stockage.lire('tirages/grand')).billets, 48 + 1 + ((0 === m.defis[2].bonne) ? 1 : 0));
 });

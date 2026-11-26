@@ -197,35 +197,35 @@ test('pas de perdant : le 25, chaque joueur sans gain reçoit 1 place de quiz po
   for (let n = 1; n <= 6; n++) { const r = await m.jouer(n, 24); assert.equal(r.statut, 200); jetons[n] = r.corps.jeton; }
   m.a('2026-12-25T12:05:00+01:00');
   const r = await m.passer();
-  assert.equal(r.envoyes, 2, 'le gagnant de la porte 24 et celui du grand tirage ; pas encore de code de quiz pour les autres');
   const t24 = await m.stockage.lire('tirages/24'), grand = await m.stockage.lire('tirages/grand'), assidus = await m.stockage.lire('tirages/assidus');
-  assert.notEqual(t24.gagnant.id, grand.gagnant.id, 'le grand tirage écarte le gagnant de la porte 24');
-  assert.equal(grand.dejaGagnants, 1); assert.equal(grand.billets, 12);
+  assert.equal(r.envoyes, 2, 'un mail par lot (porte 24, grand tirage), même si c’est la même personne ; pas encore de code de quiz pour les autres');
+  assert.equal(grand.dejaGagnants, 0, 'le grand tirage est ouvert à tous, gagnants du jour compris'); assert.equal(grand.billets, 12);
+  const gagnants = new Set([t24.gagnant.id, grand.gagnant.id]).size, perdants = 6 - gagnants;
   assert.equal(assidus.gagnant, null, 'personne n’a ouvert les 24 portes');
   const bilan = m.courrier.boite.find((x) => /^\[Avent\]/.test(x.sujet));
-  assert.match(bilan.texte, /Pas de perdant : 4 joueurs sans aucun gain reçoivent 1 place de quiz pour 1 joueur · 0 mail parti, les autres partent tout seuls/);
-  assert.match(bilan.texte, /Pas de perdant : 4 joueurs attendent leur place de quiz, il manque des codes/);
+  assert.match(bilan.texte, new RegExp('Pas de perdant : ' + perdants + ' joueurs sans aucun gain reçoivent 1 place de quiz pour 1 joueur · 0 mail parti, les autres partent tout seuls'));
+  assert.match(bilan.texte, new RegExp('Pas de perdant : ' + perdants + ' joueurs attendent leur place de quiz, il manque des codes'));
   let b = (await m.appel('GET', 'equipe/bilan', { code: CODE })).corps;
-  assert.equal(b.pasDePerdant.fait, true); assert.equal(b.pasDePerdant.joueurs, 4); assert.equal(b.pasDePerdant.attendentCode, 4); assert.equal(b.besoins.quiz, 4);
+  assert.equal(b.pasDePerdant.fait, true); assert.equal(b.pasDePerdant.joueurs, perdants); assert.equal(b.pasDePerdant.attendentCode, perdants); assert.equal(b.besoins.quiz, perdants);
   assert.equal(m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).length, 0, 'jamais de mail sans code');
   // l'équipe ajoute des codes ; deux passages en même temps : chacun reçoit UN code, aucun code ne part deux fois
-  await m.appel('POST', 'equipe/codes', { code: CODE, corps: { type: 'quiz', codes: 'PDP-1 PDP-2 PDP-3 PDP-4 PDP-5' } });
+  await m.appel('POST', 'equipe/codes', { code: CODE, corps: { type: 'quiz', codes: 'PDP-1 PDP-2 PDP-3 PDP-4 PDP-5 PDP-6' } });
   m.a('2026-12-25T12:35:00+01:00');
   const [x, y] = await Promise.all([m.moteur.livrer(SITE), m.moteur.livrer(SITE)]);
-  assert.equal(x.envoyes + y.envoyes, 4);
+  assert.equal(x.envoyes + y.envoyes, perdants);
   const pdp = m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet));
-  assert.equal(pdp.length, 4);
-  assert.equal(new Set(pdp.map((x) => x.a)).size, 4, 'quatre personnes différentes');
-  assert.equal(new Set(pdp.map((x) => /Votre code : (\S+)/.exec(x.texte)[1])).size, 4, 'quatre codes différents');
+  assert.equal(pdp.length, perdants);
+  assert.equal(new Set(pdp.map((x) => x.a)).size, perdants, 'une place par personne');
+  assert.equal(new Set(pdp.map((x) => /Votre code : (\S+)/.exec(x.texte)[1])).size, perdants, 'jamais deux fois le même code');
   assert.ok(!pdp.some((x) => x.a === t24.gagnant.email || x.a === grand.gagnant.email), 'les gagnants ne la reçoivent pas');
   assert.match(pdp[0].texte, /il n’y a pas de perdant : voici 1 place de quiz pour 1 joueur, offerte/);
   assert.match(pdp[0].texte, /Il vaut pour une seule personne, pas pour une session entière/);
   assert.match(pdp[0].texte, /Il est valable 12 mois\. Besoin de le prolonger/);
   // plus rien ne repart ensuite
   m.a('2026-12-25T13:05:00+01:00'); await m.passer(); m.a('2026-12-25T18:05:00+01:00'); await m.passer();
-  assert.equal(m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).length, 4);
+  assert.equal(m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).length, perdants);
   b = (await m.appel('GET', 'equipe/bilan', { code: CODE })).corps;
-  assert.equal(b.codes.quiz, 1); assert.equal(b.pasDePerdant.envoyees, 4); assert.equal(b.besoins.quiz, 0);
+  assert.equal(b.codes.quiz, 6 - perdants); assert.equal(b.pasDePerdant.envoyees, perdants); assert.equal(b.besoins.quiz, 0);
   // la page le dit au joueur concerné, pas aux gagnants
   const etatDe = async (n) => (await m.moteur.gerer(new Request(SITE + '/api/avent/etat', { headers: { 'x-avent-jeton': jetons[n] } }), { ip: '1.1.1.1' })).json();
   const num = (email) => email.replace(/^joueur(\d+)@.*$/, '$1');
@@ -285,6 +285,11 @@ test('réseaux sociaux : le fil des publications suit le jeu', async () => {
   assert.equal(p5.pret, true); assert.equal(p5.quand, '2026-12-05T12:15:00+01:00'); assert.equal(p5.image, SITE + '/img/avent/post-05.jpg');
   assert.match(p5.texte, /^🎄 Porte 5 du calendrier de l’Avent GAMEDOOR·41/);
   assert.match(p5.texte, /🏆 Porte 4 : bravo à Joueur1 \(jo•••@e•••\), qui remporte 1 place de quiz pour 1 joueur \+ le jeu Black Stories !/);
+  m.a('2026-12-24T12:16:00+01:00'); f = (await m.appel('GET', 'annonces')).corps;
+  assert.match(pub('avent2026-post-24').texte, /🔐 Et en plus, le gros lot : une session d’escape game complète pour toute votre équipe \(2 à 6 joueurs, salle au choix\), tirée au sort demain midi/);
+  assert.match(pub('avent2026-story-24').texte, /à gagner aujourd’hui, 1 place d’escape game pour 1 joueur \+ la DeLorean radio-commandée\. Et en plus, le gros lot du grand tirage/);
+  assert.doesNotMatch(pub('avent2026-post-23').texte, /gros lot/);
+  m.a('2026-12-05T12:16:00+01:00'); f = (await m.appel('GET', 'annonces')).corps;
   assert.match(p5.texte, /pas de perdant : le 25 décembre, chaque joueur qui n’a rien gagné reçoit 1 place de quiz pour 1 joueur/);
   assert.doesNotMatch(JSON.stringify(f), /joueur1@exemple|QUIZ-AAA/, 'ni adresse ni code dans le fil public');
   assert.equal(pub('avent2026-post-25').pret, false);

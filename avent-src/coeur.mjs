@@ -7,7 +7,7 @@
 // déposés dans le stockage par l'équipe (voir LISEZMOI.md).
 // ==========================================================================
 import { createHash, createHmac, randomBytes, randomInt, timingSafeEqual } from 'node:crypto';
-import { mailGagnant, mailPasDePerdant, mailAccuse, mailQuestionEquipe, mailRapport, legendeJour, legendeFin, quandParis, dateTexte } from './messages.mjs';
+import { mailGagnant, mailPasDePerdant, mailAccuse, mailQuestionEquipe, mailRapport, legendeJour, legendeFin, quandParis, dateTexte, GROS_LOT } from './messages.mjs';
 
 export const ANNEE = 2026;
 export const NB_PORTES = 24;
@@ -178,8 +178,9 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
   }
 
   // --- tirages ---
-  // Une même personne ne gagne qu'un tirage (décision d'Allan du 26/11/2026) : ceux qui ont déjà gagné un autre
-  // tirage (`gagnants`) sont écartés, et on tire parmi les autres ; s'il ne reste personne d'autre, on tire parmi tous.
+  // Tirages du jour : pas toujours les mêmes gagnants (décision d'Allan du 26/11/2026). Ceux qui ont déjà gagné un
+  // AUTRE tirage du jour (`gagnants`) sont écartés, et on tire parmi les autres ; s'il ne reste personne d'autre, on
+  // tire parmi tous. Le grand tirage et le tirage des 24 portes sont ouverts à TOUS, gagnants du jour compris.
   // `retires` : les gagnants que l'équipe a remplacés pour CE tirage, jamais repris.
   const fiche = (g) => (g ? { id: g.id, prenom: g.prenom, email: g.email, etiquette: etiquetteGagnant(g) } : null);
   function piocher(urne, gagnants) {
@@ -209,6 +210,13 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     Object.values(tir).forEach((t) => { if (t && t.gagnant && t.cle !== sauf) s.add(t.gagnant.id); });
     return s;
   }
+  /** Qui écarter du tirage de clé `cle` : les gagnants des autres tirages du jour ; personne pour les tirages de la fin. */
+  function aEcarter(tir, cle) {
+    if (!/^\d\d$/.test(cle)) return new Set();
+    const jours = {};
+    Object.keys(tir).forEach((k) => { if (/^\d\d$/.test(k)) jours[k] = tir[k]; });
+    return gagnantsAutres(jours, cle);
+  }
   async function lireTirages() {
     const cles = await stockage.lister('tirages/');
     const valeurs = {};
@@ -230,7 +238,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     const aRevoir = essai && quand.simule ? dus.filter((c) => connus[c]) : [];
     if (!manquants.length && !aRevoir.length) return 0;
     const joueurs = await tousLesJoueurs();
-    const tirer = (c) => { const choix = { gagnants: gagnantsAutres(connus, c) }; return /^\d\d$/.test(c) ? tirerJour(Number(c), joueurs, choix) : tirerFinal(c, joueurs, choix); };
+    const tirer = (c) => { const choix = { gagnants: aEcarter(connus, c) }; return /^\d\d$/.test(c) ? tirerJour(Number(c), joueurs, choix) : tirerFinal(c, joueurs, choix); };
     let n = 0;
     for (const c of manquants) {
       const t = tirer(c);
@@ -242,7 +250,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
       if (!vieux || vieux.prevenu || vieux.lot || (vieux.anciens && vieux.anciens.length)) continue;
       const neuf = tirer(c);
       const disparu = vieux.gagnant && !joueurs.some((x) => x.id === vieux.gagnant.id);
-      const doublon = vieux.gagnant && neuf.dejaGagnants > 0 && gagnantsAutres(connus, c).has(vieux.gagnant.id);
+      const doublon = vieux.gagnant && neuf.dejaGagnants > 0 && aEcarter(connus, c).has(vieux.gagnant.id);
       if (neuf.participants !== vieux.participants || neuf.billets !== vieux.billets || disparu || doublon) { await stockage.ecrire('tirages/' + c, neuf); connus[c] = neuf; n++; }
     }
     tiragesCache = { quand: 0, valeurs: {} };
@@ -617,7 +625,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     const reseaux = ['instagram', 'facebook'];
     const publications = [];
     for (let j = 1; j <= NB_PORTES; j++) {
-      publications.push({ id: 'avent' + ANNEE + '-story-' + pad(j), jour: j, format: 'story', reseaux, quand: quandParis(ANNEE, j, 8, 0), image: image('story-' + pad(j)), texte: 'Porte ' + j + ' du calendrier de l’Avent : à gagner aujourd’hui, ' + lotDe(j) + '.', pret: true });
+      publications.push({ id: 'avent' + ANNEE + '-story-' + pad(j), jour: j, format: 'story', reseaux, quand: quandParis(ANNEE, j, 8, 0), image: image('story-' + pad(j)), texte: 'Porte ' + j + ' du calendrier de l’Avent : à gagner aujourd’hui, ' + lotDe(j) + '.' + (j === NB_PORTES ? ' Et en plus, le gros lot du grand tirage : ' + GROS_LOT + '.' : ''), pret: true });
       publications.push({ id: 'avent' + ANNEE + '-post-' + pad(j), jour: j, format: 'post', reseaux, quand: quandParis(ANNEE, j, 12, 15), image: image('post-' + pad(j)), texte: legendeJour({ jour: j, lot: lotDe(j), veille: j > 1 ? gagne(pad(j - 1), j - 1) : null }), pret: j === 1 || !!tir[pad(j - 1)] });
     }
     publications.push({ id: 'avent' + ANNEE + '-post-25', jour: 25, format: 'post', reseaux, quand: quandParis(ANNEE, 25, 12, 15), image: image('post-25'), texte: legendeFin({ veille: gagne(pad(NB_PORTES), NB_PORTES), grand: gagne('grand'), assidus: gagne('assidus') }), pret: !!(tir[pad(NB_PORTES)] && tir.grand && tir.assidus) });
@@ -719,7 +727,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
       else if (corps.action === 'retirer') {
         const joueurs = await tousLesJoueurs();
         const anciens = (actuel.anciens || []).concat(actuel.gagnant ? [{ ...actuel.gagnant, remplaceLe: maintenant().toISOString(), raison: String(corps.raison || '').slice(0, 200) }] : []);
-        const choix = { retires: anciens.map((a) => a.id), gagnants: gagnantsAutres(await lireTirages(), cle) };
+        const choix = { retires: anciens.map((a) => a.id), gagnants: aEcarter(await lireTirages(), cle) };
         const neuf = actuel.genre === 'jour' ? tirerJour(actuel.jour, joueurs, choix) : tirerFinal(actuel.genre, joueurs, choix);
         // le nouveau gagnant reçoit son propre mail et son propre code (l'ancien garde le sien)
         Object.assign(actuel, { gagnant: neuf.gagnant, tireLe: neuf.tireLe, dejaGagnants: neuf.dejaGagnants, prevenu: false, anciens, mail: null, code: null });

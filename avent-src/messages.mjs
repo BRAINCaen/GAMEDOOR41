@@ -122,10 +122,13 @@ const MOTS = '#calendrierdelavent #jeuconcours #concours #caen #mondeville #norm
 const LIEN = 'gamedoor41.fr/calendrier-de-l-avent';
 /** Pas de point après un lot qui finit déjà par « ? » (le jeu Esquissé ?). */
 const fin = (lot, signe) => (/[?!.]$/.test(lot) ? '' : signe);
+/** Le gros lot du grand tirage, rappelé le 24 (DeLorean derrière la porte 24 ET gros lot en plus : demande d'Allan). */
+export const GROS_LOT = 'une session d’escape game complète pour toute votre équipe (2 à 6 joueurs, salle au choix)';
 
 /** Légende de la publication du jour (12 h 15) : le lot du jour + le gagnant de la veille. */
 export function legendeJour({ jour, lot, veille }) {
   const l = ['🎄 Porte ' + jour + ' du calendrier de l’Avent GAMEDOOR·41', '🎁 À gagner aujourd’hui : ' + lot + fin(lot, '.'), 'Un défi d’une minute, une seule réponse, et vous êtes dans le tirage au sort de demain midi. Bonne ou mauvaise réponse, tout le monde a sa chance. Et pas de perdant : le 25 décembre, chaque joueur qui n’a rien gagné reçoit 1 place de quiz pour 1 joueur.'];
+  if (jour === 24) l.push('🔐 Et en plus, le gros lot : ' + GROS_LOT + ', tirée au sort demain midi parmi tous les tickets du mois. Dernière porte, dernière chance d’ajouter des tickets !');
   if (veille && veille.gagnant) l.push('🏆 Porte ' + veille.jour + ' : bravo à ' + veille.gagnant + ', qui remporte ' + veille.lot + fin(veille.lot, ' !'));
   l.push('👉 Pour jouer : ' + LIEN + ' (lien dans notre bio). Jeu gratuit, jusqu’au 24 décembre.');
   l.push(MOTS);

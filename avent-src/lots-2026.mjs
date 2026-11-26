@@ -9,7 +9,8 @@
 // - grand tirage = une session d'escape game complète ; tirage des 24 portes = une session de quiz complète ;
 // - pas de perdant : le 25 décembre, chaque joueur qui n'a rien gagné reçoit 1 place de quiz pour 1 joueur
 //   (pas pour les tirages du jour : là, seul le gagnant reçoit sa place) ;
-// - une même personne ne gagne qu'un tirage : si le sort retombe sur quelqu'un qui a déjà gagné, on retire.
+// - tirages du jour : pas toujours les mêmes, si le sort retombe sur quelqu'un qui a déjà gagné une place, on retire ;
+//   le grand tirage et le tirage des 24 portes restent ouverts à tous, gagnants du jour compris.
 
 /** Jours à étoile : la place de quiz devient une place d'escape game. */
 export const ETOILES = [6, 13, 20, 24];

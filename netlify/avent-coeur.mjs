@@ -1112,8 +1112,10 @@ function mailRapport({ jour, lignes, alertes, essai = false, origine = "https://
 var MOTS = "#calendrierdelavent #jeuconcours #concours #caen #mondeville #normandie #escapegame #quiz #gamedoor41";
 var LIEN = "gamedoor41.fr/calendrier-de-l-avent";
 var fin = (lot, signe) => /[?!.]$/.test(lot) ? "" : signe;
+var GROS_LOT = "une session d\u2019escape game compl\xE8te pour toute votre \xE9quipe (2 \xE0 6 joueurs, salle au choix)";
 function legendeJour({ jour, lot, veille }) {
   const l = ["\u{1F384} Porte " + jour + " du calendrier de l\u2019Avent GAMEDOOR\xB741", "\u{1F381} \xC0 gagner aujourd\u2019hui : " + lot + fin(lot, "."), "Un d\xE9fi d\u2019une minute, une seule r\xE9ponse, et vous \xEAtes dans le tirage au sort de demain midi. Bonne ou mauvaise r\xE9ponse, tout le monde a sa chance. Et pas de perdant : le 25 d\xE9cembre, chaque joueur qui n\u2019a rien gagn\xE9 re\xE7oit 1 place de quiz pour 1 joueur."];
+  if (jour === 24) l.push("\u{1F510} Et en plus, le gros lot : " + GROS_LOT + ", tir\xE9e au sort demain midi parmi tous les tickets du mois. Derni\xE8re porte, derni\xE8re chance d\u2019ajouter des tickets !");
   if (veille && veille.gagnant) l.push("\u{1F3C6} Porte " + veille.jour + " : bravo \xE0 " + veille.gagnant + ", qui remporte " + veille.lot + fin(veille.lot, " !"));
   l.push("\u{1F449} Pour jouer : " + LIEN + " (lien dans notre bio). Jeu gratuit, jusqu\u2019au 24 d\xE9cembre.");
   l.push(MOTS);
@@ -1340,6 +1342,14 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     });
     return s;
   }
+  function aEcarter(tir, cle) {
+    if (!/^\d\d$/.test(cle)) return /* @__PURE__ */ new Set();
+    const jours = {};
+    Object.keys(tir).forEach((k) => {
+      if (/^\d\d$/.test(k)) jours[k] = tir[k];
+    });
+    return gagnantsAutres(jours, cle);
+  }
   async function lireTirages() {
     const cles = await stockage.lister("tirages/");
     const valeurs = {};
@@ -1360,7 +1370,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     if (!manquants.length && !aRevoir.length) return 0;
     const joueurs = await tousLesJoueurs();
     const tirer = (c) => {
-      const choix = { gagnants: gagnantsAutres(connus, c) };
+      const choix = { gagnants: aEcarter(connus, c) };
       return /^\d\d$/.test(c) ? tirerJour(Number(c), joueurs, choix) : tirerFinal(c, joueurs, choix);
     };
     let n = 0;
@@ -1376,7 +1386,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       if (!vieux || vieux.prevenu || vieux.lot || vieux.anciens && vieux.anciens.length) continue;
       const neuf = tirer(c);
       const disparu = vieux.gagnant && !joueurs.some((x) => x.id === vieux.gagnant.id);
-      const doublon = vieux.gagnant && neuf.dejaGagnants > 0 && gagnantsAutres(connus, c).has(vieux.gagnant.id);
+      const doublon = vieux.gagnant && neuf.dejaGagnants > 0 && aEcarter(connus, c).has(vieux.gagnant.id);
       if (neuf.participants !== vieux.participants || neuf.billets !== vieux.billets || disparu || doublon) {
         await stockage.ecrire("tirages/" + c, neuf);
         connus[c] = neuf;
@@ -1794,7 +1804,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const reseaux = ["instagram", "facebook"];
     const publications = [];
     for (let j = 1; j <= NB_PORTES; j++) {
-      publications.push({ id: "avent" + ANNEE + "-story-" + pad2(j), jour: j, format: "story", reseaux, quand: quandParis(ANNEE, j, 8, 0), image: image("story-" + pad2(j)), texte: "Porte " + j + " du calendrier de l\u2019Avent : \xE0 gagner aujourd\u2019hui, " + lotDe(j) + ".", pret: true });
+      publications.push({ id: "avent" + ANNEE + "-story-" + pad2(j), jour: j, format: "story", reseaux, quand: quandParis(ANNEE, j, 8, 0), image: image("story-" + pad2(j)), texte: "Porte " + j + " du calendrier de l\u2019Avent : \xE0 gagner aujourd\u2019hui, " + lotDe(j) + "." + (j === NB_PORTES ? " Et en plus, le gros lot du grand tirage : " + GROS_LOT + "." : ""), pret: true });
       publications.push({ id: "avent" + ANNEE + "-post-" + pad2(j), jour: j, format: "post", reseaux, quand: quandParis(ANNEE, j, 12, 15), image: image("post-" + pad2(j)), texte: legendeJour({ jour: j, lot: lotDe(j), veille: j > 1 ? gagne(pad2(j - 1), j - 1) : null }), pret: j === 1 || !!tir[pad2(j - 1)] });
     }
     publications.push({ id: "avent" + ANNEE + "-post-25", jour: 25, format: "post", reseaux, quand: quandParis(ANNEE, 25, 12, 15), image: image("post-25"), texte: legendeFin({ veille: gagne(pad2(NB_PORTES), NB_PORTES), grand: gagne("grand"), assidus: gagne("assidus") }), pret: !!(tir[pad2(NB_PORTES)] && tir.grand && tir.assidus) });
@@ -1934,7 +1944,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       else if (corps.action === "retirer") {
         const joueurs = await tousLesJoueurs();
         const anciens = (actuel.anciens || []).concat(actuel.gagnant ? [{ ...actuel.gagnant, remplaceLe: maintenant().toISOString(), raison: String(corps.raison || "").slice(0, 200) }] : []);
-        const choix = { retires: anciens.map((a) => a.id), gagnants: gagnantsAutres(await lireTirages(), cle) };
+        const choix = { retires: anciens.map((a) => a.id), gagnants: aEcarter(await lireTirages(), cle) };
         const neuf = actuel.genre === "jour" ? tirerJour(actuel.jour, joueurs, choix) : tirerFinal(actuel.genre, joueurs, choix);
         Object.assign(actuel, { gagnant: neuf.gagnant, tireLe: neuf.tireLe, dejaGagnants: neuf.dejaGagnants, prevenu: false, anciens, mail: null, code: null });
       } else return refus(400, "action", "Action inconnue.");

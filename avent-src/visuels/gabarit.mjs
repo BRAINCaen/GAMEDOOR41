@@ -51,7 +51,7 @@ export function visuel(j, format) {
            ${jeu ? `<p class="plus">${h(jeu.plus || '+ le jeu')}</p><p class="lot-jeu">${h((jeu.visuel && jeu.visuel.nom) || jeu.nom)}</p>${(jeu.visuel && jeu.visuel.sous) || jeu.sous ? `<p class="lot-sous">${h((jeu.visuel && jeu.visuel.sous) || jeu.sous)}</p>` : ''}` : ''}
          </div>
        </div>
-       ${story ? '' : '<p class="note">Un défi d’une minute. Un gagnant tiré au sort chaque jour.</p>'}`;
+       ${j === 24 ? `<p class="gros-lot">+ demain midi, le gros lot&nbsp;: une session d’escape game complète</p>` : story ? '' : '<p class="note">Un défi d’une minute. Un gagnant tiré au sort chaque jour.</p>'}`;
   return `<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap">
 <style>
@@ -77,6 +77,8 @@ export function visuel(j, format) {
   .univers { display:inline-block; padding:6px 18px; border-radius:99px; background:${c}; color:${sombre ? '#1a1400' : '#fff'}; font-family:'Oswald', sans-serif; font-weight:600; font-size:28px; letter-spacing:2px; text-transform:uppercase; }
   .lot-titre { margin-top:${story ? 22 : 26}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 44 : 38}px; letter-spacing:4px; text-transform:uppercase; color:#FFD740; }
   .lot-place { margin-top:8px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 92 : 78}px; line-height:1.05; text-transform:uppercase; }
+  .gros-lot { ${story ? 'margin:18px 0 16px;' : 'margin:26px 0 30px;'} padding:${story ? '10px 18px' : '14px 22px'}; border:3px solid #FFD740; border-radius:14px; background:rgba(0,0,0,.55); font-family:'Oswald', sans-serif; font-weight:600; font-size:${story ? 34 : 36}px; line-height:1.15; text-transform:uppercase; color:#FFD740; }
+  ${story && j === 24 ? '.lot-sous { display:none; } .porte { width:220px; height:318px; } .num { font-size:150px; } .duo { margin-top:28px; }' : ''}
   .lot-pour { margin-top:6px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 44 : 38}px; letter-spacing:2px; text-transform:uppercase; color:#FFD740; }
   .plus { margin-top:${story ? 26 : 22}px; font-family:'Oswald', sans-serif; font-weight:500; font-size:${story ? 40 : 34}px; letter-spacing:3px; text-transform:uppercase; color:#FFD740; }
   .lot-jeu { margin-top:4px; font-family:'Oswald', sans-serif; font-weight:700; font-size:${story ? 76 : 62}px; line-height:1.08; text-transform:uppercase; color:#F0EBE2; overflow-wrap:break-word; }

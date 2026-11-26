@@ -204,8 +204,8 @@
     bandeau.appendChild(el('p', { class: 'av-joueur-msg' }, [
       moi ? el('strong', { text: 'Bonjour ' + moi.prenom + '. ' }) : null, message,
       quandLot && porteLot && porteLot.lot ? el('span', { class: 'av-joueur-lot' + (porteLot.image ? ' a-image' : '') }, porteLot.image
-        ? [el('img', { class: 'av-joueur-lot-img', src: porteLot.image, alt: '', width: '54', height: '54', decoding: 'async' }), el('span', {}, [el('b', { text: quandLot }), porteLot.lot])]
-        : [el('i', { html: ICONES.cadeau }), el('b', { text: quandLot }), porteLot.lot]) : null
+        ? [el('img', { class: 'av-joueur-lot-img', src: porteLot.image, alt: '', width: '54', height: '54', decoding: 'async' }), el('span', {}, [el('b', { text: quandLot }), lotEnClair(porteLot)])]
+        : [el('i', { html: ICONES.cadeau }), el('b', { text: quandLot }), lotEnClair(porteLot)]) : null
     ]));
     if (moi) bandeau.appendChild(el('p', { class: 'av-joueur-compte' }, [
       el('span', {}, [el('b', { text: String(nb) }), (nb > 1 ? 'portes ouvertes' : 'porte ouverte') + ' sur 24']),
@@ -263,8 +263,13 @@
     if (!p.lot) return null;
     return el('p', { class: 'av-lot-jour' + (p.image ? ' a-image' : '') }, [
       p.image ? el('img', { class: 'av-lot-jour-img', src: p.image, alt: '', width: '54', height: '54', decoding: 'async' }) : el('i', { html: ICONES.cadeau }),
-      el('span', {}, [el('b', { text: quand }), p.lot])
+      el('span', {}, [el('b', { text: quand }), lotEnClair(p)])
     ]);
+  }
+  /* la porte 24 rappelle le gros lot du grand tirage, tiré le lendemain midi */
+  function lotEnClair(p) {
+    var gros = p.j === 24 && etat.lotsFinaux && etat.lotsFinaux.grand;
+    return p.lot + (gros ? '. Et en plus, le gros lot tiré au sort demain midi : ' + etat.lotsFinaux.grand : '');
   }
   function actions(noeuds, classe) { return el('div', { class: 'av-actions' + (classe ? ' ' + classe : '') }, noeuds); }
   function boutonFermer(texte) { return actions([el('button', { type: 'button', class: 'btn btn-outline', text: texte || 'Fermer', onclick: fermer })]); }
