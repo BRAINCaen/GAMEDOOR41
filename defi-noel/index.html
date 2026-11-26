@@ -14,11 +14,7 @@
   <meta property="og:url" content="https://gamedoor41.fr/defi-noel/">
   <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/img/logo/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="/css/defi-noel.css?v=1">
-  <script>if(/(^|\.)gamedoor41\.fr$/.test(location.hostname)){var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-RHVR0C2M0J";document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag("js",new Date());gtag("config","G-RHVR0C2M0J");}</script>
+  <link rel="stylesheet" href="/css/defi-noel.css?v=2">
 </head>
 <body>
   <div class="top band"><div class="wrap">
@@ -109,8 +105,10 @@
               <select class="in" id="source" name="source"><option value="">Choisir…</option><option>Mail de GAMEDOOR·41</option><option>LinkedIn</option><option>Un collègue</option><option>Un réseau ou un club d'entreprises</option><option>Autre</option></select></div>
           </div>
           <input class="piege" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <label class="case"><input type="checkbox" id="linkedin" name="linkedin" checked><span>Nous acceptons que le nom de l'entreprise apparaisse dans le classement publié sur LinkedIn.</span></label>
-          <label class="case"><input type="checkbox" id="rgpd" name="rgpd" required><span>J'accepte que GAMEDOOR·41 utilise ces informations pour le défi et pour me recontacter au sujet de ses offres entreprises. Je peux demander leur suppression à tout moment. *</span></label>
+          <label class="case"><input type="checkbox" id="rgpd" name="rgpd" required><span>J'accepte le <a href="/defi-noel/reglement/" target="_blank" rel="noopener">règlement du défi</a> et j'inscris mon entreprise avec son accord. *</span></label>
+          <label class="case"><input type="checkbox" id="linkedin" name="linkedin"><span>Facultatif : nous acceptons que le nom de l'entreprise apparaisse dans le classement publié sur LinkedIn.</span></label>
+          <label class="case"><input type="checkbox" id="offres" name="offres"><span>Facultatif : je souhaite recevoir par mail les offres entreprises de GAMEDOOR·41 (team building, séminaires). Désinscription en un clic à tout moment.</span></label>
+          <p class="notice"><b>Vos données.</b> SARL BOEHME (GAMEDOOR·41) utilise ces informations pour organiser le défi : vous envoyer les pièces, compter les points et prévenir le gagnant. Seule notre équipe y a accès ; elles sont hébergées par Netlify et les mails partent par Brevo. Nous ne les vendons ni ne les cédons. Vos réponses sont effacées au plus tard le 31 mars 2027. Vous pouvez accéder à vos données, les corriger, les faire supprimer ou vous opposer à tout contact en écrivant à <a href="mailto:contact@gamedoor41.fr">contact@gamedoor41.fr</a>. <a href="/defi-noel/reglement/#donnees" target="_blank" rel="noopener">Tout le détail</a>.</p>
           <p style="margin-top:18px"><button class="cta" type="submit" id="envoyer">Inscrire mon équipe</button></p>
           <div id="msg" role="alert"></div>
         </div>
@@ -134,12 +132,14 @@
       <details><summary>Jusqu'à quand répondre ?</summary><p>Pièce n°1 : jusqu'au mercredi 9 décembre, 23 h 59. Pièce n°2 : jusqu'au mercredi 16 décembre, 23 h 59. Pièce n°3 : jusqu'au jeudi 24 décembre, 12 h. Gagnant annoncé le jeudi 7 janvier.</p></details>
       <details><summary>On s'inscrit en retard, c'est perdu ?</summary><p>Non. Vous recevez tout de suite la pièce en cours, et chaque mail rappelle les solutions de la semaine précédente. Les semaines passées ne rapportent plus de points, mais le podium reste ouvert.</p></details>
       <details><summary>Le son passe au bureau ?</summary><p>Oui : il se lit directement sur la page, sans pièce jointe ni téléchargement. Une version écrite est prévue pour ceux qui n'ont pas de casque.</p></details>
+      <details><summary>Les mails passeront-ils les filtres de mon entreprise ?</summary><p>Ils partent de contact@gamedoor41.fr, une adresse authentifiée, sans pièce jointe, et tous les liens mènent à gamedoor41.fr. Si votre service informatique filtre beaucoup, ajoutez contact@gamedoor41.fr à vos contacts. Chaque mail donne aussi le lien en clair, à copier dans le navigateur si le bouton ne s'ouvre pas.</p></details>
+      <details><summary>Que faites-vous de mes données ?</summary><p>Elles servent uniquement au défi, sauf si vous cochez la case des offres entreprises. Pas de cookie publicitaire ni de mesure d'audience sur ces pages. Le détail est dans le <a href="/defi-noel/reglement/#donnees">règlement</a>.</p></details>
     </div>
   </section>
 
   <footer class="band pied"><div class="wrap">
     <span>GAMEDOOR·41 — Escape &amp; Quiz Game · 41 bis rue Pasteur, ZAC de Calix, 14120 Mondeville · 02 31 53 07 51</span>
-    <span><a href="/">gamedoor41.fr</a> · <a href="/politique-confidentialite/">Confidentialité</a></span>
+    <span><a href="/">gamedoor41.fr</a> · <a href="/defi-noel/reglement/">Règlement et données personnelles</a> · <a href="/mentions-legales/">Mentions légales</a></span>
   </div></footer>
 
 <script>
@@ -153,8 +153,8 @@
     if(!v('prenom')||!v('nom'))return erreur('Indiquez votre prénom et votre nom.');
     if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v('email')))return erreur('Cette adresse mail ne semble pas valide.');
     if(!(parseInt(v('joueurs'),10)>0))return erreur('Indiquez le nombre de joueurs (une estimation suffit).');
-    if(!document.getElementById('rgpd').checked)return erreur("Merci de cocher la case d'accord.");
-    var d={entreprise:v('entreprise'),prenom:v('prenom'),nom:v('nom'),email:v('email'),telephone:v('telephone'),fonction:v('fonction'),ville:v('ville'),joueurs:v('joueurs'),source:v('source'),linkedin:document.getElementById('linkedin').checked,rgpd:true,site:f.site.value};
+    if(!document.getElementById('rgpd').checked)return erreur("Merci de cocher la case : vous acceptez le règlement du défi.");
+    var d={entreprise:v('entreprise'),prenom:v('prenom'),nom:v('nom'),email:v('email'),telephone:v('telephone'),fonction:v('fonction'),ville:v('ville'),joueurs:v('joueurs'),source:v('source'),linkedin:document.getElementById('linkedin').checked,offres:document.getElementById('offres').checked,rgpd:true,site:f.site.value};
     btn.disabled=true;btn.textContent='Inscription…';
     fetch('/api/defi-noel/inscription',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(d)})
       .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})

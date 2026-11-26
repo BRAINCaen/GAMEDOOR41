@@ -1,3 +1,11 @@
+/* Polices hébergées sur le site (pas d'appel à Google : RGPD) */
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/defi-noel/barlow-400.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/defi-noel/barlow-500.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/defi-noel/barlow-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/defi-noel/barlow-700.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/defi-noel/barlow-condensed-600.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/defi-noel/barlow-condensed-700.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:800;font-display:swap;src:url(/fonts/defi-noel/barlow-condensed-800.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* Défi de Noël des entreprises 2026 — pages /defi-noel/ */
 :root{--navy:#1B2A4E;--navy2:#24365f;--navy3:#2f4a80;--red:#BE1B1B;--yel:#FFD740;--kraft:#e3c48f;--ink:#14203b;--soft:#5a6478;--line:#dfe3ea;--card:#f4f6fa;--bg:#fff;--ok:#1d7a46}
 *{box-sizing:border-box;min-width:0}
@@ -102,3 +110,13 @@ label{font-weight:600;font-size:15px}
 .essai{background:#3b0d0d;color:#ffd7d7;font-size:13px;padding:6px 16px;text-align:center}
 @media(max-width:860px){.hero .wrap,.lot .wrap,.form-band .wrap{grid-template-columns:minmax(0,1fr)}.dossier{transform:none;margin-top:20px}.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.etapes,.epreuves{grid-template-columns:minmax(0,1fr)}.champs{grid-template-columns:minmax(0,1fr)}.dossier h3{padding-right:0;margin-top:34px}}
+.notice{font-size:13px;line-height:1.5;color:var(--soft);background:var(--card);border-radius:8px;padding:10px 12px;margin:16px 0 0}
+.notice a{color:var(--ink)}
+.case a{color:var(--red)}
+.texte{max-width:820px;margin:0 auto}
+.texte h2{margin-top:34px}
+.texte h3{margin-top:22px}
+.texte li{margin-bottom:6px}
+.texte .scroll{overflow-x:auto}
+.texte table{border-collapse:collapse;width:100%;font-size:15px}
+.texte th,.texte td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}

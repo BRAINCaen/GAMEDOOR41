@@ -1056,7 +1056,8 @@ function stockage(nom) {
   return {
     lire: async (cle) => (await magasin()).get(cle, { type: "json" }),
     ecrire: async (cle, val) => { await (await magasin()).setJSON(cle, val); },
-    lister: async (prefixe) => { const { blobs } = await (await magasin()).list({ prefix: prefixe }); return blobs.map((b) => b.key); }
+    lister: async (prefixe) => { const { blobs } = await (await magasin()).list({ prefix: prefixe }); return blobs.map((b) => b.key); },
+    supprimer: async (cle) => { await (await magasin()).delete(cle); }
   };
 }
 
@@ -1086,11 +1087,12 @@ async function envoyerLot(versions, sujet) {
   return bilan;
 }
 
-var SIGNATURE = `<p style="margin:24px 0 0;color:#5a6478;font-size:13px;line-height:1.5">GAMEDOOR·41 — Escape &amp; Quiz Game · 41 bis rue Pasteur, ZAC de Calix, 14120 Mondeville · 02 31 53 07 51 · <a href="${SITE}" style="color:#5a6478">gamedoor41.fr</a><br>Entrez · Jouez · Vivez.</p><p style="margin:12px 0 0;color:#8a93a5;font-size:12px">Vous recevez ce message car votre entreprise est inscrite au Calendrier de l'Avent des énigmes. Pour ne plus rien recevoir, répondez simplement « STOP ».</p>`;
+var SIGNATURE = `<p style="margin:24px 0 0;color:#5a6478;font-size:13px;line-height:1.5">GAMEDOOR·41 — Escape &amp; Quiz Game · 41 bis rue Pasteur, ZAC de Calix, 14120 Mondeville · 02 31 53 07 51 · <a href="${SITE}" style="color:#5a6478">gamedoor41.fr</a><br>Entrez · Jouez · Vivez.</p><p style="margin:12px 0 0;color:#8a93a5;font-size:12px">Vous recevez ce message car votre entreprise est inscrite au Calendrier de l'Avent des énigmes. Pour ne plus rien recevoir, répondez simplement « STOP ». Vos données : <a href="${SITE}/defi-noel/reglement/#donnees" style="color:#8a93a5">gamedoor41.fr/defi-noel/reglement</a>.</p>`;
 function cadre(contenu) {
   return `<!doctype html><html lang="fr"><body style="margin:0;background:#eef1f6;font-family:Arial,Helvetica,sans-serif;color:#14203b"><div style="max-width:560px;margin:0 auto;padding:20px 12px"><div style="background:#1B2A4E;color:#fff;padding:16px 20px;border-radius:10px 10px 0 0;font-weight:bold;font-size:15px">GAMEDOOR·41 · Calendrier de l'Avent des énigmes</div><div style="background:#fff;padding:22px 20px;border-radius:0 0 10px 10px;font-size:15px;line-height:1.55">${contenu}${SIGNATURE}</div></div></body></html>`;
 }
-var bouton = (lien, texte) => `<p style="margin:20px 0"><a href="${h(lien)}" style="display:inline-block;background:#BE1B1B;color:#fff;text-decoration:none;font-weight:bold;padding:13px 22px;border-radius:8px">${h(texte)}</a></p>`;
+// Le lien est aussi écrit en clair : certaines messageries d'entreprise désactivent les boutons.
+var bouton = (lien, texte) => `<p style="margin:20px 0 6px"><a href="${h(lien)}" style="display:inline-block;background:#BE1B1B;color:#fff;text-decoration:none;font-weight:bold;padding:13px 22px;border-radius:8px">${h(texte)}</a></p><p style="margin:0 0 16px;font-size:13px;color:#5a6478;word-break:break-all">Le bouton ne s'ouvre pas ? Copiez ce lien dans votre navigateur : ${h(lien)}</p>`;
 var lienJeu = (origine, n, t) => `${origine}/defi-noel/piece/?n=${n}&t=${encodeURIComponent(t)}`;
 var lienPartage = (origine, n) => `${origine}/defi-noel/piece/?n=${n}`;
 
@@ -1100,7 +1102,7 @@ function mailConfirmation(e, origine) {
   return { sujet: "Inscription confirmée : le dossier Père Noël vous attend", html, texte };
 }
 function mailEquipe(e) {
-  const html = `<p>Nouvelle entreprise inscrite au défi de Noël :</p><ul><li><b>${h(e.entreprise)}</b> (${h(e.ville || "ville non précisée")})</li><li>${h(e.prenom)} ${h(e.nom)} — ${h(e.fonction || "")}</li><li>${h(e.email)} · ${h(e.telephone || "pas de téléphone")}</li><li>${h(e.joueurs)} joueurs · LinkedIn : ${e.linkedin ? "oui" : "non"} · connu par : ${h(e.source || "?")}</li></ul><p>Source CRM : Calendrier de l'Avent 2026.</p>`;
+  const html = `<p>Nouvelle entreprise inscrite au défi de Noël :</p><ul><li><b>${h(e.entreprise)}</b> (${h(e.ville || "ville non précisée")})</li><li>${h(e.prenom)} ${h(e.nom)} — ${h(e.fonction || "")}</li><li>${h(e.email)} · ${h(e.telephone || "pas de téléphone")}</li><li>${h(e.joueurs)} joueurs · LinkedIn : ${e.linkedin ? "oui" : "non"} · offres par mail : ${e.offres ? "oui" : "non"} · connu par : ${h(e.source || "?")}</li></ul><p>Source CRM : Calendrier de l'Avent 2026.</p>`;
   return { sujet: "Défi de Noël : " + e.entreprise + " s'est inscrite", html, texte: html.replace(/<[^>]+>/g, " ") };
 }
 function mailPiece(n, e, origine, rappel, contenu) {
@@ -1185,7 +1187,7 @@ function creerMoteur(contexte) {
         const r = resultats[n].find((x) => x.id === e.id);
         if (r) { parPiece[n] = r.correction.total; total += r.correction.total; if (n === 3) { derniere = r.maj; subsidiaire = r.reponses.subsidiaire; } }
       }
-      return { id: e.id, entreprise: e.entreprise, ville: e.ville, prenom: e.prenom, nom: e.nom, fonction: e.fonction, email: e.email, telephone: e.telephone, joueurs: e.joueurs, linkedin: e.linkedin, source: e.source, cree: e.cree, parPiece, total, derniere, subsidiaire, lien: lienJeu(origine, 1, e.t) };
+      return { id: e.id, entreprise: e.entreprise, ville: e.ville, prenom: e.prenom, nom: e.nom, fonction: e.fonction, email: e.email, telephone: e.telephone, joueurs: e.joueurs, linkedin: e.linkedin, offres: !!e.offres, source: e.source, cree: e.cree, parPiece, total, derniere, subsidiaire, lien: lienJeu(origine, 1, e.t) };
     });
     // Subsidiaire : écart à la vraie valeur (nombre d'entreprises ayant trouvé l'énigme 3).
     const bonnes3 = resultats[3].filter((r) => r.correction.detail.enigme > 0).length;
@@ -1209,13 +1211,13 @@ function creerMoteur(contexte) {
     if (d.site) return json({ ok: true }); // piège à robots
     const e = {
       entreprise: propre(d.entreprise, 90), ville: propre(d.ville, 60), prenom: propre(d.prenom, 50), nom: propre(d.nom, 60), fonction: propre(d.fonction, 80),
-      email: propre(d.email, 120).toLowerCase(), telephone: propre(d.telephone, 30), joueurs: Math.max(1, Math.min(500, parseInt(d.joueurs, 10) || 0)), linkedin: !!d.linkedin, source: propre(d.source, 60)
+      email: propre(d.email, 120).toLowerCase(), telephone: propre(d.telephone, 30), joueurs: Math.max(1, Math.min(500, parseInt(d.joueurs, 10) || 0)), linkedin: !!d.linkedin, offres: !!d.offres, source: propre(d.source, 60)
     };
     if (e.entreprise.length < 2) return refus(400, "entreprise", "Indiquez le nom de votre entreprise.");
     if (!e.prenom) return refus(400, "prenom", "Indiquez votre prénom.");
     if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(e.email)) return refus(400, "email", "Cette adresse mail ne semble pas valide.");
     if (JETABLES.test(e.email)) return refus(400, "email", "Merci d'utiliser votre adresse professionnelle.");
-    if (!d.rgpd) return refus(400, "rgpd", "Merci de cocher la case d'accord.");
+    if (!d.rgpd) return refus(400, "rgpd", "Merci de cocher la case : vous acceptez le règlement du défi.");
     const cleEnt = normaliser(e.entreprise).replace(/ /g, "");
     const deja = await S.lire("n/" + hacher(cleEnt));
     if (deja) {
@@ -1225,7 +1227,9 @@ function creerMoteur(contexte) {
     }
     const id = randomBytes(6).toString("hex");
     const t = jeton();
-    const ent = { ...e, id, cree: quand.toISOString(), crm: "Calendrier de l'Avent 2026", ip: hacher(req.headers.get("x-nf-client-connection-ip") || "") .slice(0, 12) };
+    const ent = { ...e, id, cree: quand.toISOString(), crm: "Calendrier de l'Avent 2026",
+      // Preuve des accords (RGPD) : quoi, quand, sur quelle version du texte. Aucune adresse IP n'est gardée.
+      accords: { reglement: quand.toISOString(), linkedin: e.linkedin ? quand.toISOString() : null, offres: e.offres ? quand.toISOString() : null, version: "reglement-2026-11-26" } };
     await S.ecrire("e/" + id, { ...ent, t });
     await S.ecrire("t/" + hacher(t), id);
     await S.ecrire("n/" + hacher(cleEnt), id);
@@ -1289,6 +1293,26 @@ function creerMoteur(contexte) {
       for (const k of ["1", "2", "3"]) if (d.pieces[k]) c.pieces[k] = d.pieces[k];
       await S.ecrire("contenu", c);
       return json({ ok: true, pieces: Object.keys(c.pieces) });
+    }
+    if (chemin === "supprimer" && m === "POST") {
+      // Droit à l'effacement : l'entreprise, son lien et toutes ses réponses disparaissent.
+      const id = String(d.id || "").replace(/[^a-f0-9]/g, "");
+      const e = id ? await S.lire("e/" + id) : null;
+      if (!e) return refus(404, "inconnu", "Entreprise introuvable.");
+      await S.supprimer("t/" + hacher(e.t));
+      await S.supprimer("n/" + hacher(normaliser(e.entreprise).replace(/ /g, "")));
+      for (const n of [1, 2, 3]) await S.supprimer(`r/${n}/${id}`);
+      await S.supprimer("e/" + id);
+      return json({ ok: true });
+    }
+    if (chemin === "modifier" && m === "POST") {
+      // Retrait d'un accord (LinkedIn ou offres) à la demande de l'entreprise.
+      const id = String(d.id || "").replace(/[^a-f0-9]/g, "");
+      const e = id ? await S.lire("e/" + id) : null;
+      if (!e) return refus(404, "inconnu", "Entreprise introuvable.");
+      for (const k of ["linkedin", "offres"]) if (k in d) { e[k] = !!d[k]; e.accords = { ...(e.accords || {}), [k]: d[k] ? new Date().toISOString() : null, [k + "Retire"]: d[k] ? null : new Date().toISOString() }; }
+      await S.ecrire("e/" + id, e);
+      return json({ ok: true });
     }
     if (chemin === "valider" && m === "POST") {
       const cle = `r/${parseInt(d.n, 10)}/${String(d.id || "").replace(/[^a-f0-9]/g, "")}`;
