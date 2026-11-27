@@ -1057,7 +1057,9 @@ function stockage(nom) {
     lire: async (cle) => (await magasin()).get(cle, { type: "json" }),
     ecrire: async (cle, val) => { await (await magasin()).setJSON(cle, val); },
     lister: async (prefixe) => { const { blobs } = await (await magasin()).list({ prefix: prefixe }); return blobs.map((b) => b.key); },
-    supprimer: async (cle) => { await (await magasin()).delete(cle); }
+    supprimer: async (cle) => { await (await magasin()).delete(cle); },
+    lireBinaire: async (cle) => (await magasin()).get(cle, { type: "arrayBuffer" }),
+    ecrireBinaire: async (cle, val) => { await (await magasin()).set(cle, val); }
   };
 }
 
@@ -1260,6 +1262,12 @@ function creerMoteur(contexte) {
     if (etat.ouverte) {
       const c = await contenu();
       reponse.piece = versionPublique(c.pieces[n]);
+      // Son déposé dans le magasin : servi par la route « son », seulement une fois la pièce ouverte.
+      const info = await S.lire("son-info/" + n);
+      if (info && reponse.piece && reponse.piece.son) {
+        const sim = essai ? url.searchParams.get("simuler") : null;
+        reponse.piece.son.audio = `/api/defi-noel/son?n=${n}&v=${encodeURIComponent(info.v)}` + (sim ? "&simuler=" + encodeURIComponent(sim) : "");
+      }
       if (ent) { const r = await S.lire(`r/${n}/${ent.id}`); reponse.mesReponses = r ? r.reponses : null; reponse.maj = r ? r.maj : null; }
     }
     return json(reponse);
@@ -1286,6 +1294,19 @@ function creerMoteur(contexte) {
     const m = req.method;
     if (chemin === "bilan" && m === "GET") return json(await bilan(origine));
     if (chemin === "contenu" && m === "GET") return json(await contenu());
+    if (chemin === "son" && m === "POST") {
+      // Dépôt d'un son : corps brut (m4a, mp3…), ?n=1|2|3. Gardé hors du dépôt public.
+      const n = parseInt(new URL(req.url).searchParams.get("n"), 10);
+      if (!PIECES[n]) return refus(400, "piece", "Pièce inconnue.");
+      const type = (req.headers.get("content-type") || "").split(";")[0].trim();
+      if (!/^audio\//.test(type)) return refus(400, "format", "Il faut un fichier audio (content-type audio/…).");
+      const octets = await req.arrayBuffer();
+      if (!octets.byteLength || octets.byteLength > 4 * 1024 * 1024) return refus(400, "taille", "Le son doit faire moins de 4 Mo.");
+      await S.ecrireBinaire("son/" + n, octets);
+      const info = { type, taille: octets.byteLength, v: Date.now().toString(36) };
+      await S.ecrire("son-info/" + n, info);
+      return json({ ok: true, n, ...info });
+    }
     let d = {}; if (m === "POST") { try { d = await req.json(); } catch { return refus(400, "format", "Corps illisible."); } }
     if (chemin === "contenu" && m === "POST") {
       if (!d.pieces || typeof d.pieces !== "object") return refus(400, "format", "Il faut { pieces: { 1: …, 2: …, 3: … } }.");
@@ -1359,6 +1380,25 @@ function creerMoteur(contexte) {
       if (chemin === "inscription" && m === "POST") return await inscrire(req, origine);
       if (chemin === "piece" && m === "GET") return await lirePiece(req);
       if (chemin === "reponses" && m === "POST") return await repondre(req);
+      if (chemin === "son" && m === "GET") {
+        const n = parseInt(url.searchParams.get("n"), 10);
+        const etat = etatPiece(n, maintenant(req));
+        if (!etat) return refus(404, "piece", "Cette pièce n'existe pas.");
+        if (!etat.ouverte) return refus(403, "fermee", "Ce son n'est pas encore disponible.");
+        const [info, octets] = await Promise.all([S.lire("son-info/" + n), S.lireBinaire("son/" + n)]);
+        if (!info || !octets) return refus(404, "son", "Pas de son pour cette pièce.");
+        // Safari (iPhone) exige les lectures partielles (Range) pour jouer un son.
+        const total = octets.byteLength;
+        const entetes = { "content-type": info.type, "cache-control": "private, max-age=3600", "accept-ranges": "bytes" };
+        const plage = /^bytes=(\d*)-(\d*)$/.exec(req.headers.get("range") || "");
+        if (plage && (plage[1] || plage[2])) {
+          let debut = plage[1] ? parseInt(plage[1], 10) : Math.max(0, total - parseInt(plage[2], 10));
+          let fin = plage[1] && plage[2] ? Math.min(parseInt(plage[2], 10), total - 1) : total - 1;
+          if (debut >= total || debut > fin) return new Response(null, { status: 416, headers: { "content-range": `bytes */${total}` } });
+          return new Response(octets.slice(debut, fin + 1), { status: 206, headers: { ...entetes, "content-range": `bytes ${debut}-${fin}/${total}`, "content-length": String(fin - debut + 1) } });
+        }
+        return new Response(octets, { status: 200, headers: { ...entetes, "content-length": String(total) } });
+      }
       if (chemin === "public" && m === "GET") { const l = await S.lister("e/"); return json({ inscrites: l.length, essai, fin: FIN_INSCRIPTIONS }); }
       if (chemin === "equipe/initialiser" && m === "POST") {
         if (await S.lire("code-equipe")) return refus(403, "deja", "Le code de l'équipe est déjà choisi.");
