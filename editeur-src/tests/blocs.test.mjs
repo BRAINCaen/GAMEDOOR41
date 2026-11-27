@@ -36,7 +36,7 @@ const TEXTES_REELS = new Set([
   'Écrire un message', 'Adresse', '41 bis rue Pasteur, 14120 Mondeville', 'Votre code', 'Copier le code',
   '00', 'jours', 'heures', 'minutes', 'secondes', 'Cette offre est terminée.', 'Il reste', 'Nouveau', 'Offre limitée',
   'Carte cadeau', 'Offrez une expérience', 'Voir la carte cadeau',
-  'Un escape game ou une émission du quiz, à offrir à qui vous voulez. La carte cadeau est valable 12 mois.',
+  'Un escape game ou une émission du quiz, à offrir à qui vous voulez. La carte cadeau est valable sans limite de durée.',
   'Horaires', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche',
   'Nous trouver', 'GAMEDOOR·41', '41 bis rue Pasteur', '14120 Mondeville', 'Préparer l’itinéraire',
   'En voiture', 'Se garer', 'En transports en commun', 'Durée', 'Joueurs', 'Âge', 'Niveau',

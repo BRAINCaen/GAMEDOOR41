@@ -20,7 +20,7 @@ export const REGLES_DEFAUT = [
   { motif: 'facultati(f|ve)', niveau: 'attention', message: 'Écrivez « si vous voulez » plutôt que « facultatif ».' },
   { motif: 'appelez[- ]nous|t[ée]l[ée]phonez[- ]nous|appelez[- ]le|contactez[- ]nous par t[ée]l[ée]phone', niveau: 'attention', message: 'On n’invite pas à appeler : renvoyez vers la réservation en ligne ou contact@gamedoor41.fr.' },
   { motif: 'b\\.r\\.a\\.i\\.n', niveau: 'attention', message: 'Le nom de la société est GAMEDOOR·41 (BRAIN reste seulement le nom des escape games).' },
-  { motif: 'valable (1|un) an|validit[ée] (d.)?(1|un) an|illimit[ée]', niveau: 'attention', message: 'Cartes cadeaux, bons et avoirs : valables 12 mois.' },
+  { motif: '(valables?|validit[ée]) (de )?(1 an|un an|12 mois|douze mois)|12 mois de validit[ée]|prolongation sur demande', niveau: 'attention', message: 'Cartes cadeaux, bons, places offertes et avoirs : valables sans limite de durée (décision d’Allan du 27/11/2026). Seule la garantie report reste limitée à 12 mois.' },
   { motif: '17[,.]50', niveau: 'attention', message: 'Le tarif entreprise (17,50 €) ne s’affiche pas au grand public.' },
   { motif: 'salle (des|pour( les)?) d[ée]butants', niveau: 'attention', message: 'Aucune salle n’est « pour débutants » : le niveau se choisit dans chaque salle.' },
   { motif: 'escape box', niveau: 'attention', message: 'L’Escape Box n’est plus proposée.' },

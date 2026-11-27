@@ -21,7 +21,7 @@ const INTERDITS = [
   ['propriété exclusive', /propriété exclusive de GAMEDOOR/i, 'Les marques et scénarios sous licence appartiennent à leurs titulaires.'],
   ['signature GAMEDOOR sur une salle', /signature GAMEDOOR|signée? GAMEDOOR|créée? par GAMEDOOR/i, 'Les escape games sont des expériences BRAIN.'],
   ['plateforme européenne fermée', /ec\.europa\.eu\/consumers\/odr/i, 'Service arrêté le 20 juillet 2025.'],
-  ['validité illimitée', /validité illimitée|valable à vie|sans date limite/i, 'Cartes cadeaux : 12 mois.'],
+  ['validité limitée à 12 mois', /valables? (<[^>]+>)*(12|douze)(&nbsp;| )mois|validité (<[^>]+>)*(12|douze)(&nbsp;| )mois|12 mois de validité|12 mois à compter de (la date d'|l')achat|prolongation sur demande|besoin de (la|le) prolonger/i, 'Cartes cadeaux, bons, places offertes et avoirs : sans limite de durée depuis le 27/11/2026 (seule la garantie report reste à 12 mois).'],
   ['quiz à 40', /4 ?(-|–|à) ?40 (candidat|joueur|enfant|personne)/i, 'Quiz : 4 à 16 candidats par session.'],
   ['40 joueurs max', /40 joueurs max/i, 'Capacité : 30 en escape + 16 au quiz = 46.'],
   ['quiz 15 € HT', /15 ?€ ?HT/i, 'Quiz pro : 15 € TTC, soit 13,64 € HT.'],
