@@ -299,9 +299,39 @@ test('grand tirage et tirage des assidus après le 24', async () => {
   const e = await m.appel('GET', 'etat', { jeton: jetonAssidu });
   assert.equal(e.corps.moi.tickets, 48);
   assert.equal(e.corps.finaux.assidus.gagnant, 'Assidue (as•••@e•••)');
-  assert.equal((await m.stockage.lire('tirages/grand')).dejaGagnants, 0, 'le grand tirage est ouvert à tous, gagnants du jour compris');
-  assert.equal((await m.stockage.lire('tirages/assidus')).dejaGagnants, 0);
+  assert.equal((await m.stockage.lire('tirages/assidus')).dejaGagnants, 0, 'le tirage des 24 portes a lieu en premier');
   assert.equal((await m.stockage.lire('tirages/03')).gagnant.etiquette, 'Joueur50 (jo•••@e•••)', 'porte 3 : Assidue a déjà gagné, c’est l’autre joueur');
-  assert.ok(e.corps.finaux.grand.gagnant);
-  assert.equal((await m.stockage.lire('tirages/grand')).billets, 48 + 1 + ((0 === m.defis[2].bonne) ? 1 : 0));
+  // une seule session complète par personne : Assidue (48 tickets) est écartée du grand tirage ;
+  // Joueur50, gagnant de la porte 3, peut gagner le grand tirage
+  const grand = await m.stockage.lire('tirages/grand');
+  assert.equal(grand.dejaGagnants, 1);
+  assert.equal(grand.gagnant.etiquette, 'Joueur50 (jo•••@e•••)');
+  assert.equal(e.corps.finaux.grand.gagnant, 'Joueur50 (jo•••@e•••)');
+  assert.equal(grand.billets, 48 + 1 + ((0 === m.defis[2].bonne) ? 1 : 0));
+  // l'équipe remplace le gagnant du grand tirage : personne d'autre que la gagnante des 24 portes → pas de gagnant
+  const code = 'un-code-assez-long';
+  await m.appel('POST', 'equipe/initialiser', { corps: { code } });
+  const r = await m.appel('POST', 'equipe/tirage', { code, corps: { cle: 'grand', action: 'retirer', raison: 'essai' } });
+  assert.equal(r.corps.tirage.gagnant, null, 'jamais les deux sessions à la même personne, même au nouveau tirage');
+  // et l'inverse : nouveau tirage des 24 portes, la seule assidue est retirée → personne
+  const r2 = await m.appel('POST', 'equipe/tirage', { code, corps: { cle: 'assidus', action: 'retirer' } });
+  assert.equal(r2.corps.tirage.gagnant, null);
+});
+
+test('les deux sessions complètes ne vont jamais à la même personne', async () => {
+  const m = await monde({ date: '2026-12-01T10:00:00+01:00' });
+  const jetons = {};
+  for (let j = 1; j <= 24; j++) {
+    m.a('2026-12-' + String(j).padStart(2, '0') + 'T10:00:00+01:00');
+    for (let n = 1; n <= 3; n++) {
+      const r = await m.appel('POST', 'jouer', { corps: { j, reponse: bonne(m.defis[j - 1]), prenom: 'Fidele' + n, email: 'fidele' + n + '@exemple.fr', reglement: true }, jeton: jetons[n], ip: '8.8.8.' + n });
+      assert.equal(r.statut, 200); jetons[n] = r.corps.jeton;
+    }
+  }
+  m.a('2026-12-25T12:05:00+01:00');
+  await m.appel('GET', 'etat');
+  const grand = await m.stockage.lire('tirages/grand'), assidus = await m.stockage.lire('tirages/assidus');
+  assert.ok(grand.gagnant && assidus.gagnant);
+  assert.notEqual(grand.gagnant.id, assidus.gagnant.id);
+  assert.equal(grand.dejaGagnants, 1);
 });

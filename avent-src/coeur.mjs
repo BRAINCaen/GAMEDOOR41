@@ -183,13 +183,15 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
   // --- tirages ---
   // Tirages du jour : pas toujours les mêmes gagnants (décision d'Allan du 26/11/2026). Ceux qui ont déjà gagné un
   // AUTRE tirage du jour (`gagnants`) sont écartés, et on tire parmi les autres ; s'il ne reste personne d'autre, on
-  // tire parmi tous. Le grand tirage et le tirage des 24 portes sont ouverts à TOUS, gagnants du jour compris.
+  // tire parmi tous. Le grand tirage et le tirage des 24 portes sont ouverts aux gagnants du jour, mais une même
+  // personne ne gagne jamais les DEUX sessions complètes (décision d'Allan du 27/11/2026) : le tirage des 24 portes
+  // a lieu d'abord, puis le grand tirage se fait sans son gagnant. Là, pas de repli : personne d'autre = pas de gagnant.
   // `retires` : les gagnants que l'équipe a remplacés pour CE tirage, jamais repris.
   const fiche = (g) => (g ? { id: g.id, prenom: g.prenom, email: g.email, etiquette: etiquetteGagnant(g) } : null);
-  function piocher(urne, gagnants) {
+  function piocher(urne, gagnants, { strict = false } = {}) {
     const libres = urne.filter((x) => !gagnants.has(x.id));
-    const choix = libres.length ? libres : urne;
-    const ecartes = libres.length ? new Set(urne.filter((x) => gagnants.has(x.id)).map((x) => x.id)).size : 0;
+    const choix = libres.length || strict ? libres : urne;
+    const ecartes = libres.length || strict ? new Set(urne.filter((x) => gagnants.has(x.id)).map((x) => x.id)).size : 0;
     return { gagnant: choix.length ? choix[randomInt(choix.length)] : null, ecartes };
   }
   function tirerJour(j, joueurs, { retires = [], gagnants = new Set() } = {}) {
@@ -203,7 +205,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     let urne = [];
     if (genre === 'grand') eligibles.forEach((x) => { const n = ticketsDe(x, tout); for (let i = 0; i < n; i++) urne.push(x); });
     else urne = eligibles.filter((x) => Object.keys(x.reponses || {}).length >= NB_PORTES);
-    const { gagnant, ecartes } = piocher(urne, gagnants);
+    const { gagnant, ecartes } = piocher(urne, gagnants, { strict: true });
     return { cle: genre, genre, participants: genre === 'grand' ? eligibles.filter((x) => Object.keys(x.reponses || {}).length).length : urne.length, billets: urne.length, dejaGagnants: ecartes, tireLe: maintenant().toISOString(),
       gagnant: fiche(gagnant), prevenu: false };
   }
@@ -213,8 +215,13 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     Object.values(tir).forEach((t) => { if (t && t.gagnant && t.cle !== sauf) s.add(t.gagnant.id); });
     return s;
   }
-  /** Qui écarter du tirage de clé `cle` : les gagnants des autres tirages du jour ; personne pour les tirages de la fin. */
+  /** Qui écarter du tirage de clé `cle` : pour un tirage du jour, les gagnants des autres tirages du jour ;
+   *  pour un tirage de la fin, le gagnant de l'autre tirage de la fin (une session complète par personne). */
   function aEcarter(tir, cle) {
+    if (cle === 'grand' || cle === 'assidus') {
+      const autre = tir[cle === 'grand' ? 'assidus' : 'grand'];
+      return new Set(autre && autre.gagnant ? [autre.gagnant.id] : []);
+    }
     if (!/^\d\d$/.test(cle)) return new Set();
     const jours = {};
     Object.keys(tir).forEach((k) => { if (/^\d\d$/.test(k)) jours[k] = tir[k]; });
@@ -226,13 +233,14 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     (await Promise.all(cles.map((c) => stockage.lire(c)))).forEach((x) => { if (x) valeurs[x.cle] = x; });
     return valeurs;
   }
-  /** Fait les tirages dus et pas encore faits, dans l'ordre (porte 1 à 24, grand tirage, tirage des 24 portes).
+  /** Fait les tirages dus et pas encore faits, dans l'ordre (porte 1 à 24, tirage des 24 portes, grand tirage :
+   *  le plus petit tirage d'abord, pour que l'écart du gagnant ne vide jamais son urne).
    *  Écriture « seulement si absent » : deux appels en même temps ne tirent pas deux gagnants. */
   async function assurerTirages(quand) {
     if (quand.simule && !essai) return 0;
     const dus = [];
     for (let j = 1; j <= NB_PORTES; j++) if (resultatVisible(j, quand)) dus.push(pad(j));
-    if (resultatVisible(NB_PORTES, quand)) dus.push('grand', 'assidus');
+    if (resultatVisible(NB_PORTES, quand)) dus.push('assidus', 'grand');
     if (!dus.length) return 0;
     const connus = await lireTirages();
     const manquants = dus.filter((c) => !connus[c]);

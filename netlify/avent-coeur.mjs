@@ -1304,10 +1304,10 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     return sortie;
   }
   const fiche = (g) => g ? { id: g.id, prenom: g.prenom, email: g.email, etiquette: etiquetteGagnant(g) } : null;
-  function piocher(urne, gagnants) {
+  function piocher(urne, gagnants, { strict = false } = {}) {
     const libres = urne.filter((x) => !gagnants.has(x.id));
-    const choix = libres.length ? libres : urne;
-    const ecartes = libres.length ? new Set(urne.filter((x) => gagnants.has(x.id)).map((x) => x.id)).size : 0;
+    const choix = libres.length || strict ? libres : urne;
+    const ecartes = libres.length || strict ? new Set(urne.filter((x) => gagnants.has(x.id)).map((x) => x.id)).size : 0;
     return { gagnant: choix.length ? choix[randomInt(choix.length)] : null, ecartes };
   }
   function tirerJour(j, joueurs, { retires = [], gagnants = /* @__PURE__ */ new Set() } = {}) {
@@ -1324,7 +1324,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       for (let i = 0; i < n; i++) urne.push(x);
     });
     else urne = eligibles.filter((x) => Object.keys(x.reponses || {}).length >= NB_PORTES);
-    const { gagnant, ecartes } = piocher(urne, gagnants);
+    const { gagnant, ecartes } = piocher(urne, gagnants, { strict: true });
     return {
       cle: genre,
       genre,
@@ -1344,6 +1344,10 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     return s;
   }
   function aEcarter(tir, cle) {
+    if (cle === "grand" || cle === "assidus") {
+      const autre = tir[cle === "grand" ? "assidus" : "grand"];
+      return new Set(autre && autre.gagnant ? [autre.gagnant.id] : []);
+    }
     if (!/^\d\d$/.test(cle)) return /* @__PURE__ */ new Set();
     const jours = {};
     Object.keys(tir).forEach((k) => {
@@ -1363,7 +1367,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     if (quand.simule && !essai) return 0;
     const dus = [];
     for (let j = 1; j <= NB_PORTES; j++) if (resultatVisible(j, quand)) dus.push(pad2(j));
-    if (resultatVisible(NB_PORTES, quand)) dus.push("grand", "assidus");
+    if (resultatVisible(NB_PORTES, quand)) dus.push("assidus", "grand");
     if (!dus.length) return 0;
     const connus = await lireTirages();
     const manquants = dus.filter((c) => !connus[c]);

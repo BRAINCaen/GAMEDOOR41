@@ -163,6 +163,7 @@ test('fin du jeu : porte 24 (avec la DeLorean), grand tirage (session d’escape
   for (let j = 1; j <= 24; j++) {
     m.a('2026-12-' + String(j).padStart(2, '0') + 'T10:00:00+01:00');
     assert.equal((await m.jouer(1, j)).statut, 200);
+    if (j === 24) assert.equal((await m.jouer(2, 24)).statut, 200);   // un 2ᵉ joueur, sinon pas de grand tirage (une session par personne)
     if (j > 1) { m.a('2026-12-' + String(j).padStart(2, '0') + 'T12:05:00+01:00'); await m.passer(); }
   }
   m.a('2026-12-25T12:05:00+01:00');
@@ -181,7 +182,8 @@ test('fin du jeu : porte 24 (avec la DeLorean), grand tirage (session d’escape
   assert.match(assidus.texte, /Ce code vous offre 1 session de quiz pour 4 à 16 candidats, émission au choix/);
   const bilan = fin.find((x) => /^\[Avent\]/.test(x.sujet));
   assert.match(bilan.sujet, /tout est parti tout seul/);
-  assert.match(bilan.texte, /Grand tirage : Joueur1/); assert.match(bilan.texte, /Tirage des 24 portes : Joueur1/);
+  assert.match(bilan.texte, /Grand tirage : Joueur2/); assert.match(bilan.texte, /Tirage des 24 portes : Joueur1/);
+  assert.match(porte24.texte, /Joueur2|Bonjour/); assert.ok(m.courrier.boite.some((x) => x.a === 'joueur2@exemple.fr' && /porte 24/.test(x.texte)), 'porte 24 : Joueur1 a déjà gagné un tirage du jour');
   assert.match(bilan.texte, /Codes en réserve : places de quiz 20, places d’escape game 0, session de quiz 0, session d’escape game 0\./);
   const b = (await m.appel('GET', 'equipe/bilan', { code: CODE })).corps;
   assert.deepEqual(b.besoins, { quiz: 0, escape: 0, session: 0, sessionEscape: 0 }); assert.equal(b.codesDonnes, 26);

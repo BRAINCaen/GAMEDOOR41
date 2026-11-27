@@ -10,7 +10,9 @@
 // - pas de perdant : le 25 décembre, chaque joueur qui n'a rien gagné reçoit 1 place de quiz pour 1 joueur
 //   (pas pour les tirages du jour : là, seul le gagnant reçoit sa place) ;
 // - tirages du jour : pas toujours les mêmes, si le sort retombe sur quelqu'un qui a déjà gagné une place, on retire ;
-//   le grand tirage et le tirage des 24 portes restent ouverts à tous, gagnants du jour compris.
+//   le grand tirage et le tirage des 24 portes restent ouverts aux gagnants du jour ;
+// - une même personne ne gagne jamais les deux sessions complètes (décision d'Allan du 27/11/2026) :
+//   le tirage des 24 portes se fait d'abord, son gagnant ne participe pas au grand tirage.
 
 /** Jours à étoile : la place de quiz devient une place d'escape game. */
 export const ETOILES = [6, 13, 20, 24];

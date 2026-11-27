@@ -332,11 +332,13 @@
       }));
     }
     if (v === 'horloge') {
+      /* l'heure affichée vient du défi (angles des aiguilles en degrés, 0 = midi) : rien n'est écrit en dur ici */
+      var hz = d.horloge || {};
       var traits = '';
       for (var h = 0; h < 12; h++) traits += '<line x1="50" y1="8" x2="50" y2="' + (h % 3 === 0 ? 17 : 13) + '" transform="rotate(' + (h * 30) + ' 50 50)"/>';
-      return el('div', { class: 'av-horloge', role: 'img', 'aria-label': 'Une horloge sans chiffres vue dans un miroir : la petite aiguille est entre le 8 et le 9, la grande est en bas', html:
+      return el('div', { class: 'av-horloge', role: 'img', 'aria-label': 'Une horloge sans chiffres vue dans un miroir' + (hz.texte ? ' : ' + hz.texte : ''), html:
         '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" class="cadran"/><g class="traits">' + traits + '</g>' +
-        '<line x1="50" y1="50" x2="50" y2="26" class="petite" transform="rotate(255 50 50)"/><line x1="50" y1="50" x2="50" y2="16" class="grande" transform="rotate(180 50 50)"/><circle cx="50" cy="50" r="3.2" class="axe"/></svg>' +
+        '<line x1="50" y1="50" x2="50" y2="26" class="petite" transform="rotate(' + Number(hz.petite || 0) + ' 50 50)"/><line x1="50" y1="50" x2="50" y2="16" class="grande" transform="rotate(' + Number(hz.grande || 0) + ' 50 50)"/><circle cx="50" cy="50" r="3.2" class="axe"/></svg>' +
         '<span>Vue dans le miroir</span>' });
     }
     if (v === 'morse') {

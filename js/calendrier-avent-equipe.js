@@ -75,7 +75,7 @@
 
   function blocTirage(cle, t, lotPrevu, quoi) {
     if (!t) return el('p', { class: 'note', text: 'Tirage pas encore fait (le lendemain à midi).' });
-    if (!t.gagnant) return el('p', { class: 'note', text: 'Tirage fait : aucun participant.' });
+    if (!t.gagnant) return el('p', { class: 'note', text: t.dejaGagnants ? 'Tirage fait, sans gagnant : la seule personne possible a déjà gagné l’autre session complète (une session par personne).' : 'Tirage fait : aucun participant.' });
     var lot = t.lot || lotPrevu || '';
     var champ = el('input', { type: 'text', value: lot, placeholder: 'Lot de ce gagnant (affiché sur le site)', maxlength: '200', 'aria-label': 'Lot de ce gagnant' });
     function action(donnees, bouton) {

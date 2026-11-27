@@ -17,7 +17,10 @@ Page publique : `/calendrier-de-l-avent/` · écran de l'équipe : `/calendrier-
   Fonction planifiée `avent-tirage` + rattrapage automatique à la première visite après midi.
 - **Pas toujours les mêmes gagnants du jour** (décision d'Allan du 26/11/2026) : à chaque tirage du jour, ceux
   qui ont déjà gagné un autre tirage du jour sont écartés et on tire parmi les autres ; s'il ne reste personne
-  d'autre, on tire parmi tous. Le grand tirage et le tirage des 24 portes sont ouverts à TOUS (gagnants compris).
+  d'autre, on tire parmi tous. Le grand tirage et le tirage des 24 portes sont ouverts aux gagnants du jour.
+- **Une session complète par personne** (décision d'Allan du 27/11/2026) : le tirage des 24 portes (session de quiz)
+  se fait en premier, puis le grand tirage (session d'escape game) sans son gagnant. Ici pas de repli : s'il n'y a
+  personne d'autre, pas de gagnant. Même règle quand l'équipe fait « Tirer un autre gagnant ».
   Le tirage garde le nombre de joueurs écartés (`dejaGagnants`), affiché dans l'écran de l'équipe.
 - **Pas de perdant** : le 25 à midi, après les deux tirages de la fin, chaque joueur qui n'a gagné aucun tirage
   reçoit 1 place de quiz pour 1 joueur (fiches `pas-de-perdant/<id>`), par mail, avec un code de quiz de la
