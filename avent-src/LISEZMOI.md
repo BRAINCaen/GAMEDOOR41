@@ -62,6 +62,14 @@ Variables Netlify du site : `AVENT_RELAIS_CLE` (secrète : les mails partent par
 l'équipe, par défaut contact@gamedoor41.fr). `BREVO_API_KEY` + `AVENT_EXPEDITEUR` : seulement si un jour le site envoie
 directement par Brevo (elle passe alors avant le relais).
 
+## Comment on trouve le calendrier sur le site
+
+`scripts/bandeau-avent.mjs` pose sur les 61 pages qui ont le menu du site : un bandeau orange fixé tout en
+haut (pas sur la page du calendrier) et le lien « 🎄 Calendrier de l'Avent » du menu (en toutes lettres
+dans le menu du téléphone ; un 🎄 à côté du 🎁 sur les écrans d'ordinateur assez larges). Tout s'efface
+seul le 26/12/2026 à 0 h ; ensuite, `node scripts/bandeau-avent.mjs --retirer` nettoie les pages
+(les styles « Calendrier de l'Avent 2026 » à la fin de css/style.css et css/home-v33.css peuvent rester).
+
 ## Où sont les données
 
 Netlify Blobs. Le vrai site écrit dans le magasin `avent-2026`, les aperçus (deploy-preview…) dans

@@ -2603,6 +2603,11 @@ a.hero-tripadvisor:hover {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 105;
+    /* Petit téléphone : le menu défile au lieu de sortir de l'écran (« Contact » était inaccessible). */
+    max-height: calc(100vh - 90px - var(--avent-h, 0px));
+    max-height: calc(100dvh - 90px - var(--avent-h, 0px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .nav-row.menu-open .nav-links .nav-link {
     padding: 14px 6px;
@@ -2700,3 +2705,39 @@ a.hero-tripadvisor:hover {
   }
 }
 
+/* =============================================================
+   Calendrier de l'Avent 2026 : bandeau d'annonce + lien du menu
+   (posés par scripts/bandeau-avent.mjs, à retirer après le 25/12/2026).
+   Rien ne s'affiche sans la classe avent-on sur <html>, posée par le
+   petit script du bandeau jusqu'au 26/12/2026 à 0 h (heure de Paris).
+   Le bandeau est fixé tout en haut ; le menu et la page descendent
+   d'autant, pour que rien ne passe dessous.
+   ============================================================= */
+.avent-bandeau { display: none; }
+html:not(.avent-on) .avent-lien:not(.active) { display: none !important; }
+html.avent-on { --avent-h: 36px; scroll-padding-top: calc(80px + var(--avent-h)); }
+html.avent-on body { padding-top: calc(56px + var(--avent-h)); }
+html.avent-on .nav { top: var(--avent-h); }
+html.avent-on .avent-bandeau {
+  display: flex; align-items: center; justify-content: center;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  height: var(--avent-h); padding: 0 16px;
+  background: #FF6B00; color: #0A0A0A;
+  font: 500 14px/1.2 'DM Sans', system-ui, sans-serif;
+  white-space: nowrap; overflow: hidden; text-decoration: none;
+}
+html.avent-on .avent-bandeau:hover strong,
+html.avent-on .avent-bandeau:focus-visible strong { text-decoration: underline; }
+html.avent-on .avent-bandeau:focus-visible { outline: 2px solid #0A0A0A; outline-offset: -4px; }
+.avent-bandeau strong { font-weight: 700; }
+.avent-bandeau-sapin { margin-right: .4em; }
+.avent-bandeau-court { display: none; }
+.avent-bandeau-fleche { margin-left: .45em; font-weight: 700; font-size: 1.3em; line-height: 1; }
+@media (max-width: 760px) {
+  html.avent-on { --avent-h: 32px; }
+  html.avent-on .avent-bandeau { font-size: 13px; padding: 0 12px; }
+  .avent-bandeau-long { display: none; }
+  .avent-bandeau-court { display: inline; }
+}
+/* Menu d’ordinateur trop étroit pour le 🎄 : il pousserait « Réserver » hors de l’écran (le bandeau reste). */
+@media (max-width: 1139px) { .avent-lien.nav-link-desktop { display: none !important; } }
