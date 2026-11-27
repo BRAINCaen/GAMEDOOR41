@@ -59,7 +59,7 @@
 
   function mailGagnant(t, lot, quoi) {
     var sujet = 'Vous avez gagné au calendrier de l’Avent de GAMEDOOR·41 !';
-    var corps = 'Bonjour ' + t.gagnant.prenom + ',\n\nBravo : vous avez été tiré(e) au sort ' + quoi + ' de notre calendrier de l’Avent « Les 24 portes ».\n\nVotre lot : ' + (lot || '[LOT À PRÉCISER]') + '\n\n[Si c’est une place offerte : votre code est XXXX, à saisir à la réservation sur gamedoor41.fr, valable 12 mois.]\n[Si c’est un jeu : il vous attend à l’accueil, 41 bis rue Pasteur à Mondeville, aux heures d’ouverture.]\n\nMerci de nous répondre pour confirmer la bonne réception de ce message.\n\nÀ très vite,\nL’équipe GAMEDOOR·41';
+    var corps = 'Bonjour ' + t.gagnant.prenom + ',\n\nBravo : vous avez été tiré(e) au sort ' + quoi + ' de notre calendrier de l’Avent « Les 24 portes ».\n\nVotre lot : ' + (lot || '[LOT À PRÉCISER]') + '\n\n[Si c’est une place offerte : votre code est XXXX, à saisir à la réservation sur gamedoor41.fr, valable sans limite de durée.]\n[Si c’est un jeu : il vous attend à l’accueil, 41 bis rue Pasteur à Mondeville, aux heures d’ouverture.]\n\nMerci de nous répondre pour confirmer la bonne réception de ce message.\n\nÀ très vite,\nL’équipe GAMEDOOR·41';
     return 'mailto:' + encodeURIComponent(t.gagnant.email) + '?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
   }
 

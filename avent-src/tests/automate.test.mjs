@@ -52,7 +52,8 @@ test('le lot part tout seul : un mail, un code, une seule fois, et le bilan à l
   assert.match(gagnant.texte, /parmi 5 joueurs/);
   assert.match(gagnant.texte, /Votre lot : 1 place de quiz pour 1 joueur \+ le jeu Black Stories/);
   assert.match(gagnant.texte, /Il vaut pour une seule personne, pas pour une session entière/);
-  assert.match(gagnant.texte, /Besoin de le prolonger ou d’une demande particulière \? Écrivez-nous à contact@gamedoor41\.fr avec le code\./);
+  assert.match(gagnant.texte, /saisissez-le au moment de régler\. Il est valable sans limite de durée\./);
+  assert.doesNotMatch(gagnant.texte + gagnant.html, /12 mois|prolong/, 'places offertes sans limite de durée (27/11/2026)');
   assert.match(gagnant.texte, /Votre code : QUIZ-AAA1/);
   assert.match(gagnant.texte, /Votre cadeau, le jeu Black Stories, vous attend à l’accueil/);
   assert.match(gagnant.html, /QUIZ-AAA1/);
@@ -222,7 +223,8 @@ test('pas de perdant : le 25, chaque joueur sans gain reçoit 1 place de quiz po
   assert.ok(!pdp.some((x) => x.a === t24.gagnant.email || x.a === grand.gagnant.email), 'les gagnants ne la reçoivent pas');
   assert.match(pdp[0].texte, /il n’y a pas de perdant : voici 1 place de quiz pour 1 joueur, offerte/);
   assert.match(pdp[0].texte, /Il vaut pour une seule personne, pas pour une session entière/);
-  assert.match(pdp[0].texte, /Il est valable 12 mois\. Besoin de le prolonger/);
+  assert.match(pdp[0].texte, /Il est valable sans limite de durée\./);
+  assert.doesNotMatch(pdp[0].texte + pdp[0].html, /12 mois|prolong/);
   // plus rien ne repart ensuite
   m.a('2026-12-25T13:05:00+01:00'); await m.passer(); m.a('2026-12-25T18:05:00+01:00'); await m.passer();
   assert.equal(m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).length, perdants);

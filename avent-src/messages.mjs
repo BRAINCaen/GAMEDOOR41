@@ -37,7 +37,6 @@ const PRECISION = {
   session: 'Il offre la session entière à tout votre groupe, de 4 à 16 candidats : choisissez l’émission en réservant.',
   sessionEscape: 'Il offre la session entière à toute votre équipe, de 2 à 6 joueurs, dans la salle de votre choix : Garde à Vue, Psychiatric ou Back to the 80’s.',
 };
-const PROLONGER = 'Besoin de le prolonger ou d’une demande particulière ? Écrivez-nous à contact@gamedoor41.fr avec le code.';
 
 /**
  * Mail au gagnant. `tirage` : 'jour' | 'grand' | 'assidus' ; `place` : 'quiz' | 'escape' | 'session' | 'sessionEscape' | null ;
@@ -58,8 +57,8 @@ export function mailGagnant({ prenom, tirage = 'jour', jour, participants, lot, 
   if (place && code) {
     lignes.push('Votre code : ' + code);
     blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + '</span>' });
-    dire('Ce code vous offre ' + QUOI[place] + '. ' + PRECISION[place] + ' Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + PROLONGER,
-      'Ce code vous offre <strong>' + h(QUOI[place]) + '</strong>. ' + h(PRECISION[place]) + ' Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + h(PROLONGER));
+    dire('Ce code vous offre ' + QUOI[place] + '. ' + PRECISION[place] + ' Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable sans limite de durée.',
+      'Ce code vous offre <strong>' + h(QUOI[place]) + '</strong>. ' + h(PRECISION[place]) + ' Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable sans limite de durée.');
   } else if (place && !suite) {
     dire('Le code de votre ' + (/^session/.test(place) ? 'session' : 'place') + ' vous arrive dans un second mail, sous 48 heures.');
   }
@@ -80,8 +79,8 @@ export function mailPasDePerdant({ prenom, code, essai = false, origine = 'https
   dire('Merci d’avoir joué à notre calendrier de l’Avent ! Le tirage au sort ne vous a pas désigné cette fois, mais chez nous il n’y a pas de perdant : voici ' + QUOI.quiz + ', offerte.');
   lignes.push('Votre code : ' + code);
   blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + '</span>' });
-  dire('Ce code vous offre ' + QUOI.quiz + ' Buzz Your Brain. ' + PRECISION.quiz + ' Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + PROLONGER,
-    'Ce code vous offre <strong>' + h(QUOI.quiz) + '</strong> Buzz Your Brain. ' + h(PRECISION.quiz) + ' Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable 12 mois. ' + h(PROLONGER));
+  dire('Ce code vous offre ' + QUOI.quiz + ' Buzz Your Brain. ' + PRECISION.quiz + ' Réservez sur gamedoor41.fr/reserver, puis saisissez-le au moment de régler. Il est valable sans limite de durée.',
+    'Ce code vous offre <strong>' + h(QUOI.quiz) + '</strong> Buzz Your Brain. ' + h(PRECISION.quiz) + ' Réservez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de régler. Il est valable sans limite de durée.');
   dire('Les lots ne sont ni échangeables ni remboursables. Une question ? Répondez simplement à ce mail.');
   dire('Joyeux Noël, et à très vite à Mondeville,');
   dire('L’équipe GAMEDOOR·41');

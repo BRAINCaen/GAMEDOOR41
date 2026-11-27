@@ -551,7 +551,7 @@
     var u = UNIVERS[p.univers] || UNIVERS.final;
     return el('aside', { class: 'av-suite-bloc' }, [
       el('p', { class: 'av-suite-titre', text: cadeau ? 'Une idée cadeau qui ne finit pas dans un placard' : 'Les vacances commencent : venez jouer pour de vrai' }),
-      el('p', { text: cadeau ? 'La carte cadeau GAMEDOOR·41 arrive tout de suite par mail. Escape game ou quiz, valable 12 mois.' : u.nom + ', 60 minutes, à Mondeville. Les créneaux des vacances partent vite.' }),
+      el('p', { text: cadeau ? 'La carte cadeau GAMEDOOR·41 arrive tout de suite par mail. Escape game ou quiz, valable sans limite de durée.' : u.nom + ', 60 minutes, à Mondeville. Les créneaux des vacances partent vite.' }),
       actions([
         el('a', { class: 'btn btn-primary', href: cadeau ? '/cadeau/' : 'https://gamedoor41.fr/reserver/', text: cadeau ? 'Offrir une carte cadeau' : 'Réserver une session', onclick: function () { suivre('avent_clic', { cible: cadeau ? 'cadeau' : 'reserver', jour: p.j }); } }),
         p.univers !== 'final' ? el('a', { class: 'btn btn-outline', href: u.lien, text: 'Découvrir ' + u.nom }) : null

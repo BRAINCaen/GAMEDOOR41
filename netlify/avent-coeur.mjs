@@ -1025,7 +1025,6 @@ var PRECISION = {
   session: "Il offre la session enti\xE8re \xE0 tout votre groupe, de 4 \xE0 16 candidats : choisissez l\u2019\xE9mission en r\xE9servant.",
   sessionEscape: "Il offre la session enti\xE8re \xE0 toute votre \xE9quipe, de 2 \xE0 6 joueurs, dans la salle de votre choix : Garde \xE0 Vue, Psychiatric ou Back to the 80\u2019s."
 };
-var PROLONGER = "Besoin de le prolonger ou d\u2019une demande particuli\xE8re ? \xC9crivez-nous \xE0 contact@gamedoor41.fr avec le code.";
 function mailGagnant({ prenom, tirage = "jour", jour, participants, lot, place, objet, code, suite = false, essai = false, origine = "https://gamedoor41.fr" }) {
   const ou = tirage === "grand" ? "du grand tirage" : tirage === "assidus" ? "du tirage des 24 portes ouvertes" : "de la porte " + jour + " (" + dateTexte(jour) + ")";
   const sujet = (essai ? "[ESSAI] " : "") + (suite ? "Votre code : " + (QUOI[place] || "votre lot") + " (calendrier de l\u2019Avent GAMEDOOR\xB741)" : "Bravo " + prenom + ", vous avez gagn\xE9 au calendrier de l\u2019Avent GAMEDOOR\xB741");
@@ -1045,8 +1044,8 @@ function mailGagnant({ prenom, tirage = "jour", jour, participants, lot, place, 
     lignes.push("Votre code : " + code);
     blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + "</span>" });
     dire(
-      "Ce code vous offre " + QUOI[place] + ". " + PRECISION[place] + " R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. " + PROLONGER,
-      "Ce code vous offre <strong>" + h(QUOI[place]) + "</strong>. " + h(PRECISION[place]) + ' R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. ' + h(PROLONGER)
+      "Ce code vous offre " + QUOI[place] + ". " + PRECISION[place] + " R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable sans limite de dur\xE9e.",
+      "Ce code vous offre <strong>" + h(QUOI[place]) + "</strong>. " + h(PRECISION[place]) + ' R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable sans limite de dur\xE9e.'
     );
   } else if (place && !suite) {
     dire("Le code de votre " + (/^session/.test(place) ? "session" : "place") + " vous arrive dans un second mail, sous 48 heures.");
@@ -1072,8 +1071,8 @@ function mailPasDePerdant({ prenom, code, essai = false, origine = "https://game
   lignes.push("Votre code : " + code);
   blocs.push({ cadre: '<strong style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#b34a00;">Votre code</strong><br><span style="font-size:26px;font-weight:bold;letter-spacing:2px;font-family:Consolas,Menlo,monospace;">' + h(code) + "</span>" });
   dire(
-    "Ce code vous offre " + QUOI.quiz + " Buzz Your Brain. " + PRECISION.quiz + " R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. " + PROLONGER,
-    "Ce code vous offre <strong>" + h(QUOI.quiz) + "</strong> Buzz Your Brain. " + h(PRECISION.quiz) + ' R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable 12 mois. ' + h(PROLONGER)
+    "Ce code vous offre " + QUOI.quiz + " Buzz Your Brain. " + PRECISION.quiz + " R\xE9servez sur gamedoor41.fr/reserver, puis saisissez-le au moment de r\xE9gler. Il est valable sans limite de dur\xE9e.",
+    "Ce code vous offre <strong>" + h(QUOI.quiz) + "</strong> Buzz Your Brain. " + h(PRECISION.quiz) + ' R\xE9servez sur <a href="https://gamedoor41.fr/reserver/" style="color:#b34a00;">gamedoor41.fr/reserver</a>, puis saisissez-le au moment de r\xE9gler. Il est valable sans limite de dur\xE9e.'
   );
   dire("Les lots ne sont ni \xE9changeables ni remboursables. Une question ? R\xE9pondez simplement \xE0 ce mail.");
   dire("Joyeux No\xEBl, et \xE0 tr\xE8s vite \xE0 Mondeville,");
