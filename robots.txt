@@ -16,3 +16,7 @@ Disallow: /signatures/
 # Editeur du site (reserve a l equipe)
 Disallow: /editeur/
 Disallow: /editeur-src/
+
+# Calendrier de l'Avent : ecran de l'equipe et moteur du jeu
+Disallow: /calendrier-de-l-avent/equipe/
+Disallow: /api/

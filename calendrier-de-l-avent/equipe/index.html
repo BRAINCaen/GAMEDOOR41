@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Calendrier de l'Avent : écran de l'équipe</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg">
+  <style>
+    :root { --fond:#0c0c0c; --carte:#171717; --bord:#2a2a2a; --texte:#f2efe9; --gris:#a39d93; --orange:#ff6b00; --or:#ffd740; --vert:#39c26b; --rouge:#ff5a6b; }
+    * { box-sizing:border-box; }
+    html { font-size:16px; -webkit-text-size-adjust:100%; }
+    body { margin:0; background:var(--fond); color:var(--texte); font-family:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.45; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
+    header { padding:18px 16px 14px; border-bottom:3px solid var(--orange); background:#141414; }
+    header h1 { margin:0; font-size:1.25rem; }
+    header p { margin:4px 0 0; color:var(--gris); font-size:.92rem; }
+    main { max-width:1100px; margin:0 auto; padding:16px; }
+    button, input, select, textarea { font:inherit; font-size:16px; }
+    button { min-height:46px; padding:8px 16px; border-radius:9px; border:1px solid var(--bord); background:#222; color:var(--texte); cursor:pointer; touch-action:manipulation; }
+    button.fort { background:var(--orange); border-color:var(--orange); color:#000; font-weight:700; }
+    button[disabled] { opacity:.5; cursor:progress; }
+    input[type=text], input[type=password] { min-height:46px; padding:8px 12px; border-radius:9px; border:1px solid #3a3a3a; background:#000; color:var(--texte); width:100%; }
+    a { color:var(--orange); }
+    .carte { background:var(--carte); border:1px solid var(--bord); border-radius:12px; padding:16px; margin:0 0 14px; }
+    .ligne { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .chiffres { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin:0 0 14px; }
+    @media (min-width:720px) { .chiffres { grid-template-columns:repeat(5, 1fr); } }
+    .chiffre { background:var(--carte); border:1px solid var(--bord); border-radius:12px; padding:12px 14px; }
+    .chiffre b { display:block; font-size:1.7rem; color:var(--orange); line-height:1.1; }
+    .chiffre span { color:var(--gris); font-size:.88rem; }
+    .jour { border-left:4px solid var(--bord); }
+    .jour.auj { border-left-color:var(--orange); }
+    .jour.gros { border-left-color:var(--or); }
+    .jour h2 { margin:0 0 4px; font-size:1.05rem; }
+    .jour .meta { color:var(--gris); font-size:.9rem; margin:0 0 10px; }
+    .gagnant { background:#0f0f0f; border-radius:10px; padding:12px; margin:10px 0 0; }
+    .gagnant strong { font-size:1.1rem; }
+    .gagnant .mail { word-break:break-all; color:var(--or); }
+    .etiquette { display:inline-block; padding:2px 9px; border-radius:99px; font-size:.8rem; font-weight:700; }
+    .etiquette.ok { background:#12331f; color:var(--vert); }
+    .etiquette.attente { background:#3a2a05; color:var(--or); }
+    .alerte { color:var(--rouge); margin:8px 0 0; }
+    .note { color:var(--gris); font-size:.9rem; margin:8px 0 0; }
+    .lot { display:flex; gap:8px; margin:10px 0 0; }
+    .lot input { flex:1 1 auto; min-width:0; }
+    details summary { cursor:pointer; padding:6px 0; color:var(--gris); }
+    .carte > h2 { margin:0 0 8px; font-size:1.1rem; }
+    textarea, select { width:100%; min-height:46px; padding:8px 12px; border-radius:9px; border:1px solid #3a3a3a; background:#000; color:var(--texte); }
+    .reserve { display:grid; gap:6px; margin:10px 0 12px; }
+    .reserve p { margin:0; padding:8px 12px; background:#0f0f0f; border-radius:8px; border-left:4px solid var(--vert); }
+    .reserve p.manque { border-left-color:var(--rouge); }
+    .question { background:#0f0f0f; border-radius:10px; padding:12px; margin:10px 0 0; border-left:4px solid var(--or); }
+    .question.traitee { border-left-color:var(--bord); opacity:.7; }
+    .question blockquote { margin:8px 0; padding:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .bouton-lien { display:inline-flex; align-items:center; min-height:46px; padding:8px 16px; border-radius:9px; background:var(--orange); color:#000; font-weight:700; text-decoration:none; }
+    .reseaux { display:grid; gap:14px; grid-template-columns:1fr; }
+    @media (min-width:720px) { .reseaux { grid-template-columns:1fr 1fr; } }
+    .reseau { background:#0f0f0f; border-radius:10px; padding:12px; }
+    .reseau img { display:block; width:100%; max-width:300px; height:auto; border-radius:8px; margin:8px 0; }
+    .reseau pre { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; font-size:.9rem; color:var(--texte); }
+    [hidden] { display:none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Les 24 portes : écran de l'équipe</h1>
+    <p id="sous-titre">Participants, gagnants, lots, questions.</p>
+  </header>
+  <main>
+    <section class="carte" id="acces">
+      <label for="code"><strong>Code de l'équipe</strong></label>
+      <div class="ligne" style="margin-top:8px;">
+        <input type="password" id="code" autocomplete="current-password" autocapitalize="none" style="flex:1 1 220px;">
+        <button type="button" class="fort" id="entrer">Entrer</button>
+      </div>
+      <p class="alerte" id="acces-erreur" hidden></p>
+    </section>
+
+    <div id="ecran" hidden>
+      <div class="chiffres" id="chiffres"></div>
+      <div class="carte ligne">
+        <button type="button" id="actualiser">Actualiser</button>
+        <a id="export" href="#" role="button">Télécharger les adresses « nouvelles » (CSV)</a>
+        <a href="/calendrier-de-l-avent/">Voir le calendrier</a>
+      </div>
+      <section class="carte">
+        <h2>Ce qui part tout seul</h2>
+        <p id="auto-etat" style="margin:0;"></p>
+        <div class="ligne" style="margin-top:10px;"><button type="button" id="bilan-mail">Recevoir le bilan du jour par mail</button></div>
+        <p class="note" id="auto-note" hidden></p>
+      </section>
+      <section class="carte">
+        <h2>Réserve de codes des places offertes</h2>
+        <p class="note" style="margin-top:0;">Créez les codes dans le Hub (Réductions › En masse), puis collez-les ici, un par ligne. Chaque gagnant reçoit le sien par mail, tout seul.</p>
+        <div class="reserve" id="codes-etat"></div>
+        <label for="codes-type"><strong>Ajouter des codes</strong></label>
+        <select id="codes-type" style="margin:6px 0 8px;">
+          <option value="quiz">1 place de quiz pour 1 joueur (20 jours + « pas de perdant »)</option>
+          <option value="escape">1 place d'escape game pour 1 joueur (les 6, 13, 20 et 24)</option>
+          <option value="session">1 session de quiz complète, 4 à 16 candidats (tirage des 24 portes)</option>
+          <option value="sessionEscape">1 session d'escape game complète, 2 à 6 joueurs (grand tirage)</option>
+        </select>
+        <textarea id="codes-liste" rows="4" placeholder="Un code par ligne" autocapitalize="characters" autocomplete="off" spellcheck="false"></textarea>
+        <div class="ligne" style="margin-top:8px;"><button type="button" class="fort" id="codes-ajouter">Ajouter ces codes</button></div>
+        <p class="note" id="codes-retour" hidden></p>
+      </section>
+      <section class="carte">
+        <h2>Questions et réclamations</h2>
+        <div id="questions"></div>
+      </section>
+      <section class="carte">
+        <h2>Réseaux sociaux : ce qui est publié tout seul</h2>
+        <p class="note" style="margin-top:0;">Chaque jour sur Instagram et Facebook : une story à 8 h (le lot du jour) et une publication à 12 h 15 (le lot du jour + le gagnant de la veille). C'est l'Espace Com de Synergia qui publie, à partir de ce fil.</p>
+        <div class="ligne" style="margin:10px 0;"><label for="reseaux-jour">Voir le jour</label> <select id="reseaux-jour" style="width:auto;flex:1 1 180px;"></select></div>
+        <div class="reseaux" id="reseaux"></div>
+      </section>
+      <div id="finaux"></div>
+      <div id="jours"></div>
+    </div>
+  </main>
+  <script defer src="/js/calendrier-avent-equipe.js?v=avent1"></script>
+</body>
+</html>
