@@ -1139,7 +1139,8 @@ var NB_PORTES = 24;
 var MAX_INSCRIPTIONS_PAR_IP = 8;
 var MAX_QUESTIONS_PAR_IP = 3;
 var MAX_ESSAIS_MAIL = 6;
-var PAQUET_PAS_DE_PERDANT = 60;
+var PAQUET_PAS_DE_PERDANT = 40;
+var MAX_ESSAIS_PAS_DE_PERDANT = 96;
 var EN_MEME_TEMPS = 6;
 var TYPES_CODES = ["quiz", "escape", "session", "sessionEscape"];
 var NOMS_CODES = { quiz: "places de quiz", escape: "places d\u2019escape game", session: "session de quiz", sessionEscape: "session d\u2019escape game" };
@@ -1493,7 +1494,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const fiches = await fichesPasDePerdant();
     const envoyee = (f) => !!(f.mail && f.mail.etat === "envoye");
     let libres = (await reserveNette()).quiz.length;
-    const choisies = fiches.filter((f) => !envoyee(f) && !(f.mail && f.mail.essais >= MAX_ESSAIS_MAIL) && (f.code || libres-- > 0)).slice(0, paquet);
+    const choisies = fiches.filter((f) => !envoyee(f) && !(f.mail && f.mail.essais >= MAX_ESSAIS_PAS_DE_PERDANT) && (f.code || libres-- > 0)).slice(0, paquet);
     if (!choisies.length) return { envoyes: 0, echecs: 0 };
     const tranche = Math.floor(maintenant().getTime() / 6e5);
     const miennes = [];
@@ -1514,8 +1515,9 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     let envoyes = 0, echecs = 0;
     for (let i = 0; i < aEnvoyer.length; i += EN_MEME_TEMPS) {
       await Promise.all(aEnvoyer.slice(i, i + EN_MEME_TEMPS).map(async (f) => {
-        const r = await courrier2.envoyer({ a: f.email, nom: f.prenom, ...mailPasDePerdant({ prenom: f.prenom, code: f.code, essai, origine }) });
-        const essais = (f.mail && f.mail.essais || 0) + 1;
+        const r = await courrier2.envoyer({ a: f.email, nom: f.prenom, tag: "pas-de-perdant", ...mailPasDePerdant({ prenom: f.prenom, code: f.code, essai, origine }) });
+        const definitif = !r.ok && /^Hub (400|413)\b|Brevo 400\b/.test(String(r.erreur || ""));
+        const essais = definitif ? MAX_ESSAIS_PAS_DE_PERDANT : (f.mail && f.mail.essais || 0) + 1;
         f.mail = r.ok ? { etat: "envoye", le: maintenant().toISOString(), essais } : { etat: "echec", le: maintenant().toISOString(), essais, erreur: String(r.erreur || "inconnue").slice(0, 200) };
         if (r.ok) envoyes++;
         else echecs++;
@@ -1542,7 +1544,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       let code = t.code || null;
       if (!code && p.place) code = await prendreCode(p.place, cle);
       const message = mailGagnant({ prenom: t.gagnant.prenom, tirage: t.genre, jour: t.jour, participants: t.participants, lot: t.lot || p.lot || "votre lot", place: p.place, objet: p.objet, code, suite: codeEnRetard, essai, origine });
-      const r = await courrier2.envoyer({ a: t.gagnant.email, nom: t.gagnant.prenom, ...message });
+      const r = await courrier2.envoyer({ a: t.gagnant.email, nom: t.gagnant.prenom, tag: "gagnant", ...message });
       t = await stockage.lire(cleBlob) || t;
       t.code = code;
       const essais = (t.mail && t.mail.essais || 0) + 1;
@@ -1634,7 +1636,7 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
       const vieilles = questions.filter((q) => maintenant().getTime() - new Date(q.le).getTime() > 48 * 36e5).length;
       if (vieilles) alertes.push(vieilles + " question" + (vieilles > 1 ? "s attendent" : " attend") + " une r\xE9ponse depuis plus de 48 heures.");
     }
-    const envoi = await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", ...mailRapport({ jour, lignes, alertes, essai, origine }) });
+    const envoi = await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", tag: "bilan", ...mailRapport({ jour, lignes, alertes, essai, origine }) });
     if (!envoi.ok && !force) await stockage.supprimer("rapports/" + cle);
     return envoi.ok;
   }
@@ -1775,8 +1777,8 @@ function creerMoteur({ stockage, maintenant = () => /* @__PURE__ */ new Date(), 
     const q = { id, prenom, email: mail.email, message, le: maintenant().toISOString(), etat: "ouverte", fiche: fiche2, accuse: false };
     await stockage.ecrire("questions/" + id, q);
     if (courrier2) {
-      await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche: fiche2, essai, origine }) });
-      const r = await courrier2.envoyer({ a: mail.email, nom: prenom, ...mailAccuse({ prenom, essai, origine }) });
+      await courrier2.envoyer({ a: contact, nom: "GAMEDOOR\xB741", tag: "question", repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche: fiche2, essai, origine }) });
+      const r = await courrier2.envoyer({ a: mail.email, nom: prenom, tag: "accuse", ...mailAccuse({ prenom, essai, origine }) });
       if (r.ok) {
         q.accuse = true;
         await stockage.ecrire("questions/" + id, q);
@@ -2106,20 +2108,53 @@ function courrierBrevo({ cle, expediteur, repondre, envoi = fetch }) {
     }
   };
 }
+function courrierRelais({ url, cle, envoi = fetch }) {
+  return {
+    async envoyer({ a, nom, sujet, texte, html, repondreA, tag }) {
+      try {
+        const r = await envoi(url, {
+          method: "POST",
+          headers: { "content-type": "application/json", "x-cle-hub": cle },
+          body: JSON.stringify({ a, nom, sujet, texte, html, repondreA: repondreA || null, tag: tag || "avent" }),
+          signal: AbortSignal.timeout(2e4)
+        });
+        if (r.ok) return { ok: true };
+        let detail = "";
+        try {
+          detail = String((await r.json() || {}).erreur || "");
+        } catch (_) {
+        }
+        return { ok: false, erreur: "Hub " + r.status + (detail ? " " + detail : "").slice(0, 160), quota: r.status === 429 };
+      } catch (e) {
+        return { ok: false, erreur: String(e && e.message || e).slice(0, 160) };
+      }
+    }
+  };
+}
+function seulementEquipe(courrier2, domaine = "gamedoor41.fr") {
+  return {
+    async envoyer(message) {
+      if (String(message.a || "").toLowerCase().endsWith("@" + domaine)) return courrier2.envoyer(message);
+      return { ok: true, simule: true };
+    }
+  };
+}
 
 // avent-src/entree.mjs
 var SITE = "https://gamedoor41.fr";
 var CONTACT = process.env.AVENT_CONTACT || "contact@gamedoor41.fr";
-function courrier() {
-  const cle = process.env.BREVO_API_KEY;
-  return cle ? courrierBrevo({ cle, expediteur: { name: "GAMEDOOR\xB741", email: process.env.AVENT_EXPEDITEUR || CONTACT }, repondre: { name: "GAMEDOOR\xB741", email: CONTACT } }) : null;
+var RELAIS = process.env.AVENT_RELAIS_URL || "https://synergia-hub.netlify.app/api/pont/avent-mail";
+function courrier(contexte) {
+  const cle = process.env.BREVO_API_KEY, relais = process.env.AVENT_RELAIS_CLE;
+  const c = cle ? courrierBrevo({ cle, expediteur: { name: "GAMEDOOR\xB741", email: process.env.AVENT_EXPEDITEUR || CONTACT }, repondre: { name: "GAMEDOOR\xB741", email: CONTACT } }) : relais ? courrierRelais({ url: RELAIS, cle: relais }) : null;
+  return c && contexte !== "production" ? seulementEquipe(c) : c;
 }
 function contexteDe(hote) {
   return /--gamedoor41\.netlify\.app$/i.test(hote) || /^(localhost|127\.0\.0\.1)$/i.test(hote) ? "apercu" : "production";
 }
 var moteurs = {};
 function moteur(contexte) {
-  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), courrier: courrier(), contact: CONTACT, stockage: stockageNetlify(contexte === "production" ? "avent-2026" : "avent-2026-apercu") });
+  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), courrier: courrier(contexte), contact: CONTACT, stockage: stockageNetlify(contexte === "production" ? "avent-2026" : "avent-2026-apercu") });
   return moteurs[contexte];
 }
 async function gererAvent(req, context) {

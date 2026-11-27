@@ -2,9 +2,9 @@
 // questions et réclamations, fil des publications pour les réseaux sociaux.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { creerMoteur, MAX_ESSAIS_MAIL, MAX_QUESTIONS_PAR_IP } from '../coeur.mjs';
+import { creerMoteur, MAX_ESSAIS_MAIL, MAX_QUESTIONS_PAR_IP, MAX_ESSAIS_PAS_DE_PERDANT } from '../coeur.mjs';
 import { stockageMemoire } from '../stockage.mjs';
-import { courrierMemoire } from '../courrier.mjs';
+import { courrierMemoire, courrierRelais, seulementEquipe } from '../courrier.mjs';
 import { lotsPrevus } from '../lots-2026.mjs';
 import { defisDEssai } from './defis-essai.mjs';
 
@@ -235,6 +235,43 @@ test('pas de perdant : le 25, chaque joueur sans gain reçoit 1 place de quiz po
   // et la publication du 25 aussi
   const fil = (await m.appel('GET', 'annonces')).corps;
   assert.match(fil.publications.find((p) => p.id === 'avent2026-post-25').texte, /🎁 Et comme il n’y a pas de perdant, tous les autres joueurs reçoivent 1 place de quiz pour 1 joueur\./);
+});
+
+test('mails par le Hub : la clé du relais part dans l’en-tête, les erreurs sont lisibles, un aperçu n’écrit qu’à l’équipe', async () => {
+  const appels = [];
+  const repondre = (statut, corps) => async (url, init) => { appels.push({ url, init }); return new Response(JSON.stringify(corps), { status: statut }); };
+  let c = courrierRelais({ url: 'https://hub.exemple/api/pont/avent-mail', cle: 'cle-du-relais', envoi: repondre(200, { ok: true }) });
+  assert.deepEqual(await c.envoyer({ a: 'lou@exemple.fr', nom: 'Lou', sujet: 'Bravo', texte: 't', html: '<p>h</p>', tag: 'gagnant', repondreA: { email: 'x@exemple.fr', name: 'X' } }), { ok: true });
+  assert.equal(appels[0].url, 'https://hub.exemple/api/pont/avent-mail');
+  assert.equal(appels[0].init.headers['x-cle-hub'], 'cle-du-relais');
+  assert.deepEqual(JSON.parse(appels[0].init.body), { a: 'lou@exemple.fr', nom: 'Lou', sujet: 'Bravo', texte: 't', html: '<p>h</p>', repondreA: { email: 'x@exemple.fr', name: 'X' }, tag: 'gagnant' });
+  c = courrierRelais({ url: 'u', cle: 'k', envoi: repondre(429, { erreur: 'Quota du jour atteint' }) });
+  assert.deepEqual(await c.envoyer({ a: 'lou@exemple.fr', sujet: 's', texte: 't' }), { ok: false, erreur: 'Hub 429 Quota du jour atteint', quota: true });
+  c = courrierRelais({ url: 'u', cle: 'k', envoi: async () => { throw new Error('réseau coupé'); } });
+  assert.deepEqual(await c.envoyer({ a: 'lou@exemple.fr', sujet: 's', texte: 't' }), { ok: false, erreur: 'réseau coupé' });
+  // aperçu : seulement vers l'équipe
+  const boite = courrierMemoire();
+  const apercu = seulementEquipe(boite);
+  assert.deepEqual(await apercu.envoyer({ a: 'faux.joueur@exemple.fr', sujet: 's' }), { ok: true, simule: true });
+  assert.deepEqual(await apercu.envoyer({ a: 'contact@gamedoor41.fr', sujet: 's' }), { ok: true });
+  assert.equal(boite.boite.length, 1); assert.equal(boite.boite[0].a, 'contact@gamedoor41.fr');
+});
+
+test('pas de perdant : une adresse refusée pour de bon n’est pas réessayée, un quota plein l’est', async () => {
+  const m = await monde({ date: '2026-12-24T10:00:00+01:00', codes: { quiz: 'Q-1 Q-2 Q-3 Q-4 Q-5 Q-6', escape: 'ESC-BBB1', session: 'SESSION-1', sessionEscape: 'SESSION-ESC-1' } });
+  for (let n = 1; n <= 4; n++) await m.jouer(n, 24);
+  const envoyer = m.courrier.envoyer;
+  m.courrier.envoyer = async (msg) => (/^Pas de perdant/.test(msg.sujet) ? (msg.a === 'joueur1@exemple.fr' ? { ok: false, erreur: 'Hub 400 Adresse du destinataire invalide.' } : { ok: false, erreur: 'Hub 429 Quota du jour atteint', quota: true }) : envoyer(msg));
+  m.a('2026-12-25T12:05:00+01:00'); await m.passer();
+  const fiches = (await Promise.all((await m.stockage.lister('pas-de-perdant/')).map((k) => m.stockage.lire(k))));
+  const mauvaise = fiches.find((f) => f.email === 'joueur1@exemple.fr');
+  if (mauvaise) assert.equal(mauvaise.mail.essais, MAX_ESSAIS_PAS_DE_PERDANT, 'adresse invalide : plus d’essai');
+  fiches.filter((f) => f.email !== 'joueur1@exemple.fr').forEach((f) => assert.equal(f.mail.essais, 1, 'quota plein : on réessaiera'));
+  m.courrier.envoyer = envoyer;
+  m.a('2026-12-26T12:05:00+01:00'); await m.passer();
+  const partis = m.courrier.boite.filter((x) => /^Pas de perdant/.test(x.sujet)).map((x) => x.a);
+  assert.ok(!partis.includes('joueur1@exemple.fr'));
+  assert.equal(partis.length, fiches.filter((f) => f.email !== 'joueur1@exemple.fr').length, 'le lendemain, les autres partent');
 });
 
 test('questions et réclamations : gardées, transmises à l’équipe, accusé de réception, pas d’abus possible', async () => {

@@ -15,7 +15,10 @@ export const MAX_INSCRIPTIONS_PAR_IP = 8;
 export const MAX_QUESTIONS_PAR_IP = 3;
 export const MAX_ESSAIS_MAIL = 6;
 /** Places « pas de perdant » envoyées par passage (une fonction planifiée n'a que 30 secondes), et en même temps. */
-export const PAQUET_PAS_DE_PERDANT = 60;
+export const PAQUET_PAS_DE_PERDANT = 40;
+/** Les places « pas de perdant » réessaient plus longtemps : l'offre Brevo gratuite (300 mails par jour pour tout GAMEDOOR·41)
+ *  peut être pleine le 25 ; on réessaie alors le lendemain (un essai par demi-heure au plus, pendant 2 jours). */
+export const MAX_ESSAIS_PAS_DE_PERDANT = 96;
 const EN_MEME_TEMPS = 6;
 export const TYPES_CODES = ['quiz', 'escape', 'session', 'sessionEscape'];
 export const NOMS_CODES = { quiz: 'places de quiz', escape: 'places d’escape game', session: 'session de quiz', sessionEscape: 'session d’escape game' };
@@ -351,7 +354,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     const fiches = await fichesPasDePerdant();
     const envoyee = (f) => !!(f.mail && f.mail.etat === 'envoye');
     let libres = (await reserveNette()).quiz.length;
-    const choisies = fiches.filter((f) => !envoyee(f) && !(f.mail && f.mail.essais >= MAX_ESSAIS_MAIL) && (f.code || libres-- > 0)).slice(0, paquet);
+    const choisies = fiches.filter((f) => !envoyee(f) && !(f.mail && f.mail.essais >= MAX_ESSAIS_PAS_DE_PERDANT) && (f.code || libres-- > 0)).slice(0, paquet);
     if (!choisies.length) return { envoyes: 0, echecs: 0 };
     const tranche = Math.floor(maintenant().getTime() / 600000);
     const miennes = [];
@@ -368,8 +371,10 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     let envoyes = 0, echecs = 0;
     for (let i = 0; i < aEnvoyer.length; i += EN_MEME_TEMPS) {
       await Promise.all(aEnvoyer.slice(i, i + EN_MEME_TEMPS).map(async (f) => {
-        const r = await courrier.envoyer({ a: f.email, nom: f.prenom, ...mailPasDePerdant({ prenom: f.prenom, code: f.code, essai, origine }) });
-        const essais = ((f.mail && f.mail.essais) || 0) + 1;
+        const r = await courrier.envoyer({ a: f.email, nom: f.prenom, tag: 'pas-de-perdant', ...mailPasDePerdant({ prenom: f.prenom, code: f.code, essai, origine }) });
+        // Adresse refusée pour de bon (invalide) : inutile de réessayer 96 fois, l'équipe le voit dans son écran.
+        const definitif = !r.ok && /^Hub (400|413)\b|Brevo 400\b/.test(String(r.erreur || ''));
+        const essais = definitif ? MAX_ESSAIS_PAS_DE_PERDANT : ((f.mail && f.mail.essais) || 0) + 1;
         f.mail = r.ok ? { etat: 'envoye', le: maintenant().toISOString(), essais } : { etat: 'echec', le: maintenant().toISOString(), essais, erreur: String(r.erreur || 'inconnue').slice(0, 200) };
         if (r.ok) envoyes++; else echecs++;
         await stockage.ecrire('pas-de-perdant/' + f.id, f);
@@ -399,7 +404,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
       let code = t.code || null;
       if (!code && p.place) code = await prendreCode(p.place, cle);
       const message = mailGagnant({ prenom: t.gagnant.prenom, tirage: t.genre, jour: t.jour, participants: t.participants, lot: t.lot || p.lot || 'votre lot', place: p.place, objet: p.objet, code, suite: codeEnRetard, essai, origine });
-      const r = await courrier.envoyer({ a: t.gagnant.email, nom: t.gagnant.prenom, ...message });
+      const r = await courrier.envoyer({ a: t.gagnant.email, nom: t.gagnant.prenom, tag: 'gagnant', ...message });
       t = (await stockage.lire(cleBlob)) || t;                           // l'équipe a pu toucher au tirage pendant l'envoi
       t.code = code;
       const essais = ((t.mail && t.mail.essais) || 0) + 1;
@@ -470,7 +475,7 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
       const vieilles = questions.filter((q) => maintenant().getTime() - new Date(q.le).getTime() > 48 * 3600000).length;
       if (vieilles) alertes.push(vieilles + ' question' + (vieilles > 1 ? 's attendent' : ' attend') + ' une réponse depuis plus de 48 heures.');
     }
-    const envoi = await courrier.envoyer({ a: contact, nom: 'GAMEDOOR·41', ...mailRapport({ jour, lignes, alertes, essai, origine }) });
+    const envoi = await courrier.envoyer({ a: contact, nom: 'GAMEDOOR·41', tag: 'bilan', ...mailRapport({ jour, lignes, alertes, essai, origine }) });
     if (!envoi.ok && !force) await stockage.supprimer('rapports/' + cle);
     return envoi.ok;
   }
@@ -602,9 +607,9 @@ export function creerMoteur({ stockage, maintenant = () => new Date(), contexte 
     const q = { id, prenom, email: mail.email, message, le: maintenant().toISOString(), etat: 'ouverte', fiche, accuse: false };
     await stockage.ecrire('questions/' + id, q);
     if (courrier) {
-      await courrier.envoyer({ a: contact, nom: 'GAMEDOOR·41', repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche, essai, origine }) });
+      await courrier.envoyer({ a: contact, nom: 'GAMEDOOR·41', tag: 'question', repondreA: { email: mail.email, name: prenom }, ...mailQuestionEquipe({ prenom, email: mail.email, message, fiche, essai, origine }) });
       // l'accusé ne recopie pas le message : le formulaire ne doit pas servir à écrire à un inconnu en notre nom
-      const r = await courrier.envoyer({ a: mail.email, nom: prenom, ...mailAccuse({ prenom, essai, origine }) });
+      const r = await courrier.envoyer({ a: mail.email, nom: prenom, tag: 'accuse', ...mailAccuse({ prenom, essai, origine }) });
       if (r.ok) { q.accuse = true; await stockage.ecrire('questions/' + id, q); }
     }
     return json({ ok: true });

@@ -2,14 +2,19 @@
 import { creerMoteur } from './coeur.mjs';
 import { stockageNetlify } from './stockage.mjs';
 import { lotsPrevus } from './lots-2026.mjs';
-import { courrierBrevo } from './courrier.mjs';
+import { courrierBrevo, courrierRelais, seulementEquipe } from './courrier.mjs';
 
-// L'envoi des mails se branche avec la variable BREVO_API_KEY du site (Netlify). Sans elle, rien ne part.
+// Les mails partent par le Hub, qui garde la clé Brevo commune (variable AVENT_RELAIS_CLE du site), ou directement par Brevo
+// si le site a un jour sa propre BREVO_API_KEY. Sans l'une ni l'autre, rien ne part : l'équipe prévient à la main.
+// Sur un aperçu, seuls les mails vers une adresse @gamedoor41.fr partent (jamais de vrai mail aux faux joueurs d'essai).
 const SITE = 'https://gamedoor41.fr';
 const CONTACT = process.env.AVENT_CONTACT || 'contact@gamedoor41.fr';
-function courrier() {
-  const cle = process.env.BREVO_API_KEY;
-  return cle ? courrierBrevo({ cle, expediteur: { name: 'GAMEDOOR·41', email: process.env.AVENT_EXPEDITEUR || CONTACT }, repondre: { name: 'GAMEDOOR·41', email: CONTACT } }) : null;
+const RELAIS = process.env.AVENT_RELAIS_URL || 'https://synergia-hub.netlify.app/api/pont/avent-mail';
+function courrier(contexte) {
+  const cle = process.env.BREVO_API_KEY, relais = process.env.AVENT_RELAIS_CLE;
+  const c = cle ? courrierBrevo({ cle, expediteur: { name: 'GAMEDOOR·41', email: process.env.AVENT_EXPEDITEUR || CONTACT }, repondre: { name: 'GAMEDOOR·41', email: CONTACT } })
+    : relais ? courrierRelais({ url: RELAIS, cle: relais }) : null;
+  return c && contexte !== 'production' ? seulementEquipe(c) : c;
 }
 
 // Un aperçu (deploy-preview-…--gamedoor41.netlify.app) ou un essai local n'est jamais « le vrai jeu ».
@@ -20,7 +25,7 @@ export function contexteDe(hote) {
 
 const moteurs = {};
 function moteur(contexte) {
-  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), courrier: courrier(), contact: CONTACT, stockage: stockageNetlify(contexte === 'production' ? 'avent-2026' : 'avent-2026-apercu') });
+  if (!moteurs[contexte]) moteurs[contexte] = creerMoteur({ contexte, lotsPrevus: lotsPrevus(), courrier: courrier(contexte), contact: CONTACT, stockage: stockageNetlify(contexte === 'production' ? 'avent-2026' : 'avent-2026-apercu') });
   return moteurs[contexte];
 }
 

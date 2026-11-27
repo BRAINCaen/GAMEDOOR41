@@ -21,6 +21,42 @@ export function courrierBrevo({ cle, expediteur, repondre, envoi = fetch }) {
   };
 }
 
+/** Par le Hub (27/11/2026, Allan : « la clé Brevo, c'est la même partout ») : le Hub garde la clé Brevo et fait partir
+ *  chaque mail depuis contact@gamedoor41.fr (synergia-hub, /api/pont/avent-mail, netlify/lib/pont-avent.mjs de son dépôt).
+ *  La clé du relais est dans la variable AVENT_RELAIS_CLE du site ; le Hub n'en garde que l'empreinte.
+ *  Réponse 429 du Hub = quota de mails du jour atteint : le moteur refera un essai plus tard. */
+export function courrierRelais({ url, cle, envoi = fetch }) {
+  return {
+    async envoyer({ a, nom, sujet, texte, html, repondreA, tag }) {
+      try {
+        const r = await envoi(url, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-cle-hub': cle },
+          body: JSON.stringify({ a, nom, sujet, texte, html, repondreA: repondreA || null, tag: tag || 'avent' }),
+          signal: AbortSignal.timeout(20000),
+        });
+        if (r.ok) return { ok: true };
+        let detail = '';
+        try { detail = String(((await r.json()) || {}).erreur || ''); } catch (_) { /* réponse non lisible */ }
+        return { ok: false, erreur: 'Hub ' + r.status + (detail ? ' ' + detail : '').slice(0, 160), quota: r.status === 429 };
+      } catch (e) {
+        return { ok: false, erreur: String((e && e.message) || e).slice(0, 160) };
+      }
+    },
+  };
+}
+
+/** Sur un aperçu : seuls les mails vers une adresse de l'équipe partent vraiment ; les autres (faux joueurs d'essai)
+ *  sont comptés comme envoyés sans rien envoyer. Jamais de vrai mail vers un inconnu depuis une page test. */
+export function seulementEquipe(courrier, domaine = 'gamedoor41.fr') {
+  return {
+    async envoyer(message) {
+      if (String(message.a || '').toLowerCase().endsWith('@' + domaine)) return courrier.envoyer(message);
+      return { ok: true, simule: true };
+    },
+  };
+}
+
 /** Pour les essais : garde les mails au lieu de les envoyer. `panne()` fait échouer les envois suivants. */
 export function courrierMemoire() {
   const boite = [];

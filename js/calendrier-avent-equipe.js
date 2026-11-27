@@ -101,8 +101,8 @@
 
   function dessinerAuto(b) {
     $('auto-etat').textContent = b.courrier
-      ? 'Mails automatiques : branchés. Le gagnant reçoit son lot et son code par mail dans la demi-heure qui suit le tirage de midi, et le bilan du jour arrive à ' + b.contact + '.'
-      : 'Mails automatiques : PAS branchés sur ce site (il manque la clé Brevo). Les tirages et l’affichage des gagnants se font tout seuls, mais les gagnants sont à prévenir avec « Écrire au gagnant ».';
+      ? 'Mails automatiques : branchés (ils partent par le Hub, avec la clé Brevo commune). Le gagnant reçoit son lot et son code par mail dans la demi-heure qui suit le tirage de midi, et le bilan du jour arrive à ' + b.contact + '.' + (b.essai ? ' Sur cette page test, seuls les mails vers une adresse @gamedoor41.fr partent vraiment.' : '')
+      : 'Mails automatiques : PAS branchés sur ce site (il manque la clé du relais du Hub, variable AVENT_RELAIS_CLE). Les tirages et l’affichage des gagnants se font tout seuls, mais les gagnants sont à prévenir avec « Écrire au gagnant ».';
     $('auto-etat').style.color = b.courrier ? '#39c26b' : '#ff5a6b';
     $('bilan-mail').hidden = !b.courrier;
     var noms = { quiz: 'Places de quiz (1 joueur)', escape: 'Places d’escape game (1 joueur)', session: 'Session de quiz complète (tirage des 24 portes)', sessionEscape: 'Session d’escape game complète (grand tirage)' };

@@ -21,7 +21,7 @@ Page publique : `/calendrier-de-l-avent/` · écran de l'équipe : `/calendrier-
   Le tirage garde le nombre de joueurs écartés (`dejaGagnants`), affiché dans l'écran de l'équipe.
 - **Pas de perdant** : le 25 à midi, après les deux tirages de la fin, chaque joueur qui n'a gagné aucun tirage
   reçoit 1 place de quiz pour 1 joueur (fiches `pas-de-perdant/<id>`), par mail, avec un code de quiz de la
-  réserve. Jamais de mail sans code : on attend que l'équipe en ajoute. Envoi par paquets de 60 toutes les
+  réserve. Jamais de mail sans code : on attend que l'équipe en ajoute. Envoi par paquets de 40 toutes les
   demi-heures, 6 à la fois. Pas de lot de consolation pour les tirages du jour.
 - **Codes** : chaque code donné est d'abord réservé (`codes-pris/<code>`, écriture « seulement si absent ») :
   même deux passages en même temps ne donnent jamais le même code à deux personnes.
@@ -39,8 +39,11 @@ Page publique : `/calendrier-de-l-avent/` · écran de l'équipe : `/calendrier-
   quiz, session d'escape game).
   Un gagnant n'est servi qu'une fois ; en cas de panne, nouvel essai à chaque passage (6 au plus) ;
   si la réserve est vide, le mail part quand même et le code suit dès qu'on en ajoute.
-  Il faut la variable **`BREVO_API_KEY`** sur le site Netlify. Sans elle, rien ne part : l'équipe prévient
-  les gagnants à la main (bouton « Écrire au gagnant »).
+  **Les mails partent par le Hub** (27/11/2026) : le Hub garde la clé Brevo commune et expose `/api/pont/avent-mail`
+  (dépôt du Hub, `netlify/lib/pont-avent.mjs`) ; le site a la variable **`AVENT_RELAIS_CLE`** (le Hub n'en garde que
+  l'empreinte, `hub_config/pont_avent` ; couper : `actif: false`). 200 mails du calendrier par jour au plus : l'offre
+  Brevo gratuite donne 300 mails par jour pour tout GAMEDOOR·41. Sur un aperçu, seuls les mails vers @gamedoor41.fr
+  partent. Sans clé, rien ne part : l'équipe prévient les gagnants à la main (bouton « Écrire au gagnant »).
 - **Bilan du jour** : un mail à l'équipe après chaque tirage (joueurs, gagnant, code, jeu à mettre de côté,
   réserve de codes, questions en attente, et ce qui demande une action).
 - **Questions et réclamations** : `POST /api/avent/question` (formulaire de la page). Gardées, transmises à
@@ -51,8 +54,10 @@ Page publique : `/calendrier-de-l-avent/` · écran de l'équipe : `/calendrier-
   n'a pas eu lieu). L'Espace Com de Synergia lit ce fil et publie sur Instagram et Facebook.
 - Fonction planifiée `avent-tirage` : toutes les demi-heures ; elle ne fait rien hors décembre.
 
-Variables Netlify du site : `BREVO_API_KEY` (secrète, obligatoire pour les mails), et si besoin
-`AVENT_CONTACT` (adresse de l'équipe, par défaut contact@gamedoor41.fr) et `AVENT_EXPEDITEUR`.
+Variables Netlify du site : `AVENT_RELAIS_CLE` (secrète : les mails partent par le Hub), et si besoin
+`AVENT_RELAIS_URL` (par défaut https://synergia-hub.netlify.app/api/pont/avent-mail), `AVENT_CONTACT` (adresse de
+l'équipe, par défaut contact@gamedoor41.fr). `BREVO_API_KEY` + `AVENT_EXPEDITEUR` : seulement si un jour le site envoie
+directement par Brevo (elle passe alors avant le relais).
 
 ## Où sont les données
 
