@@ -2050,7 +2050,7 @@ var PLACE = { quiz: "1 place de quiz", escape: "1 place d\u2019escape game" };
 var PLACE_QUIZ = PLACE.quiz + " " + POUR_UN;
 var PLACE_ESCAPE = PLACE.escape + " " + POUR_UN;
 var SALLES = "Garde \xE0 Vue, Psychiatric ou Back to the 80\u2019s";
-var VERSION_IMAGES = 1;
+var VERSION_IMAGES = 2;
 var img = (chemin) => chemin + "?v=" + VERSION_IMAGES;
 var IMAGES_PLACES = {
   quiz: img("/img/quiz/salle-quiz-buzzers-premier-plan-480w.jpg"),
@@ -2062,14 +2062,14 @@ var JEUX = {
   1: { univers: "gav", image: img("/img/avent/jeux/dossiers-criminels.jpg"), maison: false, nom: "Dossiers Criminels Pocket", sous: "Qui a tu\xE9 Isabella Vega ?", court: "Dossiers Criminels Pocket", detail: "Une enqu\xEAte de poche : des indices, des suspects, un coupable \xE0 d\xE9masquer." },
   4: { univers: "psy", image: img("/img/avent/jeux/black-stories.jpg"), maison: false, nom: "Black Stories", court: "Black Stories", detail: "50 \xE9nigmes macabres \xE0 r\xE9soudre en posant des questions. R\xE9ponses permises : oui ou non." },
   6: { univers: "quiz", image: img("/img/avent/jeux/esquisse.jpg"), maison: false, nom: "Esquiss\xE9 ?", sous: "Version 6 joueurs", court: "Esquiss\xE9 ?", detail: "Le t\xE9l\xE9phone arabe en dessin : on dessine, on devine, et tout d\xE9rape." },
-  7: { univers: "80s", image: img("/img/avent/jeux/et.jpg"), maison: true, nom: "E.T. l\u2019Extra-Terrestre", court: "E.T. l\u2019Extra-Terrestre", detail: "Jeu d\u2019aventure coop\xE9ratif : aidez E.T. \xE0 rentrer chez lui avant les agents. 2 \xE0 4 joueurs, d\xE8s 10 ans, 30 minutes." },
+  7: { univers: "80s", image: img("/img/avent/jeux/et.webp"), maison: true, detoure: true, nom: "E.T. l\u2019Extra-Terrestre", court: "E.T. l\u2019Extra-Terrestre", detail: "Jeu d\u2019aventure coop\xE9ratif : aidez E.T. \xE0 rentrer chez lui avant les agents. 2 \xE0 4 joueurs, d\xE8s 10 ans, 30 minutes." },
   10: { univers: "quiz", image: img("/img/avent/jeux/snort-funny.jpg"), maison: false, nom: "Snort Funny", sous: "Le jeu \xAB ingroinyable \xBB", court: "Snort Funny", detail: "Un jeu d\u2019ambiance pour faire rire toute la table." },
   13: { univers: "gav", image: img("/img/avent/jeux/sous-scelles.jpg"), maison: false, nom: "Sous Scell\xE9s", sous: "La Fille du Troisi\xE8me", court: "Sous Scell\xE9s : La Fille du Troisi\xE8me", detail: "Un dossier d\u2019enqu\xEAte \xE0 ouvrir chez vous : \xE0 vous de r\xE9soudre l\u2019affaire." },
-  15: { univers: "80s", image: img("/img/avent/jeux/retour-vers-le-futur.jpg"), maison: true, nom: "Retour vers le futur", court: "Retour vers le futur", detail: "Jeu d\u2019aventure coop\xE9ratif : faites monter la DeLorean \xE0 88 miles \xE0 l\u2019heure avant l\u2019\xE9clair. 2 \xE0 4 joueurs, d\xE8s 10 ans, 50 minutes." },
+  15: { univers: "80s", image: img("/img/avent/jeux/retour-vers-le-futur.webp"), maison: true, detoure: true, nom: "Retour vers le futur", court: "Retour vers le futur", detail: "Jeu d\u2019aventure coop\xE9ratif : faites monter la DeLorean \xE0 88 miles \xE0 l\u2019heure avant l\u2019\xE9clair. 2 \xE0 4 joueurs, d\xE8s 10 ans, 50 minutes." },
   16: { univers: "psy", image: img("/img/avent/jeux/scream.jpg"), maison: false, nom: "Scream, le jeu", court: "Scream", detail: "Jeu de soci\xE9t\xE9 coop\xE9ratif : faites \xE9quipe pour \xE9chapper au tueur masqu\xE9." },
   18: { univers: "quiz", image: img("/img/avent/jeux/longueur-d-onde.jpg"), maison: false, nom: "Longueur d\u2019onde", court: "Longueur d\u2019onde", detail: "Jeu d\u2019ambiance en \xE9quipes : \xEAtes-vous sur la m\xEAme longueur d\u2019onde que vos amis ?" },
   20: { univers: "psy", image: img("/img/avent/jeux/chucky.jpg"), maison: false, nom: "Chucky, le jeu", court: "Chucky", detail: "Jeu d\u2019horreur coop\xE9ratif : tous ensemble contre la poup\xE9e." },
-  23: { univers: "80s", image: img("/img/avent/jeux/goonies.jpg"), maison: true, nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." },
+  23: { univers: "80s", image: img("/img/avent/jeux/goonies.webp"), maison: true, detoure: true, nom: "The Goonies", sous: "Ne disent jamais mourir", court: "The Goonies", detail: "Jeu d\u2019aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 \xE0 5 joueurs, d\xE8s 12 ans, 50 minutes." },
   24: { univers: "final", image: img("/img/avent/jeux/delorean.jpg"), maison: false, nom: "DeLorean radio-command\xE9e", sous: "Retour vers le futur", court: "DeLorean radio-command\xE9e", objet: "la DeLorean radio-command\xE9e", plus: "+ la", alt: "La DeLorean radio-command\xE9e", visuel: { nom: "DeLorean", sous: "radio-command\xE9e, de Retour vers le futur" }, detail: "La voiture de Retour vers le futur, \xE0 piloter \xE0 la t\xE9l\xE9commande : le cadeau de la derni\xE8re porte." }
 };
 var objetDe = (jeu) => jeu.objet || "le jeu " + jeu.court;

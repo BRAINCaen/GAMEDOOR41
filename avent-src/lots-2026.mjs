@@ -29,7 +29,10 @@ export const SALLES = 'Garde à Vue, Psychiatric ou Back to the 80’s';
 // photo, garder le même nom de fichier et AUGMENTER VERSION_IMAGES : sinon les téléphones gardent l'ancienne.
 // `maison: true` = photo prise par nous, assez grande pour les visuels des réseaux sociaux ;
 // `maison: false` = petite vignette provisoire (photo du vendeur), à remplacer par notre photo de la boîte.
-export const VERSION_IMAGES = 1;
+// `detoure: true` = boîte détourée (WebP transparent, fond retiré) : sur les visuels, l'ombre suit la boîte.
+// E.T., Retour vers le futur, The Goonies : belles photos des boîtes fournies par Allan le 27/11/2026, fond blanc
+// retiré par calcul (outil scratchpad `outils/detourer.mjs`, pas d'IA).
+export const VERSION_IMAGES = 2;
 const img = (chemin) => chemin + '?v=' + VERSION_IMAGES;
 export const IMAGES_PLACES = {
   quiz: img('/img/quiz/salle-quiz-buzzers-premier-plan-480w.jpg'),
@@ -44,14 +47,14 @@ export const JEUX = {
   1: { univers: 'gav', image: img('/img/avent/jeux/dossiers-criminels.jpg'), maison: false, nom: 'Dossiers Criminels Pocket', sous: 'Qui a tué Isabella Vega ?', court: 'Dossiers Criminels Pocket', detail: 'Une enquête de poche : des indices, des suspects, un coupable à démasquer.' },
   4: { univers: 'psy', image: img('/img/avent/jeux/black-stories.jpg'), maison: false, nom: 'Black Stories', court: 'Black Stories', detail: '50 énigmes macabres à résoudre en posant des questions. Réponses permises : oui ou non.' },
   6: { univers: 'quiz', image: img('/img/avent/jeux/esquisse.jpg'), maison: false, nom: 'Esquissé ?', sous: 'Version 6 joueurs', court: 'Esquissé ?', detail: 'Le téléphone arabe en dessin : on dessine, on devine, et tout dérape.' },
-  7: { univers: '80s', image: img('/img/avent/jeux/et.jpg'), maison: true, nom: 'E.T. l’Extra-Terrestre', court: 'E.T. l’Extra-Terrestre', detail: 'Jeu d’aventure coopératif : aidez E.T. à rentrer chez lui avant les agents. 2 à 4 joueurs, dès 10 ans, 30 minutes.' },
+  7: { univers: '80s', image: img('/img/avent/jeux/et.webp'), maison: true, detoure: true, nom: 'E.T. l’Extra-Terrestre', court: 'E.T. l’Extra-Terrestre', detail: 'Jeu d’aventure coopératif : aidez E.T. à rentrer chez lui avant les agents. 2 à 4 joueurs, dès 10 ans, 30 minutes.' },
   10: { univers: 'quiz', image: img('/img/avent/jeux/snort-funny.jpg'), maison: false, nom: 'Snort Funny', sous: 'Le jeu « ingroinyable »', court: 'Snort Funny', detail: 'Un jeu d’ambiance pour faire rire toute la table.' },
   13: { univers: 'gav', image: img('/img/avent/jeux/sous-scelles.jpg'), maison: false, nom: 'Sous Scellés', sous: 'La Fille du Troisième', court: 'Sous Scellés : La Fille du Troisième', detail: 'Un dossier d’enquête à ouvrir chez vous : à vous de résoudre l’affaire.' },
-  15: { univers: '80s', image: img('/img/avent/jeux/retour-vers-le-futur.jpg'), maison: true, nom: 'Retour vers le futur', court: 'Retour vers le futur', detail: 'Jeu d’aventure coopératif : faites monter la DeLorean à 88 miles à l’heure avant l’éclair. 2 à 4 joueurs, dès 10 ans, 50 minutes.' },
+  15: { univers: '80s', image: img('/img/avent/jeux/retour-vers-le-futur.webp'), maison: true, detoure: true, nom: 'Retour vers le futur', court: 'Retour vers le futur', detail: 'Jeu d’aventure coopératif : faites monter la DeLorean à 88 miles à l’heure avant l’éclair. 2 à 4 joueurs, dès 10 ans, 50 minutes.' },
   16: { univers: 'psy', image: img('/img/avent/jeux/scream.jpg'), maison: false, nom: 'Scream, le jeu', court: 'Scream', detail: 'Jeu de société coopératif : faites équipe pour échapper au tueur masqué.' },
   18: { univers: 'quiz', image: img('/img/avent/jeux/longueur-d-onde.jpg'), maison: false, nom: 'Longueur d’onde', court: 'Longueur d’onde', detail: 'Jeu d’ambiance en équipes : êtes-vous sur la même longueur d’onde que vos amis ?' },
   20: { univers: 'psy', image: img('/img/avent/jeux/chucky.jpg'), maison: false, nom: 'Chucky, le jeu', court: 'Chucky', detail: 'Jeu d’horreur coopératif : tous ensemble contre la poupée.' },
-  23: { univers: '80s', image: img('/img/avent/jeux/goonies.jpg'), maison: true, nom: 'The Goonies', sous: 'Ne disent jamais mourir', court: 'The Goonies', detail: 'Jeu d’aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 à 5 joueurs, dès 12 ans, 50 minutes.' },
+  23: { univers: '80s', image: img('/img/avent/jeux/goonies.webp'), maison: true, detoure: true, nom: 'The Goonies', sous: 'Ne disent jamais mourir', court: 'The Goonies', detail: 'Jeu d’aventure : un joueur dirige les ennemis, les autres incarnent les Goonies. 2 à 5 joueurs, dès 12 ans, 50 minutes.' },
   24: { univers: 'final', image: img('/img/avent/jeux/delorean.jpg'), maison: false, nom: 'DeLorean radio-commandée', sous: 'Retour vers le futur', court: 'DeLorean radio-commandée', objet: 'la DeLorean radio-commandée', plus: '+ la', alt: 'La DeLorean radio-commandée', visuel: { nom: 'DeLorean', sous: 'radio-commandée, de Retour vers le futur' }, detail: 'La voiture de Retour vers le futur, à piloter à la télécommande : le cadeau de la dernière porte.' },
 };
 export const objetDe = (jeu) => jeu.objet || 'le jeu ' + jeu.court;
